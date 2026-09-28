@@ -102,6 +102,8 @@ python3.12 -m venv .venv
 结果与复现：[完整实验说明](docs/external-evaluation.md) · [冻结清单](evals/external/pilot-manifest.json) · [逐次预测与评分](evals/external/results/pilot-2026-09-29/predictions.json) · [汇总](evals/external/results/pilot-2026-09-29/summary.json) · [资源统计](evals/external/results/pilot-2026-09-29/report.md)。图表可以从公开评分表重画，无需再次调用模型。
 <!-- external-pilot:end -->
 
+事后逐例分析见 [首轮复盘与迭代设计](docs/pilot-postmortem.md)：净退化集中在两个任务，涉及已恢复错误、未执行风险及最早责任位置的区分。已保存一个未启用的 v2 候选和消融方案；尚未追加模型运行，也未替换当前 Skill。首轮成绩保持原样。
+
 ## 仓库结构
 
 ```text

@@ -1,0 +1,300 @@
+{
+  "kind": "post_hoc_development_analysis_not_new_evaluation",
+  "source_predictions_sha256": "28b2cec41b65d0a16419d387c3cae9165bc93e202d525dec0b6c10c00da73d2c",
+  "pairs": 72,
+  "identical_attribution_pairs": 65,
+  "location_transitions": {
+    "correct_to_correct": 33,
+    "wrong_to_wrong": 34,
+    "wrong_to_correct": 1,
+    "correct_to_wrong": 4
+  },
+  "case_location_counts": {
+    "ww:Algorithm-Generated:68": {
+      "without_skill": 3,
+      "with_skill": 3,
+      "trials": 3
+    },
+    "pro:dacode_smolagents_0096": {
+      "without_skill": 0,
+      "with_skill": 0,
+      "trials": 3
+    },
+    "ww:Algorithm-Generated:61": {
+      "without_skill": 0,
+      "with_skill": 0,
+      "trials": 3
+    },
+    "pro:mmlu_pro_mathchat_0213": {
+      "without_skill": 3,
+      "with_skill": 3,
+      "trials": 3
+    },
+    "pro:gaia_magentic-one_0297": {
+      "without_skill": 0,
+      "with_skill": 0,
+      "trials": 3
+    },
+    "ww:Hand-Crafted:4": {
+      "without_skill": 3,
+      "with_skill": 3,
+      "trials": 3
+    },
+    "ww:Algorithm-Generated:39": {
+      "without_skill": 3,
+      "with_skill": 3,
+      "trials": 3
+    },
+    "ww:Hand-Crafted:6": {
+      "without_skill": 3,
+      "with_skill": 3,
+      "trials": 3
+    },
+    "pro:gpqa_dylan_0052": {
+      "without_skill": 3,
+      "with_skill": 3,
+      "trials": 3
+    },
+    "pro:livecodebench_pro_metagpt_0036": {
+      "without_skill": 0,
+      "with_skill": 0,
+      "trials": 3
+    },
+    "ww:Hand-Crafted:5": {
+      "without_skill": 0,
+      "with_skill": 0,
+      "trials": 3
+    },
+    "pro:scibench_mathchat_0180": {
+      "without_skill": 3,
+      "with_skill": 3,
+      "trials": 3
+    },
+    "ww:Hand-Crafted:33": {
+      "without_skill": 3,
+      "with_skill": 3,
+      "trials": 3
+    },
+    "ww:Algorithm-Generated:97": {
+      "without_skill": 0,
+      "with_skill": 0,
+      "trials": 3
+    },
+    "ww:Algorithm-Generated:88": {
+      "without_skill": 1,
+      "with_skill": 0,
+      "trials": 3
+    },
+    "pro:gpqa_debate_0013": {
+      "without_skill": 3,
+      "with_skill": 3,
+      "trials": 3
+    },
+    "pro:scibench_dylan_0037": {
+      "without_skill": 0,
+      "with_skill": 0,
+      "trials": 3
+    },
+    "pro:alfworld_alfagent_0251": {
+      "without_skill": 3,
+      "with_skill": 3,
+      "trials": 3
+    },
+    "ww:Hand-Crafted:54": {
+      "without_skill": 0,
+      "with_skill": 0,
+      "trials": 3
+    },
+    "pro:alfworld_alfagent_0288": {
+      "without_skill": 1,
+      "with_skill": 1,
+      "trials": 3
+    },
+    "pro:math_debate_0084": {
+      "without_skill": 0,
+      "with_skill": 0,
+      "trials": 3
+    },
+    "ww:Algorithm-Generated:50": {
+      "without_skill": 2,
+      "with_skill": 0,
+      "trials": 3
+    },
+    "pro:simpleqa_verified_magentic-one_0335": {
+      "without_skill": 3,
+      "with_skill": 3,
+      "trials": 3
+    },
+    "ww:Hand-Crafted:2": {
+      "without_skill": 0,
+      "with_skill": 0,
+      "trials": 3
+    }
+  },
+  "disagreements": [
+    {
+      "case_id": "pro:alfworld_alfagent_0288",
+      "trial": 1,
+      "without_skill": {
+        "agents": [],
+        "location": "step:3",
+        "error_mode": "A.1",
+        "confidence": 0.84
+      },
+      "with_skill": {
+        "agents": [],
+        "location": "step:2",
+        "error_mode": "R.1",
+        "confidence": 0.84
+      },
+      "location_transition": "wrong_to_correct"
+    },
+    {
+      "case_id": "ww:Algorithm-Generated:50",
+      "trial": 1,
+      "without_skill": {
+        "agents": [
+          "DataAnalysis_Expert"
+        ],
+        "location": "history:3",
+        "error_mode": null,
+        "confidence": 0.45
+      },
+      "with_skill": {
+        "agents": [
+          "Financial_Expert"
+        ],
+        "location": "history:9",
+        "error_mode": null,
+        "confidence": 0.46
+      },
+      "location_transition": "correct_to_wrong"
+    },
+    {
+      "case_id": "ww:Hand-Crafted:2",
+      "trial": 1,
+      "without_skill": {
+        "agents": [
+          "Orchestrator"
+        ],
+        "location": "history:38",
+        "error_mode": null,
+        "confidence": 0.7
+      },
+      "with_skill": {
+        "agents": [
+          "Orchestrator"
+        ],
+        "location": "history:24",
+        "error_mode": null,
+        "confidence": 0.68
+      },
+      "location_transition": "wrong_to_wrong"
+    },
+    {
+      "case_id": "pro:alfworld_alfagent_0288",
+      "trial": 2,
+      "without_skill": {
+        "agents": [],
+        "location": "step:2",
+        "error_mode": "R.1",
+        "confidence": 0.84
+      },
+      "with_skill": {
+        "agents": [],
+        "location": "step:3",
+        "error_mode": "A.1",
+        "confidence": 0.83
+      },
+      "location_transition": "correct_to_wrong"
+    },
+    {
+      "case_id": "pro:math_debate_0084",
+      "trial": 2,
+      "without_skill": {
+        "agents": [
+          "agent_0",
+          "agent_2"
+        ],
+        "location": "round:0",
+        "error_mode": "R.2",
+        "confidence": 0.99
+      },
+      "with_skill": {
+        "agents": [
+          "agent_0",
+          "agent_2"
+        ],
+        "location": "round:0",
+        "error_mode": "R.4",
+        "confidence": 0.99
+      },
+      "location_transition": "wrong_to_wrong"
+    },
+    {
+      "case_id": "ww:Algorithm-Generated:88",
+      "trial": 3,
+      "without_skill": {
+        "agents": [
+          "FinancialData_Expert"
+        ],
+        "location": "history:0",
+        "error_mode": null,
+        "confidence": 0.82
+      },
+      "with_skill": {
+        "agents": [
+          "DataValidation_Expert"
+        ],
+        "location": "history:2",
+        "error_mode": null,
+        "confidence": 0.86
+      },
+      "location_transition": "correct_to_wrong"
+    },
+    {
+      "case_id": "ww:Algorithm-Generated:50",
+      "trial": 3,
+      "without_skill": {
+        "agents": [
+          "DataAnalysis_Expert"
+        ],
+        "location": "history:3",
+        "error_mode": null,
+        "confidence": 0.58
+      },
+      "with_skill": {
+        "agents": [
+          "Financial_Expert"
+        ],
+        "location": "history:9",
+        "error_mode": null,
+        "confidence": 0.32
+      },
+      "location_transition": "correct_to_wrong"
+    }
+  ],
+  "resources": {
+    "without_skill": {
+      "input_tokens": 1162262,
+      "output_tokens": 18938,
+      "median_wall_seconds": 33.302414312493056,
+      "mean_location_confidence": 0.9183333333333333,
+      "location_brier_exploratory": 0.4174333333333333
+    },
+    "with_skill": {
+      "input_tokens": 1626928,
+      "output_tokens": 23220,
+      "median_wall_seconds": 35.98589793746942,
+      "mean_location_confidence": 0.9088888888888889,
+      "location_brier_exploratory": 0.41685
+    }
+  },
+  "limitations": [
+    "Trial-number pairing is descriptive, not shared model randomness or a counterfactual.",
+    "Repeated trials are clustered by task; transition counts are not independent evidence.",
+    "Confidence/Brier inspection was not a predeclared primary analysis.",
+    "Differences in rationales do not identify which instruction caused a change.",
+    "The 24 cases become development material for subsequent skill iteration."
+  ]
+}

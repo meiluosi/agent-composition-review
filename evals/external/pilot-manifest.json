@@ -1,0 +1,1076 @@
+{
+  "schema_version": 1,
+  "frozen_at": "2026-09-28T17:17:38.384061+00:00",
+  "kind": "stratified_external_pilot_not_full_benchmark",
+  "seed": 20260929,
+  "per_dataset": 12,
+  "trials": 3,
+  "max_input_chars": 120000,
+  "conditions": [
+    "with_skill",
+    "without_skill"
+  ],
+  "cases": [
+    {
+      "case_id": "ww:Algorithm-Generated:97",
+      "dataset": "Who&When",
+      "stratum": "Algorithm-Generated",
+      "group": "ww:4fc2f1ae-8625-45b5-ab34-ad4433bc21f8",
+      "input_chars": 10157,
+      "input_sha256": "e5dc7210ddb6e84ed8afa620296ceb9f976f1b94ff9a7b04f645cab718559ab9",
+      "oracle_sha256": "b0e1fd231ab5de6deaf3a05b1f3602dc6d70e47a0c4352db95e142c8fe458fb0",
+      "prompt_sha256": {
+        "with_skill": "d34b4b00ed74c03c9202559fca33bb8486a06504816a92635810df24a08d9ded",
+        "without_skill": "5d9375cb9e85d3c2d5cb5763707e70787ea8a3b96ff08b6a30f500c9a336be9f"
+      }
+    },
+    {
+      "case_id": "pro:gaia_magentic-one_0297",
+      "dataset": "Who&When Pro",
+      "stratum": "magentic-one",
+      "group": "pro:4e98576721ec8b6bd33c9435955e5e83e1d504e0304a9bbe6bb9a3f98fea4efd",
+      "input_chars": 21952,
+      "input_sha256": "8151ede4f7f992a8cca215856968fbe6d61bb1aca2da7f69e454ed0d2510c12f",
+      "oracle_sha256": "bf057f01113cbdd3eac98b6917c0430bad8dc3f7eefb74c9a77d0bd812ae7574",
+      "prompt_sha256": {
+        "with_skill": "401024a0eedb9e9a7ce8a4b4e1c84a9e4906513a937d96ee6400dfdde6f66860",
+        "without_skill": "6750314749ae09cfed22bc5a69d7510c3d84afb5ca18e7115bd8488e7a1e6836"
+      }
+    },
+    {
+      "case_id": "ww:Hand-Crafted:33",
+      "dataset": "Who&When",
+      "stratum": "Hand-Crafted",
+      "group": "ww:72e110e7-464c-453c-a309-90a95aed6538",
+      "input_chars": 16462,
+      "input_sha256": "6ef4ae10884b62dcf74866cee25a954046cb030052d866aa2abb8b3ac510a3ac",
+      "oracle_sha256": "095491e9d98bbac07f95fc453f7c2f826a3ebffdb0ad014f148a530cd2a07632",
+      "prompt_sha256": {
+        "with_skill": "f67a632ac38151c50a8c1096c59553c8c86dde11f0b6645a79e7d6969a0cd87c",
+        "without_skill": "9f791e0f063fef5fa0efab3c0df3399ee907b3b71e5af0524b6506cfc948d616"
+      }
+    },
+    {
+      "case_id": "pro:mmlu_pro_mathchat_0213",
+      "dataset": "Who&When Pro",
+      "stratum": "mathchat",
+      "group": "pro:17e5c8b7ec31c13731f93aa58e09bb326596d407406c351dc5e6b94c20ff7093",
+      "input_chars": 8773,
+      "input_sha256": "e4aad7f0c33e600e7d54df08fd57eef737cbc1ffea4a5b50fc1ce0af3d83d932",
+      "oracle_sha256": "991644c5a74b4c38de7ed1b436d6d0014607dbf4b15db4c7094ae394cbf1e02a",
+      "prompt_sha256": {
+        "with_skill": "a61b9a8901221f4c5249392f30217b211b0c2ba90d09f329517b554958ef1013",
+        "without_skill": "d86f1fa4ddc16658efa7603efa1901cbf39892c3a8fc5bc3ef00850f1b5636bc"
+      }
+    },
+    {
+      "case_id": "pro:math_debate_0084",
+      "dataset": "Who&When Pro",
+      "stratum": "debate",
+      "group": "pro:1d64a16c06678d2b0e909cb6353b13e3f88f257a1eb78a2a9d6f49c0058cac1b",
+      "input_chars": 11099,
+      "input_sha256": "61c37008257a1969472e3aaff80f403cbdb21eaa7888cf518132ed20392ac1e8",
+      "oracle_sha256": "ae632ffd2a013f81a8c63a5fcc7ae99d472312de043304bef615e6dab53bd2cb",
+      "prompt_sha256": {
+        "with_skill": "8bc8ce3cc9bb6c2deeb0c78b2df167bb1c890bbffb1db426cac6a586b9cbea87",
+        "without_skill": "ede7f82ede4f99b60d6a94c388db31503f41e9500f02f2ba62d3f57c03b28f58"
+      }
+    },
+    {
+      "case_id": "ww:Hand-Crafted:2",
+      "dataset": "Who&When",
+      "stratum": "Hand-Crafted",
+      "group": "ww:55f4258484c5b398956133128a50462a767da211f8f72aa5ac5bbffb9bcbba1a",
+      "input_chars": 100967,
+      "input_sha256": "7d53394555b2ea4e5a97699f28ccbab8cec70d9633399471a29a4c0b7d48e9d4",
+      "oracle_sha256": "a5d84c212458d775cc54292a52c9224eede6437a0de6413b13246a7eba1ba63a",
+      "prompt_sha256": {
+        "with_skill": "a94c5cc741639d5f3e4c8b0056a22caf739fcd04f13af976b66ea5f19b154d20",
+        "without_skill": "f41682f1b9558002c51a38b3b7ffc06b6281b59dd17b0984d16bd86db11ed568"
+      }
+    },
+    {
+      "case_id": "ww:Algorithm-Generated:68",
+      "dataset": "Who&When",
+      "stratum": "Algorithm-Generated",
+      "group": "ww:c365c1c7-a3db-4d5e-a9a1-66f56eae7865",
+      "input_chars": 11473,
+      "input_sha256": "83c2c0878dba6c75d454a139e2c1d7aca807887028e692c937a27d05b74549b2",
+      "oracle_sha256": "33df79ceb61eb81f07f89d814d82984a46bc88b30763047be05a1367f2111ef8",
+      "prompt_sha256": {
+        "with_skill": "02869ce147682ff55c75cea898430f39bbf1b5651106b737374232cdd1e66488",
+        "without_skill": "c168d7a0217d7b35d11c8604768e4efd0d3e6784d3c7551c8a5b9c1fbd9f68ca"
+      }
+    },
+    {
+      "case_id": "pro:livecodebench_pro_metagpt_0036",
+      "dataset": "Who&When Pro",
+      "stratum": "metagpt",
+      "group": "pro:d401f6ed025cd8fec6e035c8749520555f893d0a5feae6bf748d0ed5b9ad5f02",
+      "input_chars": 25986,
+      "input_sha256": "fe89078faa7d3f8a177ba2d69420c1b8762b49279a96bf60af5dadaf5b812062",
+      "oracle_sha256": "868e41cc4c16e9e73e51f5b9a2e5b4f96298f482df98140263de20f7c26c4c7b",
+      "prompt_sha256": {
+        "with_skill": "307dc8b5cc9d99dbb1079ccbc69627d9b804572af569aa5804c1ac13fe4fca0e",
+        "without_skill": "a8d22f81431d7d6cff489373f4277ee607824a66f71aba1139661da160b619ec"
+      }
+    },
+    {
+      "case_id": "ww:Hand-Crafted:54",
+      "dataset": "Who&When",
+      "stratum": "Hand-Crafted",
+      "group": "ww:a0c07678-e491-4bbc-8f0b-07405144218f",
+      "input_chars": 19100,
+      "input_sha256": "2e7610f6298b39a751dd91aada6690a788dd98511781c4d139c5794d7666a376",
+      "oracle_sha256": "f8ee6567fa0a7e5c8fd36c52a4651e076af75484dd2de959316aefc3d469dcbc",
+      "prompt_sha256": {
+        "with_skill": "6685d4a6af67a4a4f2653e180c9ed05b92dc1f77812d06f5dccc7689f05ea971",
+        "without_skill": "a7b98e3160faa0d9cbafcfa4227244c06c19fb17099b053c2a85c0ba67d9799b"
+      }
+    },
+    {
+      "case_id": "pro:gpqa_dylan_0052",
+      "dataset": "Who&When Pro",
+      "stratum": "dylan",
+      "group": "pro:bf033f91e4dfec5c9f4b4deef2a7d109163f638d8194059965967d03f8d5d8b4",
+      "input_chars": 39821,
+      "input_sha256": "88ef63e844887671a5007040f9b52e9cc1afd1c4fadde2b7add23ff657ea7fe3",
+      "oracle_sha256": "643074be2db5c5c5c9d50c41a2e32d5217181b7c4d30ee5491999147c6494cbe",
+      "prompt_sha256": {
+        "with_skill": "eda511cca863ae0563ce229fa7c2a0391b0da929e703d37b91a2e6a911f4a284",
+        "without_skill": "9a1e3f767a6b1e53b42a90571afedb33afa9258ae8bc392a938a6c5a65b9cc12"
+      }
+    },
+    {
+      "case_id": "pro:alfworld_alfagent_0251",
+      "dataset": "Who&When Pro",
+      "stratum": "alfagent",
+      "group": "pro:e97dbd35f9ed1aa5e754cd6dce083fa9ba37acd73e68dac97be0bb8aeadb21a2",
+      "input_chars": 7789,
+      "input_sha256": "983cc604072455ab55dd2ef6f837177d0b71dddf231ff3a4bec49ceb6cca0f15",
+      "oracle_sha256": "c4aea9382ee347d530b10b8a6f2a8d0f6b4ae5de171b7ffe509958516fedae7f",
+      "prompt_sha256": {
+        "with_skill": "fe01351b2525141b93491a571a26a111181e5ce5f4c8b7f9eef0e331954e55d8",
+        "without_skill": "59b6db4c4184f43e440a2923c4900d1356f80fa095dd65179d19f91770651a20"
+      }
+    },
+    {
+      "case_id": "ww:Hand-Crafted:5",
+      "dataset": "Who&When",
+      "stratum": "Hand-Crafted",
+      "group": "ww:ed58682d-bc52-4baa-9eb0-4eb81e1edacc",
+      "input_chars": 20818,
+      "input_sha256": "651755267d2982a07cad434d1aece0d7238f64644d4478a9e46a8c826319745f",
+      "oracle_sha256": "746364d79324d3ef3aeb3e118db41d020d0af7a25e5988bf5ec70ff80f777b7f",
+      "prompt_sha256": {
+        "with_skill": "b47ac859fcfa390da7f29674041b6f4336455e87056544457ea4a3f52fb64124",
+        "without_skill": "14671a31ac5fd9df3e2ba02b7f2e2014de81db674bb85435038802d5e9637cb6"
+      }
+    },
+    {
+      "case_id": "ww:Hand-Crafted:4",
+      "dataset": "Who&When",
+      "stratum": "Hand-Crafted",
+      "group": "ww:f88066d274e265edd6cd9d61cd80a41accb3a14baf2297652fdd05cdf716d455",
+      "input_chars": 24594,
+      "input_sha256": "4c9489b17e70e5afde6414fb71e8644d60b76c84f87bf2d59a25c06718860932",
+      "oracle_sha256": "095491e9d98bbac07f95fc453f7c2f826a3ebffdb0ad014f148a530cd2a07632",
+      "prompt_sha256": {
+        "with_skill": "7452d16f361b6ec58f1c17b3f3f4a2b3cede2c932374007bb4857b10757a7781",
+        "without_skill": "7890af42ec49f5a14f21c3596917b34469bf01f0e98b61e8d7e3d7a6ac2d1a44"
+      }
+    },
+    {
+      "case_id": "ww:Algorithm-Generated:50",
+      "dataset": "Who&When",
+      "stratum": "Algorithm-Generated",
+      "group": "ww:076c8171-9b3b-49b9-a477-244d2a532826",
+      "input_chars": 13895,
+      "input_sha256": "b83327ba9c516dddb63f5ded5fb82839013e2d89bf95b68b5ab08afa0d1a6c55",
+      "oracle_sha256": "cc3c4c268150655b948f39fe15baff900bdc34da1f05fdfee97dac37d52fd66a",
+      "prompt_sha256": {
+        "with_skill": "8decf5f32c63e097cf80c3d541a06a6824827a4240795e9c0c85cbb91f72682e",
+        "without_skill": "6b0af67077e0c5eced1d8227077e2541e1817dd5a2d0d1e7be285278c8b7869d"
+      }
+    },
+    {
+      "case_id": "pro:dacode_smolagents_0096",
+      "dataset": "Who&When Pro",
+      "stratum": "smolagents",
+      "group": "pro:866d038119631b554928acb3558d68461430381a044e85eb8be237e4fb83fe6c",
+      "input_chars": 5614,
+      "input_sha256": "addb1d46cd25ffb05cd37a399ababd7cf5845e4833a075fc50a6233c3dce3952",
+      "oracle_sha256": "f86aa09db25fe3cf2f9ff98b775b77c0a54857de8086d86528daa9530a12cbdb",
+      "prompt_sha256": {
+        "with_skill": "9f328e205d24db698bce894fd686871fbea57194c003d7b2cb45b261e43d5363",
+        "without_skill": "8a58d8b69ac67f19cd95463463242750d1cb8d26f933ff537d9aa236115abb59"
+      }
+    },
+    {
+      "case_id": "pro:simpleqa_verified_magentic-one_0335",
+      "dataset": "Who&When Pro",
+      "stratum": "magentic-one",
+      "group": "pro:52105fef0b8029256db53ff1b2a20dd23ae18333964143111025344d950bf697",
+      "input_chars": 6912,
+      "input_sha256": "f2c43c31b29dd191a05a998176a6f9285747eceb95220aaca04acb6fc49002a4",
+      "oracle_sha256": "e25d233ef87af4c9498e222fb3251eabdf21128ba496d0d61636d7a54ab29091",
+      "prompt_sha256": {
+        "with_skill": "f7073c06542671617aefd901cd316164004bf458484de15ffe8a0aab1bfbc296",
+        "without_skill": "47db72d54565e56ef56338cea4502ec05d619c0445565f5ed5611034c88c6f7a"
+      }
+    },
+    {
+      "case_id": "ww:Algorithm-Generated:61",
+      "dataset": "Who&When",
+      "stratum": "Algorithm-Generated",
+      "group": "ww:b7f857e4-d8aa-4387-af2a-0e844df5b9d8",
+      "input_chars": 16108,
+      "input_sha256": "e38b0fe4907069b6a1fdd03421731f597720b3a354e69898d4b2ead472dc3186",
+      "oracle_sha256": "f6fcc132e16f953de68c54262738238df852870a8878f8f66d3b1abd248bf168",
+      "prompt_sha256": {
+        "with_skill": "bbf86e9b3576b4ff12035246ffe79e5dff4035bc0f42a013ade9a3d615978b43",
+        "without_skill": "231182495e07e73be225bc03a1c57cc35de9f5e1bd3112fd94d4d8aafd28b711"
+      }
+    },
+    {
+      "case_id": "ww:Algorithm-Generated:39",
+      "dataset": "Who&When",
+      "stratum": "Algorithm-Generated",
+      "group": "ww:17b5a6a3-bc87-42e8-b0fb-6ab0781ef2cc",
+      "input_chars": 17606,
+      "input_sha256": "d47977c8f5c6185052dfd88babf3b96061d4410f213faf76415c1b2c8d6a4481",
+      "oracle_sha256": "d274b4d275321bb2d4eabff8cdf21f0e3f03faf7d2d3a5a2e70b100f77d5f16c",
+      "prompt_sha256": {
+        "with_skill": "1ee6f8b32a491f684591c675034022a741e8fefd4140041d50dcd9f91e081664",
+        "without_skill": "36f48f8b50afcfd15c03053a3d98cc307cc28ad13e4b1ccad0ab2716d73ed141"
+      }
+    },
+    {
+      "case_id": "pro:scibench_mathchat_0180",
+      "dataset": "Who&When Pro",
+      "stratum": "mathchat",
+      "group": "pro:5a54c95e52f744881abff9b33a0c59637972f78819caabbc49f7d3b3a85e54d6",
+      "input_chars": 29374,
+      "input_sha256": "33bcfba0a7ce829e2793164b085ebe79eb58a51dc9fa345dfb798f900b10300e",
+      "oracle_sha256": "eed78fda6e7cd0f2bd71aa4aef4769521f8e1eaba9798e0a0ce53a15c432bc24",
+      "prompt_sha256": {
+        "with_skill": "c537946b122904f3cd70130854ecaf47bf2af983ac5ae0944f3ea7401a1a54da",
+        "without_skill": "bd02ee17a0b00c8f89e85e2b129156ae0dd6db2e42edfd40a8ea6c35ed3454f0"
+      }
+    },
+    {
+      "case_id": "ww:Hand-Crafted:6",
+      "dataset": "Who&When",
+      "stratum": "Hand-Crafted",
+      "group": "ww:e6bc98089608217e45b6956a46518fe3cce64a799b3ac43c6974c449ae14c408",
+      "input_chars": 10354,
+      "input_sha256": "c40214aca82b7c17b4c15ced09bbd44bde144c0994b73f5824143de2a60678ad",
+      "oracle_sha256": "ccab1fe32ffcddbc7faff9bfef6df07b0022fb511d2c6936309a7893608a1678",
+      "prompt_sha256": {
+        "with_skill": "62e1c2f89fd38d798d2d7a98103d499f7634f27f6f2e36a7ab02b289cdb38430",
+        "without_skill": "d2de6f1c48172aa9e52cb60177366fc1a6edfe3868e4533e11967e2bf97cf721"
+      }
+    },
+    {
+      "case_id": "pro:gpqa_debate_0013",
+      "dataset": "Who&When Pro",
+      "stratum": "debate",
+      "group": "pro:972fa9fd1644704a7b5a90a45d23412f8c201bb769b847d9ca86a3f3f08aaa1d",
+      "input_chars": 15894,
+      "input_sha256": "2a108a17aabffce641f162eb8f3c23a3e7824b123849c7c766d0ede4b6d70e36",
+      "oracle_sha256": "3b8d3b5f7e1cfccb5213032ff15fcdf2532289b73cf5252a1de14668bd5828e7",
+      "prompt_sha256": {
+        "with_skill": "4865f949359de0de6408ba055b3170a347906a26067e362605dd27d34183a241",
+        "without_skill": "2aa2abfc82f5b6788b09c5ba89e5a3577ad4754977e9035f48391b84baaabeb7"
+      }
+    },
+    {
+      "case_id": "ww:Algorithm-Generated:88",
+      "dataset": "Who&When",
+      "stratum": "Algorithm-Generated",
+      "group": "ww:08cae58d-4084-4616-b6dd-dd6534e4825b",
+      "input_chars": 19336,
+      "input_sha256": "e8c085cc7f946f8d0aac37e7490791fadf55cc62928cca6fdda1d993d6fa5a9c",
+      "oracle_sha256": "e3b93f6816bc97a1e73f3c6aeb17c8d1d00125470f50290b274e38e5c0bca68c",
+      "prompt_sha256": {
+        "with_skill": "a5d4b6ac7c8b084440e7fa7712cd05f5f9282e5f783149b058de06b1d28116eb",
+        "without_skill": "dbebf4b673692b9909ab9169e201e65edf5fd30cf86f99dec1687def49fff0e3"
+      }
+    },
+    {
+      "case_id": "pro:scibench_dylan_0037",
+      "dataset": "Who&When Pro",
+      "stratum": "dylan",
+      "group": "pro:5c599a0dca256b5fda718ab4b0c35be2cc7f1c68e14d8653ffef35ecd715d78e",
+      "input_chars": 31138,
+      "input_sha256": "4811e9fbeffaf1464dc924050612906301ac48d9f52d2faa2c526f098112137c",
+      "oracle_sha256": "06dc94c6f8f3ef4c337bf2f2eedceae471c9acd7e646b00bc393f3a3d7638dec",
+      "prompt_sha256": {
+        "with_skill": "b959a3b23b7c54c8d825e18f73bba747ebf97a162d01e162df7c02201d9eccbd",
+        "without_skill": "b6abe3d5fc7b3f20dcb376f9a4d141fd0331eca91afbb0ba1bbe988955388589"
+      }
+    },
+    {
+      "case_id": "pro:alfworld_alfagent_0288",
+      "dataset": "Who&When Pro",
+      "stratum": "alfagent",
+      "group": "pro:5d1eaceb1f2725d18d8286f136749fcdd98a62ccdc533060908793b6a748c7b6",
+      "input_chars": 7906,
+      "input_sha256": "515589b39b8f9072d869638bddc0fac9d7bd1252f504652552293ec3c584b407",
+      "oracle_sha256": "8ab4e1252966d27a1af168832c435bce62d9f7f17a7145114ab558da1cee9c65",
+      "prompt_sha256": {
+        "with_skill": "91dcd6f87064cd23028fd9792248204d819dced6bc0d2851844345c5d5fe4294",
+        "without_skill": "a8882ebfbcc703fe7d4625ddbcd361c9aa40e31aca3853e4b208069b5d050f64"
+      }
+    }
+  ],
+  "schedule": [
+    {
+      "case_id": "ww:Algorithm-Generated:68",
+      "condition": "without_skill",
+      "trial": 1
+    },
+    {
+      "case_id": "ww:Algorithm-Generated:68",
+      "condition": "with_skill",
+      "trial": 1
+    },
+    {
+      "case_id": "pro:dacode_smolagents_0096",
+      "condition": "with_skill",
+      "trial": 1
+    },
+    {
+      "case_id": "pro:dacode_smolagents_0096",
+      "condition": "without_skill",
+      "trial": 1
+    },
+    {
+      "case_id": "ww:Algorithm-Generated:61",
+      "condition": "without_skill",
+      "trial": 1
+    },
+    {
+      "case_id": "ww:Algorithm-Generated:61",
+      "condition": "with_skill",
+      "trial": 1
+    },
+    {
+      "case_id": "pro:mmlu_pro_mathchat_0213",
+      "condition": "with_skill",
+      "trial": 1
+    },
+    {
+      "case_id": "pro:mmlu_pro_mathchat_0213",
+      "condition": "without_skill",
+      "trial": 1
+    },
+    {
+      "case_id": "pro:gaia_magentic-one_0297",
+      "condition": "with_skill",
+      "trial": 1
+    },
+    {
+      "case_id": "pro:gaia_magentic-one_0297",
+      "condition": "without_skill",
+      "trial": 1
+    },
+    {
+      "case_id": "ww:Hand-Crafted:4",
+      "condition": "without_skill",
+      "trial": 1
+    },
+    {
+      "case_id": "ww:Hand-Crafted:4",
+      "condition": "with_skill",
+      "trial": 1
+    },
+    {
+      "case_id": "ww:Algorithm-Generated:39",
+      "condition": "with_skill",
+      "trial": 1
+    },
+    {
+      "case_id": "ww:Algorithm-Generated:39",
+      "condition": "without_skill",
+      "trial": 1
+    },
+    {
+      "case_id": "ww:Hand-Crafted:6",
+      "condition": "with_skill",
+      "trial": 1
+    },
+    {
+      "case_id": "ww:Hand-Crafted:6",
+      "condition": "without_skill",
+      "trial": 1
+    },
+    {
+      "case_id": "pro:gpqa_dylan_0052",
+      "condition": "with_skill",
+      "trial": 1
+    },
+    {
+      "case_id": "pro:gpqa_dylan_0052",
+      "condition": "without_skill",
+      "trial": 1
+    },
+    {
+      "case_id": "pro:livecodebench_pro_metagpt_0036",
+      "condition": "with_skill",
+      "trial": 1
+    },
+    {
+      "case_id": "pro:livecodebench_pro_metagpt_0036",
+      "condition": "without_skill",
+      "trial": 1
+    },
+    {
+      "case_id": "ww:Hand-Crafted:5",
+      "condition": "without_skill",
+      "trial": 1
+    },
+    {
+      "case_id": "ww:Hand-Crafted:5",
+      "condition": "with_skill",
+      "trial": 1
+    },
+    {
+      "case_id": "pro:scibench_mathchat_0180",
+      "condition": "without_skill",
+      "trial": 1
+    },
+    {
+      "case_id": "pro:scibench_mathchat_0180",
+      "condition": "with_skill",
+      "trial": 1
+    },
+    {
+      "case_id": "ww:Hand-Crafted:33",
+      "condition": "without_skill",
+      "trial": 1
+    },
+    {
+      "case_id": "ww:Hand-Crafted:33",
+      "condition": "with_skill",
+      "trial": 1
+    },
+    {
+      "case_id": "ww:Algorithm-Generated:97",
+      "condition": "without_skill",
+      "trial": 1
+    },
+    {
+      "case_id": "ww:Algorithm-Generated:97",
+      "condition": "with_skill",
+      "trial": 1
+    },
+    {
+      "case_id": "ww:Algorithm-Generated:88",
+      "condition": "without_skill",
+      "trial": 1
+    },
+    {
+      "case_id": "ww:Algorithm-Generated:88",
+      "condition": "with_skill",
+      "trial": 1
+    },
+    {
+      "case_id": "pro:gpqa_debate_0013",
+      "condition": "without_skill",
+      "trial": 1
+    },
+    {
+      "case_id": "pro:gpqa_debate_0013",
+      "condition": "with_skill",
+      "trial": 1
+    },
+    {
+      "case_id": "pro:scibench_dylan_0037",
+      "condition": "without_skill",
+      "trial": 1
+    },
+    {
+      "case_id": "pro:scibench_dylan_0037",
+      "condition": "with_skill",
+      "trial": 1
+    },
+    {
+      "case_id": "pro:alfworld_alfagent_0251",
+      "condition": "without_skill",
+      "trial": 1
+    },
+    {
+      "case_id": "pro:alfworld_alfagent_0251",
+      "condition": "with_skill",
+      "trial": 1
+    },
+    {
+      "case_id": "ww:Hand-Crafted:54",
+      "condition": "with_skill",
+      "trial": 1
+    },
+    {
+      "case_id": "ww:Hand-Crafted:54",
+      "condition": "without_skill",
+      "trial": 1
+    },
+    {
+      "case_id": "pro:alfworld_alfagent_0288",
+      "condition": "without_skill",
+      "trial": 1
+    },
+    {
+      "case_id": "pro:alfworld_alfagent_0288",
+      "condition": "with_skill",
+      "trial": 1
+    },
+    {
+      "case_id": "pro:math_debate_0084",
+      "condition": "without_skill",
+      "trial": 1
+    },
+    {
+      "case_id": "pro:math_debate_0084",
+      "condition": "with_skill",
+      "trial": 1
+    },
+    {
+      "case_id": "ww:Algorithm-Generated:50",
+      "condition": "without_skill",
+      "trial": 1
+    },
+    {
+      "case_id": "ww:Algorithm-Generated:50",
+      "condition": "with_skill",
+      "trial": 1
+    },
+    {
+      "case_id": "pro:simpleqa_verified_magentic-one_0335",
+      "condition": "with_skill",
+      "trial": 1
+    },
+    {
+      "case_id": "pro:simpleqa_verified_magentic-one_0335",
+      "condition": "without_skill",
+      "trial": 1
+    },
+    {
+      "case_id": "ww:Hand-Crafted:2",
+      "condition": "with_skill",
+      "trial": 1
+    },
+    {
+      "case_id": "ww:Hand-Crafted:2",
+      "condition": "without_skill",
+      "trial": 1
+    },
+    {
+      "case_id": "ww:Hand-Crafted:54",
+      "condition": "with_skill",
+      "trial": 2
+    },
+    {
+      "case_id": "ww:Hand-Crafted:54",
+      "condition": "without_skill",
+      "trial": 2
+    },
+    {
+      "case_id": "ww:Algorithm-Generated:88",
+      "condition": "without_skill",
+      "trial": 2
+    },
+    {
+      "case_id": "ww:Algorithm-Generated:88",
+      "condition": "with_skill",
+      "trial": 2
+    },
+    {
+      "case_id": "pro:alfworld_alfagent_0251",
+      "condition": "without_skill",
+      "trial": 2
+    },
+    {
+      "case_id": "pro:alfworld_alfagent_0251",
+      "condition": "with_skill",
+      "trial": 2
+    },
+    {
+      "case_id": "pro:alfworld_alfagent_0288",
+      "condition": "without_skill",
+      "trial": 2
+    },
+    {
+      "case_id": "pro:alfworld_alfagent_0288",
+      "condition": "with_skill",
+      "trial": 2
+    },
+    {
+      "case_id": "pro:mmlu_pro_mathchat_0213",
+      "condition": "without_skill",
+      "trial": 2
+    },
+    {
+      "case_id": "pro:mmlu_pro_mathchat_0213",
+      "condition": "with_skill",
+      "trial": 2
+    },
+    {
+      "case_id": "ww:Hand-Crafted:6",
+      "condition": "with_skill",
+      "trial": 2
+    },
+    {
+      "case_id": "ww:Hand-Crafted:6",
+      "condition": "without_skill",
+      "trial": 2
+    },
+    {
+      "case_id": "pro:scibench_dylan_0037",
+      "condition": "without_skill",
+      "trial": 2
+    },
+    {
+      "case_id": "pro:scibench_dylan_0037",
+      "condition": "with_skill",
+      "trial": 2
+    },
+    {
+      "case_id": "pro:gaia_magentic-one_0297",
+      "condition": "without_skill",
+      "trial": 2
+    },
+    {
+      "case_id": "pro:gaia_magentic-one_0297",
+      "condition": "with_skill",
+      "trial": 2
+    },
+    {
+      "case_id": "ww:Algorithm-Generated:97",
+      "condition": "with_skill",
+      "trial": 2
+    },
+    {
+      "case_id": "ww:Algorithm-Generated:97",
+      "condition": "without_skill",
+      "trial": 2
+    },
+    {
+      "case_id": "ww:Hand-Crafted:5",
+      "condition": "with_skill",
+      "trial": 2
+    },
+    {
+      "case_id": "ww:Hand-Crafted:5",
+      "condition": "without_skill",
+      "trial": 2
+    },
+    {
+      "case_id": "ww:Hand-Crafted:33",
+      "condition": "with_skill",
+      "trial": 2
+    },
+    {
+      "case_id": "ww:Hand-Crafted:33",
+      "condition": "without_skill",
+      "trial": 2
+    },
+    {
+      "case_id": "pro:dacode_smolagents_0096",
+      "condition": "with_skill",
+      "trial": 2
+    },
+    {
+      "case_id": "pro:dacode_smolagents_0096",
+      "condition": "without_skill",
+      "trial": 2
+    },
+    {
+      "case_id": "pro:simpleqa_verified_magentic-one_0335",
+      "condition": "with_skill",
+      "trial": 2
+    },
+    {
+      "case_id": "pro:simpleqa_verified_magentic-one_0335",
+      "condition": "without_skill",
+      "trial": 2
+    },
+    {
+      "case_id": "ww:Hand-Crafted:4",
+      "condition": "without_skill",
+      "trial": 2
+    },
+    {
+      "case_id": "ww:Hand-Crafted:4",
+      "condition": "with_skill",
+      "trial": 2
+    },
+    {
+      "case_id": "ww:Algorithm-Generated:39",
+      "condition": "with_skill",
+      "trial": 2
+    },
+    {
+      "case_id": "ww:Algorithm-Generated:39",
+      "condition": "without_skill",
+      "trial": 2
+    },
+    {
+      "case_id": "pro:scibench_mathchat_0180",
+      "condition": "without_skill",
+      "trial": 2
+    },
+    {
+      "case_id": "pro:scibench_mathchat_0180",
+      "condition": "with_skill",
+      "trial": 2
+    },
+    {
+      "case_id": "ww:Algorithm-Generated:61",
+      "condition": "with_skill",
+      "trial": 2
+    },
+    {
+      "case_id": "ww:Algorithm-Generated:61",
+      "condition": "without_skill",
+      "trial": 2
+    },
+    {
+      "case_id": "ww:Algorithm-Generated:50",
+      "condition": "without_skill",
+      "trial": 2
+    },
+    {
+      "case_id": "ww:Algorithm-Generated:50",
+      "condition": "with_skill",
+      "trial": 2
+    },
+    {
+      "case_id": "pro:gpqa_dylan_0052",
+      "condition": "with_skill",
+      "trial": 2
+    },
+    {
+      "case_id": "pro:gpqa_dylan_0052",
+      "condition": "without_skill",
+      "trial": 2
+    },
+    {
+      "case_id": "pro:math_debate_0084",
+      "condition": "without_skill",
+      "trial": 2
+    },
+    {
+      "case_id": "pro:math_debate_0084",
+      "condition": "with_skill",
+      "trial": 2
+    },
+    {
+      "case_id": "ww:Hand-Crafted:2",
+      "condition": "without_skill",
+      "trial": 2
+    },
+    {
+      "case_id": "ww:Hand-Crafted:2",
+      "condition": "with_skill",
+      "trial": 2
+    },
+    {
+      "case_id": "ww:Algorithm-Generated:68",
+      "condition": "without_skill",
+      "trial": 2
+    },
+    {
+      "case_id": "ww:Algorithm-Generated:68",
+      "condition": "with_skill",
+      "trial": 2
+    },
+    {
+      "case_id": "pro:gpqa_debate_0013",
+      "condition": "without_skill",
+      "trial": 2
+    },
+    {
+      "case_id": "pro:gpqa_debate_0013",
+      "condition": "with_skill",
+      "trial": 2
+    },
+    {
+      "case_id": "pro:livecodebench_pro_metagpt_0036",
+      "condition": "without_skill",
+      "trial": 2
+    },
+    {
+      "case_id": "pro:livecodebench_pro_metagpt_0036",
+      "condition": "with_skill",
+      "trial": 2
+    },
+    {
+      "case_id": "pro:gpqa_debate_0013",
+      "condition": "with_skill",
+      "trial": 3
+    },
+    {
+      "case_id": "pro:gpqa_debate_0013",
+      "condition": "without_skill",
+      "trial": 3
+    },
+    {
+      "case_id": "ww:Hand-Crafted:2",
+      "condition": "without_skill",
+      "trial": 3
+    },
+    {
+      "case_id": "ww:Hand-Crafted:2",
+      "condition": "with_skill",
+      "trial": 3
+    },
+    {
+      "case_id": "ww:Algorithm-Generated:61",
+      "condition": "without_skill",
+      "trial": 3
+    },
+    {
+      "case_id": "ww:Algorithm-Generated:61",
+      "condition": "with_skill",
+      "trial": 3
+    },
+    {
+      "case_id": "ww:Algorithm-Generated:97",
+      "condition": "without_skill",
+      "trial": 3
+    },
+    {
+      "case_id": "ww:Algorithm-Generated:97",
+      "condition": "with_skill",
+      "trial": 3
+    },
+    {
+      "case_id": "ww:Hand-Crafted:54",
+      "condition": "with_skill",
+      "trial": 3
+    },
+    {
+      "case_id": "ww:Hand-Crafted:54",
+      "condition": "without_skill",
+      "trial": 3
+    },
+    {
+      "case_id": "pro:gaia_magentic-one_0297",
+      "condition": "without_skill",
+      "trial": 3
+    },
+    {
+      "case_id": "pro:gaia_magentic-one_0297",
+      "condition": "with_skill",
+      "trial": 3
+    },
+    {
+      "case_id": "pro:livecodebench_pro_metagpt_0036",
+      "condition": "without_skill",
+      "trial": 3
+    },
+    {
+      "case_id": "pro:livecodebench_pro_metagpt_0036",
+      "condition": "with_skill",
+      "trial": 3
+    },
+    {
+      "case_id": "pro:dacode_smolagents_0096",
+      "condition": "with_skill",
+      "trial": 3
+    },
+    {
+      "case_id": "pro:dacode_smolagents_0096",
+      "condition": "without_skill",
+      "trial": 3
+    },
+    {
+      "case_id": "ww:Hand-Crafted:4",
+      "condition": "with_skill",
+      "trial": 3
+    },
+    {
+      "case_id": "ww:Hand-Crafted:4",
+      "condition": "without_skill",
+      "trial": 3
+    },
+    {
+      "case_id": "pro:scibench_dylan_0037",
+      "condition": "without_skill",
+      "trial": 3
+    },
+    {
+      "case_id": "pro:scibench_dylan_0037",
+      "condition": "with_skill",
+      "trial": 3
+    },
+    {
+      "case_id": "pro:mmlu_pro_mathchat_0213",
+      "condition": "without_skill",
+      "trial": 3
+    },
+    {
+      "case_id": "pro:mmlu_pro_mathchat_0213",
+      "condition": "with_skill",
+      "trial": 3
+    },
+    {
+      "case_id": "ww:Hand-Crafted:6",
+      "condition": "without_skill",
+      "trial": 3
+    },
+    {
+      "case_id": "ww:Hand-Crafted:6",
+      "condition": "with_skill",
+      "trial": 3
+    },
+    {
+      "case_id": "pro:math_debate_0084",
+      "condition": "without_skill",
+      "trial": 3
+    },
+    {
+      "case_id": "pro:math_debate_0084",
+      "condition": "with_skill",
+      "trial": 3
+    },
+    {
+      "case_id": "ww:Algorithm-Generated:68",
+      "condition": "with_skill",
+      "trial": 3
+    },
+    {
+      "case_id": "ww:Algorithm-Generated:68",
+      "condition": "without_skill",
+      "trial": 3
+    },
+    {
+      "case_id": "pro:scibench_mathchat_0180",
+      "condition": "without_skill",
+      "trial": 3
+    },
+    {
+      "case_id": "pro:scibench_mathchat_0180",
+      "condition": "with_skill",
+      "trial": 3
+    },
+    {
+      "case_id": "pro:simpleqa_verified_magentic-one_0335",
+      "condition": "without_skill",
+      "trial": 3
+    },
+    {
+      "case_id": "pro:simpleqa_verified_magentic-one_0335",
+      "condition": "with_skill",
+      "trial": 3
+    },
+    {
+      "case_id": "pro:gpqa_dylan_0052",
+      "condition": "without_skill",
+      "trial": 3
+    },
+    {
+      "case_id": "pro:gpqa_dylan_0052",
+      "condition": "with_skill",
+      "trial": 3
+    },
+    {
+      "case_id": "ww:Hand-Crafted:5",
+      "condition": "without_skill",
+      "trial": 3
+    },
+    {
+      "case_id": "ww:Hand-Crafted:5",
+      "condition": "with_skill",
+      "trial": 3
+    },
+    {
+      "case_id": "ww:Algorithm-Generated:88",
+      "condition": "without_skill",
+      "trial": 3
+    },
+    {
+      "case_id": "ww:Algorithm-Generated:88",
+      "condition": "with_skill",
+      "trial": 3
+    },
+    {
+      "case_id": "ww:Algorithm-Generated:50",
+      "condition": "with_skill",
+      "trial": 3
+    },
+    {
+      "case_id": "ww:Algorithm-Generated:50",
+      "condition": "without_skill",
+      "trial": 3
+    },
+    {
+      "case_id": "pro:alfworld_alfagent_0288",
+      "condition": "without_skill",
+      "trial": 3
+    },
+    {
+      "case_id": "pro:alfworld_alfagent_0288",
+      "condition": "with_skill",
+      "trial": 3
+    },
+    {
+      "case_id": "ww:Hand-Crafted:33",
+      "condition": "without_skill",
+      "trial": 3
+    },
+    {
+      "case_id": "ww:Hand-Crafted:33",
+      "condition": "with_skill",
+      "trial": 3
+    },
+    {
+      "case_id": "pro:alfworld_alfagent_0251",
+      "condition": "with_skill",
+      "trial": 3
+    },
+    {
+      "case_id": "pro:alfworld_alfagent_0251",
+      "condition": "without_skill",
+      "trial": 3
+    },
+    {
+      "case_id": "ww:Algorithm-Generated:39",
+      "condition": "without_skill",
+      "trial": 3
+    },
+    {
+      "case_id": "ww:Algorithm-Generated:39",
+      "condition": "with_skill",
+      "trial": 3
+    }
+  ],
+  "model_requested": "gpt-6-astra",
+  "reasoning_effort": "high",
+  "concurrency": 3,
+  "skill_files_sha256": {
+    "SKILL.md": "eebcfc93239682deb63dcdfaa9c9cea292841930e363de1d63fb49f9c3fcb7a5",
+    "references/advanced-composition.md": "c0d29e4decd7e496ec14c24bb0596080f12d985ed9da7035aa0b1a08f1f3675e",
+    "references/boundary-contracts.md": "a52a3e7aebe0e3ae5a7b5aae730c9d9ff9d9a19af5474f11296ea3c60f4e441e",
+    "references/review-output.md": "c25d751adadc9a0c435c2a75e5afc0512bf0447f5dac082524cf739cbabdd588"
+  },
+  "skill_tree_sha256": "91f5954edc8fb5d43c191eebed884dbeb87a9cce41761f0eb9f19acab3c5ed7d",
+  "source_lock_sha256": "6ffc3ae852020caa8058895da3b84cc22bbedc9aa17e8db714aca81621ba859b",
+  "core_sha256": "38bdfdadcaf6bd496d1df3faf86059768cbaf14843d419315fff071ab8ccc64a",
+  "schema_sha256": "c06ab35f108f459f74e5d297733621e9e1886dd384871e9ceae14d3860b88d10",
+  "primary_metric": "exact_location_accuracy",
+  "limitations": [
+    "Public data may have been seen in pretraining; not a contamination-free holdout.",
+    "Frozen skill is not tuned on selected cases; within-case trials are clustered, not independent tasks.",
+    "Full skill and references are injected inline; skill discovery and interactive questioning are not evaluated.",
+    "Who&When uses strict equality, unlike the inspected upstream substring scorer.",
+    "Pro macnet location mapping is excluded pending verification; unsupported and overlength cases are reported.",
+    "Only failed traces; this run cannot estimate healthy-system false-positive rate.",
+    "Model alias is requested explicitly; backend snapshot identifier is not exposed by this runner."
+  ],
+  "analysis_plan_sha256": "f720537ebf41f7d383282df4b483d7eb199a611fa5a485cdee622b916ac4f343",
+  "runner_sha256": "ed858664e378ff33db22468c990ab8aec216a52c594239d692b3b98f51ac6f70",
+  "timeout_seconds": 240,
+  "cli_version": "codex-cli 0.158.0-alpha.2.1"
+}

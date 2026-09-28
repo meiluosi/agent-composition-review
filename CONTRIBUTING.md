@@ -22,10 +22,13 @@ PR 说明应包含：触发问题、变化后的行为、相关案例 ID、运�
 ```sh
 .venv/bin/python scripts/check_repo.py
 .venv/bin/python scripts/run_evals.py
+.venv/bin/python -m unittest evals.external.test_core evals.external.test_analysis -v
 .venv/bin/python scripts/build_skill.py
 ```
 
 仅改 README 等人类说明，结构检查通常足够。修改模型可见指令时，按 [评测协议](evals/PROTOCOL.md) 做受影响场景的前向试用；自动回归不替代它。发布能力提升结论时需给出有/无 Skill 或新旧版本的可比证据。
+
+外部模型实验的固定版本、抽样、重复和图表复现见 [实验说明](docs/external-evaluation.md)。模型运行使用登录额度，须单独安排；CI 只验证适配和评分逻辑，不自动重跑 144 次实验。
 
 ## 版本与发布
 

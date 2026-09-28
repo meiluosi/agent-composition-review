@@ -1,0 +1,25 @@
+{
+  "checked_at": "2026-09-28T17:40:34.863801+00:00",
+  "kind": "post_freeze_structural_audit_before_scoring",
+  "cases": 24,
+  "explicit_annotation_markers_in_inputs": 0,
+  "agent_identity_issues": [],
+  "identity_fields_checked": [
+    "name",
+    "agent",
+    "agent_id",
+    "role",
+    "agent_instructions keys"
+  ],
+  "formatted_role_cases": [
+    "ww:Hand-Crafted:33",
+    "ww:Hand-Crafted:2",
+    "ww:Hand-Crafted:54",
+    "ww:Hand-Crafted:5",
+    "ww:Hand-Crafted:4",
+    "ww:Hand-Crafted:6"
+  ],
+  "role_normalization": "Audit only: split role at first \" (\" to recognize Orchestrator (thought). Model inputs and strict scorer were not changed.",
+  "initial_audit_correction": "Initial audit omitted role and falsely flagged six Hand-Crafted cases. All six retain their agent identifiers in role.",
+  "used_to_change_selection": false
+}

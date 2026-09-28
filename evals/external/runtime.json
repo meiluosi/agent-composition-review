@@ -1,0 +1,25 @@
+{
+  "started_at": "2026-09-28T17:20:14.880846+00:00",
+  "cli_version": "codex-cli 0.158.0-alpha.2.1",
+  "manifest_sha256": "42f192402139dea852613701aad840ee2fce5a0a6c1ec20e15dc683d758e02d2",
+  "runner_sha256": "ed858664e378ff33db22468c990ab8aec216a52c594239d692b3b98f51ac6f70",
+  "timeout_seconds": 240,
+  "max_workers": 3,
+  "planned_runs": 144,
+  "disabled_features": [
+    "shell_tool",
+    "unified_exec",
+    "plugins",
+    "apps",
+    "multi_agent",
+    "browser_use",
+    "computer_use",
+    "image_generation",
+    "view_image",
+    "skill_search"
+  ],
+  "skip_host_skill_discovery": true,
+  "user_config_ignored": true,
+  "per_case_fresh_process": true,
+  "remaining_in_this_invocation": 142
+}

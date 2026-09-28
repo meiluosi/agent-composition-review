@@ -8,3 +8,6 @@ __pycache__/
 dist/
 evals/runs/latest-local.json
 evals/runs/private/
+evals/external/data/
+evals/external/private/
+evals/external/raw-runs/

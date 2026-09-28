@@ -2,7 +2,7 @@
 
 一个以组合思想为指导的 Agent 架构诊断 Skill。沿数据流检查类型、语义契约、状态与不变量，把异常转化为有证据的根因判断、最小修复和可执行验证。
 
-**当前状态：`0.1.0-dev`，可运行的发布草案。** 项目独立维护于 [meiluosi/agent-composition-review](https://github.com/meiluosi/agent-composition-review)，当前为私有仓库。已有公开问题复现和独立模型试用；尚无证据证明它比不加载 Skill 更准确。自动检查状态见 [GitHub Actions](https://github.com/meiluosi/agent-composition-review/actions)。项目许可证尚未选择，不宣称已经完成开源发布。
+**当前状态：`0.1.0-dev`，可运行的发布草案。** 项目独立维护于 [meiluosi/agent-composition-review](https://github.com/meiluosi/agent-composition-review)，当前为私有仓库。已有公开问题复现和独立模型试用；已完成首轮外部数据对照，实际结果与限制见下方评测区。自动检查状态见 [GitHub Actions](https://github.com/meiluosi/agent-composition-review/actions)。项目许可证尚未选择，不宣称已经完成开源发布。
 
 ## 它适合什么
 
@@ -53,7 +53,7 @@ python3 scripts/build_skill.py
 | DOC-INTERRUPT：恢复重复执行 | 官方文档行为的自建例子 | 重放范围和操作幂等性 | 真框架运行及本地效果计数 |
 | 六个文本场景 | 自建场景，由模型编写 | 单位、采样、反例、全局约束、缺证据、节点错误 | 旧版两组独立回答与匿名评审 |
 
-详见 [案例说明](docs/cases.md) 和 [机器可读清单](evals/cases.json)。所有已公开且参与设计的案例都属于开发集，目前没有保留测试集。测试使用真实 LangGraph 执行器，不调用付费模型或外部业务服务。
+详见 [案例说明](docs/cases.md) 和 [机器可读清单](evals/cases.json)。上述案例已参与设计，属于开发集；外部实验的独立抽样另见下文。框架测试使用真实 LangGraph 执行器，不调用模型或外部业务服务。
 
 ## 验证
 
@@ -71,9 +71,36 @@ python3.12 -m venv .venv
 
 模型能力评测的对照条件、指标、阻止发布的条件和记录要求见 [评测协议](evals/PROTOCOL.md)。以后提出“效果更好”的结论，需要附有该协议下的对照证据，而不是仅展示绿色 CI。
 
-规模更大的外部基准已完成初步核查，见 [专业数据集与接入计划](docs/benchmarks.md)：优先考虑 Who&When，后续扩展 Who&When Pro，并在取得访问权限后考虑 AgentRx。目前尚未运行这些基准，不将其规模计入项目成绩。
+外部数据已接入 Who&When 与 Who&When Pro text，并完成下方列出的首轮 144 次对照运行；AgentRx 等待访问授权。来源与覆盖限制见 [专业数据集与接入状态](docs/benchmarks.md)。数据集完整规模不等于本轮已评测样本数。
 
 本轮新增参考指令另做了 [独立前向试用](evals/runs/2026-09-29-forward/report.md)：执行者识别出违规的查询写入，给出并验证修复，也没有把明确允许的缓存写入误报为故障。这是两个简化组件的一次开发集检查，无对照组；判据登记晚于任务分发，不能视为完整协议下的效果评测。范围与证据见 [记录](evals/runs/2026-09-29-forward/result.json)。
+
+<!-- external-pilot:start -->
+## 外部基准首轮实验
+
+2026-09-29，**完成 144/144 次计划运行；有效完成 144 次**。请求模型为 **gpt-6-astra / high**，每个数据集 12 个任务、每组每例 3 次重复。实验前冻结输入、评分器、Skill 快照和分析方案；运行中未调优 Skill。
+
+首要指标为错误位置严格匹配的准确率。先对同一任务的重复取平均，区间按任务聚类进行 10,000 次配对 bootstrap；不是把 144 次运行当作 144 个独立样本。
+
+| 数据集 | 任务数 | 无 Skill | 有 Skill | 差值（百分点） | 差值的 95% 区间（百分点） |
+| --- | ---: | ---: | ---: | ---: | --- |
+| Who&When | 12 | 50.0% | 41.7% | -8.3 | [-22.2, +0.0] |
+| Who&When Pro | 12 | 52.8% | 52.8% | +0.0 | [+0.0, +0.0] |
+
+**本轮未观察到首要指标的提升。** Who&When 的差值区间包含 0；Who&When Pro 的差值区间包含 0。这是一项分层抽样的小样本试验，不是全量基准成绩，也不能据此证明生产系统、代码修复或整体架构质量的提升。 若差值区间为 [0, 0]，表示本次每个任务的两组平均得分恰好相同；小样本的经验 bootstrap 无法由此推断未来差异也为零。
+
+![有无 Skill 的归因准确率及任务聚类区间](docs/assets/external-pilot-accuracy.png)
+
+图中 n 为指标适用的任务数；无 Agent 标签时联合指标只检查位置。[查看配对差值图](docs/assets/external-pilot-difference.png)。
+
+下图按预先固定的任务顺序展示累计定位准确率。它反映样本增加时估计如何变化，**不是训练曲线**，没有按结果调整顺序。
+
+![固定任务顺序下的累计定位准确率](docs/assets/external-pilot-cumulative.png)
+
+范围：已下载 Who&When 184 条及 Pro text 6,257 条；这里只评测所列 24 个任务。Pro 的部分位置映射及 Who&When 的超长输入未进入抽样池，详见排除记录。AgentRx 尚受访问授权限制，未运行。所有外部样本都是失败轨迹，不能据此估计正常系统误报率。公开数据也可能已被模型预训练见过。
+
+结果与复现：[完整实验说明](docs/external-evaluation.md) · [冻结清单](evals/external/pilot-manifest.json) · [逐次预测与评分](evals/external/results/pilot-2026-09-29/predictions.json) · [汇总](evals/external/results/pilot-2026-09-29/summary.json) · [资源统计](evals/external/results/pilot-2026-09-29/report.md)。图表可以从公开评分表重画，无需再次调用模型。
+<!-- external-pilot:end -->
 
 ## 仓库结构
 
@@ -83,6 +110,7 @@ README.md / docs/                 人类使用和维护说明
 evals/cases/                      可执行的框架复现与回归
 evals/scenarios/                  模型试用输入与维护者判据
 evals/runs/                       已完成评测的证据与限制
+evals/external/                   外部数据适配、冻结清单与模型对照结果
 scripts/                         校验、测试、打包
 .github/                         CI、案例提交表与 PR 模板
 ```

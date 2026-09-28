@@ -24,13 +24,19 @@ jobs:
         with:
           python-version: "3.12"
           cache: pip
-          cache-dependency-path: requirements-eval.txt
+          cache-dependency-path: |
+            requirements-eval.txt
+            requirements-benchmark.txt
       - name: Install evaluation dependencies
-        run: python -m pip install -r requirements-eval.txt
+        run: python -m pip install -r requirements-eval.txt -r requirements-benchmark.txt
       - name: Check skill and repository
         run: python scripts/check_repo.py
       - name: Run framework regressions (not model capability evaluation)
         run: python scripts/run_evals.py --output evals/runs/latest-local.json
+      - name: Check attribution input isolation and strict scorer
+        run: python -m unittest evals.external.test_core evals.external.test_analysis -v
+      - name: Verify published scores and redraw benchmark figures (no model calls)
+        run: python scripts/plot_external_eval.py
       - name: Package runtime skill
         run: python scripts/build_skill.py
       - name: Save runtime package and evaluation record

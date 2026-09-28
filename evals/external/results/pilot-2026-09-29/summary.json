@@ -1,0 +1,272 @@
+{
+  "kind": "external_stratified_pilot",
+  "generated_at": "2026-09-28T17:49:06.225508+00:00",
+  "planned_runs": 144,
+  "recorded_runs": 144,
+  "status_counts": {
+    "completed": 144
+  },
+  "unique_tasks": 24,
+  "trials_per_task_condition": 3,
+  "primary_metric": "exact_location_accuracy",
+  "interval": "paired task-cluster percentile bootstrap, 10000 replicates, seed 20260929",
+  "model_requested": "gpt-6-astra",
+  "model_snapshot": null,
+  "reasoning_effort": "high",
+  "manifest_sha256": "42f192402139dea852613701aad840ee2fce5a0a6c1ec20e15dc683d758e02d2",
+  "predictions_sha256": "28b2cec41b65d0a16419d387c3cae9165bc93e202d525dec0b6c10c00da73d2c",
+  "summarizer_sha256": "1de856f41f83c470026e9c9ac0a5345efaa8e131c5d0a4d6925f2e63904e73d0",
+  "datasets": {
+    "Who&When": {
+      "unique_tasks": 12,
+      "metrics": {
+        "location": {
+          "without_skill": {
+            "mean": 0.49999999999999994,
+            "ci95": [
+              0.25,
+              0.75
+            ]
+          },
+          "with_skill": {
+            "mean": 0.4166666666666667,
+            "ci95": [
+              0.16666666666666666,
+              0.6666666666666666
+            ]
+          },
+          "paired_difference": {
+            "mean": -0.08333333333333326,
+            "ci95": [
+              -0.2222222222222221,
+              0.0
+            ]
+          },
+          "independent_tasks": 12
+        },
+        "agent": {
+          "without_skill": {
+            "mean": 0.6666666666666666,
+            "ci95": [
+              0.4166666666666667,
+              0.888888888888889
+            ]
+          },
+          "with_skill": {
+            "mean": 0.5833333333333334,
+            "ci95": [
+              0.3333333333333333,
+              0.8333333333333334
+            ]
+          },
+          "paired_difference": {
+            "mean": -0.08333333333333326,
+            "ci95": [
+              -0.2222222222222221,
+              0.0
+            ]
+          },
+          "independent_tasks": 12
+        },
+        "joint": {
+          "without_skill": {
+            "mean": 0.4166666666666666,
+            "ci95": [
+              0.16666666666666666,
+              0.6666666666666666
+            ]
+          },
+          "with_skill": {
+            "mean": 0.3333333333333333,
+            "ci95": [
+              0.08333333333333333,
+              0.5833333333333334
+            ]
+          },
+          "paired_difference": {
+            "mean": -0.08333333333333326,
+            "ci95": [
+              -0.22222222222222215,
+              0.0
+            ]
+          },
+          "independent_tasks": 12
+        }
+      },
+      "resources": {
+        "without_skill": {
+          "runs": 36,
+          "status_counts": {
+            "completed": 36
+          },
+          "median_elapsed_seconds": 34.4415728955064,
+          "usage_totals": {
+            "input_tokens": 566480,
+            "cached_input_tokens": 105728,
+            "output_tokens": 9777,
+            "reasoning_output_tokens": 5314
+          },
+          "usage_missing_runs": 0,
+          "cost": null
+        },
+        "with_skill": {
+          "runs": 36,
+          "status_counts": {
+            "completed": 36
+          },
+          "median_elapsed_seconds": 35.582087708462495,
+          "usage_totals": {
+            "input_tokens": 798822,
+            "cached_input_tokens": 113280,
+            "output_tokens": 10657,
+            "reasoning_output_tokens": 5742
+          },
+          "usage_missing_runs": 0,
+          "cost": null
+        }
+      }
+    },
+    "Who&When Pro": {
+      "unique_tasks": 12,
+      "metrics": {
+        "location": {
+          "without_skill": {
+            "mean": 0.5277777777777778,
+            "ci95": [
+              0.25,
+              0.7777777777777778
+            ]
+          },
+          "with_skill": {
+            "mean": 0.5277777777777778,
+            "ci95": [
+              0.25,
+              0.7777777777777778
+            ]
+          },
+          "paired_difference": {
+            "mean": 0.0,
+            "ci95": [
+              0.0,
+              0.0
+            ]
+          },
+          "independent_tasks": 12
+        },
+        "agent": {
+          "without_skill": {
+            "mean": 0.5555555555555556,
+            "ci95": [
+              0.2222222222222222,
+              0.8888888888888888
+            ]
+          },
+          "with_skill": {
+            "mean": 0.5555555555555556,
+            "ci95": [
+              0.2222222222222222,
+              0.8888888888888888
+            ]
+          },
+          "paired_difference": {
+            "mean": 0.0,
+            "ci95": [
+              0.0,
+              0.0
+            ]
+          },
+          "independent_tasks": 9
+        },
+        "joint": {
+          "without_skill": {
+            "mean": 0.4444444444444444,
+            "ci95": [
+              0.19444444444444442,
+              0.7222222222222222
+            ]
+          },
+          "with_skill": {
+            "mean": 0.4444444444444444,
+            "ci95": [
+              0.19444444444444442,
+              0.7222222222222222
+            ]
+          },
+          "paired_difference": {
+            "mean": 0.0,
+            "ci95": [
+              0.0,
+              0.0
+            ]
+          },
+          "independent_tasks": 12
+        },
+        "error_mode": {
+          "without_skill": {
+            "mean": 0.3611111111111111,
+            "ci95": [
+              0.1111111111111111,
+              0.6388888888888888
+            ]
+          },
+          "with_skill": {
+            "mean": 0.3611111111111111,
+            "ci95": [
+              0.1111111111111111,
+              0.6388888888888888
+            ]
+          },
+          "paired_difference": {
+            "mean": 0.0,
+            "ci95": [
+              0.0,
+              0.0
+            ]
+          },
+          "independent_tasks": 12
+        }
+      },
+      "resources": {
+        "without_skill": {
+          "runs": 36,
+          "status_counts": {
+            "completed": 36
+          },
+          "median_elapsed_seconds": 32.59594597900286,
+          "usage_totals": {
+            "input_tokens": 595782,
+            "cached_input_tokens": 143488,
+            "output_tokens": 9161,
+            "reasoning_output_tokens": 4470
+          },
+          "usage_missing_runs": 0,
+          "cost": null
+        },
+        "with_skill": {
+          "runs": 36,
+          "status_counts": {
+            "completed": 36
+          },
+          "median_elapsed_seconds": 36.73885493801208,
+          "usage_totals": {
+            "input_tokens": 828106,
+            "cached_input_tokens": 135936,
+            "output_tokens": 12563,
+            "reasoning_output_tokens": 7621
+          },
+          "usage_missing_runs": 0,
+          "cost": null
+        }
+      }
+    }
+  },
+  "limitations": [
+    "Public data may have been seen in pretraining; not a contamination-free holdout.",
+    "Frozen skill is not tuned on selected cases; within-case trials are clustered, not independent tasks.",
+    "Full skill and references are injected inline; skill discovery and interactive questioning are not evaluated.",
+    "Who&When uses strict equality, unlike the inspected upstream substring scorer.",
+    "Pro macnet location mapping is excluded pending verification; unsupported and overlength cases are reported.",
+    "Only failed traces; this run cannot estimate healthy-system false-positive rate.",
+    "Model alias is requested explicitly; backend snapshot identifier is not exposed by this runner."
+  ]
+}

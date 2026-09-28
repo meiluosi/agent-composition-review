@@ -1,0 +1,632 @@
+{
+  "kind": "development_ablation_not_holdout",
+  "frozen_at": "2026-09-28T18:17:29.997364+00:00",
+  "seed": 20260930,
+  "trials": 3,
+  "concurrency": 3,
+  "timeout_seconds": 240,
+  "conditions": [
+    "A_no_skill",
+    "B_v1_full",
+    "C_v1_core",
+    "D_v2_core"
+  ],
+  "cases": [
+    {
+      "case_id": "ww:Algorithm-Generated:50",
+      "dataset": "Who&When",
+      "stratum": "Algorithm-Generated",
+      "group": "ww:076c8171-9b3b-49b9-a477-244d2a532826",
+      "input_sha256": "b83327ba9c516dddb63f5ded5fb82839013e2d89bf95b68b5ab08afa0d1a6c55",
+      "oracle_sha256": "cc3c4c268150655b948f39fe15baff900bdc34da1f05fdfee97dac37d52fd66a",
+      "prompt_sha256": {
+        "A_no_skill": "6b0af67077e0c5eced1d8227077e2541e1817dd5a2d0d1e7be285278c8b7869d",
+        "B_v1_full": "8decf5f32c63e097cf80c3d541a06a6824827a4240795e9c0c85cbb91f72682e",
+        "C_v1_core": "f9ef8e8ae748bfa20f3fa6b4ef8bb1f92cd601250905842225d30784841d6997",
+        "D_v2_core": "6672f5c763538136c6ea7b15811a6af1b7407a472dd540df90fcef575f39cf22"
+      }
+    },
+    {
+      "case_id": "ww:Algorithm-Generated:88",
+      "dataset": "Who&When",
+      "stratum": "Algorithm-Generated",
+      "group": "ww:08cae58d-4084-4616-b6dd-dd6534e4825b",
+      "input_sha256": "e8c085cc7f946f8d0aac37e7490791fadf55cc62928cca6fdda1d993d6fa5a9c",
+      "oracle_sha256": "e3b93f6816bc97a1e73f3c6aeb17c8d1d00125470f50290b274e38e5c0bca68c",
+      "prompt_sha256": {
+        "A_no_skill": "dbebf4b673692b9909ab9169e201e65edf5fd30cf86f99dec1687def49fff0e3",
+        "B_v1_full": "a5d4b6ac7c8b084440e7fa7712cd05f5f9282e5f783149b058de06b1d28116eb",
+        "C_v1_core": "0c729463570b4cc07485e90f1d81ea53a26f3da110535697a5fe20bb064b7067",
+        "D_v2_core": "c1bca95d23071ca250ed72d4a6b5c67f4e8d179f773241f26a9ab63fc1336871"
+      }
+    },
+    {
+      "case_id": "ww:Algorithm-Generated:68",
+      "dataset": "Who&When",
+      "stratum": "Algorithm-Generated",
+      "group": "ww:c365c1c7-a3db-4d5e-a9a1-66f56eae7865",
+      "input_sha256": "83c2c0878dba6c75d454a139e2c1d7aca807887028e692c937a27d05b74549b2",
+      "oracle_sha256": "33df79ceb61eb81f07f89d814d82984a46bc88b30763047be05a1367f2111ef8",
+      "prompt_sha256": {
+        "A_no_skill": "c168d7a0217d7b35d11c8604768e4efd0d3e6784d3c7551c8a5b9c1fbd9f68ca",
+        "B_v1_full": "02869ce147682ff55c75cea898430f39bbf1b5651106b737374232cdd1e66488",
+        "C_v1_core": "47ad05450dd1ad9a4a08c52ca0ee7a0f05ad06c8ebe3eec6e50b80cc7736931a",
+        "D_v2_core": "040532db9c06a152e4a60ca596b31fd5730b13089915160f1ab58d35065dd65d"
+      }
+    },
+    {
+      "case_id": "ww:Hand-Crafted:6",
+      "dataset": "Who&When",
+      "stratum": "Hand-Crafted",
+      "group": "ww:e6bc98089608217e45b6956a46518fe3cce64a799b3ac43c6974c449ae14c408",
+      "input_sha256": "c40214aca82b7c17b4c15ced09bbd44bde144c0994b73f5824143de2a60678ad",
+      "oracle_sha256": "ccab1fe32ffcddbc7faff9bfef6df07b0022fb511d2c6936309a7893608a1678",
+      "prompt_sha256": {
+        "A_no_skill": "d2de6f1c48172aa9e52cb60177366fc1a6edfe3868e4533e11967e2bf97cf721",
+        "B_v1_full": "62e1c2f89fd38d798d2d7a98103d499f7634f27f6f2e36a7ab02b289cdb38430",
+        "C_v1_core": "a7939d970d111d62c581e649ed0aa2f38788f67a02cfdae6eb060145310a0d2b",
+        "D_v2_core": "9811c5b15306776f1016903153583420df44784644ef0fc9ceabf7bfe130a701"
+      }
+    },
+    {
+      "case_id": "ww:Hand-Crafted:33",
+      "dataset": "Who&When",
+      "stratum": "Hand-Crafted",
+      "group": "ww:72e110e7-464c-453c-a309-90a95aed6538",
+      "input_sha256": "6ef4ae10884b62dcf74866cee25a954046cb030052d866aa2abb8b3ac510a3ac",
+      "oracle_sha256": "095491e9d98bbac07f95fc453f7c2f826a3ebffdb0ad014f148a530cd2a07632",
+      "prompt_sha256": {
+        "A_no_skill": "9f791e0f063fef5fa0efab3c0df3399ee907b3b71e5af0524b6506cfc948d616",
+        "B_v1_full": "f67a632ac38151c50a8c1096c59553c8c86dde11f0b6645a79e7d6969a0cd87c",
+        "C_v1_core": "d3eb3445befa8831af686425c1384a566a6d8c730eaaaf9d4d32dda9bc92eaca",
+        "D_v2_core": "a94459072292c307c8705439bf99bc458eac4975c339288f00c695dae53712ec"
+      }
+    },
+    {
+      "case_id": "pro:alfworld_alfagent_0288",
+      "dataset": "Who&When Pro",
+      "stratum": "alfagent",
+      "group": "pro:5d1eaceb1f2725d18d8286f136749fcdd98a62ccdc533060908793b6a748c7b6",
+      "input_sha256": "515589b39b8f9072d869638bddc0fac9d7bd1252f504652552293ec3c584b407",
+      "oracle_sha256": "8ab4e1252966d27a1af168832c435bce62d9f7f17a7145114ab558da1cee9c65",
+      "prompt_sha256": {
+        "A_no_skill": "a8882ebfbcc703fe7d4625ddbcd361c9aa40e31aca3853e4b208069b5d050f64",
+        "B_v1_full": "91dcd6f87064cd23028fd9792248204d819dced6bc0d2851844345c5d5fe4294",
+        "C_v1_core": "816d9b0af0afb9d9062fcbc5894cc7ce60500fe3d6ff6782d2de3fd65fd70a85",
+        "D_v2_core": "90d3953566afad74961b7345b8b7a893d933c8c1d598027e8a426785b99b4710"
+      }
+    },
+    {
+      "case_id": "pro:math_debate_0084",
+      "dataset": "Who&When Pro",
+      "stratum": "debate",
+      "group": "pro:1d64a16c06678d2b0e909cb6353b13e3f88f257a1eb78a2a9d6f49c0058cac1b",
+      "input_sha256": "61c37008257a1969472e3aaff80f403cbdb21eaa7888cf518132ed20392ac1e8",
+      "oracle_sha256": "ae632ffd2a013f81a8c63a5fcc7ae99d472312de043304bef615e6dab53bd2cb",
+      "prompt_sha256": {
+        "A_no_skill": "ede7f82ede4f99b60d6a94c388db31503f41e9500f02f2ba62d3f57c03b28f58",
+        "B_v1_full": "8bc8ce3cc9bb6c2deeb0c78b2df167bb1c890bbffb1db426cac6a586b9cbea87",
+        "C_v1_core": "4f2f3c998b50e3bee5faca58fa803702fd7a95260a4dea24997184be20fbe0ec",
+        "D_v2_core": "e06aa19e704977e64bd53d8608287de215b55992f8a16217a9c239ea751a28b5"
+      }
+    },
+    {
+      "case_id": "pro:dacode_smolagents_0096",
+      "dataset": "Who&When Pro",
+      "stratum": "smolagents",
+      "group": "pro:866d038119631b554928acb3558d68461430381a044e85eb8be237e4fb83fe6c",
+      "input_sha256": "addb1d46cd25ffb05cd37a399ababd7cf5845e4833a075fc50a6233c3dce3952",
+      "oracle_sha256": "f86aa09db25fe3cf2f9ff98b775b77c0a54857de8086d86528daa9530a12cbdb",
+      "prompt_sha256": {
+        "A_no_skill": "8a58d8b69ac67f19cd95463463242750d1cb8d26f933ff537d9aa236115abb59",
+        "B_v1_full": "9f328e205d24db698bce894fd686871fbea57194c003d7b2cb45b261e43d5363",
+        "C_v1_core": "c0913e5e20eaf056f48502337366fbe76c1b255af01d9c895fea286d187587c7",
+        "D_v2_core": "f5c25ff50852f5d34fa2d13094024f2172ce75caa213afde2f9c53bbf4c48547"
+      }
+    }
+  ],
+  "schedule": [
+    {
+      "case_id": "ww:Algorithm-Generated:50",
+      "condition": "C_v1_core",
+      "trial": 1
+    },
+    {
+      "case_id": "ww:Algorithm-Generated:50",
+      "condition": "B_v1_full",
+      "trial": 1
+    },
+    {
+      "case_id": "ww:Algorithm-Generated:50",
+      "condition": "D_v2_core",
+      "trial": 1
+    },
+    {
+      "case_id": "ww:Algorithm-Generated:50",
+      "condition": "A_no_skill",
+      "trial": 1
+    },
+    {
+      "case_id": "ww:Hand-Crafted:33",
+      "condition": "A_no_skill",
+      "trial": 1
+    },
+    {
+      "case_id": "ww:Hand-Crafted:33",
+      "condition": "B_v1_full",
+      "trial": 1
+    },
+    {
+      "case_id": "ww:Hand-Crafted:33",
+      "condition": "C_v1_core",
+      "trial": 1
+    },
+    {
+      "case_id": "ww:Hand-Crafted:33",
+      "condition": "D_v2_core",
+      "trial": 1
+    },
+    {
+      "case_id": "pro:math_debate_0084",
+      "condition": "C_v1_core",
+      "trial": 1
+    },
+    {
+      "case_id": "pro:math_debate_0084",
+      "condition": "B_v1_full",
+      "trial": 1
+    },
+    {
+      "case_id": "pro:math_debate_0084",
+      "condition": "D_v2_core",
+      "trial": 1
+    },
+    {
+      "case_id": "pro:math_debate_0084",
+      "condition": "A_no_skill",
+      "trial": 1
+    },
+    {
+      "case_id": "ww:Algorithm-Generated:68",
+      "condition": "C_v1_core",
+      "trial": 1
+    },
+    {
+      "case_id": "ww:Algorithm-Generated:68",
+      "condition": "B_v1_full",
+      "trial": 1
+    },
+    {
+      "case_id": "ww:Algorithm-Generated:68",
+      "condition": "D_v2_core",
+      "trial": 1
+    },
+    {
+      "case_id": "ww:Algorithm-Generated:68",
+      "condition": "A_no_skill",
+      "trial": 1
+    },
+    {
+      "case_id": "ww:Algorithm-Generated:88",
+      "condition": "D_v2_core",
+      "trial": 1
+    },
+    {
+      "case_id": "ww:Algorithm-Generated:88",
+      "condition": "C_v1_core",
+      "trial": 1
+    },
+    {
+      "case_id": "ww:Algorithm-Generated:88",
+      "condition": "B_v1_full",
+      "trial": 1
+    },
+    {
+      "case_id": "ww:Algorithm-Generated:88",
+      "condition": "A_no_skill",
+      "trial": 1
+    },
+    {
+      "case_id": "pro:alfworld_alfagent_0288",
+      "condition": "C_v1_core",
+      "trial": 1
+    },
+    {
+      "case_id": "pro:alfworld_alfagent_0288",
+      "condition": "D_v2_core",
+      "trial": 1
+    },
+    {
+      "case_id": "pro:alfworld_alfagent_0288",
+      "condition": "B_v1_full",
+      "trial": 1
+    },
+    {
+      "case_id": "pro:alfworld_alfagent_0288",
+      "condition": "A_no_skill",
+      "trial": 1
+    },
+    {
+      "case_id": "ww:Hand-Crafted:6",
+      "condition": "C_v1_core",
+      "trial": 1
+    },
+    {
+      "case_id": "ww:Hand-Crafted:6",
+      "condition": "D_v2_core",
+      "trial": 1
+    },
+    {
+      "case_id": "ww:Hand-Crafted:6",
+      "condition": "A_no_skill",
+      "trial": 1
+    },
+    {
+      "case_id": "ww:Hand-Crafted:6",
+      "condition": "B_v1_full",
+      "trial": 1
+    },
+    {
+      "case_id": "pro:dacode_smolagents_0096",
+      "condition": "B_v1_full",
+      "trial": 1
+    },
+    {
+      "case_id": "pro:dacode_smolagents_0096",
+      "condition": "A_no_skill",
+      "trial": 1
+    },
+    {
+      "case_id": "pro:dacode_smolagents_0096",
+      "condition": "C_v1_core",
+      "trial": 1
+    },
+    {
+      "case_id": "pro:dacode_smolagents_0096",
+      "condition": "D_v2_core",
+      "trial": 1
+    },
+    {
+      "case_id": "ww:Algorithm-Generated:50",
+      "condition": "A_no_skill",
+      "trial": 2
+    },
+    {
+      "case_id": "ww:Algorithm-Generated:50",
+      "condition": "B_v1_full",
+      "trial": 2
+    },
+    {
+      "case_id": "ww:Algorithm-Generated:50",
+      "condition": "C_v1_core",
+      "trial": 2
+    },
+    {
+      "case_id": "ww:Algorithm-Generated:50",
+      "condition": "D_v2_core",
+      "trial": 2
+    },
+    {
+      "case_id": "ww:Algorithm-Generated:68",
+      "condition": "D_v2_core",
+      "trial": 2
+    },
+    {
+      "case_id": "ww:Algorithm-Generated:68",
+      "condition": "A_no_skill",
+      "trial": 2
+    },
+    {
+      "case_id": "ww:Algorithm-Generated:68",
+      "condition": "C_v1_core",
+      "trial": 2
+    },
+    {
+      "case_id": "ww:Algorithm-Generated:68",
+      "condition": "B_v1_full",
+      "trial": 2
+    },
+    {
+      "case_id": "pro:dacode_smolagents_0096",
+      "condition": "C_v1_core",
+      "trial": 2
+    },
+    {
+      "case_id": "pro:dacode_smolagents_0096",
+      "condition": "D_v2_core",
+      "trial": 2
+    },
+    {
+      "case_id": "pro:dacode_smolagents_0096",
+      "condition": "B_v1_full",
+      "trial": 2
+    },
+    {
+      "case_id": "pro:dacode_smolagents_0096",
+      "condition": "A_no_skill",
+      "trial": 2
+    },
+    {
+      "case_id": "ww:Algorithm-Generated:88",
+      "condition": "A_no_skill",
+      "trial": 2
+    },
+    {
+      "case_id": "ww:Algorithm-Generated:88",
+      "condition": "B_v1_full",
+      "trial": 2
+    },
+    {
+      "case_id": "ww:Algorithm-Generated:88",
+      "condition": "C_v1_core",
+      "trial": 2
+    },
+    {
+      "case_id": "ww:Algorithm-Generated:88",
+      "condition": "D_v2_core",
+      "trial": 2
+    },
+    {
+      "case_id": "pro:math_debate_0084",
+      "condition": "B_v1_full",
+      "trial": 2
+    },
+    {
+      "case_id": "pro:math_debate_0084",
+      "condition": "A_no_skill",
+      "trial": 2
+    },
+    {
+      "case_id": "pro:math_debate_0084",
+      "condition": "D_v2_core",
+      "trial": 2
+    },
+    {
+      "case_id": "pro:math_debate_0084",
+      "condition": "C_v1_core",
+      "trial": 2
+    },
+    {
+      "case_id": "ww:Hand-Crafted:33",
+      "condition": "B_v1_full",
+      "trial": 2
+    },
+    {
+      "case_id": "ww:Hand-Crafted:33",
+      "condition": "A_no_skill",
+      "trial": 2
+    },
+    {
+      "case_id": "ww:Hand-Crafted:33",
+      "condition": "D_v2_core",
+      "trial": 2
+    },
+    {
+      "case_id": "ww:Hand-Crafted:33",
+      "condition": "C_v1_core",
+      "trial": 2
+    },
+    {
+      "case_id": "pro:alfworld_alfagent_0288",
+      "condition": "A_no_skill",
+      "trial": 2
+    },
+    {
+      "case_id": "pro:alfworld_alfagent_0288",
+      "condition": "B_v1_full",
+      "trial": 2
+    },
+    {
+      "case_id": "pro:alfworld_alfagent_0288",
+      "condition": "D_v2_core",
+      "trial": 2
+    },
+    {
+      "case_id": "pro:alfworld_alfagent_0288",
+      "condition": "C_v1_core",
+      "trial": 2
+    },
+    {
+      "case_id": "ww:Hand-Crafted:6",
+      "condition": "B_v1_full",
+      "trial": 2
+    },
+    {
+      "case_id": "ww:Hand-Crafted:6",
+      "condition": "D_v2_core",
+      "trial": 2
+    },
+    {
+      "case_id": "ww:Hand-Crafted:6",
+      "condition": "A_no_skill",
+      "trial": 2
+    },
+    {
+      "case_id": "ww:Hand-Crafted:6",
+      "condition": "C_v1_core",
+      "trial": 2
+    },
+    {
+      "case_id": "ww:Algorithm-Generated:50",
+      "condition": "D_v2_core",
+      "trial": 3
+    },
+    {
+      "case_id": "ww:Algorithm-Generated:50",
+      "condition": "A_no_skill",
+      "trial": 3
+    },
+    {
+      "case_id": "ww:Algorithm-Generated:50",
+      "condition": "B_v1_full",
+      "trial": 3
+    },
+    {
+      "case_id": "ww:Algorithm-Generated:50",
+      "condition": "C_v1_core",
+      "trial": 3
+    },
+    {
+      "case_id": "pro:alfworld_alfagent_0288",
+      "condition": "D_v2_core",
+      "trial": 3
+    },
+    {
+      "case_id": "pro:alfworld_alfagent_0288",
+      "condition": "A_no_skill",
+      "trial": 3
+    },
+    {
+      "case_id": "pro:alfworld_alfagent_0288",
+      "condition": "B_v1_full",
+      "trial": 3
+    },
+    {
+      "case_id": "pro:alfworld_alfagent_0288",
+      "condition": "C_v1_core",
+      "trial": 3
+    },
+    {
+      "case_id": "ww:Algorithm-Generated:88",
+      "condition": "C_v1_core",
+      "trial": 3
+    },
+    {
+      "case_id": "ww:Algorithm-Generated:88",
+      "condition": "D_v2_core",
+      "trial": 3
+    },
+    {
+      "case_id": "ww:Algorithm-Generated:88",
+      "condition": "B_v1_full",
+      "trial": 3
+    },
+    {
+      "case_id": "ww:Algorithm-Generated:88",
+      "condition": "A_no_skill",
+      "trial": 3
+    },
+    {
+      "case_id": "ww:Hand-Crafted:6",
+      "condition": "A_no_skill",
+      "trial": 3
+    },
+    {
+      "case_id": "ww:Hand-Crafted:6",
+      "condition": "D_v2_core",
+      "trial": 3
+    },
+    {
+      "case_id": "ww:Hand-Crafted:6",
+      "condition": "B_v1_full",
+      "trial": 3
+    },
+    {
+      "case_id": "ww:Hand-Crafted:6",
+      "condition": "C_v1_core",
+      "trial": 3
+    },
+    {
+      "case_id": "pro:math_debate_0084",
+      "condition": "C_v1_core",
+      "trial": 3
+    },
+    {
+      "case_id": "pro:math_debate_0084",
+      "condition": "B_v1_full",
+      "trial": 3
+    },
+    {
+      "case_id": "pro:math_debate_0084",
+      "condition": "D_v2_core",
+      "trial": 3
+    },
+    {
+      "case_id": "pro:math_debate_0084",
+      "condition": "A_no_skill",
+      "trial": 3
+    },
+    {
+      "case_id": "ww:Hand-Crafted:33",
+      "condition": "D_v2_core",
+      "trial": 3
+    },
+    {
+      "case_id": "ww:Hand-Crafted:33",
+      "condition": "B_v1_full",
+      "trial": 3
+    },
+    {
+      "case_id": "ww:Hand-Crafted:33",
+      "condition": "C_v1_core",
+      "trial": 3
+    },
+    {
+      "case_id": "ww:Hand-Crafted:33",
+      "condition": "A_no_skill",
+      "trial": 3
+    },
+    {
+      "case_id": "pro:dacode_smolagents_0096",
+      "condition": "B_v1_full",
+      "trial": 3
+    },
+    {
+      "case_id": "pro:dacode_smolagents_0096",
+      "condition": "D_v2_core",
+      "trial": 3
+    },
+    {
+      "case_id": "pro:dacode_smolagents_0096",
+      "condition": "A_no_skill",
+      "trial": 3
+    },
+    {
+      "case_id": "pro:dacode_smolagents_0096",
+      "condition": "C_v1_core",
+      "trial": 3
+    },
+    {
+      "case_id": "ww:Algorithm-Generated:68",
+      "condition": "D_v2_core",
+      "trial": 3
+    },
+    {
+      "case_id": "ww:Algorithm-Generated:68",
+      "condition": "A_no_skill",
+      "trial": 3
+    },
+    {
+      "case_id": "ww:Algorithm-Generated:68",
+      "condition": "C_v1_core",
+      "trial": 3
+    },
+    {
+      "case_id": "ww:Algorithm-Generated:68",
+      "condition": "B_v1_full",
+      "trial": 3
+    }
+  ],
+  "model_requested": "gpt-6-astra",
+  "reasoning_effort": "high",
+  "cli_version": "codex-cli 0.158.0-alpha.2.1",
+  "source_pilot_sha256": "42f192402139dea852613701aad840ee2fce5a0a6c1ec20e15dc683d758e02d2",
+  "core_sha256": "38bdfdadcaf6bd496d1df3faf86059768cbaf14843d419315fff071ab8ccc64a",
+  "runner_sha256": "0b4c5a41cb431bb816240d3aaa578745b66078947c8d1321db3e738c20c3bafe",
+  "analysis_plan_sha256": "707c86ea209e1ce2a873babc17d22d376d36d053709395bfb5c72a7c5b159c3b",
+  "schema_sha256": "c06ab35f108f459f74e5d297733621e9e1886dd384871e9ceae14d3860b88d10",
+  "taxonomy_sha256": "e7a446c1400afe1c11c42e270a986a0492ff97872de63026c895d6a8ac51163e",
+  "snapshot_sha256": {
+    "B_v1_full": "7b093264fb87acf1e48e0d396ce03646c5a0fe983ed5ca65996f0a0d98a5949a",
+    "C_v1_core": "834a091503388487e260f8c74dbc6aaf53c2e06d0e959278b7631f1a5bd980d8",
+    "D_v2_core": "f200adb873b28fe5c8f463b78d9d3fc7997a38f3930974977ad9ddb12dfe43db"
+  },
+  "candidate_source_sha256": "edac769ad3a62991ab5fdb619691a991b5235902d632a637cbc995ceb9e353a0",
+  "limitations": [
+    "Eight purposively selected development tasks, already used to design v2.",
+    "Core-only conditions cannot read referenced files; not native skill routing.",
+    "Trial numbers do not fix model randomness; backend snapshot is unavailable.",
+    "Exact label matching does not settle disputed causal interpretations.",
+    "No instruction changes or selective retries during this experiment."
+  ]
+}

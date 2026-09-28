@@ -11,3 +11,4 @@ evals/runs/private/
 evals/external/data/
 evals/external/private/
 evals/external/raw-runs/
+evals/iterations/*/raw-runs/

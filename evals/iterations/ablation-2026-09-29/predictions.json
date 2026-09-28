@@ -1,0 +1,3902 @@
+[
+  {
+    "case_id": "ww:Algorithm-Generated:50",
+    "condition": "C_v1_core",
+    "trial": 1,
+    "dataset": "Who&When",
+    "prediction": {
+      "agents": [
+        "DataAnalysis_Expert"
+      ],
+      "location": "history:3",
+      "error_mode": null,
+      "confidence": 0.48
+    },
+    "reason_sha256": "949fda02fe6086108ab3b9944003849cbfafa22d747444e81a7de155f4f2aa10",
+    "scores": {
+      "valid": true,
+      "location": true,
+      "agent": true,
+      "joint": true,
+      "error_mode": null
+    },
+    "status": "completed",
+    "started_at": "2026-09-28T18:17:56.089198+00:00",
+    "elapsed_seconds": 37.19020762498258,
+    "usage": {
+      "input_tokens": 14760,
+      "cached_input_tokens": 0,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 426,
+      "reasoning_output_tokens": 303
+    },
+    "model_requested": "gpt-6-astra",
+    "model_snapshot": null,
+    "reasoning_effort": "high",
+    "cli_version": "codex-cli 0.158.0-alpha.2.1",
+    "prompt_sha256": "f9ef8e8ae748bfa20f3fa6b4ef8bb1f92cd601250905842225d30784841d6997",
+    "event_sha256": "6e6d27de2b9e704d4ceafafc73f9f24286aa0ccf496659ecbed3e521c0c435e1",
+    "stderr_sha256": "1a9ce3c6c637c1649bfb8313580a704ad72949f334167e5acffb7a1f2e3a33ec",
+    "tool_item_count": 0,
+    "private_record_sha256": "cafc07f0110b5ded88a45c6a42b89247cd9378854532e4e94814721534bd36a2"
+  },
+  {
+    "case_id": "ww:Algorithm-Generated:50",
+    "condition": "B_v1_full",
+    "trial": 1,
+    "dataset": "Who&When",
+    "prediction": {
+      "agents": [
+        "Financial_Expert"
+      ],
+      "location": "history:9",
+      "error_mode": null,
+      "confidence": 0.62
+    },
+    "reason_sha256": "0affae7d84abc5e71bc050cd027ca952f65fa41c2e4cf91db25f7ea5592aec70",
+    "scores": {
+      "valid": true,
+      "location": false,
+      "agent": false,
+      "joint": false,
+      "error_mode": null
+    },
+    "status": "completed",
+    "started_at": "2026-09-28T18:17:56.090708+00:00",
+    "elapsed_seconds": 37.2381235830253,
+    "usage": {
+      "input_tokens": 19510,
+      "cached_input_tokens": 7552,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 428,
+      "reasoning_output_tokens": 269
+    },
+    "model_requested": "gpt-6-astra",
+    "model_snapshot": null,
+    "reasoning_effort": "high",
+    "cli_version": "codex-cli 0.158.0-alpha.2.1",
+    "prompt_sha256": "8decf5f32c63e097cf80c3d541a06a6824827a4240795e9c0c85cbb91f72682e",
+    "event_sha256": "22a3e318783b506ed3c2eae9d6dbe9d48576b2432e9dac8e2e5296347294e1db",
+    "stderr_sha256": "16145839f40cc149a5718df9c4c19d21012cf1abf2573ca2b2f7bd4b64dce246",
+    "tool_item_count": 0,
+    "private_record_sha256": "fe4b828508b5aa4b35c07498cb96c53a115a47defb57732ba56e64e72b4aec8a"
+  },
+  {
+    "case_id": "ww:Algorithm-Generated:50",
+    "condition": "D_v2_core",
+    "trial": 1,
+    "dataset": "Who&When",
+    "prediction": {
+      "agents": [
+        "DataAnalysis_Expert"
+      ],
+      "location": "history:3",
+      "error_mode": null,
+      "confidence": 0.58
+    },
+    "reason_sha256": "dfe5a2e7fa14bedb5603c3896207ed72eec27d2ca4c7621be6ff8a2c3aff1d18",
+    "scores": {
+      "valid": true,
+      "location": true,
+      "agent": true,
+      "joint": true,
+      "error_mode": null
+    },
+    "status": "completed",
+    "started_at": "2026-09-28T18:17:56.090651+00:00",
+    "elapsed_seconds": 31.353152708965354,
+    "usage": {
+      "input_tokens": 14087,
+      "cached_input_tokens": 0,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 348,
+      "reasoning_output_tokens": 224
+    },
+    "model_requested": "gpt-6-astra",
+    "model_snapshot": null,
+    "reasoning_effort": "high",
+    "cli_version": "codex-cli 0.158.0-alpha.2.1",
+    "prompt_sha256": "6672f5c763538136c6ea7b15811a6af1b7407a472dd540df90fcef575f39cf22",
+    "event_sha256": "f022a90427521c8e711066e810ec8490a267c0169aafdb9e68b6b4d8b10057b8",
+    "stderr_sha256": "14aa0fa8885c84b36e270389d14547fc7fcb3208d44e424cb777c3506aafd479",
+    "tool_item_count": 0,
+    "private_record_sha256": "889bb0c75a2469e45c7b5e7f0d2b747f958e3de66a3c6145c7764b55ac67c869"
+  },
+  {
+    "case_id": "ww:Algorithm-Generated:50",
+    "condition": "A_no_skill",
+    "trial": 1,
+    "dataset": "Who&When",
+    "prediction": {
+      "agents": [
+        "DataAnalysis_Expert"
+      ],
+      "location": "history:3",
+      "error_mode": null,
+      "confidence": 0.58
+    },
+    "reason_sha256": "94a307c0d4fc41a39c6128026fea464e47a39b50b224f6f7351b8842ac331cd2",
+    "scores": {
+      "valid": true,
+      "location": true,
+      "agent": true,
+      "joint": true,
+      "error_mode": null
+    },
+    "status": "completed",
+    "started_at": "2026-09-28T18:18:27.466374+00:00",
+    "elapsed_seconds": 37.38205579202622,
+    "usage": {
+      "input_tokens": 13058,
+      "cached_input_tokens": 7552,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 368,
+      "reasoning_output_tokens": 260
+    },
+    "model_requested": "gpt-6-astra",
+    "model_snapshot": null,
+    "reasoning_effort": "high",
+    "cli_version": "codex-cli 0.158.0-alpha.2.1",
+    "prompt_sha256": "6b0af67077e0c5eced1d8227077e2541e1817dd5a2d0d1e7be285278c8b7869d",
+    "event_sha256": "9492f65f0555b8e9f2c482ee4f8abb52234117a570c7a4b25cd84f4df4f943ce",
+    "stderr_sha256": "c365180ba4a6e9acd6645f7147f11b6dbcee00fc20671d4a7869cf5fc9615e72",
+    "tool_item_count": 0,
+    "private_record_sha256": "e1e5b2bea6352f3764195e06db8053295299f5b43153b676ffe868301b22ab04"
+  },
+  {
+    "case_id": "ww:Hand-Crafted:33",
+    "condition": "A_no_skill",
+    "trial": 1,
+    "dataset": "Who&When",
+    "prediction": {
+      "agents": [
+        "Orchestrator"
+      ],
+      "location": "history:8",
+      "error_mode": null,
+      "confidence": 0.96
+    },
+    "reason_sha256": "219c8d5d8bbe40e889e86da6dde152e08cf6191b8a3e5c4eb427bb9b6a19603e",
+    "scores": {
+      "valid": true,
+      "location": true,
+      "agent": false,
+      "joint": false,
+      "error_mode": null
+    },
+    "status": "completed",
+    "started_at": "2026-09-28T18:18:33.299281+00:00",
+    "elapsed_seconds": 31.54585787502583,
+    "usage": {
+      "input_tokens": 14047,
+      "cached_input_tokens": 7552,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 182,
+      "reasoning_output_tokens": 48
+    },
+    "model_requested": "gpt-6-astra",
+    "model_snapshot": null,
+    "reasoning_effort": "high",
+    "cli_version": "codex-cli 0.158.0-alpha.2.1",
+    "prompt_sha256": "9f791e0f063fef5fa0efab3c0df3399ee907b3b71e5af0524b6506cfc948d616",
+    "event_sha256": "7685eb19efdf6ceb2f2e3639f8573214fc4b38f6ebb8e536df1f6577058aaffe",
+    "stderr_sha256": "dc3e869d681b57c693ed70079a5c5975261439316474bd6868609de8a453615d",
+    "tool_item_count": 0,
+    "private_record_sha256": "1d1cbc1bacf716bdb691aaa4c6f83b8e75e403e38c6dcc3d56e36cf73e662317"
+  },
+  {
+    "case_id": "ww:Hand-Crafted:33",
+    "condition": "B_v1_full",
+    "trial": 1,
+    "dataset": "Who&When",
+    "prediction": {
+      "agents": [
+        "Orchestrator"
+      ],
+      "location": "history:8",
+      "error_mode": null,
+      "confidence": 0.97
+    },
+    "reason_sha256": "7fc4cb71b5c8cd789c17b972d3ce4d6f89f88613abbb30742d78a8e8b756f04a",
+    "scores": {
+      "valid": true,
+      "location": true,
+      "agent": false,
+      "joint": false,
+      "error_mode": null
+    },
+    "status": "completed",
+    "started_at": "2026-09-28T18:18:33.341526+00:00",
+    "elapsed_seconds": 31.526759375003166,
+    "usage": {
+      "input_tokens": 20495,
+      "cached_input_tokens": 7552,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 234,
+      "reasoning_output_tokens": 97
+    },
+    "model_requested": "gpt-6-astra",
+    "model_snapshot": null,
+    "reasoning_effort": "high",
+    "cli_version": "codex-cli 0.158.0-alpha.2.1",
+    "prompt_sha256": "f67a632ac38151c50a8c1096c59553c8c86dde11f0b6645a79e7d6969a0cd87c",
+    "event_sha256": "a16c5e9d362fda93a306857d3e8bcff676495e6d470667f8994d155984c7537f",
+    "stderr_sha256": "cf5ae54b9cef22b8244574c5bae3275d8c22082f732447faf8572e5e0fdb74fe",
+    "tool_item_count": 0,
+    "private_record_sha256": "3ef0a360fcf864a934798721190069e59607e6f1d437888b70332332c89d5692"
+  },
+  {
+    "case_id": "ww:Hand-Crafted:33",
+    "condition": "C_v1_core",
+    "trial": 1,
+    "dataset": "Who&When",
+    "prediction": {
+      "agents": [
+        "Orchestrator"
+      ],
+      "location": "history:8",
+      "error_mode": null,
+      "confidence": 0.94
+    },
+    "reason_sha256": "17438d8fc192f51560d1b6402f6aaf6ff8a6e8a92bda80680ca36ead26f41ef3",
+    "scores": {
+      "valid": true,
+      "location": true,
+      "agent": false,
+      "joint": false,
+      "error_mode": null
+    },
+    "status": "completed",
+    "started_at": "2026-09-28T18:19:04.876891+00:00",
+    "elapsed_seconds": 28.79865079204319,
+    "usage": {
+      "input_tokens": 15743,
+      "cached_input_tokens": 7552,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 227,
+      "reasoning_output_tokens": 104
+    },
+    "model_requested": "gpt-6-astra",
+    "model_snapshot": null,
+    "reasoning_effort": "high",
+    "cli_version": "codex-cli 0.158.0-alpha.2.1",
+    "prompt_sha256": "d3eb3445befa8831af686425c1384a566a6d8c730eaaaf9d4d32dda9bc92eaca",
+    "event_sha256": "a2756eb2fa1c5e273d78b150d64212eed2e95ce6e1a4f75eea9cc176036e9d60",
+    "stderr_sha256": "942b7784e663b4e9e9444ce6315ada436f915458a2224c0f38723bac9c149bc2",
+    "tool_item_count": 0,
+    "private_record_sha256": "ccb7b095b1308f5e65ab5f5f8690eae2fd7f30cf8b16fcd936264a2024074a5a"
+  },
+  {
+    "case_id": "ww:Hand-Crafted:33",
+    "condition": "D_v2_core",
+    "trial": 1,
+    "dataset": "Who&When",
+    "prediction": {
+      "agents": [
+        "Orchestrator"
+      ],
+      "location": "history:8",
+      "error_mode": null,
+      "confidence": 0.96
+    },
+    "reason_sha256": "3a7feb7fab3fab445f6198140c38e94c1943b428530055b41285af2009990c84",
+    "scores": {
+      "valid": true,
+      "location": true,
+      "agent": false,
+      "joint": false,
+      "error_mode": null
+    },
+    "status": "completed",
+    "started_at": "2026-09-28T18:19:04.875629+00:00",
+    "elapsed_seconds": 36.37209024996264,
+    "usage": {
+      "input_tokens": 15068,
+      "cached_input_tokens": 7552,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 283,
+      "reasoning_output_tokens": 150
+    },
+    "model_requested": "gpt-6-astra",
+    "model_snapshot": null,
+    "reasoning_effort": "high",
+    "cli_version": "codex-cli 0.158.0-alpha.2.1",
+    "prompt_sha256": "a94459072292c307c8705439bf99bc458eac4975c339288f00c695dae53712ec",
+    "event_sha256": "614a54e56eda1ebee41d3a7560163ae4e34e27d0ad429a7f76f3f5f6882af048",
+    "stderr_sha256": "708d5225674e826fb533e0dd60ac9eda613f9fd3eda5e283e97e80c3e5f166bc",
+    "tool_item_count": 0,
+    "private_record_sha256": "187b41043c04c48903781065445b244f25eaee41209e883c9818ed39c6d0fb52"
+  },
+  {
+    "case_id": "pro:math_debate_0084",
+    "condition": "C_v1_core",
+    "trial": 1,
+    "dataset": "Who&When Pro",
+    "prediction": {
+      "agents": [
+        "agent_0",
+        "agent_2"
+      ],
+      "location": "round:0",
+      "error_mode": "R.4",
+      "confidence": 0.99
+    },
+    "reason_sha256": "4f54ff82aecd2bd8a1f94aa048bada1067334d0188f856075e30da8bf891000a",
+    "scores": {
+      "valid": true,
+      "location": false,
+      "agent": true,
+      "joint": false,
+      "error_mode": false
+    },
+    "status": "completed",
+    "started_at": "2026-09-28T18:19:04.878313+00:00",
+    "elapsed_seconds": 77.25872558401898,
+    "usage": {
+      "input_tokens": 17891,
+      "cached_input_tokens": 17536,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 139,
+      "reasoning_output_tokens": 0
+    },
+    "model_requested": "gpt-6-astra",
+    "model_snapshot": null,
+    "reasoning_effort": "high",
+    "cli_version": "codex-cli 0.158.0-alpha.2.1",
+    "prompt_sha256": "4f2f3c998b50e3bee5faca58fa803702fd7a95260a4dea24997184be20fbe0ec",
+    "event_sha256": "012f59bb0d7b1ce0931678e8ee9dfbf653d74b2af2a324fa7af4cd892a546f3f",
+    "stderr_sha256": "94c9230c43ef413bad97b6127cd0d718b2e9158cd10894472fa6d5cbc67b0dfa",
+    "tool_item_count": 0,
+    "private_record_sha256": "db8207b316260705d5c918eabe677b3ee65cc29dec6d64ed2a28a28e5dd1529d"
+  },
+  {
+    "case_id": "pro:math_debate_0084",
+    "condition": "B_v1_full",
+    "trial": 1,
+    "dataset": "Who&When Pro",
+    "prediction": {
+      "agents": [
+        "agent_0",
+        "agent_2"
+      ],
+      "location": "round:0",
+      "error_mode": "R.4",
+      "confidence": 0.99
+    },
+    "reason_sha256": "00cad621904cb2983562c7d6ccb2c29be4abcbc3dfb9211463b8b6d07c97323d",
+    "scores": {
+      "valid": true,
+      "location": false,
+      "agent": true,
+      "joint": false,
+      "error_mode": false
+    },
+    "status": "completed",
+    "started_at": "2026-09-28T18:19:33.903279+00:00",
+    "elapsed_seconds": 75.77325437497348,
+    "usage": {
+      "input_tokens": 22415,
+      "cached_input_tokens": 0,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 292,
+      "reasoning_output_tokens": 150
+    },
+    "model_requested": "gpt-6-astra",
+    "model_snapshot": null,
+    "reasoning_effort": "high",
+    "cli_version": "codex-cli 0.158.0-alpha.2.1",
+    "prompt_sha256": "8bc8ce3cc9bb6c2deeb0c78b2df167bb1c890bbffb1db426cac6a586b9cbea87",
+    "event_sha256": "67469a580f3b1c8f1e8f2b55d53561c6f73cc03251eccf22bed5504aba88a2ce",
+    "stderr_sha256": "35a9bba317b56efd91a0c203a1141e3d48c5056b98068200870f70a8b2bb18f3",
+    "tool_item_count": 0,
+    "private_record_sha256": "147ce8e2223977825f313dd8b432ea0b5afbaf1af23e8d92a9f24a25e81abadb"
+  },
+  {
+    "case_id": "pro:math_debate_0084",
+    "condition": "D_v2_core",
+    "trial": 1,
+    "dataset": "Who&When Pro",
+    "prediction": {
+      "agents": [
+        "agent_0",
+        "agent_2"
+      ],
+      "location": "round:0",
+      "error_mode": "R.4",
+      "confidence": 0.99
+    },
+    "reason_sha256": "08d81eb9e9ab8a00b5ef711ea05b5bea6263a1cdac08164a2b8c615efc794d27",
+    "scores": {
+      "valid": true,
+      "location": false,
+      "agent": true,
+      "joint": false,
+      "error_mode": false
+    },
+    "status": "completed",
+    "started_at": "2026-09-28T18:19:41.338174+00:00",
+    "elapsed_seconds": 45.154716999968514,
+    "usage": {
+      "input_tokens": 16984,
+      "cached_input_tokens": 0,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 242,
+      "reasoning_output_tokens": 98
+    },
+    "model_requested": "gpt-6-astra",
+    "model_snapshot": null,
+    "reasoning_effort": "high",
+    "cli_version": "codex-cli 0.158.0-alpha.2.1",
+    "prompt_sha256": "e06aa19e704977e64bd53d8608287de215b55992f8a16217a9c239ea751a28b5",
+    "event_sha256": "789774742816dd05d4a76681f9f365c41f76fbab0450de3aaeab135b463c53bc",
+    "stderr_sha256": "d1a2537be6e7a3609fa0dce5ff8baeac1e6195c996ce0e6edd4fddcba5b4dc10",
+    "tool_item_count": 0,
+    "private_record_sha256": "f1719f6a523f2c25e6fc8986eaa87e73dc56b6bdfdab38081d4a9306bdd20a38"
+  },
+  {
+    "case_id": "pro:math_debate_0084",
+    "condition": "A_no_skill",
+    "trial": 1,
+    "dataset": "Who&When Pro",
+    "prediction": {
+      "agents": [
+        "agent_0",
+        "agent_2"
+      ],
+      "location": "round:0",
+      "error_mode": "R.4",
+      "confidence": 0.99
+    },
+    "reason_sha256": "1047d5c6d6b4c0b8028fd54e9558292c3eb840446257ab26c9917c99b272e4a1",
+    "scores": {
+      "valid": true,
+      "location": false,
+      "agent": true,
+      "joint": false,
+      "error_mode": false
+    },
+    "status": "completed",
+    "started_at": "2026-09-28T18:20:22.158104+00:00",
+    "elapsed_seconds": 50.51991416601231,
+    "usage": {
+      "input_tokens": 15959,
+      "cached_input_tokens": 7552,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 223,
+      "reasoning_output_tokens": 82
+    },
+    "model_requested": "gpt-6-astra",
+    "model_snapshot": null,
+    "reasoning_effort": "high",
+    "cli_version": "codex-cli 0.158.0-alpha.2.1",
+    "prompt_sha256": "ede7f82ede4f99b60d6a94c388db31503f41e9500f02f2ba62d3f57c03b28f58",
+    "event_sha256": "42e79c7f046f64980ee7da7f413e5ae953b186dbc0062af8164c8e3f105f3f11",
+    "stderr_sha256": "447328bbd04707b50b9e4d67fd56f1c7d08daf71238566d9eeebbae34a3245ba",
+    "tool_item_count": 0,
+    "private_record_sha256": "c1a98c05c3cc14c70e92d26f389ad5294dd831b0f1485b863ab62a2471377b89"
+  },
+  {
+    "case_id": "ww:Algorithm-Generated:68",
+    "condition": "C_v1_core",
+    "trial": 1,
+    "dataset": "Who&When",
+    "prediction": {
+      "agents": [
+        "Verification_Expert"
+      ],
+      "location": "history:3",
+      "error_mode": null,
+      "confidence": 0.88
+    },
+    "reason_sha256": "6198452c07c98ea9677804a4e25b4e55768c8624f66307819417a01e2a65cb8d",
+    "scores": {
+      "valid": true,
+      "location": true,
+      "agent": true,
+      "joint": true,
+      "error_mode": null
+    },
+    "status": "completed",
+    "started_at": "2026-09-28T18:20:26.505313+00:00",
+    "elapsed_seconds": 40.09312350000255,
+    "usage": {
+      "input_tokens": 14134,
+      "cached_input_tokens": 0,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 412,
+      "reasoning_output_tokens": 298
+    },
+    "model_requested": "gpt-6-astra",
+    "model_snapshot": null,
+    "reasoning_effort": "high",
+    "cli_version": "codex-cli 0.158.0-alpha.2.1",
+    "prompt_sha256": "47ad05450dd1ad9a4a08c52ca0ee7a0f05ad06c8ebe3eec6e50b80cc7736931a",
+    "event_sha256": "ccf5c602ac391a3f3e383aeed1e5733b23d8c9f91b0a4376a9ae2647fe87ac05",
+    "stderr_sha256": "c65a6a636f3318e477206fcd6cc05dbd4b94e7d828f51a33ca59e849058a968f",
+    "tool_item_count": 0,
+    "private_record_sha256": "e3f92adecba24abdd23a5f2e814bd12e1a21f86a2c7dc19c4254d30fdc0dfd13"
+  },
+  {
+    "case_id": "ww:Algorithm-Generated:68",
+    "condition": "B_v1_full",
+    "trial": 1,
+    "dataset": "Who&When",
+    "prediction": {
+      "agents": [
+        "Verification_Expert"
+      ],
+      "location": "history:3",
+      "error_mode": null,
+      "confidence": 0.93
+    },
+    "reason_sha256": "529c16e1288813c6d7979394d268d8dcb4bdb17b28ec900e9f6e9b549fb2467b",
+    "scores": {
+      "valid": true,
+      "location": true,
+      "agent": true,
+      "joint": true,
+      "error_mode": null
+    },
+    "status": "completed",
+    "started_at": "2026-09-28T18:20:49.720571+00:00",
+    "elapsed_seconds": 52.09510929201497,
+    "usage": {
+      "input_tokens": 18888,
+      "cached_input_tokens": 7552,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 434,
+      "reasoning_output_tokens": 319
+    },
+    "model_requested": "gpt-6-astra",
+    "model_snapshot": null,
+    "reasoning_effort": "high",
+    "cli_version": "codex-cli 0.158.0-alpha.2.1",
+    "prompt_sha256": "02869ce147682ff55c75cea898430f39bbf1b5651106b737374232cdd1e66488",
+    "event_sha256": "cf579770277979285e87f0f4684765ccd2e4b786166c5db44aae4913d2fc4c16",
+    "stderr_sha256": "b460adaa9d7599870490f9f0f0fd5739f5766c4b5603942d360758ba38306a16",
+    "tool_item_count": 0,
+    "private_record_sha256": "bed259030f599e10c61f89462b3fd5f245f31c7e42b4922d88c8b7da25799a38"
+  },
+  {
+    "case_id": "ww:Algorithm-Generated:68",
+    "condition": "D_v2_core",
+    "trial": 1,
+    "dataset": "Who&When",
+    "prediction": {
+      "agents": [
+        "Verification_Expert"
+      ],
+      "location": "history:3",
+      "error_mode": null,
+      "confidence": 0.89
+    },
+    "reason_sha256": "d730fec5c21458559281ef7008e380adb1759cf265d2d5b1d2abca97393a73ac",
+    "scores": {
+      "valid": true,
+      "location": true,
+      "agent": true,
+      "joint": true,
+      "error_mode": null
+    },
+    "status": "completed",
+    "started_at": "2026-09-28T18:21:06.612378+00:00",
+    "elapsed_seconds": 41.9842320419848,
+    "usage": {
+      "input_tokens": 13459,
+      "cached_input_tokens": 0,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 399,
+      "reasoning_output_tokens": 275
+    },
+    "model_requested": "gpt-6-astra",
+    "model_snapshot": null,
+    "reasoning_effort": "high",
+    "cli_version": "codex-cli 0.158.0-alpha.2.1",
+    "prompt_sha256": "040532db9c06a152e4a60ca596b31fd5730b13089915160f1ab58d35065dd65d",
+    "event_sha256": "381031588f06ba8a54ca05c3b32840338a9f5091bd52e24152b676b8902d8bee",
+    "stderr_sha256": "495e957942b76690622e4d36ca7fea6ff466d97a5df90611eb5ed8d069883dcd",
+    "tool_item_count": 0,
+    "private_record_sha256": "a086b49c4c470d1ccd48d93b8d1ce6e97114458c741d718cbd5e9070de6623e8"
+  },
+  {
+    "case_id": "ww:Algorithm-Generated:68",
+    "condition": "A_no_skill",
+    "trial": 1,
+    "dataset": "Who&When",
+    "prediction": {
+      "agents": [
+        "Verification_Expert"
+      ],
+      "location": "history:3",
+      "error_mode": null,
+      "confidence": 0.89
+    },
+    "reason_sha256": "fdfa376cc92cf759d1c1e99f068cff8811c913458ffb74cb414ee60e423b2bce",
+    "scores": {
+      "valid": true,
+      "location": true,
+      "agent": true,
+      "joint": true,
+      "error_mode": null
+    },
+    "status": "completed",
+    "started_at": "2026-09-28T18:21:12.689621+00:00",
+    "elapsed_seconds": 35.24597970803734,
+    "usage": {
+      "input_tokens": 12432,
+      "cached_input_tokens": 0,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 390,
+      "reasoning_output_tokens": 291
+    },
+    "model_requested": "gpt-6-astra",
+    "model_snapshot": null,
+    "reasoning_effort": "high",
+    "cli_version": "codex-cli 0.158.0-alpha.2.1",
+    "prompt_sha256": "c168d7a0217d7b35d11c8604768e4efd0d3e6784d3c7551c8a5b9c1fbd9f68ca",
+    "event_sha256": "3f7208948f9f18bdc9da9cd97ace818c2f2e29c8eb3ee1fc2c4565333b8188f0",
+    "stderr_sha256": "1435cda68a826520999eda22ece6723e7a459e72efc43ad42b3c398f41dffb69",
+    "tool_item_count": 0,
+    "private_record_sha256": "9c6f433caebe7af3ee54ec91d32cf1f8031330ea39282368928d35ace2304033"
+  },
+  {
+    "case_id": "ww:Algorithm-Generated:88",
+    "condition": "D_v2_core",
+    "trial": 1,
+    "dataset": "Who&When",
+    "prediction": {
+      "agents": [
+        "DataValidation_Expert"
+      ],
+      "location": "history:2",
+      "error_mode": null,
+      "confidence": 0.83
+    },
+    "reason_sha256": "d2fe3cec7e67fc1dfbec7faa8d59caacc503ffc748ae7390cb9b4f1673ce0a3d",
+    "scores": {
+      "valid": true,
+      "location": false,
+      "agent": false,
+      "joint": false,
+      "error_mode": null
+    },
+    "status": "completed",
+    "started_at": "2026-09-28T18:21:41.840931+00:00",
+    "elapsed_seconds": 29.02995012496831,
+    "usage": {
+      "input_tokens": 15179,
+      "cached_input_tokens": 0,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 290,
+      "reasoning_output_tokens": 146
+    },
+    "model_requested": "gpt-6-astra",
+    "model_snapshot": null,
+    "reasoning_effort": "high",
+    "cli_version": "codex-cli 0.158.0-alpha.2.1",
+    "prompt_sha256": "c1bca95d23071ca250ed72d4a6b5c67f4e8d179f773241f26a9ab63fc1336871",
+    "event_sha256": "dc79b72f84d13c31dd8797adef78cd9dbc7d171b8f08eeb8981275efacbf2a55",
+    "stderr_sha256": "b2572d20ef81887e42c13d915d36fa1dd646a51c37dd86266831c176ca948b01",
+    "tool_item_count": 0,
+    "private_record_sha256": "3fc3b44ffa21d65ce6c6e1a6a0c141045ae952683e2fbed948cee8a55d5d672c"
+  },
+  {
+    "case_id": "ww:Algorithm-Generated:88",
+    "condition": "C_v1_core",
+    "trial": 1,
+    "dataset": "Who&When",
+    "prediction": {
+      "agents": [
+        "FinancialData_Expert"
+      ],
+      "location": "history:0",
+      "error_mode": null,
+      "confidence": 0.83
+    },
+    "reason_sha256": "9a8b17ecfb405a5aa31e21b2a37e546eaa91824f419dddd1de67b385cac5768c",
+    "scores": {
+      "valid": true,
+      "location": true,
+      "agent": true,
+      "joint": true,
+      "error_mode": null
+    },
+    "status": "completed",
+    "started_at": "2026-09-28T18:21:47.999224+00:00",
+    "elapsed_seconds": 28.075730750046205,
+    "usage": {
+      "input_tokens": 15854,
+      "cached_input_tokens": 7552,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 265,
+      "reasoning_output_tokens": 133
+    },
+    "model_requested": "gpt-6-astra",
+    "model_snapshot": null,
+    "reasoning_effort": "high",
+    "cli_version": "codex-cli 0.158.0-alpha.2.1",
+    "prompt_sha256": "0c729463570b4cc07485e90f1d81ea53a26f3da110535697a5fe20bb064b7067",
+    "event_sha256": "09e24dc7b6b980a6b67b81a25d935c16d6b8c30a2641ca5ba82579f6836b5076",
+    "stderr_sha256": "ec7520cde9ae310ea572441f61e541aaa498e6ed456eee2fb6eaa95db80075af",
+    "tool_item_count": 0,
+    "private_record_sha256": "225688369b64ec872eef5bb1d210e27f40f6e3e9fd4fc4a5760a59d35bcb274b"
+  },
+  {
+    "case_id": "ww:Algorithm-Generated:88",
+    "condition": "B_v1_full",
+    "trial": 1,
+    "dataset": "Who&When",
+    "prediction": {
+      "agents": [
+        "DataValidation_Expert"
+      ],
+      "location": "history:2",
+      "error_mode": null,
+      "confidence": 0.85
+    },
+    "reason_sha256": "530d41eba1e68de7510633094c8174e292fc6eaa7f879cf642423288fc6514df",
+    "scores": {
+      "valid": true,
+      "location": false,
+      "agent": false,
+      "joint": false,
+      "error_mode": null
+    },
+    "status": "completed",
+    "started_at": "2026-09-28T18:21:48.608791+00:00",
+    "elapsed_seconds": 31.276146207994316,
+    "usage": {
+      "input_tokens": 20606,
+      "cached_input_tokens": 7552,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 314,
+      "reasoning_output_tokens": 192
+    },
+    "model_requested": "gpt-6-astra",
+    "model_snapshot": null,
+    "reasoning_effort": "high",
+    "cli_version": "codex-cli 0.158.0-alpha.2.1",
+    "prompt_sha256": "a5d4b6ac7c8b084440e7fa7712cd05f5f9282e5f783149b058de06b1d28116eb",
+    "event_sha256": "b12564603742fd6ec67547eb1cb4fcf9e3dbe9e390b32e0d27a5708a6fdf4cf6",
+    "stderr_sha256": "166555ce21bacf93161406ba1ae561c854e5b2eb8c63fc4df2fdc5afc2bf570f",
+    "tool_item_count": 0,
+    "private_record_sha256": "ee0bb211f8c2d8abd5ffa50a709ef49afe2a3ff2d01cadd4f30100f1d036fcd7"
+  },
+  {
+    "case_id": "ww:Algorithm-Generated:88",
+    "condition": "A_no_skill",
+    "trial": 1,
+    "dataset": "Who&When",
+    "prediction": {
+      "agents": [
+        "DataValidation_Expert"
+      ],
+      "location": "history:2",
+      "error_mode": null,
+      "confidence": 0.84
+    },
+    "reason_sha256": "f5450f982e353b205073f55c7a66ac5aac8253571260a63489781bf4392d0480",
+    "scores": {
+      "valid": true,
+      "location": false,
+      "agent": false,
+      "joint": false,
+      "error_mode": null
+    },
+    "status": "completed",
+    "started_at": "2026-09-28T18:22:10.907610+00:00",
+    "elapsed_seconds": 44.631748332991265,
+    "usage": {
+      "input_tokens": 14152,
+      "cached_input_tokens": 7552,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 367,
+      "reasoning_output_tokens": 243
+    },
+    "model_requested": "gpt-6-astra",
+    "model_snapshot": null,
+    "reasoning_effort": "high",
+    "cli_version": "codex-cli 0.158.0-alpha.2.1",
+    "prompt_sha256": "dbebf4b673692b9909ab9169e201e65edf5fd30cf86f99dec1687def49fff0e3",
+    "event_sha256": "9d5b8391b30fa0cd1f8ead329c1842c74b4285eaaafea47577aff148c289f6a6",
+    "stderr_sha256": "1451fdafb50fc730d36232eb5ffd68c56fd62532464fb3cd3f9dfcc6d89a3cc6",
+    "tool_item_count": 0,
+    "private_record_sha256": "ac5239f31a05cdf2035041a48bf54bb1c9a3af61239e1e88232c160863430e85"
+  },
+  {
+    "case_id": "pro:alfworld_alfagent_0288",
+    "condition": "C_v1_core",
+    "trial": 1,
+    "dataset": "Who&When Pro",
+    "prediction": {
+      "agents": [],
+      "location": "step:3",
+      "error_mode": "A.1",
+      "confidence": 0.83
+    },
+    "reason_sha256": "6b362891ed6b4ca87ddd65ff6ac749b347902ab81d19cf61f74d1a879566a492",
+    "scores": {
+      "valid": true,
+      "location": false,
+      "agent": null,
+      "joint": false,
+      "error_mode": false
+    },
+    "status": "completed",
+    "started_at": "2026-09-28T18:22:16.160301+00:00",
+    "elapsed_seconds": 30.23727429099381,
+    "usage": {
+      "input_tokens": 15564,
+      "cached_input_tokens": 7552,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 303,
+      "reasoning_output_tokens": 157
+    },
+    "model_requested": "gpt-6-astra",
+    "model_snapshot": null,
+    "reasoning_effort": "high",
+    "cli_version": "codex-cli 0.158.0-alpha.2.1",
+    "prompt_sha256": "816d9b0af0afb9d9062fcbc5894cc7ce60500fe3d6ff6782d2de3fd65fd70a85",
+    "event_sha256": "868da173596ef9fed9705ceaa268d98c273955ae6b21d0454adb22d03af43896",
+    "stderr_sha256": "6669cacf1e6641563a433050eaea38b8b51735739dd109753005cfc122e7dc7b",
+    "tool_item_count": 0,
+    "private_record_sha256": "f5124467aea3a64f61f0a84489265d3e3bb9409da2b38273e988c00998a214ce"
+  },
+  {
+    "case_id": "pro:alfworld_alfagent_0288",
+    "condition": "D_v2_core",
+    "trial": 1,
+    "dataset": "Who&When Pro",
+    "prediction": {
+      "agents": [],
+      "location": "step:3",
+      "error_mode": "A.1",
+      "confidence": 0.79
+    },
+    "reason_sha256": "7cb04695f0873a10d613bae867c1ca1e306bf13a032217d8146ba74b919bb6b4",
+    "scores": {
+      "valid": true,
+      "location": false,
+      "agent": null,
+      "joint": false,
+      "error_mode": false
+    },
+    "status": "completed",
+    "started_at": "2026-09-28T18:22:20.044810+00:00",
+    "elapsed_seconds": 39.72173237503739,
+    "usage": {
+      "input_tokens": 14887,
+      "cached_input_tokens": 0,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 375,
+      "reasoning_output_tokens": 242
+    },
+    "model_requested": "gpt-6-astra",
+    "model_snapshot": null,
+    "reasoning_effort": "high",
+    "cli_version": "codex-cli 0.158.0-alpha.2.1",
+    "prompt_sha256": "90d3953566afad74961b7345b8b7a893d933c8c1d598027e8a426785b99b4710",
+    "event_sha256": "28d618c1658904653589748ed0e9ab9995c2166bc0096a5e413523454316e0d9",
+    "stderr_sha256": "0b78f6efded864d770226d8f378fca3c739f0c108801b78269101032064ddb8d",
+    "tool_item_count": 0,
+    "private_record_sha256": "c497a2ece252bada5d80ae3bd5a8ecc3f376886ccb23b9b863f986f23155062d"
+  },
+  {
+    "case_id": "pro:alfworld_alfagent_0288",
+    "condition": "B_v1_full",
+    "trial": 1,
+    "dataset": "Who&When Pro",
+    "prediction": {
+      "agents": [],
+      "location": "step:3",
+      "error_mode": "A.1",
+      "confidence": 0.83
+    },
+    "reason_sha256": "ce87f9440dc0853e91624c9e5c482dcacce82c0a5e72db0d00da472c568c3d67",
+    "scores": {
+      "valid": true,
+      "location": false,
+      "agent": null,
+      "joint": false,
+      "error_mode": false
+    },
+    "status": "completed",
+    "started_at": "2026-09-28T18:22:46.518613+00:00",
+    "elapsed_seconds": 40.335697792004794,
+    "usage": {
+      "input_tokens": 20312,
+      "cached_input_tokens": 7552,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 444,
+      "reasoning_output_tokens": 308
+    },
+    "model_requested": "gpt-6-astra",
+    "model_snapshot": null,
+    "reasoning_effort": "high",
+    "cli_version": "codex-cli 0.158.0-alpha.2.1",
+    "prompt_sha256": "91dcd6f87064cd23028fd9792248204d819dced6bc0d2851844345c5d5fe4294",
+    "event_sha256": "484caae181db2ae1a09897b619e45950cea96bd484df28221f46bec499620be5",
+    "stderr_sha256": "a6cba1569040c99418ec5896153179f783b25c95b62704405496210b4d1cd52a",
+    "tool_item_count": 0,
+    "private_record_sha256": "d1322a0bcda2e63a06986c3b8e51d3140877c76638fd18ebf006f8c3b0ecbdb2"
+  },
+  {
+    "case_id": "pro:alfworld_alfagent_0288",
+    "condition": "A_no_skill",
+    "trial": 1,
+    "dataset": "Who&When Pro",
+    "prediction": {
+      "agents": [],
+      "location": "step:3",
+      "error_mode": "A.1",
+      "confidence": 0.8
+    },
+    "reason_sha256": "3f81fb0211c78464bbb97c950e6c8cc3eb02e2b354ef90f573dc16dad39761d4",
+    "scores": {
+      "valid": true,
+      "location": false,
+      "agent": null,
+      "joint": false,
+      "error_mode": false
+    },
+    "status": "completed",
+    "started_at": "2026-09-28T18:22:55.696688+00:00",
+    "elapsed_seconds": 46.31213833403308,
+    "usage": {
+      "input_tokens": 13858,
+      "cached_input_tokens": 7552,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 431,
+      "reasoning_output_tokens": 324
+    },
+    "model_requested": "gpt-6-astra",
+    "model_snapshot": null,
+    "reasoning_effort": "high",
+    "cli_version": "codex-cli 0.158.0-alpha.2.1",
+    "prompt_sha256": "a8882ebfbcc703fe7d4625ddbcd361c9aa40e31aca3853e4b208069b5d050f64",
+    "event_sha256": "d5a90718033d5df5900b7b1c98acdaf45ceead9626d83e4cd0c892b63d1bcc94",
+    "stderr_sha256": "f05e09c615e956d077bf667ec0984c16d6948038f280d68a52139db5df2a2773",
+    "tool_item_count": 0,
+    "private_record_sha256": "aa1fdcf62958d10f7f672498fea5b2fe2b778d4bdebba1ffebd91d188ce2185a"
+  },
+  {
+    "case_id": "ww:Hand-Crafted:6",
+    "condition": "C_v1_core",
+    "trial": 1,
+    "dataset": "Who&When",
+    "prediction": {
+      "agents": [
+        "Orchestrator"
+      ],
+      "location": "history:5",
+      "error_mode": null,
+      "confidence": 0.99
+    },
+    "reason_sha256": "c1c520fe29b85f5baf4bdcb9819513e00c475adfa10475f63189adc62d0d5894",
+    "scores": {
+      "valid": true,
+      "location": true,
+      "agent": true,
+      "joint": true,
+      "error_mode": null
+    },
+    "status": "completed",
+    "started_at": "2026-09-28T18:22:59.823782+00:00",
+    "elapsed_seconds": 41.48075341701042,
+    "usage": {
+      "input_tokens": 14233,
+      "cached_input_tokens": 7552,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 226,
+      "reasoning_output_tokens": 85
+    },
+    "model_requested": "gpt-6-astra",
+    "model_snapshot": null,
+    "reasoning_effort": "high",
+    "cli_version": "codex-cli 0.158.0-alpha.2.1",
+    "prompt_sha256": "a7939d970d111d62c581e649ed0aa2f38788f67a02cfdae6eb060145310a0d2b",
+    "event_sha256": "2813ec8eea68f925a8f85e0d6dc20414be1183878d2e6b6b29eaf7d3665a48f3",
+    "stderr_sha256": "a2c16ff3dbc42e0b1d9fa897f6ac29e096aae22463c074e6cb09c5c660a2bb35",
+    "tool_item_count": 0,
+    "private_record_sha256": "951b3c4605b420eba429285c5f280bfcace033d8202f77baf132e3e35e23c7e8"
+  },
+  {
+    "case_id": "ww:Hand-Crafted:6",
+    "condition": "D_v2_core",
+    "trial": 1,
+    "dataset": "Who&When",
+    "prediction": {
+      "agents": [
+        "Orchestrator"
+      ],
+      "location": "history:5",
+      "error_mode": null,
+      "confidence": 0.99
+    },
+    "reason_sha256": "77db973d403a5b22b574be7c57e513169480a31d6da021b0236119c4bfc5028b",
+    "scores": {
+      "valid": true,
+      "location": true,
+      "agent": true,
+      "joint": true,
+      "error_mode": null
+    },
+    "status": "completed",
+    "started_at": "2026-09-28T18:23:27.135961+00:00",
+    "elapsed_seconds": 36.74558783398243,
+    "usage": {
+      "input_tokens": 13558,
+      "cached_input_tokens": 0,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 197,
+      "reasoning_output_tokens": 44
+    },
+    "model_requested": "gpt-6-astra",
+    "model_snapshot": null,
+    "reasoning_effort": "high",
+    "cli_version": "codex-cli 0.158.0-alpha.2.1",
+    "prompt_sha256": "9811c5b15306776f1016903153583420df44784644ef0fc9ceabf7bfe130a701",
+    "event_sha256": "644f0b5be0cf52795b4e6f2ef367f75c38d9f19079321e653a22cdc007a868dd",
+    "stderr_sha256": "e78f592b47f478babaafce9af7f57c9d6db9dc72b93e5a4c34e89b26a4040791",
+    "tool_item_count": 0,
+    "private_record_sha256": "4c3e2944df9d0fa302941410611e0e0c2bd83a164ee5c34e29d621dacb4c475b"
+  },
+  {
+    "case_id": "ww:Hand-Crafted:6",
+    "condition": "A_no_skill",
+    "trial": 1,
+    "dataset": "Who&When",
+    "prediction": {
+      "agents": [
+        "Orchestrator"
+      ],
+      "location": "history:5",
+      "error_mode": null,
+      "confidence": 0.99
+    },
+    "reason_sha256": "4cff50307602cee7a0051177f450f5cf42c2ef0b2b9dcafaeb0868a53f7deb52",
+    "scores": {
+      "valid": true,
+      "location": true,
+      "agent": true,
+      "joint": true,
+      "error_mode": null
+    },
+    "status": "completed",
+    "started_at": "2026-09-28T18:23:41.583887+00:00",
+    "elapsed_seconds": 30.84764712501783,
+    "usage": {
+      "input_tokens": 12533,
+      "cached_input_tokens": 7552,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 162,
+      "reasoning_output_tokens": 31
+    },
+    "model_requested": "gpt-6-astra",
+    "model_snapshot": null,
+    "reasoning_effort": "high",
+    "cli_version": "codex-cli 0.158.0-alpha.2.1",
+    "prompt_sha256": "d2de6f1c48172aa9e52cb60177366fc1a6edfe3868e4533e11967e2bf97cf721",
+    "event_sha256": "18a052f6c9c4c0f12da05515ed8407ad73c22b635a385aa507d3351438f47f18",
+    "stderr_sha256": "2756de83002980c7fa0c36fc63ac25d0483148f1d957cacff9f6910a7f2b8206",
+    "tool_item_count": 0,
+    "private_record_sha256": "42ce05c2e6a38d286a5a45bc520a91085630e6c69923e80f4fc317b6c2e7c001"
+  },
+  {
+    "case_id": "ww:Hand-Crafted:6",
+    "condition": "B_v1_full",
+    "trial": 1,
+    "dataset": "Who&When",
+    "prediction": {
+      "agents": [
+        "Orchestrator"
+      ],
+      "location": "history:5",
+      "error_mode": null,
+      "confidence": 0.99
+    },
+    "reason_sha256": "986bf3bc08aaeb1994d9dea0a01f476a2f938c63a7d351164faf046b6b1840db",
+    "scores": {
+      "valid": true,
+      "location": true,
+      "agent": true,
+      "joint": true,
+      "error_mode": null
+    },
+    "status": "completed",
+    "started_at": "2026-09-28T18:23:42.046263+00:00",
+    "elapsed_seconds": 30.353566708043218,
+    "usage": {
+      "input_tokens": 18987,
+      "cached_input_tokens": 7552,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 224,
+      "reasoning_output_tokens": 88
+    },
+    "model_requested": "gpt-6-astra",
+    "model_snapshot": null,
+    "reasoning_effort": "high",
+    "cli_version": "codex-cli 0.158.0-alpha.2.1",
+    "prompt_sha256": "62e1c2f89fd38d798d2d7a98103d499f7634f27f6f2e36a7ab02b289cdb38430",
+    "event_sha256": "a5180b34b4d71667ca3441daa09be1274c9be0b95872299d1bf5358b994a9f37",
+    "stderr_sha256": "326b92b770d266d2105a2b74b3d1086e19e3a84da82b3a63ec8f324fb1a3ad18",
+    "tool_item_count": 0,
+    "private_record_sha256": "d06f259ed35c57d00811bb40386af9f43fab899e48f58ad26841286f367d9e6b"
+  },
+  {
+    "case_id": "pro:dacode_smolagents_0096",
+    "condition": "B_v1_full",
+    "trial": 1,
+    "dataset": "Who&When Pro",
+    "prediction": {
+      "agents": [],
+      "location": "step:4",
+      "error_mode": "A.1",
+      "confidence": 0.99
+    },
+    "reason_sha256": "d2d7de9478fbe8d1defd8d10835854c740228bceba8a55e4254fd4f795c3723d",
+    "scores": {
+      "valid": true,
+      "location": false,
+      "agent": null,
+      "joint": false,
+      "error_mode": false
+    },
+    "status": "completed",
+    "started_at": "2026-09-28T18:24:03.990697+00:00",
+    "elapsed_seconds": 36.267490791971795,
+    "usage": {
+      "input_tokens": 18679,
+      "cached_input_tokens": 0,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 258,
+      "reasoning_output_tokens": 147
+    },
+    "model_requested": "gpt-6-astra",
+    "model_snapshot": null,
+    "reasoning_effort": "high",
+    "cli_version": "codex-cli 0.158.0-alpha.2.1",
+    "prompt_sha256": "9f328e205d24db698bce894fd686871fbea57194c003d7b2cb45b261e43d5363",
+    "event_sha256": "7abb4182beecde93be03e6d8a70fcea44029aacedae3825bbde6d3c7ddec1c7b",
+    "stderr_sha256": "239bde731ce89da366a5f1af68bdc3b7ed07e427cfae6febbc15f5ecf4b18f58",
+    "tool_item_count": 0,
+    "private_record_sha256": "4035e22dc152ce2d7785283f0a4f674f79cfa6bae15a4d10db4467b204d9a96a"
+  },
+  {
+    "case_id": "pro:dacode_smolagents_0096",
+    "condition": "A_no_skill",
+    "trial": 1,
+    "dataset": "Who&When Pro",
+    "prediction": {
+      "agents": [],
+      "location": "step:4",
+      "error_mode": "A.1",
+      "confidence": 0.99
+    },
+    "reason_sha256": "a9664198a02602a4130bccd31813972d1f7d755f184501718a7e60352c0204c1",
+    "scores": {
+      "valid": true,
+      "location": false,
+      "agent": null,
+      "joint": false,
+      "error_mode": false
+    },
+    "status": "completed",
+    "started_at": "2026-09-28T18:24:12.495272+00:00",
+    "elapsed_seconds": 45.496165541000664,
+    "usage": {
+      "input_tokens": 12841,
+      "cached_input_tokens": 7552,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 165,
+      "reasoning_output_tokens": 54
+    },
+    "model_requested": "gpt-6-astra",
+    "model_snapshot": null,
+    "reasoning_effort": "high",
+    "cli_version": "codex-cli 0.158.0-alpha.2.1",
+    "prompt_sha256": "8a58d8b69ac67f19cd95463463242750d1cb8d26f933ff537d9aa236115abb59",
+    "event_sha256": "40d8df2071117a07caec9328d1c8bd238e341e672a9d0afd0ccd2b1fff9fdd5d",
+    "stderr_sha256": "c9b4383ad19af9d565f2f9c691dfefea2c910e7756da66b70741dec66f8c6a28",
+    "tool_item_count": 0,
+    "private_record_sha256": "8cc6b85eed1d973e7b54d317c6430002fa6e490a60da47da078de052ea0699e7"
+  },
+  {
+    "case_id": "pro:dacode_smolagents_0096",
+    "condition": "C_v1_core",
+    "trial": 1,
+    "dataset": "Who&When Pro",
+    "prediction": {
+      "agents": [],
+      "location": "step:4",
+      "error_mode": "A.1",
+      "confidence": 0.99
+    },
+    "reason_sha256": "fcd4b8a0dd456eb48d98016cc44fd1d6d0de11da51b1163230a2695acda10ec2",
+    "scores": {
+      "valid": true,
+      "location": false,
+      "agent": null,
+      "joint": false,
+      "error_mode": false
+    },
+    "status": "completed",
+    "started_at": "2026-09-28T18:24:12.465050+00:00",
+    "elapsed_seconds": 45.37879095796961,
+    "usage": {
+      "input_tokens": 14545,
+      "cached_input_tokens": 7552,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 156,
+      "reasoning_output_tokens": 42
+    },
+    "model_requested": "gpt-6-astra",
+    "model_snapshot": null,
+    "reasoning_effort": "high",
+    "cli_version": "codex-cli 0.158.0-alpha.2.1",
+    "prompt_sha256": "c0913e5e20eaf056f48502337366fbe76c1b255af01d9c895fea286d187587c7",
+    "event_sha256": "1cc8557e6d80e5ad30788e6a3db00ebc28d1960db12ce4582327bbdcae7ab8d5",
+    "stderr_sha256": "cedbfc71b6661d7cd04a6c21ba596a351619cc76ecdc5d43e638290edc408779",
+    "tool_item_count": 0,
+    "private_record_sha256": "f993efc12986b4ebcee4424a6d00d7cbe2d63f58709e420c15a6779cd32c1908"
+  },
+  {
+    "case_id": "pro:dacode_smolagents_0096",
+    "condition": "D_v2_core",
+    "trial": 1,
+    "dataset": "Who&When Pro",
+    "prediction": {
+      "agents": [],
+      "location": "step:4",
+      "error_mode": "A.1",
+      "confidence": 0.99
+    },
+    "reason_sha256": "959fd0463ce8fe9e713048795b3242393d9484377d7df276ab659b62e9f6f521",
+    "scores": {
+      "valid": true,
+      "location": false,
+      "agent": null,
+      "joint": false,
+      "error_mode": false
+    },
+    "status": "completed",
+    "started_at": "2026-09-28T18:24:40.486479+00:00",
+    "elapsed_seconds": 53.38387533300556,
+    "usage": {
+      "input_tokens": 13870,
+      "cached_input_tokens": 0,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 174,
+      "reasoning_output_tokens": 58
+    },
+    "model_requested": "gpt-6-astra",
+    "model_snapshot": null,
+    "reasoning_effort": "high",
+    "cli_version": "codex-cli 0.158.0-alpha.2.1",
+    "prompt_sha256": "f5c25ff50852f5d34fa2d13094024f2172ce75caa213afde2f9c53bbf4c48547",
+    "event_sha256": "72981db1ddafa464160ba9dccb35365f690bf4c6adb5ea32d4b856c934c85cd2",
+    "stderr_sha256": "4b00e397ddc4409734440fc7843ce871679b7c4ee8a2e163680118c0f12b57be",
+    "tool_item_count": 0,
+    "private_record_sha256": "1f92ddec2bccb5e5db47b7eacd50b71d09f6d61cc0ef9d436b14ae887f867bfa"
+  },
+  {
+    "case_id": "ww:Algorithm-Generated:50",
+    "condition": "A_no_skill",
+    "trial": 2,
+    "dataset": "Who&When",
+    "prediction": {
+      "agents": [
+        "Financial_Expert"
+      ],
+      "location": "history:9",
+      "error_mode": null,
+      "confidence": 0.38
+    },
+    "reason_sha256": "b7aa00707f9943c5bcbb68e6144cbde44fde69bf598cab5d39437d74ce4e5083",
+    "scores": {
+      "valid": true,
+      "location": false,
+      "agent": false,
+      "joint": false,
+      "error_mode": null
+    },
+    "status": "completed",
+    "started_at": "2026-09-28T18:24:58.190263+00:00",
+    "elapsed_seconds": 44.85094508295879,
+    "usage": {
+      "input_tokens": 13060,
+      "cached_input_tokens": 7552,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 354,
+      "reasoning_output_tokens": 233
+    },
+    "model_requested": "gpt-6-astra",
+    "model_snapshot": null,
+    "reasoning_effort": "high",
+    "cli_version": "codex-cli 0.158.0-alpha.2.1",
+    "prompt_sha256": "6b0af67077e0c5eced1d8227077e2541e1817dd5a2d0d1e7be285278c8b7869d",
+    "event_sha256": "148324bc89a7bda48912d2882e76a895559601b331fd2e4fdcea519b1c9771cb",
+    "stderr_sha256": "5fd75c52d3c587aa5be7c9d310e8640e6bc71acb81faaa33f269b2d8eb753780",
+    "tool_item_count": 0,
+    "private_record_sha256": "8e2286364144b5f6824e9d6086979bc4e3351668e8c6372b567efd96dccbd353"
+  },
+  {
+    "case_id": "ww:Algorithm-Generated:50",
+    "condition": "B_v1_full",
+    "trial": 2,
+    "dataset": "Who&When",
+    "prediction": {
+      "agents": [
+        "DataAnalysis_Expert"
+      ],
+      "location": "history:3",
+      "error_mode": null,
+      "confidence": 0.25
+    },
+    "reason_sha256": "3697198c85d276a5c2328be59a9d5d3a637bac6c635f2122545a361c3c0c286e",
+    "scores": {
+      "valid": true,
+      "location": true,
+      "agent": true,
+      "joint": true,
+      "error_mode": null
+    },
+    "status": "completed",
+    "started_at": "2026-09-28T18:24:58.184519+00:00",
+    "elapsed_seconds": 50.71442675002618,
+    "usage": {
+      "input_tokens": 19510,
+      "cached_input_tokens": 7552,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 546,
+      "reasoning_output_tokens": 413
+    },
+    "model_requested": "gpt-6-astra",
+    "model_snapshot": null,
+    "reasoning_effort": "high",
+    "cli_version": "codex-cli 0.158.0-alpha.2.1",
+    "prompt_sha256": "8decf5f32c63e097cf80c3d541a06a6824827a4240795e9c0c85cbb91f72682e",
+    "event_sha256": "c5356a5396686fe75c787975c9e4d45e86bb96ccd4ba1c71ec595c0a2c2b05e2",
+    "stderr_sha256": "c859e6468858e05ff3190468e8bc8c7619fd16bc16128455bfe956337baaf8ec",
+    "tool_item_count": 0,
+    "private_record_sha256": "e729b122db2bb067e27f0a6f3628ab39abfd588bcc07c393c2bd8ba2e7d6d3b8"
+  },
+  {
+    "case_id": "ww:Algorithm-Generated:50",
+    "condition": "C_v1_core",
+    "trial": 2,
+    "dataset": "Who&When",
+    "prediction": {
+      "agents": [
+        "DataAnalysis_Expert"
+      ],
+      "location": "history:3",
+      "error_mode": null,
+      "confidence": 0.48
+    },
+    "reason_sha256": "dc34e4d44d78006a2312958df469579060a0db7c20d2c37ac080a53c302f22fc",
+    "scores": {
+      "valid": true,
+      "location": true,
+      "agent": true,
+      "joint": true,
+      "error_mode": null
+    },
+    "status": "completed",
+    "started_at": "2026-09-28T18:25:34.040380+00:00",
+    "elapsed_seconds": 43.08137345901923,
+    "usage": {
+      "input_tokens": 14144,
+      "cached_input_tokens": 0,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 336,
+      "reasoning_output_tokens": 216
+    },
+    "model_requested": "gpt-6-astra",
+    "model_snapshot": null,
+    "reasoning_effort": "high",
+    "cli_version": "codex-cli 0.158.0-alpha.2.1",
+    "prompt_sha256": "f9ef8e8ae748bfa20f3fa6b4ef8bb1f92cd601250905842225d30784841d6997",
+    "event_sha256": "611051b0f18c549e49371c5e829c7eba1b307e8dfa96da7c8272dba0612c85b7",
+    "stderr_sha256": "b7ba43dd101c2016dc5668d7b76a729818996fd904a7cbdc64ba5b57441a659e",
+    "tool_item_count": 0,
+    "private_record_sha256": "9cb1c5f5b7632bee47fbac648bb81038e81012f6945b62da14603adde489fd44"
+  },
+  {
+    "case_id": "ww:Algorithm-Generated:50",
+    "condition": "D_v2_core",
+    "trial": 2,
+    "dataset": "Who&When",
+    "prediction": {
+      "agents": [
+        "Financial_Expert"
+      ],
+      "location": "history:9",
+      "error_mode": null,
+      "confidence": 0.43
+    },
+    "reason_sha256": "ca51f6a48c0eac721dd652e85d9eb0aab94df88a231f2214a7ac0f47fe06b383",
+    "scores": {
+      "valid": true,
+      "location": false,
+      "agent": false,
+      "joint": false,
+      "error_mode": null
+    },
+    "status": "completed",
+    "started_at": "2026-09-28T18:25:43.129565+00:00",
+    "elapsed_seconds": 44.75642270903336,
+    "usage": {
+      "input_tokens": 13471,
+      "cached_input_tokens": 0,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 481,
+      "reasoning_output_tokens": 333
+    },
+    "model_requested": "gpt-6-astra",
+    "model_snapshot": null,
+    "reasoning_effort": "high",
+    "cli_version": "codex-cli 0.158.0-alpha.2.1",
+    "prompt_sha256": "6672f5c763538136c6ea7b15811a6af1b7407a472dd540df90fcef575f39cf22",
+    "event_sha256": "052b48be0cb0022924c0b63783633c867d490cb117d39db77f6ced561d5e5174",
+    "stderr_sha256": "c557fc52de0513684928158ed38f1a3bae612955f0d3f307e258e705e43a4090",
+    "tool_item_count": 0,
+    "private_record_sha256": "3fb1fccc1c43bb4e484c912b59b0f6bd8864b99980e5562f3cf432c96254219f"
+  },
+  {
+    "case_id": "ww:Algorithm-Generated:68",
+    "condition": "D_v2_core",
+    "trial": 2,
+    "dataset": "Who&When",
+    "prediction": {
+      "agents": [
+        "Verification_Expert"
+      ],
+      "location": "history:3",
+      "error_mode": null,
+      "confidence": 0.84
+    },
+    "reason_sha256": "6d2a089949f7881c5875ce7b24f8bec107d1af16af730029ef6c24e0ff6bc25d",
+    "scores": {
+      "valid": true,
+      "location": true,
+      "agent": true,
+      "joint": true,
+      "error_mode": null
+    },
+    "status": "completed",
+    "started_at": "2026-09-28T18:25:49.004575+00:00",
+    "elapsed_seconds": 38.84748191596009,
+    "usage": {
+      "input_tokens": 13457,
+      "cached_input_tokens": 7552,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 438,
+      "reasoning_output_tokens": 296
+    },
+    "model_requested": "gpt-6-astra",
+    "model_snapshot": null,
+    "reasoning_effort": "high",
+    "cli_version": "codex-cli 0.158.0-alpha.2.1",
+    "prompt_sha256": "040532db9c06a152e4a60ca596b31fd5730b13089915160f1ab58d35065dd65d",
+    "event_sha256": "0ca908fb05a008e635c0ce063e71acbc710459ebc3f57ed7b18b516834ce7ecc",
+    "stderr_sha256": "8d4a84226397714a3d5f6bebd3cfbe8321fad687d0775c49ec0ed016abfd7926",
+    "tool_item_count": 0,
+    "private_record_sha256": "ac1c15c3619aacb53c445be6ac0e3c70b6c2eb989a8040db99f41f8a3a90fb1e"
+  },
+  {
+    "case_id": "ww:Algorithm-Generated:68",
+    "condition": "A_no_skill",
+    "trial": 2,
+    "dataset": "Who&When",
+    "prediction": {
+      "agents": [
+        "Verification_Expert"
+      ],
+      "location": "history:3",
+      "error_mode": null,
+      "confidence": 0.91
+    },
+    "reason_sha256": "28579e0eb638441d92701f75b78c3446972eedca2e8a88e1cb1cd84c61b94dd3",
+    "scores": {
+      "valid": true,
+      "location": true,
+      "agent": true,
+      "joint": true,
+      "error_mode": null
+    },
+    "status": "completed",
+    "started_at": "2026-09-28T18:26:17.224537+00:00",
+    "elapsed_seconds": 45.05175933300052,
+    "usage": {
+      "input_tokens": 12432,
+      "cached_input_tokens": 7552,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 326,
+      "reasoning_output_tokens": 219
+    },
+    "model_requested": "gpt-6-astra",
+    "model_snapshot": null,
+    "reasoning_effort": "high",
+    "cli_version": "codex-cli 0.158.0-alpha.2.1",
+    "prompt_sha256": "c168d7a0217d7b35d11c8604768e4efd0d3e6784d3c7551c8a5b9c1fbd9f68ca",
+    "event_sha256": "dd8f23c1b9fd80b49fd820c0995596341872e593dc4e76bf5cd02518f90f85d8",
+    "stderr_sha256": "8082d5788b642ede480edd81621dddda68ee35f269a84f8b29647bd483613523",
+    "tool_item_count": 0,
+    "private_record_sha256": "d58397f92f16b299c7b2983553de0c83c967146a327ef56ceed8ad772b83d45e"
+  },
+  {
+    "case_id": "ww:Algorithm-Generated:68",
+    "condition": "C_v1_core",
+    "trial": 2,
+    "dataset": "Who&When",
+    "prediction": {
+      "agents": [
+        "Verification_Expert"
+      ],
+      "location": "history:3",
+      "error_mode": null,
+      "confidence": 0.88
+    },
+    "reason_sha256": "46866cc9eb6965d1283f32cb14c6d5de49ca10dff01bc3d631be28300aff3872",
+    "scores": {
+      "valid": true,
+      "location": true,
+      "agent": true,
+      "joint": true,
+      "error_mode": null
+    },
+    "status": "completed",
+    "started_at": "2026-09-28T18:26:28.036442+00:00",
+    "elapsed_seconds": 34.25673479103716,
+    "usage": {
+      "input_tokens": 14132,
+      "cached_input_tokens": 7552,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 433,
+      "reasoning_output_tokens": 309
+    },
+    "model_requested": "gpt-6-astra",
+    "model_snapshot": null,
+    "reasoning_effort": "high",
+    "cli_version": "codex-cli 0.158.0-alpha.2.1",
+    "prompt_sha256": "47ad05450dd1ad9a4a08c52ca0ee7a0f05ad06c8ebe3eec6e50b80cc7736931a",
+    "event_sha256": "6e6a131b4b79f82b975782880bb207b7b1c3a0ad4ba4d54a052f7fbb23ce7dc9",
+    "stderr_sha256": "4f311d88fd25814432109fb64e53de10a6fd9bb41b7a42a830da6435847f12ae",
+    "tool_item_count": 0,
+    "private_record_sha256": "80ad524fcc5967906ddc681e587f372f64ceb3304082d7c4a6a05e1e956bbdde"
+  },
+  {
+    "case_id": "ww:Algorithm-Generated:68",
+    "condition": "B_v1_full",
+    "trial": 2,
+    "dataset": "Who&When",
+    "prediction": {
+      "agents": [
+        "Verification_Expert"
+      ],
+      "location": "history:3",
+      "error_mode": null,
+      "confidence": 0.91
+    },
+    "reason_sha256": "0c575b3b33fb863645ad57a72c45a0ed1ab8dc3517a83fbe1d1128217ee304db",
+    "scores": {
+      "valid": true,
+      "location": true,
+      "agent": true,
+      "joint": true,
+      "error_mode": null
+    },
+    "status": "completed",
+    "started_at": "2026-09-28T18:26:28.031041+00:00",
+    "elapsed_seconds": 34.21351345797302,
+    "usage": {
+      "input_tokens": 18882,
+      "cached_input_tokens": 7552,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 445,
+      "reasoning_output_tokens": 314
+    },
+    "model_requested": "gpt-6-astra",
+    "model_snapshot": null,
+    "reasoning_effort": "high",
+    "cli_version": "codex-cli 0.158.0-alpha.2.1",
+    "prompt_sha256": "02869ce147682ff55c75cea898430f39bbf1b5651106b737374232cdd1e66488",
+    "event_sha256": "28d68e351d6f46185492c4b1f7c28074d931eec21e190e5503aa0fbde8386e5d",
+    "stderr_sha256": "f7c1a2ec52e353bfef0dc3e0c4f92b0b43407f64feb72073a218134302b3e43f",
+    "tool_item_count": 0,
+    "private_record_sha256": "da18f3a687008964834ab3a457d8f6875ae0e786f94b84bf01e2a0022b3e6961"
+  },
+  {
+    "case_id": "pro:dacode_smolagents_0096",
+    "condition": "C_v1_core",
+    "trial": 2,
+    "dataset": "Who&When Pro",
+    "prediction": {
+      "agents": [],
+      "location": "step:4",
+      "error_mode": "A.1",
+      "confidence": 0.99
+    },
+    "reason_sha256": "8fc0a51f76d98d869f976829cc0c68674e436c060fc2e0f52f15f3597a257234",
+    "scores": {
+      "valid": true,
+      "location": false,
+      "agent": null,
+      "joint": false,
+      "error_mode": false
+    },
+    "status": "completed",
+    "started_at": "2026-09-28T18:27:02.622301+00:00",
+    "elapsed_seconds": 33.40894387499429,
+    "usage": {
+      "input_tokens": 14545,
+      "cached_input_tokens": 7552,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 149,
+      "reasoning_output_tokens": 43
+    },
+    "model_requested": "gpt-6-astra",
+    "model_snapshot": null,
+    "reasoning_effort": "high",
+    "cli_version": "codex-cli 0.158.0-alpha.2.1",
+    "prompt_sha256": "c0913e5e20eaf056f48502337366fbe76c1b255af01d9c895fea286d187587c7",
+    "event_sha256": "c1da2d054c1a7dbe33473d0c38a8407a5b863df65b2c962b54d11d5d963d5b2f",
+    "stderr_sha256": "c8dbbe517b373da421cb3414e1efd2b1b23491204fe617d9240f7ba6dd119df3",
+    "tool_item_count": 0,
+    "private_record_sha256": "f4988a4d42e912a85182c85db802b5c1321add187815601e689c48486b1dd04e"
+  },
+  {
+    "case_id": "pro:dacode_smolagents_0096",
+    "condition": "D_v2_core",
+    "trial": 2,
+    "dataset": "Who&When Pro",
+    "prediction": {
+      "agents": [],
+      "location": "step:4",
+      "error_mode": "A.1",
+      "confidence": 0.99
+    },
+    "reason_sha256": "d5c440d7daa62d602b406c356fdc5fb525496abd94c4e2ae4d2c1aee4df7f67c",
+    "scores": {
+      "valid": true,
+      "location": false,
+      "agent": null,
+      "joint": false,
+      "error_mode": false
+    },
+    "status": "completed",
+    "started_at": "2026-09-28T18:27:02.630858+00:00",
+    "elapsed_seconds": 34.029255041037686,
+    "usage": {
+      "input_tokens": 13870,
+      "cached_input_tokens": 7552,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 196,
+      "reasoning_output_tokens": 64
+    },
+    "model_requested": "gpt-6-astra",
+    "model_snapshot": null,
+    "reasoning_effort": "high",
+    "cli_version": "codex-cli 0.158.0-alpha.2.1",
+    "prompt_sha256": "f5c25ff50852f5d34fa2d13094024f2172ce75caa213afde2f9c53bbf4c48547",
+    "event_sha256": "d03fb447ad76efde10d6754adf2eb58cbdbc7cb600afc5bc0b137c525e8de4d2",
+    "stderr_sha256": "fa564a4ed218274e6c110fcc51d8044aeb1e05a3d9dc69f6981627cf189ebf10",
+    "tool_item_count": 0,
+    "private_record_sha256": "1edd5a8ee6574d33f821ac2b5f22bc268a824f5c70279ff1d53b7bdd6d86c385"
+  },
+  {
+    "case_id": "pro:dacode_smolagents_0096",
+    "condition": "B_v1_full",
+    "trial": 2,
+    "dataset": "Who&When Pro",
+    "prediction": {
+      "agents": [],
+      "location": "step:4",
+      "error_mode": "A.1",
+      "confidence": 0.99
+    },
+    "reason_sha256": "f4ba59e7dc0ae9278a16adf863f306a3785cb6a56b5e6a4a24bb5fc21cf92808",
+    "scores": {
+      "valid": true,
+      "location": false,
+      "agent": null,
+      "joint": false,
+      "error_mode": false
+    },
+    "status": "completed",
+    "started_at": "2026-09-28T18:27:02.637405+00:00",
+    "elapsed_seconds": 33.40801366697997,
+    "usage": {
+      "input_tokens": 19297,
+      "cached_input_tokens": 0,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 160,
+      "reasoning_output_tokens": 46
+    },
+    "model_requested": "gpt-6-astra",
+    "model_snapshot": null,
+    "reasoning_effort": "high",
+    "cli_version": "codex-cli 0.158.0-alpha.2.1",
+    "prompt_sha256": "9f328e205d24db698bce894fd686871fbea57194c003d7b2cb45b261e43d5363",
+    "event_sha256": "3079adb5367a8199a98a60279d08431b6c282d28af8567c760f4cdd0bf5463dc",
+    "stderr_sha256": "fa0c9814233b6950724010c6f503b3ae29129e5109c049e909986ce107fdc85f",
+    "tool_item_count": 0,
+    "private_record_sha256": "74ae494739b3746dbcbdb8d9b1a2a204a7f16b7f88b665eea35e24d51b54b387"
+  },
+  {
+    "case_id": "pro:dacode_smolagents_0096",
+    "condition": "A_no_skill",
+    "trial": 2,
+    "dataset": "Who&When Pro",
+    "prediction": {
+      "agents": [],
+      "location": "step:4",
+      "error_mode": "A.1",
+      "confidence": 0.99
+    },
+    "reason_sha256": "c08d1cb1f48cb9bbdea5dfa4d2b05ea51989b8705138c3cad0474128cae6730c",
+    "scores": {
+      "valid": true,
+      "location": false,
+      "agent": null,
+      "joint": false,
+      "error_mode": false
+    },
+    "status": "completed",
+    "started_at": "2026-09-28T18:27:36.259381+00:00",
+    "elapsed_seconds": 32.51703062502202,
+    "usage": {
+      "input_tokens": 12843,
+      "cached_input_tokens": 7552,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 146,
+      "reasoning_output_tokens": 40
+    },
+    "model_requested": "gpt-6-astra",
+    "model_snapshot": null,
+    "reasoning_effort": "high",
+    "cli_version": "codex-cli 0.158.0-alpha.2.1",
+    "prompt_sha256": "8a58d8b69ac67f19cd95463463242750d1cb8d26f933ff537d9aa236115abb59",
+    "event_sha256": "cefa83bbca7dd2a59b83316322e76b480db8f573d431f0c2a54be58486d5b95f",
+    "stderr_sha256": "da971a3bf0561f54cb7c8d69504ba0c2c786f1c2fef30338c065d91467775161",
+    "tool_item_count": 0,
+    "private_record_sha256": "aef10e88bab9b3ad8b13716148fee2f1d479b09ca1a608fb3956b668a6b08b9f"
+  },
+  {
+    "case_id": "ww:Algorithm-Generated:88",
+    "condition": "A_no_skill",
+    "trial": 2,
+    "dataset": "Who&When",
+    "prediction": {
+      "agents": [
+        "DataValidation_Expert"
+      ],
+      "location": "history:2",
+      "error_mode": null,
+      "confidence": 0.86
+    },
+    "reason_sha256": "9ba5b6c7b599c7fcc56ef7935710fdf8452bd02dfbdc07d10a567b9d980ffec7",
+    "scores": {
+      "valid": true,
+      "location": false,
+      "agent": false,
+      "joint": false,
+      "error_mode": null
+    },
+    "status": "completed",
+    "started_at": "2026-09-28T18:27:36.252597+00:00",
+    "elapsed_seconds": 34.4540567920194,
+    "usage": {
+      "input_tokens": 14150,
+      "cached_input_tokens": 7552,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 330,
+      "reasoning_output_tokens": 200
+    },
+    "model_requested": "gpt-6-astra",
+    "model_snapshot": null,
+    "reasoning_effort": "high",
+    "cli_version": "codex-cli 0.158.0-alpha.2.1",
+    "prompt_sha256": "dbebf4b673692b9909ab9169e201e65edf5fd30cf86f99dec1687def49fff0e3",
+    "event_sha256": "495b1a144516bd9ca8242a90bb5d34fbb0c9530e9f7e6639b9f9039fc4a5d046",
+    "stderr_sha256": "d302cdb681761b3c5534159b415350ea660f93cc530ab0a1425cabc75ee93d88",
+    "tool_item_count": 0,
+    "private_record_sha256": "9fa1525003c0cf6c77b1eb3b2e0ee53c7ceaa3449ea0da2beeba6333fa2006be"
+  },
+  {
+    "case_id": "ww:Algorithm-Generated:88",
+    "condition": "B_v1_full",
+    "trial": 2,
+    "dataset": "Who&When",
+    "prediction": {
+      "agents": [
+        "DataValidation_Expert"
+      ],
+      "location": "history:2",
+      "error_mode": null,
+      "confidence": 0.86
+    },
+    "reason_sha256": "8322dd925ceb4325134defdfa4ee44aab460bff9414c8e268fdba2491a78722c",
+    "scores": {
+      "valid": true,
+      "location": false,
+      "agent": false,
+      "joint": false,
+      "error_mode": null
+    },
+    "status": "completed",
+    "started_at": "2026-09-28T18:27:36.678746+00:00",
+    "elapsed_seconds": 39.67889966600342,
+    "usage": {
+      "input_tokens": 20604,
+      "cached_input_tokens": 0,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 340,
+      "reasoning_output_tokens": 195
+    },
+    "model_requested": "gpt-6-astra",
+    "model_snapshot": null,
+    "reasoning_effort": "high",
+    "cli_version": "codex-cli 0.158.0-alpha.2.1",
+    "prompt_sha256": "a5d4b6ac7c8b084440e7fa7712cd05f5f9282e5f783149b058de06b1d28116eb",
+    "event_sha256": "73ff69b18af39eb6355bef157e87db72c8211fc72fb145243449a4b8dc7daa85",
+    "stderr_sha256": "7eaa2c87c791eb2bc84c69af0e90c13c13f2fb50570f650c85ba687526073302",
+    "tool_item_count": 0,
+    "private_record_sha256": "03468ab1b7f2913e08cd8eed8dd06aaf85272c5e401906b917d454911fe55146"
+  },
+  {
+    "case_id": "ww:Algorithm-Generated:88",
+    "condition": "C_v1_core",
+    "trial": 2,
+    "dataset": "Who&When",
+    "prediction": {
+      "agents": [
+        "DataValidation_Expert"
+      ],
+      "location": "history:2",
+      "error_mode": null,
+      "confidence": 0.85
+    },
+    "reason_sha256": "64ebdafb7ad72eebd41518263efbe788ebd4c4f079ae6e7d114c0df613e9f969",
+    "scores": {
+      "valid": true,
+      "location": false,
+      "agent": false,
+      "joint": false,
+      "error_mode": null
+    },
+    "status": "completed",
+    "started_at": "2026-09-28T18:28:09.083836+00:00",
+    "elapsed_seconds": 40.37392583396286,
+    "usage": {
+      "input_tokens": 15852,
+      "cached_input_tokens": 7552,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 302,
+      "reasoning_output_tokens": 169
+    },
+    "model_requested": "gpt-6-astra",
+    "model_snapshot": null,
+    "reasoning_effort": "high",
+    "cli_version": "codex-cli 0.158.0-alpha.2.1",
+    "prompt_sha256": "0c729463570b4cc07485e90f1d81ea53a26f3da110535697a5fe20bb064b7067",
+    "event_sha256": "9b600763f0da6cc916190f0d3f0d96ccf1f578dc4d5286e5810b6657e56abdb9",
+    "stderr_sha256": "cc63f9e0e64fbfba36e6548527047c1ca2a1463947b755415f59c0ae6d0ca831",
+    "tool_item_count": 0,
+    "private_record_sha256": "f2cba93cf62ad02ea654c3259c9a0296ffb661a8394954259ddaf09085b5adee"
+  },
+  {
+    "case_id": "ww:Algorithm-Generated:88",
+    "condition": "D_v2_core",
+    "trial": 2,
+    "dataset": "Who&When",
+    "prediction": {
+      "agents": [
+        "DataValidation_Expert"
+      ],
+      "location": "history:2",
+      "error_mode": null,
+      "confidence": 0.86
+    },
+    "reason_sha256": "3273b0e576fbb32a6d1d303e7897accfa7256547534e41612cf38e87b53a87ae",
+    "scores": {
+      "valid": true,
+      "location": false,
+      "agent": false,
+      "joint": false,
+      "error_mode": null
+    },
+    "status": "completed",
+    "started_at": "2026-09-28T18:28:10.734416+00:00",
+    "elapsed_seconds": 38.76332349999575,
+    "usage": {
+      "input_tokens": 15179,
+      "cached_input_tokens": 7552,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 361,
+      "reasoning_output_tokens": 212
+    },
+    "model_requested": "gpt-6-astra",
+    "model_snapshot": null,
+    "reasoning_effort": "high",
+    "cli_version": "codex-cli 0.158.0-alpha.2.1",
+    "prompt_sha256": "c1bca95d23071ca250ed72d4a6b5c67f4e8d179f773241f26a9ab63fc1336871",
+    "event_sha256": "90d1672d0974f7e549ad74978c0e7d82774f8f189e6fe7334162275de61e6f89",
+    "stderr_sha256": "4c04a54d0ae329c278ea6a36221fac0776900e1b661450485de2db79160e232d",
+    "tool_item_count": 0,
+    "private_record_sha256": "fee1b0a696b8db42ec586fb15dc89ddac7a55ff71001ae0ba3b3fe2e9ddbb844"
+  },
+  {
+    "case_id": "pro:math_debate_0084",
+    "condition": "B_v1_full",
+    "trial": 2,
+    "dataset": "Who&When Pro",
+    "prediction": {
+      "agents": [
+        "agent_0",
+        "agent_2"
+      ],
+      "location": "round:0",
+      "error_mode": "R.4",
+      "confidence": 0.99
+    },
+    "reason_sha256": "1824431d7cd7cc88c763815ea767eb6e504dc20bf98b526f26e32140d26a3637",
+    "scores": {
+      "valid": true,
+      "location": false,
+      "agent": true,
+      "joint": false,
+      "error_mode": false
+    },
+    "status": "completed",
+    "started_at": "2026-09-28T18:28:16.381200+00:00",
+    "elapsed_seconds": 27.275822416995652,
+    "usage": {
+      "input_tokens": 22411,
+      "cached_input_tokens": 7552,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 249,
+      "reasoning_output_tokens": 103
+    },
+    "model_requested": "gpt-6-astra",
+    "model_snapshot": null,
+    "reasoning_effort": "high",
+    "cli_version": "codex-cli 0.158.0-alpha.2.1",
+    "prompt_sha256": "8bc8ce3cc9bb6c2deeb0c78b2df167bb1c890bbffb1db426cac6a586b9cbea87",
+    "event_sha256": "d0a99884c1a9dff50fbf719fd212ed232a76ac0eb4a36dec4f131cf2f71248ea",
+    "stderr_sha256": "29ac71b73290e99df412bbc4a0d306daf0ad6848f158711faa000e10ebdc55a5",
+    "tool_item_count": 0,
+    "private_record_sha256": "e7c5b16328a1034f4baf2a4cb78e26680172d45f456e98f280a0f60993d3f108"
+  },
+  {
+    "case_id": "pro:math_debate_0084",
+    "condition": "A_no_skill",
+    "trial": 2,
+    "dataset": "Who&When Pro",
+    "prediction": {
+      "agents": [
+        "agent_0",
+        "agent_2"
+      ],
+      "location": "round:0",
+      "error_mode": "R.2",
+      "confidence": 0.99
+    },
+    "reason_sha256": "5e950ad135f8e6b0323d19a4c3076b21f80a020cfbe267c566d420b9698cb829",
+    "scores": {
+      "valid": true,
+      "location": false,
+      "agent": true,
+      "joint": false,
+      "error_mode": false
+    },
+    "status": "completed",
+    "started_at": "2026-09-28T18:28:43.689392+00:00",
+    "elapsed_seconds": 30.274979874957353,
+    "usage": {
+      "input_tokens": 15953,
+      "cached_input_tokens": 0,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 282,
+      "reasoning_output_tokens": 145
+    },
+    "model_requested": "gpt-6-astra",
+    "model_snapshot": null,
+    "reasoning_effort": "high",
+    "cli_version": "codex-cli 0.158.0-alpha.2.1",
+    "prompt_sha256": "ede7f82ede4f99b60d6a94c388db31503f41e9500f02f2ba62d3f57c03b28f58",
+    "event_sha256": "f2da66ae88cdb19aa0f1ede77a2689c849517671f1fb8ee02297800e99e6973c",
+    "stderr_sha256": "9b547ab12db21b7e0a71d49374b6693018117726d69d264a275d477247a7b239",
+    "tool_item_count": 0,
+    "private_record_sha256": "f71f1b68e32046150c73995c479dff2f1232bbb92836875d917afd3343a1a65f"
+  },
+  {
+    "case_id": "pro:math_debate_0084",
+    "condition": "D_v2_core",
+    "trial": 2,
+    "dataset": "Who&When Pro",
+    "prediction": {
+      "agents": [
+        "agent_0",
+        "agent_2"
+      ],
+      "location": "round:0",
+      "error_mode": "R.4",
+      "confidence": 0.99
+    },
+    "reason_sha256": "b5e441693de5238d5f545430d536b3bd8dbe96d873c8107512137ab981f01284",
+    "scores": {
+      "valid": true,
+      "location": false,
+      "agent": true,
+      "joint": false,
+      "error_mode": false
+    },
+    "status": "completed",
+    "started_at": "2026-09-28T18:28:49.553617+00:00",
+    "elapsed_seconds": 34.277601917041466,
+    "usage": {
+      "input_tokens": 16986,
+      "cached_input_tokens": 7552,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 214,
+      "reasoning_output_tokens": 74
+    },
+    "model_requested": "gpt-6-astra",
+    "model_snapshot": null,
+    "reasoning_effort": "high",
+    "cli_version": "codex-cli 0.158.0-alpha.2.1",
+    "prompt_sha256": "e06aa19e704977e64bd53d8608287de215b55992f8a16217a9c239ea751a28b5",
+    "event_sha256": "3421a850c1b496165be79833be7745777017d2798916b16423b39ecea4e7ae4b",
+    "stderr_sha256": "248e50e0e5f9db53a7e8d980b3b42a64b300788f06b0ccfa81f52f956a2afc35",
+    "tool_item_count": 0,
+    "private_record_sha256": "67b6aaeebf048f2a2294836f22a639e6317d7bc055fea3a0582d288c6ce8fb86"
+  },
+  {
+    "case_id": "pro:math_debate_0084",
+    "condition": "C_v1_core",
+    "trial": 2,
+    "dataset": "Who&When Pro",
+    "prediction": {
+      "agents": [
+        "agent_0",
+        "agent_2"
+      ],
+      "location": "round:0",
+      "error_mode": "R.4",
+      "confidence": 0.99
+    },
+    "reason_sha256": "60ef3f70d5a11265d8ddeed76b7599e3ec08854fc72915aae8830ccbf8a98ec9",
+    "scores": {
+      "valid": true,
+      "location": false,
+      "agent": true,
+      "joint": false,
+      "error_mode": false
+    },
+    "status": "completed",
+    "started_at": "2026-09-28T18:28:49.549709+00:00",
+    "elapsed_seconds": 34.38711166701978,
+    "usage": {
+      "input_tokens": 17659,
+      "cached_input_tokens": 7552,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 237,
+      "reasoning_output_tokens": 95
+    },
+    "model_requested": "gpt-6-astra",
+    "model_snapshot": null,
+    "reasoning_effort": "high",
+    "cli_version": "codex-cli 0.158.0-alpha.2.1",
+    "prompt_sha256": "4f2f3c998b50e3bee5faca58fa803702fd7a95260a4dea24997184be20fbe0ec",
+    "event_sha256": "86d6111cfb9cb5ec36330668dc375f35e512dde87d83b8886686edfceba241e3",
+    "stderr_sha256": "ffce88ba81c6f1b21afd7183803f5a83762458355955f0e758a0a93f7f5a5acf",
+    "tool_item_count": 0,
+    "private_record_sha256": "fef58889156c77a30b9ec7ed8015e98ca7a1db9a773cdf2ec83990a48da53c28"
+  },
+  {
+    "case_id": "ww:Hand-Crafted:33",
+    "condition": "B_v1_full",
+    "trial": 2,
+    "dataset": "Who&When",
+    "prediction": {
+      "agents": [
+        "Orchestrator"
+      ],
+      "location": "history:8",
+      "error_mode": null,
+      "confidence": 0.97
+    },
+    "reason_sha256": "ce1883fc59e3d2259079c37800c18af2fa42650839347f9b9cc13b20ab537ac7",
+    "scores": {
+      "valid": true,
+      "location": true,
+      "agent": false,
+      "joint": false,
+      "error_mode": null
+    },
+    "status": "completed",
+    "started_at": "2026-09-28T18:29:14.009218+00:00",
+    "elapsed_seconds": 41.22971745801624,
+    "usage": {
+      "input_tokens": 20499,
+      "cached_input_tokens": 7552,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 239,
+      "reasoning_output_tokens": 94
+    },
+    "model_requested": "gpt-6-astra",
+    "model_snapshot": null,
+    "reasoning_effort": "high",
+    "cli_version": "codex-cli 0.158.0-alpha.2.1",
+    "prompt_sha256": "f67a632ac38151c50a8c1096c59553c8c86dde11f0b6645a79e7d6969a0cd87c",
+    "event_sha256": "dc894fa0618023987a98f9588e446ec9d062180dae94e7813ecf7273cbb81564",
+    "stderr_sha256": "4d2b41d768e4be14474d9028476c1879b779a9bcfb69652be17e2995925169ba",
+    "tool_item_count": 0,
+    "private_record_sha256": "fab690c3c9165a0d26511060ea6d4c84882d5c062e768690f1dfbe3907df9d6e"
+  },
+  {
+    "case_id": "ww:Hand-Crafted:33",
+    "condition": "A_no_skill",
+    "trial": 2,
+    "dataset": "Who&When",
+    "prediction": {
+      "agents": [
+        "Orchestrator"
+      ],
+      "location": "history:8",
+      "error_mode": null,
+      "confidence": 0.95
+    },
+    "reason_sha256": "0921bb260193237e8e50c08a352417f48aa61795adddc0cdc3906883e21c2926",
+    "scores": {
+      "valid": true,
+      "location": true,
+      "agent": false,
+      "joint": false,
+      "error_mode": null
+    },
+    "status": "completed",
+    "started_at": "2026-09-28T18:29:24.108442+00:00",
+    "elapsed_seconds": 31.071370625053532,
+    "usage": {
+      "input_tokens": 14043,
+      "cached_input_tokens": 7552,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 221,
+      "reasoning_output_tokens": 93
+    },
+    "model_requested": "gpt-6-astra",
+    "model_snapshot": null,
+    "reasoning_effort": "high",
+    "cli_version": "codex-cli 0.158.0-alpha.2.1",
+    "prompt_sha256": "9f791e0f063fef5fa0efab3c0df3399ee907b3b71e5af0524b6506cfc948d616",
+    "event_sha256": "ef89e7b156de6007750284e8be5a1f84a487d6bc071e0b774c3e5d1efdfc8390",
+    "stderr_sha256": "37cd09e8f5150fe30cede1b82c710dd1472d084a8cf8c262a2b50822f2f882c8",
+    "tool_item_count": 0,
+    "private_record_sha256": "81fb1522056e3f0ab7ccd72234d0d38605bcc6f8b41f40696e99081427527ed9"
+  },
+  {
+    "case_id": "ww:Hand-Crafted:33",
+    "condition": "D_v2_core",
+    "trial": 2,
+    "dataset": "Who&When",
+    "prediction": {
+      "agents": [
+        "Orchestrator"
+      ],
+      "location": "history:8",
+      "error_mode": null,
+      "confidence": 0.95
+    },
+    "reason_sha256": "4d77b43eddd4465c6aed9d435a9e0d82d5ce353ce245fca39eb2e045bc23f3a4",
+    "scores": {
+      "valid": true,
+      "location": true,
+      "agent": false,
+      "joint": false,
+      "error_mode": null
+    },
+    "status": "completed",
+    "started_at": "2026-09-28T18:29:24.095438+00:00",
+    "elapsed_seconds": 31.09977912501199,
+    "usage": {
+      "input_tokens": 15072,
+      "cached_input_tokens": 7552,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 215,
+      "reasoning_output_tokens": 76
+    },
+    "model_requested": "gpt-6-astra",
+    "model_snapshot": null,
+    "reasoning_effort": "high",
+    "cli_version": "codex-cli 0.158.0-alpha.2.1",
+    "prompt_sha256": "a94459072292c307c8705439bf99bc458eac4975c339288f00c695dae53712ec",
+    "event_sha256": "5823196a83216b023f7bee65144c51b3c0976f16d239e9e0d42c44be1aee7269",
+    "stderr_sha256": "b2e7ef46f1da94624e157fe91b34d6fe2e3cb57f81bad34822017d6e0e0cc401",
+    "tool_item_count": 0,
+    "private_record_sha256": "72d7964fa73e2d4842829bfb964bf530d14742feedb5d452bd96e5e0f2e6d810"
+  },
+  {
+    "case_id": "ww:Hand-Crafted:33",
+    "condition": "C_v1_core",
+    "trial": 2,
+    "dataset": "Who&When",
+    "prediction": {
+      "agents": [
+        "Orchestrator"
+      ],
+      "location": "history:8",
+      "error_mode": null,
+      "confidence": 0.97
+    },
+    "reason_sha256": "ea078820809d836efc9d88e3e9803345b242c4622f50cbfc9211bd82ccec9495",
+    "scores": {
+      "valid": true,
+      "location": true,
+      "agent": false,
+      "joint": false,
+      "error_mode": null
+    },
+    "status": "completed",
+    "started_at": "2026-09-28T18:29:55.312933+00:00",
+    "elapsed_seconds": 36.074908249953296,
+    "usage": {
+      "input_tokens": 15745,
+      "cached_input_tokens": 7552,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 262,
+      "reasoning_output_tokens": 130
+    },
+    "model_requested": "gpt-6-astra",
+    "model_snapshot": null,
+    "reasoning_effort": "high",
+    "cli_version": "codex-cli 0.158.0-alpha.2.1",
+    "prompt_sha256": "d3eb3445befa8831af686425c1384a566a6d8c730eaaaf9d4d32dda9bc92eaca",
+    "event_sha256": "84d2772f7e833b2adb9fb66000c5e11bc78e20dfec0f59551646416250f9b6c0",
+    "stderr_sha256": "5de08a2f4e4f8af91d7ea8fa7031f80e03e7503c9f6b10083a5cd496da4ae825",
+    "tool_item_count": 0,
+    "private_record_sha256": "da9ef833cde2ae39bfd55e1ea4fae04b18679e7103150090a2f84c7a67ca029e"
+  },
+  {
+    "case_id": "pro:alfworld_alfagent_0288",
+    "condition": "A_no_skill",
+    "trial": 2,
+    "dataset": "Who&When Pro",
+    "prediction": {
+      "agents": [],
+      "location": "step:3",
+      "error_mode": "A.1",
+      "confidence": 0.82
+    },
+    "reason_sha256": "b6c124eb67a25ad1ff4e3a1d276f8922c24bd57e90a8a4a0c01d34055e82a008",
+    "scores": {
+      "valid": true,
+      "location": false,
+      "agent": null,
+      "joint": false,
+      "error_mode": false
+    },
+    "status": "completed",
+    "started_at": "2026-09-28T18:29:55.319699+00:00",
+    "elapsed_seconds": 36.036315666977316,
+    "usage": {
+      "input_tokens": 13856,
+      "cached_input_tokens": 7552,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 358,
+      "reasoning_output_tokens": 216
+    },
+    "model_requested": "gpt-6-astra",
+    "model_snapshot": null,
+    "reasoning_effort": "high",
+    "cli_version": "codex-cli 0.158.0-alpha.2.1",
+    "prompt_sha256": "a8882ebfbcc703fe7d4625ddbcd361c9aa40e31aca3853e4b208069b5d050f64",
+    "event_sha256": "c36ead5f9f28df6dae64ebf8439c8b27fc9bd4a858dde161cd4c81aa78e9dbac",
+    "stderr_sha256": "829ec58c4d08a9a53558ec9c3d9160cf2d5afbb495936234acb423f24f20c616",
+    "tool_item_count": 0,
+    "private_record_sha256": "cf920283f23681dd282e2af6a730189ec4b458d227924c40046da115ef0b541d"
+  },
+  {
+    "case_id": "pro:alfworld_alfagent_0288",
+    "condition": "B_v1_full",
+    "trial": 2,
+    "dataset": "Who&When Pro",
+    "prediction": {
+      "agents": [],
+      "location": "step:3",
+      "error_mode": "A.1",
+      "confidence": 0.82
+    },
+    "reason_sha256": "5c2ed5a722b67d0c660602bd53c66edffd7edabd6e9a7e3224e93916615ea431",
+    "scores": {
+      "valid": true,
+      "location": false,
+      "agent": null,
+      "joint": false,
+      "error_mode": false
+    },
+    "status": "completed",
+    "started_at": "2026-09-28T18:29:55.325123+00:00",
+    "elapsed_seconds": 36.07603191700764,
+    "usage": {
+      "input_tokens": 20316,
+      "cached_input_tokens": 7552,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 325,
+      "reasoning_output_tokens": 173
+    },
+    "model_requested": "gpt-6-astra",
+    "model_snapshot": null,
+    "reasoning_effort": "high",
+    "cli_version": "codex-cli 0.158.0-alpha.2.1",
+    "prompt_sha256": "91dcd6f87064cd23028fd9792248204d819dced6bc0d2851844345c5d5fe4294",
+    "event_sha256": "e5861699147f7c36a099a86a2dd00a78d87afebbb96e92fddfb51bbf54dc1e95",
+    "stderr_sha256": "8603adcb39a7c1ffeccc4728f407fc88e5810d13ad16a2ac09cd8ca25a6c6463",
+    "tool_item_count": 0,
+    "private_record_sha256": "ce11cbf8611e518a1c01b87f4dc1b8768807096521f6bf206ed4f39cd7f84b07"
+  },
+  {
+    "case_id": "pro:alfworld_alfagent_0288",
+    "condition": "D_v2_core",
+    "trial": 2,
+    "dataset": "Who&When Pro",
+    "prediction": {
+      "agents": [],
+      "location": "step:3",
+      "error_mode": "A.1",
+      "confidence": 0.8
+    },
+    "reason_sha256": "bbd7e24369b7e10c03a1fe8ad1a74cf41db037cc846ad17a05adf2e554874bd5",
+    "scores": {
+      "valid": true,
+      "location": false,
+      "agent": null,
+      "joint": false,
+      "error_mode": false
+    },
+    "status": "completed",
+    "started_at": "2026-09-28T18:30:31.586604+00:00",
+    "elapsed_seconds": 44.27285108395154,
+    "usage": {
+      "input_tokens": 14887,
+      "cached_input_tokens": 7552,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 421,
+      "reasoning_output_tokens": 274
+    },
+    "model_requested": "gpt-6-astra",
+    "model_snapshot": null,
+    "reasoning_effort": "high",
+    "cli_version": "codex-cli 0.158.0-alpha.2.1",
+    "prompt_sha256": "90d3953566afad74961b7345b8b7a893d933c8c1d598027e8a426785b99b4710",
+    "event_sha256": "6c943304ec4e0edb15b1064da11b60987de273f10e8dcd9e0c0ce19d4b399902",
+    "stderr_sha256": "57bd87ad49c7c1d3dd94f8623dcf3195194c2f72f40f07916eecf12c19eeeb9e",
+    "tool_item_count": 0,
+    "private_record_sha256": "7a5d3bbad33b2fde63204689ae59496d5eb34f34c147254188c692698d8554d3"
+  },
+  {
+    "case_id": "pro:alfworld_alfagent_0288",
+    "condition": "C_v1_core",
+    "trial": 2,
+    "dataset": "Who&When Pro",
+    "prediction": {
+      "agents": [],
+      "location": "step:3",
+      "error_mode": "A.1",
+      "confidence": 0.84
+    },
+    "reason_sha256": "7a19b652c053bf2ed6926ea69db83c68cd74ed27ec4bab1abc1347ab19bb4fbe",
+    "scores": {
+      "valid": true,
+      "location": false,
+      "agent": null,
+      "joint": false,
+      "error_mode": false
+    },
+    "status": "completed",
+    "started_at": "2026-09-28T18:30:31.568078+00:00",
+    "elapsed_seconds": 44.29721204104135,
+    "usage": {
+      "input_tokens": 15562,
+      "cached_input_tokens": 7552,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 432,
+      "reasoning_output_tokens": 290
+    },
+    "model_requested": "gpt-6-astra",
+    "model_snapshot": null,
+    "reasoning_effort": "high",
+    "cli_version": "codex-cli 0.158.0-alpha.2.1",
+    "prompt_sha256": "816d9b0af0afb9d9062fcbc5894cc7ce60500fe3d6ff6782d2de3fd65fd70a85",
+    "event_sha256": "5fe1a6e03a1caa8805c61a219568ecae004e0bdaf1cd8073ca5986f69c2cbfe8",
+    "stderr_sha256": "06cf763a3ead0552c9cf417e2a69e36ef7d4e83a935c1dd250cbc314f537665a",
+    "tool_item_count": 0,
+    "private_record_sha256": "1592675705d774146b33c0337a74646d262fa044febbd3290f77a91d69d021c4"
+  },
+  {
+    "case_id": "ww:Hand-Crafted:6",
+    "condition": "B_v1_full",
+    "trial": 2,
+    "dataset": "Who&When",
+    "prediction": {
+      "agents": [
+        "Orchestrator"
+      ],
+      "location": "history:5",
+      "error_mode": null,
+      "confidence": 0.99
+    },
+    "reason_sha256": "d1dacc12552e0d8e13fe373905f021cf04df80331c4aee8980be7c7a24b4f26e",
+    "scores": {
+      "valid": true,
+      "location": true,
+      "agent": true,
+      "joint": true,
+      "error_mode": null
+    },
+    "status": "completed",
+    "started_at": "2026-09-28T18:30:31.576315+00:00",
+    "elapsed_seconds": 37.56465670798207,
+    "usage": {
+      "input_tokens": 18985,
+      "cached_input_tokens": 7552,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 167,
+      "reasoning_output_tokens": 35
+    },
+    "model_requested": "gpt-6-astra",
+    "model_snapshot": null,
+    "reasoning_effort": "high",
+    "cli_version": "codex-cli 0.158.0-alpha.2.1",
+    "prompt_sha256": "62e1c2f89fd38d798d2d7a98103d499f7634f27f6f2e36a7ab02b289cdb38430",
+    "event_sha256": "1586d5925f440a87d97e78b93407507f72654a5e551f9c01c420ed5f01c76afb",
+    "stderr_sha256": "08c517346d3338fdb69682811c0ed76a196d247a75fe38142ea1f581be1603f7",
+    "tool_item_count": 0,
+    "private_record_sha256": "bd0bea3037b29b4923c70dc713f80239cfd44aaab8c2bf1507b2d9e8e9445b0e"
+  },
+  {
+    "case_id": "ww:Hand-Crafted:6",
+    "condition": "D_v2_core",
+    "trial": 2,
+    "dataset": "Who&When",
+    "prediction": {
+      "agents": [
+        "Orchestrator"
+      ],
+      "location": "history:5",
+      "error_mode": null,
+      "confidence": 0.99
+    },
+    "reason_sha256": "8a3b8333e715943f39a1a9de6b581286f95bea57f227aded297765ffaf223e24",
+    "scores": {
+      "valid": true,
+      "location": true,
+      "agent": true,
+      "joint": true,
+      "error_mode": null
+    },
+    "status": "completed",
+    "started_at": "2026-09-28T18:31:09.230253+00:00",
+    "elapsed_seconds": 27.623885290988255,
+    "usage": {
+      "input_tokens": 13558,
+      "cached_input_tokens": 7552,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 181,
+      "reasoning_output_tokens": 57
+    },
+    "model_requested": "gpt-6-astra",
+    "model_snapshot": null,
+    "reasoning_effort": "high",
+    "cli_version": "codex-cli 0.158.0-alpha.2.1",
+    "prompt_sha256": "9811c5b15306776f1016903153583420df44784644ef0fc9ceabf7bfe130a701",
+    "event_sha256": "487415ec0419fa7c554d2b163adfedb7b46c574bfb090e9d9d319f31f16a9276",
+    "stderr_sha256": "f865c9b0f7b448bd4e5602f5060c6fb883d81d78717cea806ef2c4a172fbd77d",
+    "tool_item_count": 0,
+    "private_record_sha256": "2d0003ec289b50e876b0f6d5a383f8f168565c29487915b35c98bec53804f1d3"
+  },
+  {
+    "case_id": "ww:Hand-Crafted:6",
+    "condition": "A_no_skill",
+    "trial": 2,
+    "dataset": "Who&When",
+    "prediction": {
+      "agents": [
+        "Orchestrator"
+      ],
+      "location": "history:5",
+      "error_mode": null,
+      "confidence": 0.99
+    },
+    "reason_sha256": "21cfc6a26570cd38e1d5f685e3eb71ea431f105d132f4b558b8daef96e2cd034",
+    "scores": {
+      "valid": true,
+      "location": true,
+      "agent": true,
+      "joint": true,
+      "error_mode": null
+    },
+    "status": "completed",
+    "started_at": "2026-09-28T18:31:15.879042+00:00",
+    "elapsed_seconds": 28.549471166043077,
+    "usage": {
+      "input_tokens": 12533,
+      "cached_input_tokens": 7552,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 186,
+      "reasoning_output_tokens": 53
+    },
+    "model_requested": "gpt-6-astra",
+    "model_snapshot": null,
+    "reasoning_effort": "high",
+    "cli_version": "codex-cli 0.158.0-alpha.2.1",
+    "prompt_sha256": "d2de6f1c48172aa9e52cb60177366fc1a6edfe3868e4533e11967e2bf97cf721",
+    "event_sha256": "e26bd80f1ca5a2a934a1002e78af36607e58569261bea69ca65fc08e675a23ec",
+    "stderr_sha256": "a99f1955896de99c97166bce47c9b2cc5459de32ae95d020ca24e30c94355a96",
+    "tool_item_count": 0,
+    "private_record_sha256": "42604471d9604276bf40640610d2233207801e92cf72da9f6591a1025a6246c1"
+  },
+  {
+    "case_id": "ww:Hand-Crafted:6",
+    "condition": "C_v1_core",
+    "trial": 2,
+    "dataset": "Who&When",
+    "prediction": {
+      "agents": [
+        "Orchestrator"
+      ],
+      "location": "history:5",
+      "error_mode": null,
+      "confidence": 0.99
+    },
+    "reason_sha256": "1091cab607e6a1ba5929153cb0810c5086cfc88759d4cc1dfefd5279eb4e2a3a",
+    "scores": {
+      "valid": true,
+      "location": true,
+      "agent": true,
+      "joint": true,
+      "error_mode": null
+    },
+    "status": "completed",
+    "started_at": "2026-09-28T18:31:15.896572+00:00",
+    "elapsed_seconds": 28.49255795800127,
+    "usage": {
+      "input_tokens": 14235,
+      "cached_input_tokens": 7552,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 179,
+      "reasoning_output_tokens": 42
+    },
+    "model_requested": "gpt-6-astra",
+    "model_snapshot": null,
+    "reasoning_effort": "high",
+    "cli_version": "codex-cli 0.158.0-alpha.2.1",
+    "prompt_sha256": "a7939d970d111d62c581e649ed0aa2f38788f67a02cfdae6eb060145310a0d2b",
+    "event_sha256": "0518f8769d8b1147c71648866ce7c16820c1b38cf9d3ac8af77eedf86e6d9d35",
+    "stderr_sha256": "36d1b6fde1b5fd1aa3b0c03c6ea265fd951400aa5e7c778b321f0a4a7961c4e9",
+    "tool_item_count": 0,
+    "private_record_sha256": "a4cbf19992f0a47e40b33f5487405f76133abaab17b5985823743250c8eff77a"
+  },
+  {
+    "case_id": "ww:Algorithm-Generated:50",
+    "condition": "D_v2_core",
+    "trial": 3,
+    "dataset": "Who&When",
+    "prediction": {
+      "agents": [
+        "Financial_Expert"
+      ],
+      "location": "history:9",
+      "error_mode": null,
+      "confidence": 0.35
+    },
+    "reason_sha256": "12fa13628cb8a3b8ef68f7ebe96eb0d8b160ae91a05fb00af8acec492d268068",
+    "scores": {
+      "valid": true,
+      "location": false,
+      "agent": false,
+      "joint": false,
+      "error_mode": null
+    },
+    "status": "completed",
+    "started_at": "2026-09-28T18:31:37.060607+00:00",
+    "elapsed_seconds": 33.84394137497293,
+    "usage": {
+      "input_tokens": 14083,
+      "cached_input_tokens": 7552,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 395,
+      "reasoning_output_tokens": 248
+    },
+    "model_requested": "gpt-6-astra",
+    "model_snapshot": null,
+    "reasoning_effort": "high",
+    "cli_version": "codex-cli 0.158.0-alpha.2.1",
+    "prompt_sha256": "6672f5c763538136c6ea7b15811a6af1b7407a472dd540df90fcef575f39cf22",
+    "event_sha256": "7089ce16b2f6688e25003eb0f39af4c62c4f93e33b9d1a84cca04dd596345c9b",
+    "stderr_sha256": "a8e35eb7a18b4e722f3b371e6c6a1c4fc8b2c47bf1379786012b01cb8a5ecfa8",
+    "tool_item_count": 0,
+    "private_record_sha256": "74a827256ea96c8e57af58be797a02e844e76b7d461827c711abcb2631cd7c4b"
+  },
+  {
+    "case_id": "ww:Algorithm-Generated:50",
+    "condition": "A_no_skill",
+    "trial": 3,
+    "dataset": "Who&When",
+    "prediction": {
+      "agents": [
+        "DataAnalysis_Expert"
+      ],
+      "location": "history:3",
+      "error_mode": null,
+      "confidence": 0.55
+    },
+    "reason_sha256": "543fee71d78ec4677b012618cceebeca8403f0d1fd5077c9a6dc4b3ec6227b87",
+    "scores": {
+      "valid": true,
+      "location": true,
+      "agent": true,
+      "joint": true,
+      "error_mode": null
+    },
+    "status": "completed",
+    "started_at": "2026-09-28T18:31:44.465709+00:00",
+    "elapsed_seconds": 46.084330249985214,
+    "usage": {
+      "input_tokens": 13058,
+      "cached_input_tokens": 7552,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 548,
+      "reasoning_output_tokens": 421
+    },
+    "model_requested": "gpt-6-astra",
+    "model_snapshot": null,
+    "reasoning_effort": "high",
+    "cli_version": "codex-cli 0.158.0-alpha.2.1",
+    "prompt_sha256": "6b0af67077e0c5eced1d8227077e2541e1817dd5a2d0d1e7be285278c8b7869d",
+    "event_sha256": "d01bc20ca29630f435bdff09ede1a23f452f807d0213671883deaa96b99ad20e",
+    "stderr_sha256": "cddc79704265dda534caa04d5c5ce262e01c2a17fb89234c2b44f31bcaac4cc1",
+    "tool_item_count": 0,
+    "private_record_sha256": "2ca775b22623f903fad396b7f3dcfe0b7871df7865bcdc67dafbaf388c710c8f"
+  },
+  {
+    "case_id": "ww:Algorithm-Generated:50",
+    "condition": "B_v1_full",
+    "trial": 3,
+    "dataset": "Who&When",
+    "prediction": {
+      "agents": [
+        "DataAnalysis_Expert"
+      ],
+      "location": "history:3",
+      "error_mode": null,
+      "confidence": 0.42
+    },
+    "reason_sha256": "ee850cc50bff5f1b125ba85c3948629afa7dd508114f808d4c446e392c329351",
+    "scores": {
+      "valid": true,
+      "location": true,
+      "agent": true,
+      "joint": true,
+      "error_mode": null
+    },
+    "status": "completed",
+    "started_at": "2026-09-28T18:31:44.463001+00:00",
+    "elapsed_seconds": 46.27572037500795,
+    "usage": {
+      "input_tokens": 19512,
+      "cached_input_tokens": 7552,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 624,
+      "reasoning_output_tokens": 507
+    },
+    "model_requested": "gpt-6-astra",
+    "model_snapshot": null,
+    "reasoning_effort": "high",
+    "cli_version": "codex-cli 0.158.0-alpha.2.1",
+    "prompt_sha256": "8decf5f32c63e097cf80c3d541a06a6824827a4240795e9c0c85cbb91f72682e",
+    "event_sha256": "9607a19425234dbfca46f97c9ff167dcffd24153b13314dd2bda56e3475a9664",
+    "stderr_sha256": "56ee5c59f581b616beba25a7d6eb0485874a0173d0ae3f07801a5ad03c2fd84f",
+    "tool_item_count": 0,
+    "private_record_sha256": "a041a926cbbb47514e9aa4e7b80ba1aee60ca3ee1d20c36df190c5b7b6165311"
+  },
+  {
+    "case_id": "ww:Algorithm-Generated:50",
+    "condition": "C_v1_core",
+    "trial": 3,
+    "dataset": "Who&When",
+    "prediction": {
+      "agents": [
+        "Financial_Expert"
+      ],
+      "location": "history:9",
+      "error_mode": null,
+      "confidence": 0.61
+    },
+    "reason_sha256": "2c129617a5a7fdd54b95605bed6150761297590033f80bc4087a5fd6d2f1d897",
+    "scores": {
+      "valid": true,
+      "location": false,
+      "agent": false,
+      "joint": false,
+      "error_mode": null
+    },
+    "status": "completed",
+    "started_at": "2026-09-28T18:32:11.141776+00:00",
+    "elapsed_seconds": 37.036245958006475,
+    "usage": {
+      "input_tokens": 14758,
+      "cached_input_tokens": 0,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 457,
+      "reasoning_output_tokens": 306
+    },
+    "model_requested": "gpt-6-astra",
+    "model_snapshot": null,
+    "reasoning_effort": "high",
+    "cli_version": "codex-cli 0.158.0-alpha.2.1",
+    "prompt_sha256": "f9ef8e8ae748bfa20f3fa6b4ef8bb1f92cd601250905842225d30784841d6997",
+    "event_sha256": "d707ed0e315bd7146cfb4f0999fa13d33b3c98d26118ad896b54192880af46c6",
+    "stderr_sha256": "29ca64d267987fcd3a9d72f76dd7687cf5c5791bf771134dc5979615d9329ac9",
+    "tool_item_count": 0,
+    "private_record_sha256": "6d17a3af0e1ea0ba2790b39d2ae4174be28fcfa4a45da74113bfcb78a1cd909a"
+  },
+  {
+    "case_id": "pro:alfworld_alfagent_0288",
+    "condition": "D_v2_core",
+    "trial": 3,
+    "dataset": "Who&When Pro",
+    "prediction": {
+      "agents": [],
+      "location": "step:3",
+      "error_mode": "A.1",
+      "confidence": 0.8
+    },
+    "reason_sha256": "2c9ee4fe79c3f00df58d6c750dcf3051101e303500e219ac57a488d0b2415faa",
+    "scores": {
+      "valid": true,
+      "location": false,
+      "agent": null,
+      "joint": false,
+      "error_mode": false
+    },
+    "status": "completed",
+    "started_at": "2026-09-28T18:32:30.736347+00:00",
+    "elapsed_seconds": 38.718945375003386,
+    "usage": {
+      "input_tokens": 14271,
+      "cached_input_tokens": 0,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 324,
+      "reasoning_output_tokens": 186
+    },
+    "model_requested": "gpt-6-astra",
+    "model_snapshot": null,
+    "reasoning_effort": "high",
+    "cli_version": "codex-cli 0.158.0-alpha.2.1",
+    "prompt_sha256": "90d3953566afad74961b7345b8b7a893d933c8c1d598027e8a426785b99b4710",
+    "event_sha256": "800a1aa19d18b15772be5e4a7b93ff61a7a33784e05e54bfbaf03cee9f906355",
+    "stderr_sha256": "db7bc8a6876d5dda66d368f41fcc0139a70cf6dd56a3212df92b998fb4f6c403",
+    "tool_item_count": 0,
+    "private_record_sha256": "4d53baf02a5fcfd428c09f9c1133573306c4a4a9b3db69ca961c55b89ac6526f"
+  },
+  {
+    "case_id": "pro:alfworld_alfagent_0288",
+    "condition": "A_no_skill",
+    "trial": 3,
+    "dataset": "Who&When Pro",
+    "prediction": {
+      "agents": [],
+      "location": "step:3",
+      "error_mode": "A.1",
+      "confidence": 0.82
+    },
+    "reason_sha256": "7ab8c38b5a7a27260bb55a18e42750b077b8d87246e6e1c606834a452d8cef08",
+    "scores": {
+      "valid": true,
+      "location": false,
+      "agent": null,
+      "joint": false,
+      "error_mode": false
+    },
+    "status": "completed",
+    "started_at": "2026-09-28T18:32:30.795940+00:00",
+    "elapsed_seconds": 39.944702165958006,
+    "usage": {
+      "input_tokens": 13242,
+      "cached_input_tokens": 0,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 369,
+      "reasoning_output_tokens": 248
+    },
+    "model_requested": "gpt-6-astra",
+    "model_snapshot": null,
+    "reasoning_effort": "high",
+    "cli_version": "codex-cli 0.158.0-alpha.2.1",
+    "prompt_sha256": "a8882ebfbcc703fe7d4625ddbcd361c9aa40e31aca3853e4b208069b5d050f64",
+    "event_sha256": "7990fb7208329df66527ab4327d05e1f8026cb9802e944ea02402796c5d44f35",
+    "stderr_sha256": "b7637d04960a5c81d1c087dcd0d4c933c64819d0d2ac1dcc9ccf7aa1175f4d86",
+    "tool_item_count": 0,
+    "private_record_sha256": "9f9df2d473dce46edb0213e391bea933e485fe0cd2e7cc450df158857b0ae946"
+  },
+  {
+    "case_id": "pro:alfworld_alfagent_0288",
+    "condition": "B_v1_full",
+    "trial": 3,
+    "dataset": "Who&When Pro",
+    "prediction": {
+      "agents": [],
+      "location": "step:3",
+      "error_mode": "A.1",
+      "confidence": 0.83
+    },
+    "reason_sha256": "bf1c2c665dd94946ba2af66a3993460d31768a726e74db32a98d9fded422c548",
+    "scores": {
+      "valid": true,
+      "location": false,
+      "agent": null,
+      "joint": false,
+      "error_mode": false
+    },
+    "status": "completed",
+    "started_at": "2026-09-28T18:32:48.277024+00:00",
+    "elapsed_seconds": 38.7898187499959,
+    "usage": {
+      "input_tokens": 20316,
+      "cached_input_tokens": 7552,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 506,
+      "reasoning_output_tokens": 365
+    },
+    "model_requested": "gpt-6-astra",
+    "model_snapshot": null,
+    "reasoning_effort": "high",
+    "cli_version": "codex-cli 0.158.0-alpha.2.1",
+    "prompt_sha256": "91dcd6f87064cd23028fd9792248204d819dced6bc0d2851844345c5d5fe4294",
+    "event_sha256": "c813dbb32b6a4160215f480173ba47d8d73b183c4aadae207115244e917fd907",
+    "stderr_sha256": "492d225be64ee265da0f6d51a3fb967eb104d8f3bc5b8826d114afc383eab9c1",
+    "tool_item_count": 0,
+    "private_record_sha256": "fee92791a810d6c3ac61c3608ad5ec835f3e94acb792795ae5269ad2dfddb134"
+  },
+  {
+    "case_id": "pro:alfworld_alfagent_0288",
+    "condition": "C_v1_core",
+    "trial": 3,
+    "dataset": "Who&When Pro",
+    "prediction": {
+      "agents": [],
+      "location": "step:3",
+      "error_mode": "A.1",
+      "confidence": 0.84
+    },
+    "reason_sha256": "065bdeb5630154919d6fb63a0bf5afaa4505d308eacbe57fb3ebaa77f1c98424",
+    "scores": {
+      "valid": true,
+      "location": false,
+      "agent": null,
+      "joint": false,
+      "error_mode": false
+    },
+    "status": "completed",
+    "started_at": "2026-09-28T18:33:09.520699+00:00",
+    "elapsed_seconds": 32.011181207955815,
+    "usage": {
+      "input_tokens": 15562,
+      "cached_input_tokens": 7552,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 317,
+      "reasoning_output_tokens": 180
+    },
+    "model_requested": "gpt-6-astra",
+    "model_snapshot": null,
+    "reasoning_effort": "high",
+    "cli_version": "codex-cli 0.158.0-alpha.2.1",
+    "prompt_sha256": "816d9b0af0afb9d9062fcbc5894cc7ce60500fe3d6ff6782d2de3fd65fd70a85",
+    "event_sha256": "119ce73e3e69450640e015105187cf09c3892303a67fdb64bc61bfc7576fb38a",
+    "stderr_sha256": "dac9b92ffba48799cc9360a0c345c1ed89773d42d1da153388d32f6a15a88870",
+    "tool_item_count": 0,
+    "private_record_sha256": "49b6cb8f0d6bafab47f9bc43a33522860da2001db042045d2424bcffbff8e3bc"
+  },
+  {
+    "case_id": "ww:Algorithm-Generated:88",
+    "condition": "C_v1_core",
+    "trial": 3,
+    "dataset": "Who&When",
+    "prediction": {
+      "agents": [
+        "DataValidation_Expert"
+      ],
+      "location": "history:2",
+      "error_mode": null,
+      "confidence": 0.87
+    },
+    "reason_sha256": "23a75d1c91ae5813a116239abb7b6547f71817c9437bfce2fac94085a219dc5a",
+    "scores": {
+      "valid": true,
+      "location": false,
+      "agent": false,
+      "joint": false,
+      "error_mode": null
+    },
+    "status": "completed",
+    "started_at": "2026-09-28T18:33:10.771002+00:00",
+    "elapsed_seconds": 26.417143333004788,
+    "usage": {
+      "input_tokens": 15854,
+      "cached_input_tokens": 0,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 300,
+      "reasoning_output_tokens": 164
+    },
+    "model_requested": "gpt-6-astra",
+    "model_snapshot": null,
+    "reasoning_effort": "high",
+    "cli_version": "codex-cli 0.158.0-alpha.2.1",
+    "prompt_sha256": "0c729463570b4cc07485e90f1d81ea53a26f3da110535697a5fe20bb064b7067",
+    "event_sha256": "d20b493d35626c989b3c570bfd2831277e8c7207b90c3b951654ec4e95cb42d7",
+    "stderr_sha256": "ccec3709c51d42dfb6d2846f816f9c966e7209f19443cc3ee44449d6a558febe",
+    "tool_item_count": 0,
+    "private_record_sha256": "a72edf48fdf3ac9c9761dc65686346f05af9bf1d1997213874f5fa0ec75af442"
+  },
+  {
+    "case_id": "ww:Algorithm-Generated:88",
+    "condition": "D_v2_core",
+    "trial": 3,
+    "dataset": "Who&When",
+    "prediction": {
+      "agents": [
+        "DataValidation_Expert"
+      ],
+      "location": "history:2",
+      "error_mode": null,
+      "confidence": 0.8
+    },
+    "reason_sha256": "955eadcdfae40102aa2792eb87d80e885d65ae2b322779da2db88baa85ddc662",
+    "scores": {
+      "valid": true,
+      "location": false,
+      "agent": false,
+      "joint": false,
+      "error_mode": null
+    },
+    "status": "completed",
+    "started_at": "2026-09-28T18:33:27.135082+00:00",
+    "elapsed_seconds": 32.31941966700833,
+    "usage": {
+      "input_tokens": 15177,
+      "cached_input_tokens": 7552,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 452,
+      "reasoning_output_tokens": 293
+    },
+    "model_requested": "gpt-6-astra",
+    "model_snapshot": null,
+    "reasoning_effort": "high",
+    "cli_version": "codex-cli 0.158.0-alpha.2.1",
+    "prompt_sha256": "c1bca95d23071ca250ed72d4a6b5c67f4e8d179f773241f26a9ab63fc1336871",
+    "event_sha256": "5aaa7cbbd670233c900131f785d8a2f07f9d2589032ff066e404427a1e7a78ab",
+    "stderr_sha256": "471945cc51a4660d9f468019dcbda18ca2296449357b21596dbc25422eaac065",
+    "tool_item_count": 0,
+    "private_record_sha256": "a168561317dfc562e14807738b3e2418bc5a18a548eb1f3edb336a1ccbb1ab6e"
+  },
+  {
+    "case_id": "ww:Algorithm-Generated:88",
+    "condition": "B_v1_full",
+    "trial": 3,
+    "dataset": "Who&When",
+    "prediction": {
+      "agents": [
+        "DataValidation_Expert"
+      ],
+      "location": "history:2",
+      "error_mode": null,
+      "confidence": 0.84
+    },
+    "reason_sha256": "62068b0926346c21c3f5e3f31394f2c69d0d5dd9304bf12e285d0cc621518e73",
+    "scores": {
+      "valid": true,
+      "location": false,
+      "agent": false,
+      "joint": false,
+      "error_mode": null
+    },
+    "status": "completed",
+    "started_at": "2026-09-28T18:33:37.220953+00:00",
+    "elapsed_seconds": 25.03369399998337,
+    "usage": {
+      "input_tokens": 20604,
+      "cached_input_tokens": 7552,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 333,
+      "reasoning_output_tokens": 201
+    },
+    "model_requested": "gpt-6-astra",
+    "model_snapshot": null,
+    "reasoning_effort": "high",
+    "cli_version": "codex-cli 0.158.0-alpha.2.1",
+    "prompt_sha256": "a5d4b6ac7c8b084440e7fa7712cd05f5f9282e5f783149b058de06b1d28116eb",
+    "event_sha256": "4f0f95f69d05e3cb418fcef6300640e18fcb425e36d3d2f26bc000b51a239800",
+    "stderr_sha256": "f49571419af2a0e8931c5f7bf3f2c9de1845c13b670abc0f9ef45e66f381bfa5",
+    "tool_item_count": 0,
+    "private_record_sha256": "6c51b67967a8460fa0f2f1992b1af2ea8a8fc90f39e2ed56839dd22d993afcae"
+  },
+  {
+    "case_id": "ww:Algorithm-Generated:88",
+    "condition": "A_no_skill",
+    "trial": 3,
+    "dataset": "Who&When",
+    "prediction": {
+      "agents": [
+        "DataValidation_Expert"
+      ],
+      "location": "history:2",
+      "error_mode": null,
+      "confidence": 0.86
+    },
+    "reason_sha256": "fa754c23065e8ab0eb05d66d2dab12e2252a07c27a2d97785e22481586657441",
+    "scores": {
+      "valid": true,
+      "location": false,
+      "agent": false,
+      "joint": false,
+      "error_mode": null
+    },
+    "status": "completed",
+    "started_at": "2026-09-28T18:33:41.542972+00:00",
+    "elapsed_seconds": 23.087507542048115,
+    "usage": {
+      "input_tokens": 14154,
+      "cached_input_tokens": 7552,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 337,
+      "reasoning_output_tokens": 212
+    },
+    "model_requested": "gpt-6-astra",
+    "model_snapshot": null,
+    "reasoning_effort": "high",
+    "cli_version": "codex-cli 0.158.0-alpha.2.1",
+    "prompt_sha256": "dbebf4b673692b9909ab9169e201e65edf5fd30cf86f99dec1687def49fff0e3",
+    "event_sha256": "0be6c3ac822a73007bb0cf82aaae0d30c674d3ece21f4691e523f36e2eb6ba43",
+    "stderr_sha256": "02e4d8767549653aa1834137cdcb7fc40650933ce505df74688f49ef12f66434",
+    "tool_item_count": 0,
+    "private_record_sha256": "d0e2de9c464f3fce96acfa187c38fc1f8a53a79fdabac4079afd2146507e1067"
+  },
+  {
+    "case_id": "ww:Hand-Crafted:6",
+    "condition": "A_no_skill",
+    "trial": 3,
+    "dataset": "Who&When",
+    "prediction": {
+      "agents": [
+        "Orchestrator"
+      ],
+      "location": "history:5",
+      "error_mode": null,
+      "confidence": 0.99
+    },
+    "reason_sha256": "8fd18e2429b359ec38f70568635da17f33122318f0427fba7c45142c732c47d8",
+    "scores": {
+      "valid": true,
+      "location": true,
+      "agent": true,
+      "joint": true,
+      "error_mode": null
+    },
+    "status": "completed",
+    "started_at": "2026-09-28T18:33:59.548240+00:00",
+    "elapsed_seconds": 28.87247904203832,
+    "usage": {
+      "input_tokens": 12533,
+      "cached_input_tokens": 7552,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 186,
+      "reasoning_output_tokens": 51
+    },
+    "model_requested": "gpt-6-astra",
+    "model_snapshot": null,
+    "reasoning_effort": "high",
+    "cli_version": "codex-cli 0.158.0-alpha.2.1",
+    "prompt_sha256": "d2de6f1c48172aa9e52cb60177366fc1a6edfe3868e4533e11967e2bf97cf721",
+    "event_sha256": "b8722872ebbf96a0e1d2463ef4021464b453569dc2e005073df09effff384d45",
+    "stderr_sha256": "39032239046cea7a0bfcdf9e721e53331e911442ef8868908c58997b6921f005",
+    "tool_item_count": 0,
+    "private_record_sha256": "1051b2ca2b9d5d5c164e9b2a56b2bb39b65d497704af8b4eaa797aa1b633d638"
+  },
+  {
+    "case_id": "ww:Hand-Crafted:6",
+    "condition": "D_v2_core",
+    "trial": 3,
+    "dataset": "Who&When",
+    "prediction": {
+      "agents": [
+        "Orchestrator"
+      ],
+      "location": "history:5",
+      "error_mode": null,
+      "confidence": 0.99
+    },
+    "reason_sha256": "8338e881fa87c6ae97a32f8e0fac54a5b318cc0f68e478d6ec4d2d5c8e4f9d3e",
+    "scores": {
+      "valid": true,
+      "location": true,
+      "agent": true,
+      "joint": true,
+      "error_mode": null
+    },
+    "status": "completed",
+    "started_at": "2026-09-28T18:34:02.331826+00:00",
+    "elapsed_seconds": 27.259047333034687,
+    "usage": {
+      "input_tokens": 13562,
+      "cached_input_tokens": 7552,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 166,
+      "reasoning_output_tokens": 37
+    },
+    "model_requested": "gpt-6-astra",
+    "model_snapshot": null,
+    "reasoning_effort": "high",
+    "cli_version": "codex-cli 0.158.0-alpha.2.1",
+    "prompt_sha256": "9811c5b15306776f1016903153583420df44784644ef0fc9ceabf7bfe130a701",
+    "event_sha256": "9974a4b195295245237ca4214487d27bcecb959339b1947e5f8d8daf0ba36c25",
+    "stderr_sha256": "2e9ad1740e373d030dd986677d0c553ef62f536f079aa01ea68eed33b6038afd",
+    "tool_item_count": 0,
+    "private_record_sha256": "cafa0b15f5fe122e48a7b45d79d0aabc192edf4e4127f3b39881637dab84570e"
+  },
+  {
+    "case_id": "ww:Hand-Crafted:6",
+    "condition": "B_v1_full",
+    "trial": 3,
+    "dataset": "Who&When",
+    "prediction": {
+      "agents": [
+        "Orchestrator"
+      ],
+      "location": "history:5",
+      "error_mode": null,
+      "confidence": 0.99
+    },
+    "reason_sha256": "897c8c8263659ddec9cf70dda0e6d96be5fac59dcce98764856d37af0049e6de",
+    "scores": {
+      "valid": true,
+      "location": true,
+      "agent": true,
+      "joint": true,
+      "error_mode": null
+    },
+    "status": "completed",
+    "started_at": "2026-09-28T18:34:04.640960+00:00",
+    "elapsed_seconds": 34.36395345896017,
+    "usage": {
+      "input_tokens": 18989,
+      "cached_input_tokens": 7552,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 229,
+      "reasoning_output_tokens": 79
+    },
+    "model_requested": "gpt-6-astra",
+    "model_snapshot": null,
+    "reasoning_effort": "high",
+    "cli_version": "codex-cli 0.158.0-alpha.2.1",
+    "prompt_sha256": "62e1c2f89fd38d798d2d7a98103d499f7634f27f6f2e36a7ab02b289cdb38430",
+    "event_sha256": "15e2aa480b559c7e65d3271aed9e0834f79d93987ccb68ca72f38a2c76283225",
+    "stderr_sha256": "3f33678e5554c69de9a94335c493282b6e91528354173b83aa37bd8a7fd03dfb",
+    "tool_item_count": 0,
+    "private_record_sha256": "0369467a3715eae806f3ff99e5d5d402963c8a07e45b036a8c4ff1c3df88ff83"
+  },
+  {
+    "case_id": "ww:Hand-Crafted:6",
+    "condition": "C_v1_core",
+    "trial": 3,
+    "dataset": "Who&When",
+    "prediction": {
+      "agents": [
+        "Orchestrator"
+      ],
+      "location": "history:5",
+      "error_mode": null,
+      "confidence": 0.99
+    },
+    "reason_sha256": "989a6464a7529f1261e8ffd4189a5eee0ef62eb5b05712fb5887cc99a7fb05c2",
+    "scores": {
+      "valid": true,
+      "location": true,
+      "agent": true,
+      "joint": true,
+      "error_mode": null
+    },
+    "status": "completed",
+    "started_at": "2026-09-28T18:34:28.920004+00:00",
+    "elapsed_seconds": 27.027338417014107,
+    "usage": {
+      "input_tokens": 14233,
+      "cached_input_tokens": 7552,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 204,
+      "reasoning_output_tokens": 57
+    },
+    "model_requested": "gpt-6-astra",
+    "model_snapshot": null,
+    "reasoning_effort": "high",
+    "cli_version": "codex-cli 0.158.0-alpha.2.1",
+    "prompt_sha256": "a7939d970d111d62c581e649ed0aa2f38788f67a02cfdae6eb060145310a0d2b",
+    "event_sha256": "5e68b0691ab31608653cbc90a7eb13dd966c307cb1548bed8717267689192f5e",
+    "stderr_sha256": "cec92592a05b0ec3948106c66b5eed9f4f80abc32e6a31da27ff9a68bfc04276",
+    "tool_item_count": 0,
+    "private_record_sha256": "cb3a13ccd10fe6d5fd65e1e757df619ca626229644a46d6420f0cdce22c7a3c2"
+  },
+  {
+    "case_id": "pro:math_debate_0084",
+    "condition": "C_v1_core",
+    "trial": 3,
+    "dataset": "Who&When Pro",
+    "prediction": {
+      "agents": [
+        "agent_0",
+        "agent_2"
+      ],
+      "location": "round:0",
+      "error_mode": "R.2",
+      "confidence": 0.99
+    },
+    "reason_sha256": "c6d09375a100de7b275039f36450f1a9addc720e91470bddb885c2544d701b61",
+    "scores": {
+      "valid": true,
+      "location": false,
+      "agent": true,
+      "joint": false,
+      "error_mode": false
+    },
+    "status": "completed",
+    "started_at": "2026-09-28T18:34:29.621750+00:00",
+    "elapsed_seconds": 34.51104549999582,
+    "usage": {
+      "input_tokens": 17657,
+      "cached_input_tokens": 7552,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 410,
+      "reasoning_output_tokens": 267
+    },
+    "model_requested": "gpt-6-astra",
+    "model_snapshot": null,
+    "reasoning_effort": "high",
+    "cli_version": "codex-cli 0.158.0-alpha.2.1",
+    "prompt_sha256": "4f2f3c998b50e3bee5faca58fa803702fd7a95260a4dea24997184be20fbe0ec",
+    "event_sha256": "9d317dfab22305b193922eb04949fb671f82f33eb92285f1484eeff9eff7d7e5",
+    "stderr_sha256": "5d70e99de1eea288860d765af0bc03d422386e5bdca7b4c6920d2cf9bfb5d1c0",
+    "tool_item_count": 0,
+    "private_record_sha256": "582463ce20106505bf7873aec461d21005d2ecc92113095edeb1366e0ca6b540"
+  },
+  {
+    "case_id": "pro:math_debate_0084",
+    "condition": "B_v1_full",
+    "trial": 3,
+    "dataset": "Who&When Pro",
+    "prediction": {
+      "agents": [
+        "agent_0",
+        "agent_2"
+      ],
+      "location": "round:0",
+      "error_mode": "R.4",
+      "confidence": 0.99
+    },
+    "reason_sha256": "315763dbdc7fa94137872ebdb43a3d88037b67f8f8445d3ce978e1a054a9d1dd",
+    "scores": {
+      "valid": true,
+      "location": false,
+      "agent": true,
+      "joint": false,
+      "error_mode": false
+    },
+    "status": "completed",
+    "started_at": "2026-09-28T18:34:39.106357+00:00",
+    "elapsed_seconds": 27.545910165994428,
+    "usage": {
+      "input_tokens": 22411,
+      "cached_input_tokens": 7552,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 281,
+      "reasoning_output_tokens": 133
+    },
+    "model_requested": "gpt-6-astra",
+    "model_snapshot": null,
+    "reasoning_effort": "high",
+    "cli_version": "codex-cli 0.158.0-alpha.2.1",
+    "prompt_sha256": "8bc8ce3cc9bb6c2deeb0c78b2df167bb1c890bbffb1db426cac6a586b9cbea87",
+    "event_sha256": "3094f3ccc4b8ce243318915ad66bea968f605cbf513e9aa56e60d5ef86744615",
+    "stderr_sha256": "198f5d86b569989f4962c030b0f95198f1f8c6b0e07c534131b04fbf4ec5e330",
+    "tool_item_count": 0,
+    "private_record_sha256": "06624e1e102f743299469c0262e3b362621ce9e597fe042874668b0105f048fe"
+  },
+  {
+    "case_id": "pro:math_debate_0084",
+    "condition": "D_v2_core",
+    "trial": 3,
+    "dataset": "Who&When Pro",
+    "prediction": {
+      "agents": [
+        "agent_0",
+        "agent_2"
+      ],
+      "location": "round:0",
+      "error_mode": "R.4",
+      "confidence": 0.99
+    },
+    "reason_sha256": "bb821424ead42409eab3d4ce9e36db94b7e3c8e4bbeb58715612504c92763dc7",
+    "scores": {
+      "valid": true,
+      "location": false,
+      "agent": true,
+      "joint": false,
+      "error_mode": false
+    },
+    "status": "completed",
+    "started_at": "2026-09-28T18:34:56.165188+00:00",
+    "elapsed_seconds": 36.501106292009354,
+    "usage": {
+      "input_tokens": 16366,
+      "cached_input_tokens": 0,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 255,
+      "reasoning_output_tokens": 104
+    },
+    "model_requested": "gpt-6-astra",
+    "model_snapshot": null,
+    "reasoning_effort": "high",
+    "cli_version": "codex-cli 0.158.0-alpha.2.1",
+    "prompt_sha256": "e06aa19e704977e64bd53d8608287de215b55992f8a16217a9c239ea751a28b5",
+    "event_sha256": "931cdbe4093beb22e463859dee19ce00267a78e4d6899dae035cf32f9970291e",
+    "stderr_sha256": "2b273717fbd650c9acc105146cf21e7397de5f4ba3ac46dd1bc5a26316579197",
+    "tool_item_count": 0,
+    "private_record_sha256": "65c1595303a8341185fae245922d8f77667cfd8b4aa01b1070efc1d5081253ce"
+  },
+  {
+    "case_id": "pro:math_debate_0084",
+    "condition": "A_no_skill",
+    "trial": 3,
+    "dataset": "Who&When Pro",
+    "prediction": {
+      "agents": [
+        "agent_0",
+        "agent_2"
+      ],
+      "location": "round:0",
+      "error_mode": "R.4",
+      "confidence": 0.99
+    },
+    "reason_sha256": "52a8c42474a51ccc7b6b04e1d41db36c6b8847e00d93306f13b43de2681c7706",
+    "scores": {
+      "valid": true,
+      "location": false,
+      "agent": true,
+      "joint": false,
+      "error_mode": false
+    },
+    "status": "completed",
+    "started_at": "2026-09-28T18:35:04.224435+00:00",
+    "elapsed_seconds": 29.39958841702901,
+    "usage": {
+      "input_tokens": 15959,
+      "cached_input_tokens": 7552,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 241,
+      "reasoning_output_tokens": 105
+    },
+    "model_requested": "gpt-6-astra",
+    "model_snapshot": null,
+    "reasoning_effort": "high",
+    "cli_version": "codex-cli 0.158.0-alpha.2.1",
+    "prompt_sha256": "ede7f82ede4f99b60d6a94c388db31503f41e9500f02f2ba62d3f57c03b28f58",
+    "event_sha256": "0ab520fa19aacad1bee1cb770d4b51536301fbe03c6dfdbab9dcd230906c86ab",
+    "stderr_sha256": "80ee3b526fd4544adaaead29cdfbfc4f0d17d4a50125fa239e4b39870fd4f2e6",
+    "tool_item_count": 0,
+    "private_record_sha256": "886da8fb8c79053e3669052b71446b417915a9f33848754e55fab2e82a9ef277"
+  },
+  {
+    "case_id": "ww:Hand-Crafted:33",
+    "condition": "D_v2_core",
+    "trial": 3,
+    "dataset": "Who&When",
+    "prediction": {
+      "agents": [
+        "Orchestrator"
+      ],
+      "location": "history:8",
+      "error_mode": null,
+      "confidence": 0.97
+    },
+    "reason_sha256": "a404ceca9704753dd09a5c31623bcaf384b9dfb6ae7a7cb26b66f212b6e4b32f",
+    "scores": {
+      "valid": true,
+      "location": true,
+      "agent": false,
+      "joint": false,
+      "error_mode": null
+    },
+    "status": "completed",
+    "started_at": "2026-09-28T18:35:06.705726+00:00",
+    "elapsed_seconds": 25.792518208967522,
+    "usage": {
+      "input_tokens": 15072,
+      "cached_input_tokens": 7552,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 234,
+      "reasoning_output_tokens": 99
+    },
+    "model_requested": "gpt-6-astra",
+    "model_snapshot": null,
+    "reasoning_effort": "high",
+    "cli_version": "codex-cli 0.158.0-alpha.2.1",
+    "prompt_sha256": "a94459072292c307c8705439bf99bc458eac4975c339288f00c695dae53712ec",
+    "event_sha256": "2cf9b707f86ef953525d9fb1e6e9e8dc0ff5ecbe8b105e39ab40c5f7776b5d14",
+    "stderr_sha256": "870ce772526862fb52d44de919ab8965de3599282bff076a938641fca5a7602f",
+    "tool_item_count": 0,
+    "private_record_sha256": "5905296762ca8206fdeebeb9daebb6c1da72965de7a46810468aa21c3ab395a2"
+  },
+  {
+    "case_id": "ww:Hand-Crafted:33",
+    "condition": "B_v1_full",
+    "trial": 3,
+    "dataset": "Who&When",
+    "prediction": {
+      "agents": [
+        "Orchestrator"
+      ],
+      "location": "history:8",
+      "error_mode": null,
+      "confidence": 0.97
+    },
+    "reason_sha256": "0fa07031fd7745c1ad8fbf9c60e2b992c4e64752c9ee4fc3e59a97d39c58674f",
+    "scores": {
+      "valid": true,
+      "location": true,
+      "agent": false,
+      "joint": false,
+      "error_mode": null
+    },
+    "status": "completed",
+    "started_at": "2026-09-28T18:35:32.544205+00:00",
+    "elapsed_seconds": 23.231708457984496,
+    "usage": {
+      "input_tokens": 20495,
+      "cached_input_tokens": 7552,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 228,
+      "reasoning_output_tokens": 84
+    },
+    "model_requested": "gpt-6-astra",
+    "model_snapshot": null,
+    "reasoning_effort": "high",
+    "cli_version": "codex-cli 0.158.0-alpha.2.1",
+    "prompt_sha256": "f67a632ac38151c50a8c1096c59553c8c86dde11f0b6645a79e7d6969a0cd87c",
+    "event_sha256": "3a4c0ccc7f2507cbade2a009eaa7bfbbb6548f871584687445218fb559a30685",
+    "stderr_sha256": "b3cc61fc303d6da68b0617191b57582b283cf49b118a25cfe0a674e6235a3cca",
+    "tool_item_count": 0,
+    "private_record_sha256": "7a0ab1a88f4ef7bc17018a1aeb84429aed4090febbe6d477a49c0aa250566afb"
+  },
+  {
+    "case_id": "ww:Hand-Crafted:33",
+    "condition": "C_v1_core",
+    "trial": 3,
+    "dataset": "Who&When",
+    "prediction": {
+      "agents": [
+        "Orchestrator"
+      ],
+      "location": "history:8",
+      "error_mode": null,
+      "confidence": 0.98
+    },
+    "reason_sha256": "78507c5cd3a30c083e614022af80caab2cd44f91186427fd5405c1788fc29a5d",
+    "scores": {
+      "valid": true,
+      "location": true,
+      "agent": false,
+      "joint": false,
+      "error_mode": null
+    },
+    "status": "completed",
+    "started_at": "2026-09-28T18:35:32.683150+00:00",
+    "elapsed_seconds": 22.224601458990946,
+    "usage": {
+      "input_tokens": 15741,
+      "cached_input_tokens": 7552,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 240,
+      "reasoning_output_tokens": 93
+    },
+    "model_requested": "gpt-6-astra",
+    "model_snapshot": null,
+    "reasoning_effort": "high",
+    "cli_version": "codex-cli 0.158.0-alpha.2.1",
+    "prompt_sha256": "d3eb3445befa8831af686425c1384a566a6d8c730eaaaf9d4d32dda9bc92eaca",
+    "event_sha256": "62931cd984ce41e38da949d80f81cc2834198fffd9f9701c6084fb87bbc61728",
+    "stderr_sha256": "44eb4e64c1191fc904da1d214473d1af6a7cfdf0e6bc37f037fc113a93dbd5ca",
+    "tool_item_count": 0,
+    "private_record_sha256": "27128acdd809db52853ad5932be216d1e44cc6ff8d8c0381762b96cfe2894296"
+  },
+  {
+    "case_id": "ww:Hand-Crafted:33",
+    "condition": "A_no_skill",
+    "trial": 3,
+    "dataset": "Who&When",
+    "prediction": {
+      "agents": [
+        "Orchestrator"
+      ],
+      "location": "history:8",
+      "error_mode": null,
+      "confidence": 0.94
+    },
+    "reason_sha256": "bff0464fc367711536383837cbeb996d51369b439b71b601e36c77e81fc6d066",
+    "scores": {
+      "valid": true,
+      "location": true,
+      "agent": false,
+      "joint": false,
+      "error_mode": null
+    },
+    "status": "completed",
+    "started_at": "2026-09-28T18:35:33.638516+00:00",
+    "elapsed_seconds": 20.46989658405073,
+    "usage": {
+      "input_tokens": 14043,
+      "cached_input_tokens": 7552,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 213,
+      "reasoning_output_tokens": 84
+    },
+    "model_requested": "gpt-6-astra",
+    "model_snapshot": null,
+    "reasoning_effort": "high",
+    "cli_version": "codex-cli 0.158.0-alpha.2.1",
+    "prompt_sha256": "9f791e0f063fef5fa0efab3c0df3399ee907b3b71e5af0524b6506cfc948d616",
+    "event_sha256": "8ba780e30eb8aa0c4ae466dbf0ca1d107bb2776aa174c2b2f45349dc4c1e28ca",
+    "stderr_sha256": "9f6158b81584f7df6a9609829304c50b875a1b4e9eb03dba70897264640c616a",
+    "tool_item_count": 0,
+    "private_record_sha256": "d8f9cdfcefd16fbd58ce7b21fd857eef3083cf03b58476aa981c058b16c250a5"
+  },
+  {
+    "case_id": "pro:dacode_smolagents_0096",
+    "condition": "B_v1_full",
+    "trial": 3,
+    "dataset": "Who&When Pro",
+    "prediction": {
+      "agents": [],
+      "location": "step:4",
+      "error_mode": "A.1",
+      "confidence": 0.99
+    },
+    "reason_sha256": "1e6a9f4aeb3f051fc47bb57fd06ea3cdf4590c069ce0aa5018fa787c2cf724c2",
+    "scores": {
+      "valid": true,
+      "location": false,
+      "agent": null,
+      "joint": false,
+      "error_mode": false
+    },
+    "status": "completed",
+    "started_at": "2026-09-28T18:35:54.158014+00:00",
+    "elapsed_seconds": 18.195236917003058,
+    "usage": {
+      "input_tokens": 19297,
+      "cached_input_tokens": 7552,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 160,
+      "reasoning_output_tokens": 50
+    },
+    "model_requested": "gpt-6-astra",
+    "model_snapshot": null,
+    "reasoning_effort": "high",
+    "cli_version": "codex-cli 0.158.0-alpha.2.1",
+    "prompt_sha256": "9f328e205d24db698bce894fd686871fbea57194c003d7b2cb45b261e43d5363",
+    "event_sha256": "fa96d45ed9e75a943548b0174bce27c3e9932a0d41a01dc799d6361b3b8b3da9",
+    "stderr_sha256": "0e08ac1d51cfab4b1875e025a4a1861c464689f3760c1951aa6271683ffb8481",
+    "tool_item_count": 0,
+    "private_record_sha256": "877fd3d1c6b8f57957cc559a22e2e2bc212c771c26abccf96fe41ac71081cd52"
+  },
+  {
+    "case_id": "pro:dacode_smolagents_0096",
+    "condition": "D_v2_core",
+    "trial": 3,
+    "dataset": "Who&When Pro",
+    "prediction": {
+      "agents": [],
+      "location": "step:4",
+      "error_mode": "A.1",
+      "confidence": 0.99
+    },
+    "reason_sha256": "299d43f3b89662ff3739c8302a2655f35720e87ea2b23adb855991ce2f6a86ce",
+    "scores": {
+      "valid": true,
+      "location": false,
+      "agent": null,
+      "joint": false,
+      "error_mode": false
+    },
+    "status": "completed",
+    "started_at": "2026-09-28T18:35:54.911855+00:00",
+    "elapsed_seconds": 16.759059874981176,
+    "usage": {
+      "input_tokens": 13870,
+      "cached_input_tokens": 7552,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 169,
+      "reasoning_output_tokens": 56
+    },
+    "model_requested": "gpt-6-astra",
+    "model_snapshot": null,
+    "reasoning_effort": "high",
+    "cli_version": "codex-cli 0.158.0-alpha.2.1",
+    "prompt_sha256": "f5c25ff50852f5d34fa2d13094024f2172ce75caa213afde2f9c53bbf4c48547",
+    "event_sha256": "7d52be8d9eeb5174e0a40e880c964be9823ddda9d133a0ef08c043b16d5ac175",
+    "stderr_sha256": "568dfd2ea568f126ea8190303370d412236b03f6dd47ce453f763d0d9f0eda3a",
+    "tool_item_count": 0,
+    "private_record_sha256": "2462d0e0579580fda2880dcfa03f1e7044f4d4948b37f76dbe0fdda3f55dda73"
+  },
+  {
+    "case_id": "pro:dacode_smolagents_0096",
+    "condition": "A_no_skill",
+    "trial": 3,
+    "dataset": "Who&When Pro",
+    "prediction": {
+      "agents": [],
+      "location": "step:4",
+      "error_mode": "A.1",
+      "confidence": 0.99
+    },
+    "reason_sha256": "f5337748b96087602acfe95e804446ba23b2fa3c232ab79e11f174ba62b80bb0",
+    "scores": {
+      "valid": true,
+      "location": false,
+      "agent": null,
+      "joint": false,
+      "error_mode": false
+    },
+    "status": "completed",
+    "started_at": "2026-09-28T18:35:55.782077+00:00",
+    "elapsed_seconds": 17.927352291007992,
+    "usage": {
+      "input_tokens": 12845,
+      "cached_input_tokens": 7552,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 164,
+      "reasoning_output_tokens": 48
+    },
+    "model_requested": "gpt-6-astra",
+    "model_snapshot": null,
+    "reasoning_effort": "high",
+    "cli_version": "codex-cli 0.158.0-alpha.2.1",
+    "prompt_sha256": "8a58d8b69ac67f19cd95463463242750d1cb8d26f933ff537d9aa236115abb59",
+    "event_sha256": "e250baa6ec4cab9094fa1c7b089720d28086c525d70aea2a3d5eedd7c99b6b36",
+    "stderr_sha256": "ca52539f60f8e86b3ecb974d593e2d913444149abbe43ea49c2bd371bfe29481",
+    "tool_item_count": 0,
+    "private_record_sha256": "49c7bf5b17e2f3d7e200bfa44a12d1660655b6a6f0416e6361d3ab186ee4998b"
+  },
+  {
+    "case_id": "pro:dacode_smolagents_0096",
+    "condition": "C_v1_core",
+    "trial": 3,
+    "dataset": "Who&When Pro",
+    "prediction": {
+      "agents": [],
+      "location": "step:4",
+      "error_mode": "A.1",
+      "confidence": 0.99
+    },
+    "reason_sha256": "a71424bc2495bc0ad2007c772dfea2b8589b4eb4c78b4d6541058594f54a034f",
+    "scores": {
+      "valid": true,
+      "location": false,
+      "agent": null,
+      "joint": false,
+      "error_mode": false
+    },
+    "status": "completed",
+    "started_at": "2026-09-28T18:36:11.677236+00:00",
+    "elapsed_seconds": 24.562000833975617,
+    "usage": {
+      "input_tokens": 14541,
+      "cached_input_tokens": 7552,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 176,
+      "reasoning_output_tokens": 66
+    },
+    "model_requested": "gpt-6-astra",
+    "model_snapshot": null,
+    "reasoning_effort": "high",
+    "cli_version": "codex-cli 0.158.0-alpha.2.1",
+    "prompt_sha256": "c0913e5e20eaf056f48502337366fbe76c1b255af01d9c895fea286d187587c7",
+    "event_sha256": "114e69588a61efb85c3d990cabb66ecb6f5274d8c4030ea1b28eeab0742e5650",
+    "stderr_sha256": "813134d890c362842a4c9df5f6396dddd055c043d937cd79f45f4e679d62c266",
+    "tool_item_count": 0,
+    "private_record_sha256": "a88b34d6c1e4634e9b4a5be1ed245cc975c68c719dfdf7c76a8dc5b4b15d0a85"
+  },
+  {
+    "case_id": "ww:Algorithm-Generated:68",
+    "condition": "D_v2_core",
+    "trial": 3,
+    "dataset": "Who&When",
+    "prediction": {
+      "agents": [
+        "Verification_Expert"
+      ],
+      "location": "history:3",
+      "error_mode": null,
+      "confidence": 0.92
+    },
+    "reason_sha256": "b33df1ec2db4c47e905134cdd058da315b66a6da105277744269ddcadfb04d4a",
+    "scores": {
+      "valid": true,
+      "location": true,
+      "agent": true,
+      "joint": true,
+      "error_mode": null
+    },
+    "status": "completed",
+    "started_at": "2026-09-28T18:36:12.355843+00:00",
+    "elapsed_seconds": 31.27194716699887,
+    "usage": {
+      "input_tokens": 13455,
+      "cached_input_tokens": 7552,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 381,
+      "reasoning_output_tokens": 244
+    },
+    "model_requested": "gpt-6-astra",
+    "model_snapshot": null,
+    "reasoning_effort": "high",
+    "cli_version": "codex-cli 0.158.0-alpha.2.1",
+    "prompt_sha256": "040532db9c06a152e4a60ca596b31fd5730b13089915160f1ab58d35065dd65d",
+    "event_sha256": "9d998656979ffe1b560a31c0a6afc6e3a0f6924ebc46c43783a3d9de0a6853e4",
+    "stderr_sha256": "bf4f141f2d8313d922d3de9f3651366e0500396a0edfc02aa87bfcaeec240de2",
+    "tool_item_count": 0,
+    "private_record_sha256": "beb044e648e9fe6b997ba21515343d87c30de3a25887f0e56ed4249b69fe1b99"
+  },
+  {
+    "case_id": "ww:Algorithm-Generated:68",
+    "condition": "A_no_skill",
+    "trial": 3,
+    "dataset": "Who&When",
+    "prediction": {
+      "agents": [
+        "Verification_Expert"
+      ],
+      "location": "history:3",
+      "error_mode": null,
+      "confidence": 0.93
+    },
+    "reason_sha256": "7cae286004a0fe124e3db67ae9806416d3ffbd07cb0a8715c057373165c2c0c9",
+    "scores": {
+      "valid": true,
+      "location": true,
+      "agent": true,
+      "joint": true,
+      "error_mode": null
+    },
+    "status": "completed",
+    "started_at": "2026-09-28T18:36:13.713740+00:00",
+    "elapsed_seconds": 34.020132249977905,
+    "usage": {
+      "input_tokens": 12430,
+      "cached_input_tokens": 7552,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 394,
+      "reasoning_output_tokens": 297
+    },
+    "model_requested": "gpt-6-astra",
+    "model_snapshot": null,
+    "reasoning_effort": "high",
+    "cli_version": "codex-cli 0.158.0-alpha.2.1",
+    "prompt_sha256": "c168d7a0217d7b35d11c8604768e4efd0d3e6784d3c7551c8a5b9c1fbd9f68ca",
+    "event_sha256": "d466581fd90993cf1f647f78ce72d9df3c951ed0e09eb7521e8877cdcca18096",
+    "stderr_sha256": "86deb6ab2acf4bad7fc57903b82d3ec5eaea8167adca4b80a924d608a2572587",
+    "tool_item_count": 0,
+    "private_record_sha256": "c0269118b792d9eef3dc5b6089760ae68b91f2eda70111c9a34d5a6f328708a7"
+  },
+  {
+    "case_id": "ww:Algorithm-Generated:68",
+    "condition": "C_v1_core",
+    "trial": 3,
+    "dataset": "Who&When",
+    "prediction": {
+      "agents": [
+        "Verification_Expert"
+      ],
+      "location": "history:3",
+      "error_mode": null,
+      "confidence": 0.88
+    },
+    "reason_sha256": "63079e854bfa9ae6fdd04b6a700e93627c753df2e08de0105249626f8cf4dc11",
+    "scores": {
+      "valid": true,
+      "location": true,
+      "agent": true,
+      "joint": true,
+      "error_mode": null
+    },
+    "status": "completed",
+    "started_at": "2026-09-28T18:36:36.243937+00:00",
+    "elapsed_seconds": 31.353755208023358,
+    "usage": {
+      "input_tokens": 14132,
+      "cached_input_tokens": 7552,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 469,
+      "reasoning_output_tokens": 346
+    },
+    "model_requested": "gpt-6-astra",
+    "model_snapshot": null,
+    "reasoning_effort": "high",
+    "cli_version": "codex-cli 0.158.0-alpha.2.1",
+    "prompt_sha256": "47ad05450dd1ad9a4a08c52ca0ee7a0f05ad06c8ebe3eec6e50b80cc7736931a",
+    "event_sha256": "421861ca0d646863993928c9646b5248307de5b01e1f74adcdb95702c3cf9f7c",
+    "stderr_sha256": "141674dc2e0c6818ebbd60a12460354377f596a732d45441e0cebb0a11daf4ae",
+    "tool_item_count": 0,
+    "private_record_sha256": "9e0618e424b4f0f2b57558d2e5336b067d40f3f1acd6515a27f4fb3ddfdb1196"
+  },
+  {
+    "case_id": "ww:Algorithm-Generated:68",
+    "condition": "B_v1_full",
+    "trial": 3,
+    "dataset": "Who&When",
+    "prediction": {
+      "agents": [
+        "Verification_Expert"
+      ],
+      "location": "history:3",
+      "error_mode": null,
+      "confidence": 0.86
+    },
+    "reason_sha256": "6da8ba8859745c3626b6b1cab8191620f7ac6ba9fd9fde11fde275c47e4daa55",
+    "scores": {
+      "valid": true,
+      "location": true,
+      "agent": true,
+      "joint": true,
+      "error_mode": null
+    },
+    "status": "completed",
+    "started_at": "2026-09-28T18:36:43.631119+00:00",
+    "elapsed_seconds": 28.970014499966055,
+    "usage": {
+      "input_tokens": 18884,
+      "cached_input_tokens": 7552,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 536,
+      "reasoning_output_tokens": 414
+    },
+    "model_requested": "gpt-6-astra",
+    "model_snapshot": null,
+    "reasoning_effort": "high",
+    "cli_version": "codex-cli 0.158.0-alpha.2.1",
+    "prompt_sha256": "02869ce147682ff55c75cea898430f39bbf1b5651106b737374232cdd1e66488",
+    "event_sha256": "70560ea644859a179d99332057663d96a044a039f02d56d7caddef77e97f960c",
+    "stderr_sha256": "a0dd5be053149355fbd02676c3ad9390102b8402b4ee5f999c5c2fe627a97ebe",
+    "tool_item_count": 0,
+    "private_record_sha256": "13480d476a77216c5473f8ca802403c6fb2604ad9250e7bbbce7b82009e4b655"
+  }
+]

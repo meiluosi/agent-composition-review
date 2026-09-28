@@ -1,0 +1,991 @@
+{
+  "kind": "development_ablation_not_holdout",
+  "planned_runs": 96,
+  "recorded_runs": 96,
+  "status_counts": {
+    "completed": 96
+  },
+  "manifest_sha256": "f065ab531227357b6cc27685a1f2e60dbb51229a58aab907ad4cd793a4494f91",
+  "predictions_sha256": "36b718714d72821b04fb909d322181831ef3e94c0a3a82b95b80a79e395c4961",
+  "analysis_script_sha256": "539392dc1e2037b45f0470fe220ab633f27b58d6404d5772a23abbdd9ca62c8b",
+  "limitations": [
+    "Eight purposively selected development tasks, already used to design v2.",
+    "Core-only conditions cannot read referenced files; not native skill routing.",
+    "Trial numbers do not fix model randomness; backend snapshot is unavailable.",
+    "Exact label matching does not settle disputed causal interpretations.",
+    "No instruction changes or selective retries during this experiment."
+  ],
+  "statistics": {
+    "fixed_development_set": {
+      "location": {
+        "tasks": 8,
+        "conditions": {
+          "A_no_skill": {
+            "mean": 0.4583333333333333,
+            "ci95": [
+              0.125,
+              0.7916666666666666
+            ]
+          },
+          "B_v1_full": {
+            "mean": 0.4583333333333333,
+            "ci95": [
+              0.125,
+              0.7916666666666666
+            ]
+          },
+          "C_v1_core": {
+            "mean": 0.5,
+            "ci95": [
+              0.20833333333333331,
+              0.7916666666666667
+            ]
+          },
+          "D_v2_core": {
+            "mean": 0.41666666666666663,
+            "ci95": [
+              0.125,
+              0.75
+            ]
+          }
+        },
+        "comparisons": {
+          "C_minus_B": {
+            "mean": 0.041666666666666685,
+            "ci95": [
+              0.0,
+              0.125
+            ]
+          },
+          "D_minus_C": {
+            "mean": -0.08333333333333337,
+            "ci95": [
+              -0.20833333333333326,
+              0.0
+            ]
+          },
+          "D_minus_A": {
+            "mean": -0.041666666666666685,
+            "ci95": [
+              -0.125,
+              0.0
+            ]
+          },
+          "B_minus_A": {
+            "mean": 0.0,
+            "ci95": [
+              0.0,
+              0.0
+            ]
+          }
+        }
+      },
+      "agent": {
+        "tasks": 6,
+        "conditions": {
+          "A_no_skill": {
+            "mean": 0.611111111111111,
+            "ci95": [
+              0.27777777777777773,
+              0.9444444444444445
+            ]
+          },
+          "B_v1_full": {
+            "mean": 0.611111111111111,
+            "ci95": [
+              0.27777777777777773,
+              0.9444444444444445
+            ]
+          },
+          "C_v1_core": {
+            "mean": 0.6666666666666666,
+            "ci95": [
+              0.3333333333333333,
+              0.9444444444444445
+            ]
+          },
+          "D_v2_core": {
+            "mean": 0.5555555555555555,
+            "ci95": [
+              0.16666666666666666,
+              0.888888888888889
+            ]
+          }
+        },
+        "comparisons": {
+          "C_minus_B": {
+            "mean": 0.05555555555555558,
+            "ci95": [
+              0.0,
+              0.16666666666666669
+            ]
+          },
+          "D_minus_C": {
+            "mean": -0.11111111111111116,
+            "ci95": [
+              -0.22222222222222227,
+              0.0
+            ]
+          },
+          "D_minus_A": {
+            "mean": -0.05555555555555558,
+            "ci95": [
+              -0.16666666666666666,
+              0.0
+            ]
+          },
+          "B_minus_A": {
+            "mean": 0.0,
+            "ci95": [
+              0.0,
+              0.0
+            ]
+          }
+        }
+      },
+      "joint": {
+        "tasks": 8,
+        "conditions": {
+          "A_no_skill": {
+            "mean": 0.3333333333333333,
+            "ci95": [
+              0.08333333333333333,
+              0.6666666666666666
+            ]
+          },
+          "B_v1_full": {
+            "mean": 0.3333333333333333,
+            "ci95": [
+              0.08333333333333333,
+              0.6666666666666666
+            ]
+          },
+          "C_v1_core": {
+            "mean": 0.375,
+            "ci95": [
+              0.08333333333333333,
+              0.6666666666666666
+            ]
+          },
+          "D_v2_core": {
+            "mean": 0.29166666666666663,
+            "ci95": [
+              0.041666666666666664,
+              0.625
+            ]
+          }
+        },
+        "comparisons": {
+          "C_minus_B": {
+            "mean": 0.041666666666666685,
+            "ci95": [
+              0.0,
+              0.125
+            ]
+          },
+          "D_minus_C": {
+            "mean": -0.08333333333333337,
+            "ci95": [
+              -0.2083333333333333,
+              0.0
+            ]
+          },
+          "D_minus_A": {
+            "mean": -0.041666666666666685,
+            "ci95": [
+              -0.125,
+              0.0
+            ]
+          },
+          "B_minus_A": {
+            "mean": 0.0,
+            "ci95": [
+              0.0,
+              0.0
+            ]
+          }
+        }
+      },
+      "error_mode": {
+        "tasks": 3,
+        "conditions": {
+          "A_no_skill": {
+            "mean": 0.0,
+            "ci95": [
+              0.0,
+              0.0
+            ]
+          },
+          "B_v1_full": {
+            "mean": 0.0,
+            "ci95": [
+              0.0,
+              0.0
+            ]
+          },
+          "C_v1_core": {
+            "mean": 0.0,
+            "ci95": [
+              0.0,
+              0.0
+            ]
+          },
+          "D_v2_core": {
+            "mean": 0.0,
+            "ci95": [
+              0.0,
+              0.0
+            ]
+          }
+        },
+        "comparisons": {
+          "C_minus_B": {
+            "mean": 0.0,
+            "ci95": [
+              0.0,
+              0.0
+            ]
+          },
+          "D_minus_C": {
+            "mean": 0.0,
+            "ci95": [
+              0.0,
+              0.0
+            ]
+          },
+          "D_minus_A": {
+            "mean": 0.0,
+            "ci95": [
+              0.0,
+              0.0
+            ]
+          },
+          "B_minus_A": {
+            "mean": 0.0,
+            "ci95": [
+              0.0,
+              0.0
+            ]
+          }
+        }
+      }
+    },
+    "Who&When": {
+      "location": {
+        "tasks": 5,
+        "conditions": {
+          "A_no_skill": {
+            "mean": 0.7333333333333333,
+            "ci95": [
+              0.3333333333333333,
+              1.0
+            ]
+          },
+          "B_v1_full": {
+            "mean": 0.7333333333333333,
+            "ci95": [
+              0.3333333333333333,
+              1.0
+            ]
+          },
+          "C_v1_core": {
+            "mean": 0.8,
+            "ci95": [
+              0.5333333333333333,
+              1.0
+            ]
+          },
+          "D_v2_core": {
+            "mean": 0.6666666666666666,
+            "ci95": [
+              0.26666666666666666,
+              1.0
+            ]
+          }
+        },
+        "comparisons": {
+          "C_minus_B": {
+            "mean": 0.06666666666666676,
+            "ci95": [
+              0.0,
+              0.2
+            ]
+          },
+          "D_minus_C": {
+            "mean": -0.13333333333333341,
+            "ci95": [
+              -0.26666666666666666,
+              0.0
+            ]
+          },
+          "D_minus_A": {
+            "mean": -0.06666666666666665,
+            "ci95": [
+              -0.19999999999999996,
+              0.0
+            ]
+          },
+          "B_minus_A": {
+            "mean": 0.0,
+            "ci95": [
+              0.0,
+              0.0
+            ]
+          }
+        }
+      },
+      "agent": {
+        "tasks": 5,
+        "conditions": {
+          "A_no_skill": {
+            "mean": 0.5333333333333333,
+            "ci95": [
+              0.13333333333333333,
+              0.9333333333333332
+            ]
+          },
+          "B_v1_full": {
+            "mean": 0.5333333333333333,
+            "ci95": [
+              0.13333333333333333,
+              0.9333333333333332
+            ]
+          },
+          "C_v1_core": {
+            "mean": 0.6,
+            "ci95": [
+              0.26666666666666666,
+              0.9333333333333332
+            ]
+          },
+          "D_v2_core": {
+            "mean": 0.4666666666666666,
+            "ci95": [
+              0.06666666666666667,
+              0.8666666666666666
+            ]
+          }
+        },
+        "comparisons": {
+          "C_minus_B": {
+            "mean": 0.06666666666666665,
+            "ci95": [
+              0.0,
+              0.2
+            ]
+          },
+          "D_minus_C": {
+            "mean": -0.13333333333333336,
+            "ci95": [
+              -0.26666666666666666,
+              0.0
+            ]
+          },
+          "D_minus_A": {
+            "mean": -0.06666666666666671,
+            "ci95": [
+              -0.19999999999999996,
+              0.0
+            ]
+          },
+          "B_minus_A": {
+            "mean": 0.0,
+            "ci95": [
+              0.0,
+              0.0
+            ]
+          }
+        }
+      },
+      "joint": {
+        "tasks": 5,
+        "conditions": {
+          "A_no_skill": {
+            "mean": 0.5333333333333333,
+            "ci95": [
+              0.13333333333333333,
+              0.9333333333333332
+            ]
+          },
+          "B_v1_full": {
+            "mean": 0.5333333333333333,
+            "ci95": [
+              0.13333333333333333,
+              0.9333333333333332
+            ]
+          },
+          "C_v1_core": {
+            "mean": 0.6,
+            "ci95": [
+              0.26666666666666666,
+              0.9333333333333332
+            ]
+          },
+          "D_v2_core": {
+            "mean": 0.4666666666666666,
+            "ci95": [
+              0.06666666666666667,
+              0.8666666666666666
+            ]
+          }
+        },
+        "comparisons": {
+          "C_minus_B": {
+            "mean": 0.06666666666666665,
+            "ci95": [
+              0.0,
+              0.2
+            ]
+          },
+          "D_minus_C": {
+            "mean": -0.13333333333333336,
+            "ci95": [
+              -0.26666666666666666,
+              0.0
+            ]
+          },
+          "D_minus_A": {
+            "mean": -0.06666666666666671,
+            "ci95": [
+              -0.19999999999999996,
+              0.0
+            ]
+          },
+          "B_minus_A": {
+            "mean": 0.0,
+            "ci95": [
+              0.0,
+              0.0
+            ]
+          }
+        }
+      }
+    },
+    "Who&When Pro": {
+      "location": {
+        "tasks": 3,
+        "conditions": {
+          "A_no_skill": {
+            "mean": 0.0,
+            "ci95": [
+              0.0,
+              0.0
+            ]
+          },
+          "B_v1_full": {
+            "mean": 0.0,
+            "ci95": [
+              0.0,
+              0.0
+            ]
+          },
+          "C_v1_core": {
+            "mean": 0.0,
+            "ci95": [
+              0.0,
+              0.0
+            ]
+          },
+          "D_v2_core": {
+            "mean": 0.0,
+            "ci95": [
+              0.0,
+              0.0
+            ]
+          }
+        },
+        "comparisons": {
+          "C_minus_B": {
+            "mean": 0.0,
+            "ci95": [
+              0.0,
+              0.0
+            ]
+          },
+          "D_minus_C": {
+            "mean": 0.0,
+            "ci95": [
+              0.0,
+              0.0
+            ]
+          },
+          "D_minus_A": {
+            "mean": 0.0,
+            "ci95": [
+              0.0,
+              0.0
+            ]
+          },
+          "B_minus_A": {
+            "mean": 0.0,
+            "ci95": [
+              0.0,
+              0.0
+            ]
+          }
+        }
+      },
+      "agent": {
+        "tasks": 1,
+        "conditions": {
+          "A_no_skill": {
+            "mean": 1.0,
+            "ci95": [
+              1.0,
+              1.0
+            ]
+          },
+          "B_v1_full": {
+            "mean": 1.0,
+            "ci95": [
+              1.0,
+              1.0
+            ]
+          },
+          "C_v1_core": {
+            "mean": 1.0,
+            "ci95": [
+              1.0,
+              1.0
+            ]
+          },
+          "D_v2_core": {
+            "mean": 1.0,
+            "ci95": [
+              1.0,
+              1.0
+            ]
+          }
+        },
+        "comparisons": {
+          "C_minus_B": {
+            "mean": 0.0,
+            "ci95": [
+              0.0,
+              0.0
+            ]
+          },
+          "D_minus_C": {
+            "mean": 0.0,
+            "ci95": [
+              0.0,
+              0.0
+            ]
+          },
+          "D_minus_A": {
+            "mean": 0.0,
+            "ci95": [
+              0.0,
+              0.0
+            ]
+          },
+          "B_minus_A": {
+            "mean": 0.0,
+            "ci95": [
+              0.0,
+              0.0
+            ]
+          }
+        }
+      },
+      "joint": {
+        "tasks": 3,
+        "conditions": {
+          "A_no_skill": {
+            "mean": 0.0,
+            "ci95": [
+              0.0,
+              0.0
+            ]
+          },
+          "B_v1_full": {
+            "mean": 0.0,
+            "ci95": [
+              0.0,
+              0.0
+            ]
+          },
+          "C_v1_core": {
+            "mean": 0.0,
+            "ci95": [
+              0.0,
+              0.0
+            ]
+          },
+          "D_v2_core": {
+            "mean": 0.0,
+            "ci95": [
+              0.0,
+              0.0
+            ]
+          }
+        },
+        "comparisons": {
+          "C_minus_B": {
+            "mean": 0.0,
+            "ci95": [
+              0.0,
+              0.0
+            ]
+          },
+          "D_minus_C": {
+            "mean": 0.0,
+            "ci95": [
+              0.0,
+              0.0
+            ]
+          },
+          "D_minus_A": {
+            "mean": 0.0,
+            "ci95": [
+              0.0,
+              0.0
+            ]
+          },
+          "B_minus_A": {
+            "mean": 0.0,
+            "ci95": [
+              0.0,
+              0.0
+            ]
+          }
+        }
+      },
+      "error_mode": {
+        "tasks": 3,
+        "conditions": {
+          "A_no_skill": {
+            "mean": 0.0,
+            "ci95": [
+              0.0,
+              0.0
+            ]
+          },
+          "B_v1_full": {
+            "mean": 0.0,
+            "ci95": [
+              0.0,
+              0.0
+            ]
+          },
+          "C_v1_core": {
+            "mean": 0.0,
+            "ci95": [
+              0.0,
+              0.0
+            ]
+          },
+          "D_v2_core": {
+            "mean": 0.0,
+            "ci95": [
+              0.0,
+              0.0
+            ]
+          }
+        },
+        "comparisons": {
+          "C_minus_B": {
+            "mean": 0.0,
+            "ci95": [
+              0.0,
+              0.0
+            ]
+          },
+          "D_minus_C": {
+            "mean": 0.0,
+            "ci95": [
+              0.0,
+              0.0
+            ]
+          },
+          "D_minus_A": {
+            "mean": 0.0,
+            "ci95": [
+              0.0,
+              0.0
+            ]
+          },
+          "B_minus_A": {
+            "mean": 0.0,
+            "ci95": [
+              0.0,
+              0.0
+            ]
+          }
+        }
+      }
+    }
+  },
+  "per_case": {
+    "ww:Algorithm-Generated:50": {
+      "A_no_skill": {
+        "location": 0.6666666666666666,
+        "agent": 0.6666666666666666,
+        "joint": 0.6666666666666666,
+        "error_mode": null
+      },
+      "B_v1_full": {
+        "location": 0.6666666666666666,
+        "agent": 0.6666666666666666,
+        "joint": 0.6666666666666666,
+        "error_mode": null
+      },
+      "C_v1_core": {
+        "location": 0.6666666666666666,
+        "agent": 0.6666666666666666,
+        "joint": 0.6666666666666666,
+        "error_mode": null
+      },
+      "D_v2_core": {
+        "location": 0.3333333333333333,
+        "agent": 0.3333333333333333,
+        "joint": 0.3333333333333333,
+        "error_mode": null
+      }
+    },
+    "ww:Algorithm-Generated:88": {
+      "A_no_skill": {
+        "location": 0.0,
+        "agent": 0.0,
+        "joint": 0.0,
+        "error_mode": null
+      },
+      "B_v1_full": {
+        "location": 0.0,
+        "agent": 0.0,
+        "joint": 0.0,
+        "error_mode": null
+      },
+      "C_v1_core": {
+        "location": 0.3333333333333333,
+        "agent": 0.3333333333333333,
+        "joint": 0.3333333333333333,
+        "error_mode": null
+      },
+      "D_v2_core": {
+        "location": 0.0,
+        "agent": 0.0,
+        "joint": 0.0,
+        "error_mode": null
+      }
+    },
+    "ww:Algorithm-Generated:68": {
+      "A_no_skill": {
+        "location": 1.0,
+        "agent": 1.0,
+        "joint": 1.0,
+        "error_mode": null
+      },
+      "B_v1_full": {
+        "location": 1.0,
+        "agent": 1.0,
+        "joint": 1.0,
+        "error_mode": null
+      },
+      "C_v1_core": {
+        "location": 1.0,
+        "agent": 1.0,
+        "joint": 1.0,
+        "error_mode": null
+      },
+      "D_v2_core": {
+        "location": 1.0,
+        "agent": 1.0,
+        "joint": 1.0,
+        "error_mode": null
+      }
+    },
+    "ww:Hand-Crafted:6": {
+      "A_no_skill": {
+        "location": 1.0,
+        "agent": 1.0,
+        "joint": 1.0,
+        "error_mode": null
+      },
+      "B_v1_full": {
+        "location": 1.0,
+        "agent": 1.0,
+        "joint": 1.0,
+        "error_mode": null
+      },
+      "C_v1_core": {
+        "location": 1.0,
+        "agent": 1.0,
+        "joint": 1.0,
+        "error_mode": null
+      },
+      "D_v2_core": {
+        "location": 1.0,
+        "agent": 1.0,
+        "joint": 1.0,
+        "error_mode": null
+      }
+    },
+    "ww:Hand-Crafted:33": {
+      "A_no_skill": {
+        "location": 1.0,
+        "agent": 0.0,
+        "joint": 0.0,
+        "error_mode": null
+      },
+      "B_v1_full": {
+        "location": 1.0,
+        "agent": 0.0,
+        "joint": 0.0,
+        "error_mode": null
+      },
+      "C_v1_core": {
+        "location": 1.0,
+        "agent": 0.0,
+        "joint": 0.0,
+        "error_mode": null
+      },
+      "D_v2_core": {
+        "location": 1.0,
+        "agent": 0.0,
+        "joint": 0.0,
+        "error_mode": null
+      }
+    },
+    "pro:alfworld_alfagent_0288": {
+      "A_no_skill": {
+        "location": 0.0,
+        "agent": null,
+        "joint": 0.0,
+        "error_mode": 0.0
+      },
+      "B_v1_full": {
+        "location": 0.0,
+        "agent": null,
+        "joint": 0.0,
+        "error_mode": 0.0
+      },
+      "C_v1_core": {
+        "location": 0.0,
+        "agent": null,
+        "joint": 0.0,
+        "error_mode": 0.0
+      },
+      "D_v2_core": {
+        "location": 0.0,
+        "agent": null,
+        "joint": 0.0,
+        "error_mode": 0.0
+      }
+    },
+    "pro:math_debate_0084": {
+      "A_no_skill": {
+        "location": 0.0,
+        "agent": 1.0,
+        "joint": 0.0,
+        "error_mode": 0.0
+      },
+      "B_v1_full": {
+        "location": 0.0,
+        "agent": 1.0,
+        "joint": 0.0,
+        "error_mode": 0.0
+      },
+      "C_v1_core": {
+        "location": 0.0,
+        "agent": 1.0,
+        "joint": 0.0,
+        "error_mode": 0.0
+      },
+      "D_v2_core": {
+        "location": 0.0,
+        "agent": 1.0,
+        "joint": 0.0,
+        "error_mode": 0.0
+      }
+    },
+    "pro:dacode_smolagents_0096": {
+      "A_no_skill": {
+        "location": 0.0,
+        "agent": null,
+        "joint": 0.0,
+        "error_mode": 0.0
+      },
+      "B_v1_full": {
+        "location": 0.0,
+        "agent": null,
+        "joint": 0.0,
+        "error_mode": 0.0
+      },
+      "C_v1_core": {
+        "location": 0.0,
+        "agent": null,
+        "joint": 0.0,
+        "error_mode": 0.0
+      },
+      "D_v2_core": {
+        "location": 0.0,
+        "agent": null,
+        "joint": 0.0,
+        "error_mode": 0.0
+      }
+    }
+  },
+  "resources": {
+    "A_no_skill": {
+      "runs": 24,
+      "status_counts": {
+        "completed": 24
+      },
+      "median_elapsed_seconds": 34.23709452099865,
+      "usage_missing_runs": 0,
+      "cost": null,
+      "usage_totals": {
+        "input_tokens": 326014,
+        "cached_input_tokens": 158592,
+        "output_tokens": 6943,
+        "reasoning_output_tokens": 3998
+      }
+    },
+    "B_v1_full": {
+      "runs": 24,
+      "status_counts": {
+        "completed": 24
+      },
+      "median_elapsed_seconds": 35.219992687983904,
+      "usage_missing_runs": 0,
+      "cost": null,
+      "usage_totals": {
+        "input_tokens": 480904,
+        "cached_input_tokens": 151040,
+        "output_tokens": 7996,
+        "reasoning_output_tokens": 4776
+      }
+    },
+    "C_v1_core": {
+      "runs": 24,
+      "status_counts": {
+        "completed": 24
+      },
+      "median_elapsed_seconds": 34.32192322902847,
+      "usage_missing_runs": 0,
+      "cost": null,
+      "usage_totals": {
+        "input_tokens": 367076,
+        "cached_input_tokens": 153472,
+        "output_tokens": 7057,
+        "reasoning_output_tokens": 3895
+      }
+    },
+    "D_v2_core": {
+      "runs": 24,
+      "status_counts": {
+        "completed": 24
+      },
+      "median_elapsed_seconds": 35.32484608350205,
+      "usage_missing_runs": 0,
+      "cost": null,
+      "usage_totals": {
+        "input_tokens": 349428,
+        "cached_input_tokens": 105728,
+        "output_tokens": 7191,
+        "reasoning_output_tokens": 3890
+      }
+    }
+  }
+}

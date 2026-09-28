@@ -34,9 +34,11 @@ jobs:
       - name: Run framework regressions (not model capability evaluation)
         run: python scripts/run_evals.py --output evals/runs/latest-local.json
       - name: Check attribution input isolation and strict scorer
-        run: python -m unittest evals.external.test_core evals.external.test_analysis -v
+        run: python -m unittest evals.external.test_core evals.external.test_analysis evals.iterations.test_ablation -v
       - name: Verify published scores and redraw benchmark figures (no model calls)
         run: python scripts/plot_external_eval.py
+      - name: Verify development ablation scores and figures (no model calls)
+        run: python scripts/analyze_ablation.py publish
       - name: Package runtime skill
         run: python scripts/build_skill.py
       - name: Save runtime package and evaluation record

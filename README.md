@@ -102,7 +102,28 @@ python3.12 -m venv .venv
 结果与复现：[完整实验说明](docs/external-evaluation.md) · [冻结清单](evals/external/pilot-manifest.json) · [逐次预测与评分](evals/external/results/pilot-2026-09-29/predictions.json) · [汇总](evals/external/results/pilot-2026-09-29/summary.json) · [资源统计](evals/external/results/pilot-2026-09-29/report.md)。图表可以从公开评分表重画，无需再次调用模型。
 <!-- external-pilot:end -->
 
-事后逐例分析见 [首轮复盘与迭代设计](docs/pilot-postmortem.md)：净退化集中在两个任务，涉及已恢复错误、未执行风险及最早责任位置的区分。已保存一个未启用的 v2 候选和消融方案；尚未追加模型运行，也未替换当前 Skill。首轮成绩保持原样。
+事后逐例分析见 [首轮复盘与迭代设计](docs/pilot-postmortem.md)：净退化集中在两个任务，涉及已恢复错误、未执行风险及最早责任位置的区分。已保存未启用的 v2 候选，并完成下方四组开发消融。主 Skill 尚未替换，首轮成绩保持原样。
+
+<!-- development-ablation:start -->
+## 四组开发集消融
+
+首轮复盘后，针对 8 个已参与设计的任务重新运行四组、每例每组 3 次，共 **96 次新运行**。A 无 Skill；B 旧版全包；C 旧版正文；D 候选正文。A/B 提示词与首轮一致，本轮重新采样；正文组不能读取参考链接。这是开发机制检查，不能证明保留集提升或实际自动触发效果。
+
+| 条件 | 定位命中 | 准确率 | 输入 token 合计 | 输出 token 合计 | 墙钟中位数 |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| A · No skill | 11/24 | 45.8% | 326,014 | 6,943 | 34.2s |
+| B · V1 full | 11/24 | 45.8% | 480,904 | 7,996 | 35.2s |
+| C · V1 core | 12/24 | 50.0% | 367,076 | 7,057 | 34.3s |
+| D · V2 core | 10/24 | 41.7% | 349,428 | 7,191 | 35.3s |
+
+![开发集四组准确率与上下文成本](docs/assets/development-ablation-overview.png)
+
+每个条件有 24 次运行，但只有 8 个任务。按任务聚类的区间和逐例变化见 [实验报告](evals/iterations/ablation-2026-09-29/REPORT.md)。历史 144 次未并入此表；费用未知，token 与墙钟记录不等于货币报价或纯服务延迟。
+
+[逐任务成功次数图](docs/assets/development-ablation-cases.png) · [冻结清单](evals/iterations/ablation-2026-09-29/manifest.json) · [逐次预测](evals/iterations/ablation-2026-09-29/predictions.json) · [复现方法](docs/ablation-evaluation.md)
+<!-- development-ablation:end -->
+
+**本轮决定：v2 候选未获升级依据，继续保留主版本。** 旧版正文较全包少用 23.7% 输入 token，但准确率仅多命中一次；旧版全包在这次复测中与无 Skill 持平。详见 [逐例复盘与下一步实验方向](docs/ablation-findings.md)。
 
 ## 仓库结构
 

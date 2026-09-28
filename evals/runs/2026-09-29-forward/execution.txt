@@ -1,0 +1,8 @@
+Python: 3.14.4
+A original: result=None, before={}, after={'absent': {}}
+CONFIRMED: missing lookup creates a session and violates the contract
+PASS A fixed: repeated missing-session probes return None without mutation
+PASS A compatibility: existing answers remain readable; missing keys preserve rows
+PASS B: first queries populate cache; repeats reuse results; rows={'a': 'A', 'b': 'B', 'none': None}
+B loader calls: [call('a'), call('b'), call('none')]
+ALL CHECKS PASSED (including expected original A contract violation)

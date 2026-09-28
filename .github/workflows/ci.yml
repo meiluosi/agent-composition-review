@@ -1,0 +1,44 @@
+name: Skill and framework regressions
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  local-checks:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      LANGCHAIN_TRACING_V2: "false"
+      LANGSMITH_TRACING: "false"
+      PYTHONDONTWRITEBYTECODE: "1"
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: requirements-eval.txt
+      - name: Install evaluation dependencies
+        run: python -m pip install -r requirements-eval.txt
+      - name: Check skill and repository
+        run: python scripts/check_repo.py
+      - name: Run framework regressions (not model capability evaluation)
+        run: python scripts/run_evals.py --output evals/runs/latest-local.json
+      - name: Package runtime skill
+        run: python scripts/build_skill.py
+      - name: Save runtime package and evaluation record
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: skill-and-framework-evidence
+          path: |
+            dist/agent-composition-review.zip
+            evals/runs/latest-local.json
+          if-no-files-found: warn

@@ -1,0 +1,25 @@
+name: 提交故障或正常反例
+description: 用可复查材料扩充案例库
+title: "[case] "
+body:
+  - type: textarea
+    id: behavior
+    attributes:
+      label: 预期与实际行为
+      description: 哪个具体输入触发了什么结果？正常反例也可以提交。
+    validations:
+      required: true
+  - type: textarea
+    id: materials
+    attributes:
+      label: 最小复现与版本
+      description: 提供脱敏代码、必要中间输出、依赖版本与公开来源；不要粘贴密钥。
+    validations:
+      required: true
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: 判定方法
+      description: 怎样确认发生故障或修复有效？尚不确定的部分请保留。
+    validations:
+      required: true

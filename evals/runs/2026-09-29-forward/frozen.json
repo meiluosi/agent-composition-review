@@ -1,0 +1,32 @@
+{
+  "kind": "targeted_development_forward_smoke_not_comparative_eval",
+  "frozen_at": "2026-09-28T16:35:29.719492+00:00",
+  "input_sha256": "f7a446e8ab5eb0dd0a28178e69beef893a28d6b04cf8b9fda12eb6101681ae48",
+  "skill_files_sha256": {
+    "SKILL.md": "eebcfc93239682deb63dcdfaa9c9cea292841930e363de1d63fb49f9c3fcb7a5",
+    "agents/openai.yaml": "990ce681f0311731177c553baeef4349852ce30d64a55bfc2f2e9fcc59377b7d",
+    "references/advanced-composition.md": "c0d29e4decd7e496ec14c24bb0596080f12d985ed9da7035aa0b1a08f1f3675e",
+    "references/boundary-contracts.md": "a52a3e7aebe0e3ae5a7b5aae730c9d9ff9d9a19af5474f11296ea3c60f4e441e",
+    "references/review-output.md": "c25d751adadc9a0c435c2a75e5afc0512bf0447f5dac082524cf739cbabdd588"
+  },
+  "criteria": [
+    "A: demonstrate a miss returns None but adds a session against its explicit contract.",
+    "A: minimal repair must preserve existing reads and avoid allocating session on misses.",
+    "B: do not report explicitly authorized read-through caching as a defect merely because get mutates state.",
+    "Run validation and limit claims to the local sequential examples."
+  ],
+  "conditions": [
+    "with_skill"
+  ],
+  "trials": 1,
+  "model": null,
+  "reasoning_effort": "inherited; exact setting unavailable",
+  "tokens": null,
+  "cost": null,
+  "limitations": [
+    "This known failure family is already described in the skill; it is a development smoke test, not unseen transfer.",
+    "No baseline or previous-version arm; no relative capability claim.",
+    "Path strings in public artifacts are normalized for portability."
+  ],
+  "criteria_timing": "Recorded after executor dispatch, before inspecting its output; does not meet the full pre-dispatch freeze protocol."
+}

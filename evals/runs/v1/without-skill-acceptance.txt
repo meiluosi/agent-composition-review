@@ -1,0 +1,17 @@
+exit_code: 0
+stdout:
+
+stderr:
+test_01_final_state_preserves_each_result (__main__.AcceptanceTests.test_01_final_state_preserves_each_result) ... ok
+test_02_injected_functions_can_read_full_stage_context (__main__.AcceptanceTests.test_02_injected_functions_can_read_full_stage_context) ... ok
+test_03_each_processor_runs_once (__main__.AcceptanceTests.test_03_each_processor_runs_once) ... ok
+test_04_parent_and_subgraph_still_overlap (__main__.AcceptanceTests.test_04_parent_and_subgraph_still_overlap) ... ok
+test_05_subgraph_branches_still_overlap (__main__.AcceptanceTests.test_05_subgraph_branches_still_overlap) ... ok
+test_06_reused_graph_has_no_cross_request_state (__main__.AcceptanceTests.test_06_reused_graph_has_no_cross_request_state) ... ok
+test_07_async_invoke_preserves_result (__main__.AcceptanceTests.test_07_async_invoke_preserves_result) ... ok
+test_08_existing_subgraph_remains (__main__.AcceptanceTests.test_08_existing_subgraph_remains) ... ok
+
+----------------------------------------------------------------------
+Ran 8 tests in 0.018s
+
+OK

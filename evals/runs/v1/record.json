@@ -1,0 +1,43 @@
+{
+  "kind": "historical_model_behavior_eval",
+  "model": null,
+  "reasoning_effort": "inherited default; exact setting not recorded",
+  "tokens": null,
+  "cost": null,
+  "trials_per_condition": 1,
+  "conditions": [
+    "with_skill",
+    "without_skill"
+  ],
+  "scenario_cases": 6,
+  "framework_repair_cases": 1,
+  "split": "development",
+  "skill_files_sha256": {
+    "SKILL.md": "eebcfc93239682deb63dcdfaa9c9cea292841930e363de1d63fb49f9c3fcb7a5",
+    "agents/openai.yaml": "990ce681f0311731177c553baeef4349852ce30d64a55bfc2f2e9fcc59377b7d",
+    "references/advanced-composition.md": "c0d29e4decd7e496ec14c24bb0596080f12d985ed9da7035aa0b1a08f1f3675e",
+    "references/boundary-contracts.md": "ce910c770a578acf093717ce75a97ae2599f02436349e6f4b2b23cc17189cf91",
+    "references/review-output.md": "c25d751adadc9a0c435c2a75e5afc0512bf0447f5dac082524cf739cbabdd588"
+  },
+  "archive_files_sha256": {
+    "scenario-with-skill.md": "e314ab167e5ed6e19cb4751fc2a4dba61e0690d86d1e36232f954d6891b04a5b",
+    "scenario-without-skill.md": "f65c6e092c52dca356124e4b277380ac689d8ed7114de7ccbc4666bb0b65479b",
+    "scenario-blind-assessment.md": "aa8d8224e130652ee4a90f5b5b67c59353be3ae8ae24c5d4d605ac382b42b02d",
+    "with-skill-fixed.py": "b6e842ffdbdf866f12fad275a9259b89bf6fc718f97aa4c786e1db7813084406",
+    "without-skill-fixed.py": "a6d56299733d4954f9ff9c384dc28796ae85f23f7176e839dc17d89ae59dadbe",
+    "with-skill-diagnosis.md": "b7e3af1d1824e28145fcddfd26e59aa21f3c127f12a61528a39872e3bfc16144",
+    "without-skill-diagnosis.md": "a1c66f0c09923ef4293b98b9698810821a4e33addb76db13453458eafacc45b9",
+    "acceptance.py": "ef76077249979e354bf23953c8b63f8f51ea72794a066eff85ce3837e49167f1",
+    "with-skill-acceptance.txt": "2d7fb8f1af2d1a912c8cb697124a556da844d1571b5cbdf8391f87ae546dad72",
+    "without-skill-acceptance.txt": "2d7fb8f1af2d1a912c8cb697124a556da844d1571b5cbdf8391f87ae546dad72",
+    "with-skill-upstream-callbacks.txt": "b2d467a1026585d29df9b85a21a7218bfcb905b9ffca16067d359cc55c0a649a",
+    "without-skill-upstream-callbacks.txt": "3eeab50091ba416b8845fe65d4a837616ac2984a62cc36a647818edac4e56fa7"
+  },
+  "limitations": [
+    "Exact model identifier, tool-call counts and costs were not captured.",
+    "Fresh contexts shared system environment; baseline may have seen skill catalog descriptions.",
+    "Only the six text scenarios had an anonymized third-model assessment; framework repairs were checked by frozen deterministic tests and the author.",
+    "No measured diagnostic gain over baseline; both repaired the framework case.",
+    "These results apply to the archived v1 instructions, not automatically to newer reference additions."
+  ]
+}

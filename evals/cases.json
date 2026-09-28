@@ -1,0 +1,44 @@
+{
+  "schema_version": 1,
+  "cases": [
+    {
+      "id": "LG-6446",
+      "family": "snapshot-vs-update-ownership",
+      "provenance_kind": "public_issue_reproduction",
+      "source_url": "https://github.com/langchain-ai/langgraph/issues/6446",
+      "source_version": "langgraph version omitted by reporter",
+      "tested_versions": {"langgraph": "1.0.3", "langchain-core": "1.0.4"},
+      "fixture": "evals/cases/test_subgraph_boundary.py",
+      "split": "development",
+      "evidence_level": "runtime_reproduced_and_independent_skill_repair_tested_v1",
+      "adaptation": "Original code reproduced separately; portable fixture replaces timestamps with deterministic values and retains the parent/child fan-out topology.",
+      "invariant": "Only fields owned by a child may be written back; preserve read context, results and parallel execution."
+    },
+    {
+      "id": "LG-8754",
+      "family": "read-miss-hidden-mutation",
+      "provenance_kind": "public_issue_reproduction",
+      "source_url": "https://github.com/langchain-ai/langgraph/issues/8754",
+      "source_version": "langgraph-checkpoint 4.2.0 at 11ee185999b86bfea2d8c0e69cef9a5e37acf686",
+      "tested_versions": {"langgraph-checkpoint": "3.0.1"},
+      "fixture": "evals/cases/test_checkpoint_reads.py",
+      "split": "development",
+      "evidence_level": "runtime_reproduced_with_local_workaround_not_independent_skill_eval",
+      "adaptation": "Independently implemented read-miss probes on older installed version; GuardedSaver is a scoped sequential local workaround, not a submitted or production-ready upstream patch.",
+      "invariant": "Unknown-thread and namespace read misses do not allocate storage; valid checkpoints remain readable."
+    },
+    {
+      "id": "DOC-INTERRUPT",
+      "family": "resume-replay-side-effect",
+      "provenance_kind": "official_documentation_derived_example",
+      "source_url": "https://docs.langchain.com/oss/python/langgraph/interrupts",
+      "source_version": "online documentation consulted 2026-09-29",
+      "tested_versions": {"langgraph": "1.0.3", "langgraph-checkpoint": "3.0.1"},
+      "fixture": "evals/cases/test_interrupt_effects.py",
+      "split": "development",
+      "evidence_level": "documented_behavior_exercised_not_historical_incident_or_skill_eval",
+      "adaptation": "Uses a local already-authorized preparation effect and an in-process idempotency double; no external operations and no durable exactly-once guarantee.",
+      "invariant": "Resuming a workflow must not apply the same logical preparation effect twice."
+    }
+  ]
+}

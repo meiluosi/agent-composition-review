@@ -1,0 +1,43 @@
+{
+  "kind": "targeted_development_forward_smoke_not_comparative_eval",
+  "condition": "with_skill",
+  "trials": 1,
+  "python": "3.14.4",
+  "executor_reported_exit_code": 0,
+  "reviewer": "maintainer assistant; not blinded",
+  "criteria_results": [
+    {
+      "criterion": "A diagnosis and observable state evidence",
+      "result": "pass",
+      "evidence": "report.md A; execution.txt before={}, after={absent: {}}"
+    },
+    {
+      "criterion": "A minimal repair preserves existing reads and misses",
+      "result": "pass",
+      "evidence": "validate.py SessionsFixed and compatibility assertions; execution.txt PASS A"
+    },
+    {
+      "criterion": "B authorized caching is not falsely reported as defective",
+      "result": "pass",
+      "evidence": "report.md B and execution.txt loader calls for three distinct keys"
+    },
+    {
+      "criterion": "Executable verification and calibrated limits",
+      "result": "pass",
+      "evidence": "execution.txt and report.md final limitations"
+    }
+  ],
+  "artifact_sha256": {
+    "request.md": "df0bd3ea23543508e9562353db7846aaceae1a4f1cf96d50046899ec696e6e8b",
+    "report.md": "c9e64f6599e6927ef0ea18f0ef4666006ec08a8d19373a09901a78ced3b267db",
+    "validate.py": "3e65da7a2190595943f2551660d23c4caa7ad77d28c924fdbf2905c78f541450",
+    "execution.txt": "04abe2fdd6485fd36da827fe55c99b77038f3fe71149687c3b9982d2d383e665",
+    "frozen.json": "c4d0579c0a015113d1d9bae4bbe68e110edfbd7e4acadc905c01e358c9a6eb65"
+  },
+  "critical_failures": [],
+  "limitations": [
+    "Known development family; no baseline and no evidence of relative improvement.",
+    "Criteria recorded after dispatch and before reviewing response; full pre-dispatch protocol not met.",
+    "No model identifier, token or cost measurements available."
+  ]
+}

@@ -1,0 +1,64 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "verdict": {
+      "type": "string",
+      "enum": [
+        "violation",
+        "satisfied",
+        "insufficient"
+      ]
+    },
+    "primary_event_id": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "claims": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "assessment": {
+            "type": "string",
+            "enum": [
+              "supported",
+              "refuted",
+              "unknown"
+            ]
+          },
+          "evidence_ids": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "required": [
+          "id",
+          "assessment",
+          "evidence_ids"
+        ]
+      }
+    },
+    "explanation": {
+      "type": "string"
+    },
+    "next_check": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "verdict",
+    "primary_event_id",
+    "claims",
+    "explanation",
+    "next_check"
+  ]
+}

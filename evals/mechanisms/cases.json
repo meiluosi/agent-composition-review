@@ -1,0 +1,1014 @@
+{
+  "schema_version": 1,
+  "source": "Synthetic development contrasts authored alongside candidate; not independent holdout.",
+  "cases": [
+    {
+      "case_id": "m01",
+      "pair_id": "recovery",
+      "source": "author_constructed",
+      "split": "development",
+      "input": {
+        "request": "判断当前交付要求是否满足。历史局部错误另行回答；不要把问题改成寻找最早异常。",
+        "requirements": [
+          "最终交付 /deliver/report.csv，内容为已校验的 ratios。"
+        ],
+        "events": [
+          {
+            "id": "e1",
+            "kind": "observation",
+            "actor": "parser",
+            "text": "第一次用默认表头读取，缺失 revenue 列，抛出 KeyError。"
+          },
+          {
+            "id": "e2",
+            "kind": "action",
+            "actor": "analyst",
+            "text": "将 header 改为 1，重新读取。"
+          },
+          {
+            "id": "e3",
+            "kind": "observation",
+            "actor": "parser",
+            "text": "读取成功，存在 revenue/rent 列，三行金额均为有限正数。"
+          },
+          {
+            "id": "e4",
+            "kind": "observation",
+            "actor": "calculator",
+            "text": "正确计算 ratios=[2,3,4]，结果已验证。"
+          },
+          {
+            "id": "e5",
+            "kind": "observation",
+            "actor": "writer",
+            "text": "写入 /scratch/report.csv。"
+          },
+          {
+            "id": "e6",
+            "kind": "observation",
+            "actor": "acceptance",
+            "text": "/deliver/report.csv 不存在。"
+          },
+          {
+            "id": "e7",
+            "kind": "plan",
+            "actor": "worker",
+            "text": "计划复制文件到约定目录，并保留已算出的结果。"
+          },
+          {
+            "id": "e8",
+            "kind": "observation",
+            "actor": "acceptance",
+            "text": "计划尚未执行，当前 /deliver/report.csv 仍不存在；运行已停止。"
+          }
+        ],
+        "claims": [
+          {
+            "id": "q1",
+            "text": "最初的表头错误发生过。"
+          },
+          {
+            "id": "q2",
+            "text": "当前指定位置已交付正确文件。"
+          },
+          {
+            "id": "q3",
+            "text": "若从第一次就使用正确表头，整次运行一定会成功。"
+          }
+        ]
+      },
+      "oracle": {
+        "verdict": "violation",
+        "primary_event_id": "e5",
+        "claims": {
+          "q1": "supported",
+          "q2": "refuted",
+          "q3": "unknown"
+        },
+        "required_evidence": {
+          "q1": [
+            "e1"
+          ],
+          "q2": [
+            "e8"
+          ],
+          "q3": []
+        },
+        "healthy": false
+      }
+    },
+    {
+      "case_id": "m02",
+      "pair_id": "recovery",
+      "source": "author_constructed",
+      "split": "development",
+      "input": {
+        "request": "判断当前交付要求是否满足。历史局部错误另行回答；不要把问题改成寻找最早异常。",
+        "requirements": [
+          "最终交付 /deliver/report.csv，内容为已校验的 ratios。"
+        ],
+        "events": [
+          {
+            "id": "e1",
+            "kind": "observation",
+            "actor": "parser",
+            "text": "第一次用默认表头读取，缺失 revenue 列，抛出 KeyError。"
+          },
+          {
+            "id": "e2",
+            "kind": "action",
+            "actor": "analyst",
+            "text": "将 header 改为 1，重新读取。"
+          },
+          {
+            "id": "e3",
+            "kind": "observation",
+            "actor": "parser",
+            "text": "读取成功，存在 revenue/rent 列，三行金额均为有限正数。"
+          },
+          {
+            "id": "e4",
+            "kind": "observation",
+            "actor": "calculator",
+            "text": "正确计算 ratios=[2,3,4]，结果已验证。"
+          },
+          {
+            "id": "e5",
+            "kind": "observation",
+            "actor": "writer",
+            "text": "写入 /scratch/report.csv。"
+          },
+          {
+            "id": "e6",
+            "kind": "observation",
+            "actor": "acceptance",
+            "text": "/deliver/report.csv 不存在。"
+          },
+          {
+            "id": "e7",
+            "kind": "plan",
+            "actor": "worker",
+            "text": "计划复制文件到约定目录，并保留已算出的结果。"
+          },
+          {
+            "id": "e8",
+            "kind": "observation",
+            "actor": "acceptance",
+            "text": "复制后 /deliver/report.csv 存在且内容校验通过；本次交付要求全部通过。"
+          }
+        ],
+        "claims": [
+          {
+            "id": "q1",
+            "text": "最初的表头错误发生过。"
+          },
+          {
+            "id": "q2",
+            "text": "当前指定位置已交付正确文件。"
+          },
+          {
+            "id": "q3",
+            "text": "若从第一次就使用正确表头，整次运行一定会成功。"
+          }
+        ]
+      },
+      "oracle": {
+        "verdict": "satisfied",
+        "primary_event_id": null,
+        "claims": {
+          "q1": "supported",
+          "q2": "supported",
+          "q3": "unknown"
+        },
+        "required_evidence": {
+          "q1": [
+            "e1"
+          ],
+          "q2": [
+            "e8"
+          ],
+          "q3": []
+        },
+        "healthy": true
+      }
+    },
+    {
+      "case_id": "m03",
+      "pair_id": "execution",
+      "source": "author_constructed",
+      "split": "development",
+      "input": {
+        "request": "只判断是否已观察到本次最终交付违反区域完整性要求，区分代码风险与实际执行。",
+        "requirements": [
+          "最终产物必须包含 north 和 south 两个区域。"
+        ],
+        "events": [
+          {
+            "id": "e1",
+            "kind": "observation",
+            "actor": "reader",
+            "text": "两个区域都已成功读入。north: revenue=120,rent=20; south: revenue=30,rent=5。"
+          },
+          {
+            "id": "e2",
+            "kind": "observation",
+            "actor": "calculator",
+            "text": "当前内存输出包含 north 和 south，均 ratio=6。"
+          },
+          {
+            "id": "e3",
+            "kind": "plan",
+            "actor": "worker",
+            "text": "拟执行 result = result[result.region != 'south']，再交付。"
+          },
+          {
+            "id": "e4",
+            "kind": "statement",
+            "actor": "reviewer",
+            "text": "这段过滤很危险，可能遗漏区域。"
+          },
+          {
+            "id": "e5",
+            "kind": "observation",
+            "actor": "runtime",
+            "text": "没有执行 e3。后续工具日志和最终产物未提供，无法确认是否交付；e2 只是中间结果。"
+          }
+        ],
+        "claims": [
+          {
+            "id": "q1",
+            "text": "e3 的代码若执行会删除 south。"
+          },
+          {
+            "id": "q2",
+            "text": "已有证据证明本次实际交付缺少 south。"
+          },
+          {
+            "id": "q3",
+            "text": "已有证据证明本次最终交付符合完整性要求。"
+          }
+        ]
+      },
+      "oracle": {
+        "verdict": "insufficient",
+        "primary_event_id": null,
+        "claims": {
+          "q1": "supported",
+          "q2": "unknown",
+          "q3": "unknown"
+        },
+        "required_evidence": {
+          "q1": [
+            "e3"
+          ],
+          "q2": [
+            "e5"
+          ],
+          "q3": [
+            "e5"
+          ]
+        },
+        "healthy": false
+      }
+    },
+    {
+      "case_id": "m04",
+      "pair_id": "execution",
+      "source": "author_constructed",
+      "split": "development",
+      "input": {
+        "request": "只判断是否已观察到本次最终交付违反区域完整性要求，区分代码风险与实际执行。",
+        "requirements": [
+          "最终产物必须包含 north 和 south 两个区域。"
+        ],
+        "events": [
+          {
+            "id": "e1",
+            "kind": "observation",
+            "actor": "reader",
+            "text": "两个区域都已成功读入。north: revenue=120,rent=20; south: revenue=30,rent=5。"
+          },
+          {
+            "id": "e2",
+            "kind": "observation",
+            "actor": "calculator",
+            "text": "当前内存输出包含 north 和 south，均 ratio=6。"
+          },
+          {
+            "id": "e3",
+            "kind": "plan",
+            "actor": "worker",
+            "text": "拟执行 result = result[result.region != 'south']，再交付。"
+          },
+          {
+            "id": "e4",
+            "kind": "statement",
+            "actor": "reviewer",
+            "text": "这段过滤很危险，可能遗漏区域。"
+          },
+          {
+            "id": "e5",
+            "kind": "observation",
+            "actor": "runtime",
+            "text": "过滤计划已执行，最终产物只含 north，south 被删除。"
+          }
+        ],
+        "claims": [
+          {
+            "id": "q1",
+            "text": "e3 的代码若执行会删除 south。"
+          },
+          {
+            "id": "q2",
+            "text": "已有证据证明本次实际交付缺少 south。"
+          },
+          {
+            "id": "q3",
+            "text": "已有证据证明本次最终交付符合完整性要求。"
+          }
+        ]
+      },
+      "oracle": {
+        "verdict": "violation",
+        "primary_event_id": "e5",
+        "claims": {
+          "q1": "supported",
+          "q2": "supported",
+          "q3": "refuted"
+        },
+        "required_evidence": {
+          "q1": [
+            "e3"
+          ],
+          "q2": [
+            "e5"
+          ],
+          "q3": [
+            "e5"
+          ]
+        },
+        "healthy": false
+      }
+    },
+    {
+      "case_id": "m05",
+      "pair_id": "semantics",
+      "source": "author_constructed",
+      "split": "development",
+      "input": {
+        "request": "判断这次入账是否满足金额语义契约，选择实际违反位置。",
+        "requirements": [
+          "该笔 100 EUR 应按固定汇率入账为 120 USD。"
+        ],
+        "events": [
+          {
+            "id": "e1",
+            "kind": "artifact",
+            "actor": "contract",
+            "text": "字段 value 是金额数值，currency 是币种；消费者账本统一以 USD 计价，USD→USD 为恒等，EUR→USD 固定乘 1.2。"
+          },
+          {
+            "id": "e2",
+            "kind": "observation",
+            "actor": "producer",
+            "text": "输出 {value:100,currency:EUR}，生产者 schema 校验通过。"
+          },
+          {
+            "id": "e3",
+            "kind": "observation",
+            "actor": "adapter",
+            "text": "输出 {amount_usd:100}；转换程序仅复制 value 并丢弃 currency。"
+          },
+          {
+            "id": "e4",
+            "kind": "observation",
+            "actor": "consumer",
+            "text": "成功入账 100 USD，schema 校验通过。"
+          },
+          {
+            "id": "e5",
+            "kind": "statement",
+            "actor": "monitor",
+            "text": "没有抛异常，两个组件的 JSON 类型检查都通过。"
+          }
+        ],
+        "claims": [
+          {
+            "id": "q1",
+            "text": "生产者和消费者各自的结构校验通过。"
+          },
+          {
+            "id": "q2",
+            "text": "本次金额转换保留了约定业务含义。"
+          },
+          {
+            "id": "q3",
+            "text": "仅因为 currency 没出现在最终 USD 账本中，就能判定转换有错。"
+          }
+        ]
+      },
+      "oracle": {
+        "verdict": "violation",
+        "primary_event_id": "e3",
+        "claims": {
+          "q1": "supported",
+          "q2": "refuted",
+          "q3": "refuted"
+        },
+        "required_evidence": {
+          "q1": [
+            "e2",
+            "e4"
+          ],
+          "q2": [
+            "e1",
+            "e3"
+          ],
+          "q3": [
+            "e1"
+          ]
+        },
+        "healthy": false
+      }
+    },
+    {
+      "case_id": "m06",
+      "pair_id": "semantics",
+      "source": "author_constructed",
+      "split": "development",
+      "input": {
+        "request": "判断这次入账是否满足金额语义契约，选择实际违反位置。",
+        "requirements": [
+          "该笔 100 EUR 应按固定汇率入账为 120 USD。"
+        ],
+        "events": [
+          {
+            "id": "e1",
+            "kind": "artifact",
+            "actor": "contract",
+            "text": "字段 value 是金额数值，currency 是币种；消费者账本统一以 USD 计价，USD→USD 为恒等，EUR→USD 固定乘 1.2。"
+          },
+          {
+            "id": "e2",
+            "kind": "observation",
+            "actor": "producer",
+            "text": "输出 {value:100,currency:EUR}，生产者 schema 校验通过。"
+          },
+          {
+            "id": "e3",
+            "kind": "observation",
+            "actor": "adapter",
+            "text": "输出 {amount_usd:120}。"
+          },
+          {
+            "id": "e4",
+            "kind": "observation",
+            "actor": "consumer",
+            "text": "成功入账 120 USD，schema 校验通过。"
+          },
+          {
+            "id": "e5",
+            "kind": "statement",
+            "actor": "monitor",
+            "text": "没有抛异常，两个组件的 JSON 类型检查都通过。"
+          }
+        ],
+        "claims": [
+          {
+            "id": "q1",
+            "text": "生产者和消费者各自的结构校验通过。"
+          },
+          {
+            "id": "q2",
+            "text": "本次金额转换保留了约定业务含义。"
+          },
+          {
+            "id": "q3",
+            "text": "仅因为 currency 没出现在最终 USD 账本中，就能判定转换有错。"
+          }
+        ]
+      },
+      "oracle": {
+        "verdict": "satisfied",
+        "primary_event_id": null,
+        "claims": {
+          "q1": "supported",
+          "q2": "supported",
+          "q3": "refuted"
+        },
+        "required_evidence": {
+          "q1": [
+            "e2",
+            "e4"
+          ],
+          "q2": [
+            "e1",
+            "e3"
+          ],
+          "q3": [
+            "e1"
+          ]
+        },
+        "healthy": true
+      }
+    },
+    {
+      "case_id": "m07",
+      "pair_id": "sampling",
+      "source": "author_constructed",
+      "split": "development",
+      "input": {
+        "request": "判断实际调用和聚合是否符合本次请求。不要推断未提供的真实模型准确率。",
+        "requirements": [
+          "执行 e1 中定义的采样或重放语义。"
+        ],
+        "events": [
+          {
+            "id": "e1",
+            "kind": "artifact",
+            "actor": "request",
+            "text": "本次要求产生三个新的独立样本供投票；展示复制品不计为新样本。"
+          },
+          {
+            "id": "e2",
+            "kind": "observation",
+            "actor": "generator",
+            "text": "底层生成器调用一次，生成 sample_id=s1, answer=A。"
+          },
+          {
+            "id": "e3",
+            "kind": "observation",
+            "actor": "cache",
+            "text": "后两次请求命中完整结果缓存，均返回 sample_id=s1；未再次调用生成器。"
+          },
+          {
+            "id": "e4",
+            "kind": "observation",
+            "actor": "aggregator",
+            "text": "把三个返回值记为三个独立样本，执行三票投票。"
+          },
+          {
+            "id": "e5",
+            "kind": "statement",
+            "actor": "operator",
+            "text": "看到三张卡片答案都为 A。"
+          }
+        ],
+        "claims": [
+          {
+            "id": "q1",
+            "text": "本次实际发生了三次底层生成。"
+          },
+          {
+            "id": "q2",
+            "text": "当前缓存和聚合行为符合请求语义。"
+          },
+          {
+            "id": "q3",
+            "text": "仅依据 e5 的相同文本，就能证明共享同一次底层生成。"
+          }
+        ]
+      },
+      "oracle": {
+        "verdict": "violation",
+        "primary_event_id": "e3",
+        "claims": {
+          "q1": "refuted",
+          "q2": "refuted",
+          "q3": "refuted"
+        },
+        "required_evidence": {
+          "q1": [
+            "e2",
+            "e3"
+          ],
+          "q2": [
+            "e1",
+            "e3",
+            "e4"
+          ],
+          "q3": [
+            "e5"
+          ]
+        },
+        "healthy": false
+      }
+    },
+    {
+      "case_id": "m08",
+      "pair_id": "sampling",
+      "source": "author_constructed",
+      "split": "development",
+      "input": {
+        "request": "判断实际调用和聚合是否符合本次请求。不要推断未提供的真实模型准确率。",
+        "requirements": [
+          "执行 e1 中定义的采样或重放语义。"
+        ],
+        "events": [
+          {
+            "id": "e1",
+            "kind": "artifact",
+            "actor": "request",
+            "text": "本次要求恢复同一采样会话的三个展示卡片，三张都必须重放样本 s1；禁止额外采样。"
+          },
+          {
+            "id": "e2",
+            "kind": "observation",
+            "actor": "generator",
+            "text": "底层生成器调用一次，生成 sample_id=s1, answer=A。"
+          },
+          {
+            "id": "e3",
+            "kind": "observation",
+            "actor": "cache",
+            "text": "后两次请求命中完整结果缓存，均返回 sample_id=s1；未再次调用生成器。"
+          },
+          {
+            "id": "e4",
+            "kind": "observation",
+            "actor": "aggregator",
+            "text": "三张卡片均展示 s1，计为一个来源，没有声称独立投票。"
+          },
+          {
+            "id": "e5",
+            "kind": "statement",
+            "actor": "operator",
+            "text": "看到三张卡片答案都为 A。"
+          }
+        ],
+        "claims": [
+          {
+            "id": "q1",
+            "text": "本次实际发生了三次底层生成。"
+          },
+          {
+            "id": "q2",
+            "text": "当前缓存和聚合行为符合请求语义。"
+          },
+          {
+            "id": "q3",
+            "text": "仅依据 e5 的相同文本，就能证明共享同一次底层生成。"
+          }
+        ]
+      },
+      "oracle": {
+        "verdict": "satisfied",
+        "primary_event_id": null,
+        "claims": {
+          "q1": "refuted",
+          "q2": "supported",
+          "q3": "refuted"
+        },
+        "required_evidence": {
+          "q1": [
+            "e2",
+            "e3"
+          ],
+          "q2": [
+            "e1",
+            "e3",
+            "e4"
+          ],
+          "q3": [
+            "e5"
+          ]
+        },
+        "healthy": true
+      }
+    },
+    {
+      "case_id": "m09",
+      "pair_id": "global",
+      "source": "author_constructed",
+      "split": "development",
+      "input": {
+        "request": "审查本次合并是否满足明确的全局资源契约；没有其他隐含约束。",
+        "requirements": [
+          "总资源承诺不得超过 e1 的容量。"
+        ],
+        "events": [
+          {
+            "id": "e1",
+            "kind": "artifact",
+            "actor": "budget",
+            "text": "本批全局资源容量为 10，不可透支。"
+          },
+          {
+            "id": "e2",
+            "kind": "observation",
+            "actor": "agent_a",
+            "text": "预订本批 4 单位，不可复用。"
+          },
+          {
+            "id": "e3",
+            "kind": "observation",
+            "actor": "agent_b",
+            "text": "预订本批 4 单位，不可复用。"
+          },
+          {
+            "id": "e4",
+            "kind": "observation",
+            "actor": "agent_c",
+            "text": "预订本批 4 单位，不可复用。"
+          },
+          {
+            "id": "e5",
+            "kind": "observation",
+            "actor": "merge",
+            "text": "单位和批次一致、任务覆盖完整、实体定义无冲突；三项同时合并，总资源承诺 12。"
+          },
+          {
+            "id": "e6",
+            "kind": "observation",
+            "actor": "pair_checker",
+            "text": "每一对的资源和为 8，分别不超过本批容量。"
+          }
+        ],
+        "claims": [
+          {
+            "id": "q1",
+            "text": "所有两两预算检查都通过。"
+          },
+          {
+            "id": "q2",
+            "text": "三项合并的全局预算满足约束。"
+          },
+          {
+            "id": "q3",
+            "text": "仅有两两检查通过，就足以推出三项整体预算通过。"
+          }
+        ]
+      },
+      "oracle": {
+        "verdict": "violation",
+        "primary_event_id": "e5",
+        "claims": {
+          "q1": "supported",
+          "q2": "refuted",
+          "q3": "refuted"
+        },
+        "required_evidence": {
+          "q1": [
+            "e6"
+          ],
+          "q2": [
+            "e1",
+            "e5"
+          ],
+          "q3": [
+            "e6"
+          ]
+        },
+        "healthy": false
+      }
+    },
+    {
+      "case_id": "m10",
+      "pair_id": "global",
+      "source": "author_constructed",
+      "split": "development",
+      "input": {
+        "request": "审查本次合并是否满足明确的全局资源契约；没有其他隐含约束。",
+        "requirements": [
+          "总资源承诺不得超过 e1 的容量。"
+        ],
+        "events": [
+          {
+            "id": "e1",
+            "kind": "artifact",
+            "actor": "budget",
+            "text": "本批全局资源容量为 12，不可透支。"
+          },
+          {
+            "id": "e2",
+            "kind": "observation",
+            "actor": "agent_a",
+            "text": "预订本批 4 单位，不可复用。"
+          },
+          {
+            "id": "e3",
+            "kind": "observation",
+            "actor": "agent_b",
+            "text": "预订本批 4 单位，不可复用。"
+          },
+          {
+            "id": "e4",
+            "kind": "observation",
+            "actor": "agent_c",
+            "text": "预订本批 4 单位，不可复用。"
+          },
+          {
+            "id": "e5",
+            "kind": "observation",
+            "actor": "merge",
+            "text": "单位和批次一致、任务覆盖完整、实体定义无冲突；三项同时合并，总资源承诺 12。"
+          },
+          {
+            "id": "e6",
+            "kind": "observation",
+            "actor": "pair_checker",
+            "text": "每一对的资源和为 8，分别不超过本批容量。"
+          }
+        ],
+        "claims": [
+          {
+            "id": "q1",
+            "text": "所有两两预算检查都通过。"
+          },
+          {
+            "id": "q2",
+            "text": "三项合并的全局预算满足约束。"
+          },
+          {
+            "id": "q3",
+            "text": "仅有两两检查通过，就足以推出三项整体预算通过。"
+          }
+        ]
+      },
+      "oracle": {
+        "verdict": "satisfied",
+        "primary_event_id": null,
+        "claims": {
+          "q1": "supported",
+          "q2": "supported",
+          "q3": "refuted"
+        },
+        "required_evidence": {
+          "q1": [
+            "e6"
+          ],
+          "q2": [
+            "e1",
+            "e5"
+          ],
+          "q3": [
+            "e6"
+          ]
+        },
+        "healthy": true
+      }
+    },
+    {
+      "case_id": "m11",
+      "pair_id": "effects",
+      "source": "author_constructed",
+      "split": "development",
+      "input": {
+        "request": "判断本次读取是否违反其明确契约，不要仅根据函数名字决定是否允许写入。",
+        "requirements": [
+          "遵守 e1 的 API 契约，包括返回值和状态效果。"
+        ],
+        "events": [
+          {
+            "id": "e1",
+            "kind": "artifact",
+            "actor": "api_contract",
+            "text": "get(id) 未命中返回 null；必须不创建记录，不改变 store。"
+          },
+          {
+            "id": "e2",
+            "kind": "observation",
+            "actor": "snapshot",
+            "text": "调用前 store={}。"
+          },
+          {
+            "id": "e3",
+            "kind": "action",
+            "actor": "reader",
+            "text": "对 store 调用 get('new')，实现使用 defaultdict 并访问 store['new']。"
+          },
+          {
+            "id": "e4",
+            "kind": "observation",
+            "actor": "snapshot",
+            "text": "返回 null；调用后 store={'new':[]}。"
+          },
+          {
+            "id": "e5",
+            "kind": "statement",
+            "actor": "worker",
+            "text": "返回值和 JSON 类型符合预期，函数名称是 get。"
+          }
+        ],
+        "claims": [
+          {
+            "id": "q1",
+            "text": "本次调用创建了一个空记录。"
+          },
+          {
+            "id": "q2",
+            "text": "本次调用的状态变化违反契约。"
+          },
+          {
+            "id": "q3",
+            "text": "只验证返回 null 就足以证明该 API 的完整契约满足。"
+          }
+        ]
+      },
+      "oracle": {
+        "verdict": "violation",
+        "primary_event_id": "e3",
+        "claims": {
+          "q1": "supported",
+          "q2": "supported",
+          "q3": "refuted"
+        },
+        "required_evidence": {
+          "q1": [
+            "e2",
+            "e4"
+          ],
+          "q2": [
+            "e1",
+            "e4"
+          ],
+          "q3": [
+            "e1"
+          ]
+        },
+        "healthy": false
+      }
+    },
+    {
+      "case_id": "m12",
+      "pair_id": "effects",
+      "source": "author_constructed",
+      "split": "development",
+      "input": {
+        "request": "判断本次读取是否违反其明确契约，不要仅根据函数名字决定是否允许写入。",
+        "requirements": [
+          "遵守 e1 的 API 契约，包括返回值和状态效果。"
+        ],
+        "events": [
+          {
+            "id": "e1",
+            "kind": "artifact",
+            "actor": "api_contract",
+            "text": "get(id) 未命中返回 null；允许且要求插入空占位，便于后续写入。"
+          },
+          {
+            "id": "e2",
+            "kind": "observation",
+            "actor": "snapshot",
+            "text": "调用前 store={}。"
+          },
+          {
+            "id": "e3",
+            "kind": "action",
+            "actor": "reader",
+            "text": "对 store 调用 get('new')，实现使用 defaultdict 并访问 store['new']。"
+          },
+          {
+            "id": "e4",
+            "kind": "observation",
+            "actor": "snapshot",
+            "text": "返回 null；调用后 store={'new':[]}。"
+          },
+          {
+            "id": "e5",
+            "kind": "statement",
+            "actor": "worker",
+            "text": "返回值和 JSON 类型符合预期，函数名称是 get。"
+          }
+        ],
+        "claims": [
+          {
+            "id": "q1",
+            "text": "本次调用创建了一个空记录。"
+          },
+          {
+            "id": "q2",
+            "text": "本次调用的状态变化违反契约。"
+          },
+          {
+            "id": "q3",
+            "text": "只验证返回 null 就足以证明该 API 的完整契约满足。"
+          }
+        ]
+      },
+      "oracle": {
+        "verdict": "satisfied",
+        "primary_event_id": null,
+        "claims": {
+          "q1": "supported",
+          "q2": "refuted",
+          "q3": "refuted"
+        },
+        "required_evidence": {
+          "q1": [
+            "e2",
+            "e4"
+          ],
+          "q2": [
+            "e1",
+            "e4"
+          ],
+          "q3": [
+            "e1"
+          ]
+        },
+        "healthy": true
+      }
+    }
+  ]
+}

@@ -1,0 +1,489 @@
+{
+  "kind": "synthetic_development_mechanism_eval",
+  "frozen_at": "2026-09-29T03:07:51.677200+00:00",
+  "model_requested": "gpt-6-astra",
+  "reasoning_effort": "high",
+  "model_snapshot": null,
+  "cli_version": "codex-cli 0.158.0-alpha.2.1",
+  "concurrency": 3,
+  "timeout_seconds": 240,
+  "trials": 2,
+  "seed": 20260929,
+  "conditions": [
+    "A_no_skill",
+    "B_v1_routed",
+    "C_v3_routed"
+  ],
+  "schedule": [
+    {
+      "case_id": "m12",
+      "condition": "B_v1_routed",
+      "trial": 1
+    },
+    {
+      "case_id": "m12",
+      "condition": "A_no_skill",
+      "trial": 1
+    },
+    {
+      "case_id": "m12",
+      "condition": "C_v3_routed",
+      "trial": 1
+    },
+    {
+      "case_id": "m01",
+      "condition": "A_no_skill",
+      "trial": 1
+    },
+    {
+      "case_id": "m01",
+      "condition": "C_v3_routed",
+      "trial": 1
+    },
+    {
+      "case_id": "m01",
+      "condition": "B_v1_routed",
+      "trial": 1
+    },
+    {
+      "case_id": "m06",
+      "condition": "A_no_skill",
+      "trial": 1
+    },
+    {
+      "case_id": "m06",
+      "condition": "C_v3_routed",
+      "trial": 1
+    },
+    {
+      "case_id": "m06",
+      "condition": "B_v1_routed",
+      "trial": 1
+    },
+    {
+      "case_id": "m11",
+      "condition": "A_no_skill",
+      "trial": 1
+    },
+    {
+      "case_id": "m11",
+      "condition": "B_v1_routed",
+      "trial": 1
+    },
+    {
+      "case_id": "m11",
+      "condition": "C_v3_routed",
+      "trial": 1
+    },
+    {
+      "case_id": "m10",
+      "condition": "B_v1_routed",
+      "trial": 1
+    },
+    {
+      "case_id": "m10",
+      "condition": "A_no_skill",
+      "trial": 1
+    },
+    {
+      "case_id": "m10",
+      "condition": "C_v3_routed",
+      "trial": 1
+    },
+    {
+      "case_id": "m02",
+      "condition": "B_v1_routed",
+      "trial": 1
+    },
+    {
+      "case_id": "m02",
+      "condition": "A_no_skill",
+      "trial": 1
+    },
+    {
+      "case_id": "m02",
+      "condition": "C_v3_routed",
+      "trial": 1
+    },
+    {
+      "case_id": "m04",
+      "condition": "C_v3_routed",
+      "trial": 1
+    },
+    {
+      "case_id": "m04",
+      "condition": "B_v1_routed",
+      "trial": 1
+    },
+    {
+      "case_id": "m04",
+      "condition": "A_no_skill",
+      "trial": 1
+    },
+    {
+      "case_id": "m03",
+      "condition": "C_v3_routed",
+      "trial": 1
+    },
+    {
+      "case_id": "m03",
+      "condition": "A_no_skill",
+      "trial": 1
+    },
+    {
+      "case_id": "m03",
+      "condition": "B_v1_routed",
+      "trial": 1
+    },
+    {
+      "case_id": "m08",
+      "condition": "C_v3_routed",
+      "trial": 1
+    },
+    {
+      "case_id": "m08",
+      "condition": "B_v1_routed",
+      "trial": 1
+    },
+    {
+      "case_id": "m08",
+      "condition": "A_no_skill",
+      "trial": 1
+    },
+    {
+      "case_id": "m05",
+      "condition": "A_no_skill",
+      "trial": 1
+    },
+    {
+      "case_id": "m05",
+      "condition": "B_v1_routed",
+      "trial": 1
+    },
+    {
+      "case_id": "m05",
+      "condition": "C_v3_routed",
+      "trial": 1
+    },
+    {
+      "case_id": "m09",
+      "condition": "C_v3_routed",
+      "trial": 1
+    },
+    {
+      "case_id": "m09",
+      "condition": "A_no_skill",
+      "trial": 1
+    },
+    {
+      "case_id": "m09",
+      "condition": "B_v1_routed",
+      "trial": 1
+    },
+    {
+      "case_id": "m07",
+      "condition": "B_v1_routed",
+      "trial": 1
+    },
+    {
+      "case_id": "m07",
+      "condition": "C_v3_routed",
+      "trial": 1
+    },
+    {
+      "case_id": "m07",
+      "condition": "A_no_skill",
+      "trial": 1
+    },
+    {
+      "case_id": "m07",
+      "condition": "B_v1_routed",
+      "trial": 2
+    },
+    {
+      "case_id": "m07",
+      "condition": "A_no_skill",
+      "trial": 2
+    },
+    {
+      "case_id": "m07",
+      "condition": "C_v3_routed",
+      "trial": 2
+    },
+    {
+      "case_id": "m01",
+      "condition": "A_no_skill",
+      "trial": 2
+    },
+    {
+      "case_id": "m01",
+      "condition": "B_v1_routed",
+      "trial": 2
+    },
+    {
+      "case_id": "m01",
+      "condition": "C_v3_routed",
+      "trial": 2
+    },
+    {
+      "case_id": "m05",
+      "condition": "C_v3_routed",
+      "trial": 2
+    },
+    {
+      "case_id": "m05",
+      "condition": "B_v1_routed",
+      "trial": 2
+    },
+    {
+      "case_id": "m05",
+      "condition": "A_no_skill",
+      "trial": 2
+    },
+    {
+      "case_id": "m04",
+      "condition": "C_v3_routed",
+      "trial": 2
+    },
+    {
+      "case_id": "m04",
+      "condition": "A_no_skill",
+      "trial": 2
+    },
+    {
+      "case_id": "m04",
+      "condition": "B_v1_routed",
+      "trial": 2
+    },
+    {
+      "case_id": "m02",
+      "condition": "A_no_skill",
+      "trial": 2
+    },
+    {
+      "case_id": "m02",
+      "condition": "C_v3_routed",
+      "trial": 2
+    },
+    {
+      "case_id": "m02",
+      "condition": "B_v1_routed",
+      "trial": 2
+    },
+    {
+      "case_id": "m03",
+      "condition": "A_no_skill",
+      "trial": 2
+    },
+    {
+      "case_id": "m03",
+      "condition": "B_v1_routed",
+      "trial": 2
+    },
+    {
+      "case_id": "m03",
+      "condition": "C_v3_routed",
+      "trial": 2
+    },
+    {
+      "case_id": "m11",
+      "condition": "A_no_skill",
+      "trial": 2
+    },
+    {
+      "case_id": "m11",
+      "condition": "B_v1_routed",
+      "trial": 2
+    },
+    {
+      "case_id": "m11",
+      "condition": "C_v3_routed",
+      "trial": 2
+    },
+    {
+      "case_id": "m06",
+      "condition": "B_v1_routed",
+      "trial": 2
+    },
+    {
+      "case_id": "m06",
+      "condition": "C_v3_routed",
+      "trial": 2
+    },
+    {
+      "case_id": "m06",
+      "condition": "A_no_skill",
+      "trial": 2
+    },
+    {
+      "case_id": "m10",
+      "condition": "B_v1_routed",
+      "trial": 2
+    },
+    {
+      "case_id": "m10",
+      "condition": "C_v3_routed",
+      "trial": 2
+    },
+    {
+      "case_id": "m10",
+      "condition": "A_no_skill",
+      "trial": 2
+    },
+    {
+      "case_id": "m08",
+      "condition": "B_v1_routed",
+      "trial": 2
+    },
+    {
+      "case_id": "m08",
+      "condition": "C_v3_routed",
+      "trial": 2
+    },
+    {
+      "case_id": "m08",
+      "condition": "A_no_skill",
+      "trial": 2
+    },
+    {
+      "case_id": "m12",
+      "condition": "B_v1_routed",
+      "trial": 2
+    },
+    {
+      "case_id": "m12",
+      "condition": "C_v3_routed",
+      "trial": 2
+    },
+    {
+      "case_id": "m12",
+      "condition": "A_no_skill",
+      "trial": 2
+    },
+    {
+      "case_id": "m09",
+      "condition": "A_no_skill",
+      "trial": 2
+    },
+    {
+      "case_id": "m09",
+      "condition": "B_v1_routed",
+      "trial": 2
+    },
+    {
+      "case_id": "m09",
+      "condition": "C_v3_routed",
+      "trial": 2
+    }
+  ],
+  "cases": [
+    {
+      "case_id": "m01",
+      "pair_id": "recovery",
+      "input_sha256": "aa2c8cd14e881935d8702b57aa0f23cd2bb5fbdf7f8ef1923a716a7973860272",
+      "oracle_sha256": "a25f0fc65b289ca74c45e33d79acc85a57999f51865c410f532941eadb06a5f7"
+    },
+    {
+      "case_id": "m02",
+      "pair_id": "recovery",
+      "input_sha256": "1e55c9d11d65fbdb7897f4473c6e7e7b22a5f1d6bd8d4ba96eaf0099ef2dad17",
+      "oracle_sha256": "070ac04a7a2ebbc35b7096d0cc2279dd15fe025da75c6d3095c3a3036116f6eb"
+    },
+    {
+      "case_id": "m03",
+      "pair_id": "execution",
+      "input_sha256": "7669847aa16032a003576f165e98b45ac5cbd848b9983066c45a1c175f3cd508",
+      "oracle_sha256": "51e635f7ed87a4eb1af42100b4697fa4d8b40d035126ea08ab897efe95753962"
+    },
+    {
+      "case_id": "m04",
+      "pair_id": "execution",
+      "input_sha256": "b03de7771cc0e615c9e423e6673de9f333a047781de55b4e10e433c2414617d2",
+      "oracle_sha256": "55a0f5b209e6f013b4df03b4a26186ecf1b3a4da65d356f9c8aa01d62129d446"
+    },
+    {
+      "case_id": "m05",
+      "pair_id": "semantics",
+      "input_sha256": "31d8cc0a436f341a258f3f58977ce9ce2209c19dba606c27b137144af59063bf",
+      "oracle_sha256": "dbed7ef80e7ffc8fcfe1d04887aae9e1ce5247ec4c444af435e44a400e1030b6"
+    },
+    {
+      "case_id": "m06",
+      "pair_id": "semantics",
+      "input_sha256": "1b3554bc7db8009fc5e85a5d4f5ecee279f4339e361996d7008da750a01e9414",
+      "oracle_sha256": "caaa341e19fc6eaa772b9db8616145d10745a01cf4b8d92e9739d63a7620c11e"
+    },
+    {
+      "case_id": "m07",
+      "pair_id": "sampling",
+      "input_sha256": "253894996a737c9155376afed1da7ca93c0718793a876d0a701334234cc8103e",
+      "oracle_sha256": "f56319a1935da6351f8ab63c097f5de74bf3747102f1478dc585cbeeb2aa0763"
+    },
+    {
+      "case_id": "m08",
+      "pair_id": "sampling",
+      "input_sha256": "a59e51420f6e0b7b1f9d17c08e36afb2206775a1799d3b36aa96d38db677d04f",
+      "oracle_sha256": "f294d5c2bb12558f5f27ddf1a6d43122703a0b4416baafa7f943416eb6da301b"
+    },
+    {
+      "case_id": "m09",
+      "pair_id": "global",
+      "input_sha256": "4f6dadff3e824b70b6a3ab58614eb3ac56a37bb088cf632d294a30aa942b7129",
+      "oracle_sha256": "ae1e70720e82e1aad8404d8ee4bed32e9bf590de89c4b9f880771f3a9fe5238a"
+    },
+    {
+      "case_id": "m10",
+      "pair_id": "global",
+      "input_sha256": "304fa7f9123cffd7505f5d28ab7790a512a42cf816062fea0ce6e315439cc190",
+      "oracle_sha256": "e393fe6ffad436a6dc29af0fba1b00f52b1bc0d855b34da605eea553df246309"
+    },
+    {
+      "case_id": "m11",
+      "pair_id": "effects",
+      "input_sha256": "a7a3082fe612db48109df07ff56b5c774d5a85dcbd8652b59d07a760df833db4",
+      "oracle_sha256": "5a69cc20f5b7bbcdfbae3f6bf91a7dc155229482149461f7437ec2acc893ce76"
+    },
+    {
+      "case_id": "m12",
+      "pair_id": "effects",
+      "input_sha256": "759e7055f5802442fbe11a3aaf9c2cac3f555bc4e9eaa620813c53b0b5137061",
+      "oracle_sha256": "ba799d60479e24d9afc4502ea9286646d93ccae5f62e14d0464ac59cd9700b99"
+    }
+  ],
+  "prompt_sha256": {
+    "A_no_skill": "c7eb240e191f547a9821a031918b7974b24a080b2d6769472792ce97e4d1f649",
+    "B_v1_routed": "6fde88f6f81cc73247fd7fbf85238199f2955d20cae91cb9f02fd2eeedf874db",
+    "C_v3_routed": "c16a86e161eb2d209be1fcc21a4a7d4b14b54b143b33d20808f8a6307118d76b"
+  },
+  "files_sha256": {
+    "evals/mechanisms/cases.json": "401ac7c7f9b11362571b393ca22ed8f3ed1c0a0f26396c4a1b3a6caf4a706b19",
+    "evals/mechanisms/core.py": "c86c6a96a9af9e722527a04ceb792755bb8dd0e8b4ea70a98ef9bfb25c8aa668",
+    "scripts/run_mechanism_eval.py": "732eb26c81c27c3a8e2da70a8cda8cf9dd35094ff6757a869cc155299443f585",
+    "scripts/analyze_mechanisms.py": "3343b3bdf1365eaff7bfacdc4f2d72b25c292722221ad79cb7744af6869d94d8",
+    "evals/iterations/mechanisms-2026-09-29/ANALYSIS_PLAN.md": "772da6014da5606969d8c11387695a8fc005ad06f3b78a9051b51d5a8d0ec8f2",
+    "evals/iterations/mechanisms-2026-09-29/prediction.schema.json": "27e40c97713a5734c3021584fb9d271e84274270fa481a9d44abdf63ff50e679",
+    "evals/iterations/mechanisms-2026-09-29/snapshots/B_v1_routed/SKILL.md": "eebcfc93239682deb63dcdfaa9c9cea292841930e363de1d63fb49f9c3fcb7a5",
+    "evals/iterations/mechanisms-2026-09-29/snapshots/C_v3_routed/SKILL.md": "ac9c8775912ef0a923a2bdb827920776cf811b3a6b6d8070771bbc519598894c",
+    "evals/iterations/mechanisms-2026-09-29/snapshots/B_v1_routed/references/boundary-contracts.md": "a52a3e7aebe0e3ae5a7b5aae730c9d9ff9d9a19af5474f11296ea3c60f4e441e",
+    "evals/iterations/mechanisms-2026-09-29/snapshots/B_v1_routed/references/review-output.md": "c25d751adadc9a0c435c2a75e5afc0512bf0447f5dac082524cf739cbabdd588",
+    "evals/iterations/mechanisms-2026-09-29/snapshots/B_v1_routed/references/advanced-composition.md": "c0d29e4decd7e496ec14c24bb0596080f12d985ed9da7035aa0b1a08f1f3675e",
+    "evals/iterations/mechanisms-2026-09-29/snapshots/C_v3_routed/references/contracts.md": "5ce30419213bc0af48f891de5ea32b9d8ef5398400396ee2f13616ee464bc48e",
+    "evals/iterations/mechanisms-2026-09-29/snapshots/C_v3_routed/references/gluing.md": "fda165771c046c14e4730885b275d156142a1d123a2e371634c245e966583260",
+    "evals/iterations/mechanisms-2026-09-29/snapshots/C_v3_routed/references/evidence.md": "f0d168f13fd87fde50a3a0b8588b636941ec8cb3e997d3539c71cb8010f2e41f",
+    "evals/iterations/mechanisms-2026-09-29/snapshots/C_v3_routed/references/probability-causality.md": "b7eda116e32377a58406d7655ab3b15c508802657910b3ccb3e4a19616bd37b7",
+    "evals/iterations/mechanisms-2026-09-29/snapshots/C_v3_routed/references/effects.md": "384eff61c966aee8bff4cd5ea074893cf0e00844d25bdfc5874d9d1b97d2a74b",
+    "evals/iterations/mechanisms-2026-09-29/snapshots/C_v3_routed/references/quantitative.md": "f0a266b554a51259a3bfda0618755a91ec3c37841768fe939e47da2d53212e38",
+    "evals/iterations/mechanisms-2026-09-29/snapshots/C_v3_routed/agents/openai.yaml": "990ce681f0311731177c553baeef4349852ce30d64a55bfc2f2e9fcc59377b7d",
+    "evals/iterations/mechanisms-2026-09-29/snapshots/C_v3_routed/scripts/check_evidence.py": "98c60fe8ea0d36dd40b2da48d9768f6c81e31803b6036af826c611ad26d07592"
+  },
+  "limitations": [
+    "Authored with candidate: development cases, no holdout or natural frequency claim.",
+    "Two repeats; six paired families are the uncertainty units.",
+    "Forced core injection with actual optional reference reads, not automatic skill discovery.",
+    "Shared output contract already supplies evidence guidance; measures incremental skill benefit.",
+    "Read-only shell and observed-command audit are not a complete filesystem security boundary.",
+    "Exact backend snapshot and monetary cost unavailable.",
+    "Structured claim scoring is not a blind expert review of all prose.",
+    "No executed repair or real-world causal intervention in these synthetic logs."
+  ]
+}

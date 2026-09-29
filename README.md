@@ -36,6 +36,20 @@ python3 scripts/build_skill.py
 
 也可以请求架构审查或新旧路径的重构验证。具体执行规则见 [SKILL.md](SKILL.md)。
 
+## 模块化框架开发
+
+项目继续使用一个主 Skill、一个 Git 仓库。新理论按诊断需要放入参考模块；只有出现独立任务、独立验收和独立发布需求，才考虑拆成其他 Skill。
+
+[系统性框架设计](docs/categorical-framework.md) 将接口与组合、运行语义、契约与精化、证据抽象、随机与因果、局部与整体、定量验证连接起来。[v3 候选](evals/iterations/v3-candidate/SKILL.md) 包含一个入口、六份按需参考及一个证据记录检查器。它尚未替换当前主版本或个人安装；数学依据、工程假设和模型效果分别说明。
+
+检查器只能验证记录引用与状态一致性，不能证明事实真实或根因正确。候选评测协议见 [成对机制方案](evals/iterations/mechanisms-2026-09-29/ANALYSIS_PLAN.md)。单独打包候选：
+
+```sh
+python3 scripts/build_skill.py --source evals/iterations/v3-candidate
+```
+
+输出为 `dist/agent-composition-review-candidate.zip`，包含九个运行文件，不包含评测案例、标签和维护文档。默认打包命令仍生成当前主版本。
+
 ## 一个已复现的例子
 
 [LangGraph #6446](https://github.com/langchain-ai/langgraph/issues/6446) 报告了父图与子图并行时的字段冲突。本地执行发现：叶节点只修改 s1/s2，但子图输出完整状态，旧 b 被父图当作更新，与另一节点的新 b 冲突。
@@ -124,6 +138,26 @@ python3.12 -m venv .venv
 <!-- development-ablation:end -->
 
 **本轮决定：v2 候选未获升级依据，继续保留主版本。** 旧版正文较全包少用 23.7% 输入 token，但准确率仅多命中一次；旧版全包在这次复测中与无 Skill 持平。详见 [逐例复盘与下一步实验方向](docs/ablation-findings.md)。
+
+## 模块化 v3：72 次成对机制检查
+
+完成 **72/72 次有效运行**：六个自建开发家族、每家族两个相邻变体，比较无 Skill、v1、v3，每例各两次。主入口强制注入，参考文件由模型实际按需读取；三组具有相同的只读工具和共同输出协议。这不是自动触发测试，也不是新的外部基准成绩。
+
+| 条件 | 成对契约判断 | 离散命题严格匹配 | 正常例误报 | 输入 token |
+| --- | ---: | ---: | ---: | ---: |
+| 无 Skill | 100% | 71/72 | 0/10 | 519,767 |
+| v1 按需参考 | 100% | 70/72 | 0/10 | 960,368 |
+| v3 按需参考 | 100% | 72/72 | 0/10 | 848,565 |
+
+![成对机制判断及实际上下文成本](docs/assets/mechanisms-v3-overview.png)
+
+**主指标未观察到提升，v3 继续保留为候选。** 这套短案例出现天花板，且次要位置与命题题面存在目标歧义；不能将候选的命题匹配结果直接解释为稳定收益。v3 输入比 v1 少 11.6%，仍比无 Skill 多 63.3%。本轮与前两轮的任务、工具和指标不同，不能接成一条效果提升曲线。
+
+![固定家族顺序下的累计成对判断](docs/assets/mechanisms-v3-cumulative.png)
+
+三条线重叠反映相同成绩；这不是训练曲线。只有六个开发家族，经验区间退化不代表未来确定性。实际读取参考的运行数为 v1 23/24、v3 22/24；程序检查器本轮未被模型调用，其作用不能由该表推出。
+
+[实验报告](evals/iterations/mechanisms-2026-09-29/REPORT.md) · [逐次预测](evals/iterations/mechanisms-2026-09-29/predictions.json) · [机制复盘与版本决定](docs/mechanism-findings.md) · [复现与边界](docs/mechanism-evaluation.md)
 
 ## 仓库结构
 

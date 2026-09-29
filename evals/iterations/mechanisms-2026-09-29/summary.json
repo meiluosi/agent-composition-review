@@ -1,0 +1,171 @@
+{
+  "kind": "synthetic_development_mechanism_eval",
+  "planned_runs": 72,
+  "recorded_runs": 72,
+  "manifest_sha256": "91533346d315c0123482ad2521e7313eb1ed190f7864ca6ef9198146033b515c",
+  "predictions_sha256": "a51b61adb0da1b19b3f89bfd75828f5b09ab1add621d31e39519efc0f60a93e8",
+  "metrics": {
+    "A_no_skill": {
+      "runs": 24,
+      "pair_success": 1.0,
+      "pair_ci95": [
+        1.0,
+        1.0
+      ],
+      "verdict_correct": 24,
+      "location_correct": 20,
+      "claim_accuracy": 0.9861111111111112,
+      "all_claims_correct": 23,
+      "reference_integrity": 24,
+      "anchor_coverage": 1.0,
+      "healthy_runs": 10,
+      "healthy_false_alarms": 0,
+      "healthy_invalid": 0
+    },
+    "B_v1_routed": {
+      "runs": 24,
+      "pair_success": 1.0,
+      "pair_ci95": [
+        1.0,
+        1.0
+      ],
+      "verdict_correct": 24,
+      "location_correct": 22,
+      "claim_accuracy": 0.9722222222222222,
+      "all_claims_correct": 23,
+      "reference_integrity": 24,
+      "anchor_coverage": 1.0,
+      "healthy_runs": 10,
+      "healthy_false_alarms": 0,
+      "healthy_invalid": 0
+    },
+    "C_v3_routed": {
+      "runs": 24,
+      "pair_success": 1.0,
+      "pair_ci95": [
+        1.0,
+        1.0
+      ],
+      "verdict_correct": 24,
+      "location_correct": 20,
+      "claim_accuracy": 1.0,
+      "all_claims_correct": 24,
+      "reference_integrity": 24,
+      "anchor_coverage": 1.0,
+      "healthy_runs": 10,
+      "healthy_false_alarms": 0,
+      "healthy_invalid": 0
+    }
+  },
+  "by_pair": {
+    "effects": {
+      "A_no_skill": 1.0,
+      "B_v1_routed": 1.0,
+      "C_v3_routed": 1.0
+    },
+    "execution": {
+      "A_no_skill": 1.0,
+      "B_v1_routed": 1.0,
+      "C_v3_routed": 1.0
+    },
+    "global": {
+      "A_no_skill": 1.0,
+      "B_v1_routed": 1.0,
+      "C_v3_routed": 1.0
+    },
+    "recovery": {
+      "A_no_skill": 1.0,
+      "B_v1_routed": 1.0,
+      "C_v3_routed": 1.0
+    },
+    "sampling": {
+      "A_no_skill": 1.0,
+      "B_v1_routed": 1.0,
+      "C_v3_routed": 1.0
+    },
+    "semantics": {
+      "A_no_skill": 1.0,
+      "B_v1_routed": 1.0,
+      "C_v3_routed": 1.0
+    }
+  },
+  "differences": {
+    "v3_minus_none": {
+      "mean": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "v3_minus_v1": {
+      "mean": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    }
+  },
+  "resources": {
+    "A_no_skill": {
+      "statuses": {
+        "completed": 24
+      },
+      "median_seconds": 41.99454439600231,
+      "usage_missing": 0,
+      "cost": null,
+      "usage": {
+        "input_tokens": 519767,
+        "cached_input_tokens": 323840,
+        "output_tokens": 9246,
+        "reasoning_output_tokens": 2148
+      },
+      "tool_calls": 24,
+      "runs_reading_references": 0,
+      "reference_reads": {}
+    },
+    "B_v1_routed": {
+      "statuses": {
+        "completed": 24
+      },
+      "median_seconds": 43.49764383301954,
+      "usage_missing": 0,
+      "cost": null,
+      "usage": {
+        "input_tokens": 960368,
+        "cached_input_tokens": 625792,
+        "output_tokens": 10047,
+        "reasoning_output_tokens": 1184
+      },
+      "tool_calls": 52,
+      "runs_reading_references": 23,
+      "reference_reads": {
+        "references/boundary-contracts.md": 16,
+        "references/review-output.md": 15,
+        "references/advanced-composition.md": 8
+      }
+    },
+    "C_v3_routed": {
+      "statuses": {
+        "completed": 24
+      },
+      "median_seconds": 46.252215541986516,
+      "usage_missing": 0,
+      "cost": null,
+      "usage": {
+        "input_tokens": 848565,
+        "cached_input_tokens": 545536,
+        "output_tokens": 9873,
+        "reasoning_output_tokens": 1103
+      },
+      "tool_calls": 52,
+      "runs_reading_references": 22,
+      "reference_reads": {
+        "references/contracts.md": 8,
+        "references/effects.md": 4,
+        "references/evidence.md": 7,
+        "references/probability-causality.md": 9,
+        "references/gluing.md": 4
+      }
+    }
+  }
+}

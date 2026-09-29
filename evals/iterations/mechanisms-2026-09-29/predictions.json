@@ -1,0 +1,6249 @@
+[
+  {
+    "case_id": "m12",
+    "condition": "B_v1_routed",
+    "trial": 1,
+    "prediction": {
+      "verdict": "satisfied",
+      "primary_event_id": null,
+      "claims": [
+        {
+          "id": "q1",
+          "assessment": "supported",
+          "evidence_ids": [
+            "e2",
+            "e3",
+            "e4"
+          ]
+        },
+        {
+          "id": "q2",
+          "assessment": "refuted",
+          "evidence_ids": [
+            "e1",
+            "e4"
+          ]
+        },
+        {
+          "id": "q3",
+          "assessment": "refuted",
+          "evidence_ids": [
+            "e1"
+          ]
+        }
+      ],
+      "explanation": "",
+      "next_check": ""
+    },
+    "scores": {
+      "verdict": true,
+      "location": true,
+      "claim_accuracy": 1.0,
+      "all_claims": true,
+      "reference_integrity": true,
+      "evidence_anchor_coverage": 1.0,
+      "healthy_false_alarm": false
+    },
+    "explanation_sha256": "64c9c52a96493a19fb3536196931620926aec9a9c0245afb962cf0a692e10bf4",
+    "raw_record_sha256": "ed619a2db80236c36ac9f5b167b1df7613363505f289a905a78e87b7a93820e1",
+    "status": "completed",
+    "started_at": "2026-09-29T03:08:04.384577+00:00",
+    "elapsed_seconds": 43.81919041601941,
+    "usage": {
+      "input_tokens": 39611,
+      "cached_input_tokens": 24576,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 361,
+      "reasoning_output_tokens": 21
+    },
+    "input_sha256": "759e7055f5802442fbe11a3aaf9c2cac3f555bc4e9eaa620813c53b0b5137061",
+    "prompt_sha256": "6fde88f6f81cc73247fd7fbf85238199f2955d20cae91cb9f02fd2eeedf874db",
+    "event_sha256": "751309909cfde9413933e0edf90a90bf7667f5ca67591a089cb20fd3d81a38e0",
+    "stderr_sha256": "1ba633b21200cbb7e02c50f36285071a7794a915425f1ccf168c82577ad0c05f",
+    "tool_audit": [
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'cat case.json'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "case.json"
+        ]
+      },
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'cat references/boundary-contracts.md'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "references/boundary-contracts.md"
+        ]
+      }
+    ],
+    "tool_item_count": 2,
+    "read_files": [
+      "case.json",
+      "references/boundary-contracts.md"
+    ]
+  },
+  {
+    "case_id": "m12",
+    "condition": "A_no_skill",
+    "trial": 1,
+    "prediction": {
+      "verdict": "satisfied",
+      "primary_event_id": null,
+      "claims": [
+        {
+          "id": "q1",
+          "assessment": "supported",
+          "evidence_ids": [
+            "e2",
+            "e4"
+          ]
+        },
+        {
+          "id": "q2",
+          "assessment": "refuted",
+          "evidence_ids": [
+            "e1",
+            "e4"
+          ]
+        },
+        {
+          "id": "q3",
+          "assessment": "refuted",
+          "evidence_ids": [
+            "e1"
+          ]
+        }
+      ],
+      "explanation": "",
+      "next_check": ""
+    },
+    "scores": {
+      "verdict": true,
+      "location": true,
+      "claim_accuracy": 1.0,
+      "all_claims": true,
+      "reference_integrity": true,
+      "evidence_anchor_coverage": 1.0,
+      "healthy_false_alarm": false
+    },
+    "explanation_sha256": "03d3f3fb363af95d61c259a8479f745b979dea66948c2825ca9156c989deddaa",
+    "raw_record_sha256": "cc7884d6eb2198753b3a2f01569ff22c624854462f048caffdbc58965182f35e",
+    "status": "completed",
+    "started_at": "2026-09-29T03:08:04.383727+00:00",
+    "elapsed_seconds": 41.11999416700564,
+    "usage": {
+      "input_tokens": 21608,
+      "cached_input_tokens": 10368,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 330,
+      "reasoning_output_tokens": 44
+    },
+    "input_sha256": "759e7055f5802442fbe11a3aaf9c2cac3f555bc4e9eaa620813c53b0b5137061",
+    "prompt_sha256": "c7eb240e191f547a9821a031918b7974b24a080b2d6769472792ce97e4d1f649",
+    "event_sha256": "d65baf51f38ee2360261391cc747aa686c2e841e0e62756c2f4cfcedd2866de4",
+    "stderr_sha256": "dd9bbf331fc680f80f87d45e98c3e1f335c74c069d2ae82187d96761c52a577d",
+    "tool_audit": [
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'cat case.json'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "case.json"
+        ]
+      }
+    ],
+    "tool_item_count": 1,
+    "read_files": [
+      "case.json"
+    ]
+  },
+  {
+    "case_id": "m12",
+    "condition": "C_v3_routed",
+    "trial": 1,
+    "prediction": {
+      "verdict": "satisfied",
+      "primary_event_id": null,
+      "claims": [
+        {
+          "id": "q1",
+          "assessment": "supported",
+          "evidence_ids": [
+            "e2",
+            "e3",
+            "e4"
+          ]
+        },
+        {
+          "id": "q2",
+          "assessment": "refuted",
+          "evidence_ids": [
+            "e1",
+            "e4"
+          ]
+        },
+        {
+          "id": "q3",
+          "assessment": "refuted",
+          "evidence_ids": [
+            "e1"
+          ]
+        }
+      ],
+      "explanation": "",
+      "next_check": ""
+    },
+    "scores": {
+      "verdict": true,
+      "location": true,
+      "claim_accuracy": 1.0,
+      "all_claims": true,
+      "reference_integrity": true,
+      "evidence_anchor_coverage": 1.0,
+      "healthy_false_alarm": false
+    },
+    "explanation_sha256": "43b975b7293bf76995a46f79e8d3bd1bb1866f63edc378798e3845d51c97c2e8",
+    "raw_record_sha256": "729e67a9498428e45c0d9635b93257b553fb9f10f16dabced81a25c092c32c74",
+    "status": "completed",
+    "started_at": "2026-09-29T03:08:04.384635+00:00",
+    "elapsed_seconds": 43.85464083304396,
+    "usage": {
+      "input_tokens": 36564,
+      "cached_input_tokens": 23040,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 341,
+      "reasoning_output_tokens": 0
+    },
+    "input_sha256": "759e7055f5802442fbe11a3aaf9c2cac3f555bc4e9eaa620813c53b0b5137061",
+    "prompt_sha256": "c16a86e161eb2d209be1fcc21a4a7d4b14b54b143b33d20808f8a6307118d76b",
+    "event_sha256": "58d59158efb6033bcd29ae3d4fc81f45d2ddca6f363c88377fd96ff638cbd209",
+    "stderr_sha256": "3fb7c1c9d1747f7cfaa236c7d8f8d8abe7e676fbce8b54f503c1ae01022945fd",
+    "tool_audit": [
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'cat case.json'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "case.json"
+        ]
+      },
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'cat references/contracts.md references/effects.md'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "references/contracts.md",
+          "references/effects.md"
+        ]
+      }
+    ],
+    "tool_item_count": 2,
+    "read_files": [
+      "case.json",
+      "references/contracts.md",
+      "references/effects.md"
+    ]
+  },
+  {
+    "case_id": "m01",
+    "condition": "A_no_skill",
+    "trial": 1,
+    "prediction": {
+      "verdict": "violation",
+      "primary_event_id": "e8",
+      "claims": [
+        {
+          "id": "q1",
+          "assessment": "supported",
+          "evidence_ids": [
+            "e1"
+          ]
+        },
+        {
+          "id": "q2",
+          "assessment": "refuted",
+          "evidence_ids": [
+            "e6",
+            "e8"
+          ]
+        },
+        {
+          "id": "q3",
+          "assessment": "unknown",
+          "evidence_ids": [
+            "e2",
+            "e3",
+            "e4",
+            "e5",
+            "e8"
+          ]
+        }
+      ],
+      "explanation": "",
+      "next_check": ""
+    },
+    "scores": {
+      "verdict": true,
+      "location": false,
+      "claim_accuracy": 1.0,
+      "all_claims": true,
+      "reference_integrity": true,
+      "evidence_anchor_coverage": 1.0,
+      "healthy_false_alarm": null
+    },
+    "explanation_sha256": "5fcf59be78e73a2bf75ea23529fff1666d7e4a83c5c62c1959511f7e089320c8",
+    "raw_record_sha256": "b3a80ea6ff619a2cae722083424204aff761bfd7fe987c16329059184ae92869",
+    "status": "completed",
+    "started_at": "2026-09-29T03:08:45.504694+00:00",
+    "elapsed_seconds": 35.054237041040324,
+    "usage": {
+      "input_tokens": 21761,
+      "cached_input_tokens": 8320,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 379,
+      "reasoning_output_tokens": 64
+    },
+    "input_sha256": "aa2c8cd14e881935d8702b57aa0f23cd2bb5fbdf7f8ef1923a716a7973860272",
+    "prompt_sha256": "c7eb240e191f547a9821a031918b7974b24a080b2d6769472792ce97e4d1f649",
+    "event_sha256": "a40d59ff77800604cec29b125411e2ed111d5b8e3b5b6424e679659d8f5a1c9d",
+    "stderr_sha256": "8ef487cd343e6b2b61bf6a2d0ffc282fe85a36eeab153b33eb4beb1f3ecc1229",
+    "tool_audit": [
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'cat case.json'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "case.json"
+        ]
+      }
+    ],
+    "tool_item_count": 1,
+    "read_files": [
+      "case.json"
+    ]
+  },
+  {
+    "case_id": "m01",
+    "condition": "C_v3_routed",
+    "trial": 1,
+    "prediction": {
+      "verdict": "violation",
+      "primary_event_id": "e8",
+      "claims": [
+        {
+          "id": "q1",
+          "assessment": "supported",
+          "evidence_ids": [
+            "e1"
+          ]
+        },
+        {
+          "id": "q2",
+          "assessment": "refuted",
+          "evidence_ids": [
+            "e4",
+            "e5",
+            "e6",
+            "e8"
+          ]
+        },
+        {
+          "id": "q3",
+          "assessment": "unknown",
+          "evidence_ids": [
+            "e2",
+            "e3",
+            "e4",
+            "e5",
+            "e8"
+          ]
+        }
+      ],
+      "explanation": "",
+      "next_check": ""
+    },
+    "scores": {
+      "verdict": true,
+      "location": false,
+      "claim_accuracy": 1.0,
+      "all_claims": true,
+      "reference_integrity": true,
+      "evidence_anchor_coverage": 1.0,
+      "healthy_false_alarm": null
+    },
+    "explanation_sha256": "6cd037ecd8734adbce358e08e56d7f56fdaaf323be9a6b454e2e804720728d71",
+    "raw_record_sha256": "293139940002f09e32023020fd949d108a3b187f6ebc598ecc36c76e0dd2cfc1",
+    "status": "completed",
+    "started_at": "2026-09-29T03:08:48.204924+00:00",
+    "elapsed_seconds": 46.22138962498866,
+    "usage": {
+      "input_tokens": 37287,
+      "cached_input_tokens": 23168,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 550,
+      "reasoning_output_tokens": 77
+    },
+    "input_sha256": "aa2c8cd14e881935d8702b57aa0f23cd2bb5fbdf7f8ef1923a716a7973860272",
+    "prompt_sha256": "c16a86e161eb2d209be1fcc21a4a7d4b14b54b143b33d20808f8a6307118d76b",
+    "event_sha256": "b791924c71a54bf32a6dfe7599ab515e5715bf221196fee706f433b259cf4a28",
+    "stderr_sha256": "e4a95beb71f84ad3eb59e829ad3c751ed8255adb0b56aaf1c336feb07c37cec7",
+    "tool_audit": [
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'cat case.json'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "case.json"
+        ]
+      },
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'cat references/evidence.md'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "references/evidence.md"
+        ]
+      },
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'cat references/probability-causality.md'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "references/probability-causality.md"
+        ]
+      }
+    ],
+    "tool_item_count": 3,
+    "read_files": [
+      "case.json",
+      "references/evidence.md",
+      "references/probability-causality.md"
+    ]
+  },
+  {
+    "case_id": "m01",
+    "condition": "B_v1_routed",
+    "trial": 1,
+    "prediction": {
+      "verdict": "violation",
+      "primary_event_id": "e8",
+      "claims": [
+        {
+          "id": "q1",
+          "assessment": "supported",
+          "evidence_ids": [
+            "e1"
+          ]
+        },
+        {
+          "id": "q2",
+          "assessment": "refuted",
+          "evidence_ids": [
+            "e4",
+            "e5",
+            "e6",
+            "e8"
+          ]
+        },
+        {
+          "id": "q3",
+          "assessment": "unknown",
+          "evidence_ids": [
+            "e2",
+            "e3",
+            "e4",
+            "e5",
+            "e8"
+          ]
+        }
+      ],
+      "explanation": "",
+      "next_check": ""
+    },
+    "scores": {
+      "verdict": true,
+      "location": false,
+      "claim_accuracy": 1.0,
+      "all_claims": true,
+      "reference_integrity": true,
+      "evidence_anchor_coverage": 1.0,
+      "healthy_false_alarm": null
+    },
+    "explanation_sha256": "219308cef534712ad079e4a26e640797f8e4a5c72e083e48ded557f77726eefc",
+    "raw_record_sha256": "e6b292c75cef19c8d6a6f2ca0a6a4b07d3834e2c94801ac565d47b8a3b230c11",
+    "status": "completed",
+    "started_at": "2026-09-29T03:08:48.240138+00:00",
+    "elapsed_seconds": 36.85367737500928,
+    "usage": {
+      "input_tokens": 41173,
+      "cached_input_tokens": 24832,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 504,
+      "reasoning_output_tokens": 27
+    },
+    "input_sha256": "aa2c8cd14e881935d8702b57aa0f23cd2bb5fbdf7f8ef1923a716a7973860272",
+    "prompt_sha256": "6fde88f6f81cc73247fd7fbf85238199f2955d20cae91cb9f02fd2eeedf874db",
+    "event_sha256": "3f72e4cf2e8c63f112f25892d58c8e35e0a5b2f71260ad20fb5a6c2d8e2aebcb",
+    "stderr_sha256": "01485a6a6880aab9c3fda29f100e0d9aa8326cb9f203433cd5ae52f0a8b9a878",
+    "tool_audit": [
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'cat case.json'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "case.json"
+        ]
+      },
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'cat references/review-output.md'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "references/review-output.md"
+        ]
+      },
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'cat references/boundary-contracts.md'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "references/boundary-contracts.md"
+        ]
+      }
+    ],
+    "tool_item_count": 3,
+    "read_files": [
+      "case.json",
+      "references/boundary-contracts.md",
+      "references/review-output.md"
+    ]
+  },
+  {
+    "case_id": "m06",
+    "condition": "A_no_skill",
+    "trial": 1,
+    "prediction": {
+      "verdict": "satisfied",
+      "primary_event_id": null,
+      "claims": [
+        {
+          "id": "q1",
+          "assessment": "supported",
+          "evidence_ids": [
+            "e2",
+            "e4"
+          ]
+        },
+        {
+          "id": "q2",
+          "assessment": "supported",
+          "evidence_ids": [
+            "e1",
+            "e2",
+            "e3",
+            "e4"
+          ]
+        },
+        {
+          "id": "q3",
+          "assessment": "refuted",
+          "evidence_ids": [
+            "e1",
+            "e3",
+            "e4"
+          ]
+        }
+      ],
+      "explanation": "",
+      "next_check": ""
+    },
+    "scores": {
+      "verdict": true,
+      "location": true,
+      "claim_accuracy": 1.0,
+      "all_claims": true,
+      "reference_integrity": true,
+      "evidence_anchor_coverage": 1.0,
+      "healthy_false_alarm": false
+    },
+    "explanation_sha256": "773a5f838d3d7542cf5a17651d27c1879bfce2f689bb48573a4505a104fa96b5",
+    "raw_record_sha256": "cf6833004790721d992ef9ecbac322dd159640aa6ebdefd54a2558a3ce5a166b",
+    "status": "completed",
+    "started_at": "2026-09-29T03:09:20.559414+00:00",
+    "elapsed_seconds": 25.775460749980994,
+    "usage": {
+      "input_tokens": 21628,
+      "cached_input_tokens": 10368,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 328,
+      "reasoning_output_tokens": 34
+    },
+    "input_sha256": "1b3554bc7db8009fc5e85a5d4f5ecee279f4339e361996d7008da750a01e9414",
+    "prompt_sha256": "c7eb240e191f547a9821a031918b7974b24a080b2d6769472792ce97e4d1f649",
+    "event_sha256": "48657bf18ca7c963f76b83db9ee7d1d60c62a24ce28352b20286ae990ddf0f5d",
+    "stderr_sha256": "86d71d8597197974b3570aa9c53b3d838f09fa3523a477eaf52503235c4566f4",
+    "tool_audit": [
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'cat case.json'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "case.json"
+        ]
+      }
+    ],
+    "tool_item_count": 1,
+    "read_files": [
+      "case.json"
+    ]
+  },
+  {
+    "case_id": "m06",
+    "condition": "C_v3_routed",
+    "trial": 1,
+    "prediction": {
+      "verdict": "satisfied",
+      "primary_event_id": null,
+      "claims": [
+        {
+          "id": "q1",
+          "assessment": "supported",
+          "evidence_ids": [
+            "e2",
+            "e4"
+          ]
+        },
+        {
+          "id": "q2",
+          "assessment": "supported",
+          "evidence_ids": [
+            "e1",
+            "e2",
+            "e3",
+            "e4"
+          ]
+        },
+        {
+          "id": "q3",
+          "assessment": "refuted",
+          "evidence_ids": [
+            "e1",
+            "e3",
+            "e4"
+          ]
+        }
+      ],
+      "explanation": "",
+      "next_check": ""
+    },
+    "scores": {
+      "verdict": true,
+      "location": true,
+      "claim_accuracy": 1.0,
+      "all_claims": true,
+      "reference_integrity": true,
+      "evidence_anchor_coverage": 1.0,
+      "healthy_false_alarm": false
+    },
+    "explanation_sha256": "1cae97ca245e403e1f4558ceeb3411501b5e00fe6ec938a96709ba0c1cc917cf",
+    "raw_record_sha256": "b22667ad3e83cf9c1c08759e53872521c4ff7f2b620df5747d33085114cbf8c7",
+    "status": "completed",
+    "started_at": "2026-09-29T03:09:25.094316+00:00",
+    "elapsed_seconds": 41.864604541042354,
+    "usage": {
+      "input_tokens": 36104,
+      "cached_input_tokens": 23040,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 297,
+      "reasoning_output_tokens": 12
+    },
+    "input_sha256": "1b3554bc7db8009fc5e85a5d4f5ecee279f4339e361996d7008da750a01e9414",
+    "prompt_sha256": "c16a86e161eb2d209be1fcc21a4a7d4b14b54b143b33d20808f8a6307118d76b",
+    "event_sha256": "5c5ec1b54bd08cb0df631ddf05e5c2816c5dbcddd6f11633cca9bf897a6567ef",
+    "stderr_sha256": "f0b520884f16b22b45dc8275f97a4f2d8739161a8b898e4a333d933d4de53fd2",
+    "tool_audit": [
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'cat case.json'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "case.json"
+        ]
+      },
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'cat references/contracts.md'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "references/contracts.md"
+        ]
+      }
+    ],
+    "tool_item_count": 2,
+    "read_files": [
+      "case.json",
+      "references/contracts.md"
+    ]
+  },
+  {
+    "case_id": "m06",
+    "condition": "B_v1_routed",
+    "trial": 1,
+    "prediction": {
+      "verdict": "satisfied",
+      "primary_event_id": null,
+      "claims": [
+        {
+          "id": "q1",
+          "assessment": "supported",
+          "evidence_ids": [
+            "e2",
+            "e4"
+          ]
+        },
+        {
+          "id": "q2",
+          "assessment": "supported",
+          "evidence_ids": [
+            "e1",
+            "e2",
+            "e3",
+            "e4"
+          ]
+        },
+        {
+          "id": "q3",
+          "assessment": "refuted",
+          "evidence_ids": [
+            "e1",
+            "e3",
+            "e4"
+          ]
+        }
+      ],
+      "explanation": "",
+      "next_check": ""
+    },
+    "scores": {
+      "verdict": true,
+      "location": true,
+      "claim_accuracy": 1.0,
+      "all_claims": true,
+      "reference_integrity": true,
+      "evidence_anchor_coverage": 1.0,
+      "healthy_false_alarm": false
+    },
+    "explanation_sha256": "55b606de9796c998a3ea6d7ea73697b8ceee24617f53b74ce072de571e038922",
+    "raw_record_sha256": "3767fef0773b147cf34a8fcb920876d97f05354c12ab9899728fbdc30a782cb4",
+    "status": "completed",
+    "started_at": "2026-09-29T03:09:34.426728+00:00",
+    "elapsed_seconds": 35.54512629198143,
+    "usage": {
+      "input_tokens": 40756,
+      "cached_input_tokens": 24704,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 352,
+      "reasoning_output_tokens": 0
+    },
+    "input_sha256": "1b3554bc7db8009fc5e85a5d4f5ecee279f4339e361996d7008da750a01e9414",
+    "prompt_sha256": "6fde88f6f81cc73247fd7fbf85238199f2955d20cae91cb9f02fd2eeedf874db",
+    "event_sha256": "0a6d2ded73d2b6f8773e1ce6b4eec0cd5e49bbc136ab0b86ee6709d6360ed7a2",
+    "stderr_sha256": "ac7e2ca3ba56cf45eb26ff487f4a607964f2ba79c68db63bb69f8135dc6c187a",
+    "tool_audit": [
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'cat case.json'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "case.json"
+        ]
+      },
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'cat references/boundary-contracts.md references/review-output.md'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "references/boundary-contracts.md",
+          "references/review-output.md"
+        ]
+      }
+    ],
+    "tool_item_count": 2,
+    "read_files": [
+      "case.json",
+      "references/boundary-contracts.md",
+      "references/review-output.md"
+    ]
+  },
+  {
+    "case_id": "m11",
+    "condition": "A_no_skill",
+    "trial": 1,
+    "prediction": {
+      "verdict": "violation",
+      "primary_event_id": "e3",
+      "claims": [
+        {
+          "id": "q1",
+          "assessment": "supported",
+          "evidence_ids": [
+            "e2",
+            "e3",
+            "e4"
+          ]
+        },
+        {
+          "id": "q2",
+          "assessment": "supported",
+          "evidence_ids": [
+            "e1",
+            "e2",
+            "e4"
+          ]
+        },
+        {
+          "id": "q3",
+          "assessment": "refuted",
+          "evidence_ids": [
+            "e1",
+            "e4"
+          ]
+        }
+      ],
+      "explanation": "",
+      "next_check": ""
+    },
+    "scores": {
+      "verdict": true,
+      "location": true,
+      "claim_accuracy": 1.0,
+      "all_claims": true,
+      "reference_integrity": true,
+      "evidence_anchor_coverage": 1.0,
+      "healthy_false_alarm": null
+    },
+    "explanation_sha256": "925042fc10ccd0d0484d7528164cb762b540b21434781dfc1be86f350e35a13e",
+    "raw_record_sha256": "4c5b76625c001b65035b90d89c324ab116f8c2a4d0535bf02e884003089b59ef",
+    "status": "completed",
+    "started_at": "2026-09-29T03:09:46.335422+00:00",
+    "elapsed_seconds": 29.17765624995809,
+    "usage": {
+      "input_tokens": 21606,
+      "cached_input_tokens": 10368,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 342,
+      "reasoning_output_tokens": 57
+    },
+    "input_sha256": "a7a3082fe612db48109df07ff56b5c774d5a85dcbd8652b59d07a760df833db4",
+    "prompt_sha256": "c7eb240e191f547a9821a031918b7974b24a080b2d6769472792ce97e4d1f649",
+    "event_sha256": "f1712caf7dc74ffe7ed88ea5e0246194b836705042969b9f4b344734e16b8000",
+    "stderr_sha256": "11ef23d8854bd4f0f3fdcdf2edf9e4a1b47ee1c908a4952378c43d9ff19afaea",
+    "tool_audit": [
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'cat case.json'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "case.json"
+        ]
+      }
+    ],
+    "tool_item_count": 1,
+    "read_files": [
+      "case.json"
+    ]
+  },
+  {
+    "case_id": "m11",
+    "condition": "B_v1_routed",
+    "trial": 1,
+    "prediction": {
+      "verdict": "violation",
+      "primary_event_id": "e3",
+      "claims": [
+        {
+          "id": "q1",
+          "assessment": "supported",
+          "evidence_ids": [
+            "e2",
+            "e3",
+            "e4"
+          ]
+        },
+        {
+          "id": "q2",
+          "assessment": "supported",
+          "evidence_ids": [
+            "e1",
+            "e2",
+            "e3",
+            "e4"
+          ]
+        },
+        {
+          "id": "q3",
+          "assessment": "refuted",
+          "evidence_ids": [
+            "e1",
+            "e4"
+          ]
+        }
+      ],
+      "explanation": "",
+      "next_check": ""
+    },
+    "scores": {
+      "verdict": true,
+      "location": true,
+      "claim_accuracy": 1.0,
+      "all_claims": true,
+      "reference_integrity": true,
+      "evidence_anchor_coverage": 1.0,
+      "healthy_false_alarm": null
+    },
+    "explanation_sha256": "39ce2ef1fff2b7056974fc74940fde40d0779fea218b3fb5ceb659a8d576a4f9",
+    "raw_record_sha256": "e39302481ab5074f278b63c44851e614b70e78b5696299c990bcce0d9447de6f",
+    "status": "completed",
+    "started_at": "2026-09-29T03:10:06.960355+00:00",
+    "elapsed_seconds": 44.408228582993615,
+    "usage": {
+      "input_tokens": 39579,
+      "cached_input_tokens": 24576,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 357,
+      "reasoning_output_tokens": 15
+    },
+    "input_sha256": "a7a3082fe612db48109df07ff56b5c774d5a85dcbd8652b59d07a760df833db4",
+    "prompt_sha256": "6fde88f6f81cc73247fd7fbf85238199f2955d20cae91cb9f02fd2eeedf874db",
+    "event_sha256": "6dc0f2a7611702c3feaeb3b2e521f8abdabf9efc65ab26fd7d636d786898b563",
+    "stderr_sha256": "3889fae58dd2cf7a1b6e1450175f3ea06de0aaa62f5df126a1c2e6de40eaa475",
+    "tool_audit": [
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'cat case.json'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "case.json"
+        ]
+      },
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'cat references/boundary-contracts.md'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "references/boundary-contracts.md"
+        ]
+      }
+    ],
+    "tool_item_count": 2,
+    "read_files": [
+      "case.json",
+      "references/boundary-contracts.md"
+    ]
+  },
+  {
+    "case_id": "m11",
+    "condition": "C_v3_routed",
+    "trial": 1,
+    "prediction": {
+      "verdict": "violation",
+      "primary_event_id": "e3",
+      "claims": [
+        {
+          "id": "q1",
+          "assessment": "supported",
+          "evidence_ids": [
+            "e2",
+            "e3",
+            "e4"
+          ]
+        },
+        {
+          "id": "q2",
+          "assessment": "supported",
+          "evidence_ids": [
+            "e1",
+            "e2",
+            "e3",
+            "e4"
+          ]
+        },
+        {
+          "id": "q3",
+          "assessment": "refuted",
+          "evidence_ids": [
+            "e1",
+            "e4"
+          ]
+        }
+      ],
+      "explanation": "",
+      "next_check": ""
+    },
+    "scores": {
+      "verdict": true,
+      "location": true,
+      "claim_accuracy": 1.0,
+      "all_claims": true,
+      "reference_integrity": true,
+      "evidence_anchor_coverage": 1.0,
+      "healthy_false_alarm": null
+    },
+    "explanation_sha256": "8064f56b8a6748ae501ab376902083629e18ae3c01f5926fe587f1e5f96b327a",
+    "raw_record_sha256": "65604a554a94bfd9ac2a0bd64e2b67cc68bc2ecff192de8647b525ed8afa95e5",
+    "status": "completed",
+    "started_at": "2026-09-29T03:10:09.973000+00:00",
+    "elapsed_seconds": 46.6466309580137,
+    "usage": {
+      "input_tokens": 36694,
+      "cached_input_tokens": 23040,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 435,
+      "reasoning_output_tokens": 27
+    },
+    "input_sha256": "a7a3082fe612db48109df07ff56b5c774d5a85dcbd8652b59d07a760df833db4",
+    "prompt_sha256": "c16a86e161eb2d209be1fcc21a4a7d4b14b54b143b33d20808f8a6307118d76b",
+    "event_sha256": "6de17c12067dcc61db96cea5578cf3487d33401280ba3879eb02b3340de97b29",
+    "stderr_sha256": "c5751485fb551a8f70e03fa365f0e70adfd071f095abf2055268b14a3cb15ba6",
+    "tool_audit": [
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'cat case.json'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "case.json"
+        ]
+      },
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'cat references/contracts.md'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "references/contracts.md"
+        ]
+      },
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'cat references/effects.md'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "references/effects.md"
+        ]
+      }
+    ],
+    "tool_item_count": 3,
+    "read_files": [
+      "case.json",
+      "references/contracts.md",
+      "references/effects.md"
+    ]
+  },
+  {
+    "case_id": "m10",
+    "condition": "B_v1_routed",
+    "trial": 1,
+    "prediction": {
+      "verdict": "satisfied",
+      "primary_event_id": null,
+      "claims": [
+        {
+          "id": "q1",
+          "assessment": "supported",
+          "evidence_ids": [
+            "e1",
+            "e2",
+            "e3",
+            "e4",
+            "e6"
+          ]
+        },
+        {
+          "id": "q2",
+          "assessment": "supported",
+          "evidence_ids": [
+            "e1",
+            "e2",
+            "e3",
+            "e4",
+            "e5"
+          ]
+        },
+        {
+          "id": "q3",
+          "assessment": "refuted",
+          "evidence_ids": [
+            "e1",
+            "e6"
+          ]
+        }
+      ],
+      "explanation": "",
+      "next_check": ""
+    },
+    "scores": {
+      "verdict": true,
+      "location": true,
+      "claim_accuracy": 1.0,
+      "all_claims": true,
+      "reference_integrity": true,
+      "evidence_anchor_coverage": 1.0,
+      "healthy_false_alarm": false
+    },
+    "explanation_sha256": "af2348880f8c3ea4c9f9f9b428f78662d17c87fbef70c4bb25c78a0236798d05",
+    "raw_record_sha256": "6c8f5e0d4d187f5edb3c2cab344aa26ddcc3d4c5ea106b5b54acdb262cd03e26",
+    "status": "completed",
+    "started_at": "2026-09-29T03:10:15.519948+00:00",
+    "elapsed_seconds": 42.26093704201048,
+    "usage": {
+      "input_tokens": 40135,
+      "cached_input_tokens": 24704,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 473,
+      "reasoning_output_tokens": 95
+    },
+    "input_sha256": "304fa7f9123cffd7505f5d28ab7790a512a42cf816062fea0ce6e315439cc190",
+    "prompt_sha256": "6fde88f6f81cc73247fd7fbf85238199f2955d20cae91cb9f02fd2eeedf874db",
+    "event_sha256": "de061724aed3b41a567936d94a7edb0605f976d88d92eafd343872ba7e60cfbd",
+    "stderr_sha256": "b60e0752e43ed3ef21c31639851207ce838ea99ce4e2142cda40243ed646fe1e",
+    "tool_audit": [
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -c 'cat case.json'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "case.json"
+        ]
+      },
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -c 'cat references/advanced-composition.md'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "references/advanced-composition.md"
+        ]
+      }
+    ],
+    "tool_item_count": 2,
+    "read_files": [
+      "case.json",
+      "references/advanced-composition.md"
+    ]
+  },
+  {
+    "case_id": "m10",
+    "condition": "A_no_skill",
+    "trial": 1,
+    "prediction": {
+      "verdict": "satisfied",
+      "primary_event_id": null,
+      "claims": [
+        {
+          "id": "q1",
+          "assessment": "supported",
+          "evidence_ids": [
+            "e1",
+            "e6"
+          ]
+        },
+        {
+          "id": "q2",
+          "assessment": "supported",
+          "evidence_ids": [
+            "e1",
+            "e2",
+            "e3",
+            "e4",
+            "e5"
+          ]
+        },
+        {
+          "id": "q3",
+          "assessment": "refuted",
+          "evidence_ids": [
+            "e1",
+            "e6"
+          ]
+        }
+      ],
+      "explanation": "",
+      "next_check": ""
+    },
+    "scores": {
+      "verdict": true,
+      "location": true,
+      "claim_accuracy": 1.0,
+      "all_claims": true,
+      "reference_integrity": true,
+      "evidence_anchor_coverage": 1.0,
+      "healthy_false_alarm": false
+    },
+    "explanation_sha256": "44631c12fe0152cd077e81429b7a4c01ba55b118bb7cb33baecb5abc55884bd4",
+    "raw_record_sha256": "2773598d981385f87b89777dd71fb116ef85ee975ad4b2d43a38ceed77c84c9d",
+    "status": "completed",
+    "started_at": "2026-09-29T03:10:51.369120+00:00",
+    "elapsed_seconds": 44.22443399997428,
+    "usage": {
+      "input_tokens": 21669,
+      "cached_input_tokens": 18688,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 549,
+      "reasoning_output_tokens": 249
+    },
+    "input_sha256": "304fa7f9123cffd7505f5d28ab7790a512a42cf816062fea0ce6e315439cc190",
+    "prompt_sha256": "c7eb240e191f547a9821a031918b7974b24a080b2d6769472792ce97e4d1f649",
+    "event_sha256": "a5022d3e4d0b2d32e4d4d25b1a689753b7c6a3fbac90d6240f332273d2460e0c",
+    "stderr_sha256": "0d9ebc9eb094a656e2b86a6585b8ae11629986109b38fc61452f800c8c0693f7",
+    "tool_audit": [
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'cat case.json'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "case.json"
+        ]
+      }
+    ],
+    "tool_item_count": 1,
+    "read_files": [
+      "case.json"
+    ]
+  },
+  {
+    "case_id": "m10",
+    "condition": "C_v3_routed",
+    "trial": 1,
+    "prediction": {
+      "verdict": "satisfied",
+      "primary_event_id": null,
+      "claims": [
+        {
+          "id": "q1",
+          "assessment": "supported",
+          "evidence_ids": [
+            "e1",
+            "e2",
+            "e3",
+            "e4",
+            "e6"
+          ]
+        },
+        {
+          "id": "q2",
+          "assessment": "supported",
+          "evidence_ids": [
+            "e1",
+            "e2",
+            "e3",
+            "e4",
+            "e5"
+          ]
+        },
+        {
+          "id": "q3",
+          "assessment": "refuted",
+          "evidence_ids": [
+            "e1",
+            "e5",
+            "e6"
+          ]
+        }
+      ],
+      "explanation": "",
+      "next_check": ""
+    },
+    "scores": {
+      "verdict": true,
+      "location": true,
+      "claim_accuracy": 1.0,
+      "all_claims": true,
+      "reference_integrity": true,
+      "evidence_anchor_coverage": 1.0,
+      "healthy_false_alarm": false
+    },
+    "explanation_sha256": "99522e30382b568bd59980be3b6d23452b5c8f00b9dfe88649bd5c4a122d7d81",
+    "raw_record_sha256": "bec2e61bb91f86780997c9d05335b29108316049a0227936602f8fdd306869b5",
+    "status": "completed",
+    "started_at": "2026-09-29T03:10:56.620161+00:00",
+    "elapsed_seconds": 59.72786216705572,
+    "usage": {
+      "input_tokens": 35947,
+      "cached_input_tokens": 11904,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 430,
+      "reasoning_output_tokens": 71
+    },
+    "input_sha256": "304fa7f9123cffd7505f5d28ab7790a512a42cf816062fea0ce6e315439cc190",
+    "prompt_sha256": "c16a86e161eb2d209be1fcc21a4a7d4b14b54b143b33d20808f8a6307118d76b",
+    "event_sha256": "c549a820feae23b7ad70bfcbf59319669db68885bb5c6b0b418d38aecfff9384",
+    "stderr_sha256": "d009c713f621304346fb8af5fb442399a025bdde6984d1bbe7aa905c379edd46",
+    "tool_audit": [
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'cat case.json'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "case.json"
+        ]
+      },
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'cat references/gluing.md'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "references/gluing.md"
+        ]
+      }
+    ],
+    "tool_item_count": 2,
+    "read_files": [
+      "case.json",
+      "references/gluing.md"
+    ]
+  },
+  {
+    "case_id": "m02",
+    "condition": "B_v1_routed",
+    "trial": 1,
+    "prediction": {
+      "verdict": "satisfied",
+      "primary_event_id": null,
+      "claims": [
+        {
+          "id": "q1",
+          "assessment": "supported",
+          "evidence_ids": [
+            "e1"
+          ]
+        },
+        {
+          "id": "q2",
+          "assessment": "supported",
+          "evidence_ids": [
+            "e4",
+            "e8"
+          ]
+        },
+        {
+          "id": "q3",
+          "assessment": "unknown",
+          "evidence_ids": [
+            "e2",
+            "e3",
+            "e5",
+            "e6",
+            "e8"
+          ]
+        }
+      ],
+      "explanation": "",
+      "next_check": ""
+    },
+    "scores": {
+      "verdict": true,
+      "location": true,
+      "claim_accuracy": 1.0,
+      "all_claims": true,
+      "reference_integrity": true,
+      "evidence_anchor_coverage": 1.0,
+      "healthy_false_alarm": false
+    },
+    "explanation_sha256": "0869e086c3a3a22c4a67b343d321ef3eeb5e3fa7a9cf3b7ecae1ea77b80b00bb",
+    "raw_record_sha256": "6c3dbd9363a390b90d442e8a211c4c5ad5e8c53772b1c6e4cf8c911183b9f5bc",
+    "status": "completed",
+    "started_at": "2026-09-29T03:10:57.782197+00:00",
+    "elapsed_seconds": 49.246028875000775,
+    "usage": {
+      "input_tokens": 41059,
+      "cached_input_tokens": 24832,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 413,
+      "reasoning_output_tokens": 20
+    },
+    "input_sha256": "1e55c9d11d65fbdb7897f4473c6e7e7b22a5f1d6bd8d4ba96eaf0099ef2dad17",
+    "prompt_sha256": "6fde88f6f81cc73247fd7fbf85238199f2955d20cae91cb9f02fd2eeedf874db",
+    "event_sha256": "4ce9c6ed92af8185251d9ce184449c61d45be46de6f04fc54de6f58695ea7885",
+    "stderr_sha256": "099a35d72cf364f82a430160a247e54973fe34ec2a35f88e8bb060d3bdb0b26b",
+    "tool_audit": [
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'cat case.json'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "case.json"
+        ]
+      },
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'cat references/boundary-contracts.md references/review-output.md'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "references/boundary-contracts.md",
+          "references/review-output.md"
+        ]
+      }
+    ],
+    "tool_item_count": 2,
+    "read_files": [
+      "case.json",
+      "references/boundary-contracts.md",
+      "references/review-output.md"
+    ]
+  },
+  {
+    "case_id": "m02",
+    "condition": "A_no_skill",
+    "trial": 1,
+    "prediction": {
+      "verdict": "satisfied",
+      "primary_event_id": null,
+      "claims": [
+        {
+          "id": "q1",
+          "assessment": "supported",
+          "evidence_ids": [
+            "e1"
+          ]
+        },
+        {
+          "id": "q2",
+          "assessment": "supported",
+          "evidence_ids": [
+            "e4",
+            "e8"
+          ]
+        },
+        {
+          "id": "q3",
+          "assessment": "unknown",
+          "evidence_ids": [
+            "e1",
+            "e5",
+            "e6",
+            "e8"
+          ]
+        }
+      ],
+      "explanation": "",
+      "next_check": ""
+    },
+    "scores": {
+      "verdict": true,
+      "location": true,
+      "claim_accuracy": 1.0,
+      "all_claims": true,
+      "reference_integrity": true,
+      "evidence_anchor_coverage": 1.0,
+      "healthy_false_alarm": false
+    },
+    "explanation_sha256": "d60da6745ea120bf566d28955c1edd6906516879cf16c5f8cdaf7fd6596565c1",
+    "raw_record_sha256": "eba843e6edb8b0f9dfa45119b98d7f894199f530389c3c9593c7ef65689a792a",
+    "status": "completed",
+    "started_at": "2026-09-29T03:11:35.596778+00:00",
+    "elapsed_seconds": 42.07451404200401,
+    "usage": {
+      "input_tokens": 21775,
+      "cached_input_tokens": 0,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 429,
+      "reasoning_output_tokens": 120
+    },
+    "input_sha256": "1e55c9d11d65fbdb7897f4473c6e7e7b22a5f1d6bd8d4ba96eaf0099ef2dad17",
+    "prompt_sha256": "c7eb240e191f547a9821a031918b7974b24a080b2d6769472792ce97e4d1f649",
+    "event_sha256": "2fe623f9b33dd7b70bbfe03ae648ab68ae38f04ab9f72c3aa8344fc0e137db67",
+    "stderr_sha256": "85fff31c5152a9a88e83d45022a408bd78a19fc6c60c0ac5327832925ebfb4cf",
+    "tool_audit": [
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'cat case.json'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "case.json"
+        ]
+      }
+    ],
+    "tool_item_count": 1,
+    "read_files": [
+      "case.json"
+    ]
+  },
+  {
+    "case_id": "m02",
+    "condition": "C_v3_routed",
+    "trial": 1,
+    "prediction": {
+      "verdict": "satisfied",
+      "primary_event_id": null,
+      "claims": [
+        {
+          "id": "q1",
+          "assessment": "supported",
+          "evidence_ids": [
+            "e1"
+          ]
+        },
+        {
+          "id": "q2",
+          "assessment": "supported",
+          "evidence_ids": [
+            "e4",
+            "e8"
+          ]
+        },
+        {
+          "id": "q3",
+          "assessment": "unknown",
+          "evidence_ids": [
+            "e2",
+            "e3",
+            "e5",
+            "e6",
+            "e8"
+          ]
+        }
+      ],
+      "explanation": "",
+      "next_check": ""
+    },
+    "scores": {
+      "verdict": true,
+      "location": true,
+      "claim_accuracy": 1.0,
+      "all_claims": true,
+      "reference_integrity": true,
+      "evidence_anchor_coverage": 1.0,
+      "healthy_false_alarm": false
+    },
+    "explanation_sha256": "61e087a6a62b714d821076c95f577bfa6da8a49aa68e1700b34305f0666b8127",
+    "raw_record_sha256": "c86fc67eb69b59c0bf178f3ce173d12953d84fb1aba45ea8141acd07ea1b131a",
+    "status": "completed",
+    "started_at": "2026-09-29T03:11:47.030998+00:00",
+    "elapsed_seconds": 51.44611504202476,
+    "usage": {
+      "input_tokens": 37158,
+      "cached_input_tokens": 31616,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 408,
+      "reasoning_output_tokens": 0
+    },
+    "input_sha256": "1e55c9d11d65fbdb7897f4473c6e7e7b22a5f1d6bd8d4ba96eaf0099ef2dad17",
+    "prompt_sha256": "c16a86e161eb2d209be1fcc21a4a7d4b14b54b143b33d20808f8a6307118d76b",
+    "event_sha256": "aebb79e8f0fd0a798b47d106498cf1f75e8bb9b7a4352bb79776603a41de1255",
+    "stderr_sha256": "186c83d098a1f29d8c2337cabd219ee0dfb1b08fc421b9c39634d67c1995d866",
+    "tool_audit": [
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'cat case.json'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "case.json"
+        ]
+      },
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'cat references/evidence.md references/probability-causality.md'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "references/evidence.md",
+          "references/probability-causality.md"
+        ]
+      }
+    ],
+    "tool_item_count": 2,
+    "read_files": [
+      "case.json",
+      "references/evidence.md",
+      "references/probability-causality.md"
+    ]
+  },
+  {
+    "case_id": "m04",
+    "condition": "C_v3_routed",
+    "trial": 1,
+    "prediction": {
+      "verdict": "violation",
+      "primary_event_id": "e5",
+      "claims": [
+        {
+          "id": "q1",
+          "assessment": "supported",
+          "evidence_ids": [
+            "e3",
+            "e5"
+          ]
+        },
+        {
+          "id": "q2",
+          "assessment": "supported",
+          "evidence_ids": [
+            "e5"
+          ]
+        },
+        {
+          "id": "q3",
+          "assessment": "refuted",
+          "evidence_ids": [
+            "e5"
+          ]
+        }
+      ],
+      "explanation": "",
+      "next_check": ""
+    },
+    "scores": {
+      "verdict": true,
+      "location": true,
+      "claim_accuracy": 1.0,
+      "all_claims": true,
+      "reference_integrity": true,
+      "evidence_anchor_coverage": 1.0,
+      "healthy_false_alarm": null
+    },
+    "explanation_sha256": "128ac006030790b6bff8162372ac0223d59f6b4cedfb83d4ed48a80b6248cf40",
+    "raw_record_sha256": "c44ddb35bde45a7a7fec3c6a22d7533a880df8cf14d2d618993d8ddab5e35cb9",
+    "status": "completed",
+    "started_at": "2026-09-29T03:11:56.354439+00:00",
+    "elapsed_seconds": 34.910536458017305,
+    "usage": {
+      "input_tokens": 36301,
+      "cached_input_tokens": 23040,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 307,
+      "reasoning_output_tokens": 0
+    },
+    "input_sha256": "b03de7771cc0e615c9e423e6673de9f333a047781de55b4e10e433c2414617d2",
+    "prompt_sha256": "c16a86e161eb2d209be1fcc21a4a7d4b14b54b143b33d20808f8a6307118d76b",
+    "event_sha256": "ed06e4776da44d1b5de984344130c5df4927dc0ab2ee58bc4ddd3c71b0618a29",
+    "stderr_sha256": "e41f60ad865e8ac0ef4aef1fcddfa55d0f821968b46c24798bdc7dba3b1057f2",
+    "tool_audit": [
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'cat case.json'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "case.json"
+        ]
+      },
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'cat references/evidence.md'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "references/evidence.md"
+        ]
+      }
+    ],
+    "tool_item_count": 2,
+    "read_files": [
+      "case.json",
+      "references/evidence.md"
+    ]
+  },
+  {
+    "case_id": "m04",
+    "condition": "B_v1_routed",
+    "trial": 1,
+    "prediction": {
+      "verdict": "violation",
+      "primary_event_id": "e5",
+      "claims": [
+        {
+          "id": "q1",
+          "assessment": "supported",
+          "evidence_ids": [
+            "e3",
+            "e5"
+          ]
+        },
+        {
+          "id": "q2",
+          "assessment": "supported",
+          "evidence_ids": [
+            "e5"
+          ]
+        },
+        {
+          "id": "q3",
+          "assessment": "refuted",
+          "evidence_ids": [
+            "e5"
+          ]
+        }
+      ],
+      "explanation": "",
+      "next_check": ""
+    },
+    "scores": {
+      "verdict": true,
+      "location": true,
+      "claim_accuracy": 1.0,
+      "all_claims": true,
+      "reference_integrity": true,
+      "evidence_anchor_coverage": 1.0,
+      "healthy_false_alarm": null
+    },
+    "explanation_sha256": "1338aff7824fcded22031e89095fbe0c586774f624bf59b61a8110fc63f1df48",
+    "raw_record_sha256": "a14340d6745973b5a94f53f4cddd0ba56376e4d05ffede9a5e6c27bf2b07ea4f",
+    "status": "completed",
+    "started_at": "2026-09-29T03:12:17.673216+00:00",
+    "elapsed_seconds": 54.09743558400078,
+    "usage": {
+      "input_tokens": 40859,
+      "cached_input_tokens": 24704,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 399,
+      "reasoning_output_tokens": 21
+    },
+    "input_sha256": "b03de7771cc0e615c9e423e6673de9f333a047781de55b4e10e433c2414617d2",
+    "prompt_sha256": "6fde88f6f81cc73247fd7fbf85238199f2955d20cae91cb9f02fd2eeedf874db",
+    "event_sha256": "5eb24b8329b3a95dfd23269411173ddab7f95f58236bf4dc65f8bd9ab0339f75",
+    "stderr_sha256": "6f8f948f81ee01cd78a6a7b51008e3114490cc0ddf15502698de3c6f2083664f",
+    "tool_audit": [
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'cat case.json'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "case.json"
+        ]
+      },
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'cat references/boundary-contracts.md'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "references/boundary-contracts.md"
+        ]
+      },
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'cat references/review-output.md'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "references/review-output.md"
+        ]
+      }
+    ],
+    "tool_item_count": 3,
+    "read_files": [
+      "case.json",
+      "references/boundary-contracts.md",
+      "references/review-output.md"
+    ]
+  },
+  {
+    "case_id": "m04",
+    "condition": "A_no_skill",
+    "trial": 1,
+    "prediction": {
+      "verdict": "violation",
+      "primary_event_id": "e5",
+      "claims": [
+        {
+          "id": "q1",
+          "assessment": "supported",
+          "evidence_ids": [
+            "e3",
+            "e5"
+          ]
+        },
+        {
+          "id": "q2",
+          "assessment": "supported",
+          "evidence_ids": [
+            "e5"
+          ]
+        },
+        {
+          "id": "q3",
+          "assessment": "refuted",
+          "evidence_ids": [
+            "e5"
+          ]
+        }
+      ],
+      "explanation": "",
+      "next_check": ""
+    },
+    "scores": {
+      "verdict": true,
+      "location": true,
+      "claim_accuracy": 1.0,
+      "all_claims": true,
+      "reference_integrity": true,
+      "evidence_anchor_coverage": 1.0,
+      "healthy_false_alarm": null
+    },
+    "explanation_sha256": "e28e9a3a2087db30fb91763d31c2905a79510c1bb2abc9aaec5b76ba9bb27691",
+    "raw_record_sha256": "7ce5af25be3f846686b1cb7940e7357d604a0eecc9a0df7aada1f388d862791a",
+    "status": "completed",
+    "started_at": "2026-09-29T03:12:31.269062+00:00",
+    "elapsed_seconds": 36.82354204100557,
+    "usage": {
+      "input_tokens": 21624,
+      "cached_input_tokens": 18688,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 217,
+      "reasoning_output_tokens": 0
+    },
+    "input_sha256": "b03de7771cc0e615c9e423e6673de9f333a047781de55b4e10e433c2414617d2",
+    "prompt_sha256": "c7eb240e191f547a9821a031918b7974b24a080b2d6769472792ce97e4d1f649",
+    "event_sha256": "66b44eab3e4d3f86c3e8dad75bbbaf243c64840f35ed9003cc5e439d6af1eec5",
+    "stderr_sha256": "66b216d60339550fe146707f863b3374467a872c87aa82afde5b67f8f128049e",
+    "tool_audit": [
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'cat case.json'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "case.json"
+        ]
+      }
+    ],
+    "tool_item_count": 1,
+    "read_files": [
+      "case.json"
+    ]
+  },
+  {
+    "case_id": "m03",
+    "condition": "C_v3_routed",
+    "trial": 1,
+    "prediction": {
+      "verdict": "insufficient",
+      "primary_event_id": null,
+      "claims": [
+        {
+          "id": "q1",
+          "assessment": "supported",
+          "evidence_ids": [
+            "e2",
+            "e3"
+          ]
+        },
+        {
+          "id": "q2",
+          "assessment": "unknown",
+          "evidence_ids": [
+            "e3",
+            "e5"
+          ]
+        },
+        {
+          "id": "q3",
+          "assessment": "unknown",
+          "evidence_ids": [
+            "e2",
+            "e5"
+          ]
+        }
+      ],
+      "explanation": "",
+      "next_check": ""
+    },
+    "scores": {
+      "verdict": true,
+      "location": true,
+      "claim_accuracy": 1.0,
+      "all_claims": true,
+      "reference_integrity": true,
+      "evidence_anchor_coverage": 1.0,
+      "healthy_false_alarm": null
+    },
+    "explanation_sha256": "0d8d0a6ead56b337c633ec78efa353516813402b399381b1c653cf07b976cfe1",
+    "raw_record_sha256": "23cdaee73eda068e32fb542775cee647c117fa324d2d39d148c1b70abde6ef2f",
+    "status": "completed",
+    "started_at": "2026-09-29T03:12:38.481510+00:00",
+    "elapsed_seconds": 69.07759237498976,
+    "usage": {
+      "input_tokens": 37064,
+      "cached_input_tokens": 23040,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 611,
+      "reasoning_output_tokens": 238
+    },
+    "input_sha256": "7669847aa16032a003576f165e98b45ac5cbd848b9983066c45a1c175f3cd508",
+    "prompt_sha256": "c16a86e161eb2d209be1fcc21a4a7d4b14b54b143b33d20808f8a6307118d76b",
+    "event_sha256": "296006333419c3fe9513aacb82d060bb23f4d41fcbacb60f881d75f3157f8e7b",
+    "stderr_sha256": "eb6707449f673507c5fbf08cd3bb8d5068a2b3cc0a0f6d651b572201d4e0415f",
+    "tool_audit": [
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'cat case.json'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "case.json"
+        ]
+      },
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'cat references/evidence.md'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "references/evidence.md"
+        ]
+      },
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'cat references/probability-causality.md'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "references/probability-causality.md"
+        ]
+      }
+    ],
+    "tool_item_count": 3,
+    "read_files": [
+      "case.json",
+      "references/evidence.md",
+      "references/probability-causality.md"
+    ]
+  },
+  {
+    "case_id": "m03",
+    "condition": "A_no_skill",
+    "trial": 1,
+    "prediction": {
+      "verdict": "insufficient",
+      "primary_event_id": null,
+      "claims": [
+        {
+          "id": "q1",
+          "assessment": "supported",
+          "evidence_ids": [
+            "e2",
+            "e3"
+          ]
+        },
+        {
+          "id": "q2",
+          "assessment": "unknown",
+          "evidence_ids": [
+            "e5"
+          ]
+        },
+        {
+          "id": "q3",
+          "assessment": "unknown",
+          "evidence_ids": [
+            "e2",
+            "e5"
+          ]
+        }
+      ],
+      "explanation": "",
+      "next_check": ""
+    },
+    "scores": {
+      "verdict": true,
+      "location": true,
+      "claim_accuracy": 1.0,
+      "all_claims": true,
+      "reference_integrity": true,
+      "evidence_anchor_coverage": 1.0,
+      "healthy_false_alarm": null
+    },
+    "explanation_sha256": "617f335adab5eb4af7a4a1481df041589bd4d99016674dc413a1ec5cab32fa06",
+    "raw_record_sha256": "add563cf2fb8a71cd72bc64254b46a1d44cfcf67c7f96d2fd1030763015b6599",
+    "status": "completed",
+    "started_at": "2026-09-29T03:13:08.096681+00:00",
+    "elapsed_seconds": 46.18430758401519,
+    "usage": {
+      "input_tokens": 21639,
+      "cached_input_tokens": 10368,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 506,
+      "reasoning_output_tokens": 212
+    },
+    "input_sha256": "7669847aa16032a003576f165e98b45ac5cbd848b9983066c45a1c175f3cd508",
+    "prompt_sha256": "c7eb240e191f547a9821a031918b7974b24a080b2d6769472792ce97e4d1f649",
+    "event_sha256": "388d26d1c7ad16bf9958460a8af1486bd5261628850a90fdf7fa0d364467f7f1",
+    "stderr_sha256": "71487e440d4b6f4e265da54f86230aea475550696c7226b7150e77313b53baa2",
+    "tool_audit": [
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'cat case.json'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "case.json"
+        ]
+      }
+    ],
+    "tool_item_count": 1,
+    "read_files": [
+      "case.json"
+    ]
+  },
+  {
+    "case_id": "m03",
+    "condition": "B_v1_routed",
+    "trial": 1,
+    "prediction": {
+      "verdict": "insufficient",
+      "primary_event_id": null,
+      "claims": [
+        {
+          "id": "q1",
+          "assessment": "supported",
+          "evidence_ids": [
+            "e2",
+            "e3"
+          ]
+        },
+        {
+          "id": "q2",
+          "assessment": "refuted",
+          "evidence_ids": [
+            "e5"
+          ]
+        },
+        {
+          "id": "q3",
+          "assessment": "refuted",
+          "evidence_ids": [
+            "e2",
+            "e5"
+          ]
+        }
+      ],
+      "explanation": "",
+      "next_check": ""
+    },
+    "scores": {
+      "verdict": true,
+      "location": true,
+      "claim_accuracy": 0.3333333333333333,
+      "all_claims": false,
+      "reference_integrity": true,
+      "evidence_anchor_coverage": 1.0,
+      "healthy_false_alarm": null
+    },
+    "explanation_sha256": "4827639eb6db4b04982eaa38a5876c2069f857c3b453209f92b893a8dbf637e2",
+    "raw_record_sha256": "36696e286320b06801ce2fac1b11c63bf91a214aaaaf448a1d60af813dc9f549",
+    "status": "completed",
+    "started_at": "2026-09-29T03:13:11.774262+00:00",
+    "elapsed_seconds": 55.496835624973755,
+    "usage": {
+      "input_tokens": 40907,
+      "cached_input_tokens": 20992,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 679,
+      "reasoning_output_tokens": 282
+    },
+    "input_sha256": "7669847aa16032a003576f165e98b45ac5cbd848b9983066c45a1c175f3cd508",
+    "prompt_sha256": "6fde88f6f81cc73247fd7fbf85238199f2955d20cae91cb9f02fd2eeedf874db",
+    "event_sha256": "f0791cd5a23aa8d8dc59f8ca848355539a3ca627369788ea9f8de1a05eb75fd8",
+    "stderr_sha256": "e151296acf7ee2da49d6eb5dd55848e12ba12b913d72cd4fc4cc69e17795c794",
+    "tool_audit": [
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'cat case.json'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "case.json"
+        ]
+      },
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'cat references/review-output.md'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "references/review-output.md"
+        ]
+      },
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'cat references/boundary-contracts.md'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "references/boundary-contracts.md"
+        ]
+      }
+    ],
+    "tool_item_count": 3,
+    "read_files": [
+      "case.json",
+      "references/boundary-contracts.md",
+      "references/review-output.md"
+    ]
+  },
+  {
+    "case_id": "m08",
+    "condition": "C_v3_routed",
+    "trial": 1,
+    "prediction": {
+      "verdict": "satisfied",
+      "primary_event_id": null,
+      "claims": [
+        {
+          "id": "q1",
+          "assessment": "refuted",
+          "evidence_ids": [
+            "e2",
+            "e3"
+          ]
+        },
+        {
+          "id": "q2",
+          "assessment": "supported",
+          "evidence_ids": [
+            "e1",
+            "e2",
+            "e3",
+            "e4"
+          ]
+        },
+        {
+          "id": "q3",
+          "assessment": "refuted",
+          "evidence_ids": [
+            "e5"
+          ]
+        }
+      ],
+      "explanation": "",
+      "next_check": ""
+    },
+    "scores": {
+      "verdict": true,
+      "location": true,
+      "claim_accuracy": 1.0,
+      "all_claims": true,
+      "reference_integrity": true,
+      "evidence_anchor_coverage": 1.0,
+      "healthy_false_alarm": false
+    },
+    "explanation_sha256": "771d205c3ce9ac482efbb49a778bd8d004e36a3ded877d3efe500204c2b35dbb",
+    "raw_record_sha256": "8de0e04ea2e710c5c695f9490d89d9981a130dd444f968ecd8b990b24294b97b",
+    "status": "completed",
+    "started_at": "2026-09-29T03:13:47.564867+00:00",
+    "elapsed_seconds": 48.4735713750124,
+    "usage": {
+      "input_tokens": 36017,
+      "cached_input_tokens": 23040,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 345,
+      "reasoning_output_tokens": 0
+    },
+    "input_sha256": "a59e51420f6e0b7b1f9d17c08e36afb2206775a1799d3b36aa96d38db677d04f",
+    "prompt_sha256": "c16a86e161eb2d209be1fcc21a4a7d4b14b54b143b33d20808f8a6307118d76b",
+    "event_sha256": "c7397db4e609856182c178c1f3663bd18c9b2d717647abc80878e3d484f7c3f7",
+    "stderr_sha256": "e87ecb16dee7d73f9be8133cbc71d99c72c8ce0e95741bcee61e93497d522237",
+    "tool_audit": [
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'cat case.json'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "case.json"
+        ]
+      },
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'cat references/probability-causality.md'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "references/probability-causality.md"
+        ]
+      }
+    ],
+    "tool_item_count": 2,
+    "read_files": [
+      "case.json",
+      "references/probability-causality.md"
+    ]
+  },
+  {
+    "case_id": "m08",
+    "condition": "B_v1_routed",
+    "trial": 1,
+    "prediction": {
+      "verdict": "satisfied",
+      "primary_event_id": null,
+      "claims": [
+        {
+          "id": "q1",
+          "assessment": "refuted",
+          "evidence_ids": [
+            "e2",
+            "e3"
+          ]
+        },
+        {
+          "id": "q2",
+          "assessment": "supported",
+          "evidence_ids": [
+            "e1",
+            "e2",
+            "e3",
+            "e4"
+          ]
+        },
+        {
+          "id": "q3",
+          "assessment": "refuted",
+          "evidence_ids": [
+            "e5"
+          ]
+        }
+      ],
+      "explanation": "",
+      "next_check": ""
+    },
+    "scores": {
+      "verdict": true,
+      "location": true,
+      "claim_accuracy": 1.0,
+      "all_claims": true,
+      "reference_integrity": true,
+      "evidence_anchor_coverage": 1.0,
+      "healthy_false_alarm": false
+    },
+    "explanation_sha256": "0aeaecb81141e0049dfddcd690c5bf5f5f99b8c65f64c6cd0b45088fcef06cce",
+    "raw_record_sha256": "4c157c6d396e3ff52c792a01dbc6dc900f2ddbf2e1e4da35a0184f9cd68d02c3",
+    "status": "completed",
+    "started_at": "2026-09-29T03:13:54.283618+00:00",
+    "elapsed_seconds": 42.062125249998644,
+    "usage": {
+      "input_tokens": 40052,
+      "cached_input_tokens": 24704,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 357,
+      "reasoning_output_tokens": 0
+    },
+    "input_sha256": "a59e51420f6e0b7b1f9d17c08e36afb2206775a1799d3b36aa96d38db677d04f",
+    "prompt_sha256": "6fde88f6f81cc73247fd7fbf85238199f2955d20cae91cb9f02fd2eeedf874db",
+    "event_sha256": "de072203ff17c44000b2b2a3a552b338168431c4449166a27284d2f3f2a6a700",
+    "stderr_sha256": "fb062005230e7e279d52b559142c232273d02e9bdb8d56ea8d5afecc2937ecca",
+    "tool_audit": [
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'cat case.json'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "case.json"
+        ]
+      },
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'cat references/advanced-composition.md'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "references/advanced-composition.md"
+        ]
+      }
+    ],
+    "tool_item_count": 2,
+    "read_files": [
+      "case.json",
+      "references/advanced-composition.md"
+    ]
+  },
+  {
+    "case_id": "m08",
+    "condition": "A_no_skill",
+    "trial": 1,
+    "prediction": {
+      "verdict": "satisfied",
+      "primary_event_id": null,
+      "claims": [
+        {
+          "id": "q1",
+          "assessment": "refuted",
+          "evidence_ids": [
+            "e2",
+            "e3"
+          ]
+        },
+        {
+          "id": "q2",
+          "assessment": "supported",
+          "evidence_ids": [
+            "e1",
+            "e2",
+            "e3",
+            "e4"
+          ]
+        },
+        {
+          "id": "q3",
+          "assessment": "refuted",
+          "evidence_ids": [
+            "e5"
+          ]
+        }
+      ],
+      "explanation": "",
+      "next_check": ""
+    },
+    "scores": {
+      "verdict": true,
+      "location": true,
+      "claim_accuracy": 1.0,
+      "all_claims": true,
+      "reference_integrity": true,
+      "evidence_anchor_coverage": 1.0,
+      "healthy_false_alarm": false
+    },
+    "explanation_sha256": "034a08c0b76e08da072fd0849f14ba523bd0ed8c9a87adfe705de2029e67610f",
+    "raw_record_sha256": "64bbcedabfe828a085be74042e6d3c795a61d7e008dc8b5f752d6c5e5a5cabb7",
+    "status": "completed",
+    "started_at": "2026-09-29T03:14:07.273247+00:00",
+    "elapsed_seconds": 35.731690749991685,
+    "usage": {
+      "input_tokens": 21636,
+      "cached_input_tokens": 10368,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 357,
+      "reasoning_output_tokens": 65
+    },
+    "input_sha256": "a59e51420f6e0b7b1f9d17c08e36afb2206775a1799d3b36aa96d38db677d04f",
+    "prompt_sha256": "c7eb240e191f547a9821a031918b7974b24a080b2d6769472792ce97e4d1f649",
+    "event_sha256": "57f001ba961bec25ac140e46c3a7a758ec629c1a2b35510d9a22e362c53454f4",
+    "stderr_sha256": "3f789e5652939caed0d628c8fa03074ff09cb8194d1bcceaec5801f96761fdc0",
+    "tool_audit": [
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'cat case.json'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "case.json"
+        ]
+      }
+    ],
+    "tool_item_count": 1,
+    "read_files": [
+      "case.json"
+    ]
+  },
+  {
+    "case_id": "m05",
+    "condition": "A_no_skill",
+    "trial": 1,
+    "prediction": {
+      "verdict": "violation",
+      "primary_event_id": "e3",
+      "claims": [
+        {
+          "id": "q1",
+          "assessment": "supported",
+          "evidence_ids": [
+            "e2",
+            "e4"
+          ]
+        },
+        {
+          "id": "q2",
+          "assessment": "refuted",
+          "evidence_ids": [
+            "e1",
+            "e2",
+            "e3",
+            "e4"
+          ]
+        },
+        {
+          "id": "q3",
+          "assessment": "refuted",
+          "evidence_ids": [
+            "e1",
+            "e3"
+          ]
+        }
+      ],
+      "explanation": "",
+      "next_check": ""
+    },
+    "scores": {
+      "verdict": true,
+      "location": true,
+      "claim_accuracy": 1.0,
+      "all_claims": true,
+      "reference_integrity": true,
+      "evidence_anchor_coverage": 1.0,
+      "healthy_false_alarm": null
+    },
+    "explanation_sha256": "e614c29360864b95d2da21cbf7ff90699d8a63cd838190237316667a9ff09dad",
+    "raw_record_sha256": "69addba3ec055e9b9f42bcadd607deed23615f2f96dafbe18493e7eda26e59ff",
+    "status": "completed",
+    "started_at": "2026-09-29T03:14:36.041770+00:00",
+    "elapsed_seconds": 43.560422375041526,
+    "usage": {
+      "input_tokens": 21650,
+      "cached_input_tokens": 10368,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 381,
+      "reasoning_output_tokens": 64
+    },
+    "input_sha256": "31d8cc0a436f341a258f3f58977ce9ce2209c19dba606c27b137144af59063bf",
+    "prompt_sha256": "c7eb240e191f547a9821a031918b7974b24a080b2d6769472792ce97e4d1f649",
+    "event_sha256": "80ff0c28887a0f34e208c8a3d7390bb0adbbf5aeb88326907c7e489183f19c9c",
+    "stderr_sha256": "03aa668453f8d175da26f944fe26a17eb9a55d006156a237238ca54c48785f55",
+    "tool_audit": [
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'cat case.json'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "case.json"
+        ]
+      }
+    ],
+    "tool_item_count": 1,
+    "read_files": [
+      "case.json"
+    ]
+  },
+  {
+    "case_id": "m05",
+    "condition": "B_v1_routed",
+    "trial": 1,
+    "prediction": {
+      "verdict": "violation",
+      "primary_event_id": "e3",
+      "claims": [
+        {
+          "id": "q1",
+          "assessment": "supported",
+          "evidence_ids": [
+            "e2",
+            "e4"
+          ]
+        },
+        {
+          "id": "q2",
+          "assessment": "refuted",
+          "evidence_ids": [
+            "e1",
+            "e2",
+            "e3",
+            "e4"
+          ]
+        },
+        {
+          "id": "q3",
+          "assessment": "refuted",
+          "evidence_ids": [
+            "e1",
+            "e3"
+          ]
+        }
+      ],
+      "explanation": "",
+      "next_check": ""
+    },
+    "scores": {
+      "verdict": true,
+      "location": true,
+      "claim_accuracy": 1.0,
+      "all_claims": true,
+      "reference_integrity": true,
+      "evidence_anchor_coverage": 1.0,
+      "healthy_false_alarm": null
+    },
+    "explanation_sha256": "d80e2283bd654f7d994c6666f168f57b0cfe37dc1ff1defd1bc66c9d66517900",
+    "raw_record_sha256": "9676acd31981d3d8cc555701d5dcbf9c034c042d3af26654caabbf9acc96c9ea",
+    "status": "completed",
+    "started_at": "2026-09-29T03:14:36.347461+00:00",
+    "elapsed_seconds": 43.00192100001732,
+    "usage": {
+      "input_tokens": 39682,
+      "cached_input_tokens": 24704,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 408,
+      "reasoning_output_tokens": 38
+    },
+    "input_sha256": "31d8cc0a436f341a258f3f58977ce9ce2209c19dba606c27b137144af59063bf",
+    "prompt_sha256": "6fde88f6f81cc73247fd7fbf85238199f2955d20cae91cb9f02fd2eeedf874db",
+    "event_sha256": "cb635f053b5fc344279bf334cce67fa968ffcddd10c713033695f66fbe5f3125",
+    "stderr_sha256": "250f5bcbba0e47af8c14c1c828b887903046fe1ea7901066eb57def90a60b79c",
+    "tool_audit": [
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'cat case.json'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "case.json"
+        ]
+      },
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'cat references/boundary-contracts.md'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "references/boundary-contracts.md"
+        ]
+      }
+    ],
+    "tool_item_count": 2,
+    "read_files": [
+      "case.json",
+      "references/boundary-contracts.md"
+    ]
+  },
+  {
+    "case_id": "m05",
+    "condition": "C_v3_routed",
+    "trial": 1,
+    "prediction": {
+      "verdict": "violation",
+      "primary_event_id": "e3",
+      "claims": [
+        {
+          "id": "q1",
+          "assessment": "supported",
+          "evidence_ids": [
+            "e2",
+            "e4"
+          ]
+        },
+        {
+          "id": "q2",
+          "assessment": "refuted",
+          "evidence_ids": [
+            "e1",
+            "e2",
+            "e3",
+            "e4"
+          ]
+        },
+        {
+          "id": "q3",
+          "assessment": "refuted",
+          "evidence_ids": [
+            "e1",
+            "e3"
+          ]
+        }
+      ],
+      "explanation": "",
+      "next_check": ""
+    },
+    "scores": {
+      "verdict": true,
+      "location": true,
+      "claim_accuracy": 1.0,
+      "all_claims": true,
+      "reference_integrity": true,
+      "evidence_anchor_coverage": 1.0,
+      "healthy_false_alarm": null
+    },
+    "explanation_sha256": "f912e24f2c6a94082d36c6a0be645c983976898706831caeaf2063eb6620d902",
+    "raw_record_sha256": "37eae04b1c35442b55664f2e743fa324f76d11072c836bee939ab785534913eb",
+    "status": "completed",
+    "started_at": "2026-09-29T03:14:43.007531+00:00",
+    "elapsed_seconds": 53.60526566702174,
+    "usage": {
+      "input_tokens": 36105,
+      "cached_input_tokens": 23040,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 434,
+      "reasoning_output_tokens": 67
+    },
+    "input_sha256": "31d8cc0a436f341a258f3f58977ce9ce2209c19dba606c27b137144af59063bf",
+    "prompt_sha256": "c16a86e161eb2d209be1fcc21a4a7d4b14b54b143b33d20808f8a6307118d76b",
+    "event_sha256": "b02bcf213e95f9a1bb617847273f73323bec7e3e1ac81c7d36bccca188fe50d4",
+    "stderr_sha256": "1fa560ad69bc6af0e129de4438d29d26fc3e18b43865f8e50d6f8db468a2ccac",
+    "tool_audit": [
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'cat case.json'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "case.json"
+        ]
+      },
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'cat references/contracts.md'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "references/contracts.md"
+        ]
+      }
+    ],
+    "tool_item_count": 2,
+    "read_files": [
+      "case.json",
+      "references/contracts.md"
+    ]
+  },
+  {
+    "case_id": "m09",
+    "condition": "C_v3_routed",
+    "trial": 1,
+    "prediction": {
+      "verdict": "violation",
+      "primary_event_id": "e5",
+      "claims": [
+        {
+          "id": "q1",
+          "assessment": "supported",
+          "evidence_ids": [
+            "e1",
+            "e2",
+            "e3",
+            "e4",
+            "e6"
+          ]
+        },
+        {
+          "id": "q2",
+          "assessment": "refuted",
+          "evidence_ids": [
+            "e1",
+            "e5"
+          ]
+        },
+        {
+          "id": "q3",
+          "assessment": "refuted",
+          "evidence_ids": [
+            "e1",
+            "e5",
+            "e6"
+          ]
+        }
+      ],
+      "explanation": "",
+      "next_check": ""
+    },
+    "scores": {
+      "verdict": true,
+      "location": true,
+      "claim_accuracy": 1.0,
+      "all_claims": true,
+      "reference_integrity": true,
+      "evidence_anchor_coverage": 1.0,
+      "healthy_false_alarm": null
+    },
+    "explanation_sha256": "9f05209831268d819ca3b3d9addbe770aa34af6b47a81964758d3f2e56d0c8fa",
+    "raw_record_sha256": "a020b0a80d2e8cf2f1e5da270025656d838d96c2cbf76345a73c08613f03814f",
+    "status": "completed",
+    "started_at": "2026-09-29T03:15:19.356048+00:00",
+    "elapsed_seconds": 43.5132910409593,
+    "usage": {
+      "input_tokens": 35920,
+      "cached_input_tokens": 23168,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 354,
+      "reasoning_output_tokens": 0
+    },
+    "input_sha256": "4f6dadff3e824b70b6a3ab58614eb3ac56a37bb088cf632d294a30aa942b7129",
+    "prompt_sha256": "c16a86e161eb2d209be1fcc21a4a7d4b14b54b143b33d20808f8a6307118d76b",
+    "event_sha256": "7e0db190bfd3368bb8f1cb0dded08e913c94f5ceb9c09897d77bb419e3f54aaf",
+    "stderr_sha256": "8c165dff9a3440c230b999de6caff232c0af136d63effcc2ee3214a03e667fb2",
+    "tool_audit": [
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'cat case.json'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "case.json"
+        ]
+      },
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'cat references/gluing.md'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "references/gluing.md"
+        ]
+      }
+    ],
+    "tool_item_count": 2,
+    "read_files": [
+      "case.json",
+      "references/gluing.md"
+    ]
+  },
+  {
+    "case_id": "m09",
+    "condition": "A_no_skill",
+    "trial": 1,
+    "prediction": {
+      "verdict": "violation",
+      "primary_event_id": "e5",
+      "claims": [
+        {
+          "id": "q1",
+          "assessment": "supported",
+          "evidence_ids": [
+            "e1",
+            "e6"
+          ]
+        },
+        {
+          "id": "q2",
+          "assessment": "refuted",
+          "evidence_ids": [
+            "e1",
+            "e5"
+          ]
+        },
+        {
+          "id": "q3",
+          "assessment": "refuted",
+          "evidence_ids": [
+            "e1",
+            "e5",
+            "e6"
+          ]
+        }
+      ],
+      "explanation": "",
+      "next_check": ""
+    },
+    "scores": {
+      "verdict": true,
+      "location": true,
+      "claim_accuracy": 1.0,
+      "all_claims": true,
+      "reference_integrity": true,
+      "evidence_anchor_coverage": 1.0,
+      "healthy_false_alarm": null
+    },
+    "explanation_sha256": "207ba9bfc6f5562b289f1c146f2cd75f6fb4ef3e978f4ae8c2ac401cdec4a80c",
+    "raw_record_sha256": "d917d8ce2b1dc6dfc7e58e4872aa1ad8138a228e786b37e579401b4483fbfc6c",
+    "status": "completed",
+    "started_at": "2026-09-29T03:15:19.615330+00:00",
+    "elapsed_seconds": 43.22547337500146,
+    "usage": {
+      "input_tokens": 21670,
+      "cached_input_tokens": 18688,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 332,
+      "reasoning_output_tokens": 44
+    },
+    "input_sha256": "4f6dadff3e824b70b6a3ab58614eb3ac56a37bb088cf632d294a30aa942b7129",
+    "prompt_sha256": "c7eb240e191f547a9821a031918b7974b24a080b2d6769472792ce97e4d1f649",
+    "event_sha256": "8a96e3aac4f4b02c2007d6bd170ee98438e11b2693da4803f744e7e075364585",
+    "stderr_sha256": "b224329d62da461449ad7bc29d196c1311ec9af822fa476c8ee1246f1f52e80c",
+    "tool_audit": [
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'cat case.json'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "case.json"
+        ]
+      }
+    ],
+    "tool_item_count": 1,
+    "read_files": [
+      "case.json"
+    ]
+  },
+  {
+    "case_id": "m09",
+    "condition": "B_v1_routed",
+    "trial": 1,
+    "prediction": {
+      "verdict": "violation",
+      "primary_event_id": "e5",
+      "claims": [
+        {
+          "id": "q1",
+          "assessment": "supported",
+          "evidence_ids": [
+            "e1",
+            "e6"
+          ]
+        },
+        {
+          "id": "q2",
+          "assessment": "refuted",
+          "evidence_ids": [
+            "e1",
+            "e5"
+          ]
+        },
+        {
+          "id": "q3",
+          "assessment": "refuted",
+          "evidence_ids": [
+            "e1",
+            "e5",
+            "e6"
+          ]
+        }
+      ],
+      "explanation": "",
+      "next_check": ""
+    },
+    "scores": {
+      "verdict": true,
+      "location": true,
+      "claim_accuracy": 1.0,
+      "all_claims": true,
+      "reference_integrity": true,
+      "evidence_anchor_coverage": 1.0,
+      "healthy_false_alarm": null
+    },
+    "explanation_sha256": "b3ba4c523b577ceefa858d39081699525cf1ea496d2d12b3d863277eb8f21071",
+    "raw_record_sha256": "69dd061e9c8fc217d120e90911e8a921e336100c4a8d016bd16668c065f12932",
+    "status": "completed",
+    "started_at": "2026-09-29T03:15:36.616326+00:00",
+    "elapsed_seconds": 51.6542209580075,
+    "usage": {
+      "input_tokens": 42948,
+      "cached_input_tokens": 24704,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 347,
+      "reasoning_output_tokens": 0
+    },
+    "input_sha256": "4f6dadff3e824b70b6a3ab58614eb3ac56a37bb088cf632d294a30aa942b7129",
+    "prompt_sha256": "6fde88f6f81cc73247fd7fbf85238199f2955d20cae91cb9f02fd2eeedf874db",
+    "event_sha256": "261aebff07a3570b51e819b30578665eed1328542e569709b4a62866bbb3814c",
+    "stderr_sha256": "88610aa6ce6db2427b44ad8caa29cd5caa0197ae116833391f0fe7518e39832f",
+    "tool_audit": [
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'cat case.json'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "case.json"
+        ]
+      },
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'cat references/advanced-composition.md references/boundary-contracts.md references/review-output.md'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "references/advanced-composition.md",
+          "references/boundary-contracts.md",
+          "references/review-output.md"
+        ]
+      }
+    ],
+    "tool_item_count": 2,
+    "read_files": [
+      "case.json",
+      "references/advanced-composition.md",
+      "references/boundary-contracts.md",
+      "references/review-output.md"
+    ]
+  },
+  {
+    "case_id": "m07",
+    "condition": "B_v1_routed",
+    "trial": 1,
+    "prediction": {
+      "verdict": "violation",
+      "primary_event_id": "e3",
+      "claims": [
+        {
+          "id": "q1",
+          "assessment": "refuted",
+          "evidence_ids": [
+            "e2",
+            "e3"
+          ]
+        },
+        {
+          "id": "q2",
+          "assessment": "refuted",
+          "evidence_ids": [
+            "e1",
+            "e2",
+            "e3",
+            "e4"
+          ]
+        },
+        {
+          "id": "q3",
+          "assessment": "refuted",
+          "evidence_ids": [
+            "e5"
+          ]
+        }
+      ],
+      "explanation": "",
+      "next_check": ""
+    },
+    "scores": {
+      "verdict": true,
+      "location": true,
+      "claim_accuracy": 1.0,
+      "all_claims": true,
+      "reference_integrity": true,
+      "evidence_anchor_coverage": 1.0,
+      "healthy_false_alarm": null
+    },
+    "explanation_sha256": "68191869b7e975d323079eba496fb1c154c97dfbef284105854293216ab65c40",
+    "raw_record_sha256": "7fbd190684bbde52036af139c5394d006a197482d9c96a2498e7a79be0ee131d",
+    "status": "completed",
+    "started_at": "2026-09-29T03:16:02.845646+00:00",
+    "elapsed_seconds": 52.06457954196958,
+    "usage": {
+      "input_tokens": 40050,
+      "cached_input_tokens": 24704,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 436,
+      "reasoning_output_tokens": 64
+    },
+    "input_sha256": "253894996a737c9155376afed1da7ca93c0718793a876d0a701334234cc8103e",
+    "prompt_sha256": "6fde88f6f81cc73247fd7fbf85238199f2955d20cae91cb9f02fd2eeedf874db",
+    "event_sha256": "6d2d76f5d60756a262f423c707a16e8801efe13b2d07cf0b6793960b6d465f41",
+    "stderr_sha256": "1acc74d5699ab2b5eba81ae5a86bc207f17a8bb2d1956912252f93aa53b16e74",
+    "tool_audit": [
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -c 'cat case.json'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "case.json"
+        ]
+      },
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -c 'cat references/advanced-composition.md'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "references/advanced-composition.md"
+        ]
+      }
+    ],
+    "tool_item_count": 2,
+    "read_files": [
+      "case.json",
+      "references/advanced-composition.md"
+    ]
+  },
+  {
+    "case_id": "m07",
+    "condition": "C_v3_routed",
+    "trial": 1,
+    "prediction": {
+      "verdict": "violation",
+      "primary_event_id": "e4",
+      "claims": [
+        {
+          "id": "q1",
+          "assessment": "refuted",
+          "evidence_ids": [
+            "e2",
+            "e3"
+          ]
+        },
+        {
+          "id": "q2",
+          "assessment": "refuted",
+          "evidence_ids": [
+            "e1",
+            "e2",
+            "e3",
+            "e4"
+          ]
+        },
+        {
+          "id": "q3",
+          "assessment": "refuted",
+          "evidence_ids": [
+            "e5"
+          ]
+        }
+      ],
+      "explanation": "",
+      "next_check": ""
+    },
+    "scores": {
+      "verdict": true,
+      "location": false,
+      "claim_accuracy": 1.0,
+      "all_claims": true,
+      "reference_integrity": true,
+      "evidence_anchor_coverage": 1.0,
+      "healthy_false_alarm": null
+    },
+    "explanation_sha256": "604eed3c8cb32a7d2db6058644b8039839b65342d9b8ffee91259dfc3ed43b87",
+    "raw_record_sha256": "97563099140cf7377cbcd9da657e6310791a40092616d78a7bcc11badb7deef4",
+    "status": "completed",
+    "started_at": "2026-09-29T03:16:02.873674+00:00",
+    "elapsed_seconds": 61.745865166943986,
+    "usage": {
+      "input_tokens": 35997,
+      "cached_input_tokens": 28416,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 395,
+      "reasoning_output_tokens": 25
+    },
+    "input_sha256": "253894996a737c9155376afed1da7ca93c0718793a876d0a701334234cc8103e",
+    "prompt_sha256": "c16a86e161eb2d209be1fcc21a4a7d4b14b54b143b33d20808f8a6307118d76b",
+    "event_sha256": "1fd7bf31fa68bf4b6a64601d4cd8a82c9453e6a98a7794121528defca4d0709f",
+    "stderr_sha256": "e2a9469bafb93eaa1c53d19a300297942775ef009ebbca331980c7055fa9c4a3",
+    "tool_audit": [
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'cat case.json'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "case.json"
+        ]
+      },
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'cat references/probability-causality.md'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "references/probability-causality.md"
+        ]
+      }
+    ],
+    "tool_item_count": 2,
+    "read_files": [
+      "case.json",
+      "references/probability-causality.md"
+    ]
+  },
+  {
+    "case_id": "m07",
+    "condition": "A_no_skill",
+    "trial": 1,
+    "prediction": {
+      "verdict": "violation",
+      "primary_event_id": "e4",
+      "claims": [
+        {
+          "id": "q1",
+          "assessment": "refuted",
+          "evidence_ids": [
+            "e2",
+            "e3"
+          ]
+        },
+        {
+          "id": "q2",
+          "assessment": "refuted",
+          "evidence_ids": [
+            "e1",
+            "e2",
+            "e3",
+            "e4"
+          ]
+        },
+        {
+          "id": "q3",
+          "assessment": "refuted",
+          "evidence_ids": [
+            "e5"
+          ]
+        }
+      ],
+      "explanation": "",
+      "next_check": ""
+    },
+    "scores": {
+      "verdict": true,
+      "location": false,
+      "claim_accuracy": 1.0,
+      "all_claims": true,
+      "reference_integrity": true,
+      "evidence_anchor_coverage": 1.0,
+      "healthy_false_alarm": null
+    },
+    "explanation_sha256": "9cbf5a229afe46256eeeacee3e3606d2ae1b767b7fbc3ac97f16e76733400093",
+    "raw_record_sha256": "3be33c2014e13ebc7ef8b5cb3acaec79b2156dc1efce82db25498c80f74fe331",
+    "status": "completed",
+    "started_at": "2026-09-29T03:16:28.274700+00:00",
+    "elapsed_seconds": 54.742148333985824,
+    "usage": {
+      "input_tokens": 21629,
+      "cached_input_tokens": 18688,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 401,
+      "reasoning_output_tokens": 98
+    },
+    "input_sha256": "253894996a737c9155376afed1da7ca93c0718793a876d0a701334234cc8103e",
+    "prompt_sha256": "c7eb240e191f547a9821a031918b7974b24a080b2d6769472792ce97e4d1f649",
+    "event_sha256": "605a12c2e89142973b58b51570db4e6c683fe23ea27add18dd83c914b3d9ca5b",
+    "stderr_sha256": "01f593bd51a3e593600f3c7ab9f09e9593521616d61a5d0720df3451781f5b92",
+    "tool_audit": [
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'cat case.json'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "case.json"
+        ]
+      }
+    ],
+    "tool_item_count": 1,
+    "read_files": [
+      "case.json"
+    ]
+  },
+  {
+    "case_id": "m07",
+    "condition": "B_v1_routed",
+    "trial": 2,
+    "prediction": {
+      "verdict": "violation",
+      "primary_event_id": "e3",
+      "claims": [
+        {
+          "id": "q1",
+          "assessment": "refuted",
+          "evidence_ids": [
+            "e2",
+            "e3"
+          ]
+        },
+        {
+          "id": "q2",
+          "assessment": "refuted",
+          "evidence_ids": [
+            "e1",
+            "e2",
+            "e3",
+            "e4"
+          ]
+        },
+        {
+          "id": "q3",
+          "assessment": "refuted",
+          "evidence_ids": [
+            "e5"
+          ]
+        }
+      ],
+      "explanation": "",
+      "next_check": ""
+    },
+    "scores": {
+      "verdict": true,
+      "location": true,
+      "claim_accuracy": 1.0,
+      "all_claims": true,
+      "reference_integrity": true,
+      "evidence_anchor_coverage": 1.0,
+      "healthy_false_alarm": null
+    },
+    "explanation_sha256": "721fba5d2fee5dd3e0a1030a30d22ef0f1c4ee0ed53c3833ea48c3dcca0f4cb9",
+    "raw_record_sha256": "6468bb9f5abf495cdeb7420b09c4dc5e1ae5388973582c7b90923eae26f32a14",
+    "status": "completed",
+    "started_at": "2026-09-29T03:16:54.913449+00:00",
+    "elapsed_seconds": 121.63409429200692,
+    "usage": {
+      "input_tokens": 40046,
+      "cached_input_tokens": 36736,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 442,
+      "reasoning_output_tokens": 56
+    },
+    "input_sha256": "253894996a737c9155376afed1da7ca93c0718793a876d0a701334234cc8103e",
+    "prompt_sha256": "6fde88f6f81cc73247fd7fbf85238199f2955d20cae91cb9f02fd2eeedf874db",
+    "event_sha256": "b076e8f805dcf4d94b1234c3b23bdc52a6526b38d887b52068ed3d94b37ae618",
+    "stderr_sha256": "5ceb634c082d2532e5772162c2dadca024a81145e3a4ec67a352938a0f8adf9f",
+    "tool_audit": [
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'cat case.json'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "case.json"
+        ]
+      },
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'cat references/advanced-composition.md'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "references/advanced-composition.md"
+        ]
+      }
+    ],
+    "tool_item_count": 2,
+    "read_files": [
+      "case.json",
+      "references/advanced-composition.md"
+    ]
+  },
+  {
+    "case_id": "m07",
+    "condition": "A_no_skill",
+    "trial": 2,
+    "prediction": {
+      "verdict": "violation",
+      "primary_event_id": "e4",
+      "claims": [
+        {
+          "id": "q1",
+          "assessment": "refuted",
+          "evidence_ids": [
+            "e2",
+            "e3"
+          ]
+        },
+        {
+          "id": "q2",
+          "assessment": "refuted",
+          "evidence_ids": [
+            "e1",
+            "e2",
+            "e3",
+            "e4"
+          ]
+        },
+        {
+          "id": "q3",
+          "assessment": "refuted",
+          "evidence_ids": [
+            "e5"
+          ]
+        }
+      ],
+      "explanation": "",
+      "next_check": ""
+    },
+    "scores": {
+      "verdict": true,
+      "location": false,
+      "claim_accuracy": 1.0,
+      "all_claims": true,
+      "reference_integrity": true,
+      "evidence_anchor_coverage": 1.0,
+      "healthy_false_alarm": null
+    },
+    "explanation_sha256": "2fd80fd6977f366a036d100c9a7fe461b9a58bc1ca3fc125eabfe81e73878d68",
+    "raw_record_sha256": "3e7cea36637dab95d4279c13fb0bad677e83ce854bb740d82edf028bde43a678",
+    "status": "completed",
+    "started_at": "2026-09-29T03:17:04.621658+00:00",
+    "elapsed_seconds": 117.21085845801281,
+    "usage": {
+      "input_tokens": 21623,
+      "cached_input_tokens": 10368,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 355,
+      "reasoning_output_tokens": 50
+    },
+    "input_sha256": "253894996a737c9155376afed1da7ca93c0718793a876d0a701334234cc8103e",
+    "prompt_sha256": "c7eb240e191f547a9821a031918b7974b24a080b2d6769472792ce97e4d1f649",
+    "event_sha256": "1a9ca4a35a8ac57de9119427af19c084b69e027e3094f43aa728d22b8b469559",
+    "stderr_sha256": "9b83e922d8cdc3c6219b2255c881bbd7d17cfe95331fff8d3dc853d5413caed6",
+    "tool_audit": [
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'cat case.json'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "case.json"
+        ]
+      }
+    ],
+    "tool_item_count": 1,
+    "read_files": [
+      "case.json"
+    ]
+  },
+  {
+    "case_id": "m07",
+    "condition": "C_v3_routed",
+    "trial": 2,
+    "prediction": {
+      "verdict": "violation",
+      "primary_event_id": "e4",
+      "claims": [
+        {
+          "id": "q1",
+          "assessment": "refuted",
+          "evidence_ids": [
+            "e2",
+            "e3"
+          ]
+        },
+        {
+          "id": "q2",
+          "assessment": "refuted",
+          "evidence_ids": [
+            "e1",
+            "e2",
+            "e3",
+            "e4"
+          ]
+        },
+        {
+          "id": "q3",
+          "assessment": "refuted",
+          "evidence_ids": [
+            "e5"
+          ]
+        }
+      ],
+      "explanation": "",
+      "next_check": ""
+    },
+    "scores": {
+      "verdict": true,
+      "location": false,
+      "claim_accuracy": 1.0,
+      "all_claims": true,
+      "reference_integrity": true,
+      "evidence_anchor_coverage": 1.0,
+      "healthy_false_alarm": null
+    },
+    "explanation_sha256": "71a05c1d1afa4b14953b2396393f726ad14ad76c1bdb3de438d538a1c27203f6",
+    "raw_record_sha256": "59d98fcc43c90bbe1cb3e5a4cb1def7a8d47843bc60c680483cfe71aa475c6bb",
+    "status": "completed",
+    "started_at": "2026-09-29T03:17:23.019828+00:00",
+    "elapsed_seconds": 101.78330562496558,
+    "usage": {
+      "input_tokens": 36013,
+      "cached_input_tokens": 31360,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 360,
+      "reasoning_output_tokens": 0
+    },
+    "input_sha256": "253894996a737c9155376afed1da7ca93c0718793a876d0a701334234cc8103e",
+    "prompt_sha256": "c16a86e161eb2d209be1fcc21a4a7d4b14b54b143b33d20808f8a6307118d76b",
+    "event_sha256": "f6479b273117822cfa5bbe7a961ffe2d04c31403a8027a4dd34b81800b721b28",
+    "stderr_sha256": "2e1d59022a618bea43302ef226f7b6343e30a7d428fefff1895ff92c4867844a",
+    "tool_audit": [
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'cat case.json'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "case.json"
+        ]
+      },
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'cat references/probability-causality.md'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "references/probability-causality.md"
+        ]
+      }
+    ],
+    "tool_item_count": 2,
+    "read_files": [
+      "case.json",
+      "references/probability-causality.md"
+    ]
+  },
+  {
+    "case_id": "m01",
+    "condition": "A_no_skill",
+    "trial": 2,
+    "prediction": {
+      "verdict": "violation",
+      "primary_event_id": "e8",
+      "claims": [
+        {
+          "id": "q1",
+          "assessment": "supported",
+          "evidence_ids": [
+            "e1"
+          ]
+        },
+        {
+          "id": "q2",
+          "assessment": "refuted",
+          "evidence_ids": [
+            "e4",
+            "e5",
+            "e8"
+          ]
+        },
+        {
+          "id": "q3",
+          "assessment": "unknown",
+          "evidence_ids": [
+            "e1",
+            "e3",
+            "e4",
+            "e5",
+            "e8"
+          ]
+        }
+      ],
+      "explanation": "",
+      "next_check": ""
+    },
+    "scores": {
+      "verdict": true,
+      "location": false,
+      "claim_accuracy": 1.0,
+      "all_claims": true,
+      "reference_integrity": true,
+      "evidence_anchor_coverage": 1.0,
+      "healthy_false_alarm": null
+    },
+    "explanation_sha256": "70278437819eca70d30bce3c9cd99b0d4948b618fc11990d70efdb1fc5f79e6b",
+    "raw_record_sha256": "9440ebd82432a67c83ba669ff5fff3f055d7688b88d5362ae2a4003678485247",
+    "status": "completed",
+    "started_at": "2026-09-29T03:18:56.552592+00:00",
+    "elapsed_seconds": 49.685004667029716,
+    "usage": {
+      "input_tokens": 21765,
+      "cached_input_tokens": 18688,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 400,
+      "reasoning_output_tokens": 82
+    },
+    "input_sha256": "aa2c8cd14e881935d8702b57aa0f23cd2bb5fbdf7f8ef1923a716a7973860272",
+    "prompt_sha256": "c7eb240e191f547a9821a031918b7974b24a080b2d6769472792ce97e4d1f649",
+    "event_sha256": "306cd594dfa4b60990c4c14de01b2a8e03e893d4259db48e0bddcc691ad4ea62",
+    "stderr_sha256": "8d5980d29c09038a37fd2cf19fdb913c52c37b47d3bc0934ebbe03a4a2309495",
+    "tool_audit": [
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'cat case.json'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "case.json"
+        ]
+      }
+    ],
+    "tool_item_count": 1,
+    "read_files": [
+      "case.json"
+    ]
+  },
+  {
+    "case_id": "m01",
+    "condition": "B_v1_routed",
+    "trial": 2,
+    "prediction": {
+      "verdict": "violation",
+      "primary_event_id": "e8",
+      "claims": [
+        {
+          "id": "q1",
+          "assessment": "supported",
+          "evidence_ids": [
+            "e1"
+          ]
+        },
+        {
+          "id": "q2",
+          "assessment": "refuted",
+          "evidence_ids": [
+            "e5",
+            "e6",
+            "e8"
+          ]
+        },
+        {
+          "id": "q3",
+          "assessment": "unknown",
+          "evidence_ids": [
+            "e2",
+            "e3",
+            "e4",
+            "e5",
+            "e8"
+          ]
+        }
+      ],
+      "explanation": "",
+      "next_check": ""
+    },
+    "scores": {
+      "verdict": true,
+      "location": false,
+      "claim_accuracy": 1.0,
+      "all_claims": true,
+      "reference_integrity": true,
+      "evidence_anchor_coverage": 1.0,
+      "healthy_false_alarm": null
+    },
+    "explanation_sha256": "7a44018ce1228cb362e80267537fc33271e4ecf355bdb96f2ed037c3b98dda09",
+    "raw_record_sha256": "1b6b0697f5cbe03f4f0f2f9025446c7720d6bd8ba402d773bcfe8e27ab1e23df",
+    "status": "completed",
+    "started_at": "2026-09-29T03:19:01.835435+00:00",
+    "elapsed_seconds": 38.65307712502545,
+    "usage": {
+      "input_tokens": 41146,
+      "cached_input_tokens": 20352,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 480,
+      "reasoning_output_tokens": 25
+    },
+    "input_sha256": "aa2c8cd14e881935d8702b57aa0f23cd2bb5fbdf7f8ef1923a716a7973860272",
+    "prompt_sha256": "6fde88f6f81cc73247fd7fbf85238199f2955d20cae91cb9f02fd2eeedf874db",
+    "event_sha256": "5790693b2580e10e2f1cce9717b856b6214d6d8af33dca5cf5c348b45ec29ec5",
+    "stderr_sha256": "9349710bafacf18f90e19c1b2227473ec5d12e2c666712000498d0dd6d034e51",
+    "tool_audit": [
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'cat case.json'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "case.json"
+        ]
+      },
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'cat references/review-output.md'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "references/review-output.md"
+        ]
+      },
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'cat references/boundary-contracts.md'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "references/boundary-contracts.md"
+        ]
+      }
+    ],
+    "tool_item_count": 3,
+    "read_files": [
+      "case.json",
+      "references/boundary-contracts.md",
+      "references/review-output.md"
+    ]
+  },
+  {
+    "case_id": "m01",
+    "condition": "C_v3_routed",
+    "trial": 2,
+    "prediction": {
+      "verdict": "violation",
+      "primary_event_id": "e8",
+      "claims": [
+        {
+          "id": "q1",
+          "assessment": "supported",
+          "evidence_ids": [
+            "e1"
+          ]
+        },
+        {
+          "id": "q2",
+          "assessment": "refuted",
+          "evidence_ids": [
+            "e4",
+            "e5",
+            "e8"
+          ]
+        },
+        {
+          "id": "q3",
+          "assessment": "unknown",
+          "evidence_ids": [
+            "e2",
+            "e3",
+            "e4",
+            "e5",
+            "e8"
+          ]
+        }
+      ],
+      "explanation": "",
+      "next_check": ""
+    },
+    "scores": {
+      "verdict": true,
+      "location": false,
+      "claim_accuracy": 1.0,
+      "all_claims": true,
+      "reference_integrity": true,
+      "evidence_anchor_coverage": 1.0,
+      "healthy_false_alarm": null
+    },
+    "explanation_sha256": "9727254fd39cb6a7b535bf64262c660a85e1badfe824329c53f1fcb20e3e45f0",
+    "raw_record_sha256": "caa689f9a942c89654435fc6835026756691b874afa0819bb16cd92a5d903e29",
+    "status": "completed",
+    "started_at": "2026-09-29T03:19:04.805805+00:00",
+    "elapsed_seconds": 35.93265279196203,
+    "usage": {
+      "input_tokens": 23530,
+      "cached_input_tokens": 8320,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 401,
+      "reasoning_output_tokens": 43
+    },
+    "input_sha256": "aa2c8cd14e881935d8702b57aa0f23cd2bb5fbdf7f8ef1923a716a7973860272",
+    "prompt_sha256": "c16a86e161eb2d209be1fcc21a4a7d4b14b54b143b33d20808f8a6307118d76b",
+    "event_sha256": "63df607f9d37f6f31f348490c9750ee8b1cfd76f2b7eed86f05a4245db6b396d",
+    "stderr_sha256": "020bfd4c2d04522f4bea321fd039c5ad41ca8c0d5943086a1fa75e3d97f0b9e3",
+    "tool_audit": [
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'cat case.json'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "case.json"
+        ]
+      }
+    ],
+    "tool_item_count": 1,
+    "read_files": [
+      "case.json"
+    ]
+  },
+  {
+    "case_id": "m05",
+    "condition": "C_v3_routed",
+    "trial": 2,
+    "prediction": {
+      "verdict": "violation",
+      "primary_event_id": "e3",
+      "claims": [
+        {
+          "id": "q1",
+          "assessment": "supported",
+          "evidence_ids": [
+            "e2",
+            "e4"
+          ]
+        },
+        {
+          "id": "q2",
+          "assessment": "refuted",
+          "evidence_ids": [
+            "e1",
+            "e2",
+            "e3",
+            "e4"
+          ]
+        },
+        {
+          "id": "q3",
+          "assessment": "refuted",
+          "evidence_ids": [
+            "e1",
+            "e3"
+          ]
+        }
+      ],
+      "explanation": "",
+      "next_check": ""
+    },
+    "scores": {
+      "verdict": true,
+      "location": true,
+      "claim_accuracy": 1.0,
+      "all_claims": true,
+      "reference_integrity": true,
+      "evidence_anchor_coverage": 1.0,
+      "healthy_false_alarm": null
+    },
+    "explanation_sha256": "5c5e19f2d09de1c65842f4c1ccd6bd50a9bbcbc5686f5e37514f6b63e9cba204",
+    "raw_record_sha256": "3c5846d73deca977cd2c2088c03ffe1d006a87ea8e8771c61b9663459b623a43",
+    "status": "completed",
+    "started_at": "2026-09-29T03:19:40.495062+00:00",
+    "elapsed_seconds": 46.28304145898437,
+    "usage": {
+      "input_tokens": 36102,
+      "cached_input_tokens": 11776,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 401,
+      "reasoning_output_tokens": 37
+    },
+    "input_sha256": "31d8cc0a436f341a258f3f58977ce9ce2209c19dba606c27b137144af59063bf",
+    "prompt_sha256": "c16a86e161eb2d209be1fcc21a4a7d4b14b54b143b33d20808f8a6307118d76b",
+    "event_sha256": "79d8ca379101774959641c4de8fe5790254b88b077ef852f60902423c3198ce5",
+    "stderr_sha256": "22723435e2d957b82ecf0083845cb3e79b958650a3f6ee46c2235ea68f885caf",
+    "tool_audit": [
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'cat case.json'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "case.json"
+        ]
+      },
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'cat references/contracts.md'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "references/contracts.md"
+        ]
+      }
+    ],
+    "tool_item_count": 2,
+    "read_files": [
+      "case.json",
+      "references/contracts.md"
+    ]
+  },
+  {
+    "case_id": "m05",
+    "condition": "B_v1_routed",
+    "trial": 2,
+    "prediction": {
+      "verdict": "violation",
+      "primary_event_id": "e3",
+      "claims": [
+        {
+          "id": "q1",
+          "assessment": "supported",
+          "evidence_ids": [
+            "e2",
+            "e4"
+          ]
+        },
+        {
+          "id": "q2",
+          "assessment": "refuted",
+          "evidence_ids": [
+            "e1",
+            "e2",
+            "e3",
+            "e4"
+          ]
+        },
+        {
+          "id": "q3",
+          "assessment": "refuted",
+          "evidence_ids": [
+            "e1",
+            "e3"
+          ]
+        }
+      ],
+      "explanation": "",
+      "next_check": ""
+    },
+    "scores": {
+      "verdict": true,
+      "location": true,
+      "claim_accuracy": 1.0,
+      "all_claims": true,
+      "reference_integrity": true,
+      "evidence_anchor_coverage": 1.0,
+      "healthy_false_alarm": null
+    },
+    "explanation_sha256": "388519ed5f301cb9c1701953e5db7b9737d8990b89c4b256fc2a7fc70db62829",
+    "raw_record_sha256": "a46a4386cee02fd1003f79c81174d0752b0ec77e37a756bfb5e41aa5176fa7f0",
+    "status": "completed",
+    "started_at": "2026-09-29T03:19:40.741209+00:00",
+    "elapsed_seconds": 46.2019907500362,
+    "usage": {
+      "input_tokens": 40788,
+      "cached_input_tokens": 33024,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 382,
+      "reasoning_output_tokens": 0
+    },
+    "input_sha256": "31d8cc0a436f341a258f3f58977ce9ce2209c19dba606c27b137144af59063bf",
+    "prompt_sha256": "6fde88f6f81cc73247fd7fbf85238199f2955d20cae91cb9f02fd2eeedf874db",
+    "event_sha256": "68a3af1cb562b714bda7ec4c4c67cc6ca2ea3aa8ea1ac08c2c138eec2f3eba81",
+    "stderr_sha256": "d767192c6b2cdfce1758550d07ce8872113cc6229a46ab0db752ba685e31d1cf",
+    "tool_audit": [
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -c 'cat case.json'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "case.json"
+        ]
+      },
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -c 'cat references/boundary-contracts.md references/review-output.md'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "references/boundary-contracts.md",
+          "references/review-output.md"
+        ]
+      }
+    ],
+    "tool_item_count": 2,
+    "read_files": [
+      "case.json",
+      "references/boundary-contracts.md",
+      "references/review-output.md"
+    ]
+  },
+  {
+    "case_id": "m05",
+    "condition": "A_no_skill",
+    "trial": 2,
+    "prediction": {
+      "verdict": "violation",
+      "primary_event_id": "e3",
+      "claims": [
+        {
+          "id": "q1",
+          "assessment": "supported",
+          "evidence_ids": [
+            "e2",
+            "e4"
+          ]
+        },
+        {
+          "id": "q2",
+          "assessment": "refuted",
+          "evidence_ids": [
+            "e1",
+            "e2",
+            "e3",
+            "e4"
+          ]
+        },
+        {
+          "id": "q3",
+          "assessment": "refuted",
+          "evidence_ids": [
+            "e1",
+            "e3"
+          ]
+        }
+      ],
+      "explanation": "",
+      "next_check": ""
+    },
+    "scores": {
+      "verdict": true,
+      "location": true,
+      "claim_accuracy": 1.0,
+      "all_claims": true,
+      "reference_integrity": true,
+      "evidence_anchor_coverage": 1.0,
+      "healthy_false_alarm": null
+    },
+    "explanation_sha256": "d8d8c916838002baf30e69494d31e007b26ee4e06929afc8e6fecee97dcf7283",
+    "raw_record_sha256": "8b4555bd72559833e32a82dba1647b9e4a228a0d2afeab31f505c2393eb8a627",
+    "status": "completed",
+    "started_at": "2026-09-29T03:19:46.239881+00:00",
+    "elapsed_seconds": 45.92722054198384,
+    "usage": {
+      "input_tokens": 21647,
+      "cached_input_tokens": 18688,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 388,
+      "reasoning_output_tokens": 67
+    },
+    "input_sha256": "31d8cc0a436f341a258f3f58977ce9ce2209c19dba606c27b137144af59063bf",
+    "prompt_sha256": "c7eb240e191f547a9821a031918b7974b24a080b2d6769472792ce97e4d1f649",
+    "event_sha256": "0708041699b4efc1af4960bc404c5f9943c9b329b8b7c066b4cc2bb2c80e4a9e",
+    "stderr_sha256": "bf06b932e6263ad9e62ad3f6466746411cf2a8f590afca22f3b8652778a23fff",
+    "tool_audit": [
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'cat case.json'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "case.json"
+        ]
+      }
+    ],
+    "tool_item_count": 1,
+    "read_files": [
+      "case.json"
+    ]
+  },
+  {
+    "case_id": "m04",
+    "condition": "C_v3_routed",
+    "trial": 2,
+    "prediction": {
+      "verdict": "violation",
+      "primary_event_id": "e5",
+      "claims": [
+        {
+          "id": "q1",
+          "assessment": "supported",
+          "evidence_ids": [
+            "e3",
+            "e5"
+          ]
+        },
+        {
+          "id": "q2",
+          "assessment": "supported",
+          "evidence_ids": [
+            "e5"
+          ]
+        },
+        {
+          "id": "q3",
+          "assessment": "refuted",
+          "evidence_ids": [
+            "e5"
+          ]
+        }
+      ],
+      "explanation": "",
+      "next_check": ""
+    },
+    "scores": {
+      "verdict": true,
+      "location": true,
+      "claim_accuracy": 1.0,
+      "all_claims": true,
+      "reference_integrity": true,
+      "evidence_anchor_coverage": 1.0,
+      "healthy_false_alarm": null
+    },
+    "explanation_sha256": "dab9743a40d9c63c02beb958312ca0092332f3f888c04cd02edada4c1b9d4a5b",
+    "raw_record_sha256": "87623c5dcfc8d73042a612ec8ae51abb103113ac5720c1b3abfd8ba690ea8593",
+    "status": "completed",
+    "started_at": "2026-09-29T03:20:26.782059+00:00",
+    "elapsed_seconds": 25.81496662495192,
+    "usage": {
+      "input_tokens": 23382,
+      "cached_input_tokens": 19584,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 266,
+      "reasoning_output_tokens": 35
+    },
+    "input_sha256": "b03de7771cc0e615c9e423e6673de9f333a047781de55b4e10e433c2414617d2",
+    "prompt_sha256": "c16a86e161eb2d209be1fcc21a4a7d4b14b54b143b33d20808f8a6307118d76b",
+    "event_sha256": "0f605ed0294e77f16fa8cbb4cbb8e38d1eb2bb06d143656394416e7f186ae6c9",
+    "stderr_sha256": "6daaea85f6a00bda8c3abc8a4275c52accc11f69b934bb54ec1804b66acbd2af",
+    "tool_audit": [
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'cat case.json'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "case.json"
+        ]
+      }
+    ],
+    "tool_item_count": 1,
+    "read_files": [
+      "case.json"
+    ]
+  },
+  {
+    "case_id": "m04",
+    "condition": "A_no_skill",
+    "trial": 2,
+    "prediction": {
+      "verdict": "violation",
+      "primary_event_id": "e5",
+      "claims": [
+        {
+          "id": "q1",
+          "assessment": "supported",
+          "evidence_ids": [
+            "e3",
+            "e5"
+          ]
+        },
+        {
+          "id": "q2",
+          "assessment": "supported",
+          "evidence_ids": [
+            "e5"
+          ]
+        },
+        {
+          "id": "q3",
+          "assessment": "refuted",
+          "evidence_ids": [
+            "e5"
+          ]
+        }
+      ],
+      "explanation": "",
+      "next_check": ""
+    },
+    "scores": {
+      "verdict": true,
+      "location": true,
+      "claim_accuracy": 1.0,
+      "all_claims": true,
+      "reference_integrity": true,
+      "evidence_anchor_coverage": 1.0,
+      "healthy_false_alarm": null
+    },
+    "explanation_sha256": "652a30084fd1c5a1918c3e2e89109285b04a1110b2af17555463633b5d6a4b8e",
+    "raw_record_sha256": "c90630e509b5c0d6d3c95dd89e49066fc0669471c36a9cf923aea3a59132707d",
+    "status": "completed",
+    "started_at": "2026-09-29T03:20:26.945511+00:00",
+    "elapsed_seconds": 24.700492041010875,
+    "usage": {
+      "input_tokens": 21611,
+      "cached_input_tokens": 18688,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 204,
+      "reasoning_output_tokens": 0
+    },
+    "input_sha256": "b03de7771cc0e615c9e423e6673de9f333a047781de55b4e10e433c2414617d2",
+    "prompt_sha256": "c7eb240e191f547a9821a031918b7974b24a080b2d6769472792ce97e4d1f649",
+    "event_sha256": "18aa784d806b8f5011b2472a420cf855e33fdba363c9f12e243d41ab80bde0ea",
+    "stderr_sha256": "52010bed48ce2cd7d7253cc8462b6e6ca22afcbb027a7e0cf4d0868e7577ec4c",
+    "tool_audit": [
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'cat case.json'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "case.json"
+        ]
+      }
+    ],
+    "tool_item_count": 1,
+    "read_files": [
+      "case.json"
+    ]
+  },
+  {
+    "case_id": "m04",
+    "condition": "B_v1_routed",
+    "trial": 2,
+    "prediction": {
+      "verdict": "violation",
+      "primary_event_id": "e5",
+      "claims": [
+        {
+          "id": "q1",
+          "assessment": "supported",
+          "evidence_ids": [
+            "e3",
+            "e5"
+          ]
+        },
+        {
+          "id": "q2",
+          "assessment": "supported",
+          "evidence_ids": [
+            "e5"
+          ]
+        },
+        {
+          "id": "q3",
+          "assessment": "refuted",
+          "evidence_ids": [
+            "e5"
+          ]
+        }
+      ],
+      "explanation": "",
+      "next_check": ""
+    },
+    "scores": {
+      "verdict": true,
+      "location": true,
+      "claim_accuracy": 1.0,
+      "all_claims": true,
+      "reference_integrity": true,
+      "evidence_anchor_coverage": 1.0,
+      "healthy_false_alarm": null
+    },
+    "explanation_sha256": "f3b12ada4003730e6d19dfb2eec4af5d3a8c8439ef77e6b75e81b4af67461b65",
+    "raw_record_sha256": "54498011caa352cae8eb8397ee8ea7825e7512eb6cad0efc44ec37ea3fed6184",
+    "status": "completed",
+    "started_at": "2026-09-29T03:20:32.169528+00:00",
+    "elapsed_seconds": 35.63017666700762,
+    "usage": {
+      "input_tokens": 40827,
+      "cached_input_tokens": 24704,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 389,
+      "reasoning_output_tokens": 30
+    },
+    "input_sha256": "b03de7771cc0e615c9e423e6673de9f333a047781de55b4e10e433c2414617d2",
+    "prompt_sha256": "6fde88f6f81cc73247fd7fbf85238199f2955d20cae91cb9f02fd2eeedf874db",
+    "event_sha256": "ed2625e4381ebe30d0020ab8daa9eeb0085ec96cd8df9694e0dc2ae3c6589aff",
+    "stderr_sha256": "f8311eccaa9ef74242e6ff3af89843030e8b2a86c3c44fd7ca5a1cc9091e5fd3",
+    "tool_audit": [
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'cat case.json'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "case.json"
+        ]
+      },
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'cat references/boundary-contracts.md'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "references/boundary-contracts.md"
+        ]
+      },
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'cat references/review-output.md'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "references/review-output.md"
+        ]
+      }
+    ],
+    "tool_item_count": 3,
+    "read_files": [
+      "case.json",
+      "references/boundary-contracts.md",
+      "references/review-output.md"
+    ]
+  },
+  {
+    "case_id": "m02",
+    "condition": "A_no_skill",
+    "trial": 2,
+    "prediction": {
+      "verdict": "satisfied",
+      "primary_event_id": null,
+      "claims": [
+        {
+          "id": "q1",
+          "assessment": "supported",
+          "evidence_ids": [
+            "e1"
+          ]
+        },
+        {
+          "id": "q2",
+          "assessment": "supported",
+          "evidence_ids": [
+            "e4",
+            "e8"
+          ]
+        },
+        {
+          "id": "q3",
+          "assessment": "unknown",
+          "evidence_ids": [
+            "e1",
+            "e5",
+            "e6",
+            "e8"
+          ]
+        }
+      ],
+      "explanation": "",
+      "next_check": ""
+    },
+    "scores": {
+      "verdict": true,
+      "location": true,
+      "claim_accuracy": 1.0,
+      "all_claims": true,
+      "reference_integrity": true,
+      "evidence_anchor_coverage": 1.0,
+      "healthy_false_alarm": false
+    },
+    "explanation_sha256": "2ffcd5300806b8b4020b56a1424d31dfe634360c26808efc661ee28482b1003b",
+    "raw_record_sha256": "ade666e0f9cb8f1db52cf366518a68e389df36fee667633a261a61a157297c4d",
+    "status": "completed",
+    "started_at": "2026-09-29T03:20:51.648599+00:00",
+    "elapsed_seconds": 42.089704083045945,
+    "usage": {
+      "input_tokens": 21773,
+      "cached_input_tokens": 10368,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 400,
+      "reasoning_output_tokens": 84
+    },
+    "input_sha256": "1e55c9d11d65fbdb7897f4473c6e7e7b22a5f1d6bd8d4ba96eaf0099ef2dad17",
+    "prompt_sha256": "c7eb240e191f547a9821a031918b7974b24a080b2d6769472792ce97e4d1f649",
+    "event_sha256": "4c492d5acf58420c94cf983f6979f2d45821a14b06123e87715d9cee2a2b9ccf",
+    "stderr_sha256": "be1d34df12595a7c195b7d537363e32ce21f65ce63fa51a56c9bc46c2c46753a",
+    "tool_audit": [
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'cat case.json'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "case.json"
+        ]
+      }
+    ],
+    "tool_item_count": 1,
+    "read_files": [
+      "case.json"
+    ]
+  },
+  {
+    "case_id": "m02",
+    "condition": "C_v3_routed",
+    "trial": 2,
+    "prediction": {
+      "verdict": "satisfied",
+      "primary_event_id": null,
+      "claims": [
+        {
+          "id": "q1",
+          "assessment": "supported",
+          "evidence_ids": [
+            "e1"
+          ]
+        },
+        {
+          "id": "q2",
+          "assessment": "supported",
+          "evidence_ids": [
+            "e4",
+            "e8"
+          ]
+        },
+        {
+          "id": "q3",
+          "assessment": "unknown",
+          "evidence_ids": [
+            "e2",
+            "e3",
+            "e5",
+            "e6",
+            "e8"
+          ]
+        }
+      ],
+      "explanation": "",
+      "next_check": ""
+    },
+    "scores": {
+      "verdict": true,
+      "location": true,
+      "claim_accuracy": 1.0,
+      "all_claims": true,
+      "reference_integrity": true,
+      "evidence_anchor_coverage": 1.0,
+      "healthy_false_alarm": false
+    },
+    "explanation_sha256": "d0d07544ed31f7e66fbf0e0b079ee9e8ced202359f40136d5252c6b591b6036b",
+    "raw_record_sha256": "6d905ec4bcb46a13e6442c01959e0a4b189141e8d3bfc4d8865c0ff08d473b27",
+    "status": "completed",
+    "started_at": "2026-09-29T03:20:52.604755+00:00",
+    "elapsed_seconds": 42.04700516699813,
+    "usage": {
+      "input_tokens": 37295,
+      "cached_input_tokens": 23296,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 457,
+      "reasoning_output_tokens": 14
+    },
+    "input_sha256": "1e55c9d11d65fbdb7897f4473c6e7e7b22a5f1d6bd8d4ba96eaf0099ef2dad17",
+    "prompt_sha256": "c16a86e161eb2d209be1fcc21a4a7d4b14b54b143b33d20808f8a6307118d76b",
+    "event_sha256": "4bf65723f1c013b5552943ce6bfd85cb6cadf2aa3f5ae9bfa05a242751299801",
+    "stderr_sha256": "45606f3d45d8eaf5508798e7eb85f78c6a1802e5ecbb16740fb97ec2a558d5e0",
+    "tool_audit": [
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'cat case.json'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "case.json"
+        ]
+      },
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'cat references/probability-causality.md'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "references/probability-causality.md"
+        ]
+      },
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'cat references/evidence.md'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "references/evidence.md"
+        ]
+      }
+    ],
+    "tool_item_count": 3,
+    "read_files": [
+      "case.json",
+      "references/evidence.md",
+      "references/probability-causality.md"
+    ]
+  },
+  {
+    "case_id": "m02",
+    "condition": "B_v1_routed",
+    "trial": 2,
+    "prediction": {
+      "verdict": "satisfied",
+      "primary_event_id": null,
+      "claims": [
+        {
+          "id": "q1",
+          "assessment": "supported",
+          "evidence_ids": [
+            "e1"
+          ]
+        },
+        {
+          "id": "q2",
+          "assessment": "supported",
+          "evidence_ids": [
+            "e4",
+            "e8"
+          ]
+        },
+        {
+          "id": "q3",
+          "assessment": "unknown",
+          "evidence_ids": [
+            "e2",
+            "e3",
+            "e5",
+            "e6",
+            "e8"
+          ]
+        }
+      ],
+      "explanation": "",
+      "next_check": ""
+    },
+    "scores": {
+      "verdict": true,
+      "location": true,
+      "claim_accuracy": 1.0,
+      "all_claims": true,
+      "reference_integrity": true,
+      "evidence_anchor_coverage": 1.0,
+      "healthy_false_alarm": false
+    },
+    "explanation_sha256": "be81956c412977217c99a3564eff801a7957072c14dae58baf7e3680cd4c5174",
+    "raw_record_sha256": "b532f357fb3e2840031df5be37c2151c03d47128ef72f82625e94aa1ba482443",
+    "status": "completed",
+    "started_at": "2026-09-29T03:21:07.808345+00:00",
+    "elapsed_seconds": 51.780640416021924,
+    "usage": {
+      "input_tokens": 41076,
+      "cached_input_tokens": 24832,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 420,
+      "reasoning_output_tokens": 31
+    },
+    "input_sha256": "1e55c9d11d65fbdb7897f4473c6e7e7b22a5f1d6bd8d4ba96eaf0099ef2dad17",
+    "prompt_sha256": "6fde88f6f81cc73247fd7fbf85238199f2955d20cae91cb9f02fd2eeedf874db",
+    "event_sha256": "27f5522b464331314b59ae4c27cd6896e8b2dca685ae8d8bec49070dae332daa",
+    "stderr_sha256": "7bc2b5fcf3a5f5f5b50f11879b5dc5a43ff8d40428daf895707ae6df160d315e",
+    "tool_audit": [
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'cat case.json'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "case.json"
+        ]
+      },
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'cat references/boundary-contracts.md references/review-output.md'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "references/boundary-contracts.md",
+          "references/review-output.md"
+        ]
+      }
+    ],
+    "tool_item_count": 2,
+    "read_files": [
+      "case.json",
+      "references/boundary-contracts.md",
+      "references/review-output.md"
+    ]
+  },
+  {
+    "case_id": "m03",
+    "condition": "A_no_skill",
+    "trial": 2,
+    "prediction": {
+      "verdict": "insufficient",
+      "primary_event_id": null,
+      "claims": [
+        {
+          "id": "q1",
+          "assessment": "unknown",
+          "evidence_ids": [
+            "e2",
+            "e3",
+            "e5"
+          ]
+        },
+        {
+          "id": "q2",
+          "assessment": "unknown",
+          "evidence_ids": [
+            "e3",
+            "e5"
+          ]
+        },
+        {
+          "id": "q3",
+          "assessment": "unknown",
+          "evidence_ids": [
+            "e2",
+            "e5"
+          ]
+        }
+      ],
+      "explanation": "",
+      "next_check": ""
+    },
+    "scores": {
+      "verdict": true,
+      "location": true,
+      "claim_accuracy": 0.6666666666666666,
+      "all_claims": false,
+      "reference_integrity": true,
+      "evidence_anchor_coverage": 1.0,
+      "healthy_false_alarm": null
+    },
+    "explanation_sha256": "6fa208492a5d9d7865d182e23bd4e300754b3b1002b28ee65749e52ce0f82579",
+    "raw_record_sha256": "481e8c54e68becd3658b98397d45446c6e507256a2fbfb9d7e8215fc1943c4e4",
+    "status": "completed",
+    "started_at": "2026-09-29T03:21:33.740709+00:00",
+    "elapsed_seconds": 49.144095209019724,
+    "usage": {
+      "input_tokens": 21631,
+      "cached_input_tokens": 10368,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 707,
+      "reasoning_output_tokens": 380
+    },
+    "input_sha256": "7669847aa16032a003576f165e98b45ac5cbd848b9983066c45a1c175f3cd508",
+    "prompt_sha256": "c7eb240e191f547a9821a031918b7974b24a080b2d6769472792ce97e4d1f649",
+    "event_sha256": "482e12c4db13bf9158878328567cdee7f2ab75a62f4b5c7d7c8a7cb6c16dc2dd",
+    "stderr_sha256": "6f6f2e2bebfd2f131622d235113c78c65e71c9b03977142ea5b75036929ebac4",
+    "tool_audit": [
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'cat case.json'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "case.json"
+        ]
+      }
+    ],
+    "tool_item_count": 1,
+    "read_files": [
+      "case.json"
+    ]
+  },
+  {
+    "case_id": "m03",
+    "condition": "B_v1_routed",
+    "trial": 2,
+    "prediction": {
+      "verdict": "insufficient",
+      "primary_event_id": null,
+      "claims": [
+        {
+          "id": "q1",
+          "assessment": "supported",
+          "evidence_ids": [
+            "e2",
+            "e3"
+          ]
+        },
+        {
+          "id": "q2",
+          "assessment": "unknown",
+          "evidence_ids": [
+            "e3",
+            "e5"
+          ]
+        },
+        {
+          "id": "q3",
+          "assessment": "unknown",
+          "evidence_ids": [
+            "e2",
+            "e5"
+          ]
+        }
+      ],
+      "explanation": "",
+      "next_check": ""
+    },
+    "scores": {
+      "verdict": true,
+      "location": true,
+      "claim_accuracy": 1.0,
+      "all_claims": true,
+      "reference_integrity": true,
+      "evidence_anchor_coverage": 1.0,
+      "healthy_false_alarm": null
+    },
+    "explanation_sha256": "fa0cb27c462d20afebdf21dc3f9f642de8e9548f9df84d46e8bbb9176b1c7863",
+    "raw_record_sha256": "cb7f038850703d0defcc08b687dcfa5d948ecc3a351efdc936afa378d49de51c",
+    "status": "completed",
+    "started_at": "2026-09-29T03:21:34.653867+00:00",
+    "elapsed_seconds": 51.7997122919769,
+    "usage": {
+      "input_tokens": 25017,
+      "cached_input_tokens": 12032,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 613,
+      "reasoning_output_tokens": 362
+    },
+    "input_sha256": "7669847aa16032a003576f165e98b45ac5cbd848b9983066c45a1c175f3cd508",
+    "prompt_sha256": "6fde88f6f81cc73247fd7fbf85238199f2955d20cae91cb9f02fd2eeedf874db",
+    "event_sha256": "84107a14fa9f19382fc07f166534aed9ccf7a8383651ffe60847d6fa6d2a389b",
+    "stderr_sha256": "c5d8ddb102713db265dec968edd9f9fc3bd911ff496173523237f11f6d614f78",
+    "tool_audit": [
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'cat case.json'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "case.json"
+        ]
+      }
+    ],
+    "tool_item_count": 1,
+    "read_files": [
+      "case.json"
+    ]
+  },
+  {
+    "case_id": "m03",
+    "condition": "C_v3_routed",
+    "trial": 2,
+    "prediction": {
+      "verdict": "insufficient",
+      "primary_event_id": null,
+      "claims": [
+        {
+          "id": "q1",
+          "assessment": "supported",
+          "evidence_ids": [
+            "e2",
+            "e3"
+          ]
+        },
+        {
+          "id": "q2",
+          "assessment": "unknown",
+          "evidence_ids": [
+            "e3",
+            "e5"
+          ]
+        },
+        {
+          "id": "q3",
+          "assessment": "unknown",
+          "evidence_ids": [
+            "e2",
+            "e5"
+          ]
+        }
+      ],
+      "explanation": "",
+      "next_check": ""
+    },
+    "scores": {
+      "verdict": true,
+      "location": true,
+      "claim_accuracy": 1.0,
+      "all_claims": true,
+      "reference_integrity": true,
+      "evidence_anchor_coverage": 1.0,
+      "healthy_false_alarm": null
+    },
+    "explanation_sha256": "17f4571c2905fcc9ccd3b90cd7287a164954eae3f8e38a7290174064bd9385d8",
+    "raw_record_sha256": "e115a44ca837efc0505ebf0dbe56717817bece32d67049025232bc77e451b78e",
+    "status": "completed",
+    "started_at": "2026-09-29T03:21:59.591236+00:00",
+    "elapsed_seconds": 60.745387416973244,
+    "usage": {
+      "input_tokens": 37015,
+      "cached_input_tokens": 11776,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 765,
+      "reasoning_output_tokens": 351
+    },
+    "input_sha256": "7669847aa16032a003576f165e98b45ac5cbd848b9983066c45a1c175f3cd508",
+    "prompt_sha256": "c16a86e161eb2d209be1fcc21a4a7d4b14b54b143b33d20808f8a6307118d76b",
+    "event_sha256": "f8b061533e37d00c6384e8bf419a6c050779398c574a0ddfe47593003dca6593",
+    "stderr_sha256": "dc794c81b5cf5a9badfab05a144ec540dc6a7f912fc34e394b5831e7a56b7364",
+    "tool_audit": [
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'cat case.json'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "case.json"
+        ]
+      },
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'cat references/evidence.md'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "references/evidence.md"
+        ]
+      },
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'cat references/probability-causality.md'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "references/probability-causality.md"
+        ]
+      }
+    ],
+    "tool_item_count": 3,
+    "read_files": [
+      "case.json",
+      "references/evidence.md",
+      "references/probability-causality.md"
+    ]
+  },
+  {
+    "case_id": "m11",
+    "condition": "A_no_skill",
+    "trial": 2,
+    "prediction": {
+      "verdict": "violation",
+      "primary_event_id": "e3",
+      "claims": [
+        {
+          "id": "q1",
+          "assessment": "supported",
+          "evidence_ids": [
+            "e2",
+            "e3",
+            "e4"
+          ]
+        },
+        {
+          "id": "q2",
+          "assessment": "supported",
+          "evidence_ids": [
+            "e1",
+            "e2",
+            "e3",
+            "e4"
+          ]
+        },
+        {
+          "id": "q3",
+          "assessment": "refuted",
+          "evidence_ids": [
+            "e1",
+            "e4"
+          ]
+        }
+      ],
+      "explanation": "",
+      "next_check": ""
+    },
+    "scores": {
+      "verdict": true,
+      "location": true,
+      "claim_accuracy": 1.0,
+      "all_claims": true,
+      "reference_integrity": true,
+      "evidence_anchor_coverage": 1.0,
+      "healthy_false_alarm": null
+    },
+    "explanation_sha256": "45b47ac98576c46ccea568594eeb4d17910389a075977bf47d8e8952813406e0",
+    "raw_record_sha256": "cb6446f174ae8fa166d6f8226a4ebaafebc7e8f08bc350b4c45476a3aa2700da",
+    "status": "completed",
+    "started_at": "2026-09-29T03:22:22.886832+00:00",
+    "elapsed_seconds": 37.43967400002293,
+    "usage": {
+      "input_tokens": 21600,
+      "cached_input_tokens": 18688,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 344,
+      "reasoning_output_tokens": 32
+    },
+    "input_sha256": "a7a3082fe612db48109df07ff56b5c774d5a85dcbd8652b59d07a760df833db4",
+    "prompt_sha256": "c7eb240e191f547a9821a031918b7974b24a080b2d6769472792ce97e4d1f649",
+    "event_sha256": "9e39fbd2345a9c5ee15484002665eed76f0c36627755a90d9a73cf31cf5d685d",
+    "stderr_sha256": "fb184096a9b9cf3fa54908dd6429fa65ae9ce4660c75491623ae576b8f8e86ba",
+    "tool_audit": [
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'cat case.json'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "case.json"
+        ]
+      }
+    ],
+    "tool_item_count": 1,
+    "read_files": [
+      "case.json"
+    ]
+  },
+  {
+    "case_id": "m11",
+    "condition": "B_v1_routed",
+    "trial": 2,
+    "prediction": {
+      "verdict": "violation",
+      "primary_event_id": "e3",
+      "claims": [
+        {
+          "id": "q1",
+          "assessment": "supported",
+          "evidence_ids": [
+            "e2",
+            "e3",
+            "e4"
+          ]
+        },
+        {
+          "id": "q2",
+          "assessment": "supported",
+          "evidence_ids": [
+            "e1",
+            "e2",
+            "e3",
+            "e4"
+          ]
+        },
+        {
+          "id": "q3",
+          "assessment": "refuted",
+          "evidence_ids": [
+            "e1",
+            "e4"
+          ]
+        }
+      ],
+      "explanation": "",
+      "next_check": ""
+    },
+    "scores": {
+      "verdict": true,
+      "location": true,
+      "claim_accuracy": 1.0,
+      "all_claims": true,
+      "reference_integrity": true,
+      "evidence_anchor_coverage": 1.0,
+      "healthy_false_alarm": null
+    },
+    "explanation_sha256": "a4f4e870c2545b4690622c709c9aaa2b54db15d42f4432bc5b76fb8a806869d7",
+    "raw_record_sha256": "e52adf98469b6ac2743d99cbda8615e621b97fe1f1d904fb36d20280379549ba",
+    "status": "completed",
+    "started_at": "2026-09-29T03:22:26.456022+00:00",
+    "elapsed_seconds": 34.24777229200117,
+    "usage": {
+      "input_tokens": 40685,
+      "cached_input_tokens": 32896,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 365,
+      "reasoning_output_tokens": 0
+    },
+    "input_sha256": "a7a3082fe612db48109df07ff56b5c774d5a85dcbd8652b59d07a760df833db4",
+    "prompt_sha256": "6fde88f6f81cc73247fd7fbf85238199f2955d20cae91cb9f02fd2eeedf874db",
+    "event_sha256": "698fd938c3485ed2c5861a5a7ecbd335e7fcdeb42907ab68a1ddc997e312557c",
+    "stderr_sha256": "dce86ab03dee8ff3fc1f476a80a9ace01eaf3f5e697416d9574a0f449365a7b1",
+    "tool_audit": [
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'cat case.json'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "case.json"
+        ]
+      },
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'cat references/boundary-contracts.md references/review-output.md'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "references/boundary-contracts.md",
+          "references/review-output.md"
+        ]
+      }
+    ],
+    "tool_item_count": 2,
+    "read_files": [
+      "case.json",
+      "references/boundary-contracts.md",
+      "references/review-output.md"
+    ]
+  },
+  {
+    "case_id": "m11",
+    "condition": "C_v3_routed",
+    "trial": 2,
+    "prediction": {
+      "verdict": "violation",
+      "primary_event_id": "e3",
+      "claims": [
+        {
+          "id": "q1",
+          "assessment": "supported",
+          "evidence_ids": [
+            "e2",
+            "e3",
+            "e4"
+          ]
+        },
+        {
+          "id": "q2",
+          "assessment": "supported",
+          "evidence_ids": [
+            "e1",
+            "e2",
+            "e3",
+            "e4"
+          ]
+        },
+        {
+          "id": "q3",
+          "assessment": "refuted",
+          "evidence_ids": [
+            "e1",
+            "e4"
+          ]
+        }
+      ],
+      "explanation": "",
+      "next_check": ""
+    },
+    "scores": {
+      "verdict": true,
+      "location": true,
+      "claim_accuracy": 1.0,
+      "all_claims": true,
+      "reference_integrity": true,
+      "evidence_anchor_coverage": 1.0,
+      "healthy_false_alarm": null
+    },
+    "explanation_sha256": "f70c91ca99d664865fdd81f082f2e9b228ef8b1bfc9ff5a553de55e8d6a99361",
+    "raw_record_sha256": "a4246eed56b85f3dd13d7443d60caabc392a47b4a617b5104bd5b89f86377b11",
+    "status": "completed",
+    "started_at": "2026-09-29T03:23:00.331641+00:00",
+    "elapsed_seconds": 44.269016749982256,
+    "usage": {
+      "input_tokens": 36564,
+      "cached_input_tokens": 23040,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 362,
+      "reasoning_output_tokens": 0
+    },
+    "input_sha256": "a7a3082fe612db48109df07ff56b5c774d5a85dcbd8652b59d07a760df833db4",
+    "prompt_sha256": "c16a86e161eb2d209be1fcc21a4a7d4b14b54b143b33d20808f8a6307118d76b",
+    "event_sha256": "d079d18f83a4a035b7ca28012680dd2525988895fb140b6127c4077565a687eb",
+    "stderr_sha256": "e8376f8c780203274a17e276954823860c82915babd33ee719b477622cf3cc8e",
+    "tool_audit": [
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'cat case.json'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "case.json"
+        ]
+      },
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'cat references/contracts.md references/effects.md'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "references/contracts.md",
+          "references/effects.md"
+        ]
+      }
+    ],
+    "tool_item_count": 2,
+    "read_files": [
+      "case.json",
+      "references/contracts.md",
+      "references/effects.md"
+    ]
+  },
+  {
+    "case_id": "m06",
+    "condition": "B_v1_routed",
+    "trial": 2,
+    "prediction": {
+      "verdict": "satisfied",
+      "primary_event_id": null,
+      "claims": [
+        {
+          "id": "q1",
+          "assessment": "supported",
+          "evidence_ids": [
+            "e2",
+            "e4"
+          ]
+        },
+        {
+          "id": "q2",
+          "assessment": "supported",
+          "evidence_ids": [
+            "e1",
+            "e2",
+            "e3",
+            "e4"
+          ]
+        },
+        {
+          "id": "q3",
+          "assessment": "refuted",
+          "evidence_ids": [
+            "e1",
+            "e3",
+            "e4"
+          ]
+        }
+      ],
+      "explanation": "",
+      "next_check": ""
+    },
+    "scores": {
+      "verdict": true,
+      "location": true,
+      "claim_accuracy": 1.0,
+      "all_claims": true,
+      "reference_integrity": true,
+      "evidence_anchor_coverage": 1.0,
+      "healthy_false_alarm": false
+    },
+    "explanation_sha256": "7e3df75abdbfacdadeb06be892285b307e830572e7eded28f1023a0558cce8c3",
+    "raw_record_sha256": "ade2afe2a6eaa9d17df8813e99c97657a1de64c13ac14c77ce2a5c4ea88cb331",
+    "status": "completed",
+    "started_at": "2026-09-29T03:23:00.338786+00:00",
+    "elapsed_seconds": 43.176097250019666,
+    "usage": {
+      "input_tokens": 40748,
+      "cached_input_tokens": 24704,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 355,
+      "reasoning_output_tokens": 0
+    },
+    "input_sha256": "1b3554bc7db8009fc5e85a5d4f5ecee279f4339e361996d7008da750a01e9414",
+    "prompt_sha256": "6fde88f6f81cc73247fd7fbf85238199f2955d20cae91cb9f02fd2eeedf874db",
+    "event_sha256": "08a0a36b9f3019bf11bc9a274e0c3d1ee01a62007e95601c92e9c443c5463e72",
+    "stderr_sha256": "94f634358214b74d4d23cc4c403513670a2e4539d2e84b223f0d82ce2bf1aec6",
+    "tool_audit": [
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'cat case.json'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "case.json"
+        ]
+      },
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'cat references/boundary-contracts.md references/review-output.md'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "references/boundary-contracts.md",
+          "references/review-output.md"
+        ]
+      }
+    ],
+    "tool_item_count": 2,
+    "read_files": [
+      "case.json",
+      "references/boundary-contracts.md",
+      "references/review-output.md"
+    ]
+  },
+  {
+    "case_id": "m06",
+    "condition": "C_v3_routed",
+    "trial": 2,
+    "prediction": {
+      "verdict": "satisfied",
+      "primary_event_id": null,
+      "claims": [
+        {
+          "id": "q1",
+          "assessment": "supported",
+          "evidence_ids": [
+            "e2",
+            "e4"
+          ]
+        },
+        {
+          "id": "q2",
+          "assessment": "supported",
+          "evidence_ids": [
+            "e1",
+            "e2",
+            "e3",
+            "e4"
+          ]
+        },
+        {
+          "id": "q3",
+          "assessment": "refuted",
+          "evidence_ids": [
+            "e1",
+            "e3",
+            "e4"
+          ]
+        }
+      ],
+      "explanation": "",
+      "next_check": ""
+    },
+    "scores": {
+      "verdict": true,
+      "location": true,
+      "claim_accuracy": 1.0,
+      "all_claims": true,
+      "reference_integrity": true,
+      "evidence_anchor_coverage": 1.0,
+      "healthy_false_alarm": false
+    },
+    "explanation_sha256": "e6187e340079f07b67047df9cbfb349b3d39449479639aa37c1fa7548f97e95d",
+    "raw_record_sha256": "42554cf70a26d1a4c2e8321751efed2541a18016d8ee79f73cc34cbc9e939455",
+    "status": "completed",
+    "started_at": "2026-09-29T03:23:00.705942+00:00",
+    "elapsed_seconds": 45.556428500043694,
+    "usage": {
+      "input_tokens": 36108,
+      "cached_input_tokens": 31360,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 363,
+      "reasoning_output_tokens": 14
+    },
+    "input_sha256": "1b3554bc7db8009fc5e85a5d4f5ecee279f4339e361996d7008da750a01e9414",
+    "prompt_sha256": "c16a86e161eb2d209be1fcc21a4a7d4b14b54b143b33d20808f8a6307118d76b",
+    "event_sha256": "120cdcfb8be998c5003dd6cf61cf282af6dc879c576051f0d2c63f1f40a2797f",
+    "stderr_sha256": "0858bde4792d1157c1223bc006e1f5d02cb2c6608a9e50f7054e7e658e9c45ab",
+    "tool_audit": [
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'cat case.json'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "case.json"
+        ]
+      },
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'cat references/contracts.md'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "references/contracts.md"
+        ]
+      }
+    ],
+    "tool_item_count": 2,
+    "read_files": [
+      "case.json",
+      "references/contracts.md"
+    ]
+  },
+  {
+    "case_id": "m06",
+    "condition": "A_no_skill",
+    "trial": 2,
+    "prediction": {
+      "verdict": "satisfied",
+      "primary_event_id": null,
+      "claims": [
+        {
+          "id": "q1",
+          "assessment": "supported",
+          "evidence_ids": [
+            "e2",
+            "e4"
+          ]
+        },
+        {
+          "id": "q2",
+          "assessment": "supported",
+          "evidence_ids": [
+            "e1",
+            "e2",
+            "e3",
+            "e4"
+          ]
+        },
+        {
+          "id": "q3",
+          "assessment": "refuted",
+          "evidence_ids": [
+            "e1",
+            "e3",
+            "e4"
+          ]
+        }
+      ],
+      "explanation": "",
+      "next_check": ""
+    },
+    "scores": {
+      "verdict": true,
+      "location": true,
+      "claim_accuracy": 1.0,
+      "all_claims": true,
+      "reference_integrity": true,
+      "evidence_anchor_coverage": 1.0,
+      "healthy_false_alarm": false
+    },
+    "explanation_sha256": "f9f49d49e1ef2fab890d4ba59c8a899be48da1131a41741229c27e4696bd2429",
+    "raw_record_sha256": "11d9fa8cb99f51c61358ea2aaa4080b2be821bc4dea1149cc334383a7c0d6321",
+    "status": "completed",
+    "started_at": "2026-09-29T03:23:43.552745+00:00",
+    "elapsed_seconds": 36.708548292052,
+    "usage": {
+      "input_tokens": 21631,
+      "cached_input_tokens": 10368,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 332,
+      "reasoning_output_tokens": 41
+    },
+    "input_sha256": "1b3554bc7db8009fc5e85a5d4f5ecee279f4339e361996d7008da750a01e9414",
+    "prompt_sha256": "c7eb240e191f547a9821a031918b7974b24a080b2d6769472792ce97e4d1f649",
+    "event_sha256": "3ec99963e886f9a142a51e77461dc275cd64295a30de84d1eb90ea928a98cc0a",
+    "stderr_sha256": "6b07070712bb9aa8b4c9cd2fe3c9d2f74d611446627214cf83eafc771c6dd27c",
+    "tool_audit": [
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'cat case.json'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "case.json"
+        ]
+      }
+    ],
+    "tool_item_count": 1,
+    "read_files": [
+      "case.json"
+    ]
+  },
+  {
+    "case_id": "m10",
+    "condition": "B_v1_routed",
+    "trial": 2,
+    "prediction": {
+      "verdict": "satisfied",
+      "primary_event_id": null,
+      "claims": [
+        {
+          "id": "q1",
+          "assessment": "supported",
+          "evidence_ids": [
+            "e1",
+            "e6"
+          ]
+        },
+        {
+          "id": "q2",
+          "assessment": "supported",
+          "evidence_ids": [
+            "e1",
+            "e2",
+            "e3",
+            "e4",
+            "e5"
+          ]
+        },
+        {
+          "id": "q3",
+          "assessment": "refuted",
+          "evidence_ids": [
+            "e1",
+            "e6"
+          ]
+        }
+      ],
+      "explanation": "",
+      "next_check": ""
+    },
+    "scores": {
+      "verdict": true,
+      "location": true,
+      "claim_accuracy": 1.0,
+      "all_claims": true,
+      "reference_integrity": true,
+      "evidence_anchor_coverage": 1.0,
+      "healthy_false_alarm": false
+    },
+    "explanation_sha256": "b3d0ac10eb6a309a69144c0876b2483540b4e34e093afe1d05a81a1837e86ee9",
+    "raw_record_sha256": "d88541d39ac922aab78cea59a2d31f0bdd82e42ef98b5016803558fb326d180d",
+    "status": "completed",
+    "started_at": "2026-09-29T03:23:44.603860+00:00",
+    "elapsed_seconds": 43.13019245804753,
+    "usage": {
+      "input_tokens": 41227,
+      "cached_input_tokens": 24704,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 447,
+      "reasoning_output_tokens": 76
+    },
+    "input_sha256": "304fa7f9123cffd7505f5d28ab7790a512a42cf816062fea0ce6e315439cc190",
+    "prompt_sha256": "6fde88f6f81cc73247fd7fbf85238199f2955d20cae91cb9f02fd2eeedf874db",
+    "event_sha256": "bbbbc0e8ea63f13ec798081d66cf95f4e9f8d474e6cdebbb9d6a4225d3c21641",
+    "stderr_sha256": "5fa249887e8f16e280c2fdd92cebadd384677379457ffc578a8205060f50bd72",
+    "tool_audit": [
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'cat case.json'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "case.json"
+        ]
+      },
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'cat references/advanced-composition.md references/review-output.md'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "references/advanced-composition.md",
+          "references/review-output.md"
+        ]
+      }
+    ],
+    "tool_item_count": 2,
+    "read_files": [
+      "case.json",
+      "references/advanced-composition.md",
+      "references/review-output.md"
+    ]
+  },
+  {
+    "case_id": "m10",
+    "condition": "C_v3_routed",
+    "trial": 2,
+    "prediction": {
+      "verdict": "satisfied",
+      "primary_event_id": null,
+      "claims": [
+        {
+          "id": "q1",
+          "assessment": "supported",
+          "evidence_ids": [
+            "e1",
+            "e2",
+            "e3",
+            "e4",
+            "e6"
+          ]
+        },
+        {
+          "id": "q2",
+          "assessment": "supported",
+          "evidence_ids": [
+            "e1",
+            "e2",
+            "e3",
+            "e4",
+            "e5"
+          ]
+        },
+        {
+          "id": "q3",
+          "assessment": "refuted",
+          "evidence_ids": [
+            "e1",
+            "e6"
+          ]
+        }
+      ],
+      "explanation": "",
+      "next_check": ""
+    },
+    "scores": {
+      "verdict": true,
+      "location": true,
+      "claim_accuracy": 1.0,
+      "all_claims": true,
+      "reference_integrity": true,
+      "evidence_anchor_coverage": 1.0,
+      "healthy_false_alarm": false
+    },
+    "explanation_sha256": "3325f3dc1176d7765b1b63346d459d6fd3e80e7258d5cb1d9aa010ee6fa28388",
+    "raw_record_sha256": "270d649f0ea4376899c673da4fb0169bbfe51bab91bd40d29f65bbcfe977d98c",
+    "status": "completed",
+    "started_at": "2026-09-29T03:23:46.308182+00:00",
+    "elapsed_seconds": 39.794461165962275,
+    "usage": {
+      "input_tokens": 35923,
+      "cached_input_tokens": 23168,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 454,
+      "reasoning_output_tokens": 78
+    },
+    "input_sha256": "304fa7f9123cffd7505f5d28ab7790a512a42cf816062fea0ce6e315439cc190",
+    "prompt_sha256": "c16a86e161eb2d209be1fcc21a4a7d4b14b54b143b33d20808f8a6307118d76b",
+    "event_sha256": "fa4894171cae886303d21626faeeef22398eb4df941742d15cf610d5ac336ca8",
+    "stderr_sha256": "dbfeffd601e650c6926b5aed171a7fb099a65aa589bf21a1b0093ae8888b932d",
+    "tool_audit": [
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'cat case.json'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "case.json"
+        ]
+      },
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'cat references/gluing.md'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "references/gluing.md"
+        ]
+      }
+    ],
+    "tool_item_count": 2,
+    "read_files": [
+      "case.json",
+      "references/gluing.md"
+    ]
+  },
+  {
+    "case_id": "m10",
+    "condition": "A_no_skill",
+    "trial": 2,
+    "prediction": {
+      "verdict": "satisfied",
+      "primary_event_id": null,
+      "claims": [
+        {
+          "id": "q1",
+          "assessment": "supported",
+          "evidence_ids": [
+            "e1",
+            "e6"
+          ]
+        },
+        {
+          "id": "q2",
+          "assessment": "supported",
+          "evidence_ids": [
+            "e1",
+            "e2",
+            "e3",
+            "e4",
+            "e5"
+          ]
+        },
+        {
+          "id": "q3",
+          "assessment": "refuted",
+          "evidence_ids": [
+            "e1",
+            "e6"
+          ]
+        }
+      ],
+      "explanation": "",
+      "next_check": ""
+    },
+    "scores": {
+      "verdict": true,
+      "location": true,
+      "claim_accuracy": 1.0,
+      "all_claims": true,
+      "reference_integrity": true,
+      "evidence_anchor_coverage": 1.0,
+      "healthy_false_alarm": false
+    },
+    "explanation_sha256": "e5f414e2fb6a40b8ea6ee6aeb6f54c5f9da98e08189d7d2441a8e7aaaae94aff",
+    "raw_record_sha256": "753f11081dce89ba0331ec51987fd23b8ccb86927fcac174610c09f73c9dca06",
+    "status": "completed",
+    "started_at": "2026-09-29T03:24:20.263896+00:00",
+    "elapsed_seconds": 46.234036958019715,
+    "usage": {
+      "input_tokens": 21667,
+      "cached_input_tokens": 18688,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 517,
+      "reasoning_output_tokens": 199
+    },
+    "input_sha256": "304fa7f9123cffd7505f5d28ab7790a512a42cf816062fea0ce6e315439cc190",
+    "prompt_sha256": "c7eb240e191f547a9821a031918b7974b24a080b2d6769472792ce97e4d1f649",
+    "event_sha256": "c54828578cd4ddbdf81ec93802daa31acc20aa7aa3c63b97800e8b1738d07067",
+    "stderr_sha256": "b22d5fcc78f5c943bd82833859b30e5142664da5155721fedb52060d27adcf58",
+    "tool_audit": [
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'cat case.json'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "case.json"
+        ]
+      }
+    ],
+    "tool_item_count": 1,
+    "read_files": [
+      "case.json"
+    ]
+  },
+  {
+    "case_id": "m08",
+    "condition": "B_v1_routed",
+    "trial": 2,
+    "prediction": {
+      "verdict": "satisfied",
+      "primary_event_id": null,
+      "claims": [
+        {
+          "id": "q1",
+          "assessment": "refuted",
+          "evidence_ids": [
+            "e2",
+            "e3"
+          ]
+        },
+        {
+          "id": "q2",
+          "assessment": "supported",
+          "evidence_ids": [
+            "e1",
+            "e2",
+            "e3",
+            "e4"
+          ]
+        },
+        {
+          "id": "q3",
+          "assessment": "refuted",
+          "evidence_ids": [
+            "e5"
+          ]
+        }
+      ],
+      "explanation": "",
+      "next_check": ""
+    },
+    "scores": {
+      "verdict": true,
+      "location": true,
+      "claim_accuracy": 1.0,
+      "all_claims": true,
+      "reference_integrity": true,
+      "evidence_anchor_coverage": 1.0,
+      "healthy_false_alarm": false
+    },
+    "explanation_sha256": "7d8c6624b0415a63fefc2266c1d2ab19fe368c9ec3e33f596dd52e4b3a3c1f47",
+    "raw_record_sha256": "19240217e34af5555855af71087b871ec49d1a5cc45baef538590e6ebe497004",
+    "status": "completed",
+    "started_at": "2026-09-29T03:24:26.106384+00:00",
+    "elapsed_seconds": 59.580083874985576,
+    "usage": {
+      "input_tokens": 40068,
+      "cached_input_tokens": 33024,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 379,
+      "reasoning_output_tokens": 21
+    },
+    "input_sha256": "a59e51420f6e0b7b1f9d17c08e36afb2206775a1799d3b36aa96d38db677d04f",
+    "prompt_sha256": "6fde88f6f81cc73247fd7fbf85238199f2955d20cae91cb9f02fd2eeedf874db",
+    "event_sha256": "66307f49f298b52c0a69d720090aad2a03ae89891b0760fe7ba3161cf3f7f445",
+    "stderr_sha256": "209ca8f4947f19338c4a4f828d92b91c9942bc5a730ff525fcf0791c5c2d3d2f",
+    "tool_audit": [
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'cat case.json'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "case.json"
+        ]
+      },
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'cat references/advanced-composition.md'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "references/advanced-composition.md"
+        ]
+      }
+    ],
+    "tool_item_count": 2,
+    "read_files": [
+      "case.json",
+      "references/advanced-composition.md"
+    ]
+  },
+  {
+    "case_id": "m08",
+    "condition": "C_v3_routed",
+    "trial": 2,
+    "prediction": {
+      "verdict": "satisfied",
+      "primary_event_id": null,
+      "claims": [
+        {
+          "id": "q1",
+          "assessment": "refuted",
+          "evidence_ids": [
+            "e2",
+            "e3"
+          ]
+        },
+        {
+          "id": "q2",
+          "assessment": "supported",
+          "evidence_ids": [
+            "e1",
+            "e2",
+            "e3",
+            "e4"
+          ]
+        },
+        {
+          "id": "q3",
+          "assessment": "refuted",
+          "evidence_ids": [
+            "e5"
+          ]
+        }
+      ],
+      "explanation": "",
+      "next_check": ""
+    },
+    "scores": {
+      "verdict": true,
+      "location": true,
+      "claim_accuracy": 1.0,
+      "all_claims": true,
+      "reference_integrity": true,
+      "evidence_anchor_coverage": 1.0,
+      "healthy_false_alarm": false
+    },
+    "explanation_sha256": "123b52c8d0c23559cc2334db57e4baa44f1bf68e76b20acc01efde003a2f1924",
+    "raw_record_sha256": "e475549a7dc13b98cde6e1b1b8437767887808ff7a47510a292cf5bf141f25d1",
+    "status": "completed",
+    "started_at": "2026-09-29T03:24:27.737851+00:00",
+    "elapsed_seconds": 51.28985154099064,
+    "usage": {
+      "input_tokens": 37002,
+      "cached_input_tokens": 31360,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 433,
+      "reasoning_output_tokens": 14
+    },
+    "input_sha256": "a59e51420f6e0b7b1f9d17c08e36afb2206775a1799d3b36aa96d38db677d04f",
+    "prompt_sha256": "c16a86e161eb2d209be1fcc21a4a7d4b14b54b143b33d20808f8a6307118d76b",
+    "event_sha256": "89649d8ee1a4a720664afdf7222cbf04d095641cd71f2ff4357bde61865a5bff",
+    "stderr_sha256": "4e1f358709c985657161f99041cdd2ce8b98bd96a5517bda0a200dd657d915d4",
+    "tool_audit": [
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'cat case.json'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "case.json"
+        ]
+      },
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'cat references/evidence.md'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "references/evidence.md"
+        ]
+      },
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'cat references/probability-causality.md'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "references/probability-causality.md"
+        ]
+      }
+    ],
+    "tool_item_count": 3,
+    "read_files": [
+      "case.json",
+      "references/evidence.md",
+      "references/probability-causality.md"
+    ]
+  },
+  {
+    "case_id": "m08",
+    "condition": "A_no_skill",
+    "trial": 2,
+    "prediction": {
+      "verdict": "satisfied",
+      "primary_event_id": null,
+      "claims": [
+        {
+          "id": "q1",
+          "assessment": "refuted",
+          "evidence_ids": [
+            "e2",
+            "e3"
+          ]
+        },
+        {
+          "id": "q2",
+          "assessment": "supported",
+          "evidence_ids": [
+            "e1",
+            "e2",
+            "e3",
+            "e4"
+          ]
+        },
+        {
+          "id": "q3",
+          "assessment": "refuted",
+          "evidence_ids": [
+            "e5"
+          ]
+        }
+      ],
+      "explanation": "",
+      "next_check": ""
+    },
+    "scores": {
+      "verdict": true,
+      "location": true,
+      "claim_accuracy": 1.0,
+      "all_claims": true,
+      "reference_integrity": true,
+      "evidence_anchor_coverage": 1.0,
+      "healthy_false_alarm": false
+    },
+    "explanation_sha256": "c5b80486fc8eba7e80d3edced22ea26f148543a4122a1fe4ab7fb3132b0c3608",
+    "raw_record_sha256": "7d0539417b1a24eaaec07ad92cf52cc2199c59cfa0c7e167c4cd5411c3b6a50c",
+    "status": "completed",
+    "started_at": "2026-09-29T03:25:06.523079+00:00",
+    "elapsed_seconds": 41.91457475000061,
+    "usage": {
+      "input_tokens": 21644,
+      "cached_input_tokens": 18688,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 387,
+      "reasoning_output_tokens": 85
+    },
+    "input_sha256": "a59e51420f6e0b7b1f9d17c08e36afb2206775a1799d3b36aa96d38db677d04f",
+    "prompt_sha256": "c7eb240e191f547a9821a031918b7974b24a080b2d6769472792ce97e4d1f649",
+    "event_sha256": "9f11e89782c4ee6bd9ed5992289118647313d329a0bb2cefc987a43a21f1417e",
+    "stderr_sha256": "8534f5d9910eecdd0674999b48094e53d281b1ea169c5aa6bd33316f142d0b61",
+    "tool_audit": [
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'cat case.json'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "case.json"
+        ]
+      }
+    ],
+    "tool_item_count": 1,
+    "read_files": [
+      "case.json"
+    ]
+  },
+  {
+    "case_id": "m12",
+    "condition": "B_v1_routed",
+    "trial": 2,
+    "prediction": {
+      "verdict": "satisfied",
+      "primary_event_id": null,
+      "claims": [
+        {
+          "id": "q1",
+          "assessment": "supported",
+          "evidence_ids": [
+            "e2",
+            "e3",
+            "e4"
+          ]
+        },
+        {
+          "id": "q2",
+          "assessment": "refuted",
+          "evidence_ids": [
+            "e1",
+            "e4"
+          ]
+        },
+        {
+          "id": "q3",
+          "assessment": "refuted",
+          "evidence_ids": [
+            "e1"
+          ]
+        }
+      ],
+      "explanation": "",
+      "next_check": ""
+    },
+    "scores": {
+      "verdict": true,
+      "location": true,
+      "claim_accuracy": 1.0,
+      "all_claims": true,
+      "reference_integrity": true,
+      "evidence_anchor_coverage": 1.0,
+      "healthy_false_alarm": false
+    },
+    "explanation_sha256": "862bee2d2852d442480a9ca9069ec9f72c462cdec42b410ba9e09448f71564dc",
+    "raw_record_sha256": "1c473b9b62641aa6542adffdd7fbc9a87c3e1fd509bf9ba21bd8cefc926f77db",
+    "status": "completed",
+    "started_at": "2026-09-29T03:25:19.031905+00:00",
+    "elapsed_seconds": 40.64630370802479,
+    "usage": {
+      "input_tokens": 40697,
+      "cached_input_tokens": 33024,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 325,
+      "reasoning_output_tokens": 0
+    },
+    "input_sha256": "759e7055f5802442fbe11a3aaf9c2cac3f555bc4e9eaa620813c53b0b5137061",
+    "prompt_sha256": "6fde88f6f81cc73247fd7fbf85238199f2955d20cae91cb9f02fd2eeedf874db",
+    "event_sha256": "ed504080a5ecde36227e50a4c69c897e465d120d46b154c9b5b7a3f0c13b210d",
+    "stderr_sha256": "f028bb26bc79f584b846a66a0924573391fad1e51087abfd34a716c60256745c",
+    "tool_audit": [
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'cat case.json'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "case.json"
+        ]
+      },
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'cat references/boundary-contracts.md references/review-output.md'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "references/boundary-contracts.md",
+          "references/review-output.md"
+        ]
+      }
+    ],
+    "tool_item_count": 2,
+    "read_files": [
+      "case.json",
+      "references/boundary-contracts.md",
+      "references/review-output.md"
+    ]
+  },
+  {
+    "case_id": "m12",
+    "condition": "C_v3_routed",
+    "trial": 2,
+    "prediction": {
+      "verdict": "satisfied",
+      "primary_event_id": null,
+      "claims": [
+        {
+          "id": "q1",
+          "assessment": "supported",
+          "evidence_ids": [
+            "e2",
+            "e3",
+            "e4"
+          ]
+        },
+        {
+          "id": "q2",
+          "assessment": "refuted",
+          "evidence_ids": [
+            "e1",
+            "e4"
+          ]
+        },
+        {
+          "id": "q3",
+          "assessment": "refuted",
+          "evidence_ids": [
+            "e1"
+          ]
+        }
+      ],
+      "explanation": "",
+      "next_check": ""
+    },
+    "scores": {
+      "verdict": true,
+      "location": true,
+      "claim_accuracy": 1.0,
+      "all_claims": true,
+      "reference_integrity": true,
+      "evidence_anchor_coverage": 1.0,
+      "healthy_false_alarm": false
+    },
+    "explanation_sha256": "db723797deb7959b896494f988a6cf48203a23de8d028007847346d15ce15be4",
+    "raw_record_sha256": "825655524d80c0fd6cc81263cba84440d11d78a6a9da48a5ba9e0f687bfa65b6",
+    "status": "completed",
+    "started_at": "2026-09-29T03:25:25.690185+00:00",
+    "elapsed_seconds": 51.56653295899741,
+    "usage": {
+      "input_tokens": 36554,
+      "cached_input_tokens": 31360,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 338,
+      "reasoning_output_tokens": 0
+    },
+    "input_sha256": "759e7055f5802442fbe11a3aaf9c2cac3f555bc4e9eaa620813c53b0b5137061",
+    "prompt_sha256": "c16a86e161eb2d209be1fcc21a4a7d4b14b54b143b33d20808f8a6307118d76b",
+    "event_sha256": "a3db246eb295d1dda3fa63deedd7cb56ff104ed6041d0e42ce94b15e1711f8bf",
+    "stderr_sha256": "0c3834e87625fc49eeb4d8e14d5f44cc322a3bdafe061840105ec1e689f00f50",
+    "tool_audit": [
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'cat case.json'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "case.json"
+        ]
+      },
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'cat references/contracts.md references/effects.md'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "references/contracts.md",
+          "references/effects.md"
+        ]
+      }
+    ],
+    "tool_item_count": 2,
+    "read_files": [
+      "case.json",
+      "references/contracts.md",
+      "references/effects.md"
+    ]
+  },
+  {
+    "case_id": "m12",
+    "condition": "A_no_skill",
+    "trial": 2,
+    "prediction": {
+      "verdict": "satisfied",
+      "primary_event_id": null,
+      "claims": [
+        {
+          "id": "q1",
+          "assessment": "supported",
+          "evidence_ids": [
+            "e2",
+            "e4"
+          ]
+        },
+        {
+          "id": "q2",
+          "assessment": "refuted",
+          "evidence_ids": [
+            "e1",
+            "e4"
+          ]
+        },
+        {
+          "id": "q3",
+          "assessment": "refuted",
+          "evidence_ids": [
+            "e1"
+          ]
+        }
+      ],
+      "explanation": "",
+      "next_check": ""
+    },
+    "scores": {
+      "verdict": true,
+      "location": true,
+      "claim_accuracy": 1.0,
+      "all_claims": true,
+      "reference_integrity": true,
+      "evidence_anchor_coverage": 1.0,
+      "healthy_false_alarm": false
+    },
+    "explanation_sha256": "3afdc420baa97b0e5411c2d2c7a8b4073bc809ceb1f2266a2a6291836d03ed3e",
+    "raw_record_sha256": "18681c03310d2ffdf964ccf8ea1e33dd7d6bd43c74ee6ef8ebe6ea1d3422effa",
+    "status": "completed",
+    "started_at": "2026-09-29T03:25:48.442879+00:00",
+    "elapsed_seconds": 41.64676870801486,
+    "usage": {
+      "input_tokens": 21609,
+      "cached_input_tokens": 16640,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 333,
+      "reasoning_output_tokens": 43
+    },
+    "input_sha256": "759e7055f5802442fbe11a3aaf9c2cac3f555bc4e9eaa620813c53b0b5137061",
+    "prompt_sha256": "c7eb240e191f547a9821a031918b7974b24a080b2d6769472792ce97e4d1f649",
+    "event_sha256": "3fee55071ff4ac7229175cbf5e575714f285ece6d93d92eb6b1d97f2cec09550",
+    "stderr_sha256": "3ae4ccdea1c2efaa0f9f6b424cadf5f29be28892ac1ea7bb6c5aa62beb804f08",
+    "tool_audit": [
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'cat case.json'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "case.json"
+        ]
+      }
+    ],
+    "tool_item_count": 1,
+    "read_files": [
+      "case.json"
+    ]
+  },
+  {
+    "case_id": "m09",
+    "condition": "A_no_skill",
+    "trial": 2,
+    "prediction": {
+      "verdict": "violation",
+      "primary_event_id": "e5",
+      "claims": [
+        {
+          "id": "q1",
+          "assessment": "supported",
+          "evidence_ids": [
+            "e1",
+            "e6"
+          ]
+        },
+        {
+          "id": "q2",
+          "assessment": "refuted",
+          "evidence_ids": [
+            "e1",
+            "e5"
+          ]
+        },
+        {
+          "id": "q3",
+          "assessment": "refuted",
+          "evidence_ids": [
+            "e1",
+            "e5",
+            "e6"
+          ]
+        }
+      ],
+      "explanation": "",
+      "next_check": ""
+    },
+    "scores": {
+      "verdict": true,
+      "location": true,
+      "claim_accuracy": 1.0,
+      "all_claims": true,
+      "reference_integrity": true,
+      "evidence_anchor_coverage": 1.0,
+      "healthy_false_alarm": null
+    },
+    "explanation_sha256": "5525ef118de9958f08f98f01c43bdaaa62d1d4bc6c0de031cd578266d2dd8c7a",
+    "raw_record_sha256": "a5b8d09976bbd188e7b745f42a67867e8740f5baa3a4e862387bc6d44ab31be7",
+    "status": "completed",
+    "started_at": "2026-09-29T03:25:59.682896+00:00",
+    "elapsed_seconds": 37.80963462498039,
+    "usage": {
+      "input_tokens": 21671,
+      "cached_input_tokens": 8320,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 328,
+      "reasoning_output_tokens": 34
+    },
+    "input_sha256": "4f6dadff3e824b70b6a3ab58614eb3ac56a37bb088cf632d294a30aa942b7129",
+    "prompt_sha256": "c7eb240e191f547a9821a031918b7974b24a080b2d6769472792ce97e4d1f649",
+    "event_sha256": "e9507bdc420b5663e196bcf790100e356fbe87f30b5ee2837a9de668d0690896",
+    "stderr_sha256": "4b15665ec70cbafb973af90d9c1f3b11fcd48f1095c05466c6ab85d2fd0b148c",
+    "tool_audit": [
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'cat case.json'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "case.json"
+        ]
+      }
+    ],
+    "tool_item_count": 1,
+    "read_files": [
+      "case.json"
+    ]
+  },
+  {
+    "case_id": "m09",
+    "condition": "B_v1_routed",
+    "trial": 2,
+    "prediction": {
+      "verdict": "violation",
+      "primary_event_id": "e5",
+      "claims": [
+        {
+          "id": "q1",
+          "assessment": "supported",
+          "evidence_ids": [
+            "e1",
+            "e6"
+          ]
+        },
+        {
+          "id": "q2",
+          "assessment": "refuted",
+          "evidence_ids": [
+            "e1",
+            "e5"
+          ]
+        },
+        {
+          "id": "q3",
+          "assessment": "refuted",
+          "evidence_ids": [
+            "e1",
+            "e5",
+            "e6"
+          ]
+        }
+      ],
+      "explanation": "",
+      "next_check": ""
+    },
+    "scores": {
+      "verdict": true,
+      "location": true,
+      "claim_accuracy": 1.0,
+      "all_claims": true,
+      "reference_integrity": true,
+      "evidence_anchor_coverage": 1.0,
+      "healthy_false_alarm": null
+    },
+    "explanation_sha256": "40e9e97c7d4336be836bbcc1ba9e4d84daf8d59bf988e9764f49047b4db25989",
+    "raw_record_sha256": "e09f12d1929f8f584221c73851d7341b4820c608ed1b697e72ac3d4081595437",
+    "status": "completed",
+    "started_at": "2026-09-29T03:26:17.259280+00:00",
+    "elapsed_seconds": 40.03544966701884,
+    "usage": {
+      "input_tokens": 41232,
+      "cached_input_tokens": 33024,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 364,
+      "reasoning_output_tokens": 0
+    },
+    "input_sha256": "4f6dadff3e824b70b6a3ab58614eb3ac56a37bb088cf632d294a30aa942b7129",
+    "prompt_sha256": "6fde88f6f81cc73247fd7fbf85238199f2955d20cae91cb9f02fd2eeedf874db",
+    "event_sha256": "201ad5897db4a79239939a9cfcb62d971a1f7edfe90a85b268c286b57f904ae8",
+    "stderr_sha256": "175a1cf282757db9929463a86866189253838873be0fe4bba8d21e17444b9cc6",
+    "tool_audit": [
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'cat case.json'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "case.json"
+        ]
+      },
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'cat references/advanced-composition.md references/review-output.md'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "references/advanced-composition.md",
+          "references/review-output.md"
+        ]
+      }
+    ],
+    "tool_item_count": 2,
+    "read_files": [
+      "case.json",
+      "references/advanced-composition.md",
+      "references/review-output.md"
+    ]
+  },
+  {
+    "case_id": "m09",
+    "condition": "C_v3_routed",
+    "trial": 2,
+    "prediction": {
+      "verdict": "violation",
+      "primary_event_id": "e5",
+      "claims": [
+        {
+          "id": "q1",
+          "assessment": "supported",
+          "evidence_ids": [
+            "e1",
+            "e2",
+            "e3",
+            "e4",
+            "e6"
+          ]
+        },
+        {
+          "id": "q2",
+          "assessment": "refuted",
+          "evidence_ids": [
+            "e1",
+            "e5"
+          ]
+        },
+        {
+          "id": "q3",
+          "assessment": "refuted",
+          "evidence_ids": [
+            "e1",
+            "e5",
+            "e6"
+          ]
+        }
+      ],
+      "explanation": "",
+      "next_check": ""
+    },
+    "scores": {
+      "verdict": true,
+      "location": true,
+      "claim_accuracy": 1.0,
+      "all_claims": true,
+      "reference_integrity": true,
+      "evidence_anchor_coverage": 1.0,
+      "healthy_false_alarm": null
+    },
+    "explanation_sha256": "349394bec172c801d015a6ef6d9f0e3a820555797ebb427f96e0a8cd3682e63c",
+    "raw_record_sha256": "7219700d531c5e297fa24c440036400be10a4c3501575e5362fb411bb872c748",
+    "status": "completed",
+    "started_at": "2026-09-29T03:26:30.093855+00:00",
+    "elapsed_seconds": 43.78294837498106,
+    "usage": {
+      "input_tokens": 35919,
+      "cached_input_tokens": 19584,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 366,
+      "reasoning_output_tokens": 0
+    },
+    "input_sha256": "4f6dadff3e824b70b6a3ab58614eb3ac56a37bb088cf632d294a30aa942b7129",
+    "prompt_sha256": "c16a86e161eb2d209be1fcc21a4a7d4b14b54b143b33d20808f8a6307118d76b",
+    "event_sha256": "387c8e471f267c8c9eed9e4120c650d7c53ef20f5d54450a38f669d18b6e9445",
+    "stderr_sha256": "880048dbcc93642c9258ccb9691094c3282b93ad04e133b1536f8da0915583fe",
+    "tool_audit": [
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'cat case.json'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "case.json"
+        ]
+      },
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'cat references/gluing.md'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "references/gluing.md"
+        ]
+      }
+    ],
+    "tool_item_count": 2,
+    "read_files": [
+      "case.json",
+      "references/gluing.md"
+    ]
+  }
+]

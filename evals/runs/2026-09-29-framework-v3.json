@@ -1,0 +1,31 @@
+{
+  "kind": "deterministic_framework_regression_not_model_eval",
+  "recorded_at": "2026-09-29T03:11:56.869320+00:00",
+  "python": "3.12.14",
+  "platform": "Darwin",
+  "packages": {
+    "langgraph": "1.0.3",
+    "langgraph-checkpoint": "3.0.1",
+    "langchain-core": "1.0.4"
+  },
+  "skill_sha256": "eebcfc93239682deb63dcdfaa9c9cea292841930e363de1d63fb49f9c3fcb7a5",
+  "skill_files_sha256": {
+    "SKILL.md": "eebcfc93239682deb63dcdfaa9c9cea292841930e363de1d63fb49f9c3fcb7a5",
+    "agents/openai.yaml": "990ce681f0311731177c553baeef4349852ce30d64a55bfc2f2e9fcc59377b7d",
+    "references/advanced-composition.md": "c0d29e4decd7e496ec14c24bb0596080f12d985ed9da7035aa0b1a08f1f3675e",
+    "references/boundary-contracts.md": "a52a3e7aebe0e3ae5a7b5aae730c9d9ff9d9a19af5474f11296ea3c60f4e441e",
+    "references/review-output.md": "c25d751adadc9a0c435c2a75e5afc0512bf0447f5dac082524cf739cbabdd588"
+  },
+  "skill_tree_sha256": "8f49e908a5db2820df4c385544a0a295c469c5955c146a594190a0eb33c5ec52",
+  "fixture_sha256": {
+    "evals/cases/test_checkpoint_reads.py": "a18360fa54f356f3cbec4bff0ad0ad73bca76e6f18b0c337c77734b2f9384a5a",
+    "evals/cases/test_interrupt_effects.py": "35251f9d92831547446708d542964d9ba0ac2374160669f39e30bd5335bf1af6",
+    "evals/cases/test_subgraph_boundary.py": "c791313c3115334984de21e3f704f6d416bdf638d07981810283a11272090023"
+  },
+  "tests_run": 10,
+  "failures": 0,
+  "errors": 0,
+  "skipped": 0,
+  "passed": true,
+  "output": "test_guard_does_not_turn_existing_checkpoints_into_misses (evals.cases.test_checkpoint_reads.CheckpointReadTests.test_guard_does_not_turn_existing_checkpoints_into_misses) ... ok\ntest_guarded_async_misses_preserve_all_storage (evals.cases.test_checkpoint_reads.CheckpointReadTests.test_guarded_async_misses_preserve_all_storage) ... ok\ntest_guarded_sync_misses_preserve_all_storage (evals.cases.test_checkpoint_reads.CheckpointReadTests.test_guarded_sync_misses_preserve_all_storage) ... ok\ntest_reported_read_misses_create_ghost_threads (evals.cases.test_checkpoint_reads.CheckpointReadTests.test_reported_read_misses_create_ghost_threads) ... ok\ntest_idempotency_does_not_suppress_new_operations (evals.cases.test_interrupt_effects.InterruptEffectTests.test_idempotency_does_not_suppress_new_operations) ... ok\ntest_operation_identity_prevents_duplicate_effect_in_this_fixture (evals.cases.test_interrupt_effects.InterruptEffectTests.test_operation_identity_prevents_duplicate_effect_in_this_fixture) ... ok\ntest_resume_reexecutes_the_pre_interrupt_effect (evals.cases.test_interrupt_effects.InterruptEffectTests.test_resume_reexecutes_the_pre_interrupt_effect) ... ok\ntest_broken_version_reproduces_reported_error (evals.cases.test_subgraph_boundary.SubgraphBoundaryTests.test_broken_version_reproduces_reported_error) ... ok\ntest_repair_keeps_context_and_results_on_reuse (evals.cases.test_subgraph_boundary.SubgraphBoundaryTests.test_repair_keeps_context_and_results_on_reuse) ... ok\ntest_repair_preserves_both_parallel_boundaries (evals.cases.test_subgraph_boundary.SubgraphBoundaryTests.test_repair_preserves_both_parallel_boundaries) ... ok\n\n----------------------------------------------------------------------\nRan 10 tests in 0.226s\n\nOK\n"
+}

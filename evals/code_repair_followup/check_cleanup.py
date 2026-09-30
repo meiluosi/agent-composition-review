@@ -37,5 +37,35 @@ async def check(path):
         await asyncio.gather(group,return_exceptions=True)
 
 
+async def check_self_cancel(path):
+    spec=importlib.util.spec_from_file_location('self_cancel_candidate',path)
+    module=importlib.util.module_from_spec(spec);spec.loader.exec_module(module)
+    cleaning=asyncio.Event();release=asyncio.Event();cleaned=asyncio.Event()
+    async def worker():
+        asyncio.current_task().cancel()
+        try:await asyncio.sleep(0)
+        finally:
+            cleaning.set();await release.wait();cleaned.set()
+    group=asyncio.create_task(module.run_group([worker]))
+    try:
+        await asyncio.wait_for(cleaning.wait(),1)
+        group.cancel()  # One parent cancellation; the child was already cancelling itself.
+        for _ in range(5):await asyncio.sleep(0)
+        early_exit=group.done();release.set()
+        try:await asyncio.wait_for(group,1);outcome='normal_return'
+        except BaseException as error:outcome=type(error).__name__
+        return {'passed':not early_exit and cleaned.is_set() and outcome=='CancelledError',
+                'returned_before_cleanup_release':early_exit,'cleanup_finished':cleaned.is_set(),'outcome':outcome}
+    finally:
+        release.set()
+        if not group.done():group.cancel()
+        await asyncio.gather(group,return_exceptions=True)
+
+
+async def check_all(path):
+    results={'failure_then_parent_cancel':await check(path),'self_cancel_then_parent_cancel':await check_self_cancel(path)}
+    return {'passed':all(r['passed'] for r in results.values()),'checks':results}
+
+
 if __name__=='__main__':
-    print(json.dumps(asyncio.run(check(Path(sys.argv[1]))),indent=2))
+    print(json.dumps(asyncio.run(check_all(Path(sys.argv[1]))),indent=2))

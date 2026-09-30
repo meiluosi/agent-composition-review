@@ -6,7 +6,7 @@ from pathlib import Path
 import subprocess
 import sys
 from run_code_repair_eval import ROOT,RUN,ARMS,digest,verify,write
-from evals.code_repair_followup.check_cleanup import check
+from evals.code_repair_followup.check_cleanup import check_all as check
 from evals.code_repair_followup.check_transaction import check as check_transaction
 
 
@@ -45,7 +45,7 @@ def main():
         normal[arm]={'n':len(rs),'behavior_pass':sum(r['status']=='completed' and r['acceptance']['passed'] for r in rs),
                      'unchanged':sum(not r['source_changed'] for r in rs)}
     result={'kind':'post_freeze_development_probe','discovery':'After first c05 and c04 repairs; before original 36 repairs finished',
-            'scope':'Cancellation during cleanup; busy commit followed by connection reuse. Separate exploratory probes.',
+            'scope':'Parent cancellation during failure cleanup or child self-cancellation cleanup; busy commit followed by connection reuse. Separate exploratory probes.',
             'normal_label_correction':'c04 and c06 are not valid normal controls; original labels and scores remain untouched.',
             'script_sha256':{n:digest((ROOT/'evals/code_repair_followup'/n).read_bytes()) for n in ('check_cleanup.py','check_transaction.py')},
             'frozen_references':{'async_group':asyncio.run(check(ROOT/'evals/code_repair/tasks/async_group/healthy.py')),

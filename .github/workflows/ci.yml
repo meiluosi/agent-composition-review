@@ -41,6 +41,8 @@ jobs:
         run: python -m unittest evals.replay.test_runtime evals.replay.test_protocol -v
       - name: Check autonomous code repair fixtures and evaluation isolation
         run: python -m unittest evals.code_repair.test_fixtures evals.code_repair.test_protocol -v
+      - name: Preserve the post-freeze asynchronous cleanup counterexample
+        run: python -m unittest evals.code_repair_followup.test_cleanup -v
       - name: Verify published scores and redraw benchmark figures (no model calls)
         run: python scripts/plot_external_eval.py
       - name: Verify development ablation scores and figures (no model calls)

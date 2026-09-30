@@ -2,7 +2,7 @@
 
 一个以组合思想为指导的 Agent 架构诊断 Skill。沿数据流检查类型、语义契约、状态与不变量，把异常转化为有证据的根因判断、最小修复和可执行验证。
 
-**当前状态：`0.1.0-dev`，可运行的发布草案。** 项目独立维护于 [meiluosi/agent-composition-review](https://github.com/meiluosi/agent-composition-review)，当前为私有仓库。已有公开问题复现和独立模型试用；已完成首轮外部数据对照，实际结果与限制见下方评测区。自动检查状态见 [GitHub Actions](https://github.com/meiluosi/agent-composition-review/actions)。项目许可证尚未选择，不宣称已经完成开源发布。
+**当前状态：`0.1.0-dev`，可运行的发布草案。** 项目独立维护于 [meiluosi/agent-composition-review](https://github.com/meiluosi/agent-composition-review)，当前为私有仓库。已有公开问题复现和独立模型试用；已完成首轮外部数据对照，实际结果与限制见下方评测区。最新一轮已完成 48 次配置修复对照，三组均通过全部验收，v4 保留候选；详见下方独立结果。自动检查状态见 [GitHub Actions](https://github.com/meiluosi/agent-composition-review/actions)。项目许可证尚未选择，不宣称已经完成开源发布。
 
 ## 它适合什么
 
@@ -50,7 +50,7 @@ python3 scripts/build_skill.py --source evals/iterations/v3-candidate
 
 输出为 `dist/agent-composition-review-candidate.zip`，包含九个运行文件，不包含评测案例、标签和维护文档。默认打包命令仍生成当前主版本。
 
-下一轮 [v4 执行候选](candidates/v4/agent-composition-review/SKILL.md) 增加动作/状态结构、测试生成和回放检查，仍在开发。目录职责与官方依据见 [组织说明](docs/skill-organization.md)。
+下一轮 [v4 执行候选](candidates/v4/agent-composition-review/SKILL.md) 增加动作/状态结构、测试生成和回放检查，仍在开发。目录职责与官方依据见 [组织说明](docs/skill-organization.md)，可运行流程和 336 条工具回归见 [执行说明](docs/executable-workflow.md)。
 
 ## 一个已复现的例子
 
@@ -160,6 +160,34 @@ python3.12 -m venv .venv
 三条线重叠反映相同成绩；这不是训练曲线。只有六个开发家族，经验区间退化不代表未来确定性。实际读取参考的运行数为 v1 23/24、v3 22/24；程序检查器本轮未被模型调用，其作用不能由该表推出。
 
 [实验报告](evals/iterations/mechanisms-2026-09-29/REPORT.md) · [逐次预测](evals/iterations/mechanisms-2026-09-29/predictions.json) · [机制复盘与版本决定](docs/mechanism-findings.md) · [复现与边界](docs/mechanism-evaluation.md)
+
+## v4：48 次执行修复对照
+
+新增动作/状态结构、组合义务、有限输入域生成及轨迹验收，见 [执行工作流](docs/executable-workflow.md)。先完成 336 条确定性工具回归，再对模型给出的每份配置实际执行 57 个验收输入。
+
+本轮完成 **48/48 次有效模型运行**：同一自建检索系统的 8 个开发任务，三组各重复两次。三组都具有相同结构模型、代码和回放工具；“无 Skill”在此指无额外 Skill 指导。任务是有限配置修复，不是任意代码修改或自动建模。
+
+| 条件 | 全部验收通过 | 最小改动通过 | 正常例不必要改动 | 输入 token |
+| --- | ---: | ---: | ---: | ---: |
+| 无额外 Skill 指导 | 16/16 | 16/16 | 0/4 | 878,508 |
+| v3 指导 | 16/16 | 16/16 | 0/4 | 1,148,308 |
+| v4 指导 | 16/16 | 16/16 | 0/4 | 1,127,561 |
+
+![配置修复验收与上下文成本](docs/assets/replay-v4-overview.png)
+
+**未观察到额外指导的增量收益，v4 继续保留为候选。** v4 输入比无额外指导组多 28.3%；不能由此评价工具本身是否有用，因为三组都拿到了工具。主包及个人安装未升级。三组均为满分，存在天花板；任务配对区间 [0,0] 不能证明未来差异为零。
+
+![固定开发任务顺序的累计验收率](docs/assets/replay-v4-cumulative.png)
+
+这不是训练曲线；不与前轮外部归因成绩拼接。只有一个系统的八个变体，不能宣称真实系统泛化提升或自然触发已验证。
+
+[实验报告](evals/iterations/replay-2026-09-30/REPORT.md) · [逐次预测与验收](evals/iterations/replay-2026-09-30/predictions.json) · [复盘与版本决定](docs/replay-findings.md) · [复现说明](docs/replay-evaluation.md)
+
+显式打包 v4：
+
+```sh
+python3 scripts/build_skill.py --source candidates/v4/agent-composition-review --output dist/agent-composition-review-v4.zip
+```
 
 ## 仓库结构
 

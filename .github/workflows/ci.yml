@@ -45,6 +45,10 @@ jobs:
         run: python scripts/analyze_ablation.py publish
       - name: Verify paired mechanism scores and figures (no model calls)
         run: python scripts/analyze_mechanisms.py publish
+      - name: Verify executed contract regression summary
+        run: python scripts/verify_contract_regression.py
+      - name: Verify configuration repairs and redraw figures (no model calls)
+        run: python scripts/analyze_replay.py publish
       - name: Package runtime skill
         run: python scripts/build_skill.py
       - name: Package unpromoted modular candidate separately

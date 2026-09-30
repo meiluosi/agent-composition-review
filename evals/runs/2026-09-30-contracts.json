@@ -1,0 +1,65 @@
+{
+  "kind": "deterministic_adapter_mutation_regression_not_model_evaluation",
+  "model_sha256": "effeaaeffce66456e6e3816deedbbce76896713d9cc59607c2e8bc857398359a",
+  "limitations": [
+    "Authored synthetic local system and fake services, not production traces.",
+    "Contracts and mutants authored together; not independent validation of skill capability."
+  ],
+  "generated_inputs": 48,
+  "records": [
+    {
+      "configuration": "healthy",
+      "inputs": 48,
+      "satisfied": 48,
+      "violation": 0,
+      "insufficient": 0
+    },
+    {
+      "configuration": "cache_scope",
+      "inputs": 48,
+      "satisfied": 24,
+      "violation": 24,
+      "insufficient": 0
+    },
+    {
+      "configuration": "error_mode",
+      "inputs": 48,
+      "satisfied": 32,
+      "violation": 16,
+      "insufficient": 0
+    },
+    {
+      "configuration": "unit_mode",
+      "inputs": 48,
+      "satisfied": 40,
+      "violation": 8,
+      "insufficient": 0
+    },
+    {
+      "configuration": "sample_mode",
+      "inputs": 48,
+      "satisfied": 24,
+      "violation": 24,
+      "insufficient": 0
+    },
+    {
+      "configuration": "lineage_mode",
+      "inputs": 48,
+      "satisfied": 32,
+      "violation": 16,
+      "insufficient": 0
+    },
+    {
+      "configuration": "retry_accounting",
+      "inputs": 48,
+      "satisfied": 24,
+      "violation": 24,
+      "insufficient": 0
+    }
+  ],
+  "source_sha256": {
+    "candidates/v4/agent-composition-review/scripts/composition.py": "1eb7a2a566b776789344246981386c2259e877b5dc299588a2d925a34588bd9e",
+    "evals/replay/system.py": "84062b651d64a7f147c32f9930f28b5594ec221b935a4b2cfc9b2c277811d422",
+    "evals/replay/make_model.py": "7475aadc81e682bbfe2973d84c4f9c684c026e5a7c1f1a827d7d6904051a5fbe"
+  }
+}

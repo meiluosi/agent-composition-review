@@ -13,10 +13,8 @@ from evals.replay.system import OPTIONS, run
 from evals.replay.defaults import DEFAULT
 
 
-def main():
-    parser=argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('--output',type=Path,default=ROOT/'evals/runs/replay-contracts.json')
-    args=parser.parse_args(); m=model(); scenarios=c.generate(m)['cases']; records=[]
+def run_suite():
+    m=model(); scenarios=c.generate(m)['cases']; records=[]
     configurations={'healthy':DEFAULT}
     configurations.update({key:{**DEFAULT,key:next(v for v in vals if v!=DEFAULT[key])} for key,vals in OPTIONS.items()})
     for name,config in configurations.items():
@@ -30,9 +28,16 @@ def main():
             'model_sha256':c.digest(m),'plan':c.plan(m),'probe_generation':c.generate(m),
             'records':records,'limitations':['Authored synthetic local system and fake services, not production traces.',
                                             'Contracts and mutants authored together; not independent validation of skill capability.']}
+    return result
+
+
+def main():
+    parser=argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--output',type=Path,default=ROOT/'evals/runs/private/replay-contracts.json')
+    args=parser.parse_args(); result=run_suite()
     args.output.parent.mkdir(parents=True,exist_ok=True)
     args.output.write_text(json.dumps(result,ensure_ascii=False,indent=2)+'\n')
-    print(json.dumps([{k:v for k,v in r.items() if k!='checks'} for r in records],indent=2))
+    print(json.dumps([{k:v for k,v in r.items() if k!='checks'} for r in result['records']],indent=2))
 
 
 if __name__=='__main__':main()

@@ -1,0 +1,5701 @@
+[
+  {
+    "case_id": "r01",
+    "condition": "B_v3",
+    "trial": 1,
+    "status": "completed",
+    "prediction": {
+      "configuration": {
+        "cache_scope": "tenant_query",
+        "error_mode": "tagged",
+        "unit_mode": "convert",
+        "sample_mode": "fresh",
+        "lineage_mode": "preserve",
+        "retry_accounting": "all_calls"
+      },
+      "initial_verdict": "violation",
+      "explanation": "仅修改两个必要字段：缓存按租户与查询隔离，避免跨租户命中及状态污染；计费包含失败重试的全部实际调用。其他有效配置保留。实际回放原配置有36/48个输入失败，修复后48/48全部通过行为契约检查。",
+      "verified": true
+    },
+    "elapsed_seconds": 59.67237829102669,
+    "exit_code": 0,
+    "timed_out": false,
+    "usage": {
+      "input_tokens": 87743,
+      "cached_input_tokens": 59904,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 435,
+      "reasoning_output_tokens": 0
+    },
+    "model_requested": "gpt-6-astra",
+    "reasoning_effort": "high",
+    "cli_version": "codex-cli 0.158.0-alpha.2.1",
+    "input_sha256": "8afbed60f03f0ed2430bcab88d86838264b94e1a7661784c93bf23494d77b269",
+    "prompt_sha256": "f5e396eb3141fa62dbefc40c31e454789c188151303a4266560d7316e27912a6",
+    "event_sha256": "a00dea6728deda6aef29e370b35b6dcc5115114fd6d45f4614f449bdd91bb030",
+    "stderr_sha256": "f9257ba0d44744c831969b08ff0966027ad19e309ca43a57b780a076ecb63bd4",
+    "tool_audit": [
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc ls",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [],
+        "replay": false
+      },
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'cat task.json model.json initial_trace.json system.py replay.py composition.py'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "task.json",
+          "model.json",
+          "initial_trace.json",
+          "system.py",
+          "replay.py",
+          "composition.py"
+        ],
+        "replay": false
+      },
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'cat initial_trace.json'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "initial_trace.json"
+        ],
+        "replay": false
+      },
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'cat SKILL.md references/effects.md references/probability-causality.md'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "SKILL.md",
+          "references/effects.md",
+          "references/probability-causality.md"
+        ],
+        "replay": false
+      },
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'python3 -B replay.py'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "task.json",
+          "model.json",
+          "system.py",
+          "composition.py",
+          "replay.py"
+        ],
+        "replay": true
+      },
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc \"python3 -B replay.py '{\\\"cache_scope\\\":\\\"tenant_query\\\",\\\"error_mode\\\":\\\"tagged\\\",\\\"unit_mode\\\":\\\"convert\\\",\\\"sample_mode\\\":\\\"fresh\\\",\\\"lineage_mode\\\":\\\"preserve\\\",\\\"retry_accounting\\\":\\\"all_calls\\\"}'\"",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "task.json",
+          "model.json",
+          "system.py",
+          "composition.py",
+          "replay.py"
+        ],
+        "replay": true
+      }
+    ],
+    "read_files": [
+      "SKILL.md",
+      "composition.py",
+      "initial_trace.json",
+      "model.json",
+      "references/effects.md",
+      "references/probability-causality.md",
+      "replay.py",
+      "system.py",
+      "task.json"
+    ],
+    "successful_replay_calls": 2,
+    "score": {
+      "behavior_pass": true,
+      "minimal_repair": true,
+      "acceptance": {
+        "all_pass": true,
+        "passed": 57,
+        "total": 57,
+        "failures": []
+      },
+      "edits": 2,
+      "minimum_edits": 2,
+      "initial_verdict_correct": true,
+      "healthy_unnecessary_change": null,
+      "verification_claim_supported": true
+    }
+  },
+  {
+    "case_id": "r01",
+    "condition": "C_v4",
+    "trial": 1,
+    "status": "completed",
+    "prediction": {
+      "configuration": {
+        "cache_scope": "tenant_query",
+        "error_mode": "tagged",
+        "unit_mode": "convert",
+        "sample_mode": "fresh",
+        "lineage_mode": "preserve",
+        "retry_accounting": "all_calls"
+      },
+      "initial_verdict": "violation",
+      "explanation": "原配置回放48组输入，36组失败。仅修改两个必要字段：缓存按租户与查询隔离，防止跨租户命中及状态污染；所有实际尝试均计费，修复重试漏计。其余有效配置保留。修复后实际回放48/48通过，无失败契约。",
+      "verified": true
+    },
+    "elapsed_seconds": 50.59094483300578,
+    "exit_code": 0,
+    "timed_out": false,
+    "usage": {
+      "input_tokens": 89066,
+      "cached_input_tokens": 60672,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 436,
+      "reasoning_output_tokens": 0
+    },
+    "model_requested": "gpt-6-astra",
+    "reasoning_effort": "high",
+    "cli_version": "codex-cli 0.158.0-alpha.2.1",
+    "input_sha256": "8afbed60f03f0ed2430bcab88d86838264b94e1a7661784c93bf23494d77b269",
+    "prompt_sha256": "4d58fda654427490b3a0e3b704f952971b1b9ba9e5bbef23058c5bfb5223d452",
+    "event_sha256": "cc274918621646298ff3a2e2963ea4bf2aec27f8656450cb8938aef21b2b698e",
+    "stderr_sha256": "3d05bebc74a4b93442f2d8789ba8d6f537d3ab40dd5df09661612285a97fc46b",
+    "tool_audit": [
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc ls",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [],
+        "replay": false
+      },
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'cat task.json model.json system.py initial_trace.json replay.py composition.py'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "task.json",
+          "model.json",
+          "system.py",
+          "initial_trace.json",
+          "replay.py",
+          "composition.py"
+        ],
+        "replay": false
+      },
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'cat initial_trace.json'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "initial_trace.json"
+        ],
+        "replay": false
+      },
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'cat SKILL.md references/executable-contracts.md'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "SKILL.md",
+          "references/executable-contracts.md"
+        ],
+        "replay": false
+      },
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'python3 -B replay.py'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "task.json",
+          "model.json",
+          "system.py",
+          "composition.py",
+          "replay.py"
+        ],
+        "replay": true
+      },
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc \"python3 -B replay.py '{\\\"cache_scope\\\":\\\"tenant_query\\\",\\\"error_mode\\\":\\\"tagged\\\",\\\"unit_mode\\\":\\\"convert\\\",\\\"sample_mode\\\":\\\"fresh\\\",\\\"lineage_mode\\\":\\\"preserve\\\",\\\"retry_accounting\\\":\\\"all_calls\\\"}'\"",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "task.json",
+          "model.json",
+          "system.py",
+          "composition.py",
+          "replay.py"
+        ],
+        "replay": true
+      }
+    ],
+    "read_files": [
+      "SKILL.md",
+      "composition.py",
+      "initial_trace.json",
+      "model.json",
+      "references/executable-contracts.md",
+      "replay.py",
+      "system.py",
+      "task.json"
+    ],
+    "successful_replay_calls": 2,
+    "score": {
+      "behavior_pass": true,
+      "minimal_repair": true,
+      "acceptance": {
+        "all_pass": true,
+        "passed": 57,
+        "total": 57,
+        "failures": []
+      },
+      "edits": 2,
+      "minimum_edits": 2,
+      "initial_verdict_correct": true,
+      "healthy_unnecessary_change": null,
+      "verification_claim_supported": true
+    }
+  },
+  {
+    "case_id": "r01",
+    "condition": "A_no_skill",
+    "trial": 1,
+    "status": "completed",
+    "prediction": {
+      "configuration": {
+        "cache_scope": "tenant_query",
+        "error_mode": "tagged",
+        "unit_mode": "convert",
+        "sample_mode": "fresh",
+        "lineage_mode": "preserve",
+        "retry_accounting": "all_calls"
+      },
+      "initial_verdict": "violation",
+      "explanation": "原配置回放48个声明输入，36个失败。仅修改两个必要字段：缓存按租户与查询隔离，所有实际尝试均计费；其余有效选项保持不变。修改后实际回放48个输入全部通过，无失败契约。",
+      "verified": true
+    },
+    "elapsed_seconds": 49.18241220799973,
+    "exit_code": 0,
+    "timed_out": false,
+    "usage": {
+      "input_tokens": 66382,
+      "cached_input_tokens": 46464,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 424,
+      "reasoning_output_tokens": 34
+    },
+    "model_requested": "gpt-6-astra",
+    "reasoning_effort": "high",
+    "cli_version": "codex-cli 0.158.0-alpha.2.1",
+    "input_sha256": "8afbed60f03f0ed2430bcab88d86838264b94e1a7661784c93bf23494d77b269",
+    "prompt_sha256": "882c2741b24961d22fad8e1a8e1ca3be21ce7e0fdfd6db045780ae28795706c7",
+    "event_sha256": "ed94c6d394c53acef47425ff52d167d5d4b969902558944d004e4aff8fb95d6b",
+    "stderr_sha256": "94fa1f3f6396c7b2fc3a280d1d8c95f83e65f3a36844a68171bf20c5ede4b258",
+    "tool_audit": [
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc ls",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [],
+        "replay": false
+      },
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'cat task.json model.json initial_trace.json'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "task.json",
+          "model.json",
+          "initial_trace.json"
+        ],
+        "replay": false
+      },
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'cat system.py replay.py'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "system.py",
+          "replay.py"
+        ],
+        "replay": false
+      },
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'python3 -B replay.py'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "task.json",
+          "model.json",
+          "system.py",
+          "composition.py",
+          "replay.py"
+        ],
+        "replay": true
+      },
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc \"python3 -B replay.py '{\\\"cache_scope\\\":\\\"tenant_query\\\",\\\"error_mode\\\":\\\"tagged\\\",\\\"unit_mode\\\":\\\"convert\\\",\\\"sample_mode\\\":\\\"fresh\\\",\\\"lineage_mode\\\":\\\"preserve\\\",\\\"retry_accounting\\\":\\\"all_calls\\\"}'\"",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "task.json",
+          "model.json",
+          "system.py",
+          "composition.py",
+          "replay.py"
+        ],
+        "replay": true
+      }
+    ],
+    "read_files": [
+      "composition.py",
+      "initial_trace.json",
+      "model.json",
+      "replay.py",
+      "system.py",
+      "task.json"
+    ],
+    "successful_replay_calls": 2,
+    "score": {
+      "behavior_pass": true,
+      "minimal_repair": true,
+      "acceptance": {
+        "all_pass": true,
+        "passed": 57,
+        "total": 57,
+        "failures": []
+      },
+      "edits": 2,
+      "minimum_edits": 2,
+      "initial_verdict_correct": true,
+      "healthy_unnecessary_change": null,
+      "verification_claim_supported": true
+    }
+  },
+  {
+    "case_id": "r05",
+    "condition": "A_no_skill",
+    "trial": 1,
+    "status": "completed",
+    "prediction": {
+      "configuration": {
+        "cache_scope": "tenant_query",
+        "error_mode": "tagged",
+        "unit_mode": "convert",
+        "sample_mode": "fresh",
+        "lineage_mode": "preserve",
+        "retry_accounting": "all_calls"
+      },
+      "initial_verdict": "violation",
+      "explanation": "仅修改三个必要字段，分别修复跨租户缓存、失败被转为空结果、来源 ID 丢失；其余有效配置保持不变。实际回放原配置有 40/48 个输入失败，修复后全部 48 个声明输入通过行为契约检查。",
+      "verified": true
+    },
+    "elapsed_seconds": 58.536972792004235,
+    "exit_code": 0,
+    "timed_out": false,
+    "usage": {
+      "input_tokens": 53501,
+      "cached_input_tokens": 31360,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 426,
+      "reasoning_output_tokens": 33
+    },
+    "model_requested": "gpt-6-astra",
+    "reasoning_effort": "high",
+    "cli_version": "codex-cli 0.158.0-alpha.2.1",
+    "input_sha256": "f7c84f0b74e05586ad527e42125a413e978a3562153bcbd6b4be6d6a8060d091",
+    "prompt_sha256": "882c2741b24961d22fad8e1a8e1ca3be21ce7e0fdfd6db045780ae28795706c7",
+    "event_sha256": "02b0b656fd14d059cf659fe7aa8a4a22cb7a5a6e38e9440971634e469b147d5c",
+    "stderr_sha256": "f132cba9cd7521811a85471c37a3682460452c1b43f91114c163b26a1ace39bf",
+    "tool_audit": [
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'cat task.json model.json initial_trace.json'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "task.json",
+          "model.json",
+          "initial_trace.json"
+        ],
+        "replay": false
+      },
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'cat system.py replay.py composition.py'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "system.py",
+          "replay.py",
+          "composition.py"
+        ],
+        "replay": false
+      },
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'python3 -B replay.py'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "task.json",
+          "model.json",
+          "system.py",
+          "composition.py",
+          "replay.py"
+        ],
+        "replay": true
+      },
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc \"python3 -B replay.py '{\\\"cache_scope\\\":\\\"tenant_query\\\",\\\"error_mode\\\":\\\"tagged\\\",\\\"unit_mode\\\":\\\"convert\\\",\\\"sample_mode\\\":\\\"fresh\\\",\\\"lineage_mode\\\":\\\"preserve\\\",\\\"retry_accounting\\\":\\\"all_calls\\\"}'\"",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "task.json",
+          "model.json",
+          "system.py",
+          "composition.py",
+          "replay.py"
+        ],
+        "replay": true
+      }
+    ],
+    "read_files": [
+      "composition.py",
+      "initial_trace.json",
+      "model.json",
+      "replay.py",
+      "system.py",
+      "task.json"
+    ],
+    "successful_replay_calls": 2,
+    "score": {
+      "behavior_pass": true,
+      "minimal_repair": true,
+      "acceptance": {
+        "all_pass": true,
+        "passed": 57,
+        "total": 57,
+        "failures": []
+      },
+      "edits": 3,
+      "minimum_edits": 3,
+      "initial_verdict_correct": true,
+      "healthy_unnecessary_change": null,
+      "verification_claim_supported": true
+    }
+  },
+  {
+    "case_id": "r05",
+    "condition": "B_v3",
+    "trial": 1,
+    "status": "completed",
+    "prediction": {
+      "configuration": {
+        "cache_scope": "tenant_query",
+        "error_mode": "tagged",
+        "unit_mode": "convert",
+        "sample_mode": "fresh",
+        "lineage_mode": "preserve",
+        "retry_accounting": "all_calls"
+      },
+      "initial_verdict": "violation",
+      "explanation": "仅修改三个必要字段：缓存按租户隔离、保留失败状态、保留来源 ID；其余有效配置保持不变。原配置回放 48 个声明输入，40 个失败；修复后实际回放 48/48 通过，无失败契约。",
+      "verified": true
+    },
+    "elapsed_seconds": 52.063997208024375,
+    "exit_code": 0,
+    "timed_out": false,
+    "usage": {
+      "input_tokens": 85861,
+      "cached_input_tokens": 59008,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 440,
+      "reasoning_output_tokens": 0
+    },
+    "model_requested": "gpt-6-astra",
+    "reasoning_effort": "high",
+    "cli_version": "codex-cli 0.158.0-alpha.2.1",
+    "input_sha256": "f7c84f0b74e05586ad527e42125a413e978a3562153bcbd6b4be6d6a8060d091",
+    "prompt_sha256": "f5e396eb3141fa62dbefc40c31e454789c188151303a4266560d7316e27912a6",
+    "event_sha256": "b58d321e61da1fe610d2a1e2e4cc943833a7f25c530e1efedd92a41b72ba8e17",
+    "stderr_sha256": "bc1c678eba39d28ab653335844c54d2eaf913ad4926894c4fbf91f9691aae2fe",
+    "tool_audit": [
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc ls",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [],
+        "replay": false
+      },
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'cat task.json model.json initial_trace.json system.py replay.py composition.py'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "task.json",
+          "model.json",
+          "initial_trace.json",
+          "system.py",
+          "replay.py",
+          "composition.py"
+        ],
+        "replay": false
+      },
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc \"sed -n '160,300p' initial_trace.json\"",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "initial_trace.json"
+        ],
+        "replay": false
+      },
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'cat SKILL.md references/contracts.md references/effects.md references/probability-causality.md'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "SKILL.md",
+          "references/contracts.md",
+          "references/effects.md",
+          "references/probability-causality.md"
+        ],
+        "replay": false
+      },
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'python3 -B replay.py'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "task.json",
+          "model.json",
+          "system.py",
+          "composition.py",
+          "replay.py"
+        ],
+        "replay": true
+      },
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc \"python3 -B replay.py '{\\\"cache_scope\\\":\\\"tenant_query\\\",\\\"error_mode\\\":\\\"tagged\\\",\\\"unit_mode\\\":\\\"convert\\\",\\\"sample_mode\\\":\\\"fresh\\\",\\\"lineage_mode\\\":\\\"preserve\\\",\\\"retry_accounting\\\":\\\"all_calls\\\"}'\"",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "task.json",
+          "model.json",
+          "system.py",
+          "composition.py",
+          "replay.py"
+        ],
+        "replay": true
+      }
+    ],
+    "read_files": [
+      "SKILL.md",
+      "composition.py",
+      "initial_trace.json",
+      "model.json",
+      "references/contracts.md",
+      "references/effects.md",
+      "references/probability-causality.md",
+      "replay.py",
+      "system.py",
+      "task.json"
+    ],
+    "successful_replay_calls": 2,
+    "score": {
+      "behavior_pass": true,
+      "minimal_repair": true,
+      "acceptance": {
+        "all_pass": true,
+        "passed": 57,
+        "total": 57,
+        "failures": []
+      },
+      "edits": 3,
+      "minimum_edits": 3,
+      "initial_verdict_correct": true,
+      "healthy_unnecessary_change": null,
+      "verification_claim_supported": true
+    }
+  },
+  {
+    "case_id": "r05",
+    "condition": "C_v4",
+    "trial": 1,
+    "status": "completed",
+    "prediction": {
+      "configuration": {
+        "cache_scope": "tenant_query",
+        "error_mode": "tagged",
+        "unit_mode": "convert",
+        "sample_mode": "fresh",
+        "lineage_mode": "preserve",
+        "retry_accounting": "all_calls"
+      },
+      "initial_verdict": "violation",
+      "explanation": "仅修改三个必要字段：按租户隔离缓存、保留失败标签、保留来源 ID；其余有效选项保持不变。实际回放原配置 48 个输入中 40 个失败，修复后 48 个全部通过，无失败义务。",
+      "verified": true
+    },
+    "elapsed_seconds": 48.328029999975115,
+    "exit_code": 0,
+    "timed_out": false,
+    "usage": {
+      "input_tokens": 75915,
+      "cached_input_tokens": 33664,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 363,
+      "reasoning_output_tokens": 0
+    },
+    "model_requested": "gpt-6-astra",
+    "reasoning_effort": "high",
+    "cli_version": "codex-cli 0.158.0-alpha.2.1",
+    "input_sha256": "f7c84f0b74e05586ad527e42125a413e978a3562153bcbd6b4be6d6a8060d091",
+    "prompt_sha256": "4d58fda654427490b3a0e3b704f952971b1b9ba9e5bbef23058c5bfb5223d452",
+    "event_sha256": "24ab3ef0594a61e994a46b640acdb432a1dd49b2d6bde878833b915d1bb60b7f",
+    "stderr_sha256": "0e1f71a786834295e7adee74e672d0f34ef05aa9083ea74da2376ec693b90d52",
+    "tool_audit": [
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc ls",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [],
+        "replay": false
+      },
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'cat task.json system.py model.json initial_trace.json'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "task.json",
+          "system.py",
+          "model.json",
+          "initial_trace.json"
+        ],
+        "replay": false
+      },
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'cat SKILL.md references/executable-contracts.md replay.py'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "SKILL.md",
+          "references/executable-contracts.md",
+          "replay.py"
+        ],
+        "replay": false
+      },
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'python3 -B replay.py'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "task.json",
+          "model.json",
+          "system.py",
+          "composition.py",
+          "replay.py"
+        ],
+        "replay": true
+      },
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc \"python3 -B replay.py '{\\\"cache_scope\\\":\\\"tenant_query\\\",\\\"error_mode\\\":\\\"tagged\\\",\\\"unit_mode\\\":\\\"convert\\\",\\\"sample_mode\\\":\\\"fresh\\\",\\\"lineage_mode\\\":\\\"preserve\\\",\\\"retry_accounting\\\":\\\"all_calls\\\"}'\"",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "task.json",
+          "model.json",
+          "system.py",
+          "composition.py",
+          "replay.py"
+        ],
+        "replay": true
+      }
+    ],
+    "read_files": [
+      "SKILL.md",
+      "composition.py",
+      "initial_trace.json",
+      "model.json",
+      "references/executable-contracts.md",
+      "replay.py",
+      "system.py",
+      "task.json"
+    ],
+    "successful_replay_calls": 2,
+    "score": {
+      "behavior_pass": true,
+      "minimal_repair": true,
+      "acceptance": {
+        "all_pass": true,
+        "passed": 57,
+        "total": 57,
+        "failures": []
+      },
+      "edits": 3,
+      "minimum_edits": 3,
+      "initial_verdict_correct": true,
+      "healthy_unnecessary_change": null,
+      "verification_claim_supported": true
+    }
+  },
+  {
+    "case_id": "r07",
+    "condition": "A_no_skill",
+    "trial": 1,
+    "status": "completed",
+    "prediction": {
+      "configuration": {
+        "cache_scope": "tenant_query",
+        "error_mode": "tagged",
+        "unit_mode": "convert",
+        "sample_mode": "fresh",
+        "lineage_mode": "preserve",
+        "retry_accounting": "all_calls"
+      },
+      "initial_verdict": "satisfied",
+      "explanation": "实际执行 python3 -B replay.py，全部 48 个声明输入组合通过行为契约检查，失败数为 0。原始配置已满足要求，最少必要修改为 0 项，完整保留原配置。",
+      "verified": true
+    },
+    "elapsed_seconds": 50.571792333968915,
+    "exit_code": 0,
+    "timed_out": false,
+    "usage": {
+      "input_tokens": 52910,
+      "cached_input_tokens": 31232,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 261,
+      "reasoning_output_tokens": 22
+    },
+    "model_requested": "gpt-6-astra",
+    "reasoning_effort": "high",
+    "cli_version": "codex-cli 0.158.0-alpha.2.1",
+    "input_sha256": "c53a393156fc20bb7dd2e4b6a35d34374813c72a1e356494c4578322004ba1f7",
+    "prompt_sha256": "882c2741b24961d22fad8e1a8e1ca3be21ce7e0fdfd6db045780ae28795706c7",
+    "event_sha256": "95973f3166b877c6bb07793fefff1a21227839125e48d49ac9b504598dc47fcf",
+    "stderr_sha256": "05c68e6cf7cc2cc4e5712eea953439177058eeaf6c2cc9f5a16e3c4e562c8be8",
+    "tool_audit": [
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc ls",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [],
+        "replay": false
+      },
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'cat task.json model.json initial_trace.json system.py replay.py composition.py'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "task.json",
+          "model.json",
+          "initial_trace.json",
+          "system.py",
+          "replay.py",
+          "composition.py"
+        ],
+        "replay": false
+      },
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'python3 -B replay.py'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "task.json",
+          "model.json",
+          "system.py",
+          "composition.py",
+          "replay.py"
+        ],
+        "replay": true
+      }
+    ],
+    "read_files": [
+      "composition.py",
+      "initial_trace.json",
+      "model.json",
+      "replay.py",
+      "system.py",
+      "task.json"
+    ],
+    "successful_replay_calls": 1,
+    "score": {
+      "behavior_pass": true,
+      "minimal_repair": true,
+      "acceptance": {
+        "all_pass": true,
+        "passed": 57,
+        "total": 57,
+        "failures": []
+      },
+      "edits": 0,
+      "minimum_edits": 0,
+      "initial_verdict_correct": true,
+      "healthy_unnecessary_change": false,
+      "verification_claim_supported": true
+    }
+  },
+  {
+    "case_id": "r07",
+    "condition": "C_v4",
+    "trial": 1,
+    "status": "completed",
+    "prediction": {
+      "configuration": {
+        "cache_scope": "tenant_query",
+        "error_mode": "tagged",
+        "unit_mode": "convert",
+        "sample_mode": "fresh",
+        "lineage_mode": "preserve",
+        "retry_accounting": "all_calls"
+      },
+      "initial_verdict": "satisfied",
+      "explanation": "实际执行 python3 -B replay.py，声明输入域的 48 个用例全部通过，无失败义务。原配置已满足契约，最少必要修改为 0 个字段，完整保留原配置。",
+      "verified": true
+    },
+    "elapsed_seconds": 42.98546712502139,
+    "exit_code": 0,
+    "timed_out": false,
+    "usage": {
+      "input_tokens": 53353,
+      "cached_input_tokens": 30848,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 310,
+      "reasoning_output_tokens": 0
+    },
+    "model_requested": "gpt-6-astra",
+    "reasoning_effort": "high",
+    "cli_version": "codex-cli 0.158.0-alpha.2.1",
+    "input_sha256": "c53a393156fc20bb7dd2e4b6a35d34374813c72a1e356494c4578322004ba1f7",
+    "prompt_sha256": "4d58fda654427490b3a0e3b704f952971b1b9ba9e5bbef23058c5bfb5223d452",
+    "event_sha256": "74420ed1dd014ebf34b4158cad49b4b77f92378743994ea3aff598d2e84da948",
+    "stderr_sha256": "eee1249cef0bd87bf82518d97252731beb89cb3fd8abd4e215d04a0a2f6cf21f",
+    "tool_audit": [
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc ls",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [],
+        "replay": false
+      },
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'cat task.json model.json system.py initial_trace.json replay.py'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "task.json",
+          "model.json",
+          "system.py",
+          "initial_trace.json",
+          "replay.py"
+        ],
+        "replay": false
+      },
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'cat SKILL.md references/executable-contracts.md'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "SKILL.md",
+          "references/executable-contracts.md"
+        ],
+        "replay": false
+      },
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'python3 -B replay.py'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "task.json",
+          "model.json",
+          "system.py",
+          "composition.py",
+          "replay.py"
+        ],
+        "replay": true
+      }
+    ],
+    "read_files": [
+      "SKILL.md",
+      "composition.py",
+      "initial_trace.json",
+      "model.json",
+      "references/executable-contracts.md",
+      "replay.py",
+      "system.py",
+      "task.json"
+    ],
+    "successful_replay_calls": 1,
+    "score": {
+      "behavior_pass": true,
+      "minimal_repair": true,
+      "acceptance": {
+        "all_pass": true,
+        "passed": 57,
+        "total": 57,
+        "failures": []
+      },
+      "edits": 0,
+      "minimum_edits": 0,
+      "initial_verdict_correct": true,
+      "healthy_unnecessary_change": false,
+      "verification_claim_supported": true
+    }
+  },
+  {
+    "case_id": "r07",
+    "condition": "B_v3",
+    "trial": 1,
+    "status": "completed",
+    "prediction": {
+      "configuration": {
+        "cache_scope": "tenant_query",
+        "error_mode": "tagged",
+        "unit_mode": "convert",
+        "sample_mode": "fresh",
+        "lineage_mode": "preserve",
+        "retry_accounting": "all_calls"
+      },
+      "initial_verdict": "satisfied",
+      "explanation": "实际运行 python3 -B replay.py，全部 48 个声明输入组合通过行为契约检查，失败数为 0。原配置已满足要求，最少必要修改为 0 项。",
+      "verified": true
+    },
+    "elapsed_seconds": 59.486286416999064,
+    "exit_code": 0,
+    "timed_out": false,
+    "usage": {
+      "input_tokens": 60784,
+      "cached_input_tokens": 33024,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 342,
+      "reasoning_output_tokens": 0
+    },
+    "model_requested": "gpt-6-astra",
+    "reasoning_effort": "high",
+    "cli_version": "codex-cli 0.158.0-alpha.2.1",
+    "input_sha256": "c53a393156fc20bb7dd2e4b6a35d34374813c72a1e356494c4578322004ba1f7",
+    "prompt_sha256": "f5e396eb3141fa62dbefc40c31e454789c188151303a4266560d7316e27912a6",
+    "event_sha256": "a84698ef6de62cee8740c2a17fa45950a4d078bfbdd7ca69f96d14a55022f0f8",
+    "stderr_sha256": "60288c77db59199b02c5281c7b6640a1235801fd87bd450ff2838c63a1fd8f4d",
+    "tool_audit": [
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc ls",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [],
+        "replay": false
+      },
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'cat task.json system.py model.json initial_trace.json replay.py composition.py'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "task.json",
+          "system.py",
+          "model.json",
+          "initial_trace.json",
+          "replay.py",
+          "composition.py"
+        ],
+        "replay": false
+      },
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'cat initial_trace.json'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "initial_trace.json"
+        ],
+        "replay": false
+      },
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'cat SKILL.md references/contracts.md references/effects.md references/probability-causality.md'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "SKILL.md",
+          "references/contracts.md",
+          "references/effects.md",
+          "references/probability-causality.md"
+        ],
+        "replay": false
+      },
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'python3 -B replay.py'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "task.json",
+          "model.json",
+          "system.py",
+          "composition.py",
+          "replay.py"
+        ],
+        "replay": true
+      }
+    ],
+    "read_files": [
+      "SKILL.md",
+      "composition.py",
+      "initial_trace.json",
+      "model.json",
+      "references/contracts.md",
+      "references/effects.md",
+      "references/probability-causality.md",
+      "replay.py",
+      "system.py",
+      "task.json"
+    ],
+    "successful_replay_calls": 1,
+    "score": {
+      "behavior_pass": true,
+      "minimal_repair": true,
+      "acceptance": {
+        "all_pass": true,
+        "passed": 57,
+        "total": 57,
+        "failures": []
+      },
+      "edits": 0,
+      "minimum_edits": 0,
+      "initial_verdict_correct": true,
+      "healthy_unnecessary_change": false,
+      "verification_claim_supported": true
+    }
+  },
+  {
+    "case_id": "r03",
+    "condition": "B_v3",
+    "trial": 1,
+    "status": "completed",
+    "prediction": {
+      "configuration": {
+        "cache_scope": "tenant_query",
+        "error_mode": "tagged",
+        "unit_mode": "convert",
+        "sample_mode": "fresh",
+        "lineage_mode": "preserve",
+        "retry_accounting": "all_calls"
+      },
+      "initial_verdict": "violation",
+      "explanation": "仅修改两个必要字段：convert 将美分转换为美元；fresh 为每个样本分别调用。其余有效配置保持不变。实际回放显示原配置在48个声明输入中失败28个，违反单位转换和新采样契约；修复后48个全部通过，无失败义务。",
+      "verified": true
+    },
+    "elapsed_seconds": 50.65827008296037,
+    "exit_code": 0,
+    "timed_out": false,
+    "usage": {
+      "input_tokens": 58165,
+      "cached_input_tokens": 41344,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 410,
+      "reasoning_output_tokens": 0
+    },
+    "model_requested": "gpt-6-astra",
+    "reasoning_effort": "high",
+    "cli_version": "codex-cli 0.158.0-alpha.2.1",
+    "input_sha256": "de2e45d657365e4271cb0638d08c2b98685c941953c0d402daa9d984a0f384f7",
+    "prompt_sha256": "f5e396eb3141fa62dbefc40c31e454789c188151303a4266560d7316e27912a6",
+    "event_sha256": "6983d21ca6912526b3045a33be7e5b5734e605535eae8f7102424c11bda750bf",
+    "stderr_sha256": "76907cefaffa964db8581f6fe18d72304ae20e59f813675cf17b116f82dbe8c5",
+    "tool_audit": [
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc ls",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [],
+        "replay": false
+      },
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'cat task.json system.py model.json initial_trace.json replay.py composition.py'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "task.json",
+          "system.py",
+          "model.json",
+          "initial_trace.json",
+          "replay.py",
+          "composition.py"
+        ],
+        "replay": false
+      },
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'cat SKILL.md references/contracts.md references/probability-causality.md'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "SKILL.md",
+          "references/contracts.md",
+          "references/probability-causality.md"
+        ],
+        "replay": false
+      },
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'python3 -B replay.py'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "task.json",
+          "model.json",
+          "system.py",
+          "composition.py",
+          "replay.py"
+        ],
+        "replay": true
+      },
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc \"python3 -B replay.py '{\\\"cache_scope\\\":\\\"tenant_query\\\",\\\"error_mode\\\":\\\"tagged\\\",\\\"unit_mode\\\":\\\"convert\\\",\\\"sample_mode\\\":\\\"fresh\\\",\\\"lineage_mode\\\":\\\"preserve\\\",\\\"retry_accounting\\\":\\\"all_calls\\\"}'\"",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "task.json",
+          "model.json",
+          "system.py",
+          "composition.py",
+          "replay.py"
+        ],
+        "replay": true
+      }
+    ],
+    "read_files": [
+      "SKILL.md",
+      "composition.py",
+      "initial_trace.json",
+      "model.json",
+      "references/contracts.md",
+      "references/probability-causality.md",
+      "replay.py",
+      "system.py",
+      "task.json"
+    ],
+    "successful_replay_calls": 2,
+    "score": {
+      "behavior_pass": true,
+      "minimal_repair": true,
+      "acceptance": {
+        "all_pass": true,
+        "passed": 57,
+        "total": 57,
+        "failures": []
+      },
+      "edits": 2,
+      "minimum_edits": 2,
+      "initial_verdict_correct": true,
+      "healthy_unnecessary_change": null,
+      "verification_claim_supported": true
+    }
+  },
+  {
+    "case_id": "r03",
+    "condition": "C_v4",
+    "trial": 1,
+    "status": "completed",
+    "prediction": {
+      "configuration": {
+        "cache_scope": "tenant_query",
+        "error_mode": "tagged",
+        "unit_mode": "convert",
+        "sample_mode": "fresh",
+        "lineage_mode": "preserve",
+        "retry_accounting": "all_calls"
+      },
+      "initial_verdict": "violation",
+      "explanation": "仅修改两个必要字段：convert 将美分转换为美元，fresh 确保每次采样分别调用；其余有效配置保留。实际回放原配置有 28/48 个输入失败，违反金额转换和采样调用契约；修改后 48/48 全部通过。",
+      "verified": true
+    },
+    "elapsed_seconds": 56.36301145795733,
+    "exit_code": 0,
+    "timed_out": false,
+    "usage": {
+      "input_tokens": 75575,
+      "cached_input_tokens": 52480,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 380,
+      "reasoning_output_tokens": 0
+    },
+    "model_requested": "gpt-6-astra",
+    "reasoning_effort": "high",
+    "cli_version": "codex-cli 0.158.0-alpha.2.1",
+    "input_sha256": "de2e45d657365e4271cb0638d08c2b98685c941953c0d402daa9d984a0f384f7",
+    "prompt_sha256": "4d58fda654427490b3a0e3b704f952971b1b9ba9e5bbef23058c5bfb5223d452",
+    "event_sha256": "0ec2e1a76f95482ade7ae9658d53bf66655b748ed38fad3c8f1aae8ce7924a54",
+    "stderr_sha256": "87b4953ee815ee05268f67624962d0dbed3e7f8593acc65a31c2f830777132ec",
+    "tool_audit": [
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc ls",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [],
+        "replay": false
+      },
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'cat task.json system.py model.json initial_trace.json'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "task.json",
+          "system.py",
+          "model.json",
+          "initial_trace.json"
+        ],
+        "replay": false
+      },
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'cat SKILL.md references/executable-contracts.md replay.py'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "SKILL.md",
+          "references/executable-contracts.md",
+          "replay.py"
+        ],
+        "replay": false
+      },
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'python3 -B replay.py'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "task.json",
+          "model.json",
+          "system.py",
+          "composition.py",
+          "replay.py"
+        ],
+        "replay": true
+      },
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc \"python3 -B replay.py '{\\\"cache_scope\\\":\\\"tenant_query\\\",\\\"error_mode\\\":\\\"tagged\\\",\\\"unit_mode\\\":\\\"convert\\\",\\\"sample_mode\\\":\\\"fresh\\\",\\\"lineage_mode\\\":\\\"preserve\\\",\\\"retry_accounting\\\":\\\"all_calls\\\"}'\"",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "task.json",
+          "model.json",
+          "system.py",
+          "composition.py",
+          "replay.py"
+        ],
+        "replay": true
+      }
+    ],
+    "read_files": [
+      "SKILL.md",
+      "composition.py",
+      "initial_trace.json",
+      "model.json",
+      "references/executable-contracts.md",
+      "replay.py",
+      "system.py",
+      "task.json"
+    ],
+    "successful_replay_calls": 2,
+    "score": {
+      "behavior_pass": true,
+      "minimal_repair": true,
+      "acceptance": {
+        "all_pass": true,
+        "passed": 57,
+        "total": 57,
+        "failures": []
+      },
+      "edits": 2,
+      "minimum_edits": 2,
+      "initial_verdict_correct": true,
+      "healthy_unnecessary_change": null,
+      "verification_claim_supported": true
+    }
+  },
+  {
+    "case_id": "r03",
+    "condition": "A_no_skill",
+    "trial": 1,
+    "status": "completed",
+    "prediction": {
+      "configuration": {
+        "cache_scope": "tenant_query",
+        "error_mode": "tagged",
+        "unit_mode": "convert",
+        "sample_mode": "fresh",
+        "lineage_mode": "preserve",
+        "retry_accounting": "all_calls"
+      },
+      "initial_verdict": "violation",
+      "explanation": "原配置回放48例，28例违反美分转换或独立调用契约。仅修改unit_mode和sample_mode，分别修复这两个必要行为，其余有效配置保持不变。候选配置实际回放48例全部通过。",
+      "verified": true
+    },
+    "elapsed_seconds": 44.85492349998094,
+    "exit_code": 0,
+    "timed_out": false,
+    "usage": {
+      "input_tokens": 53448,
+      "cached_input_tokens": 39552,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 388,
+      "reasoning_output_tokens": 37
+    },
+    "model_requested": "gpt-6-astra",
+    "reasoning_effort": "high",
+    "cli_version": "codex-cli 0.158.0-alpha.2.1",
+    "input_sha256": "de2e45d657365e4271cb0638d08c2b98685c941953c0d402daa9d984a0f384f7",
+    "prompt_sha256": "882c2741b24961d22fad8e1a8e1ca3be21ce7e0fdfd6db045780ae28795706c7",
+    "event_sha256": "102e5da50bf478e5b461d2e22c9dcc9a6a3e07107af998c4c516b4f4002d8ab2",
+    "stderr_sha256": "5c30b9dc1a20b978c85f7a469bd2dff202f7ec528c7cc27f67b4cc8be27db2f8",
+    "tool_audit": [
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'cat task.json model.json initial_trace.json system.py replay.py composition.py'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "task.json",
+          "model.json",
+          "initial_trace.json",
+          "system.py",
+          "replay.py",
+          "composition.py"
+        ],
+        "replay": false
+      },
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'python3 -B replay.py'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "task.json",
+          "model.json",
+          "system.py",
+          "composition.py",
+          "replay.py"
+        ],
+        "replay": true
+      },
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc \"python3 -B replay.py '{\\\"cache_scope\\\":\\\"tenant_query\\\",\\\"error_mode\\\":\\\"tagged\\\",\\\"unit_mode\\\":\\\"convert\\\",\\\"sample_mode\\\":\\\"fresh\\\",\\\"lineage_mode\\\":\\\"preserve\\\",\\\"retry_accounting\\\":\\\"all_calls\\\"}'\"",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "task.json",
+          "model.json",
+          "system.py",
+          "composition.py",
+          "replay.py"
+        ],
+        "replay": true
+      }
+    ],
+    "read_files": [
+      "composition.py",
+      "initial_trace.json",
+      "model.json",
+      "replay.py",
+      "system.py",
+      "task.json"
+    ],
+    "successful_replay_calls": 2,
+    "score": {
+      "behavior_pass": true,
+      "minimal_repair": true,
+      "acceptance": {
+        "all_pass": true,
+        "passed": 57,
+        "total": 57,
+        "failures": []
+      },
+      "edits": 2,
+      "minimum_edits": 2,
+      "initial_verdict_correct": true,
+      "healthy_unnecessary_change": null,
+      "verification_claim_supported": true
+    }
+  },
+  {
+    "case_id": "r02",
+    "condition": "C_v4",
+    "trial": 1,
+    "status": "completed",
+    "prediction": {
+      "configuration": {
+        "cache_scope": "tenant_query",
+        "error_mode": "tagged",
+        "unit_mode": "convert",
+        "sample_mode": "fresh",
+        "lineage_mode": "preserve",
+        "retry_accounting": "all_calls"
+      },
+      "initial_verdict": "violation",
+      "explanation": "仅修改两个必要字段：error_mode 改为 tagged，保留失败状态；lineage_mode 改为 preserve，保留来源 ID。其余有效配置保持不变。实际回放原配置有 32/48 个输入违反契约；修复后 48/48 全部通过，无失败或未知检查。",
+      "verified": true
+    },
+    "elapsed_seconds": 254.26979783305433,
+    "exit_code": 0,
+    "timed_out": false,
+    "usage": {
+      "input_tokens": 75533,
+      "cached_input_tokens": 63616,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 422,
+      "reasoning_output_tokens": 0
+    },
+    "model_requested": "gpt-6-astra",
+    "reasoning_effort": "high",
+    "cli_version": "codex-cli 0.158.0-alpha.2.1",
+    "input_sha256": "2ec276a76b60d90ccf777e725f92e9a61471b14018a16f4a14b28ab5df29f414",
+    "prompt_sha256": "4d58fda654427490b3a0e3b704f952971b1b9ba9e5bbef23058c5bfb5223d452",
+    "event_sha256": "8a133ab16090bbda7c9891767b3cf242577eee7dcacdfadc2684289237f63233",
+    "stderr_sha256": "953f708eda300a457ec72f20945fa091267d541c55618f42458bf2b9640d56d5",
+    "tool_audit": [
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc ls",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [],
+        "replay": false
+      },
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'cat task.json system.py model.json initial_trace.json'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "task.json",
+          "system.py",
+          "model.json",
+          "initial_trace.json"
+        ],
+        "replay": false
+      },
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'cat SKILL.md references/executable-contracts.md replay.py'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "SKILL.md",
+          "references/executable-contracts.md",
+          "replay.py"
+        ],
+        "replay": false
+      },
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc \"python3 -B replay.py '{\\\"cache_scope\\\":\\\"tenant_query\\\",\\\"error_mode\\\":\\\"tagged\\\",\\\"unit_mode\\\":\\\"convert\\\",\\\"sample_mode\\\":\\\"fresh\\\",\\\"lineage_mode\\\":\\\"preserve\\\",\\\"retry_accounting\\\":\\\"all_calls\\\"}'\"",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "task.json",
+          "model.json",
+          "system.py",
+          "composition.py",
+          "replay.py"
+        ],
+        "replay": true
+      },
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'python3 -B replay.py'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "task.json",
+          "model.json",
+          "system.py",
+          "composition.py",
+          "replay.py"
+        ],
+        "replay": true
+      }
+    ],
+    "read_files": [
+      "SKILL.md",
+      "composition.py",
+      "initial_trace.json",
+      "model.json",
+      "references/executable-contracts.md",
+      "replay.py",
+      "system.py",
+      "task.json"
+    ],
+    "successful_replay_calls": 2,
+    "score": {
+      "behavior_pass": true,
+      "minimal_repair": true,
+      "acceptance": {
+        "all_pass": true,
+        "passed": 57,
+        "total": 57,
+        "failures": []
+      },
+      "edits": 2,
+      "minimum_edits": 2,
+      "initial_verdict_correct": true,
+      "healthy_unnecessary_change": null,
+      "verification_claim_supported": true
+    }
+  },
+  {
+    "case_id": "r02",
+    "condition": "A_no_skill",
+    "trial": 1,
+    "status": "completed",
+    "prediction": {
+      "configuration": {
+        "cache_scope": "tenant_query",
+        "error_mode": "tagged",
+        "unit_mode": "convert",
+        "sample_mode": "fresh",
+        "lineage_mode": "preserve",
+        "retry_accounting": "all_calls"
+      },
+      "initial_verdict": "violation",
+      "explanation": "仅修改两个必要字段：error_mode 改为 tagged，保留失败状态；lineage_mode 改为 preserve，保留来源 ID。其余有效配置保持不变。实际回放原配置有 32/48 个输入失败；修复后 48/48 全部通过行为契约检查。",
+      "verified": true
+    },
+    "elapsed_seconds": 40.53454449999845,
+    "exit_code": 0,
+    "timed_out": false,
+    "usage": {
+      "input_tokens": 53430,
+      "cached_input_tokens": 31232,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 389,
+      "reasoning_output_tokens": 21
+    },
+    "model_requested": "gpt-6-astra",
+    "reasoning_effort": "high",
+    "cli_version": "codex-cli 0.158.0-alpha.2.1",
+    "input_sha256": "2ec276a76b60d90ccf777e725f92e9a61471b14018a16f4a14b28ab5df29f414",
+    "prompt_sha256": "882c2741b24961d22fad8e1a8e1ca3be21ce7e0fdfd6db045780ae28795706c7",
+    "event_sha256": "c5b4cb2adcec1ca907577afecfaa99504212771b369b72c2384771149a62245a",
+    "stderr_sha256": "6bb3611c3d1075d6a939dc12a04102f68351ab89994bb12737b066e5cd56b67b",
+    "tool_audit": [
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'cat task.json model.json initial_trace.json system.py replay.py composition.py'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "task.json",
+          "model.json",
+          "initial_trace.json",
+          "system.py",
+          "replay.py",
+          "composition.py"
+        ],
+        "replay": false
+      },
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc \"python3 -B replay.py '{\\\"cache_scope\\\":\\\"tenant_query\\\",\\\"error_mode\\\":\\\"tagged\\\",\\\"unit_mode\\\":\\\"convert\\\",\\\"sample_mode\\\":\\\"fresh\\\",\\\"lineage_mode\\\":\\\"preserve\\\",\\\"retry_accounting\\\":\\\"all_calls\\\"}'\"",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "task.json",
+          "model.json",
+          "system.py",
+          "composition.py",
+          "replay.py"
+        ],
+        "replay": true
+      },
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'python3 -B replay.py'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "task.json",
+          "model.json",
+          "system.py",
+          "composition.py",
+          "replay.py"
+        ],
+        "replay": true
+      }
+    ],
+    "read_files": [
+      "composition.py",
+      "initial_trace.json",
+      "model.json",
+      "replay.py",
+      "system.py",
+      "task.json"
+    ],
+    "successful_replay_calls": 2,
+    "score": {
+      "behavior_pass": true,
+      "minimal_repair": true,
+      "acceptance": {
+        "all_pass": true,
+        "passed": 57,
+        "total": 57,
+        "failures": []
+      },
+      "edits": 2,
+      "minimum_edits": 2,
+      "initial_verdict_correct": true,
+      "healthy_unnecessary_change": null,
+      "verification_claim_supported": true
+    }
+  },
+  {
+    "case_id": "r02",
+    "condition": "B_v3",
+    "trial": 1,
+    "status": "completed",
+    "prediction": {
+      "configuration": {
+        "cache_scope": "tenant_query",
+        "error_mode": "tagged",
+        "unit_mode": "convert",
+        "sample_mode": "fresh",
+        "lineage_mode": "preserve",
+        "retry_accounting": "all_calls"
+      },
+      "initial_verdict": "violation",
+      "explanation": "最少修改两项：error_mode 改为 tagged，保留失败状态并输出 unknown；lineage_mode 改为 preserve，保留来源 ID。其余有效配置保持不变。实际回放原配置有 32/48 个输入违反契约；修复后 48/48 全部通过。",
+      "verified": true
+    },
+    "elapsed_seconds": 59.742893958988134,
+    "exit_code": 0,
+    "timed_out": false,
+    "usage": {
+      "input_tokens": 75381,
+      "cached_input_tokens": 52352,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 414,
+      "reasoning_output_tokens": 0
+    },
+    "model_requested": "gpt-6-astra",
+    "reasoning_effort": "high",
+    "cli_version": "codex-cli 0.158.0-alpha.2.1",
+    "input_sha256": "2ec276a76b60d90ccf777e725f92e9a61471b14018a16f4a14b28ab5df29f414",
+    "prompt_sha256": "f5e396eb3141fa62dbefc40c31e454789c188151303a4266560d7316e27912a6",
+    "event_sha256": "961fbe552709f2a42d7de7f76b5098d9528dbdf633aace55c08a2ca19bc618eb",
+    "stderr_sha256": "b1dd0c7920e53a8c4ca0eab31c269b7b1ede01b01b9efc71956fdb04835357fa",
+    "tool_audit": [
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc ls",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [],
+        "replay": false
+      },
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'cat task.json model.json initial_trace.json system.py'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "task.json",
+          "model.json",
+          "initial_trace.json",
+          "system.py"
+        ],
+        "replay": false
+      },
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'cat SKILL.md references/effects.md references/evidence.md replay.py'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "SKILL.md",
+          "references/effects.md",
+          "references/evidence.md",
+          "replay.py"
+        ],
+        "replay": false
+      },
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'python3 -B replay.py'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "task.json",
+          "model.json",
+          "system.py",
+          "composition.py",
+          "replay.py"
+        ],
+        "replay": true
+      },
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc \"python3 -B replay.py '{\\\"cache_scope\\\":\\\"tenant_query\\\",\\\"error_mode\\\":\\\"tagged\\\",\\\"unit_mode\\\":\\\"convert\\\",\\\"sample_mode\\\":\\\"fresh\\\",\\\"lineage_mode\\\":\\\"preserve\\\",\\\"retry_accounting\\\":\\\"all_calls\\\"}'\"",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "task.json",
+          "model.json",
+          "system.py",
+          "composition.py",
+          "replay.py"
+        ],
+        "replay": true
+      }
+    ],
+    "read_files": [
+      "SKILL.md",
+      "composition.py",
+      "initial_trace.json",
+      "model.json",
+      "references/effects.md",
+      "references/evidence.md",
+      "replay.py",
+      "system.py",
+      "task.json"
+    ],
+    "successful_replay_calls": 2,
+    "score": {
+      "behavior_pass": true,
+      "minimal_repair": true,
+      "acceptance": {
+        "all_pass": true,
+        "passed": 57,
+        "total": 57,
+        "failures": []
+      },
+      "edits": 2,
+      "minimum_edits": 2,
+      "initial_verdict_correct": true,
+      "healthy_unnecessary_change": null,
+      "verification_claim_supported": true
+    }
+  },
+  {
+    "case_id": "r06",
+    "condition": "C_v4",
+    "trial": 1,
+    "status": "completed",
+    "prediction": {
+      "configuration": {
+        "cache_scope": "tenant_query",
+        "error_mode": "tagged",
+        "unit_mode": "convert",
+        "sample_mode": "fresh",
+        "lineage_mode": "preserve",
+        "retry_accounting": "all_calls"
+      },
+      "initial_verdict": "violation",
+      "explanation": "原配置回放 48 个声明输入，32 个失败，违反金额换算、来源保留及重试计费契约。仅修改对应的三个必要字段，其余保持原值；修复后实际回放 48/48 通过，无失败义务。",
+      "verified": true
+    },
+    "elapsed_seconds": 57.59461658296641,
+    "exit_code": 0,
+    "timed_out": false,
+    "usage": {
+      "input_tokens": 76082,
+      "cached_input_tokens": 52736,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 403,
+      "reasoning_output_tokens": 0
+    },
+    "model_requested": "gpt-6-astra",
+    "reasoning_effort": "high",
+    "cli_version": "codex-cli 0.158.0-alpha.2.1",
+    "input_sha256": "72da67ce3a2677448a6db4618301742dd7edb6a8c9c4b71f604fd0094a38bca7",
+    "prompt_sha256": "4d58fda654427490b3a0e3b704f952971b1b9ba9e5bbef23058c5bfb5223d452",
+    "event_sha256": "c3d7b85257317c1c51a50335e0fa5c370f6a7eca70cf26c52ab1864868c788fc",
+    "stderr_sha256": "c147b7319d544ebba7016220dcc685564178262ae827a152386235e495c507de",
+    "tool_audit": [
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc ls",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [],
+        "replay": false
+      },
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'cat task.json system.py model.json initial_trace.json'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "task.json",
+          "system.py",
+          "model.json",
+          "initial_trace.json"
+        ],
+        "replay": false
+      },
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'cat SKILL.md references/executable-contracts.md replay.py'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "SKILL.md",
+          "references/executable-contracts.md",
+          "replay.py"
+        ],
+        "replay": false
+      },
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'python3 -B replay.py'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "task.json",
+          "model.json",
+          "system.py",
+          "composition.py",
+          "replay.py"
+        ],
+        "replay": true
+      },
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc \"python3 -B replay.py '{\\\"cache_scope\\\":\\\"tenant_query\\\",\\\"error_mode\\\":\\\"tagged\\\",\\\"unit_mode\\\":\\\"convert\\\",\\\"sample_mode\\\":\\\"fresh\\\",\\\"lineage_mode\\\":\\\"preserve\\\",\\\"retry_accounting\\\":\\\"all_calls\\\"}'\"",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "task.json",
+          "model.json",
+          "system.py",
+          "composition.py",
+          "replay.py"
+        ],
+        "replay": true
+      }
+    ],
+    "read_files": [
+      "SKILL.md",
+      "composition.py",
+      "initial_trace.json",
+      "model.json",
+      "references/executable-contracts.md",
+      "replay.py",
+      "system.py",
+      "task.json"
+    ],
+    "successful_replay_calls": 2,
+    "score": {
+      "behavior_pass": true,
+      "minimal_repair": true,
+      "acceptance": {
+        "all_pass": true,
+        "passed": 57,
+        "total": 57,
+        "failures": []
+      },
+      "edits": 3,
+      "minimum_edits": 3,
+      "initial_verdict_correct": true,
+      "healthy_unnecessary_change": null,
+      "verification_claim_supported": true
+    }
+  },
+  {
+    "case_id": "r06",
+    "condition": "B_v3",
+    "trial": 1,
+    "status": "completed",
+    "prediction": {
+      "configuration": {
+        "cache_scope": "tenant_query",
+        "error_mode": "tagged",
+        "unit_mode": "convert",
+        "sample_mode": "fresh",
+        "lineage_mode": "preserve",
+        "retry_accounting": "all_calls"
+      },
+      "initial_verdict": "violation",
+      "explanation": "原配置回放有32/48个输入失败，涉及美分转换、来源ID保留和重试计费。仅修改对应三个字段，其余保持原值；这三项各有独立契约要求，均为必要修改。修复后实际回放48/48全部通过，无失败义务。",
+      "verified": true
+    },
+    "elapsed_seconds": 50.28087025001878,
+    "exit_code": 0,
+    "timed_out": false,
+    "usage": {
+      "input_tokens": 87965,
+      "cached_input_tokens": 60032,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 437,
+      "reasoning_output_tokens": 0
+    },
+    "model_requested": "gpt-6-astra",
+    "reasoning_effort": "high",
+    "cli_version": "codex-cli 0.158.0-alpha.2.1",
+    "input_sha256": "72da67ce3a2677448a6db4618301742dd7edb6a8c9c4b71f604fd0094a38bca7",
+    "prompt_sha256": "f5e396eb3141fa62dbefc40c31e454789c188151303a4266560d7316e27912a6",
+    "event_sha256": "16ed98dbcb13eedfb1c52ef7e5f3c5889ab51a5879f77305ce2eade06b4bb9e9",
+    "stderr_sha256": "bde8f487740d4f4512e61c2b191926110a975ec6d4ff412a73dbc57897e33cca",
+    "tool_audit": [
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc ls",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [],
+        "replay": false
+      },
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'cat task.json model.json system.py initial_trace.json replay.py composition.py'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "task.json",
+          "model.json",
+          "system.py",
+          "initial_trace.json",
+          "replay.py",
+          "composition.py"
+        ],
+        "replay": false
+      },
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'cat SKILL.md references/contracts.md references/effects.md'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "SKILL.md",
+          "references/contracts.md",
+          "references/effects.md"
+        ],
+        "replay": false
+      },
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'cat initial_trace.json'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "initial_trace.json"
+        ],
+        "replay": false
+      },
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'python3 -B replay.py'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "task.json",
+          "model.json",
+          "system.py",
+          "composition.py",
+          "replay.py"
+        ],
+        "replay": true
+      },
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc \"python3 -B replay.py '{\\\"cache_scope\\\":\\\"tenant_query\\\",\\\"error_mode\\\":\\\"tagged\\\",\\\"unit_mode\\\":\\\"convert\\\",\\\"sample_mode\\\":\\\"fresh\\\",\\\"lineage_mode\\\":\\\"preserve\\\",\\\"retry_accounting\\\":\\\"all_calls\\\"}'\"",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "task.json",
+          "model.json",
+          "system.py",
+          "composition.py",
+          "replay.py"
+        ],
+        "replay": true
+      }
+    ],
+    "read_files": [
+      "SKILL.md",
+      "composition.py",
+      "initial_trace.json",
+      "model.json",
+      "references/contracts.md",
+      "references/effects.md",
+      "replay.py",
+      "system.py",
+      "task.json"
+    ],
+    "successful_replay_calls": 2,
+    "score": {
+      "behavior_pass": true,
+      "minimal_repair": true,
+      "acceptance": {
+        "all_pass": true,
+        "passed": 57,
+        "total": 57,
+        "failures": []
+      },
+      "edits": 3,
+      "minimum_edits": 3,
+      "initial_verdict_correct": true,
+      "healthy_unnecessary_change": null,
+      "verification_claim_supported": true
+    }
+  },
+  {
+    "case_id": "r06",
+    "condition": "A_no_skill",
+    "trial": 1,
+    "status": "completed",
+    "prediction": {
+      "configuration": {
+        "cache_scope": "tenant_query",
+        "error_mode": "tagged",
+        "unit_mode": "convert",
+        "sample_mode": "fresh",
+        "lineage_mode": "preserve",
+        "retry_accounting": "all_calls"
+      },
+      "initial_verdict": "violation",
+      "explanation": "仅修改三个必要字段：将美分转换为美元、保留来源 ID、计费所有实际尝试；其余保持原值。实际回放原配置有 32/48 个输入失败，涉及上述三项行为契约；修复后 48/48 全部通过。",
+      "verified": true
+    },
+    "elapsed_seconds": 53.603954540973064,
+    "exit_code": 0,
+    "timed_out": false,
+    "usage": {
+      "input_tokens": 53495,
+      "cached_input_tokens": 31232,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 414,
+      "reasoning_output_tokens": 30
+    },
+    "model_requested": "gpt-6-astra",
+    "reasoning_effort": "high",
+    "cli_version": "codex-cli 0.158.0-alpha.2.1",
+    "input_sha256": "72da67ce3a2677448a6db4618301742dd7edb6a8c9c4b71f604fd0094a38bca7",
+    "prompt_sha256": "882c2741b24961d22fad8e1a8e1ca3be21ce7e0fdfd6db045780ae28795706c7",
+    "event_sha256": "6269273d5cbd93344ff424eef51adc88b475cf95d05fa15703a604815b29c4c1",
+    "stderr_sha256": "a0472bfa96a1fa91c5d9071ece66213958458ba9bd08ea2c3eb15bc300dabc84",
+    "tool_audit": [
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc ls",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [],
+        "replay": false
+      },
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'cat task.json model.json initial_trace.json system.py replay.py composition.py'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "task.json",
+          "model.json",
+          "initial_trace.json",
+          "system.py",
+          "replay.py",
+          "composition.py"
+        ],
+        "replay": false
+      },
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc \"python3 -B replay.py '{\\\"cache_scope\\\":\\\"tenant_query\\\",\\\"error_mode\\\":\\\"tagged\\\",\\\"unit_mode\\\":\\\"convert\\\",\\\"sample_mode\\\":\\\"fresh\\\",\\\"lineage_mode\\\":\\\"preserve\\\",\\\"retry_accounting\\\":\\\"all_calls\\\"}'\"",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "task.json",
+          "model.json",
+          "system.py",
+          "composition.py",
+          "replay.py"
+        ],
+        "replay": true
+      },
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'python3 -B replay.py'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "task.json",
+          "model.json",
+          "system.py",
+          "composition.py",
+          "replay.py"
+        ],
+        "replay": true
+      }
+    ],
+    "read_files": [
+      "composition.py",
+      "initial_trace.json",
+      "model.json",
+      "replay.py",
+      "system.py",
+      "task.json"
+    ],
+    "successful_replay_calls": 2,
+    "score": {
+      "behavior_pass": true,
+      "minimal_repair": true,
+      "acceptance": {
+        "all_pass": true,
+        "passed": 57,
+        "total": 57,
+        "failures": []
+      },
+      "edits": 3,
+      "minimum_edits": 3,
+      "initial_verdict_correct": true,
+      "healthy_unnecessary_change": null,
+      "verification_claim_supported": true
+    }
+  },
+  {
+    "case_id": "r04",
+    "condition": "C_v4",
+    "trial": 1,
+    "status": "completed",
+    "prediction": {
+      "configuration": {
+        "cache_scope": "tenant_query",
+        "error_mode": "tagged",
+        "unit_mode": "convert",
+        "sample_mode": "fresh",
+        "lineage_mode": "preserve",
+        "retry_accounting": "all_calls"
+      },
+      "initial_verdict": "violation",
+      "explanation": "初始配置回放 48 个输入，28 个失败，违反美分转美元与重试计费契约。仅修改 unit_mode 和 retry_accounting，分别修复单位换算和失败尝试漏计费；其余有效配置保留。修改后实际回放 48/48 全部通过。",
+      "verified": true
+    },
+    "elapsed_seconds": 48.488981375005096,
+    "exit_code": 0,
+    "timed_out": false,
+    "usage": {
+      "input_tokens": 76081,
+      "cached_input_tokens": 61184,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 405,
+      "reasoning_output_tokens": 0
+    },
+    "model_requested": "gpt-6-astra",
+    "reasoning_effort": "high",
+    "cli_version": "codex-cli 0.158.0-alpha.2.1",
+    "input_sha256": "d43b6f0017c4f756cf1ff324b2c0839b71e1a491da909c72d32200c11dbb5c84",
+    "prompt_sha256": "4d58fda654427490b3a0e3b704f952971b1b9ba9e5bbef23058c5bfb5223d452",
+    "event_sha256": "62f1b05227806de44dee874b83db079edc7d72d97ca1713b0c6416bd6559dbd7",
+    "stderr_sha256": "ac51cdd3ed7e081bf7ed45a5918ab19938a34aafe257d18c2f092ed8fe26efbc",
+    "tool_audit": [
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc ls",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [],
+        "replay": false
+      },
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'cat task.json system.py model.json initial_trace.json'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "task.json",
+          "system.py",
+          "model.json",
+          "initial_trace.json"
+        ],
+        "replay": false
+      },
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'cat SKILL.md references/executable-contracts.md replay.py'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "SKILL.md",
+          "references/executable-contracts.md",
+          "replay.py"
+        ],
+        "replay": false
+      },
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'python3 -B replay.py'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "task.json",
+          "model.json",
+          "system.py",
+          "composition.py",
+          "replay.py"
+        ],
+        "replay": true
+      },
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc \"python3 -B replay.py '{\\\"cache_scope\\\":\\\"tenant_query\\\",\\\"error_mode\\\":\\\"tagged\\\",\\\"unit_mode\\\":\\\"convert\\\",\\\"sample_mode\\\":\\\"fresh\\\",\\\"lineage_mode\\\":\\\"preserve\\\",\\\"retry_accounting\\\":\\\"all_calls\\\"}'\"",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "task.json",
+          "model.json",
+          "system.py",
+          "composition.py",
+          "replay.py"
+        ],
+        "replay": true
+      }
+    ],
+    "read_files": [
+      "SKILL.md",
+      "composition.py",
+      "initial_trace.json",
+      "model.json",
+      "references/executable-contracts.md",
+      "replay.py",
+      "system.py",
+      "task.json"
+    ],
+    "successful_replay_calls": 2,
+    "score": {
+      "behavior_pass": true,
+      "minimal_repair": true,
+      "acceptance": {
+        "all_pass": true,
+        "passed": 57,
+        "total": 57,
+        "failures": []
+      },
+      "edits": 2,
+      "minimum_edits": 2,
+      "initial_verdict_correct": true,
+      "healthy_unnecessary_change": null,
+      "verification_claim_supported": true
+    }
+  },
+  {
+    "case_id": "r04",
+    "condition": "B_v3",
+    "trial": 1,
+    "status": "completed",
+    "prediction": {
+      "configuration": {
+        "cache_scope": "tenant_query",
+        "error_mode": "tagged",
+        "unit_mode": "convert",
+        "sample_mode": "fresh",
+        "lineage_mode": "preserve",
+        "retry_accounting": "all_calls"
+      },
+      "initial_verdict": "violation",
+      "explanation": "原配置回放48个声明输入，28个失败，违反美分转换和调用计费契约。最少需修改两项：unit_mode=convert，将125美分转换为1.25美元；retry_accounting=all_calls，计入失败重试。其余配置保留。修复后实际回放48/48通过，无失败契约。",
+      "verified": true
+    },
+    "elapsed_seconds": 39.71538404200692,
+    "exit_code": 0,
+    "timed_out": false,
+    "usage": {
+      "input_tokens": 87982,
+      "cached_input_tokens": 60032,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 466,
+      "reasoning_output_tokens": 16
+    },
+    "model_requested": "gpt-6-astra",
+    "reasoning_effort": "high",
+    "cli_version": "codex-cli 0.158.0-alpha.2.1",
+    "input_sha256": "d43b6f0017c4f756cf1ff324b2c0839b71e1a491da909c72d32200c11dbb5c84",
+    "prompt_sha256": "f5e396eb3141fa62dbefc40c31e454789c188151303a4266560d7316e27912a6",
+    "event_sha256": "30bede6ac840de54c2a7ccf105589f12f376ca204bcafc160508672ad2d6da6f",
+    "stderr_sha256": "56eae9f5d4fe571ac4342a2ef2586ef0a1037f96ad1e231f25e7c4ed4911dfdd",
+    "tool_audit": [
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc ls",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [],
+        "replay": false
+      },
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'cat task.json model.json system.py initial_trace.json replay.py composition.py'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "task.json",
+          "model.json",
+          "system.py",
+          "initial_trace.json",
+          "replay.py",
+          "composition.py"
+        ],
+        "replay": false
+      },
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'cat SKILL.md references/contracts.md references/effects.md'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "SKILL.md",
+          "references/contracts.md",
+          "references/effects.md"
+        ],
+        "replay": false
+      },
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'cat initial_trace.json'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "initial_trace.json"
+        ],
+        "replay": false
+      },
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'python3 -B replay.py'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "task.json",
+          "model.json",
+          "system.py",
+          "composition.py",
+          "replay.py"
+        ],
+        "replay": true
+      },
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc \"python3 -B replay.py '{\\\"cache_scope\\\":\\\"tenant_query\\\",\\\"error_mode\\\":\\\"tagged\\\",\\\"unit_mode\\\":\\\"convert\\\",\\\"sample_mode\\\":\\\"fresh\\\",\\\"lineage_mode\\\":\\\"preserve\\\",\\\"retry_accounting\\\":\\\"all_calls\\\"}'\"",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "task.json",
+          "model.json",
+          "system.py",
+          "composition.py",
+          "replay.py"
+        ],
+        "replay": true
+      }
+    ],
+    "read_files": [
+      "SKILL.md",
+      "composition.py",
+      "initial_trace.json",
+      "model.json",
+      "references/contracts.md",
+      "references/effects.md",
+      "replay.py",
+      "system.py",
+      "task.json"
+    ],
+    "successful_replay_calls": 2,
+    "score": {
+      "behavior_pass": true,
+      "minimal_repair": true,
+      "acceptance": {
+        "all_pass": true,
+        "passed": 57,
+        "total": 57,
+        "failures": []
+      },
+      "edits": 2,
+      "minimum_edits": 2,
+      "initial_verdict_correct": true,
+      "healthy_unnecessary_change": null,
+      "verification_claim_supported": true
+    }
+  },
+  {
+    "case_id": "r04",
+    "condition": "A_no_skill",
+    "trial": 1,
+    "status": "completed",
+    "prediction": {
+      "configuration": {
+        "cache_scope": "tenant_query",
+        "error_mode": "tagged",
+        "unit_mode": "convert",
+        "sample_mode": "fresh",
+        "lineage_mode": "preserve",
+        "retry_accounting": "all_calls"
+      },
+      "initial_verdict": "violation",
+      "explanation": "原配置回放48个声明输入，28个失败，涉及美分换算和重试计费。最少需修改两项：unit_mode 改为 convert，retry_accounting 改为 all_calls；其余保持不变。候选配置实际回放48/48通过，无契约失败。",
+      "verified": true
+    },
+    "elapsed_seconds": 38.591540583001915,
+    "exit_code": 0,
+    "timed_out": false,
+    "usage": {
+      "input_tokens": 53429,
+      "cached_input_tokens": 31232,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 384,
+      "reasoning_output_tokens": 21
+    },
+    "model_requested": "gpt-6-astra",
+    "reasoning_effort": "high",
+    "cli_version": "codex-cli 0.158.0-alpha.2.1",
+    "input_sha256": "d43b6f0017c4f756cf1ff324b2c0839b71e1a491da909c72d32200c11dbb5c84",
+    "prompt_sha256": "882c2741b24961d22fad8e1a8e1ca3be21ce7e0fdfd6db045780ae28795706c7",
+    "event_sha256": "5919f8f3d5b35a6ac9cf4dadf6b5344e249753ad61390ef5b9db61c77c4724a9",
+    "stderr_sha256": "a4b7e259757f8c0a43e5afd91daf7aa0bdbdf28da68659d64385186132555b72",
+    "tool_audit": [
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'cat task.json model.json initial_trace.json system.py replay.py composition.py'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "task.json",
+          "model.json",
+          "initial_trace.json",
+          "system.py",
+          "replay.py",
+          "composition.py"
+        ],
+        "replay": false
+      },
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc \"python3 -B replay.py '{\\\"cache_scope\\\":\\\"tenant_query\\\",\\\"error_mode\\\":\\\"tagged\\\",\\\"unit_mode\\\":\\\"convert\\\",\\\"sample_mode\\\":\\\"fresh\\\",\\\"lineage_mode\\\":\\\"preserve\\\",\\\"retry_accounting\\\":\\\"all_calls\\\"}'\"",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "task.json",
+          "model.json",
+          "system.py",
+          "composition.py",
+          "replay.py"
+        ],
+        "replay": true
+      },
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'python3 -B replay.py'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "task.json",
+          "model.json",
+          "system.py",
+          "composition.py",
+          "replay.py"
+        ],
+        "replay": true
+      }
+    ],
+    "read_files": [
+      "composition.py",
+      "initial_trace.json",
+      "model.json",
+      "replay.py",
+      "system.py",
+      "task.json"
+    ],
+    "successful_replay_calls": 2,
+    "score": {
+      "behavior_pass": true,
+      "minimal_repair": true,
+      "acceptance": {
+        "all_pass": true,
+        "passed": 57,
+        "total": 57,
+        "failures": []
+      },
+      "edits": 2,
+      "minimum_edits": 2,
+      "initial_verdict_correct": true,
+      "healthy_unnecessary_change": null,
+      "verification_claim_supported": true
+    }
+  },
+  {
+    "case_id": "r08",
+    "condition": "A_no_skill",
+    "trial": 1,
+    "status": "completed",
+    "prediction": {
+      "configuration": {
+        "cache_scope": "tenant_query",
+        "error_mode": "tagged",
+        "unit_mode": "convert",
+        "sample_mode": "reuse",
+        "lineage_mode": "preserve",
+        "retry_accounting": "all_calls"
+      },
+      "initial_verdict": "satisfied",
+      "explanation": "无需修改。实际执行 python3 -B replay.py，声明输入域的 48 个案例全部通过行为契约检查，失败数为 0。采样要求均为 reuse_allowed，因此保留 reuse；最少修改为 0 项。",
+      "verified": true
+    },
+    "elapsed_seconds": 30.792916749953292,
+    "exit_code": 0,
+    "timed_out": false,
+    "usage": {
+      "input_tokens": 52889,
+      "cached_input_tokens": 29184,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 263,
+      "reasoning_output_tokens": 22
+    },
+    "model_requested": "gpt-6-astra",
+    "reasoning_effort": "high",
+    "cli_version": "codex-cli 0.158.0-alpha.2.1",
+    "input_sha256": "041e8752ad7099cb2d387320480216bbae583f71789a87dad595af76bcb646d6",
+    "prompt_sha256": "882c2741b24961d22fad8e1a8e1ca3be21ce7e0fdfd6db045780ae28795706c7",
+    "event_sha256": "bbfac1b25fdda2603a8f7888eaafe6ca725f4cb6cc73d1cadbda43a6bbd50615",
+    "stderr_sha256": "00d1af59fd713be639969a457fe2cb085c94b8976415211fe81ba3b4c8990d22",
+    "tool_audit": [
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc ls",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [],
+        "replay": false
+      },
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'cat task.json model.json initial_trace.json system.py replay.py composition.py'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "task.json",
+          "model.json",
+          "initial_trace.json",
+          "system.py",
+          "replay.py",
+          "composition.py"
+        ],
+        "replay": false
+      },
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'python3 -B replay.py'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "task.json",
+          "model.json",
+          "system.py",
+          "composition.py",
+          "replay.py"
+        ],
+        "replay": true
+      }
+    ],
+    "read_files": [
+      "composition.py",
+      "initial_trace.json",
+      "model.json",
+      "replay.py",
+      "system.py",
+      "task.json"
+    ],
+    "successful_replay_calls": 1,
+    "score": {
+      "behavior_pass": true,
+      "minimal_repair": true,
+      "acceptance": {
+        "all_pass": true,
+        "passed": 57,
+        "total": 57,
+        "failures": []
+      },
+      "edits": 0,
+      "minimum_edits": 0,
+      "initial_verdict_correct": true,
+      "healthy_unnecessary_change": false,
+      "verification_claim_supported": true
+    }
+  },
+  {
+    "case_id": "r08",
+    "condition": "B_v3",
+    "trial": 1,
+    "status": "completed",
+    "prediction": {
+      "configuration": {
+        "cache_scope": "tenant_query",
+        "error_mode": "tagged",
+        "unit_mode": "convert",
+        "sample_mode": "reuse",
+        "lineage_mode": "preserve",
+        "retry_accounting": "all_calls"
+      },
+      "initial_verdict": "satisfied",
+      "explanation": "最少修改为零项。声明输入域的 sampling_requirement 均为 reuse_allowed，允许复用采样。实际执行 python3 -B replay.py，48 个输入全部通过行为契约检查，失败数为 0，保留完整原配置。",
+      "verified": true
+    },
+    "elapsed_seconds": 48.8502451669774,
+    "exit_code": 0,
+    "timed_out": false,
+    "usage": {
+      "input_tokens": 57648,
+      "cached_input_tokens": 41344,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 356,
+      "reasoning_output_tokens": 18
+    },
+    "model_requested": "gpt-6-astra",
+    "reasoning_effort": "high",
+    "cli_version": "codex-cli 0.158.0-alpha.2.1",
+    "input_sha256": "041e8752ad7099cb2d387320480216bbae583f71789a87dad595af76bcb646d6",
+    "prompt_sha256": "f5e396eb3141fa62dbefc40c31e454789c188151303a4266560d7316e27912a6",
+    "event_sha256": "eacbe230fdef6659119250cfeed147c16aacb8423d0284aa53b05690c12ea4f3",
+    "stderr_sha256": "9f54d1b19bd363387e9e04bcc7308077a970855cf21995b47ef3ba4c3e0a9e43",
+    "tool_audit": [
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc ls",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [],
+        "replay": false
+      },
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'cat task.json model.json initial_trace.json system.py replay.py composition.py'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "task.json",
+          "model.json",
+          "initial_trace.json",
+          "system.py",
+          "replay.py",
+          "composition.py"
+        ],
+        "replay": false
+      },
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'cat SKILL.md references/contracts.md references/probability-causality.md'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "SKILL.md",
+          "references/contracts.md",
+          "references/probability-causality.md"
+        ],
+        "replay": false
+      },
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'python3 -B replay.py'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "task.json",
+          "model.json",
+          "system.py",
+          "composition.py",
+          "replay.py"
+        ],
+        "replay": true
+      }
+    ],
+    "read_files": [
+      "SKILL.md",
+      "composition.py",
+      "initial_trace.json",
+      "model.json",
+      "references/contracts.md",
+      "references/probability-causality.md",
+      "replay.py",
+      "system.py",
+      "task.json"
+    ],
+    "successful_replay_calls": 1,
+    "score": {
+      "behavior_pass": true,
+      "minimal_repair": true,
+      "acceptance": {
+        "all_pass": true,
+        "passed": 57,
+        "total": 57,
+        "failures": []
+      },
+      "edits": 0,
+      "minimum_edits": 0,
+      "initial_verdict_correct": true,
+      "healthy_unnecessary_change": false,
+      "verification_claim_supported": true
+    }
+  },
+  {
+    "case_id": "r08",
+    "condition": "C_v4",
+    "trial": 1,
+    "status": "completed",
+    "prediction": {
+      "configuration": {
+        "cache_scope": "tenant_query",
+        "error_mode": "tagged",
+        "unit_mode": "convert",
+        "sample_mode": "reuse",
+        "lineage_mode": "preserve",
+        "retry_accounting": "all_calls"
+      },
+      "initial_verdict": "satisfied",
+      "explanation": "无需修改，最少修改字段数为 0。声明输入域的 sampling_requirement 均为 reuse_allowed，允许复用采样。已实际运行 python3 -B replay.py：48 个输入全部通过行为契约检查，失败数为 0。",
+      "verified": true
+    },
+    "elapsed_seconds": 36.93291933299042,
+    "exit_code": 0,
+    "timed_out": false,
+    "usage": {
+      "input_tokens": 53090,
+      "cached_input_tokens": 30592,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 289,
+      "reasoning_output_tokens": 0
+    },
+    "model_requested": "gpt-6-astra",
+    "reasoning_effort": "high",
+    "cli_version": "codex-cli 0.158.0-alpha.2.1",
+    "input_sha256": "041e8752ad7099cb2d387320480216bbae583f71789a87dad595af76bcb646d6",
+    "prompt_sha256": "4d58fda654427490b3a0e3b704f952971b1b9ba9e5bbef23058c5bfb5223d452",
+    "event_sha256": "388dad826b3cece2ba445655f673343906fcd97aa5cc2e14e1eddd15add28f99",
+    "stderr_sha256": "a072a03aa4f5e05d6abeb3f5e5e33e21d4d8120e9c4f809459281bc6a34e13a0",
+    "tool_audit": [
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc ls",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [],
+        "replay": false
+      },
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'cat task.json system.py model.json initial_trace.json'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "task.json",
+          "system.py",
+          "model.json",
+          "initial_trace.json"
+        ],
+        "replay": false
+      },
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'cat SKILL.md references/executable-contracts.md replay.py'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "SKILL.md",
+          "references/executable-contracts.md",
+          "replay.py"
+        ],
+        "replay": false
+      },
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'python3 -B replay.py'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "task.json",
+          "model.json",
+          "system.py",
+          "composition.py",
+          "replay.py"
+        ],
+        "replay": true
+      }
+    ],
+    "read_files": [
+      "SKILL.md",
+      "composition.py",
+      "initial_trace.json",
+      "model.json",
+      "references/executable-contracts.md",
+      "replay.py",
+      "system.py",
+      "task.json"
+    ],
+    "successful_replay_calls": 1,
+    "score": {
+      "behavior_pass": true,
+      "minimal_repair": true,
+      "acceptance": {
+        "all_pass": true,
+        "passed": 57,
+        "total": 57,
+        "failures": []
+      },
+      "edits": 0,
+      "minimum_edits": 0,
+      "initial_verdict_correct": true,
+      "healthy_unnecessary_change": false,
+      "verification_claim_supported": true
+    }
+  },
+  {
+    "case_id": "r03",
+    "condition": "C_v4",
+    "trial": 2,
+    "status": "completed",
+    "prediction": {
+      "configuration": {
+        "cache_scope": "tenant_query",
+        "error_mode": "tagged",
+        "unit_mode": "convert",
+        "sample_mode": "fresh",
+        "lineage_mode": "preserve",
+        "retry_accounting": "all_calls"
+      },
+      "initial_verdict": "violation",
+      "explanation": "原配置回放 48 个声明输入，28 个失败，违反美分转美元和独立调用采样契约。最少需修改 unit_mode 为 convert、sample_mode 为 fresh，其余保持不变。候选已实际回放，48/48 通过，无失败义务。",
+      "verified": true
+    },
+    "elapsed_seconds": 52.20574825000949,
+    "exit_code": 0,
+    "timed_out": false,
+    "usage": {
+      "input_tokens": 83909,
+      "cached_input_tokens": 55040,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 378,
+      "reasoning_output_tokens": 0
+    },
+    "model_requested": "gpt-6-astra",
+    "reasoning_effort": "high",
+    "cli_version": "codex-cli 0.158.0-alpha.2.1",
+    "input_sha256": "de2e45d657365e4271cb0638d08c2b98685c941953c0d402daa9d984a0f384f7",
+    "prompt_sha256": "4d58fda654427490b3a0e3b704f952971b1b9ba9e5bbef23058c5bfb5223d452",
+    "event_sha256": "bcbe99145323dbaee52586ac83842153f45cb3df134eca39f2644248d0f94844",
+    "stderr_sha256": "07f58a53736e0884a1043dafb9976a5679e26b61cc4df8b957ddf1a17cb9044f",
+    "tool_audit": [
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc ls",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [],
+        "replay": false
+      },
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'cat task.json system.py model.json initial_trace.json replay.py composition.py'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "task.json",
+          "system.py",
+          "model.json",
+          "initial_trace.json",
+          "replay.py",
+          "composition.py"
+        ],
+        "replay": false
+      },
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'cat SKILL.md references/executable-contracts.md'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "SKILL.md",
+          "references/executable-contracts.md"
+        ],
+        "replay": false
+      },
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'python3 -B replay.py'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "task.json",
+          "model.json",
+          "system.py",
+          "composition.py",
+          "replay.py"
+        ],
+        "replay": true
+      },
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc \"python3 -B replay.py '{\\\"cache_scope\\\":\\\"tenant_query\\\",\\\"error_mode\\\":\\\"tagged\\\",\\\"unit_mode\\\":\\\"convert\\\",\\\"sample_mode\\\":\\\"fresh\\\",\\\"lineage_mode\\\":\\\"preserve\\\",\\\"retry_accounting\\\":\\\"all_calls\\\"}'\"",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "task.json",
+          "model.json",
+          "system.py",
+          "composition.py",
+          "replay.py"
+        ],
+        "replay": true
+      }
+    ],
+    "read_files": [
+      "SKILL.md",
+      "composition.py",
+      "initial_trace.json",
+      "model.json",
+      "references/executable-contracts.md",
+      "replay.py",
+      "system.py",
+      "task.json"
+    ],
+    "successful_replay_calls": 2,
+    "score": {
+      "behavior_pass": true,
+      "minimal_repair": true,
+      "acceptance": {
+        "all_pass": true,
+        "passed": 57,
+        "total": 57,
+        "failures": []
+      },
+      "edits": 2,
+      "minimum_edits": 2,
+      "initial_verdict_correct": true,
+      "healthy_unnecessary_change": null,
+      "verification_claim_supported": true
+    }
+  },
+  {
+    "case_id": "r03",
+    "condition": "A_no_skill",
+    "trial": 2,
+    "status": "completed",
+    "prediction": {
+      "configuration": {
+        "cache_scope": "tenant_query",
+        "error_mode": "tagged",
+        "unit_mode": "convert",
+        "sample_mode": "fresh",
+        "lineage_mode": "preserve",
+        "retry_accounting": "all_calls"
+      },
+      "initial_verdict": "violation",
+      "explanation": "原配置回放 48 个声明输入，28 个失败，涉及 cents 转 USD 和 fresh 采样调用复用。仅修改 unit_mode 与 sample_mode，分别修复这两项独立违约，其余有效配置保留。修改后实际回放 48/48 通过，无失败契约。",
+      "verified": true
+    },
+    "elapsed_seconds": 48.20015583303757,
+    "exit_code": 0,
+    "timed_out": false,
+    "usage": {
+      "input_tokens": 53414,
+      "cached_input_tokens": 20864,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 389,
+      "reasoning_output_tokens": 25
+    },
+    "model_requested": "gpt-6-astra",
+    "reasoning_effort": "high",
+    "cli_version": "codex-cli 0.158.0-alpha.2.1",
+    "input_sha256": "de2e45d657365e4271cb0638d08c2b98685c941953c0d402daa9d984a0f384f7",
+    "prompt_sha256": "882c2741b24961d22fad8e1a8e1ca3be21ce7e0fdfd6db045780ae28795706c7",
+    "event_sha256": "62953712c1509861673a246ab713ed02ccb52244542060da15104a1dc0e74107",
+    "stderr_sha256": "4391a8b597e844b693536277c7a67b1caa67ecc739b9c1691d34a46e1d5b84b9",
+    "tool_audit": [
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'cat task.json model.json initial_trace.json system.py replay.py composition.py'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "task.json",
+          "model.json",
+          "initial_trace.json",
+          "system.py",
+          "replay.py",
+          "composition.py"
+        ],
+        "replay": false
+      },
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'python3 -B replay.py'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "task.json",
+          "model.json",
+          "system.py",
+          "composition.py",
+          "replay.py"
+        ],
+        "replay": true
+      },
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc \"python3 -B replay.py '{\\\"cache_scope\\\":\\\"tenant_query\\\",\\\"error_mode\\\":\\\"tagged\\\",\\\"unit_mode\\\":\\\"convert\\\",\\\"sample_mode\\\":\\\"fresh\\\",\\\"lineage_mode\\\":\\\"preserve\\\",\\\"retry_accounting\\\":\\\"all_calls\\\"}'\"",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "task.json",
+          "model.json",
+          "system.py",
+          "composition.py",
+          "replay.py"
+        ],
+        "replay": true
+      }
+    ],
+    "read_files": [
+      "composition.py",
+      "initial_trace.json",
+      "model.json",
+      "replay.py",
+      "system.py",
+      "task.json"
+    ],
+    "successful_replay_calls": 2,
+    "score": {
+      "behavior_pass": true,
+      "minimal_repair": true,
+      "acceptance": {
+        "all_pass": true,
+        "passed": 57,
+        "total": 57,
+        "failures": []
+      },
+      "edits": 2,
+      "minimum_edits": 2,
+      "initial_verdict_correct": true,
+      "healthy_unnecessary_change": null,
+      "verification_claim_supported": true
+    }
+  },
+  {
+    "case_id": "r03",
+    "condition": "B_v3",
+    "trial": 2,
+    "status": "completed",
+    "prediction": {
+      "configuration": {
+        "cache_scope": "tenant_query",
+        "error_mode": "tagged",
+        "unit_mode": "convert",
+        "sample_mode": "fresh",
+        "lineage_mode": "preserve",
+        "retry_accounting": "all_calls"
+      },
+      "initial_verdict": "violation",
+      "explanation": "仅修改两个必要字段：convert 将美分转换为美元；fresh 为每次采样单独调用。其余有效配置保持不变。实际回放原配置有 28/48 个输入违反金额转换或采样契约；修改后全部 48 个声明输入通过，无失败。",
+      "verified": true
+    },
+    "elapsed_seconds": 50.29967575002229,
+    "exit_code": 0,
+    "timed_out": false,
+    "usage": {
+      "input_tokens": 56099,
+      "cached_input_tokens": 41472,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 374,
+      "reasoning_output_tokens": 0
+    },
+    "model_requested": "gpt-6-astra",
+    "reasoning_effort": "high",
+    "cli_version": "codex-cli 0.158.0-alpha.2.1",
+    "input_sha256": "de2e45d657365e4271cb0638d08c2b98685c941953c0d402daa9d984a0f384f7",
+    "prompt_sha256": "f5e396eb3141fa62dbefc40c31e454789c188151303a4266560d7316e27912a6",
+    "event_sha256": "b196d5ca2096e4478bbec358455a925557cb5115b4a7881afa3e486fc6391861",
+    "stderr_sha256": "ad5aa4634025ce00c690cd0dad293d6c33fd5589e299b64a6f5565626cb17258",
+    "tool_audit": [
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'cat system.py initial_trace.json replay.py composition.py'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "system.py",
+          "initial_trace.json",
+          "replay.py",
+          "composition.py"
+        ],
+        "replay": false
+      },
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'cat task.json model.json'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "task.json",
+          "model.json"
+        ],
+        "replay": false
+      },
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'python3 -B replay.py'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "task.json",
+          "model.json",
+          "system.py",
+          "composition.py",
+          "replay.py"
+        ],
+        "replay": true
+      },
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc \"python3 -B replay.py '{\\\"cache_scope\\\":\\\"tenant_query\\\",\\\"error_mode\\\":\\\"tagged\\\",\\\"unit_mode\\\":\\\"convert\\\",\\\"sample_mode\\\":\\\"fresh\\\",\\\"lineage_mode\\\":\\\"preserve\\\",\\\"retry_accounting\\\":\\\"all_calls\\\"}'\"",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "task.json",
+          "model.json",
+          "system.py",
+          "composition.py",
+          "replay.py"
+        ],
+        "replay": true
+      }
+    ],
+    "read_files": [
+      "composition.py",
+      "initial_trace.json",
+      "model.json",
+      "replay.py",
+      "system.py",
+      "task.json"
+    ],
+    "successful_replay_calls": 2,
+    "score": {
+      "behavior_pass": true,
+      "minimal_repair": true,
+      "acceptance": {
+        "all_pass": true,
+        "passed": 57,
+        "total": 57,
+        "failures": []
+      },
+      "edits": 2,
+      "minimum_edits": 2,
+      "initial_verdict_correct": true,
+      "healthy_unnecessary_change": null,
+      "verification_claim_supported": true
+    }
+  },
+  {
+    "case_id": "r06",
+    "condition": "B_v3",
+    "trial": 2,
+    "status": "completed",
+    "prediction": {
+      "configuration": {
+        "cache_scope": "tenant_query",
+        "error_mode": "tagged",
+        "unit_mode": "convert",
+        "sample_mode": "fresh",
+        "lineage_mode": "preserve",
+        "retry_accounting": "all_calls"
+      },
+      "initial_verdict": "violation",
+      "explanation": "原配置回放 48 个输入，32 个失败，涉及美分转换、来源 ID 保留及重试计费。仅修改对应的三个必要字段，保留其余有效配置；修复后实际回放 48/48 通过，无契约违反。",
+      "verified": true
+    },
+    "elapsed_seconds": 42.95578737498727,
+    "exit_code": 0,
+    "timed_out": false,
+    "usage": {
+      "input_tokens": 71211,
+      "cached_input_tokens": 57856,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 424,
+      "reasoning_output_tokens": 0
+    },
+    "model_requested": "gpt-6-astra",
+    "reasoning_effort": "high",
+    "cli_version": "codex-cli 0.158.0-alpha.2.1",
+    "input_sha256": "72da67ce3a2677448a6db4618301742dd7edb6a8c9c4b71f604fd0094a38bca7",
+    "prompt_sha256": "f5e396eb3141fa62dbefc40c31e454789c188151303a4266560d7316e27912a6",
+    "event_sha256": "4d13baec492d5c06cb1ca51956d708e9bb095d837579fead1311c2ecfe7a8bc2",
+    "stderr_sha256": "49ee140f78be21b6a5486f81a8fb3211fdb3ab7a8c508dd6f994459280cb6cbd",
+    "tool_audit": [
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc ls",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [],
+        "replay": false
+      },
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'cat task.json system.py model.json initial_trace.json'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "task.json",
+          "system.py",
+          "model.json",
+          "initial_trace.json"
+        ],
+        "replay": false
+      },
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'cat SKILL.md references/contracts.md references/effects.md references/quantitative.md replay.py'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "SKILL.md",
+          "references/contracts.md",
+          "references/effects.md",
+          "references/quantitative.md",
+          "replay.py"
+        ],
+        "replay": false
+      },
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'python3 -B replay.py'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "task.json",
+          "model.json",
+          "system.py",
+          "composition.py",
+          "replay.py"
+        ],
+        "replay": true
+      },
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc \"python3 -B replay.py '{\\\"cache_scope\\\":\\\"tenant_query\\\",\\\"error_mode\\\":\\\"tagged\\\",\\\"unit_mode\\\":\\\"convert\\\",\\\"sample_mode\\\":\\\"fresh\\\",\\\"lineage_mode\\\":\\\"preserve\\\",\\\"retry_accounting\\\":\\\"all_calls\\\"}'\"",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "task.json",
+          "model.json",
+          "system.py",
+          "composition.py",
+          "replay.py"
+        ],
+        "replay": true
+      }
+    ],
+    "read_files": [
+      "SKILL.md",
+      "composition.py",
+      "initial_trace.json",
+      "model.json",
+      "references/contracts.md",
+      "references/effects.md",
+      "references/quantitative.md",
+      "replay.py",
+      "system.py",
+      "task.json"
+    ],
+    "successful_replay_calls": 2,
+    "score": {
+      "behavior_pass": true,
+      "minimal_repair": true,
+      "acceptance": {
+        "all_pass": true,
+        "passed": 57,
+        "total": 57,
+        "failures": []
+      },
+      "edits": 3,
+      "minimum_edits": 3,
+      "initial_verdict_correct": true,
+      "healthy_unnecessary_change": null,
+      "verification_claim_supported": true
+    }
+  },
+  {
+    "case_id": "r06",
+    "condition": "C_v4",
+    "trial": 2,
+    "status": "completed",
+    "prediction": {
+      "configuration": {
+        "cache_scope": "tenant_query",
+        "error_mode": "tagged",
+        "unit_mode": "convert",
+        "sample_mode": "fresh",
+        "lineage_mode": "preserve",
+        "retry_accounting": "all_calls"
+      },
+      "initial_verdict": "violation",
+      "explanation": "仅修改三个必要字段：转换 cents 为 USD、保留来源 ID、计费所有实际尝试，其余保持原值。实际回放原配置有 32/48 个输入失败，分别涉及这三项契约；修复后 48/48 全部通过。",
+      "verified": true
+    },
+    "elapsed_seconds": 60.72798091702862,
+    "exit_code": 0,
+    "timed_out": false,
+    "usage": {
+      "input_tokens": 75509,
+      "cached_input_tokens": 60544,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 376,
+      "reasoning_output_tokens": 0
+    },
+    "model_requested": "gpt-6-astra",
+    "reasoning_effort": "high",
+    "cli_version": "codex-cli 0.158.0-alpha.2.1",
+    "input_sha256": "72da67ce3a2677448a6db4618301742dd7edb6a8c9c4b71f604fd0094a38bca7",
+    "prompt_sha256": "4d58fda654427490b3a0e3b704f952971b1b9ba9e5bbef23058c5bfb5223d452",
+    "event_sha256": "aff95debd6fab614e477188281fe5d7e42add57bed7730fff8e4f07024bc8e01",
+    "stderr_sha256": "b11b3bacb89fb18cdb8aa550239b338802ca50e4e839d411ed2d82e58e633828",
+    "tool_audit": [
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc ls",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [],
+        "replay": false
+      },
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'cat task.json system.py model.json initial_trace.json'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "task.json",
+          "system.py",
+          "model.json",
+          "initial_trace.json"
+        ],
+        "replay": false
+      },
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'cat SKILL.md references/executable-contracts.md replay.py'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "SKILL.md",
+          "references/executable-contracts.md",
+          "replay.py"
+        ],
+        "replay": false
+      },
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'python3 -B replay.py'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "task.json",
+          "model.json",
+          "system.py",
+          "composition.py",
+          "replay.py"
+        ],
+        "replay": true
+      },
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc \"python3 -B replay.py '{\\\"cache_scope\\\":\\\"tenant_query\\\",\\\"error_mode\\\":\\\"tagged\\\",\\\"unit_mode\\\":\\\"convert\\\",\\\"sample_mode\\\":\\\"fresh\\\",\\\"lineage_mode\\\":\\\"preserve\\\",\\\"retry_accounting\\\":\\\"all_calls\\\"}'\"",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "task.json",
+          "model.json",
+          "system.py",
+          "composition.py",
+          "replay.py"
+        ],
+        "replay": true
+      }
+    ],
+    "read_files": [
+      "SKILL.md",
+      "composition.py",
+      "initial_trace.json",
+      "model.json",
+      "references/executable-contracts.md",
+      "replay.py",
+      "system.py",
+      "task.json"
+    ],
+    "successful_replay_calls": 2,
+    "score": {
+      "behavior_pass": true,
+      "minimal_repair": true,
+      "acceptance": {
+        "all_pass": true,
+        "passed": 57,
+        "total": 57,
+        "failures": []
+      },
+      "edits": 3,
+      "minimum_edits": 3,
+      "initial_verdict_correct": true,
+      "healthy_unnecessary_change": null,
+      "verification_claim_supported": true
+    }
+  },
+  {
+    "case_id": "r06",
+    "condition": "A_no_skill",
+    "trial": 2,
+    "status": "completed",
+    "prediction": {
+      "configuration": {
+        "cache_scope": "tenant_query",
+        "error_mode": "tagged",
+        "unit_mode": "convert",
+        "sample_mode": "fresh",
+        "lineage_mode": "preserve",
+        "retry_accounting": "all_calls"
+      },
+      "initial_verdict": "violation",
+      "explanation": "仅修改三个必要字段：金额转换为 USD、保留来源 ID、计费全部实际调用，其余保持原值。原配置回放 48 个声明输入，32 个失败，涉及上述三项契约；修改后实际回放 48/48 通过，无失败。",
+      "verified": true
+    },
+    "elapsed_seconds": 41.86073020903859,
+    "exit_code": 0,
+    "timed_out": false,
+    "usage": {
+      "input_tokens": 53377,
+      "cached_input_tokens": 31232,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 338,
+      "reasoning_output_tokens": 14
+    },
+    "model_requested": "gpt-6-astra",
+    "reasoning_effort": "high",
+    "cli_version": "codex-cli 0.158.0-alpha.2.1",
+    "input_sha256": "72da67ce3a2677448a6db4618301742dd7edb6a8c9c4b71f604fd0094a38bca7",
+    "prompt_sha256": "882c2741b24961d22fad8e1a8e1ca3be21ce7e0fdfd6db045780ae28795706c7",
+    "event_sha256": "708ec714c2021bf23f3f9b055a27b604219d5609b9704fff5211ae81d88ade4f",
+    "stderr_sha256": "93ebf1f9cd4c42dd969c2a4d79b7cb3ddeebb434e58458257705736785f3098a",
+    "tool_audit": [
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'cat task.json model.json initial_trace.json system.py replay.py composition.py'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "task.json",
+          "model.json",
+          "initial_trace.json",
+          "system.py",
+          "replay.py",
+          "composition.py"
+        ],
+        "replay": false
+      },
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'python3 -B replay.py'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "task.json",
+          "model.json",
+          "system.py",
+          "composition.py",
+          "replay.py"
+        ],
+        "replay": true
+      },
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc \"python3 -B replay.py '{\\\"cache_scope\\\":\\\"tenant_query\\\",\\\"error_mode\\\":\\\"tagged\\\",\\\"unit_mode\\\":\\\"convert\\\",\\\"sample_mode\\\":\\\"fresh\\\",\\\"lineage_mode\\\":\\\"preserve\\\",\\\"retry_accounting\\\":\\\"all_calls\\\"}'\"",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "task.json",
+          "model.json",
+          "system.py",
+          "composition.py",
+          "replay.py"
+        ],
+        "replay": true
+      }
+    ],
+    "read_files": [
+      "composition.py",
+      "initial_trace.json",
+      "model.json",
+      "replay.py",
+      "system.py",
+      "task.json"
+    ],
+    "successful_replay_calls": 2,
+    "score": {
+      "behavior_pass": true,
+      "minimal_repair": true,
+      "acceptance": {
+        "all_pass": true,
+        "passed": 57,
+        "total": 57,
+        "failures": []
+      },
+      "edits": 3,
+      "minimum_edits": 3,
+      "initial_verdict_correct": true,
+      "healthy_unnecessary_change": null,
+      "verification_claim_supported": true
+    }
+  },
+  {
+    "case_id": "r05",
+    "condition": "A_no_skill",
+    "trial": 2,
+    "status": "completed",
+    "prediction": {
+      "configuration": {
+        "cache_scope": "tenant_query",
+        "error_mode": "tagged",
+        "unit_mode": "convert",
+        "sample_mode": "fresh",
+        "lineage_mode": "preserve",
+        "retry_accounting": "all_calls"
+      },
+      "initial_verdict": "violation",
+      "explanation": "原配置回放有40/48个输入失败。最少修改3项：缓存按租户隔离、保留失败状态、保留来源ID；其余有效配置不变。修改后实际回放48/48通过，无失败契约。",
+      "verified": true
+    },
+    "elapsed_seconds": 60.88589029200375,
+    "exit_code": 0,
+    "timed_out": false,
+    "usage": {
+      "input_tokens": 66281,
+      "cached_input_tokens": 54656,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 397,
+      "reasoning_output_tokens": 37
+    },
+    "model_requested": "gpt-6-astra",
+    "reasoning_effort": "high",
+    "cli_version": "codex-cli 0.158.0-alpha.2.1",
+    "input_sha256": "f7c84f0b74e05586ad527e42125a413e978a3562153bcbd6b4be6d6a8060d091",
+    "prompt_sha256": "882c2741b24961d22fad8e1a8e1ca3be21ce7e0fdfd6db045780ae28795706c7",
+    "event_sha256": "b199994cae8daac5bbf9db4d10c68ddbe1ecb5079ac8131e3ec81d7436fcd44c",
+    "stderr_sha256": "bd1d5f0440e1b6d36b332d6e7155ac9ce16f404c9c621daa7a7b65f8537f5f83",
+    "tool_audit": [
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc ls",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [],
+        "replay": false
+      },
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'cat task.json model.json initial_trace.json'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "task.json",
+          "model.json",
+          "initial_trace.json"
+        ],
+        "replay": false
+      },
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'cat system.py replay.py'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "system.py",
+          "replay.py"
+        ],
+        "replay": false
+      },
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'python3 -B replay.py'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "task.json",
+          "model.json",
+          "system.py",
+          "composition.py",
+          "replay.py"
+        ],
+        "replay": true
+      },
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc \"python3 -B replay.py '{\\\"cache_scope\\\":\\\"tenant_query\\\",\\\"error_mode\\\":\\\"tagged\\\",\\\"unit_mode\\\":\\\"convert\\\",\\\"sample_mode\\\":\\\"fresh\\\",\\\"lineage_mode\\\":\\\"preserve\\\",\\\"retry_accounting\\\":\\\"all_calls\\\"}'\"",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "task.json",
+          "model.json",
+          "system.py",
+          "composition.py",
+          "replay.py"
+        ],
+        "replay": true
+      }
+    ],
+    "read_files": [
+      "composition.py",
+      "initial_trace.json",
+      "model.json",
+      "replay.py",
+      "system.py",
+      "task.json"
+    ],
+    "successful_replay_calls": 2,
+    "score": {
+      "behavior_pass": true,
+      "minimal_repair": true,
+      "acceptance": {
+        "all_pass": true,
+        "passed": 57,
+        "total": 57,
+        "failures": []
+      },
+      "edits": 3,
+      "minimum_edits": 3,
+      "initial_verdict_correct": true,
+      "healthy_unnecessary_change": null,
+      "verification_claim_supported": true
+    }
+  },
+  {
+    "case_id": "r05",
+    "condition": "C_v4",
+    "trial": 2,
+    "status": "completed",
+    "prediction": {
+      "configuration": {
+        "cache_scope": "tenant_query",
+        "error_mode": "tagged",
+        "unit_mode": "convert",
+        "sample_mode": "fresh",
+        "lineage_mode": "preserve",
+        "retry_accounting": "all_calls"
+      },
+      "initial_verdict": "violation",
+      "explanation": "仅修改三个必要字段：缓存按租户隔离、保留失败状态、保留来源 ID，其余有效配置不变。实际回放原配置有 40/48 个输入失败；修改后全部 48 个声明输入通过行为契约检查。",
+      "verified": true
+    },
+    "elapsed_seconds": 53.357099209039006,
+    "exit_code": 0,
+    "timed_out": false,
+    "usage": {
+      "input_tokens": 75971,
+      "cached_input_tokens": 52736,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 398,
+      "reasoning_output_tokens": 0
+    },
+    "model_requested": "gpt-6-astra",
+    "reasoning_effort": "high",
+    "cli_version": "codex-cli 0.158.0-alpha.2.1",
+    "input_sha256": "f7c84f0b74e05586ad527e42125a413e978a3562153bcbd6b4be6d6a8060d091",
+    "prompt_sha256": "4d58fda654427490b3a0e3b704f952971b1b9ba9e5bbef23058c5bfb5223d452",
+    "event_sha256": "012becd73193940a76e5b8f120d21061e6eec78076d1a86fbefdf39b1837a29d",
+    "stderr_sha256": "08fc24c7eb5ebe9ad2511afe1ffe27552b12d7c7c98bcf67b4f760b00ace10b3",
+    "tool_audit": [
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc ls",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [],
+        "replay": false
+      },
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'cat task.json model.json system.py initial_trace.json'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "task.json",
+          "model.json",
+          "system.py",
+          "initial_trace.json"
+        ],
+        "replay": false
+      },
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'cat SKILL.md references/executable-contracts.md replay.py'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "SKILL.md",
+          "references/executable-contracts.md",
+          "replay.py"
+        ],
+        "replay": false
+      },
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'python3 -B replay.py'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "task.json",
+          "model.json",
+          "system.py",
+          "composition.py",
+          "replay.py"
+        ],
+        "replay": true
+      },
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc \"python3 -B replay.py '{\\\"cache_scope\\\":\\\"tenant_query\\\",\\\"error_mode\\\":\\\"tagged\\\",\\\"unit_mode\\\":\\\"convert\\\",\\\"sample_mode\\\":\\\"fresh\\\",\\\"lineage_mode\\\":\\\"preserve\\\",\\\"retry_accounting\\\":\\\"all_calls\\\"}'\"",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "task.json",
+          "model.json",
+          "system.py",
+          "composition.py",
+          "replay.py"
+        ],
+        "replay": true
+      }
+    ],
+    "read_files": [
+      "SKILL.md",
+      "composition.py",
+      "initial_trace.json",
+      "model.json",
+      "references/executable-contracts.md",
+      "replay.py",
+      "system.py",
+      "task.json"
+    ],
+    "successful_replay_calls": 2,
+    "score": {
+      "behavior_pass": true,
+      "minimal_repair": true,
+      "acceptance": {
+        "all_pass": true,
+        "passed": 57,
+        "total": 57,
+        "failures": []
+      },
+      "edits": 3,
+      "minimum_edits": 3,
+      "initial_verdict_correct": true,
+      "healthy_unnecessary_change": null,
+      "verification_claim_supported": true
+    }
+  },
+  {
+    "case_id": "r05",
+    "condition": "B_v3",
+    "trial": 2,
+    "status": "completed",
+    "prediction": {
+      "configuration": {
+        "cache_scope": "tenant_query",
+        "error_mode": "tagged",
+        "unit_mode": "convert",
+        "sample_mode": "fresh",
+        "lineage_mode": "preserve",
+        "retry_accounting": "all_calls"
+      },
+      "initial_verdict": "violation",
+      "explanation": "仅修改三个必要字段：按租户隔离缓存、保留失败状态、保留来源 ID；其余有效配置保持不变。实际回放原配置 48 个输入中 40 个失败，修复后 48 个全部通过行为契约检查。",
+      "verified": true
+    },
+    "elapsed_seconds": 46.883475707960315,
+    "exit_code": 0,
+    "timed_out": false,
+    "usage": {
+      "input_tokens": 58674,
+      "cached_input_tokens": 33024,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 403,
+      "reasoning_output_tokens": 0
+    },
+    "model_requested": "gpt-6-astra",
+    "reasoning_effort": "high",
+    "cli_version": "codex-cli 0.158.0-alpha.2.1",
+    "input_sha256": "f7c84f0b74e05586ad527e42125a413e978a3562153bcbd6b4be6d6a8060d091",
+    "prompt_sha256": "f5e396eb3141fa62dbefc40c31e454789c188151303a4266560d7316e27912a6",
+    "event_sha256": "2d07a77fea0f4d7d2c5c4b58256fbbe189fce413df309f5e8d48e5a81b515e04",
+    "stderr_sha256": "ae2d12fec7670a18880beb5eff977359c2ae8ae0a1353a5028aad67359170370",
+    "tool_audit": [
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc ls",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [],
+        "replay": false
+      },
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'cat task.json model.json initial_trace.json system.py replay.py composition.py'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "task.json",
+          "model.json",
+          "initial_trace.json",
+          "system.py",
+          "replay.py",
+          "composition.py"
+        ],
+        "replay": false
+      },
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'cat SKILL.md references/contracts.md references/effects.md references/probability-causality.md'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "SKILL.md",
+          "references/contracts.md",
+          "references/effects.md",
+          "references/probability-causality.md"
+        ],
+        "replay": false
+      },
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc \"python3 -B replay.py '{\\\"cache_scope\\\":\\\"tenant_query\\\",\\\"error_mode\\\":\\\"tagged\\\",\\\"unit_mode\\\":\\\"convert\\\",\\\"sample_mode\\\":\\\"fresh\\\",\\\"lineage_mode\\\":\\\"preserve\\\",\\\"retry_accounting\\\":\\\"all_calls\\\"}'\"",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "task.json",
+          "model.json",
+          "system.py",
+          "composition.py",
+          "replay.py"
+        ],
+        "replay": true
+      },
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'python3 -B replay.py'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "task.json",
+          "model.json",
+          "system.py",
+          "composition.py",
+          "replay.py"
+        ],
+        "replay": true
+      }
+    ],
+    "read_files": [
+      "SKILL.md",
+      "composition.py",
+      "initial_trace.json",
+      "model.json",
+      "references/contracts.md",
+      "references/effects.md",
+      "references/probability-causality.md",
+      "replay.py",
+      "system.py",
+      "task.json"
+    ],
+    "successful_replay_calls": 2,
+    "score": {
+      "behavior_pass": true,
+      "minimal_repair": true,
+      "acceptance": {
+        "all_pass": true,
+        "passed": 57,
+        "total": 57,
+        "failures": []
+      },
+      "edits": 3,
+      "minimum_edits": 3,
+      "initial_verdict_correct": true,
+      "healthy_unnecessary_change": null,
+      "verification_claim_supported": true
+    }
+  },
+  {
+    "case_id": "r08",
+    "condition": "A_no_skill",
+    "trial": 2,
+    "status": "completed",
+    "prediction": {
+      "configuration": {
+        "cache_scope": "tenant_query",
+        "error_mode": "tagged",
+        "unit_mode": "convert",
+        "sample_mode": "reuse",
+        "lineage_mode": "preserve",
+        "retry_accounting": "all_calls"
+      },
+      "initial_verdict": "satisfied",
+      "explanation": "最少修改为 0 项，保留完整原配置。已实际执行 python3 -B replay.py，全部 48 个声明输入通过，失败数为 0。声明域的 sampling_requirement 为 reuse_allowed，允许复用采样，无需改为 fresh。",
+      "verified": true
+    },
+    "elapsed_seconds": 102.8315097920131,
+    "exit_code": 0,
+    "timed_out": false,
+    "usage": {
+      "input_tokens": 52877,
+      "cached_input_tokens": 31360,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 258,
+      "reasoning_output_tokens": 31
+    },
+    "model_requested": "gpt-6-astra",
+    "reasoning_effort": "high",
+    "cli_version": "codex-cli 0.158.0-alpha.2.1",
+    "input_sha256": "041e8752ad7099cb2d387320480216bbae583f71789a87dad595af76bcb646d6",
+    "prompt_sha256": "882c2741b24961d22fad8e1a8e1ca3be21ce7e0fdfd6db045780ae28795706c7",
+    "event_sha256": "50eb3a5824dd30489f0895b40e02f8c582818da989c06b1e3f8e252603cee010",
+    "stderr_sha256": "b57d677875e6010979ff290a08dd223bf2307c06f7db902255c0b6b173b02130",
+    "tool_audit": [
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'cat task.json model.json initial_trace.json system.py replay.py composition.py'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "task.json",
+          "model.json",
+          "initial_trace.json",
+          "system.py",
+          "replay.py",
+          "composition.py"
+        ],
+        "replay": false
+      },
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'python3 -B replay.py'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "task.json",
+          "model.json",
+          "system.py",
+          "composition.py",
+          "replay.py"
+        ],
+        "replay": true
+      }
+    ],
+    "read_files": [
+      "composition.py",
+      "initial_trace.json",
+      "model.json",
+      "replay.py",
+      "system.py",
+      "task.json"
+    ],
+    "successful_replay_calls": 1,
+    "score": {
+      "behavior_pass": true,
+      "minimal_repair": true,
+      "acceptance": {
+        "all_pass": true,
+        "passed": 57,
+        "total": 57,
+        "failures": []
+      },
+      "edits": 0,
+      "minimum_edits": 0,
+      "initial_verdict_correct": true,
+      "healthy_unnecessary_change": false,
+      "verification_claim_supported": true
+    }
+  },
+  {
+    "case_id": "r08",
+    "condition": "B_v3",
+    "trial": 2,
+    "status": "completed",
+    "prediction": {
+      "configuration": {
+        "cache_scope": "tenant_query",
+        "error_mode": "tagged",
+        "unit_mode": "convert",
+        "sample_mode": "reuse",
+        "lineage_mode": "preserve",
+        "retry_accounting": "all_calls"
+      },
+      "initial_verdict": "satisfied",
+      "explanation": "最少必要修改为零。声明输入域的 sampling_requirement 固定为 reuse_allowed，允许复用采样。已实际执行 python3 -B replay.py，48 个输入全部通过行为契约检查，失败数为 0，因此保留原配置。",
+      "verified": true
+    },
+    "elapsed_seconds": 108.94148004200542,
+    "exit_code": 0,
+    "timed_out": false,
+    "usage": {
+      "input_tokens": 57071,
+      "cached_input_tokens": 44288,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 294,
+      "reasoning_output_tokens": 0
+    },
+    "model_requested": "gpt-6-astra",
+    "reasoning_effort": "high",
+    "cli_version": "codex-cli 0.158.0-alpha.2.1",
+    "input_sha256": "041e8752ad7099cb2d387320480216bbae583f71789a87dad595af76bcb646d6",
+    "prompt_sha256": "f5e396eb3141fa62dbefc40c31e454789c188151303a4266560d7316e27912a6",
+    "event_sha256": "1ccfab054ca1b962133c0ed3ed4703da1adb379b60fe3f240da51e9244720740",
+    "stderr_sha256": "3a82be94d86d080cc74f02cc3e150df0842055164a0f81ce5442a664cdb08684",
+    "tool_audit": [
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc ls",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [],
+        "replay": false
+      },
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'cat task.json model.json initial_trace.json system.py replay.py composition.py'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "task.json",
+          "model.json",
+          "initial_trace.json",
+          "system.py",
+          "replay.py",
+          "composition.py"
+        ],
+        "replay": false
+      },
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'cat SKILL.md references/probability-causality.md'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "SKILL.md",
+          "references/probability-causality.md"
+        ],
+        "replay": false
+      },
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'python3 -B replay.py'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "task.json",
+          "model.json",
+          "system.py",
+          "composition.py",
+          "replay.py"
+        ],
+        "replay": true
+      }
+    ],
+    "read_files": [
+      "SKILL.md",
+      "composition.py",
+      "initial_trace.json",
+      "model.json",
+      "references/probability-causality.md",
+      "replay.py",
+      "system.py",
+      "task.json"
+    ],
+    "successful_replay_calls": 1,
+    "score": {
+      "behavior_pass": true,
+      "minimal_repair": true,
+      "acceptance": {
+        "all_pass": true,
+        "passed": 57,
+        "total": 57,
+        "failures": []
+      },
+      "edits": 0,
+      "minimum_edits": 0,
+      "initial_verdict_correct": true,
+      "healthy_unnecessary_change": false,
+      "verification_claim_supported": true
+    }
+  },
+  {
+    "case_id": "r08",
+    "condition": "C_v4",
+    "trial": 2,
+    "status": "completed",
+    "prediction": {
+      "configuration": {
+        "cache_scope": "tenant_query",
+        "error_mode": "tagged",
+        "unit_mode": "convert",
+        "sample_mode": "reuse",
+        "lineage_mode": "preserve",
+        "retry_accounting": "all_calls"
+      },
+      "initial_verdict": "satisfied",
+      "explanation": "最少修改为零项。声明输入域的采样要求均为 reuse_allowed，允许保留 reuse。已实际执行 python3 -B replay.py：48 个输入全部通过，失败数为 0，保留原配置。",
+      "verified": true
+    },
+    "elapsed_seconds": 103.85789841698715,
+    "exit_code": 0,
+    "timed_out": false,
+    "usage": {
+      "input_tokens": 53384,
+      "cached_input_tokens": 42368,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 259,
+      "reasoning_output_tokens": 0
+    },
+    "model_requested": "gpt-6-astra",
+    "reasoning_effort": "high",
+    "cli_version": "codex-cli 0.158.0-alpha.2.1",
+    "input_sha256": "041e8752ad7099cb2d387320480216bbae583f71789a87dad595af76bcb646d6",
+    "prompt_sha256": "4d58fda654427490b3a0e3b704f952971b1b9ba9e5bbef23058c5bfb5223d452",
+    "event_sha256": "d8474dccb478f10ff96509ec5a3c2c2cf09989f2cb2327fb6bdf8260c32f2e47",
+    "stderr_sha256": "d6b8f3d331661d04a94ebe657c96d7e1ebc0f5348ed4010dbcd2f68ce8493b06",
+    "tool_audit": [
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc ls",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [],
+        "replay": false
+      },
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'cat task.json model.json initial_trace.json system.py replay.py'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "task.json",
+          "model.json",
+          "initial_trace.json",
+          "system.py",
+          "replay.py"
+        ],
+        "replay": false
+      },
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'cat SKILL.md references/executable-contracts.md'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "SKILL.md",
+          "references/executable-contracts.md"
+        ],
+        "replay": false
+      },
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'python3 -B replay.py'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "task.json",
+          "model.json",
+          "system.py",
+          "composition.py",
+          "replay.py"
+        ],
+        "replay": true
+      }
+    ],
+    "read_files": [
+      "SKILL.md",
+      "composition.py",
+      "initial_trace.json",
+      "model.json",
+      "references/executable-contracts.md",
+      "replay.py",
+      "system.py",
+      "task.json"
+    ],
+    "successful_replay_calls": 1,
+    "score": {
+      "behavior_pass": true,
+      "minimal_repair": true,
+      "acceptance": {
+        "all_pass": true,
+        "passed": 57,
+        "total": 57,
+        "failures": []
+      },
+      "edits": 0,
+      "minimum_edits": 0,
+      "initial_verdict_correct": true,
+      "healthy_unnecessary_change": false,
+      "verification_claim_supported": true
+    }
+  },
+  {
+    "case_id": "r01",
+    "condition": "A_no_skill",
+    "trial": 2,
+    "status": "completed",
+    "prediction": {
+      "configuration": {
+        "cache_scope": "tenant_query",
+        "error_mode": "tagged",
+        "unit_mode": "convert",
+        "sample_mode": "fresh",
+        "lineage_mode": "preserve",
+        "retry_accounting": "all_calls"
+      },
+      "initial_verdict": "violation",
+      "explanation": "仅修改两个必要字段：缓存按租户与查询隔离，所有实际调用均计费（含失败重试）。其余有效配置保持不变。实际回放原配置有36/48个输入失败；修改后48/48全部通过行为契约检查。",
+      "verified": true
+    },
+    "elapsed_seconds": 42.34076933399774,
+    "exit_code": 0,
+    "timed_out": false,
+    "usage": {
+      "input_tokens": 53366,
+      "cached_input_tokens": 39552,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 355,
+      "reasoning_output_tokens": 31
+    },
+    "model_requested": "gpt-6-astra",
+    "reasoning_effort": "high",
+    "cli_version": "codex-cli 0.158.0-alpha.2.1",
+    "input_sha256": "8afbed60f03f0ed2430bcab88d86838264b94e1a7661784c93bf23494d77b269",
+    "prompt_sha256": "882c2741b24961d22fad8e1a8e1ca3be21ce7e0fdfd6db045780ae28795706c7",
+    "event_sha256": "fe3ef0b408abbf572ef894fd5b802689387ea3667b3c6b2230f429118d4fe032",
+    "stderr_sha256": "9f5dfeaa37c874d13357b693ef8b8d8ab7c25872d1ef4a5cb5488181e6a4f43e",
+    "tool_audit": [
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'cat task.json model.json initial_trace.json system.py replay.py composition.py'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "task.json",
+          "model.json",
+          "initial_trace.json",
+          "system.py",
+          "replay.py",
+          "composition.py"
+        ],
+        "replay": false
+      },
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'python3 -B replay.py'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "task.json",
+          "model.json",
+          "system.py",
+          "composition.py",
+          "replay.py"
+        ],
+        "replay": true
+      },
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc \"python3 -B replay.py '{\\\"cache_scope\\\":\\\"tenant_query\\\",\\\"error_mode\\\":\\\"tagged\\\",\\\"unit_mode\\\":\\\"convert\\\",\\\"sample_mode\\\":\\\"fresh\\\",\\\"lineage_mode\\\":\\\"preserve\\\",\\\"retry_accounting\\\":\\\"all_calls\\\"}'\"",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "task.json",
+          "model.json",
+          "system.py",
+          "composition.py",
+          "replay.py"
+        ],
+        "replay": true
+      }
+    ],
+    "read_files": [
+      "composition.py",
+      "initial_trace.json",
+      "model.json",
+      "replay.py",
+      "system.py",
+      "task.json"
+    ],
+    "successful_replay_calls": 2,
+    "score": {
+      "behavior_pass": true,
+      "minimal_repair": true,
+      "acceptance": {
+        "all_pass": true,
+        "passed": 57,
+        "total": 57,
+        "failures": []
+      },
+      "edits": 2,
+      "minimum_edits": 2,
+      "initial_verdict_correct": true,
+      "healthy_unnecessary_change": null,
+      "verification_claim_supported": true
+    }
+  },
+  {
+    "case_id": "r01",
+    "condition": "B_v3",
+    "trial": 2,
+    "status": "completed",
+    "prediction": {
+      "configuration": {
+        "cache_scope": "tenant_query",
+        "error_mode": "tagged",
+        "unit_mode": "convert",
+        "sample_mode": "fresh",
+        "lineage_mode": "preserve",
+        "retry_accounting": "all_calls"
+      },
+      "initial_verdict": "violation",
+      "explanation": "仅修改两个必要字段：缓存按租户与查询隔离，避免跨租户命中及状态污染；计费覆盖所有实际尝试，补上失败重试。其余有效配置保留。实际回放原配置有36/48个输入失败，修复后48/48全部通过，无契约违反。",
+      "verified": true
+    },
+    "elapsed_seconds": 41.24335637502372,
+    "exit_code": 0,
+    "timed_out": false,
+    "usage": {
+      "input_tokens": 74737,
+      "cached_input_tokens": 60288,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 412,
+      "reasoning_output_tokens": 0
+    },
+    "model_requested": "gpt-6-astra",
+    "reasoning_effort": "high",
+    "cli_version": "codex-cli 0.158.0-alpha.2.1",
+    "input_sha256": "8afbed60f03f0ed2430bcab88d86838264b94e1a7661784c93bf23494d77b269",
+    "prompt_sha256": "f5e396eb3141fa62dbefc40c31e454789c188151303a4266560d7316e27912a6",
+    "event_sha256": "aaf9c0bf576471217904becc9ddb49cfe68b87ba2c59bf6afe7e38ef725456fe",
+    "stderr_sha256": "f56a00eb4feea22cb41ed165ce11e6fb62f92e0d58a7170345d087231b79c7f0",
+    "tool_audit": [
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc ls",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [],
+        "replay": false
+      },
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'cat task.json model.json initial_trace.json system.py'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "task.json",
+          "model.json",
+          "initial_trace.json",
+          "system.py"
+        ],
+        "replay": false
+      },
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'cat SKILL.md references/effects.md references/probability-causality.md replay.py'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "SKILL.md",
+          "references/effects.md",
+          "references/probability-causality.md",
+          "replay.py"
+        ],
+        "replay": false
+      },
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'python3 -B replay.py'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "task.json",
+          "model.json",
+          "system.py",
+          "composition.py",
+          "replay.py"
+        ],
+        "replay": true
+      },
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc \"python3 -B replay.py '{\\\"cache_scope\\\":\\\"tenant_query\\\",\\\"error_mode\\\":\\\"tagged\\\",\\\"unit_mode\\\":\\\"convert\\\",\\\"sample_mode\\\":\\\"fresh\\\",\\\"lineage_mode\\\":\\\"preserve\\\",\\\"retry_accounting\\\":\\\"all_calls\\\"}'\"",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "task.json",
+          "model.json",
+          "system.py",
+          "composition.py",
+          "replay.py"
+        ],
+        "replay": true
+      }
+    ],
+    "read_files": [
+      "SKILL.md",
+      "composition.py",
+      "initial_trace.json",
+      "model.json",
+      "references/effects.md",
+      "references/probability-causality.md",
+      "replay.py",
+      "system.py",
+      "task.json"
+    ],
+    "successful_replay_calls": 2,
+    "score": {
+      "behavior_pass": true,
+      "minimal_repair": true,
+      "acceptance": {
+        "all_pass": true,
+        "passed": 57,
+        "total": 57,
+        "failures": []
+      },
+      "edits": 2,
+      "minimum_edits": 2,
+      "initial_verdict_correct": true,
+      "healthy_unnecessary_change": null,
+      "verification_claim_supported": true
+    }
+  },
+  {
+    "case_id": "r01",
+    "condition": "C_v4",
+    "trial": 2,
+    "status": "completed",
+    "prediction": {
+      "configuration": {
+        "cache_scope": "tenant_query",
+        "error_mode": "tagged",
+        "unit_mode": "convert",
+        "sample_mode": "fresh",
+        "lineage_mode": "preserve",
+        "retry_accounting": "all_calls"
+      },
+      "initial_verdict": "violation",
+      "explanation": "仅修改两个必要字段：缓存按租户与查询隔离，避免串用其他租户结果；计费覆盖全部实际尝试，避免漏计失败重试。其余有效配置保持不变。实际回放原配置有36/48个输入失败，修复后48/48全部通过行为契约检查。",
+      "verified": true
+    },
+    "elapsed_seconds": 40.64284387498628,
+    "exit_code": 0,
+    "timed_out": false,
+    "usage": {
+      "input_tokens": 58872,
+      "cached_input_tokens": 41600,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 404,
+      "reasoning_output_tokens": 0
+    },
+    "model_requested": "gpt-6-astra",
+    "reasoning_effort": "high",
+    "cli_version": "codex-cli 0.158.0-alpha.2.1",
+    "input_sha256": "8afbed60f03f0ed2430bcab88d86838264b94e1a7661784c93bf23494d77b269",
+    "prompt_sha256": "4d58fda654427490b3a0e3b704f952971b1b9ba9e5bbef23058c5bfb5223d452",
+    "event_sha256": "b1cf51cadc00d650aa65f64789f1915abf0df76d45d25a64b18856aae23dd909",
+    "stderr_sha256": "b29bf1568ad82cc823c6ff062cea6dda7131ea15a2d5a53989474030e46db3a9",
+    "tool_audit": [
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc ls",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [],
+        "replay": false
+      },
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'cat task.json system.py model.json initial_trace.json replay.py composition.py'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "task.json",
+          "system.py",
+          "model.json",
+          "initial_trace.json",
+          "replay.py",
+          "composition.py"
+        ],
+        "replay": false
+      },
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'cat SKILL.md references/executable-contracts.md'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "SKILL.md",
+          "references/executable-contracts.md"
+        ],
+        "replay": false
+      },
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc \"python3 -B replay.py '{\\\"cache_scope\\\":\\\"tenant_query\\\",\\\"error_mode\\\":\\\"tagged\\\",\\\"unit_mode\\\":\\\"convert\\\",\\\"sample_mode\\\":\\\"fresh\\\",\\\"lineage_mode\\\":\\\"preserve\\\",\\\"retry_accounting\\\":\\\"all_calls\\\"}'\"",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "task.json",
+          "model.json",
+          "system.py",
+          "composition.py",
+          "replay.py"
+        ],
+        "replay": true
+      },
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'python3 -B replay.py'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "task.json",
+          "model.json",
+          "system.py",
+          "composition.py",
+          "replay.py"
+        ],
+        "replay": true
+      }
+    ],
+    "read_files": [
+      "SKILL.md",
+      "composition.py",
+      "initial_trace.json",
+      "model.json",
+      "references/executable-contracts.md",
+      "replay.py",
+      "system.py",
+      "task.json"
+    ],
+    "successful_replay_calls": 2,
+    "score": {
+      "behavior_pass": true,
+      "minimal_repair": true,
+      "acceptance": {
+        "all_pass": true,
+        "passed": 57,
+        "total": 57,
+        "failures": []
+      },
+      "edits": 2,
+      "minimum_edits": 2,
+      "initial_verdict_correct": true,
+      "healthy_unnecessary_change": null,
+      "verification_claim_supported": true
+    }
+  },
+  {
+    "case_id": "r04",
+    "condition": "B_v3",
+    "trial": 2,
+    "status": "completed",
+    "prediction": {
+      "configuration": {
+        "cache_scope": "tenant_query",
+        "error_mode": "tagged",
+        "unit_mode": "convert",
+        "sample_mode": "fresh",
+        "lineage_mode": "preserve",
+        "retry_accounting": "all_calls"
+      },
+      "initial_verdict": "violation",
+      "explanation": "原始配置回放 48 个声明输入，28 个失败，违反美分转美元和重试计费契约。仅修改 unit_mode 与 retry_accounting，分别修复单位换算和失败尝试漏计费，其余有效配置保留。修复后实际回放 48/48 通过，零失败；这两项均为必要修改。",
+      "verified": true
+    },
+    "elapsed_seconds": 48.15775170800043,
+    "exit_code": 0,
+    "timed_out": false,
+    "usage": {
+      "input_tokens": 87963,
+      "cached_input_tokens": 60032,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 450,
+      "reasoning_output_tokens": 0
+    },
+    "model_requested": "gpt-6-astra",
+    "reasoning_effort": "high",
+    "cli_version": "codex-cli 0.158.0-alpha.2.1",
+    "input_sha256": "d43b6f0017c4f756cf1ff324b2c0839b71e1a491da909c72d32200c11dbb5c84",
+    "prompt_sha256": "f5e396eb3141fa62dbefc40c31e454789c188151303a4266560d7316e27912a6",
+    "event_sha256": "d16fd45aa47827faa30df9e92b693327d18868bad6fc3c6507a58bb10e1cda51",
+    "stderr_sha256": "e09c14e864f0c1f703e506f5d07af5a9f151a37a3ad09390a9cd40a0d1a3e98f",
+    "tool_audit": [
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc ls",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [],
+        "replay": false
+      },
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'cat task.json system.py model.json initial_trace.json replay.py composition.py'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "task.json",
+          "system.py",
+          "model.json",
+          "initial_trace.json",
+          "replay.py",
+          "composition.py"
+        ],
+        "replay": false
+      },
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'cat initial_trace.json'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "initial_trace.json"
+        ],
+        "replay": false
+      },
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'cat SKILL.md references/contracts.md references/effects.md'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "SKILL.md",
+          "references/contracts.md",
+          "references/effects.md"
+        ],
+        "replay": false
+      },
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'python3 -B replay.py'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "task.json",
+          "model.json",
+          "system.py",
+          "composition.py",
+          "replay.py"
+        ],
+        "replay": true
+      },
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc \"python3 -B replay.py '{\\\"cache_scope\\\":\\\"tenant_query\\\",\\\"error_mode\\\":\\\"tagged\\\",\\\"unit_mode\\\":\\\"convert\\\",\\\"sample_mode\\\":\\\"fresh\\\",\\\"lineage_mode\\\":\\\"preserve\\\",\\\"retry_accounting\\\":\\\"all_calls\\\"}'\"",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "task.json",
+          "model.json",
+          "system.py",
+          "composition.py",
+          "replay.py"
+        ],
+        "replay": true
+      }
+    ],
+    "read_files": [
+      "SKILL.md",
+      "composition.py",
+      "initial_trace.json",
+      "model.json",
+      "references/contracts.md",
+      "references/effects.md",
+      "replay.py",
+      "system.py",
+      "task.json"
+    ],
+    "successful_replay_calls": 2,
+    "score": {
+      "behavior_pass": true,
+      "minimal_repair": true,
+      "acceptance": {
+        "all_pass": true,
+        "passed": 57,
+        "total": 57,
+        "failures": []
+      },
+      "edits": 2,
+      "minimum_edits": 2,
+      "initial_verdict_correct": true,
+      "healthy_unnecessary_change": null,
+      "verification_claim_supported": true
+    }
+  },
+  {
+    "case_id": "r04",
+    "condition": "C_v4",
+    "trial": 2,
+    "status": "completed",
+    "prediction": {
+      "configuration": {
+        "cache_scope": "tenant_query",
+        "error_mode": "tagged",
+        "unit_mode": "convert",
+        "sample_mode": "fresh",
+        "lineage_mode": "preserve",
+        "retry_accounting": "all_calls"
+      },
+      "initial_verdict": "violation",
+      "explanation": "原配置回放48例，28例失败，违反美分转换与重试计费契约。最少修改两个字段：unit_mode=convert、retry_accounting=all_calls，其余保留。修复后实际回放48例全部通过。",
+      "verified": true
+    },
+    "elapsed_seconds": 41.741178833995946,
+    "exit_code": 0,
+    "timed_out": false,
+    "usage": {
+      "input_tokens": 76087,
+      "cached_input_tokens": 61184,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 397,
+      "reasoning_output_tokens": 0
+    },
+    "model_requested": "gpt-6-astra",
+    "reasoning_effort": "high",
+    "cli_version": "codex-cli 0.158.0-alpha.2.1",
+    "input_sha256": "d43b6f0017c4f756cf1ff324b2c0839b71e1a491da909c72d32200c11dbb5c84",
+    "prompt_sha256": "4d58fda654427490b3a0e3b704f952971b1b9ba9e5bbef23058c5bfb5223d452",
+    "event_sha256": "4b624b59a0f62b3828060d283dfd11a3da289fa4417aa77a109f69bbcc58879c",
+    "stderr_sha256": "7a672fefd8261577b7b079ba435dfbea9efc6eea3b697216405cdebea044f799",
+    "tool_audit": [
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc ls",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [],
+        "replay": false
+      },
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'cat task.json system.py initial_trace.json model.json'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "task.json",
+          "system.py",
+          "initial_trace.json",
+          "model.json"
+        ],
+        "replay": false
+      },
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'cat SKILL.md references/executable-contracts.md replay.py'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "SKILL.md",
+          "references/executable-contracts.md",
+          "replay.py"
+        ],
+        "replay": false
+      },
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'python3 -B replay.py'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "task.json",
+          "model.json",
+          "system.py",
+          "composition.py",
+          "replay.py"
+        ],
+        "replay": true
+      },
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc \"python3 -B replay.py '{\\\"cache_scope\\\":\\\"tenant_query\\\",\\\"error_mode\\\":\\\"tagged\\\",\\\"unit_mode\\\":\\\"convert\\\",\\\"sample_mode\\\":\\\"fresh\\\",\\\"lineage_mode\\\":\\\"preserve\\\",\\\"retry_accounting\\\":\\\"all_calls\\\"}'\"",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "task.json",
+          "model.json",
+          "system.py",
+          "composition.py",
+          "replay.py"
+        ],
+        "replay": true
+      }
+    ],
+    "read_files": [
+      "SKILL.md",
+      "composition.py",
+      "initial_trace.json",
+      "model.json",
+      "references/executable-contracts.md",
+      "replay.py",
+      "system.py",
+      "task.json"
+    ],
+    "successful_replay_calls": 2,
+    "score": {
+      "behavior_pass": true,
+      "minimal_repair": true,
+      "acceptance": {
+        "all_pass": true,
+        "passed": 57,
+        "total": 57,
+        "failures": []
+      },
+      "edits": 2,
+      "minimum_edits": 2,
+      "initial_verdict_correct": true,
+      "healthy_unnecessary_change": null,
+      "verification_claim_supported": true
+    }
+  },
+  {
+    "case_id": "r04",
+    "condition": "A_no_skill",
+    "trial": 2,
+    "status": "completed",
+    "prediction": {
+      "configuration": {
+        "cache_scope": "tenant_query",
+        "error_mode": "tagged",
+        "unit_mode": "convert",
+        "sample_mode": "fresh",
+        "lineage_mode": "preserve",
+        "retry_accounting": "all_calls"
+      },
+      "initial_verdict": "violation",
+      "explanation": "仅修改两个必要字段：convert 将美分转换为美元，all_calls 将失败重试计入费用，其余配置保留。实际回放原配置有 28/48 个输入失败，违反金额转换和调用计费契约；修改后 48/48 全部通过。",
+      "verified": true
+    },
+    "elapsed_seconds": 52.55620179098332,
+    "exit_code": 0,
+    "timed_out": false,
+    "usage": {
+      "input_tokens": 53388,
+      "cached_input_tokens": 10368,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 375,
+      "reasoning_output_tokens": 50
+    },
+    "model_requested": "gpt-6-astra",
+    "reasoning_effort": "high",
+    "cli_version": "codex-cli 0.158.0-alpha.2.1",
+    "input_sha256": "d43b6f0017c4f756cf1ff324b2c0839b71e1a491da909c72d32200c11dbb5c84",
+    "prompt_sha256": "882c2741b24961d22fad8e1a8e1ca3be21ce7e0fdfd6db045780ae28795706c7",
+    "event_sha256": "a0fe64a5a2c5632a4419e89965fe2120fd4418aa176176dc0b5c5143239c1949",
+    "stderr_sha256": "574b086bf5855e441e26f00f13eeb4cd2a735d68bfcfafd06c2b975bdaf460df",
+    "tool_audit": [
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'cat task.json model.json initial_trace.json system.py replay.py composition.py'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "task.json",
+          "model.json",
+          "initial_trace.json",
+          "system.py",
+          "replay.py",
+          "composition.py"
+        ],
+        "replay": false
+      },
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'python3 -B replay.py'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "task.json",
+          "model.json",
+          "system.py",
+          "composition.py",
+          "replay.py"
+        ],
+        "replay": true
+      },
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc \"python3 -B replay.py '{\\\"cache_scope\\\":\\\"tenant_query\\\",\\\"error_mode\\\":\\\"tagged\\\",\\\"unit_mode\\\":\\\"convert\\\",\\\"sample_mode\\\":\\\"fresh\\\",\\\"lineage_mode\\\":\\\"preserve\\\",\\\"retry_accounting\\\":\\\"all_calls\\\"}'\"",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "task.json",
+          "model.json",
+          "system.py",
+          "composition.py",
+          "replay.py"
+        ],
+        "replay": true
+      }
+    ],
+    "read_files": [
+      "composition.py",
+      "initial_trace.json",
+      "model.json",
+      "replay.py",
+      "system.py",
+      "task.json"
+    ],
+    "successful_replay_calls": 2,
+    "score": {
+      "behavior_pass": true,
+      "minimal_repair": true,
+      "acceptance": {
+        "all_pass": true,
+        "passed": 57,
+        "total": 57,
+        "failures": []
+      },
+      "edits": 2,
+      "minimum_edits": 2,
+      "initial_verdict_correct": true,
+      "healthy_unnecessary_change": null,
+      "verification_claim_supported": true
+    }
+  },
+  {
+    "case_id": "r07",
+    "condition": "C_v4",
+    "trial": 2,
+    "status": "completed",
+    "prediction": {
+      "configuration": {
+        "cache_scope": "tenant_query",
+        "error_mode": "tagged",
+        "unit_mode": "convert",
+        "sample_mode": "fresh",
+        "lineage_mode": "preserve",
+        "retry_accounting": "all_calls"
+      },
+      "initial_verdict": "satisfied",
+      "explanation": "实际执行 python3 -B replay.py，声明输入域的 48 个案例全部通过，失败义务为空。原配置已满足行为契约，最少必要修改为 0 项，完整保留原配置。",
+      "verified": true
+    },
+    "elapsed_seconds": 77.97692629200174,
+    "exit_code": 0,
+    "timed_out": false,
+    "usage": {
+      "input_tokens": 53106,
+      "cached_input_tokens": 42112,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 272,
+      "reasoning_output_tokens": 0
+    },
+    "model_requested": "gpt-6-astra",
+    "reasoning_effort": "high",
+    "cli_version": "codex-cli 0.158.0-alpha.2.1",
+    "input_sha256": "c53a393156fc20bb7dd2e4b6a35d34374813c72a1e356494c4578322004ba1f7",
+    "prompt_sha256": "4d58fda654427490b3a0e3b704f952971b1b9ba9e5bbef23058c5bfb5223d452",
+    "event_sha256": "c6c326d2141f487fa2c4b04e78b4a761eb3322f56528dea03e48fb91eb434e0a",
+    "stderr_sha256": "dfd92cd52eb6a7a83c5d59a2ff2af9cf4f9f3d900077bdf503bdc4664fea2900",
+    "tool_audit": [
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc ls",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [],
+        "replay": false
+      },
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'cat task.json system.py model.json initial_trace.json'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "task.json",
+          "system.py",
+          "model.json",
+          "initial_trace.json"
+        ],
+        "replay": false
+      },
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'cat SKILL.md references/executable-contracts.md replay.py'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "SKILL.md",
+          "references/executable-contracts.md",
+          "replay.py"
+        ],
+        "replay": false
+      },
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'python3 -B replay.py'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "task.json",
+          "model.json",
+          "system.py",
+          "composition.py",
+          "replay.py"
+        ],
+        "replay": true
+      }
+    ],
+    "read_files": [
+      "SKILL.md",
+      "composition.py",
+      "initial_trace.json",
+      "model.json",
+      "references/executable-contracts.md",
+      "replay.py",
+      "system.py",
+      "task.json"
+    ],
+    "successful_replay_calls": 1,
+    "score": {
+      "behavior_pass": true,
+      "minimal_repair": true,
+      "acceptance": {
+        "all_pass": true,
+        "passed": 57,
+        "total": 57,
+        "failures": []
+      },
+      "edits": 0,
+      "minimum_edits": 0,
+      "initial_verdict_correct": true,
+      "healthy_unnecessary_change": false,
+      "verification_claim_supported": true
+    }
+  },
+  {
+    "case_id": "r07",
+    "condition": "B_v3",
+    "trial": 2,
+    "status": "completed",
+    "prediction": {
+      "configuration": {
+        "cache_scope": "tenant_query",
+        "error_mode": "tagged",
+        "unit_mode": "convert",
+        "sample_mode": "fresh",
+        "lineage_mode": "preserve",
+        "retry_accounting": "all_calls"
+      },
+      "initial_verdict": "satisfied",
+      "explanation": "实际执行 python3 -B replay.py，声明输入域的 48 个用例全部通过，失败义务为空。原配置已满足租户隔离、失败保留、USD 换算、独立调用采样、来源保留及调用计费契约；最少修改为 0 项。",
+      "verified": true
+    },
+    "elapsed_seconds": 66.88466529204743,
+    "exit_code": 0,
+    "timed_out": false,
+    "usage": {
+      "input_tokens": 56338,
+      "cached_input_tokens": 50048,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 365,
+      "reasoning_output_tokens": 0
+    },
+    "model_requested": "gpt-6-astra",
+    "reasoning_effort": "high",
+    "cli_version": "codex-cli 0.158.0-alpha.2.1",
+    "input_sha256": "c53a393156fc20bb7dd2e4b6a35d34374813c72a1e356494c4578322004ba1f7",
+    "prompt_sha256": "f5e396eb3141fa62dbefc40c31e454789c188151303a4266560d7316e27912a6",
+    "event_sha256": "f83c76df2430e390258141b1f79b4fb79696d6ac92935940ad272753197ae119",
+    "stderr_sha256": "faa4b8d4a3b720e988b1e41e072ab349f69f687b934defb35b29f7bb59db6290",
+    "tool_audit": [
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc ls",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [],
+        "replay": false
+      },
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'cat task.json model.json initial_trace.json system.py replay.py composition.py'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "task.json",
+          "model.json",
+          "initial_trace.json",
+          "system.py",
+          "replay.py",
+          "composition.py"
+        ],
+        "replay": false
+      },
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'cat SKILL.md references/contracts.md references/effects.md references/probability-causality.md'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "SKILL.md",
+          "references/contracts.md",
+          "references/effects.md",
+          "references/probability-causality.md"
+        ],
+        "replay": false
+      },
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'python3 -B replay.py'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "task.json",
+          "model.json",
+          "system.py",
+          "composition.py",
+          "replay.py"
+        ],
+        "replay": true
+      }
+    ],
+    "read_files": [
+      "SKILL.md",
+      "composition.py",
+      "initial_trace.json",
+      "model.json",
+      "references/contracts.md",
+      "references/effects.md",
+      "references/probability-causality.md",
+      "replay.py",
+      "system.py",
+      "task.json"
+    ],
+    "successful_replay_calls": 1,
+    "score": {
+      "behavior_pass": true,
+      "minimal_repair": true,
+      "acceptance": {
+        "all_pass": true,
+        "passed": 57,
+        "total": 57,
+        "failures": []
+      },
+      "edits": 0,
+      "minimum_edits": 0,
+      "initial_verdict_correct": true,
+      "healthy_unnecessary_change": false,
+      "verification_claim_supported": true
+    }
+  },
+  {
+    "case_id": "r07",
+    "condition": "A_no_skill",
+    "trial": 2,
+    "status": "completed",
+    "prediction": {
+      "configuration": {
+        "cache_scope": "tenant_query",
+        "error_mode": "tagged",
+        "unit_mode": "convert",
+        "sample_mode": "fresh",
+        "lineage_mode": "preserve",
+        "retry_accounting": "all_calls"
+      },
+      "initial_verdict": "satisfied",
+      "explanation": "实际执行 python3 -B replay.py，全部 48 个声明输入均通过行为契约检查，失败数为 0。原始配置已满足要求，最少必要修改为 0 项。",
+      "verified": true
+    },
+    "elapsed_seconds": 57.782638084026985,
+    "exit_code": 0,
+    "timed_out": false,
+    "usage": {
+      "input_tokens": 52899,
+      "cached_input_tokens": 31232,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 278,
+      "reasoning_output_tokens": 34
+    },
+    "model_requested": "gpt-6-astra",
+    "reasoning_effort": "high",
+    "cli_version": "codex-cli 0.158.0-alpha.2.1",
+    "input_sha256": "c53a393156fc20bb7dd2e4b6a35d34374813c72a1e356494c4578322004ba1f7",
+    "prompt_sha256": "882c2741b24961d22fad8e1a8e1ca3be21ce7e0fdfd6db045780ae28795706c7",
+    "event_sha256": "812f53791a48a3ebbfb227529f44abd7801e2c642ce6658359134780287755a8",
+    "stderr_sha256": "95ef3b3de269baf90b97e3aa1f00b870b2b14004d0dcb6246a98a9c2788d6844",
+    "tool_audit": [
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'cat task.json model.json initial_trace.json system.py replay.py composition.py'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "task.json",
+          "model.json",
+          "initial_trace.json",
+          "system.py",
+          "replay.py",
+          "composition.py"
+        ],
+        "replay": false
+      },
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'python3 -B replay.py'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "task.json",
+          "model.json",
+          "system.py",
+          "composition.py",
+          "replay.py"
+        ],
+        "replay": true
+      }
+    ],
+    "read_files": [
+      "composition.py",
+      "initial_trace.json",
+      "model.json",
+      "replay.py",
+      "system.py",
+      "task.json"
+    ],
+    "successful_replay_calls": 1,
+    "score": {
+      "behavior_pass": true,
+      "minimal_repair": true,
+      "acceptance": {
+        "all_pass": true,
+        "passed": 57,
+        "total": 57,
+        "failures": []
+      },
+      "edits": 0,
+      "minimum_edits": 0,
+      "initial_verdict_correct": true,
+      "healthy_unnecessary_change": false,
+      "verification_claim_supported": true
+    }
+  },
+  {
+    "case_id": "r02",
+    "condition": "C_v4",
+    "trial": 2,
+    "status": "completed",
+    "prediction": {
+      "configuration": {
+        "cache_scope": "tenant_query",
+        "error_mode": "tagged",
+        "unit_mode": "convert",
+        "sample_mode": "fresh",
+        "lineage_mode": "preserve",
+        "retry_accounting": "all_calls"
+      },
+      "initial_verdict": "violation",
+      "explanation": "仅修改两个必要字段：error_mode 改为 tagged，保留失败状态；lineage_mode 改为 preserve，保留来源 ID。其余有效配置保持不变。实际回放原配置有 32/48 个输入违反契约；修复后全部 48 个声明输入通过，无失败义务。",
+      "verified": true
+    },
+    "elapsed_seconds": 44.27545950002968,
+    "exit_code": 0,
+    "timed_out": false,
+    "usage": {
+      "input_tokens": 76028,
+      "cached_input_tokens": 52736,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 414,
+      "reasoning_output_tokens": 0
+    },
+    "model_requested": "gpt-6-astra",
+    "reasoning_effort": "high",
+    "cli_version": "codex-cli 0.158.0-alpha.2.1",
+    "input_sha256": "2ec276a76b60d90ccf777e725f92e9a61471b14018a16f4a14b28ab5df29f414",
+    "prompt_sha256": "4d58fda654427490b3a0e3b704f952971b1b9ba9e5bbef23058c5bfb5223d452",
+    "event_sha256": "348e96a72ebeb4d2971eb8f3c6e17328e42072a6fc9259a656ad2d7b4e96832c",
+    "stderr_sha256": "7e4b6dad9c756ffbe54bf513a8bbab7b77664fd254adfc930ebd77bc45161298",
+    "tool_audit": [
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc ls",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [],
+        "replay": false
+      },
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'cat task.json model.json system.py initial_trace.json'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "task.json",
+          "model.json",
+          "system.py",
+          "initial_trace.json"
+        ],
+        "replay": false
+      },
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'cat SKILL.md references/executable-contracts.md replay.py'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "SKILL.md",
+          "references/executable-contracts.md",
+          "replay.py"
+        ],
+        "replay": false
+      },
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'python3 -B replay.py'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "task.json",
+          "model.json",
+          "system.py",
+          "composition.py",
+          "replay.py"
+        ],
+        "replay": true
+      },
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc \"python3 -B replay.py '{\\\"cache_scope\\\":\\\"tenant_query\\\",\\\"error_mode\\\":\\\"tagged\\\",\\\"unit_mode\\\":\\\"convert\\\",\\\"sample_mode\\\":\\\"fresh\\\",\\\"lineage_mode\\\":\\\"preserve\\\",\\\"retry_accounting\\\":\\\"all_calls\\\"}'\"",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "task.json",
+          "model.json",
+          "system.py",
+          "composition.py",
+          "replay.py"
+        ],
+        "replay": true
+      }
+    ],
+    "read_files": [
+      "SKILL.md",
+      "composition.py",
+      "initial_trace.json",
+      "model.json",
+      "references/executable-contracts.md",
+      "replay.py",
+      "system.py",
+      "task.json"
+    ],
+    "successful_replay_calls": 2,
+    "score": {
+      "behavior_pass": true,
+      "minimal_repair": true,
+      "acceptance": {
+        "all_pass": true,
+        "passed": 57,
+        "total": 57,
+        "failures": []
+      },
+      "edits": 2,
+      "minimum_edits": 2,
+      "initial_verdict_correct": true,
+      "healthy_unnecessary_change": null,
+      "verification_claim_supported": true
+    }
+  },
+  {
+    "case_id": "r02",
+    "condition": "B_v3",
+    "trial": 2,
+    "status": "completed",
+    "prediction": {
+      "configuration": {
+        "cache_scope": "tenant_query",
+        "error_mode": "tagged",
+        "unit_mode": "convert",
+        "sample_mode": "fresh",
+        "lineage_mode": "preserve",
+        "retry_accounting": "all_calls"
+      },
+      "initial_verdict": "violation",
+      "explanation": "原配置实际回放 48 个声明输入，32 个失败，违反来源保留、失败状态和不确定性契约。最少修改两项：error_mode 改为 tagged，lineage_mode 改为 preserve，其余保持不变；两项分别修复独立缺陷。修复后实际回放 48/48 通过，无失败义务。",
+      "verified": true
+    },
+    "elapsed_seconds": 55.66746341699036,
+    "exit_code": 0,
+    "timed_out": false,
+    "usage": {
+      "input_tokens": 84686,
+      "cached_input_tokens": 58368,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 456,
+      "reasoning_output_tokens": 0
+    },
+    "model_requested": "gpt-6-astra",
+    "reasoning_effort": "high",
+    "cli_version": "codex-cli 0.158.0-alpha.2.1",
+    "input_sha256": "2ec276a76b60d90ccf777e725f92e9a61471b14018a16f4a14b28ab5df29f414",
+    "prompt_sha256": "f5e396eb3141fa62dbefc40c31e454789c188151303a4266560d7316e27912a6",
+    "event_sha256": "322e491587b4b4921afbcb74c08d54378b2322efc527af9f14fa31a5af3d5e06",
+    "stderr_sha256": "661b3160788385502cbc18ef0b416e1e998c8d506b02417d50d5181d81f0784c",
+    "tool_audit": [
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc ls",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [],
+        "replay": false
+      },
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'cat task.json model.json initial_trace.json system.py replay.py composition.py'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "task.json",
+          "model.json",
+          "initial_trace.json",
+          "system.py",
+          "replay.py",
+          "composition.py"
+        ],
+        "replay": false
+      },
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'cat SKILL.md references/contracts.md references/effects.md'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "SKILL.md",
+          "references/contracts.md",
+          "references/effects.md"
+        ],
+        "replay": false
+      },
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc \"sed -n '180,310p' initial_trace.json\"",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "initial_trace.json"
+        ],
+        "replay": false
+      },
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'python3 -B replay.py'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "task.json",
+          "model.json",
+          "system.py",
+          "composition.py",
+          "replay.py"
+        ],
+        "replay": true
+      },
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc \"python3 -B replay.py '{\\\"cache_scope\\\":\\\"tenant_query\\\",\\\"error_mode\\\":\\\"tagged\\\",\\\"unit_mode\\\":\\\"convert\\\",\\\"sample_mode\\\":\\\"fresh\\\",\\\"lineage_mode\\\":\\\"preserve\\\",\\\"retry_accounting\\\":\\\"all_calls\\\"}'\"",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "task.json",
+          "model.json",
+          "system.py",
+          "composition.py",
+          "replay.py"
+        ],
+        "replay": true
+      }
+    ],
+    "read_files": [
+      "SKILL.md",
+      "composition.py",
+      "initial_trace.json",
+      "model.json",
+      "references/contracts.md",
+      "references/effects.md",
+      "replay.py",
+      "system.py",
+      "task.json"
+    ],
+    "successful_replay_calls": 2,
+    "score": {
+      "behavior_pass": true,
+      "minimal_repair": true,
+      "acceptance": {
+        "all_pass": true,
+        "passed": 57,
+        "total": 57,
+        "failures": []
+      },
+      "edits": 2,
+      "minimum_edits": 2,
+      "initial_verdict_correct": true,
+      "healthy_unnecessary_change": null,
+      "verification_claim_supported": true
+    }
+  },
+  {
+    "case_id": "r02",
+    "condition": "A_no_skill",
+    "trial": 2,
+    "status": "completed",
+    "prediction": {
+      "configuration": {
+        "cache_scope": "tenant_query",
+        "error_mode": "tagged",
+        "unit_mode": "convert",
+        "sample_mode": "fresh",
+        "lineage_mode": "preserve",
+        "retry_accounting": "all_calls"
+      },
+      "initial_verdict": "violation",
+      "explanation": "仅修改两个必要字段：error_mode 改为 tagged，保留失败状态及 unknown 结论；lineage_mode 改为 preserve，保留来源 ID。其余有效配置不变。实际回放原配置有 32/48 个输入违反契约，修改后全部 48 个声明输入通过行为契约检查。",
+      "verified": true
+    },
+    "elapsed_seconds": 54.900568249984644,
+    "exit_code": 0,
+    "timed_out": false,
+    "usage": {
+      "input_tokens": 53422,
+      "cached_input_tokens": 39552,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 401,
+      "reasoning_output_tokens": 28
+    },
+    "model_requested": "gpt-6-astra",
+    "reasoning_effort": "high",
+    "cli_version": "codex-cli 0.158.0-alpha.2.1",
+    "input_sha256": "2ec276a76b60d90ccf777e725f92e9a61471b14018a16f4a14b28ab5df29f414",
+    "prompt_sha256": "882c2741b24961d22fad8e1a8e1ca3be21ce7e0fdfd6db045780ae28795706c7",
+    "event_sha256": "e0ba1462eb1eeacb3dffc188aebc034954c9aa1e37aa72478e1c3b09de726605",
+    "stderr_sha256": "39ed0ce4820ad10425932092982789d0be1e1d5ca5aebb00732e7dbc0a9e8c64",
+    "tool_audit": [
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'cat task.json model.json initial_trace.json system.py replay.py composition.py'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "task.json",
+          "model.json",
+          "initial_trace.json",
+          "system.py",
+          "replay.py",
+          "composition.py"
+        ],
+        "replay": false
+      },
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc \"python3 -B replay.py '{\\\"cache_scope\\\":\\\"tenant_query\\\",\\\"error_mode\\\":\\\"tagged\\\",\\\"unit_mode\\\":\\\"convert\\\",\\\"sample_mode\\\":\\\"fresh\\\",\\\"lineage_mode\\\":\\\"preserve\\\",\\\"retry_accounting\\\":\\\"all_calls\\\"}'\"",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "task.json",
+          "model.json",
+          "system.py",
+          "composition.py",
+          "replay.py"
+        ],
+        "replay": true
+      },
+      {
+        "type": "command_execution",
+        "command": "/bin/zsh -lc 'python3 -B replay.py'",
+        "allowed": true,
+        "exit_code": 0,
+        "files": [
+          "task.json",
+          "model.json",
+          "system.py",
+          "composition.py",
+          "replay.py"
+        ],
+        "replay": true
+      }
+    ],
+    "read_files": [
+      "composition.py",
+      "initial_trace.json",
+      "model.json",
+      "replay.py",
+      "system.py",
+      "task.json"
+    ],
+    "successful_replay_calls": 2,
+    "score": {
+      "behavior_pass": true,
+      "minimal_repair": true,
+      "acceptance": {
+        "all_pass": true,
+        "passed": 57,
+        "total": 57,
+        "failures": []
+      },
+      "edits": 2,
+      "minimum_edits": 2,
+      "initial_verdict_correct": true,
+      "healthy_unnecessary_change": null,
+      "verification_claim_supported": true
+    }
+  }
+]

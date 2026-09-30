@@ -1,0 +1,75 @@
+{
+  "conditions": {
+    "A_no_skill": {
+      "runs": 16,
+      "valid": 16,
+      "behavior_pass": 16,
+      "minimal_repair": 16,
+      "initial_verdict_correct": 16,
+      "healthy_unnecessary_change": 0,
+      "healthy_runs": 4,
+      "replay_runs": 16,
+      "input_tokens": 878508,
+      "output_tokens": 5740,
+      "median_seconds": 49.877102270984324
+    },
+    "B_v3": {
+      "runs": 16,
+      "valid": 16,
+      "behavior_pass": 16,
+      "minimal_repair": 16,
+      "initial_verdict_correct": 16,
+      "healthy_unnecessary_change": 0,
+      "healthy_runs": 4,
+      "replay_runs": 16,
+      "input_tokens": 1148308,
+      "output_tokens": 6478,
+      "median_seconds": 50.47897291649133
+    },
+    "C_v4": {
+      "runs": 16,
+      "valid": 16,
+      "behavior_pass": 16,
+      "minimal_repair": 16,
+      "initial_verdict_correct": 16,
+      "healthy_unnecessary_change": 0,
+      "healthy_runs": 4,
+      "replay_runs": 16,
+      "input_tokens": 1127561,
+      "output_tokens": 5906,
+      "median_seconds": 51.398346541507635
+    }
+  },
+  "paired_behavior_differences_vs_no_skill": {
+    "B_v3": {
+      "difference": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "C_v4": {
+      "difference": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    }
+  },
+  "case_order": [
+    "r01",
+    "r02",
+    "r03",
+    "r04",
+    "r05",
+    "r06",
+    "r07",
+    "r08"
+  ],
+  "limitations": [
+    "Eight authored variants of one system; bootstrap is not cross-system uncertainty.",
+    "Matched tools, supplied IR, constrained configuration choices; no autonomous code repair or natural triggering.",
+    "No changes or retries selected by model outcome.",
+    "A [0,0] interval is empirical degeneracy, not certainty about future performance."
+  ]
+}

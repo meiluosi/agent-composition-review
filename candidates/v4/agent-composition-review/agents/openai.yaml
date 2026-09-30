@@ -1,0 +1,4 @@
+interface:
+  display_name: "Agent 组合架构审查"
+  short_description: "沿数据流检查类型、契约与不变量，定位 Agent 组合故障并验证重构"
+  default_prompt: "使用 $agent-composition-review 审查当前 Agent 系统；沿数据流定位类型、契约、状态与组合风险，并给出有证据的发现和最小验证方法。"

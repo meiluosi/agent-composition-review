@@ -1,0 +1,82 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "configuration": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "cache_scope": {
+          "type": "string",
+          "enum": [
+            "query",
+            "tenant_query"
+          ]
+        },
+        "error_mode": {
+          "type": "string",
+          "enum": [
+            "empty",
+            "tagged"
+          ]
+        },
+        "unit_mode": {
+          "type": "string",
+          "enum": [
+            "identity",
+            "convert"
+          ]
+        },
+        "sample_mode": {
+          "type": "string",
+          "enum": [
+            "reuse",
+            "fresh"
+          ]
+        },
+        "lineage_mode": {
+          "type": "string",
+          "enum": [
+            "drop",
+            "preserve"
+          ]
+        },
+        "retry_accounting": {
+          "type": "string",
+          "enum": [
+            "success_only",
+            "all_calls"
+          ]
+        }
+      },
+      "required": [
+        "cache_scope",
+        "error_mode",
+        "unit_mode",
+        "sample_mode",
+        "lineage_mode",
+        "retry_accounting"
+      ]
+    },
+    "initial_verdict": {
+      "type": "string",
+      "enum": [
+        "violation",
+        "satisfied",
+        "insufficient"
+      ]
+    },
+    "explanation": {
+      "type": "string"
+    },
+    "verified": {
+      "type": "boolean"
+    }
+  },
+  "required": [
+    "configuration",
+    "initial_verdict",
+    "explanation",
+    "verified"
+  ]
+}

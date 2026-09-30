@@ -28,7 +28,8 @@ def main():
     result = unittest.TextTestRunner(stream=stream, verbosity=2).run(suite)
     text = stream.getvalue().replace(str(ROOT), "<repo>")
     print(text, end="")
-    skill_paths = [ROOT / "SKILL.md", ROOT / "agents/openai.yaml"] + sorted((ROOT / "references").glob("*.md"))
+    runtime = ROOT / "skills/agent-composition-review"
+    skill_paths = [runtime / "SKILL.md", runtime / "agents/openai.yaml"] + sorted((runtime / "references").glob("*.md"))
     skill_hashes = {str(p.relative_to(ROOT)): hashlib.sha256(p.read_bytes()).hexdigest() for p in skill_paths}
     record = {
         "kind": "deterministic_framework_regression_not_model_eval",
@@ -36,7 +37,7 @@ def main():
         "python": platform.python_version(), "platform": platform.system(),
         "packages": {name: importlib.metadata.version(name) for name in
                      ["langgraph", "langgraph-checkpoint", "langchain-core"]},
-        "skill_sha256": hashlib.sha256((ROOT / "SKILL.md").read_bytes()).hexdigest(),
+        "skill_sha256": hashlib.sha256((runtime / "SKILL.md").read_bytes()).hexdigest(),
         "skill_files_sha256": skill_hashes,
         "skill_tree_sha256": hashlib.sha256(json.dumps(skill_hashes, sort_keys=True).encode()).hexdigest(),
         "fixture_sha256": {str(p.relative_to(ROOT)): hashlib.sha256(p.read_bytes()).hexdigest()

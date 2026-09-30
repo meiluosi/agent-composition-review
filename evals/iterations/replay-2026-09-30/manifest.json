@@ -1,0 +1,310 @@
+{
+  "kind": "synthetic_constrained_configuration_repair_development",
+  "frozen_at": "2026-09-30T05:34:51.355262+00:00",
+  "model_requested": "gpt-6-astra",
+  "reasoning_effort": "high",
+  "model_snapshot": null,
+  "cli_version": "codex-cli 0.158.0-alpha.2.1",
+  "concurrency": 3,
+  "timeout_seconds": 300,
+  "trials": 2,
+  "seed": 20260930,
+  "schedule": [
+    {
+      "case_id": "r01",
+      "condition": "B_v3",
+      "trial": 1
+    },
+    {
+      "case_id": "r01",
+      "condition": "C_v4",
+      "trial": 1
+    },
+    {
+      "case_id": "r01",
+      "condition": "A_no_skill",
+      "trial": 1
+    },
+    {
+      "case_id": "r05",
+      "condition": "A_no_skill",
+      "trial": 1
+    },
+    {
+      "case_id": "r05",
+      "condition": "B_v3",
+      "trial": 1
+    },
+    {
+      "case_id": "r05",
+      "condition": "C_v4",
+      "trial": 1
+    },
+    {
+      "case_id": "r07",
+      "condition": "A_no_skill",
+      "trial": 1
+    },
+    {
+      "case_id": "r07",
+      "condition": "C_v4",
+      "trial": 1
+    },
+    {
+      "case_id": "r07",
+      "condition": "B_v3",
+      "trial": 1
+    },
+    {
+      "case_id": "r03",
+      "condition": "B_v3",
+      "trial": 1
+    },
+    {
+      "case_id": "r03",
+      "condition": "C_v4",
+      "trial": 1
+    },
+    {
+      "case_id": "r03",
+      "condition": "A_no_skill",
+      "trial": 1
+    },
+    {
+      "case_id": "r02",
+      "condition": "C_v4",
+      "trial": 1
+    },
+    {
+      "case_id": "r02",
+      "condition": "A_no_skill",
+      "trial": 1
+    },
+    {
+      "case_id": "r02",
+      "condition": "B_v3",
+      "trial": 1
+    },
+    {
+      "case_id": "r06",
+      "condition": "C_v4",
+      "trial": 1
+    },
+    {
+      "case_id": "r06",
+      "condition": "B_v3",
+      "trial": 1
+    },
+    {
+      "case_id": "r06",
+      "condition": "A_no_skill",
+      "trial": 1
+    },
+    {
+      "case_id": "r04",
+      "condition": "C_v4",
+      "trial": 1
+    },
+    {
+      "case_id": "r04",
+      "condition": "B_v3",
+      "trial": 1
+    },
+    {
+      "case_id": "r04",
+      "condition": "A_no_skill",
+      "trial": 1
+    },
+    {
+      "case_id": "r08",
+      "condition": "A_no_skill",
+      "trial": 1
+    },
+    {
+      "case_id": "r08",
+      "condition": "B_v3",
+      "trial": 1
+    },
+    {
+      "case_id": "r08",
+      "condition": "C_v4",
+      "trial": 1
+    },
+    {
+      "case_id": "r03",
+      "condition": "C_v4",
+      "trial": 2
+    },
+    {
+      "case_id": "r03",
+      "condition": "A_no_skill",
+      "trial": 2
+    },
+    {
+      "case_id": "r03",
+      "condition": "B_v3",
+      "trial": 2
+    },
+    {
+      "case_id": "r06",
+      "condition": "B_v3",
+      "trial": 2
+    },
+    {
+      "case_id": "r06",
+      "condition": "C_v4",
+      "trial": 2
+    },
+    {
+      "case_id": "r06",
+      "condition": "A_no_skill",
+      "trial": 2
+    },
+    {
+      "case_id": "r05",
+      "condition": "A_no_skill",
+      "trial": 2
+    },
+    {
+      "case_id": "r05",
+      "condition": "C_v4",
+      "trial": 2
+    },
+    {
+      "case_id": "r05",
+      "condition": "B_v3",
+      "trial": 2
+    },
+    {
+      "case_id": "r08",
+      "condition": "A_no_skill",
+      "trial": 2
+    },
+    {
+      "case_id": "r08",
+      "condition": "B_v3",
+      "trial": 2
+    },
+    {
+      "case_id": "r08",
+      "condition": "C_v4",
+      "trial": 2
+    },
+    {
+      "case_id": "r01",
+      "condition": "A_no_skill",
+      "trial": 2
+    },
+    {
+      "case_id": "r01",
+      "condition": "B_v3",
+      "trial": 2
+    },
+    {
+      "case_id": "r01",
+      "condition": "C_v4",
+      "trial": 2
+    },
+    {
+      "case_id": "r04",
+      "condition": "B_v3",
+      "trial": 2
+    },
+    {
+      "case_id": "r04",
+      "condition": "C_v4",
+      "trial": 2
+    },
+    {
+      "case_id": "r04",
+      "condition": "A_no_skill",
+      "trial": 2
+    },
+    {
+      "case_id": "r07",
+      "condition": "C_v4",
+      "trial": 2
+    },
+    {
+      "case_id": "r07",
+      "condition": "B_v3",
+      "trial": 2
+    },
+    {
+      "case_id": "r07",
+      "condition": "A_no_skill",
+      "trial": 2
+    },
+    {
+      "case_id": "r02",
+      "condition": "C_v4",
+      "trial": 2
+    },
+    {
+      "case_id": "r02",
+      "condition": "B_v3",
+      "trial": 2
+    },
+    {
+      "case_id": "r02",
+      "condition": "A_no_skill",
+      "trial": 2
+    }
+  ],
+  "files_sha256": {
+    "evals/iterations/replay-2026-09-30/snapshots/B_v3/SKILL.md": "ac9c8775912ef0a923a2bdb827920776cf811b3a6b6d8070771bbc519598894c",
+    "evals/iterations/replay-2026-09-30/snapshots/B_v3/agents/openai.yaml": "990ce681f0311731177c553baeef4349852ce30d64a55bfc2f2e9fcc59377b7d",
+    "evals/iterations/replay-2026-09-30/snapshots/B_v3/references/contracts.md": "5ce30419213bc0af48f891de5ea32b9d8ef5398400396ee2f13616ee464bc48e",
+    "evals/iterations/replay-2026-09-30/snapshots/B_v3/references/effects.md": "384eff61c966aee8bff4cd5ea074893cf0e00844d25bdfc5874d9d1b97d2a74b",
+    "evals/iterations/replay-2026-09-30/snapshots/B_v3/references/evidence.md": "f0d168f13fd87fde50a3a0b8588b636941ec8cb3e997d3539c71cb8010f2e41f",
+    "evals/iterations/replay-2026-09-30/snapshots/B_v3/references/gluing.md": "fda165771c046c14e4730885b275d156142a1d123a2e371634c245e966583260",
+    "evals/iterations/replay-2026-09-30/snapshots/B_v3/references/probability-causality.md": "b7eda116e32377a58406d7655ab3b15c508802657910b3ccb3e4a19616bd37b7",
+    "evals/iterations/replay-2026-09-30/snapshots/B_v3/references/quantitative.md": "f0a266b554a51259a3bfda0618755a91ec3c37841768fe939e47da2d53212e38",
+    "evals/iterations/replay-2026-09-30/snapshots/B_v3/scripts/check_evidence.py": "98c60fe8ea0d36dd40b2da48d9768f6c81e31803b6036af826c611ad26d07592",
+    "evals/iterations/replay-2026-09-30/snapshots/C_v4/SKILL.md": "8b50547f9d4c923239b325084bac1691e55e882710bc33e22f23b743e918af55",
+    "evals/iterations/replay-2026-09-30/snapshots/C_v4/agents/openai.yaml": "990ce681f0311731177c553baeef4349852ce30d64a55bfc2f2e9fcc59377b7d",
+    "evals/iterations/replay-2026-09-30/snapshots/C_v4/assets/retrieval.model.json": "9830965fcba8f02bfc6fa044c9ff1b0b9087c7e1fd34078f7b2d457348a5cef3",
+    "evals/iterations/replay-2026-09-30/snapshots/C_v4/references/contracts.md": "5ce30419213bc0af48f891de5ea32b9d8ef5398400396ee2f13616ee464bc48e",
+    "evals/iterations/replay-2026-09-30/snapshots/C_v4/references/effects.md": "384eff61c966aee8bff4cd5ea074893cf0e00844d25bdfc5874d9d1b97d2a74b",
+    "evals/iterations/replay-2026-09-30/snapshots/C_v4/references/evidence.md": "f0d168f13fd87fde50a3a0b8588b636941ec8cb3e997d3539c71cb8010f2e41f",
+    "evals/iterations/replay-2026-09-30/snapshots/C_v4/references/executable-contracts.md": "7ef6ab3842dc3aab0388d529883dc82443a60751f0c599d21aae78a9c47c4291",
+    "evals/iterations/replay-2026-09-30/snapshots/C_v4/references/gluing.md": "fda165771c046c14e4730885b275d156142a1d123a2e371634c245e966583260",
+    "evals/iterations/replay-2026-09-30/snapshots/C_v4/references/probability-causality.md": "b7eda116e32377a58406d7655ab3b15c508802657910b3ccb3e4a19616bd37b7",
+    "evals/iterations/replay-2026-09-30/snapshots/C_v4/references/quantitative.md": "f0a266b554a51259a3bfda0618755a91ec3c37841768fe939e47da2d53212e38",
+    "evals/iterations/replay-2026-09-30/snapshots/C_v4/scripts/check_evidence.py": "98c60fe8ea0d36dd40b2da48d9768f6c81e31803b6036af826c611ad26d07592",
+    "evals/iterations/replay-2026-09-30/snapshots/C_v4/scripts/composition.py": "1eb7a2a566b776789344246981386c2259e877b5dc299588a2d925a34588bd9e",
+    "evals/iterations/replay-2026-09-30/cases.json": "c336cee5132f0f1e824aa83d51e8be46873420c8717907d13d93b3342dc06997",
+    "evals/iterations/replay-2026-09-30/prediction.schema.json": "1e1328ca9b40872be1d245ae102ffdb13d8376b93e40007f76d51cf44fbd78f9",
+    "evals/iterations/replay-2026-09-30/ANALYSIS_PLAN.md": "696ff8ab37044800a132e25a36364a401d90ad778d70ffcc84c074e48f61ff86",
+    "scripts/run_replay_eval.py": "499bfd0981b738d39b66c8fc3e24ba8de932920697240b35178037314af82ef1",
+    "scripts/analyze_replay.py": "3588aa5638e164162a8d4df0011e5fc9adc8d0cc430db71907396cec4033907c",
+    "evals/replay/__init__.py": "3b76f4c81735f8c7c6d429695ea55a84a7270ee0a996ad291db82b8cb80ae69e",
+    "evals/replay/acceptance.py": "8b0cfa415dea42c1e9b1bf26a5e6c22a59af43d673fee70389a5f40d2fc8ce4f",
+    "evals/replay/defaults.py": "9b9267944115c23947b58b722a8bbf1c79836b2441f902526b5d8c045f5918f9",
+    "evals/replay/experiment.py": "8683826fceb75bba35a6cc842de5d00182f10a24f89deddd79c48be25e74e42c",
+    "evals/replay/make_model.py": "7475aadc81e682bbfe2973d84c4f9c684c026e5a7c1f1a827d7d6904051a5fbe",
+    "evals/replay/protocol.py": "e836ada1ff49e471b1eb752da3cbb3f85d5dc3b977381ac826949e2f55bd2fe2",
+    "evals/replay/runtime.py": "0be5b5d73386c9af51e1b8e540902a886cd0b9257c7a6b258f840f0871491398",
+    "evals/replay/system.py": "84062b651d64a7f147c32f9930f28b5594ec221b935a4b2cfc9b2c277811d422",
+    "evals/replay/test_protocol.py": "955e8772ad414bedee337ce4e4d236e1510082f7d966624847d28219766ea168",
+    "evals/replay/test_runtime.py": "7046bec90da11cb25c925689b61694b59b7a0de023162e251811e0db683c266f",
+    "evals/replay/visible_replay.py": "380e8915739dc6d715a55909c41f6390e989591d8c9c8ea4ca02249badbc7bd1",
+    "candidates/v4/agent-composition-review/SKILL.md": "8b50547f9d4c923239b325084bac1691e55e882710bc33e22f23b743e918af55",
+    "candidates/v4/agent-composition-review/agents/openai.yaml": "990ce681f0311731177c553baeef4349852ce30d64a55bfc2f2e9fcc59377b7d",
+    "candidates/v4/agent-composition-review/assets/retrieval.model.json": "9830965fcba8f02bfc6fa044c9ff1b0b9087c7e1fd34078f7b2d457348a5cef3",
+    "candidates/v4/agent-composition-review/references/contracts.md": "5ce30419213bc0af48f891de5ea32b9d8ef5398400396ee2f13616ee464bc48e",
+    "candidates/v4/agent-composition-review/references/effects.md": "384eff61c966aee8bff4cd5ea074893cf0e00844d25bdfc5874d9d1b97d2a74b",
+    "candidates/v4/agent-composition-review/references/evidence.md": "f0d168f13fd87fde50a3a0b8588b636941ec8cb3e997d3539c71cb8010f2e41f",
+    "candidates/v4/agent-composition-review/references/executable-contracts.md": "7ef6ab3842dc3aab0388d529883dc82443a60751f0c599d21aae78a9c47c4291",
+    "candidates/v4/agent-composition-review/references/gluing.md": "fda165771c046c14e4730885b275d156142a1d123a2e371634c245e966583260",
+    "candidates/v4/agent-composition-review/references/probability-causality.md": "b7eda116e32377a58406d7655ab3b15c508802657910b3ccb3e4a19616bd37b7",
+    "candidates/v4/agent-composition-review/references/quantitative.md": "f0a266b554a51259a3bfda0618755a91ec3c37841768fe939e47da2d53212e38",
+    "candidates/v4/agent-composition-review/scripts/check_evidence.py": "98c60fe8ea0d36dd40b2da48d9768f6c81e31803b6036af826c611ad26d07592",
+    "candidates/v4/agent-composition-review/scripts/composition.py": "1eb7a2a566b776789344246981386c2259e877b5dc299588a2d925a34588bd9e"
+  },
+  "prompt_sha256": {
+    "A_no_skill": "882c2741b24961d22fad8e1a8e1ca3be21ce7e0fdfd6db045780ae28795706c7",
+    "B_v3": "f5e396eb3141fa62dbefc40c31e454789c188151303a4266560d7316e27912a6",
+    "C_v4": "4d58fda654427490b3a0e3b704f952971b1b9ba9e5bbef23058c5bfb5223d452"
+  }
+}

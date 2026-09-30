@@ -12,7 +12,8 @@ ROOT = Path(__file__).resolve().parents[1]
 
 
 def check(root=ROOT):
-    text = (root / "SKILL.md").read_text()
+    runtime = root / "skills/agent-composition-review"
+    text = (runtime / "SKILL.md").read_text()
     match = re.match(r"^---\n(.*?)\n---\n", text, re.S)
     assert match, "SKILL.md needs YAML frontmatter"
     meta = yaml.safe_load(match.group(1))
@@ -21,7 +22,7 @@ def check(root=ROOT):
     assert isinstance(meta["description"], str) and 0 < len(meta["description"]) <= 1024
     assert "<" not in meta["description"] and ">" not in meta["description"]
     assert "[TODO:" not in text
-    ui = yaml.safe_load((root / "agents/openai.yaml").read_text())["interface"]
+    ui = yaml.safe_load((runtime / "agents/openai.yaml").read_text())["interface"]
     assert "$agent-composition-review" in ui["default_prompt"]
     assert 25 <= len(ui["short_description"]) <= 64
     registry = json.loads((root / "evals/cases.json").read_text())

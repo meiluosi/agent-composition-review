@@ -120,7 +120,7 @@ def main():
         skill_root=PUBLIC/"skill-snapshot"
     else:
         for idx,name in enumerate(pools): selected.extend(select_stratified(pools[name],args.per_dataset,args.seed+idx))
-        rng.shuffle(selected);skill_root=ROOT
+        rng.shuffle(selected);skill_root=ROOT/"skills/agent-composition-review"
     skill_paths=[skill_root/"SKILL.md",*sorted((skill_root/"references").glob("*.md"))]
     skill_hashes={str(x.relative_to(skill_root)):digest(x.read_bytes()) for x in skill_paths}
     bundle="\n\n".join("FILE: "+str(x.relative_to(skill_root))+"\n"+x.read_text() for x in skill_paths)

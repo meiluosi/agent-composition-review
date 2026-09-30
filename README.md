@@ -16,7 +16,7 @@
 
 ## 使用
 
-将仓库中的 `SKILL.md`、`agents/`、`references/` 放在同一个名为 `agent-composition-review` 的技能目录中。Codex 的个人技能目录可使用 `~/.codex/skills/agent-composition-review/`。无需将评测答案或框架依赖安装到技能目录。
+主运行包位于 `skills/agent-composition-review/`，与维护脚本、文档和评测分开。将该完整目录安装到目标环境的技能目录；目前 OpenAI 文档列出的个人发现路径为 `~/.agents/skills/`，已存在的本机安装路径不由本次改动迁移。无需将评测答案或框架依赖安装到技能目录。
 
 可以生成只含这五个运行时文件的迁移包：
 
@@ -34,7 +34,7 @@ python3 scripts/build_skill.py
 区分已证实和待验证的原因，给出最小修复并运行相关验证。
 ```
 
-也可以请求架构审查或新旧路径的重构验证。具体执行规则见 [SKILL.md](SKILL.md)。
+也可以请求架构审查或新旧路径的重构验证。具体执行规则见 [SKILL.md](skills/agent-composition-review/SKILL.md)。
 
 ## 模块化框架开发
 
@@ -49,6 +49,8 @@ python3 scripts/build_skill.py --source evals/iterations/v3-candidate
 ```
 
 输出为 `dist/agent-composition-review-candidate.zip`，包含九个运行文件，不包含评测案例、标签和维护文档。默认打包命令仍生成当前主版本。
+
+下一轮 [v4 执行候选](candidates/v4/agent-composition-review/SKILL.md) 增加动作/状态结构、测试生成和回放检查，仍在开发。目录职责与官方依据见 [组织说明](docs/skill-organization.md)。
 
 ## 一个已复现的例子
 
@@ -162,13 +164,15 @@ python3.12 -m venv .venv
 ## 仓库结构
 
 ```text
-SKILL.md / agents/ / references/   模型使用的技能包
+skills/agent-composition-review/  当前主版本运行包
+candidates/v4/agent-composition-review/ 下一轮候选运行包
 README.md / docs/                 人类使用和维护说明
 evals/cases/                      可执行的框架复现与回归
 evals/scenarios/                  模型试用输入与维护者判据
 evals/runs/                       已完成评测的证据与限制
 evals/external/                   外部数据适配、冻结清单与模型对照结果
-scripts/                         校验、测试、打包
+scripts/                         维护用校验、测试、打包
+evals/replay/                    动作/状态契约的执行回放与验收
 .github/                         CI、案例提交表与 PR 模板
 ```
 

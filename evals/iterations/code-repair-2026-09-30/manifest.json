@@ -1,0 +1,246 @@
+{
+  "kind": "cross_runtime_autonomous_modeling_development",
+  "frozen_at": "2026-09-30T15:51:22.554952+00:00",
+  "model_requested": "gpt-6-astra",
+  "reasoning_effort": "high",
+  "model_snapshot": null,
+  "cli_version": "codex-cli 0.158.0-alpha.2.1",
+  "python_version": "3.12.14",
+  "sqlite_version": "3.53.1",
+  "execution_platform": "Darwin",
+  "langgraph_version": "1.0.3",
+  "concurrency": 3,
+  "timeout_seconds": 480,
+  "review_timeout_seconds": 180,
+  "trials": 2,
+  "seed": 202609301,
+  "schedule": [
+    {
+      "case_id": "c05",
+      "condition": "C_v4",
+      "trial": 1
+    },
+    {
+      "case_id": "c05",
+      "condition": "A_basic",
+      "trial": 1
+    },
+    {
+      "case_id": "c05",
+      "condition": "B_tools",
+      "trial": 1
+    },
+    {
+      "case_id": "c04",
+      "condition": "C_v4",
+      "trial": 1
+    },
+    {
+      "case_id": "c04",
+      "condition": "B_tools",
+      "trial": 1
+    },
+    {
+      "case_id": "c04",
+      "condition": "A_basic",
+      "trial": 1
+    },
+    {
+      "case_id": "c03",
+      "condition": "B_tools",
+      "trial": 1
+    },
+    {
+      "case_id": "c03",
+      "condition": "A_basic",
+      "trial": 1
+    },
+    {
+      "case_id": "c03",
+      "condition": "C_v4",
+      "trial": 1
+    },
+    {
+      "case_id": "c02",
+      "condition": "A_basic",
+      "trial": 1
+    },
+    {
+      "case_id": "c02",
+      "condition": "C_v4",
+      "trial": 1
+    },
+    {
+      "case_id": "c02",
+      "condition": "B_tools",
+      "trial": 1
+    },
+    {
+      "case_id": "c06",
+      "condition": "B_tools",
+      "trial": 1
+    },
+    {
+      "case_id": "c06",
+      "condition": "C_v4",
+      "trial": 1
+    },
+    {
+      "case_id": "c06",
+      "condition": "A_basic",
+      "trial": 1
+    },
+    {
+      "case_id": "c01",
+      "condition": "B_tools",
+      "trial": 1
+    },
+    {
+      "case_id": "c01",
+      "condition": "C_v4",
+      "trial": 1
+    },
+    {
+      "case_id": "c01",
+      "condition": "A_basic",
+      "trial": 1
+    },
+    {
+      "case_id": "c01",
+      "condition": "A_basic",
+      "trial": 2
+    },
+    {
+      "case_id": "c01",
+      "condition": "B_tools",
+      "trial": 2
+    },
+    {
+      "case_id": "c01",
+      "condition": "C_v4",
+      "trial": 2
+    },
+    {
+      "case_id": "c02",
+      "condition": "C_v4",
+      "trial": 2
+    },
+    {
+      "case_id": "c02",
+      "condition": "A_basic",
+      "trial": 2
+    },
+    {
+      "case_id": "c02",
+      "condition": "B_tools",
+      "trial": 2
+    },
+    {
+      "case_id": "c06",
+      "condition": "A_basic",
+      "trial": 2
+    },
+    {
+      "case_id": "c06",
+      "condition": "C_v4",
+      "trial": 2
+    },
+    {
+      "case_id": "c06",
+      "condition": "B_tools",
+      "trial": 2
+    },
+    {
+      "case_id": "c04",
+      "condition": "B_tools",
+      "trial": 2
+    },
+    {
+      "case_id": "c04",
+      "condition": "A_basic",
+      "trial": 2
+    },
+    {
+      "case_id": "c04",
+      "condition": "C_v4",
+      "trial": 2
+    },
+    {
+      "case_id": "c03",
+      "condition": "A_basic",
+      "trial": 2
+    },
+    {
+      "case_id": "c03",
+      "condition": "B_tools",
+      "trial": 2
+    },
+    {
+      "case_id": "c03",
+      "condition": "C_v4",
+      "trial": 2
+    },
+    {
+      "case_id": "c05",
+      "condition": "A_basic",
+      "trial": 2
+    },
+    {
+      "case_id": "c05",
+      "condition": "B_tools",
+      "trial": 2
+    },
+    {
+      "case_id": "c05",
+      "condition": "C_v4",
+      "trial": 2
+    }
+  ],
+  "files_sha256": {
+    "evals/iterations/code-repair-2026-09-30/snapshots/B_tools/TOOLS.md": "1ed4a5fa0d764a77059350104bfe8d842aaf7b9f13ce0fa6e526f48f3ef61629",
+    "evals/iterations/code-repair-2026-09-30/snapshots/B_tools/scripts/check_evidence.py": "98c60fe8ea0d36dd40b2da48d9768f6c81e31803b6036af826c611ad26d07592",
+    "evals/iterations/code-repair-2026-09-30/snapshots/B_tools/scripts/composition.py": "1eb7a2a566b776789344246981386c2259e877b5dc299588a2d925a34588bd9e",
+    "evals/iterations/code-repair-2026-09-30/snapshots/C_v4/SKILL.md": "8b50547f9d4c923239b325084bac1691e55e882710bc33e22f23b743e918af55",
+    "evals/iterations/code-repair-2026-09-30/snapshots/C_v4/TOOLS.md": "1ed4a5fa0d764a77059350104bfe8d842aaf7b9f13ce0fa6e526f48f3ef61629",
+    "evals/iterations/code-repair-2026-09-30/snapshots/C_v4/agents/openai.yaml": "990ce681f0311731177c553baeef4349852ce30d64a55bfc2f2e9fcc59377b7d",
+    "evals/iterations/code-repair-2026-09-30/snapshots/C_v4/assets/retrieval.model.json": "9830965fcba8f02bfc6fa044c9ff1b0b9087c7e1fd34078f7b2d457348a5cef3",
+    "evals/iterations/code-repair-2026-09-30/snapshots/C_v4/references/contracts.md": "5ce30419213bc0af48f891de5ea32b9d8ef5398400396ee2f13616ee464bc48e",
+    "evals/iterations/code-repair-2026-09-30/snapshots/C_v4/references/effects.md": "384eff61c966aee8bff4cd5ea074893cf0e00844d25bdfc5874d9d1b97d2a74b",
+    "evals/iterations/code-repair-2026-09-30/snapshots/C_v4/references/evidence.md": "f0d168f13fd87fde50a3a0b8588b636941ec8cb3e997d3539c71cb8010f2e41f",
+    "evals/iterations/code-repair-2026-09-30/snapshots/C_v4/references/executable-contracts.md": "7ef6ab3842dc3aab0388d529883dc82443a60751f0c599d21aae78a9c47c4291",
+    "evals/iterations/code-repair-2026-09-30/snapshots/C_v4/references/gluing.md": "fda165771c046c14e4730885b275d156142a1d123a2e371634c245e966583260",
+    "evals/iterations/code-repair-2026-09-30/snapshots/C_v4/references/probability-causality.md": "b7eda116e32377a58406d7655ab3b15c508802657910b3ccb3e4a19616bd37b7",
+    "evals/iterations/code-repair-2026-09-30/snapshots/C_v4/references/quantitative.md": "f0a266b554a51259a3bfda0618755a91ec3c37841768fe939e47da2d53212e38",
+    "evals/iterations/code-repair-2026-09-30/snapshots/C_v4/scripts/check_evidence.py": "98c60fe8ea0d36dd40b2da48d9768f6c81e31803b6036af826c611ad26d07592",
+    "evals/iterations/code-repair-2026-09-30/snapshots/C_v4/scripts/composition.py": "1eb7a2a566b776789344246981386c2259e877b5dc299588a2d925a34588bd9e",
+    "evals/code_repair/MODEL_FORMAT.md": "16adaba053e4fa8ad97f32a96bee484b265eafb1d57256782f03d25a273b721b",
+    "evals/code_repair/TOOLS.md": "1ed4a5fa0d764a77059350104bfe8d842aaf7b9f13ce0fa6e526f48f3ef61629",
+    "evals/code_repair/__init__.py": "6a8eb0526e1c2b1e0e569694a7ddf2221da293474b366a2e923e580d0c7752f1",
+    "evals/code_repair/acceptance.py": "adfebf70b51823080f251f43476ec56d5b189e020fdbb23895c88525e33270d2",
+    "evals/code_repair/catalog.py": "69a0eaf019e3978eb1a91ed93c7af186b6e814590e7f99502cb57cc4d8fad456",
+    "evals/code_repair/grading.py": "09b9ac819766340e307b33d9f738f768798d52835d997cf41fc42d6a3ff5c12b",
+    "evals/code_repair/protocol.py": "8b0bacee63a2c181cd038367a87f513f8ef5ac46275ddcb0896fbd816cdf4a53",
+    "evals/code_repair/smoke.py": "83b4d734643f4075718fdcebd11cdb80bb7d76003cdf840ec9eb468d7a386856",
+    "evals/code_repair/tasks/async_group/app.py": "26e7a54d09710818e628796784db0a97c550b1e72f1137fbb4625d07aa009cd9",
+    "evals/code_repair/tasks/async_group/healthy.py": "4cd44599dc5f52aea177d95c72f6abd005c57f64aba0b8a891b8cf208a8b2c7f",
+    "evals/code_repair/tasks/graph/app.py": "1bacdb9930e2ecd7673f79d9e8adf6dfa7df08128168b4d99c19917ac9c85737",
+    "evals/code_repair/tasks/graph/healthy.py": "15c40b7686ac55f3a104c38c336d452f6de47daa714a35ffd4c3e5538bed573b",
+    "evals/code_repair/tasks/transaction/app.py": "999b7d8bdfc0cb9558ebae800e6a26326b84f61e77ebe33356a3140952fa7f8b",
+    "evals/code_repair/tasks/transaction/healthy.py": "d562dec2c3c644f679b4b97f54251ae1a9beef1337739df7e3d7173bcbcd034c",
+    "evals/code_repair/test_fixtures.py": "2ce0c13c6d031fa623eff3efb2344cf7c430a55fdd0ef66c53631d7373b48f1d",
+    "evals/code_repair/test_protocol.py": "c5573b17a0ec1f9915ae7d540b19752e2bfd54451c513d76e97d695b7d9d86b1",
+    "evals/iterations/code-repair-2026-09-30/cases.json": "393fb5256f8531319e8907b649b7922738c62497747ceabe91eb6ebf2719682b",
+    "evals/iterations/code-repair-2026-09-30/ANALYSIS_PLAN.md": "9a17e39381f6052c098b2ee968cf96b34aaad69d423409b7b5ec8011e1f49788",
+    "evals/iterations/code-repair-2026-09-30/prediction.schema.json": "f8865b7be067adbe6aee514af7cc12430e2578ae45d4d2edb146da80a162d0dd",
+    "evals/iterations/code-repair-2026-09-30/review.schema.json": "c30291d8b74b0e8e8b45b81a20833bd7d05aacbd004a0f4d6742b92a9d32a0a6",
+    "scripts/run_code_repair_eval.py": "3eebdc192cd6501416491451d322ab812e3bcd333ca375feb5a3ba34f5f2b599",
+    "scripts/review_code_models.py": "7ca51e9b042352412b2d5f15a5ad7888ad74ae235ea35d167a26c2baaad4b8e8",
+    "scripts/analyze_code_repair.py": "2b659ec7114751bac63016bc150863d4d78faaf130b862522deb388629ff84d3",
+    "candidates/v4/agent-composition-review/scripts/composition.py": "1eb7a2a566b776789344246981386c2259e877b5dc299588a2d925a34588bd9e"
+  },
+  "prompt_sha256": {
+    "A_basic": "1bb460fb636cc7a19abd022ed921acd8d0028460effea85ac05ce737f1f9e4ba",
+    "B_tools": "1bb460fb636cc7a19abd022ed921acd8d0028460effea85ac05ce737f1f9e4ba",
+    "C_v4": "e50f6f07a426e3c16576d6474bf162cb5d63f92dee943e576e526ec2dcb6bbff"
+  }
+}

@@ -1,0 +1,54 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "criteria": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string",
+            "enum": [
+              "r1",
+              "r2",
+              "r3"
+            ]
+          },
+          "assessment": {
+            "type": "string",
+            "enum": [
+              "covered",
+              "contradicted",
+              "insufficient"
+            ]
+          },
+          "model_evidence": {
+            "type": "string"
+          },
+          "code_evidence": {
+            "type": "string"
+          },
+          "reason": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "assessment",
+          "model_evidence",
+          "code_evidence",
+          "reason"
+        ]
+      }
+    },
+    "uncertainty": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "criteria",
+    "uncertainty"
+  ]
+}

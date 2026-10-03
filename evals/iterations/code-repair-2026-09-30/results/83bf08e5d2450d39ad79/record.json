@@ -1,0 +1,185 @@
+{
+  "case_id": "c03",
+  "condition": "B_tools",
+  "trial": 2,
+  "exit_code": 1,
+  "timed_out": false,
+  "elapsed_seconds": 233.05055741599062,
+  "usage": null,
+  "completed": false,
+  "status": "infrastructure_failure",
+  "prediction": null,
+  "acceptance": {
+    "tests_run": 7,
+    "passed": true,
+    "checks": [
+      {
+        "test": "test_empty_batch_and_repeat_failure_do_not_end_transaction",
+        "passed": true
+      },
+      {
+        "test": "test_existing_savepoint_is_preserved",
+        "passed": true
+      },
+      {
+        "test": "test_explicit_transaction_in_autocommit_mode",
+        "passed": true
+      },
+      {
+        "test": "test_failure_rolls_back_only_own_batch",
+        "passed": true
+      },
+      {
+        "test": "test_standalone_failure_is_atomic_and_preserves_original_error",
+        "passed": true
+      },
+      {
+        "test": "test_standalone_success_is_committed",
+        "passed": true
+      },
+      {
+        "test": "test_success_does_not_commit_callers_transaction",
+        "passed": true
+      }
+    ],
+    "exit_code": 0,
+    "timed_out": false,
+    "sandbox": "macos_no_network_writes_only_grade_directory",
+    "stderr": ""
+  },
+  "structure": {
+    "valid": true,
+    "errors": [],
+    "scope": "Syntax/references only; semantic criteria reviewed independently."
+  },
+  "source_changed": true,
+  "artifacts": {
+    "app.py": "fc3fdccc9285c9972a3dd4d4b8843b139fb166e4b392023c4aa9ea6f90ce38dc",
+    "model.json": "560771765fdb125bfc55d3da8e52b028b8c4776cf8d4671259a4d80462ee5e3a",
+    "test_write_batch.py": "42f4d83dc3ad70e449af8a39951640093045e87a86c3962216157c5bda5a23ae"
+  },
+  "protected_changes": [],
+  "outside_changes": [],
+  "artifact_errors": [],
+  "tool_audit": [
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc \"pwd; rg --files -g '\"'!__pycache__'\"' -g '\"'!'\"\\\\.git'\"",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc 'cat app.py smoke.py'",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc 'cat task.md MODEL_FORMAT.md'",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 1,
+      "command": "/bin/zsh -lc \"rg --files --hidden -g AGENTS.md -g '\"'!'\"\\\\.git' -g '\"'!__pycache__'\"'\"",
+      "review_flags": []
+    },
+    {
+      "type": "file_change",
+      "exit_code": null,
+      "changes": [
+        {
+          "path": "<workspace>/test_write_batch.py",
+          "kind": "add"
+        }
+      ]
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 1,
+      "command": "/bin/zsh -lc './run_python test_write_batch.py original'",
+      "review_flags": []
+    },
+    {
+      "type": "file_change",
+      "exit_code": null,
+      "changes": [
+        {
+          "path": "<workspace>/app.py",
+          "kind": "update"
+        }
+      ]
+    },
+    {
+      "type": "file_change",
+      "exit_code": null,
+      "changes": [
+        {
+          "path": "<workspace>/app.py",
+          "kind": "update"
+        }
+      ]
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc 'nl -ba app.py'",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc './run_python smoke.py'",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc './run_python test_write_batch.py app'",
+      "review_flags": []
+    },
+    {
+      "type": "file_change",
+      "exit_code": null,
+      "changes": [
+        {
+          "path": "<workspace>/model.json",
+          "kind": "add"
+        }
+      ]
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc './run_python -m json.tool model.json > /dev/null'",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 1,
+      "command": "/bin/zsh -lc 'diff -u original.py app.py'",
+      "review_flags": []
+    }
+  ],
+  "case_sha256": "869b6661534ff5fada727853ef16de29d88ed3987bb6fa0a8a2ce2eb7d5e9ef5",
+  "prompt_sha256": "1bb460fb636cc7a19abd022ed921acd8d0028460effea85ac05ce737f1f9e4ba",
+  "event_sha256": "28f9af8e98be6c4e200f38c0b4ed9673ed4f39549ee7929bbec834d04637cb8d",
+  "stderr_sha256": "4eb6806ed58b9fb6ae3d3edf2cf149e1875a7db14abb35622d2bf1fe72c7fd36",
+  "model_requested": "gpt-6-astra",
+  "reasoning_effort": "high",
+  "cli_version": "codex-cli 0.158.0-alpha.2.1",
+  "review": {
+    "exit_code": 1,
+    "timed_out": false,
+    "elapsed_seconds": 22.713003833021503,
+    "usage": null,
+    "completed": false,
+    "valid": false,
+    "prediction": null,
+    "tool_items": [],
+    "input_sha256": "44d893f9c670ca1515bce6ead04e8f8f11137922cd94ea951835cc45885474ef",
+    "event_sha256": "ec22d658a8dca94d77271e145bd7efed7e92c048cc6e7f3ed67667ae2023c92c"
+  }
+}

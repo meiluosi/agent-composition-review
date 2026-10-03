@@ -1,0 +1,1557 @@
+{
+  "kind": "behavior_test_observations",
+  "description": "Actual invocation results and call logs; not a sequential action-state replay.",
+  "tests_run": 9,
+  "successful": true,
+  "observations": [
+    {
+      "category": "async_two_barriers",
+      "input": {
+        "count": 11,
+        "label": "async",
+        "left": 31,
+        "right": 42
+      },
+      "output": {
+        "count": 18,
+        "label": "async|fresh",
+        "left": 54,
+        "right": 55
+      },
+      "calls": [
+        "prepare",
+        "refresh",
+        "left",
+        "right"
+      ]
+    },
+    {
+      "category": "two_barriers",
+      "input": {
+        "count": 0,
+        "label": "snapshot",
+        "left": 71,
+        "right": -21
+      },
+      "output": {
+        "count": 7,
+        "label": "snapshot|fresh",
+        "left": 86,
+        "right": -22
+      },
+      "calls": [
+        "prepare",
+        "refresh",
+        "left",
+        "right"
+      ]
+    },
+    {
+      "category": "two_barriers",
+      "input": {
+        "count": 1,
+        "label": "snapshot",
+        "left": 71,
+        "right": -21
+      },
+      "output": {
+        "count": 8,
+        "label": "snapshot|fresh",
+        "left": 87,
+        "right": -21
+      },
+      "calls": [
+        "prepare",
+        "refresh",
+        "left",
+        "right"
+      ]
+    },
+    {
+      "category": "two_barriers",
+      "input": {
+        "count": 2,
+        "label": "snapshot",
+        "left": 71,
+        "right": -21
+      },
+      "output": {
+        "count": 9,
+        "label": "snapshot|fresh",
+        "left": 88,
+        "right": -20
+      },
+      "calls": [
+        "prepare",
+        "refresh",
+        "right",
+        "left"
+      ]
+    },
+    {
+      "category": "two_barriers",
+      "input": {
+        "count": 3,
+        "label": "snapshot",
+        "left": 71,
+        "right": -21
+      },
+      "output": {
+        "count": 10,
+        "label": "snapshot|fresh",
+        "left": 89,
+        "right": -19
+      },
+      "calls": [
+        "prepare",
+        "left",
+        "refresh",
+        "right"
+      ]
+    },
+    {
+      "category": "chained",
+      "input": {
+        "count": -7,
+        "label": "seed",
+        "left": 19,
+        "right": -23
+      },
+      "output": {
+        "count": 0,
+        "label": "seed|fresh",
+        "left": 23,
+        "right": -27
+      },
+      "calls": [
+        "prepare",
+        "refresh",
+        "right",
+        "left"
+      ]
+    },
+    {
+      "category": "chained",
+      "input": {
+        "count": 0,
+        "label": "seed|fresh",
+        "left": 23,
+        "right": -27
+      },
+      "output": {
+        "count": 7,
+        "label": "seed|fresh|fresh",
+        "left": 40,
+        "right": -30
+      },
+      "calls": [
+        "prepare",
+        "refresh",
+        "left",
+        "right"
+      ]
+    },
+    {
+      "category": "chained",
+      "input": {
+        "count": 7,
+        "label": "seed|fresh|fresh",
+        "left": 40,
+        "right": -30
+      },
+      "output": {
+        "count": 14,
+        "label": "seed|fresh|fresh|fresh",
+        "left": 70,
+        "right": -32
+      },
+      "calls": [
+        "prepare",
+        "refresh",
+        "right",
+        "left"
+      ]
+    },
+    {
+      "category": "chained",
+      "input": {
+        "count": 14,
+        "label": "seed|fresh|fresh|fresh",
+        "left": 70,
+        "right": -32
+      },
+      "output": {
+        "count": 21,
+        "label": "seed|fresh|fresh|fresh|fresh",
+        "left": 113,
+        "right": -33
+      },
+      "calls": [
+        "prepare",
+        "left",
+        "refresh",
+        "right"
+      ]
+    },
+    {
+      "category": "chained",
+      "input": {
+        "count": 21,
+        "label": "seed|fresh|fresh|fresh|fresh",
+        "left": 113,
+        "right": -33
+      },
+      "output": {
+        "count": 28,
+        "label": "seed|fresh|fresh|fresh|fresh|fresh",
+        "left": 169,
+        "right": -33
+      },
+      "calls": [
+        "prepare",
+        "left",
+        "refresh",
+        "right"
+      ]
+    },
+    {
+      "category": "concurrent_same_graph",
+      "inputs": [
+        {
+          "count": 0,
+          "label": "",
+          "left": 100,
+          "right": -100
+        },
+        {
+          "count": 1,
+          "label": "q",
+          "left": 101,
+          "right": -101
+        },
+        {
+          "count": 2,
+          "label": "qq",
+          "left": 102,
+          "right": -102
+        },
+        {
+          "count": 3,
+          "label": "qqq",
+          "left": 103,
+          "right": -103
+        },
+        {
+          "count": 4,
+          "label": "qqqq",
+          "left": 104,
+          "right": -104
+        },
+        {
+          "count": 5,
+          "label": "qqqqq",
+          "left": 105,
+          "right": -105
+        },
+        {
+          "count": 6,
+          "label": "qqqqqq",
+          "left": 106,
+          "right": -106
+        },
+        {
+          "count": 7,
+          "label": "qqqqqqq",
+          "left": 107,
+          "right": -107
+        },
+        {
+          "count": 8,
+          "label": "qqqqqqqq",
+          "left": 108,
+          "right": -108
+        },
+        {
+          "count": 9,
+          "label": "qqqqqqqqq",
+          "left": 109,
+          "right": -109
+        },
+        {
+          "count": 10,
+          "label": "qqqqqqqqqq",
+          "left": 110,
+          "right": -110
+        },
+        {
+          "count": 11,
+          "label": "qqqqqqqqqqq",
+          "left": 111,
+          "right": -111
+        },
+        {
+          "count": 12,
+          "label": "qqqqqqqqqqqq",
+          "left": 112,
+          "right": -112
+        },
+        {
+          "count": 13,
+          "label": "qqqqqqqqqqqqq",
+          "left": 113,
+          "right": -113
+        },
+        {
+          "count": 14,
+          "label": "qqqqqqqqqqqqqq",
+          "left": 114,
+          "right": -114
+        },
+        {
+          "count": 15,
+          "label": "qqqqqqqqqqqqqqq",
+          "left": 115,
+          "right": -115
+        }
+      ],
+      "outputs": [
+        {
+          "count": 7,
+          "label": "|fresh",
+          "left": 107,
+          "right": -93
+        },
+        {
+          "count": 8,
+          "label": "q|fresh",
+          "left": 110,
+          "right": -94
+        },
+        {
+          "count": 9,
+          "label": "qq|fresh",
+          "left": 113,
+          "right": -95
+        },
+        {
+          "count": 10,
+          "label": "qqq|fresh",
+          "left": 116,
+          "right": -96
+        },
+        {
+          "count": 11,
+          "label": "qqqq|fresh",
+          "left": 119,
+          "right": -97
+        },
+        {
+          "count": 12,
+          "label": "qqqqq|fresh",
+          "left": 122,
+          "right": -98
+        },
+        {
+          "count": 13,
+          "label": "qqqqqq|fresh",
+          "left": 125,
+          "right": -99
+        },
+        {
+          "count": 14,
+          "label": "qqqqqqq|fresh",
+          "left": 128,
+          "right": -100
+        },
+        {
+          "count": 15,
+          "label": "qqqqqqqq|fresh",
+          "left": 131,
+          "right": -101
+        },
+        {
+          "count": 16,
+          "label": "qqqqqqqqq|fresh",
+          "left": 134,
+          "right": -102
+        },
+        {
+          "count": 17,
+          "label": "qqqqqqqqqq|fresh",
+          "left": 137,
+          "right": -103
+        },
+        {
+          "count": 18,
+          "label": "qqqqqqqqqqq|fresh",
+          "left": 140,
+          "right": -104
+        },
+        {
+          "count": 19,
+          "label": "qqqqqqqqqqqq|fresh",
+          "left": 143,
+          "right": -105
+        },
+        {
+          "count": 20,
+          "label": "qqqqqqqqqqqqq|fresh",
+          "left": 146,
+          "right": -106
+        },
+        {
+          "count": 21,
+          "label": "qqqqqqqqqqqqqq|fresh",
+          "left": 149,
+          "right": -107
+        },
+        {
+          "count": 22,
+          "label": "qqqqqqqqqqqqqqq|fresh",
+          "left": 152,
+          "right": -108
+        }
+      ],
+      "calls": [
+        "prepare",
+        "prepare",
+        "prepare",
+        "prepare",
+        "refresh",
+        "left",
+        "refresh",
+        "left",
+        "right",
+        "right",
+        "left",
+        "refresh",
+        "right",
+        "right",
+        "left",
+        "refresh",
+        "prepare",
+        "prepare",
+        "refresh",
+        "right",
+        "refresh",
+        "left",
+        "prepare",
+        "left",
+        "prepare",
+        "right",
+        "prepare",
+        "refresh",
+        "left",
+        "left",
+        "prepare",
+        "refresh",
+        "right",
+        "right",
+        "refresh",
+        "prepare",
+        "right",
+        "left",
+        "refresh",
+        "prepare",
+        "left",
+        "prepare",
+        "refresh",
+        "left",
+        "right",
+        "left",
+        "refresh",
+        "right",
+        "right",
+        "prepare",
+        "refresh",
+        "left",
+        "prepare",
+        "prepare",
+        "right",
+        "refresh",
+        "left",
+        "left",
+        "refresh",
+        "left",
+        "refresh",
+        "right",
+        "right",
+        "right"
+      ]
+    },
+    {
+      "category": "exception",
+      "site": "parent_gate",
+      "observed_exception": "GateFailure"
+    },
+    {
+      "category": "exception",
+      "site": "child_gate",
+      "observed_exception": "GateFailure"
+    },
+    {
+      "category": "separate_graphs",
+      "input": {
+        "count": 0,
+        "label": "0",
+        "left": 0,
+        "right": 0
+      },
+      "output": {
+        "count": 7,
+        "label": "0|fresh",
+        "left": 8,
+        "right": 6
+      },
+      "calls": [
+        "prepare",
+        "refresh",
+        "left",
+        "right"
+      ]
+    },
+    {
+      "category": "separate_graphs",
+      "input": {
+        "count": 1,
+        "label": "1",
+        "left": 17,
+        "right": -1
+      },
+      "output": {
+        "count": 8,
+        "label": "1|fresh",
+        "left": 26,
+        "right": 6
+      },
+      "calls": [
+        "prepare",
+        "refresh",
+        "right",
+        "left"
+      ]
+    },
+    {
+      "category": "separate_graphs",
+      "input": {
+        "count": 2,
+        "label": "0",
+        "left": 34,
+        "right": -2
+      },
+      "output": {
+        "count": 9,
+        "label": "0|fresh",
+        "left": 44,
+        "right": 6
+      },
+      "calls": [
+        "prepare",
+        "refresh",
+        "right",
+        "left"
+      ]
+    },
+    {
+      "category": "separate_graphs",
+      "input": {
+        "count": 3,
+        "label": "1",
+        "left": 51,
+        "right": -3
+      },
+      "output": {
+        "count": 10,
+        "label": "1|fresh",
+        "left": 62,
+        "right": 6
+      },
+      "calls": [
+        "prepare",
+        "refresh",
+        "right",
+        "left"
+      ]
+    },
+    {
+      "category": "separate_graphs",
+      "input": {
+        "count": 4,
+        "label": "0",
+        "left": 68,
+        "right": -4
+      },
+      "output": {
+        "count": 11,
+        "label": "0|fresh",
+        "left": 80,
+        "right": 6
+      },
+      "calls": [
+        "prepare",
+        "refresh",
+        "right",
+        "left"
+      ]
+    },
+    {
+      "category": "separate_graphs",
+      "input": {
+        "count": 5,
+        "label": "1",
+        "left": 85,
+        "right": -5
+      },
+      "output": {
+        "count": 12,
+        "label": "1|fresh",
+        "left": 98,
+        "right": 6
+      },
+      "calls": [
+        "prepare",
+        "refresh",
+        "right",
+        "left"
+      ]
+    },
+    {
+      "category": "invoke",
+      "input": {
+        "count": 1,
+        "label": "x",
+        "left": 2,
+        "right": 3
+      },
+      "output": {
+        "count": 8,
+        "label": "x|fresh",
+        "left": 11,
+        "right": 10
+      },
+      "calls": [
+        "prepare",
+        "refresh",
+        "left",
+        "right"
+      ]
+    },
+    {
+      "category": "exception",
+      "site": "prepare",
+      "observed_exception": "TypeError"
+    },
+    {
+      "category": "direct_child",
+      "input": {
+        "count": 0,
+        "label": "child",
+        "left": 73,
+        "right": -91
+      },
+      "output": {
+        "left": 78,
+        "right": -96
+      },
+      "calls": [
+        "left",
+        "right"
+      ]
+    },
+    {
+      "category": "direct_child",
+      "input": {
+        "count": 1,
+        "label": "child",
+        "left": 73,
+        "right": -91
+      },
+      "output": {
+        "left": 79,
+        "right": -95
+      },
+      "calls": [
+        "left",
+        "right"
+      ]
+    },
+    {
+      "category": "direct_child",
+      "input": {
+        "count": 2,
+        "label": "child",
+        "left": 73,
+        "right": -91
+      },
+      "output": {
+        "left": 80,
+        "right": -94
+      },
+      "calls": [
+        "left",
+        "right"
+      ]
+    },
+    {
+      "category": "invoke",
+      "input": {
+        "count": 4,
+        "label": "parent",
+        "left": 9,
+        "right": 3
+      },
+      "output": {
+        "count": 11,
+        "label": "parent|fresh",
+        "left": 26,
+        "right": 8
+      },
+      "calls": [
+        "prepare",
+        "refresh",
+        "right",
+        "left"
+      ]
+    },
+    {
+      "category": "invoke",
+      "input": {
+        "count": -19,
+        "label": "",
+        "left": 0,
+        "right": 0
+      },
+      "output": {
+        "count": -12,
+        "label": "|fresh",
+        "left": -12,
+        "right": -12
+      },
+      "calls": [
+        "prepare",
+        "refresh",
+        "left",
+        "right"
+      ]
+    },
+    {
+      "category": "invoke",
+      "input": {
+        "count": -19,
+        "label": "",
+        "left": 51,
+        "right": -73
+      },
+      "output": {
+        "count": -12,
+        "label": "|fresh",
+        "left": 39,
+        "right": -85
+      },
+      "calls": [
+        "prepare",
+        "left",
+        "refresh",
+        "right"
+      ]
+    },
+    {
+      "category": "invoke",
+      "input": {
+        "count": -19,
+        "label": "old",
+        "left": 0,
+        "right": 0
+      },
+      "output": {
+        "count": -12,
+        "label": "old|fresh",
+        "left": -9,
+        "right": -15
+      },
+      "calls": [
+        "prepare",
+        "refresh",
+        "right",
+        "left"
+      ]
+    },
+    {
+      "category": "invoke",
+      "input": {
+        "count": -19,
+        "label": "old",
+        "left": 51,
+        "right": -73
+      },
+      "output": {
+        "count": -12,
+        "label": "old|fresh",
+        "left": 42,
+        "right": -88
+      },
+      "calls": [
+        "prepare",
+        "refresh",
+        "left",
+        "right"
+      ]
+    },
+    {
+      "category": "invoke",
+      "input": {
+        "count": -19,
+        "label": "汉字🙂",
+        "left": 0,
+        "right": 0
+      },
+      "output": {
+        "count": -12,
+        "label": "汉字🙂|fresh",
+        "left": -9,
+        "right": -15
+      },
+      "calls": [
+        "prepare",
+        "refresh",
+        "right",
+        "left"
+      ]
+    },
+    {
+      "category": "invoke",
+      "input": {
+        "count": -19,
+        "label": "汉字🙂",
+        "left": 51,
+        "right": -73
+      },
+      "output": {
+        "count": -12,
+        "label": "汉字🙂|fresh",
+        "left": 42,
+        "right": -88
+      },
+      "calls": [
+        "prepare",
+        "refresh",
+        "left",
+        "right"
+      ]
+    },
+    {
+      "category": "invoke",
+      "input": {
+        "count": -19,
+        "label": "a|fresh",
+        "left": 0,
+        "right": 0
+      },
+      "output": {
+        "count": -12,
+        "label": "a|fresh|fresh",
+        "left": -5,
+        "right": -19
+      },
+      "calls": [
+        "prepare",
+        "refresh",
+        "right",
+        "left"
+      ]
+    },
+    {
+      "category": "invoke",
+      "input": {
+        "count": -19,
+        "label": "a|fresh",
+        "left": 51,
+        "right": -73
+      },
+      "output": {
+        "count": -12,
+        "label": "a|fresh|fresh",
+        "left": 46,
+        "right": -92
+      },
+      "calls": [
+        "prepare",
+        "left",
+        "refresh",
+        "right"
+      ]
+    },
+    {
+      "category": "invoke",
+      "input": {
+        "count": -19,
+        "label": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+        "left": 0,
+        "right": 0
+      },
+      "output": {
+        "count": -12,
+        "label": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx|fresh",
+        "left": 988,
+        "right": -1012
+      },
+      "calls": [
+        "prepare",
+        "refresh",
+        "right",
+        "left"
+      ]
+    },
+    {
+      "category": "invoke",
+      "input": {
+        "count": -19,
+        "label": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+        "left": 51,
+        "right": -73
+      },
+      "output": {
+        "count": -12,
+        "label": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx|fresh",
+        "left": 1039,
+        "right": -1085
+      },
+      "calls": [
+        "prepare",
+        "refresh",
+        "left",
+        "right"
+      ]
+    },
+    {
+      "category": "invoke",
+      "input": {
+        "count": 0,
+        "label": "",
+        "left": 0,
+        "right": 0
+      },
+      "output": {
+        "count": 7,
+        "label": "|fresh",
+        "left": 7,
+        "right": 7
+      },
+      "calls": [
+        "prepare",
+        "refresh",
+        "right",
+        "left"
+      ]
+    },
+    {
+      "category": "invoke",
+      "input": {
+        "count": 0,
+        "label": "",
+        "left": 51,
+        "right": -73
+      },
+      "output": {
+        "count": 7,
+        "label": "|fresh",
+        "left": 58,
+        "right": -66
+      },
+      "calls": [
+        "prepare",
+        "refresh",
+        "right",
+        "left"
+      ]
+    },
+    {
+      "category": "invoke",
+      "input": {
+        "count": 0,
+        "label": "old",
+        "left": 0,
+        "right": 0
+      },
+      "output": {
+        "count": 7,
+        "label": "old|fresh",
+        "left": 10,
+        "right": 4
+      },
+      "calls": [
+        "prepare",
+        "refresh",
+        "right",
+        "left"
+      ]
+    },
+    {
+      "category": "invoke",
+      "input": {
+        "count": 0,
+        "label": "old",
+        "left": 51,
+        "right": -73
+      },
+      "output": {
+        "count": 7,
+        "label": "old|fresh",
+        "left": 61,
+        "right": -69
+      },
+      "calls": [
+        "prepare",
+        "left",
+        "refresh",
+        "right"
+      ]
+    },
+    {
+      "category": "invoke",
+      "input": {
+        "count": 0,
+        "label": "汉字🙂",
+        "left": 0,
+        "right": 0
+      },
+      "output": {
+        "count": 7,
+        "label": "汉字🙂|fresh",
+        "left": 10,
+        "right": 4
+      },
+      "calls": [
+        "prepare",
+        "refresh",
+        "left",
+        "right"
+      ]
+    },
+    {
+      "category": "invoke",
+      "input": {
+        "count": 0,
+        "label": "汉字🙂",
+        "left": 51,
+        "right": -73
+      },
+      "output": {
+        "count": 7,
+        "label": "汉字🙂|fresh",
+        "left": 61,
+        "right": -69
+      },
+      "calls": [
+        "prepare",
+        "refresh",
+        "right",
+        "left"
+      ]
+    },
+    {
+      "category": "invoke",
+      "input": {
+        "count": 0,
+        "label": "a|fresh",
+        "left": 0,
+        "right": 0
+      },
+      "output": {
+        "count": 7,
+        "label": "a|fresh|fresh",
+        "left": 14,
+        "right": 0
+      },
+      "calls": [
+        "prepare",
+        "refresh",
+        "left",
+        "right"
+      ]
+    },
+    {
+      "category": "invoke",
+      "input": {
+        "count": 0,
+        "label": "a|fresh",
+        "left": 51,
+        "right": -73
+      },
+      "output": {
+        "count": 7,
+        "label": "a|fresh|fresh",
+        "left": 65,
+        "right": -73
+      },
+      "calls": [
+        "prepare",
+        "left",
+        "refresh",
+        "right"
+      ]
+    },
+    {
+      "category": "invoke",
+      "input": {
+        "count": 0,
+        "label": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+        "left": 0,
+        "right": 0
+      },
+      "output": {
+        "count": 7,
+        "label": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx|fresh",
+        "left": 1007,
+        "right": -993
+      },
+      "calls": [
+        "prepare",
+        "left",
+        "refresh",
+        "right"
+      ]
+    },
+    {
+      "category": "invoke",
+      "input": {
+        "count": 0,
+        "label": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+        "left": 51,
+        "right": -73
+      },
+      "output": {
+        "count": 7,
+        "label": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx|fresh",
+        "left": 1058,
+        "right": -1066
+      },
+      "calls": [
+        "prepare",
+        "left",
+        "refresh",
+        "right"
+      ]
+    },
+    {
+      "category": "invoke",
+      "input": {
+        "count": 1,
+        "label": "",
+        "left": 0,
+        "right": 0
+      },
+      "output": {
+        "count": 8,
+        "label": "|fresh",
+        "left": 8,
+        "right": 8
+      },
+      "calls": [
+        "prepare",
+        "left",
+        "refresh",
+        "right"
+      ]
+    },
+    {
+      "category": "invoke",
+      "input": {
+        "count": 1,
+        "label": "",
+        "left": 51,
+        "right": -73
+      },
+      "output": {
+        "count": 8,
+        "label": "|fresh",
+        "left": 59,
+        "right": -65
+      },
+      "calls": [
+        "prepare",
+        "refresh",
+        "left",
+        "right"
+      ]
+    },
+    {
+      "category": "invoke",
+      "input": {
+        "count": 1,
+        "label": "old",
+        "left": 0,
+        "right": 0
+      },
+      "output": {
+        "count": 8,
+        "label": "old|fresh",
+        "left": 11,
+        "right": 5
+      },
+      "calls": [
+        "prepare",
+        "refresh",
+        "left",
+        "right"
+      ]
+    },
+    {
+      "category": "invoke",
+      "input": {
+        "count": 1,
+        "label": "old",
+        "left": 51,
+        "right": -73
+      },
+      "output": {
+        "count": 8,
+        "label": "old|fresh",
+        "left": 62,
+        "right": -68
+      },
+      "calls": [
+        "prepare",
+        "left",
+        "refresh",
+        "right"
+      ]
+    },
+    {
+      "category": "invoke",
+      "input": {
+        "count": 1,
+        "label": "汉字🙂",
+        "left": 0,
+        "right": 0
+      },
+      "output": {
+        "count": 8,
+        "label": "汉字🙂|fresh",
+        "left": 11,
+        "right": 5
+      },
+      "calls": [
+        "prepare",
+        "left",
+        "refresh",
+        "right"
+      ]
+    },
+    {
+      "category": "invoke",
+      "input": {
+        "count": 1,
+        "label": "汉字🙂",
+        "left": 51,
+        "right": -73
+      },
+      "output": {
+        "count": 8,
+        "label": "汉字🙂|fresh",
+        "left": 62,
+        "right": -68
+      },
+      "calls": [
+        "prepare",
+        "refresh",
+        "left",
+        "right"
+      ]
+    },
+    {
+      "category": "invoke",
+      "input": {
+        "count": 1,
+        "label": "a|fresh",
+        "left": 0,
+        "right": 0
+      },
+      "output": {
+        "count": 8,
+        "label": "a|fresh|fresh",
+        "left": 15,
+        "right": 1
+      },
+      "calls": [
+        "prepare",
+        "refresh",
+        "left",
+        "right"
+      ]
+    },
+    {
+      "category": "invoke",
+      "input": {
+        "count": 1,
+        "label": "a|fresh",
+        "left": 51,
+        "right": -73
+      },
+      "output": {
+        "count": 8,
+        "label": "a|fresh|fresh",
+        "left": 66,
+        "right": -72
+      },
+      "calls": [
+        "prepare",
+        "refresh",
+        "right",
+        "left"
+      ]
+    },
+    {
+      "category": "invoke",
+      "input": {
+        "count": 1,
+        "label": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+        "left": 0,
+        "right": 0
+      },
+      "output": {
+        "count": 8,
+        "label": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx|fresh",
+        "left": 1008,
+        "right": -992
+      },
+      "calls": [
+        "prepare",
+        "refresh",
+        "left",
+        "right"
+      ]
+    },
+    {
+      "category": "invoke",
+      "input": {
+        "count": 1,
+        "label": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+        "left": 51,
+        "right": -73
+      },
+      "output": {
+        "count": 8,
+        "label": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx|fresh",
+        "left": 1059,
+        "right": -1065
+      },
+      "calls": [
+        "prepare",
+        "left",
+        "refresh",
+        "right"
+      ]
+    },
+    {
+      "category": "invoke",
+      "input": {
+        "count": 1000000000000000000000000000000,
+        "label": "",
+        "left": 0,
+        "right": 0
+      },
+      "output": {
+        "count": 1000000000000000000000000000007,
+        "label": "|fresh",
+        "left": 1000000000000000000000000000007,
+        "right": 1000000000000000000000000000007
+      },
+      "calls": [
+        "prepare",
+        "refresh",
+        "right",
+        "left"
+      ]
+    },
+    {
+      "category": "invoke",
+      "input": {
+        "count": 1000000000000000000000000000000,
+        "label": "",
+        "left": 51,
+        "right": -73
+      },
+      "output": {
+        "count": 1000000000000000000000000000007,
+        "label": "|fresh",
+        "left": 1000000000000000000000000000058,
+        "right": 999999999999999999999999999934
+      },
+      "calls": [
+        "prepare",
+        "refresh",
+        "right",
+        "left"
+      ]
+    },
+    {
+      "category": "invoke",
+      "input": {
+        "count": 1000000000000000000000000000000,
+        "label": "old",
+        "left": 0,
+        "right": 0
+      },
+      "output": {
+        "count": 1000000000000000000000000000007,
+        "label": "old|fresh",
+        "left": 1000000000000000000000000000010,
+        "right": 1000000000000000000000000000004
+      },
+      "calls": [
+        "prepare",
+        "refresh",
+        "right",
+        "left"
+      ]
+    },
+    {
+      "category": "invoke",
+      "input": {
+        "count": 1000000000000000000000000000000,
+        "label": "old",
+        "left": 51,
+        "right": -73
+      },
+      "output": {
+        "count": 1000000000000000000000000000007,
+        "label": "old|fresh",
+        "left": 1000000000000000000000000000061,
+        "right": 999999999999999999999999999931
+      },
+      "calls": [
+        "prepare",
+        "refresh",
+        "left",
+        "right"
+      ]
+    },
+    {
+      "category": "invoke",
+      "input": {
+        "count": 1000000000000000000000000000000,
+        "label": "汉字🙂",
+        "left": 0,
+        "right": 0
+      },
+      "output": {
+        "count": 1000000000000000000000000000007,
+        "label": "汉字🙂|fresh",
+        "left": 1000000000000000000000000000010,
+        "right": 1000000000000000000000000000004
+      },
+      "calls": [
+        "prepare",
+        "refresh",
+        "right",
+        "left"
+      ]
+    },
+    {
+      "category": "invoke",
+      "input": {
+        "count": 1000000000000000000000000000000,
+        "label": "汉字🙂",
+        "left": 51,
+        "right": -73
+      },
+      "output": {
+        "count": 1000000000000000000000000000007,
+        "label": "汉字🙂|fresh",
+        "left": 1000000000000000000000000000061,
+        "right": 999999999999999999999999999931
+      },
+      "calls": [
+        "prepare",
+        "refresh",
+        "left",
+        "right"
+      ]
+    },
+    {
+      "category": "invoke",
+      "input": {
+        "count": 1000000000000000000000000000000,
+        "label": "a|fresh",
+        "left": 0,
+        "right": 0
+      },
+      "output": {
+        "count": 1000000000000000000000000000007,
+        "label": "a|fresh|fresh",
+        "left": 1000000000000000000000000000014,
+        "right": 1000000000000000000000000000000
+      },
+      "calls": [
+        "prepare",
+        "refresh",
+        "left",
+        "right"
+      ]
+    },
+    {
+      "category": "invoke",
+      "input": {
+        "count": 1000000000000000000000000000000,
+        "label": "a|fresh",
+        "left": 51,
+        "right": -73
+      },
+      "output": {
+        "count": 1000000000000000000000000000007,
+        "label": "a|fresh|fresh",
+        "left": 1000000000000000000000000000065,
+        "right": 999999999999999999999999999927
+      },
+      "calls": [
+        "prepare",
+        "refresh",
+        "left",
+        "right"
+      ]
+    },
+    {
+      "category": "invoke",
+      "input": {
+        "count": 1000000000000000000000000000000,
+        "label": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+        "left": 0,
+        "right": 0
+      },
+      "output": {
+        "count": 1000000000000000000000000000007,
+        "label": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx|fresh",
+        "left": 1000000000000000000000000001007,
+        "right": 999999999999999999999999999007
+      },
+      "calls": [
+        "prepare",
+        "refresh",
+        "left",
+        "right"
+      ]
+    },
+    {
+      "category": "invoke",
+      "input": {
+        "count": 1000000000000000000000000000000,
+        "label": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+        "left": 51,
+        "right": -73
+      },
+      "output": {
+        "count": 1000000000000000000000000000007,
+        "label": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx|fresh",
+        "left": 1000000000000000000000000001058,
+        "right": 999999999999999999999999998934
+      },
+      "calls": [
+        "prepare",
+        "refresh",
+        "right",
+        "left"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,115 @@
+{
+  "schema_version": 1,
+  "types": {
+    "BatchRequest": {
+      "connection": {"type": "object"},
+      "rows": {"type": "array"}
+    },
+    "BatchReturn": {
+      "value": {"type": "number"}
+    }
+  },
+  "resources": {
+    "records": "调用者连接中的 records 表以及插入触发的数据库修改。",
+    "transaction": "同一连接的事务状态及未提交工作。",
+    "savepoints": "同一连接的保存点栈，包括调用者保存点和本函数创建的保存点。"
+  },
+  "actions": [
+    {
+      "id": "write_batch",
+      "meaning": "app.py:write_batch(connection, rows)：在独立命名的保存点内插入一批行，释放成功后返回预先取得的序列长度；插入或释放失败时尝试局部回滚，并重新抛出原异常。",
+      "input_type": "BatchRequest",
+      "output_type": "BatchReturn",
+      "reads": ["records", "transaction", "savepoints"],
+      "writes": ["records", "transaction", "savepoints"],
+      "pre": [
+        {
+          "id": "empty_batch_allowed",
+          "requirement": "有限输入序列的长度允许为零。连接有效、表存在及每项为键值对等前提另见 requirements；此谓词不验证连接或表结构。",
+          "must": {"op": "ge", "args": [{"count": {"path": "input.rows"}}, {"literal": 0}]}
+        }
+      ],
+      "post": [
+        {
+          "id": "successful_return_count",
+          "requirement": "正常返回时返回值等于输入序列长度。此条件仅覆盖正常返回事件；异常路径不产生 BatchReturn。",
+          "must": {"op": "eq", "args": [{"path": "output.value"}, {"count": {"path": "input.rows"}}]}
+        }
+      ]
+    }
+  ],
+  "edges": [],
+  "required_actions": ["write_batch"],
+  "relations": [
+    {
+      "kind": "internal_lifecycle",
+      "action": "write_batch",
+      "description": "先获取长度和保存点名称，再 SAVEPOINT；executemany 与成功 RELEASE 同处 try 内；任一步失败均进入异常处理。ROLLBACK TO 成功后才执行清理 RELEASE。末尾裸 raise 保留原异常。这里只建模一个公开调用，无跨动作数据交接。"
+    }
+  ],
+  "requirements": [
+    {
+      "id": "input_contract",
+      "description": "调用者提供可用的 SQLite 连接及已存在的 records(key,value) 表；rows 为稳定的有限键值对序列。BatchRequest 是参数投影，BatchReturn.value 是整数返回值的记录形式，不是新增的 Python 包装类型。",
+      "verification": "测试使用默认 sqlite3 连接及 isolation_level=None。任意用户自定义序列和任意连接子类不作全面保证。"
+    },
+    {
+      "id": "atomic_batch",
+      "description": "普通插入失败或最外层 RELEASE 提交失败时，ROLLBACK TO 撤销本批修改，随后 RELEASE 清除本函数保存点。数据库已自动回滚时无需再次撤销。保证依赖 SQLite 允许清理，且没有其他代码并发操纵该连接。",
+      "verification": "已执行重复键部分插入失败、重复失败、延迟外键提交失败、迭代中 KeyboardInterrupt 和自动回滚触发器测试。"
+    },
+    {
+      "id": "transaction_ownership",
+      "description": "没有外层事务时，最外层保存点的 RELEASE 提交；存在外层事务或调用者保存点时，RELEASE 仅移除本函数保存点。函数没有 connection.commit、connection.rollback 或连接关闭调用。",
+      "verification": "已验证独立调用后 in_transaction 为 false 且 rollback 不撤销成功结果；默认隐式事务、两种连接模式的显式 BEGIN、调用者嵌套保存点均可继续操作和完成事务。依赖 SQLite 保存点语义。"
+    },
+    {
+      "id": "exception_identity",
+      "description": "插入或 RELEASE 抛出的 BaseException 在尝试清理后由裸 raise 重新抛出；清理自身的异常被抑制。SAVEPOINT 创建前或创建时的异常直接传播。",
+      "verification": "实际验证触发器原始 IntegrityError 类型及消息，另验证 KeyboardInterrupt 与注入清理失败后的异常对象身份。"
+    },
+    {
+      "id": "bound_values_and_connection_reuse",
+      "description": "键和值通过两个 SQL 参数绑定；保存点标识符仅由固定前缀与 UUID 十六进制串组成。始终使用传入连接。",
+      "verification": "已测试含引号、SQL 注释字符、Unicode、换行及 NUL 的键，并在成功和失败后复用连接。UUID 不冲突属于推断，未穷举。"
+    }
+  ],
+  "validation": {
+    "executed": [
+      {
+        "command": "./run_python smoke.py",
+        "result": "原始版及交付版均通过：返回 1，查询结果为 [('example', 5)]。"
+      },
+      {
+        "command": "./run_python test_batch.py",
+        "result": "原始版运行当时的 6 项测试，出现 2 个失败子用例和 1 个错误：延迟外键 RELEASE 失败留下本批行，自动回滚后的清理异常覆盖原异常。交付版通过扩展后的全部 8 项测试及其参数组合。"
+      }
+    ],
+    "inferred": [
+      "保存点的提交和嵌套作用域遵循 SQLite 语义；实现未新增辅助模块依赖。",
+      "在任何数据库修改前取得 len(rows)，因此长度读取失败不会留下本批写入。"
+    ],
+    "not_verified": [
+      "磁盘损坏、磁盘耗尽、进程崩溃和真实 I/O 错误下的恢复与持久性。",
+      "并发复用同一连接、所有 SQLite 版本、所有约束和触发器组合。"
+    ]
+  },
+  "scope": {
+    "description": "当前 app.py 的最小公开边界模型：一个 write_batch 动作及其真实数据库资源和内部事务生命周期。结构谓词仅表达输入长度和正常返回计数；原子性、异常身份、事务所有权使用源码依据与实际行为测试说明，不声称由 JSON 结构检查证明。",
+    "limitations": [
+      "未将 sqlite3 内部执行步骤建成独立动作，未建模所有 SQL 约束、触发器副作用或操作系统故障。",
+      "如果 SQLite 因 RAISE(ROLLBACK)、ON CONFLICT ROLLBACK 或严重错误整体回滚，调用者原有事务和保存点也可能已丢失；局部保存点无法恢复这些工作。自动整体回滚测试在无调用者事务场景执行。",
+      "若连接拒绝 ROLLBACK TO，原异常仍保留，并且不会继续 RELEASE 以免提交失败批次；此时无法保证批次已撤销。注入故障测试确认该边界，并由测试调用者最终 rollback 清理。",
+      "调用者事务中的延迟约束最终由调用者提交时检查，本函数释放嵌套保存点不代表最终提交一定成功。",
+      "返回计数按有效输入序列长度计算；任意跳过插入的触发器、忽略冲突的表定义、输入序列并发变更或恶意自定义长度不在已验证的计数语义内。",
+      "动作的正常输出只投影实际整数返回值，异常路径没有伪造返回对象；异常处理约束在 requirements 中以文字与测试记录表达。"
+    ],
+    "evidence": [
+      {"path": "app.py", "start": 5, "end": 8, "supports": "公开接口、预先取得序列长度、生成保存点名称，并在调用者连接上创建保存点。"},
+      {"path": "app.py", "start": 9, "end": 12, "supports": "参数化批量插入与成功释放位于同一异常捕获范围，覆盖最外层提交失败。"},
+      {"path": "app.py", "start": 13, "end": 22, "supports": "捕获 BaseException；先回滚到本函数保存点，成功后再释放；抑制清理异常并重新抛出原异常。"},
+      {"path": "app.py", "start": 23, "end": 23, "supports": "成功释放后返回原输入长度。"},
+      {"path": "app.py", "start": 1, "end": 23, "supports": "完整实现仅依赖标准库 uuid；无辅助模块、连接替换或关闭，也无直接提交或整体回滚调用。"}
+    ]
+  }
+}

@@ -10,7 +10,9 @@
 | B_tools | 相同 | 有 | 无 |
 | C_v4 | 相同 | 有，与 B 相同 | 有 |
 
-每组每例两次，36 次修复；随后每份结果进行一次新上下文的结构评审，最多另 36 次调用。没有提供参考结构或修复答案。共同要求交付 `model.json`，因此这并非自然触发实验；不能将差值解释为范畴论的整体效应。
+每组每例两次，36 次修复；随后每份结果进行一次新上下文的结构评审，最多另 36 次调用。没有提供当前任务的参考结构或修复答案；C 保留 v4 运行包自带的通用检索示例，它属于该组指导材料。共同要求交付 `model.json`，因此这并非自然触发实验；不能将差值解释为范畴论的整体效应。
+
+实际原批次完成 30 次修复，6 次因额度限制中断；原 36 次评审也全部因额度限制失败。2026-10-04 另行冻结并完成 [31 次评审恢复](../evals/iterations/code-repair-2026-09-30/review-recovery-2026-10-04/PROTOCOL.md)，没有覆盖原记录或补跑代码。CLI 从 0.158.0-alpha.2.1 变为 0.160.0，精确模型服务快照仍未知。恢复评审包含一份中间模型，另五次缺少模型，不伪造结果。
 
 首指标是所有适用行为验收通过，同时执行过程有效。故障修复、正常行为保持和正常源文件是否原样保留分别报告。辅助指标分开记录结构语法/引用有效和三项机制判据的盲评标签，不合并成总分。
 
@@ -33,9 +35,14 @@
 ```sh
 .venv/bin/python -m unittest evals.code_repair.test_fixtures evals.code_repair.test_protocol -v
 .venv/bin/python scripts/analyze_code_repair.py publish
+.venv/bin/python scripts/analyze_recovered_code_reviews.py
+.venv/bin/python scripts/audit_code_repair_boundaries.py
+.venv/bin/python scripts/render_code_repair_report.py
 ```
 
 第二条在结果发布后，从记录中的源文件重新执行行为验收、检查模型引用和产物哈希，并重画图表。它不是用保存的分数假装重验，也不重新调用评审模型。记录中的历史错误文字可能随平台变化，只比较检查名称、数量和通过状态。
+
+其余命令分别校验恢复评审、重放已审阅产物的事后探针、生成区分额度失败与行为结果的报告和图。原自动图的评审零值代表无有效评审，不是语义错误率；README 使用带有可用性说明的新图。完整 [结果](../evals/iterations/code-repair-2026-09-30/REPORT.md) 与 [维护者复核](../evals/iterations/code-repair-2026-09-30/CURATOR_REVIEW.md) 保留各层证据。
 
 重新运行模型需要明确的新实验目录/冻结记录，不能覆盖此轮。维护者本轮的命令依次为 `run_code_repair_eval.py freeze`、`run_code_repair_eval.py run`、`review_code_models.py`、`analyze_code_repair.py import`；执行脚本会拒绝悄悄重跑已经开始却没有结束记录的尝试。
 

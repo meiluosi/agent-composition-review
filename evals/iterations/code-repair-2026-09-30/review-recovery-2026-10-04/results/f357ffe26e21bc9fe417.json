@@ -1,0 +1,50 @@
+{
+  "case_id": "c04",
+  "condition": "B_tools",
+  "trial": 1,
+  "exit_code": 0,
+  "timed_out": false,
+  "elapsed_seconds": 64.89117075002287,
+  "usage": {
+    "input_tokens": 13106,
+    "cached_input_tokens": 7552,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 868,
+    "reasoning_output_tokens": 112
+  },
+  "completed": true,
+  "valid": true,
+  "prediction": {
+    "criteria": [
+      {
+        "id": "r1",
+        "assessment": "covered",
+        "model_evidence": "resources 明确区分 records、transaction、savepoints 和 connection_lifetime；scope.description 将事务状态定义为调用前后快照，将 output.count 映射到实际整数返回值；write_batch 的 reads/writes 表达批次对记录和事务资源的影响。",
+        "code_evidence": "提交代码第6行读取调用者连接的事务状态，第8行创建批次保存点，第10行在同一连接上参数化插入，第28行返回 len(rows)；没有关闭或替换连接的操作。",
+        "reason": "模型覆盖调用者持有的连接、既有事务工作和本批次数据变化，并解释了说明性类型与真实接口的对应关系。单动作及空 edges 与该建模范围一致。"
+      },
+      {
+        "id": "r2",
+        "assessment": "covered",
+        "model_evidence": "implementation_paths.normal_return 明确说明“最外层 RELEASE 提交本次事务；嵌套 RELEASE 不提交调用者事务”；successful_transaction_ownership 同时注明状态布尔比较不能独立证明持久性或保存点存续。",
+        "code_evidence": "提交代码第6、8、12行对应入口事务观察、创建和释放局部保存点。独立验收 test_standalone_success_is_committed、test_success_does_not_commit_callers_transaction、test_existing_savepoint_is_preserved 和 test_explicit_transaction_in_autocommit_mode 均通过。",
+        "reason": "模型明确区分独立提交与嵌套参与，相关关系有代码及独立执行证据支持，没有将正常内层返回误写为提交外层工作。"
+      },
+      {
+        "id": "r3",
+        "assessment": "covered",
+        "model_evidence": "implementation_paths 分别描述有外层事务时局部 ROLLBACK TO/RELEASE、无外层事务时整体 ROLLBACK，以及清理异常后重新抛出原异常；scope.limitations 明确排除引擎强制撤销外层事务，并说明清理失败不能保证撤销完成。",
+        "code_evidence": "提交代码第9—12行将 INSERT 和 RELEASE 纳入同一 try；第15—22行按事务归属清理；第23—27行捕获清理错误并裸 raise。独立验收 test_failure_rolls_back_only_own_batch、test_standalone_failure_is_atomic_and_preserves_original_error、test_empty_batch_and_repeat_failure_do_not_end_transaction 均通过。原始代码第15行的 RELEASE 位于异常处理范围之外，模型路径对应的是提交版本。",
+        "reason": "模型以具体控制流表示批次撤销、调用者工作保护和异常保留，且行号与提交版本一致。其清理失败和引擎整体回滚边界被明确标为限制，没有被当作已验证的原子性保证。"
+      }
+    ],
+    "uncertainty": "独立验收仅提供7项通过结果；模型自述的9项扩展测试、锁提交失败及异常身份注入测试未附独立执行记录，不能全部视为已核实。上述判断依据所给代码、模型关系及独立验收，不构成全状态证明。"
+  },
+  "tool_items": [],
+  "errors": [],
+  "input_sha256": "ab59c22875e835e22663c1878f114333230dc0273c82be1a256fada5575ab1b0",
+  "event_sha256": "5caee2df12e6377927d446fb67b278888ccfba660e78517ad16e79fe739553d6",
+  "cli_version": "codex-cli 0.160.0",
+  "model_requested": "gpt-6-astra",
+  "reasoning_effort": "high"
+}

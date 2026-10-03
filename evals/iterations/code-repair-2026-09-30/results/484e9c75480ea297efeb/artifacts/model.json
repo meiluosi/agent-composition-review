@@ -1,0 +1,107 @@
+{
+  "schema_version": 1,
+  "types": {
+    "BatchArguments": {
+      "connection": {"type": "object"},
+      "rows": {"type": "array"}
+    },
+    "BatchReturn": {
+      "value": {"type": "number"}
+    }
+  },
+  "resources": {
+    "records": "调用者连接中已有的 records 表及本次 INSERT 的事务内变更。",
+    "transaction_stack": "该连接的事务与保存点栈，包括调用者已有状态和工具临时保存点。",
+    "connection_lifetime": "传入的 SQLite 连接对象及其可用状态；工具不关闭或替换连接。"
+  },
+  "actions": [
+    {
+      "id": "write_batch",
+      "meaning": "app.py:write_batch(connection, rows)：取得批次数量，创建独立命名保存点，参数化插入全部行；成功释放保存点并返回数量，失败尝试撤销批次、释放保存点后重抛原异常。",
+      "input_type": "BatchArguments",
+      "output_type": "BatchReturn",
+      "reads": ["records", "transaction_stack", "connection_lifetime"],
+      "writes": ["records", "transaction_stack"],
+      "pre": [
+        {
+          "id": "finite_sized_batch",
+          "requirement": "输入契约：rows 是可取得长度的有限序列。此数值谓词仅描述长度，不验证每项是否为可绑定的 (key, value)。",
+          "must": {"op": "ge", "args": [{"count": {"path": "input.rows"}}, {"literal": 0}]}
+        }
+      ],
+      "post": [
+        {
+          "id": "returned_count",
+          "requirement": "正常返回值等于调用开始时的序列长度；BatchReturn.value 是实际整数返回值的模型投影。",
+          "must": {"op": "eq", "args": [{"path": "output.value"}, {"count": {"path": "input.rows"}}]}
+        }
+      ]
+    }
+  ],
+  "edges": [],
+  "required_actions": ["write_batch"],
+  "requirements": [
+    {
+      "id": "batch_atomicity",
+      "requirement": "通常的 INSERT 或提交约束失败时，撤销该批次已产生的全部写入。",
+      "implementation": "SAVEPOINT 包围 executemany 和 RELEASE；异常分支 ROLLBACK TO 后 RELEASE。",
+      "verification": "已运行 test_transaction_matrix、test_original_exception_identity_and_base_exception、test_deferred_constraint_at_commit；实际检查表内容和事务状态。"
+    },
+    {
+      "id": "standalone_commit",
+      "requirement": "调用前无事务时，成功结果已提交；空批次不留下事务。",
+      "implementation": "释放最外层保存点由 SQLite 提交，不依赖连接的隐式 BEGIN 行为。",
+      "verification": "已运行 test_durable_commit_and_caller_control，以另一个连接观察提交可见性；test_transaction_matrix 检查空批次。"
+    },
+    {
+      "id": "caller_ownership",
+      "requirement": "已有事务或保存点时，仅释放或回滚本次保存点，保留调用者已有工作及其后续提交、回滚权。",
+      "implementation": "无 connection.commit()/rollback() 或连接上下文管理；SQL 仅引用工具生成的保存点名称。",
+      "verification": "已运行 test_transaction_matrix、test_implicit_outer_transaction、test_durable_commit_and_caller_control；包括默认连接、isolation_level=None 显式 BEGIN、SAVEPOINT 启动事务及嵌套保存点。"
+    },
+    {
+      "id": "exception_identity",
+      "requirement": "批次或 RELEASE 失败时保留原异常，即使清理过程又失败。",
+      "implementation": "捕获 BaseException，清理异常不替代原异常，使用裸 raise 重抛。",
+      "verification": "已运行 test_original_exception_identity_and_base_exception 和 test_cleanup_exception_does_not_replace_original，检查异常对象身份；提交约束失败也已覆盖。"
+    },
+    {
+      "id": "parameter_binding_and_connection",
+      "requirement": "键值使用参数绑定；使用同一调用者连接，不关闭或替换。",
+      "implementation": "INSERT 使用两个 ?；仅保存点标识符进入 SQL 拼接，其内容为固定前缀和 uuid4().hex。",
+      "verification": "已运行 test_transaction_matrix，覆盖引号、分号、Unicode、NUL 字符键，并在每组后继续使用同一连接。"
+    }
+  ],
+  "validation": {
+    "executed": [
+      {"command": "./run_python smoke.py", "result": "原实现和当前实现均正常输出 1 和 [('example', 5)]。"},
+      {"command": "./run_python test_batches.py", "result": "原实现：6 个测试方法中出现 33 个失败子项；当前实现：全部通过。事务矩阵含 32 组，另含跨连接持久化、异常身份及清理故障检查。"}
+    ],
+    "inferred": [
+      "最外层与嵌套 RELEASE 的提交差异来自 SQLite 保存点语义，并由所列行为测试抽样验证。",
+      "源码没有关闭、替换连接或调用连接级提交、回滚；UUID 名称隔离依赖其碰撞概率可忽略。"
+    ],
+    "not_proven": [
+      "测试不是对所有 SQLite 配置、数据库模式和故障的穷举证明。",
+      "JSON 条件只编码有限长度与返回计数；事务、异常身份和连接所有权要求由源码及实际测试支持，不由结构检查证明。"
+    ]
+  },
+  "scope": {
+    "description": "当前 app.py 的最小公开边界模型：一个 write_batch 动作，无内部动作之间的交接，因此 edges 为空。BatchArguments 对应实际参数；rows 将有限 Python 序列抽象成数组，BatchReturn.value 投影实际整数返回值，并非代码新增的包装对象。失败没有正常输出，异常路径在 requirements 中说明。",
+    "limitations": [
+      "前置业务契约还包括：连接可用、records 表已存在、rows 项为可绑定的键值对；不在上述有限谓词中完整编码。假定序列在调用期间不被并发修改。",
+      "未验证同一连接的并发或重入使用、用户适配器或触发器主动改变事务状态。",
+      "SQLite 的 ON CONFLICT ROLLBACK、RAISE(ROLLBACK) 或严重存储错误可能直接撤销整个事务、销毁保存点；保存点方案无法恢复数据库已撤销的调用者工作。这些情形未做行为验证。",
+      "若清理 SQL 自身失败，仅保证不掩盖原异常；不能声称批次已成功清理。已注入清理失败验证异常身份，未验证磁盘满、I/O 故障或锁争用。",
+      "UUID 保存点名不提供数学上的绝对无碰撞保证；未强制制造名称碰撞。",
+      "返回 len(rows) 依赖常规 INSERT 语义；未验证会静默忽略写入或产生额外写入的触发器、特殊冲突策略。"
+    ],
+    "evidence": [
+      {"path": "app.py", "start": 3, "end": 9, "supports": "仅依赖标准库 UUID；保留公开函数参数；插入前取得数量并创建本批次保存点。"},
+      {"path": "app.py", "start": 11, "end": 14, "supports": "键值参数绑定；RELEASE 成功路径，事务归属行为依赖 SQLite 保存点语义。"},
+      {"path": "app.py", "start": 15, "end": 22, "supports": "异常路径回滚到本次保存点并释放；清理异常不覆盖原异常。"},
+      {"path": "app.py", "start": 23, "end": 23, "supports": "成功返回预先取得的批次长度。"},
+      {"path": "app.py", "start": 6, "end": 23, "supports": "所有 SQL 均在调用者连接执行，没有关闭或替换连接，没有全局提交或回滚调用。"}
+    ]
+  }
+}

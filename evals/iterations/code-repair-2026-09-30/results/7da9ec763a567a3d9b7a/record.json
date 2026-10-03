@@ -1,0 +1,207 @@
+{
+  "case_id": "c06",
+  "condition": "C_v4",
+  "trial": 2,
+  "exit_code": 0,
+  "timed_out": false,
+  "elapsed_seconds": 343.39368858304806,
+  "usage": {
+    "input_tokens": 206269,
+    "cached_input_tokens": 170880,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 9591,
+    "reasoning_output_tokens": 2404
+  },
+  "completed": true,
+  "status": "completed",
+  "prediction": {
+    "initial_verdict": "violation",
+    "summary": "已修复 app.py 的重复取消和清理被打断问题，保留异常传播、并发执行及结果顺序。公开接口不变，代码自包含。已交付含实际行号依据的 model.json 和回归测试。",
+    "tests_executed": [
+      "./run_python smoke.py：修改前后均通过，输出 [2, 4]",
+      "./run_python test_run_group.py original：12 项中 4 项失败",
+      "./run_python test_run_group.py app：12 项全部通过",
+      "./run_python scripts/composition.py validate model.json：通过，仅验证结构"
+    ],
+    "limitations": [
+      "验证限于当前 Python 3.12 环境，未穷尽所有并发调度。",
+      "按任务范围保证一次外部取消及有限清理，不覆盖重复父取消或永不结束的清理。",
+      "模型未进行并发轨迹回放；行为结论来自实际回归测试与代码审查。"
+    ]
+  },
+  "acceptance": {
+    "tests_run": 5,
+    "passed": true,
+    "checks": [
+      {
+        "test": "test_child_cancellation_cleans_other_children",
+        "passed": true
+      },
+      {
+        "test": "test_external_cancellation_and_unrelated_task_survives",
+        "passed": true
+      },
+      {
+        "test": "test_factory_failure_cleans_already_started_children",
+        "passed": true
+      },
+      {
+        "test": "test_failure_waits_for_sibling_cleanup_and_keeps_exception",
+        "passed": true
+      },
+      {
+        "test": "test_order_empty_and_concurrency",
+        "passed": true
+      }
+    ],
+    "exit_code": 0,
+    "timed_out": false,
+    "sandbox": "macos_no_network_writes_only_grade_directory",
+    "stderr": ""
+  },
+  "structure": {
+    "valid": true,
+    "errors": [],
+    "scope": "Syntax/references only; semantic criteria reviewed independently."
+  },
+  "source_changed": true,
+  "artifacts": {
+    "app.py": "e7b40021367630848d0eb85175c11a373ef722d43e0587eb807a537cf4821b62",
+    "model.json": "2b48d5046e3cd0c328bd5106b1f56c1fcffccd64e0ac86d5b6bb50a0ba1f8eff",
+    "test_run_group.py": "e8dbcb8a3c154db75e468d411f8406f45a008df0e9095dfa993e35b07ba6ca6f"
+  },
+  "protected_changes": [],
+  "outside_changes": [],
+  "artifact_errors": [],
+  "tool_audit": [
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc \"pwd; rg --files -g '\"'!__pycache__'\"' -g '\"'!*.pyc'\"'\"",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc 'cat task.md MODEL_FORMAT.md app.py smoke.py'",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc 'cat SKILL.md references/executable-contracts.md references/contracts.md references/effects.md'",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc \"cat TOOLS.md; sed -n '1,220p' scripts/composition.py; cat original.py; ./run_python smoke.py\"",
+      "review_flags": []
+    },
+    {
+      "type": "file_change",
+      "exit_code": null,
+      "changes": [
+        {
+          "path": "<workspace>/test_run_group.py",
+          "kind": "add"
+        }
+      ]
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 1,
+      "command": "/bin/zsh -lc './run_python test_run_group.py original'",
+      "review_flags": []
+    },
+    {
+      "type": "file_change",
+      "exit_code": null,
+      "changes": [
+        {
+          "path": "<workspace>/app.py",
+          "kind": "update"
+        }
+      ]
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc './run_python test_run_group.py app'",
+      "review_flags": []
+    },
+    {
+      "type": "file_change",
+      "exit_code": null,
+      "changes": [
+        {
+          "path": "<workspace>/test_run_group.py",
+          "kind": "update"
+        }
+      ]
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 1,
+      "command": "/bin/zsh -lc './run_python test_run_group.py original'",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc './run_python test_run_group.py app; ./run_python smoke.py; nl -ba app.py'",
+      "review_flags": []
+    },
+    {
+      "type": "file_change",
+      "exit_code": null,
+      "changes": [
+        {
+          "path": "<workspace>/model.json",
+          "kind": "add"
+        }
+      ]
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc './run_python scripts/composition.py validate model.json'",
+      "review_flags": []
+    },
+    {
+      "type": "file_change",
+      "exit_code": null,
+      "changes": [
+        {
+          "path": "<workspace>/model.json",
+          "kind": "update"
+        }
+      ]
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 1,
+      "command": "/bin/zsh -lc './run_python scripts/composition.py validate model.json; diff -u original.py app.py'",
+      "review_flags": []
+    }
+  ],
+  "case_sha256": "b9b04507fd2af834ba951d62f4554c46b7a6d970bcc075ba48b85d881225bd15",
+  "prompt_sha256": "e50f6f07a426e3c16576d6474bf162cb5d63f92dee943e576e526ec2dcb6bbff",
+  "event_sha256": "daf87e0ef3ab0060e3580888ca330c6387f1af682622c0aa580c097c4cfafe07",
+  "stderr_sha256": "c5f00471e96bf7436639380db23d63c261c1c59dd1aabfbc84640d6bd4303ba4",
+  "model_requested": "gpt-6-astra",
+  "reasoning_effort": "high",
+  "cli_version": "codex-cli 0.158.0-alpha.2.1",
+  "review": {
+    "exit_code": 1,
+    "timed_out": false,
+    "elapsed_seconds": 26.557689541950822,
+    "usage": null,
+    "completed": false,
+    "valid": false,
+    "prediction": null,
+    "tool_items": [],
+    "input_sha256": "2c095283ee827746fb934fe9fd926245f623b4351f80773a44654f9e04aea9c1",
+    "event_sha256": "d5dbf7612b504bea06d64be7a5cdd4034df92824db54494627f2f5e26f985888"
+  }
+}

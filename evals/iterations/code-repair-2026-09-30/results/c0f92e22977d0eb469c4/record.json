@@ -1,0 +1,170 @@
+{
+  "case_id": "c03",
+  "condition": "A_basic",
+  "trial": 2,
+  "exit_code": 1,
+  "timed_out": false,
+  "elapsed_seconds": 177.83784674998606,
+  "usage": null,
+  "completed": false,
+  "status": "infrastructure_failure",
+  "prediction": null,
+  "acceptance": {
+    "tests_run": 7,
+    "passed": true,
+    "checks": [
+      {
+        "test": "test_empty_batch_and_repeat_failure_do_not_end_transaction",
+        "passed": true
+      },
+      {
+        "test": "test_existing_savepoint_is_preserved",
+        "passed": true
+      },
+      {
+        "test": "test_explicit_transaction_in_autocommit_mode",
+        "passed": true
+      },
+      {
+        "test": "test_failure_rolls_back_only_own_batch",
+        "passed": true
+      },
+      {
+        "test": "test_standalone_failure_is_atomic_and_preserves_original_error",
+        "passed": true
+      },
+      {
+        "test": "test_standalone_success_is_committed",
+        "passed": true
+      },
+      {
+        "test": "test_success_does_not_commit_callers_transaction",
+        "passed": true
+      }
+    ],
+    "exit_code": 0,
+    "timed_out": false,
+    "sandbox": "macos_no_network_writes_only_grade_directory",
+    "stderr": ""
+  },
+  "structure": {
+    "valid": false,
+    "errors": [
+      "'NoneType' object is not subscriptable"
+    ],
+    "scope": "Syntax/references only; semantic criteria reviewed independently."
+  },
+  "source_changed": true,
+  "artifacts": {
+    "app.py": "b767e12865ef43ef87f8c325547f084519c30dd787cd73f05f7d867261a16d44",
+    "test_write_batch.py": "07e26ad57c502bf4a6188bc50ce4bb051641414f08aab8d6e654f1f021e6bd7d"
+  },
+  "protected_changes": [],
+  "outside_changes": [],
+  "artifact_errors": [],
+  "tool_audit": [
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc \"pwd; rg --files -g '\"'!original.py'\"' -g '\"'!__pycache__/**'\"' -g '\"'!.*'\"'\"",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc 'cat task.md app.py MODEL_FORMAT.md smoke.py'",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc 'ls -la; cat run_python; nl -ba app.py'",
+      "review_flags": []
+    },
+    {
+      "type": "file_change",
+      "exit_code": null,
+      "changes": [
+        {
+          "path": "<workspace>/test_write_batch.py",
+          "kind": "add"
+        }
+      ]
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc './run_python smoke.py'",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 1,
+      "command": "/bin/zsh -lc './run_python -m unittest -v test_write_batch'",
+      "review_flags": []
+    },
+    {
+      "type": "file_change",
+      "exit_code": null,
+      "changes": [
+        {
+          "path": "<workspace>/app.py",
+          "kind": "update"
+        }
+      ]
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc './run_python -m unittest -v test_write_batch'",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc './run_python smoke.py'",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc 'nl -ba app.py'",
+      "review_flags": []
+    },
+    {
+      "type": "file_change",
+      "exit_code": null,
+      "changes": [
+        {
+          "path": "<workspace>/test_write_batch.py",
+          "kind": "update"
+        }
+      ]
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc './run_python -m unittest -v test_write_batch'",
+      "review_flags": []
+    }
+  ],
+  "case_sha256": "869b6661534ff5fada727853ef16de29d88ed3987bb6fa0a8a2ce2eb7d5e9ef5",
+  "prompt_sha256": "1bb460fb636cc7a19abd022ed921acd8d0028460effea85ac05ce737f1f9e4ba",
+  "event_sha256": "38b1b6bc004c9a0ed7de2d413bbca5675397aab8e8874ce23bb89de44105b356",
+  "stderr_sha256": "1f12e7558e70c5ef0c192953104aee00d4c86759ac53f9a7ea16a08c8548b9c8",
+  "model_requested": "gpt-6-astra",
+  "reasoning_effort": "high",
+  "cli_version": "codex-cli 0.158.0-alpha.2.1",
+  "review": {
+    "exit_code": 1,
+    "timed_out": false,
+    "elapsed_seconds": 16.30519241699949,
+    "usage": null,
+    "completed": false,
+    "valid": false,
+    "prediction": null,
+    "tool_items": [],
+    "input_sha256": "f223761d49eb4e8ec63ea7648422377849e43dac6c9e193f63fc3002f5216706",
+    "event_sha256": "07041fc0cfef6a06dc38d96e32f342089edf8a6e09a334377fd516700947b653"
+  }
+}

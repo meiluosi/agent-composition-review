@@ -1,0 +1,50 @@
+{
+  "case_id": "c06",
+  "condition": "A_basic",
+  "trial": 2,
+  "exit_code": 0,
+  "timed_out": false,
+  "elapsed_seconds": 59.38661895901896,
+  "usage": {
+    "input_tokens": 13012,
+    "cached_input_tokens": 0,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 992,
+    "reasoning_output_tokens": 189
+  },
+  "completed": true,
+  "valid": true,
+  "prediction": {
+    "criteria": [
+      {
+        "id": "r1",
+        "assessment": "covered",
+        "model_evidence": "actions.create_owned_tasks、await_ordered_group 及其数据边描述任务按工厂顺序登记和 gather 有序返回；relations.concurrency 描述并发调度；relations.finally 与 cancel_and_drain_owned 描述父取消后的清理。scope 明确对应提交版本及至多一次外部取消。",
+        "code_evidence": "提交代码第 6–14 行建立局部任务表、create_task 并发调度并通过 shield 等待 gather；第 15–30 行处理退出清理。独立验收 test_order_empty_and_concurrency 和 test_external_cancellation_and_unrelated_task_survives 均通过。",
+        "reason": "模型将任务创建、并发等待、有序结果、父取消和生命周期结束连接起来，且与提交代码一致。顺序语义有源码依据和代表性验收支持，并非仅凭结果数量谓词认定。"
+      },
+      {
+        "id": "r2",
+        "assessment": "covered",
+        "model_evidence": "relations.finally 明确失败路径不产生正常输出；relations.outcome_propagation 声明结果在 finally 完成后交付，普通异常无包装传播，return_exceptions 的列表仅供内部清理使用；all_owned_tasks_settled 明确有限清理及一次外部取消的范围。",
+        "code_evidence": "提交代码第 14–15 行使返回或异常传播经过 finally；第 22–29 行等待全部已登记任务及原 group，清理期间收到父取消后继续等待；第 30 行裸 raise。独立验收 test_failure_waits_for_sibling_cleanup_and_keeps_exception 和 test_child_cancellation_cleans_other_children 均通过。",
+        "reason": "模型明确区分等待阶段产生异常与子任务完成清理两个边界，并说明清理完成后才向调用者交付结果或传播异常。它也准确描述清理期间新到达的父取消可取代此前失败，没有把内部收集异常当作公开结果。"
+      },
+      {
+        "id": "r3",
+        "assessment": "covered",
+        "model_evidence": "state_resources.owned_tasks 将所有权限制为本次调用的局部 tasks；no_foreign_cancellation 和 ownership_unchanged 限定取消集合。create_owned_tasks.meaning、cleanup_owned_set 及 relations.finally 明确工厂同步抛错时清理已创建前缀。",
+        "code_evidence": "提交代码第 6、9–10 行仅登记本次创建的任务，工厂调用位于 try 内；第 16–18 行仅遍历该表取消任务；第 22 行在 group 尚未创建时仍等待已登记任务。独立验收 test_factory_failure_cleans_already_started_children 和 test_external_cancellation_and_unrelated_task_survives 均通过。",
+        "reason": "所有权边界和工厂创建失败路径均有明确关系及源码依据；模型没有将无关后台任务纳入清理，也没有假设失败工厂会产生完整任务表。"
+      }
+    ],
+    "uncertainty": "确定性检查仅支持语法和引用有效性。独立行为验收提供了 5 项通过记录；模型自述的另外执行记录未附独立日志，不能视为额外验证。以上判断限于声明的提交版本、一次外部取消及有限清理范围，不构成所有调度交错的证明。"
+  },
+  "tool_items": [],
+  "errors": [],
+  "input_sha256": "e7b6a1c1c6b6a0deab16a5696fbfba41c5e88049f798bd5dd1f171e882d1d455",
+  "event_sha256": "8c6722edd846b1c7bfbffb5642def582b0328dae1a41683f2169d9cb208e9617",
+  "cli_version": "codex-cli 0.160.0",
+  "model_requested": "gpt-6-astra",
+  "reasoning_effort": "high"
+}

@@ -1,0 +1,79 @@
+{
+  "case_id": "c05",
+  "condition": "C_v4",
+  "trial": 2,
+  "exit_code": 1,
+  "timed_out": false,
+  "elapsed_seconds": 22.99319658294553,
+  "usage": null,
+  "completed": false,
+  "status": "infrastructure_failure",
+  "prediction": null,
+  "acceptance": {
+    "tests_run": 5,
+    "passed": false,
+    "checks": [
+      {
+        "test": "test_child_cancellation_cleans_other_children",
+        "passed": false,
+        "error": "Traceback (most recent call last):\n  File \"/Users/meros/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/asyncio/runners.py\", line 118, in run\n    return self._loop.run_until_complete(task)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/Users/meros/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/asyncio/base_events.py\", line 691, in run_until_complete\n    return future.result()\n           ^^^^^^^^^^^^^^^\n  File \"<grade>/acceptance.py\", line 124, in test_child_cancellation_cleans_other_children\n    self.assertTrue(cleaned.is_set())\nAssertionError: False is not true\n"
+      },
+      {
+        "test": "test_external_cancellation_and_unrelated_task_survives",
+        "passed": true
+      },
+      {
+        "test": "test_factory_failure_cleans_already_started_children",
+        "passed": false,
+        "error": "Traceback (most recent call last):\n  File \"/Users/meros/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/asyncio/runners.py\", line 118, in run\n    return self._loop.run_until_complete(task)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/Users/meros/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/asyncio/base_events.py\", line 691, in run_until_complete\n    return future.result()\n           ^^^^^^^^^^^^^^^\n  File \"<grade>/acceptance.py\", line 134, in test_factory_failure_cleans_already_started_children\n    for coro in created:self.assertIsNone(coro.cr_frame)\n                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: <frame at 0x106620400, file '<grade>/acceptance.py', line 128, code worker> is not None\n"
+      },
+      {
+        "test": "test_failure_waits_for_sibling_cleanup_and_keeps_exception",
+        "passed": false,
+        "error": "Traceback (most recent call last):\n  File \"/Users/meros/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/asyncio/runners.py\", line 118, in run\n    return self._loop.run_until_complete(task)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/Users/meros/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/asyncio/base_events.py\", line 691, in run_until_complete\n    return future.result()\n           ^^^^^^^^^^^^^^^\n  File \"<grade>/acceptance.py\", line 114, in test_failure_waits_for_sibling_cleanup_and_keeps_exception\n    self.assertIs(raised.exception,sentinel);self.assertTrue(cleaned.is_set())\n                                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: False is not true\n"
+      },
+      {
+        "test": "test_order_empty_and_concurrency",
+        "passed": true
+      }
+    ],
+    "exit_code": 1,
+    "timed_out": false,
+    "sandbox": "macos_no_network_writes_only_grade_directory",
+    "stderr": ""
+  },
+  "structure": {
+    "valid": false,
+    "errors": [
+      "'NoneType' object is not subscriptable"
+    ],
+    "scope": "Syntax/references only; semantic criteria reviewed independently."
+  },
+  "source_changed": false,
+  "artifacts": {
+    "app.py": "26e7a54d09710818e628796784db0a97c550b1e72f1137fbb4625d07aa009cd9"
+  },
+  "protected_changes": [],
+  "outside_changes": [],
+  "artifact_errors": [],
+  "tool_audit": [],
+  "case_sha256": "8388a50d780a20f09ec3e8ea64c8dfe56b51374e49548b37ec7a2d502f716615",
+  "prompt_sha256": "e50f6f07a426e3c16576d6474bf162cb5d63f92dee943e576e526ec2dcb6bbff",
+  "event_sha256": "74f49cc1b8544f5a3382015015d362ceb012092e3e23e8c2f420c58259997333",
+  "stderr_sha256": "52e50eee7b1333c17cf805a8f91fb1609f78567a431b97f941229653b056efa6",
+  "model_requested": "gpt-6-astra",
+  "reasoning_effort": "high",
+  "cli_version": "codex-cli 0.158.0-alpha.2.1",
+  "review": {
+    "exit_code": 1,
+    "timed_out": false,
+    "elapsed_seconds": 22.78575149999233,
+    "usage": null,
+    "completed": false,
+    "valid": false,
+    "prediction": null,
+    "tool_items": [],
+    "input_sha256": "42fa71a5a94014ed949118fd94388a422feb6468b5ab64ea25a1c42715dee3e5",
+    "event_sha256": "549a3aa3acf09b0869990a0b880ea0ae6ea3bbfe073bbfe7036b23bf619b376d"
+  }
+}

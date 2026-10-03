@@ -1,0 +1,131 @@
+{
+  "case_id": "c03",
+  "condition": "C_v4",
+  "trial": 2,
+  "exit_code": 1,
+  "timed_out": false,
+  "elapsed_seconds": 132.43367854104144,
+  "usage": null,
+  "completed": false,
+  "status": "infrastructure_failure",
+  "prediction": null,
+  "acceptance": {
+    "tests_run": 7,
+    "passed": false,
+    "checks": [
+      {
+        "test": "test_empty_batch_and_repeat_failure_do_not_end_transaction",
+        "passed": false,
+        "error": "Traceback (most recent call last):\n  File \"<grade>/acceptance.py\", line 88, in test_empty_batch_and_repeat_failure_do_not_end_transaction\n    self.assertTrue(self.conn.in_transaction);self.assertEqual(self.rows(),[('outer',10)])\n    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: False is not true\n"
+      },
+      {
+        "test": "test_existing_savepoint_is_preserved",
+        "passed": false,
+        "error": "Traceback (most recent call last):\n  File \"<grade>/acceptance.py\", line 81, in test_existing_savepoint_is_preserved\n    self.conn.execute('ROLLBACK TO caller');self.conn.execute('RELEASE caller')\n    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nsqlite3.OperationalError: no such savepoint: caller\n"
+      },
+      {
+        "test": "test_explicit_transaction_in_autocommit_mode",
+        "passed": false,
+        "error": "Traceback (most recent call last):\n  File \"<grade>/acceptance.py\", line 75, in test_explicit_transaction_in_autocommit_mode\n    self.assertTrue(self.conn.in_transaction);self.assertEqual(self.rows(),[('outer',1)])\n    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: False is not true\n"
+      },
+      {
+        "test": "test_failure_rolls_back_only_own_batch",
+        "passed": false,
+        "error": "Traceback (most recent call last):\n  File \"<grade>/acceptance.py\", line 69, in test_failure_rolls_back_only_own_batch\n    self.assertTrue(self.conn.in_transaction);self.assertEqual(self.rows(),[('outer',10)])\n    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: False is not true\n"
+      },
+      {
+        "test": "test_standalone_failure_is_atomic_and_preserves_original_error",
+        "passed": true
+      },
+      {
+        "test": "test_standalone_success_is_committed",
+        "passed": true
+      },
+      {
+        "test": "test_success_does_not_commit_callers_transaction",
+        "passed": false,
+        "error": "Traceback (most recent call last):\n  File \"<grade>/acceptance.py\", line 63, in test_success_does_not_commit_callers_transaction\n    self.assertTrue(self.conn.in_transaction);self.assertEqual(self.external(),[])\n    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: False is not true\n"
+      }
+    ],
+    "exit_code": 1,
+    "timed_out": false,
+    "sandbox": "macos_no_network_writes_only_grade_directory",
+    "stderr": ""
+  },
+  "structure": {
+    "valid": false,
+    "errors": [
+      "'NoneType' object is not subscriptable"
+    ],
+    "scope": "Syntax/references only; semantic criteria reviewed independently."
+  },
+  "source_changed": false,
+  "artifacts": {
+    "app.py": "999b7d8bdfc0cb9558ebae800e6a26326b84f61e77ebe33356a3140952fa7f8b",
+    "test_write_batch.py": "1a031113d8496c2bb2ff9ef0b92e23eb4a895480be250496b583ad9c2328c932"
+  },
+  "protected_changes": [],
+  "outside_changes": [],
+  "artifact_errors": [],
+  "tool_audit": [
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc \"pwd; rg --files -g '\"'!__pycache__'\"' -g '\"'!*.pyc'\"'\"",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc 'cat task.md MODEL_FORMAT.md app.py smoke.py'",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 1,
+      "command": "/bin/zsh -lc \"cat SKILL.md references/executable-contracts.md references/contracts.md references/effects.md; rg --files --hidden -g AGENTS.md -g '\"'!.git'\"'\"",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc \"cat run_python; sed -n '1,220p' scripts/composition.py; cat original.py\"",
+      "review_flags": []
+    },
+    {
+      "type": "file_change",
+      "exit_code": null,
+      "changes": [
+        {
+          "path": "<workspace>/test_write_batch.py",
+          "kind": "add"
+        }
+      ]
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 1,
+      "command": "/bin/zsh -lc './run_python test_write_batch.py --original'",
+      "review_flags": []
+    }
+  ],
+  "case_sha256": "869b6661534ff5fada727853ef16de29d88ed3987bb6fa0a8a2ce2eb7d5e9ef5",
+  "prompt_sha256": "e50f6f07a426e3c16576d6474bf162cb5d63f92dee943e576e526ec2dcb6bbff",
+  "event_sha256": "d4251517d3e1ed9abda4bfd6f5316dc292f587080d2b82bc4b9ee59a33a7dbdf",
+  "stderr_sha256": "3e9f98048c8dbf8535ee46c479d769b597e7bbe3e6e0e35fe7de430d6a81226c",
+  "model_requested": "gpt-6-astra",
+  "reasoning_effort": "high",
+  "cli_version": "codex-cli 0.158.0-alpha.2.1",
+  "review": {
+    "exit_code": 1,
+    "timed_out": false,
+    "elapsed_seconds": 21.264702291984577,
+    "usage": null,
+    "completed": false,
+    "valid": false,
+    "prediction": null,
+    "tool_items": [],
+    "input_sha256": "d93623cde79065adaff8490654fdd860421ada44ba5a4b4ee9ed5cad2d6a25b9",
+    "event_sha256": "493ce11ca03a8d61964bdb7328da6291f195c57ff8efac275101527f67aee02e"
+  }
+}

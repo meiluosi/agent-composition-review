@@ -2,7 +2,7 @@
 
 一个以组合思想为指导的 Agent 架构诊断 Skill。沿数据流检查类型、语义契约、状态与不变量，把异常转化为有证据的根因判断、最小修复和可执行验证。
 
-**当前状态：`0.1.0-dev`，可运行的发布草案。** 项目独立维护于 [meiluosi/agent-composition-review](https://github.com/meiluosi/agent-composition-review)，当前为私有仓库。已有公开问题复现和独立模型试用；已完成首轮外部数据对照，实际结果与限制见下方评测区。最新一轮已完成 48 次配置修复对照，三组均通过全部验收，v4 保留候选；详见下方独立结果。自动检查状态见 [GitHub Actions](https://github.com/meiluosi/agent-composition-review/actions)。项目许可证尚未选择，不宣称已经完成开源发布。
+**当前状态：`0.1.0-dev`，可运行的发布草案。** 项目独立维护于 [meiluosi/agent-composition-review](https://github.com/meiluosi/agent-composition-review)，当前为私有仓库。最新自主建模与代码修复完成 30/36 次，另 6 次因额度限制中断；随后完成独立登记的 31 份结构评审。发现了两处错误的正常标签，修订与限制均保留，v4 继续作为候选。[查看最新复盘](docs/code-repair-findings.md)。自动检查状态见 [GitHub Actions](https://github.com/meiluosi/agent-composition-review/actions)。许可证尚未选择，不宣称已经完成开源发布。
 
 ## 它适合什么
 
@@ -50,7 +50,7 @@ python3 scripts/build_skill.py --source evals/iterations/v3-candidate
 
 输出为 `dist/agent-composition-review-candidate.zip`，包含九个运行文件，不包含评测案例、标签和维护文档。默认打包命令仍生成当前主版本。
 
-下一轮 [v4 执行候选](candidates/v4/agent-composition-review/SKILL.md) 增加动作/状态结构、测试生成和回放检查，仍在开发。目录职责与官方依据见 [组织说明](docs/skill-organization.md)，可运行流程和 336 条工具回归见 [执行说明](docs/executable-workflow.md)。
+[v4 执行候选](candidates/v4/agent-composition-review/SKILL.md) 增加动作/状态结构、测试生成和回放检查，仍在开发。目录职责与官方依据见 [组织说明](docs/skill-organization.md)，可运行流程和 336 条工具回归见 [执行说明](docs/executable-workflow.md)。
 
 ## 一个已复现的例子
 
@@ -90,6 +90,31 @@ python3.12 -m venv .venv
 外部数据已接入 Who&When 与 Who&When Pro text，并完成下方列出的首轮 144 次对照运行；AgentRx 等待访问授权。来源与覆盖限制见 [专业数据集与接入状态](docs/benchmarks.md)。数据集完整规模不等于本轮已评测样本数。
 
 本轮新增参考指令另做了 [独立前向试用](evals/runs/2026-09-29-forward/report.md)：执行者识别出违规的查询写入，给出并验证修复，也没有把明确允许的缓存写入误报为故障。这是两个简化组件的一次开发集检查，无对照组；判据登记晚于任务分发，不能视为完整协议下的效果评测。范围与证据见 [记录](evals/runs/2026-09-29-forward/result.json)。
+
+## 最新：自主建模与跨运行机制代码修复
+
+LangGraph 子图、SQLite 事务、asyncio 任务组各两个变体，比较基本工具、增加契约工具、再增加 v4 指导。不给当前任务的参考模型，直接交付代码和自行建立的结构。三组各两次重复，共 36 次尝试；都是开发材料。
+
+| 条件 | 有效完成 / 计划 | 原行为验收通过 / 有效完成 | 恢复评审三项 covered / 完成任务的模型 | 已记录修复输入 token |
+| --- | ---: | ---: | ---: | ---: |
+| A · 基本工具 | 10/12 | 10/10 | 10/10 | 1,231,665 |
+| B · 加契约工具 | 10/12 | 10/10 | 10/10 | 1,296,781 |
+| C · 再加 v4 指导 | 10/12 | 10/10 | 10/10 | 1,629,543 |
+
+**每组两次额度失败保留，不能解释为能力失败。** 原 36 次评审也因额度失败不可用；2026-10-04 另行登记并完成 31 次评审，包含一份中断任务的中间模型。表中仅列已完成任务，未升级中断任务状态。恢复批次使用相同请求模型和判据，但 CLI 版本不同。失败调用用量缺失，输入含缓存，不等于费用。
+
+![自主修复原验收、额度失败与固定顺序累计曲线](assets/code-repair-audited.png)
+
+曲线分母保留全部计划尝试，下降来自额度失败，不是训练退化。**原正常标签 c04/c06 有误**：提交失败、清理期间取消的交错未被原验收覆盖。修订参考和反例已保留；正常保持仅能在 c02 上作有限解释，每组两次均保留代码。
+
+| 事后探针：仅有效完成产物 | A | B | C |
+| --- | ---: | ---: | ---: |
+| 两个异步清理交错均通过 | 2/3 | 3/3 | 3/3 |
+| 提交失败撤销并可复用连接 | 1/3 | 2/3 | 2/3 |
+
+这些探针由观察到的结果启发，不是预注册或保留集成绩。评审 covered 也不能代替完整行为验收：任务已终止仍可能没有完成业务清理。**没有获得 v4 指导的升级依据，继续保留候选。** C 的已记录修复输入比 A 多约 32.3%；目录拆分或增加理论文字的收益尚未得到证明。
+
+[完整报告](evals/iterations/code-repair-2026-09-30/REPORT.md) · [维护者复核](evals/iterations/code-repair-2026-09-30/CURATOR_REVIEW.md) · [复现与恢复批次说明](docs/code-repair-evaluation.md) · [复盘与框架推进](docs/code-repair-findings.md)
 
 <!-- external-pilot:start -->
 ## 外部基准首轮实验
@@ -201,6 +226,8 @@ evals/runs/                       已完成评测的证据与限制
 evals/external/                   外部数据适配、冻结清单与模型对照结果
 scripts/                         维护用校验、测试、打包
 evals/replay/                    动作/状态契约的执行回放与验收
+evals/code_repair/               自主建模、代码修复与原冻结验收
+evals/code_repair_followup/      正常标签纠错、补充探针与修订参考
 .github/                         CI、案例提交表与 PR 模板
 ```
 

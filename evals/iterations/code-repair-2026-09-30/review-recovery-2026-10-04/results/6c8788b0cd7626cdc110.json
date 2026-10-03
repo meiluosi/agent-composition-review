@@ -1,0 +1,50 @@
+{
+  "case_id": "c05",
+  "condition": "C_v4",
+  "trial": 1,
+  "exit_code": 0,
+  "timed_out": false,
+  "elapsed_seconds": 62.95396129100118,
+  "usage": {
+    "input_tokens": 12430,
+    "cached_input_tokens": 0,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 844,
+    "reasoning_output_tokens": 108
+  },
+  "completed": true,
+  "valid": true,
+  "prediction": {
+    "criteria": [
+      {
+        "id": "r1",
+        "assessment": "covered",
+        "model_evidence": "scope 明确限定为交付 app.py；actions.run_group 描述完整调用生命周期；relations.parallel_execution 说明并发等待及按登记顺序返回；relations.exceptional_lifecycle 描述父取消后的清理与传播。requirements.ordered_concurrent_success 包含空输入。",
+        "code_evidence": "提交代码第 9–11 行按输入顺序创建任务并交给 gather，第 14 行 shield 隔离父取消，第 15–29 行处理异常及取消。独立验收 test_order_empty_and_concurrency、test_external_cancellation_and_unrelated_task_survives 均通过。",
+        "reason": "模型通过边界动作和内部关系覆盖生命周期、并发子任务、有序结果及调用方取消，与声明的提交版本一致。edges 为空不妨碍这些关系的表达。"
+      },
+      {
+        "id": "r2",
+        "assessment": "covered",
+        "model_evidence": "resources 将传播异常的 group_future 与等待全部结束的 cleanup_future 分开；relations.exceptional_lifecycle 明确先排空、后裸 raise。scope.evidence 对第 21–28 行等待结束和第 29 行传播原异常分别给出依据。",
+        "code_evidence": "提交代码第 15–18 行捕获异常并取消剩余任务，第 21–28 行用 return_exceptions=True 收集任务及 group，等待 cleanup 完成，第 29 行才重新抛出。独立验收 test_failure_waits_for_sibling_cleanup_and_keeps_exception、test_child_cancellation_cleans_other_children 均通过。",
+        "reason": "模型明确区分异常已被观察与子任务已完成，清理收集的异常不会成为公开返回值；退出前等待清理及保留原异常均有控制流和行为证据支持，而非仅依赖后置要求。"
+      },
+      {
+        "id": "r3",
+        "assessment": "covered",
+        "model_evidence": "resources.owned_tasks 限定为每次调用的局部任务列表；relations.task_ownership 明确工厂同步失败后停止创建并清理已登记任务。scope.limitations 将归属保证限定为 run_group 自身直接创建和取消的任务。",
+        "code_evidence": "提交代码第 6 行建立局部 tasks，第 9–10 行在 try 内调用工厂并登记任务；第 16–18 行仅遍历该列表发出取消。独立验收 test_factory_failure_cleans_already_started_children、test_external_cancellation_and_unrelated_task_survives 均通过。",
+        "reason": "取消归属和工厂创建失败路径均有明确建模及实现依据，没有将保证扩展到任意后台任务或子任务自行产生的副作用。"
+      }
+    ],
+    "uncertainty": "结构检查仅支持语法及引用有效。模型所述 12 项本地测试未提供独立执行明细；本评审依据所给代码和独立验收的 5 项结果。结论限于模型声明的输入、有限清理及一次外部取消范围，不构成全部调度交错的证明。"
+  },
+  "tool_items": [],
+  "errors": [],
+  "input_sha256": "97164bf6674ec149612e10b87c2b89d673e4346c7f8b56219bafac4c107d3590",
+  "event_sha256": "13cefa0448e9b21550cda0a698a29728e43563f2cfe2d1967f27f5c6daa0f4a7",
+  "cli_version": "codex-cli 0.160.0",
+  "model_requested": "gpt-6-astra",
+  "reasoning_effort": "high"
+}

@@ -34,6 +34,7 @@ def main():
         result=probe(path,family)
         rows.append({**job,'family':family,'source_sha256':digest(path.read_bytes()),'valid_execution':record['status']=='completed',**result})
     summary={family:{arm:{'n':sum(r['condition']==arm and r['family']==family for r in rows),
+                  'completed_n':sum(r['condition']==arm and r['family']==family and r['valid_execution'] for r in rows),
                   'pass':sum(r['condition']==arm and r['family']==family and r['valid_execution'] and r['passed'] for r in rows)} for arm in ARMS}
                   for family in ('async_group','transaction')}
     normal={}

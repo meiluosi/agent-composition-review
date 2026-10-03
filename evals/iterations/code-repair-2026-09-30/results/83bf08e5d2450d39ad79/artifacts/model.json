@@ -1,0 +1,108 @@
+{
+  "schema_version": 1,
+  "types": {
+    "BatchCall": {
+      "connection": {"type": "object"},
+      "rows": {"type": "array"}
+    },
+    "BatchReturn": {
+      "count": {"type": "number"}
+    }
+  },
+  "resources": {
+    "records": "调用者连接中 records 表的行及待提交的插入。",
+    "transaction_stack": "同一连接的事务与保存点栈，包括调用前已有工作和本次新建保存点。",
+    "connection_lifetime": "调用者连接的对象身份及打开状态。"
+  },
+  "actions": [
+    {
+      "id": "write_batch",
+      "meaning": "app.py::write_batch(connection, rows)：先计算数量并创建本次保存点，再参数化插入；成功释放保存点并返回数量，失败尝试回滚到本次保存点、释放并重新抛出原异常。此动作建模整个公开调用。",
+      "input_type": "BatchCall",
+      "output_type": "BatchReturn",
+      "reads": ["records", "transaction_stack", "connection_lifetime"],
+      "writes": ["records", "transaction_stack"],
+      "pre": [
+        {
+          "id": "sized_sequence",
+          "requirement": "rows 的长度可计算且非负，允许长度为零。元素绑定由 SQLite 在执行时检查。",
+          "must": {
+            "op": "ge",
+            "args": [{"count": {"path": "input.rows"}}, {"literal": 0}]
+          }
+        }
+      ],
+      "post": [
+        {
+          "id": "successful_count",
+          "requirement": "正常返回值等于输入序列长度；异常退出不产生返回值。该等式不单独证明数据库原子性。",
+          "must": {
+            "op": "eq",
+            "args": [{"path": "output.count"}, {"count": {"path": "input.rows"}}]
+          }
+        }
+      ]
+    }
+  ],
+  "edges": [],
+  "required_actions": ["write_batch"],
+  "requirements": [
+    {
+      "id": "batch_atomicity",
+      "requirement": "单批次全部成功或全部撤销。",
+      "implementation": "第 9 行先创建保存点；第 11–13 行插入；第 19–20 行只回滚和释放本次保存点。第 16 行的提交错误也进入同一异常处理。",
+      "verification": "已运行重复主键、NOT NULL、绑定数量错误以及延迟外键约束失败测试；在默认连接和 isolation_level=None 下检查失败前后的实际行内容。清理失败时的原子性不在已验证保证中。"
+    },
+    {
+      "id": "transaction_ownership",
+      "requirement": "无外层事务时成功结果提交；有外层事务或保存点时保留调用者工作和控制权。",
+      "implementation": "第 9、16 行依赖 SQLite 保存点语义：最外层 RELEASE 提交，嵌套 RELEASE 保留外层事务。异常路径不调用整连接 rollback。",
+      "verification": "已用第二个连接验证独立成功写入可见；已验证默认隐式事务、两种连接设置下的显式 BEGIN、调用者保存点，以及成功、失败、空批次之后由调用者提交或回滚；另验证两层调用者保存点仍可逐层回滚和释放。"
+    },
+    {
+      "id": "original_exception",
+      "requirement": "失败保留原异常。",
+      "implementation": "第 17–24 行使用裸 raise；清理期间的异常被捕获，避免替代原异常。保存点创建或 len 失败未经包装直接传播。",
+      "verification": "通过连接子类记录 executemany 抛出的异常，验证调用方收到同一个异常对象；另注入 ROLLBACK TO 错误，验证该错误不替换插入异常。未对全部底层故障逐项注入。"
+    },
+    {
+      "id": "connection_and_parameters",
+      "requirement": "不关闭或替换调用者连接；键和值使用绑定参数；公开接口不变且 app.py 自包含。",
+      "implementation": "第 6–25 行始终使用传入连接，无 close、connect 或整连接事务操作；第 12 行使用问号绑定；仅依赖标准库 uuid。",
+      "verification": "已验证特殊字符和中文键按原值存储，调用后连接可继续查询；通过代码检查确认没有新增辅助模块依赖。"
+    }
+  ],
+  "validation": {
+    "executed": [
+      {
+        "command": "./run_python test_write_batch.py original",
+        "result": "8 个测试方法；33 个子用例断言失败，2 个子用例错误。证明原实现破坏调用者事务/保存点，并在自动提交模式失败时留下部分插入。"
+      },
+      {
+        "command": "./run_python test_write_batch.py app",
+        "result": "8 个测试方法全部通过，包含 30 个外层事务/结局/提交或回滚组合。"
+      },
+      {
+        "command": "./run_python smoke.py",
+        "result": "通过；输出 1 和 [('example', 5)]。"
+      }
+    ],
+    "inference": "保存点的提交与嵌套隔离性质根据 SQLite 语义和源码推断，并由列出的行为测试覆盖代表性路径；本模型的条件表达式不是数据库行为证明。"
+  },
+  "scope": {
+    "description": "最小公开边界模型：只有 write_batch 一个动作，因此没有动作间交接边。BatchCall 是实参视图，rows 的 array 表示有限 Python 序列；BatchReturn.count 是实际整数返回值的命名投影，不改变公开接口。前后条件中的 input/output 指这些视图，post 仅适用于正常返回。异常路径、事务所有权和连接生命周期以 requirements 和行号证据描述，不虚构运行时状态字段。",
+    "limitations": [
+      "调用约定要求连接可用、records 表存在且 rows 为稳定的有限二元组序列；不支持仅可迭代而没有 len 的生成器。模型未展开 SQLite 绑定类型或表的全部定义。",
+      "数据库行为验证以普通 PRIMARY KEY/NOT NULL 约束和一个延迟外键约束为范围；成功数量按输入长度计算，未验证会忽略或替换插入的自定义触发器及特殊冲突策略。",
+      "磁盘损坏、断连、SQLite 自动撤销整个事务的严重错误或 ON CONFLICT ROLLBACK 等机制可能使本次保存点失效；此时实现保留原异常，但无法保证恢复外层工作。注入清理失败只验证异常身份，不声称清理成功。",
+      "未验证多线程同时操作同一连接、回调重入或调用过程中修改 rows，也未穷举各 SQLite/Python 版本及锁竞争、进程崩溃、断电情形。",
+      "类型和条件属于结构声明；测试结果与源码推断在 validation 中分别标识，不将格式合规当作业务证明。"
+    ],
+    "evidence": [
+      {"path": "app.py", "start": 3, "end": 9, "supports": "标准库依赖、公开函数签名、预先计算数量及创建本次独立命名的保存点。"},
+      {"path": "app.py", "start": 11, "end": 16, "supports": "参数化批量插入；成功释放本次保存点；最外层提交或保留外层事务的语义依赖 SQLite。"},
+      {"path": "app.py", "start": 17, "end": 24, "supports": "插入或释放失败时回滚本次保存点；清理异常不替代原异常；裸 raise 保留原异常。"},
+      {"path": "app.py", "start": 6, "end": 25, "supports": "仅使用传入连接，不关闭或替换连接；成功返回预先计算的输入长度。"}
+    ]
+  }
+}

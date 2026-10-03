@@ -1,0 +1,50 @@
+{
+  "case_id": "c03",
+  "condition": "C_v4",
+  "trial": 1,
+  "exit_code": 0,
+  "timed_out": false,
+  "elapsed_seconds": 51.43958645797102,
+  "usage": {
+    "input_tokens": 12542,
+    "cached_input_tokens": 0,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 771,
+    "reasoning_output_tokens": 97
+  },
+  "completed": true,
+  "valid": true,
+  "prediction": {
+    "criteria": [
+      {
+        "id": "r1",
+        "assessment": "covered",
+        "model_evidence": "resources 定义 records、transaction.active 和调用者 connection 身份/可用性；post 中 batch_present、prior_rows_preserved、failed_batch_undone、connection_preserved 描述调用前后的关系。",
+        "code_evidence": "提交代码第11—20行在同一 connection 上建立保存点、插入及局部回滚，第24行返回数量；未关闭或替换连接。独立验收的批次失败及调用者事务保留检查通过。",
+        "reason": "模型明确表示调用者拥有的共享状态及每批次的数据影响，并说明连接描述符和行表示的映射。其行谓词局限已明确披露，与声明范围一致。"
+      },
+      {
+        "id": "r2",
+        "assessment": "covered",
+        "model_evidence": "actions[0].meaning 明确区分“没有外层事务时最外层 RELEASE 提交，否则保留调用者事务”；transaction_ownership 表示活动状态保持，并明确其不能单独验证实际提交；savepoints_preserved 单列保存点可用性要求。",
+        "code_evidence": "提交代码第11、14行使用 SAVEPOINT / RELEASE。独立验收 test_standalone_success_is_committed、test_success_does_not_commit_callers_transaction、test_existing_savepoint_is_preserved 和 test_explicit_transaction_in_autocommit_mode 均通过。",
+        "reason": "模型通过保存点嵌套语义和边界状态关系区分独立提交与参与外层事务；执行证据支持正常返回不终结调用者工作，而非仅凭事务活动布尔值作保证。"
+      },
+      {
+        "id": "r3",
+        "assessment": "covered",
+        "model_evidence": "failed_batch_undone 要求失败前后 records 相等，限定于仍可执行保存点回滚的情况；original_exception 描述原异常保留；scope.evidence 指向当前 app.py 第15—23行，并披露清理失败等限制。",
+        "code_evidence": "提交代码第19—20行仅回滚并释放私有保存点，第21—23行抑制清理异常后裸 raise。独立验收 test_failure_rolls_back_only_own_batch、test_standalone_failure_is_atomic_and_preserves_original_error 及重复失败检查通过。",
+        "reason": "模型覆盖批次级撤销、调用者已有工作保留和原异常传播，且准确对应提交版本的保存点实现。对无法执行清理的情况明确限定，未将其宣称为已验证的数据恢复保证。"
+      }
+    ],
+    "uncertainty": "结构检查仅证明语法和引用有效。模型自述的额外测试未提供独立执行明细，不能全部视为已核验；给定独立验收支持上述核心关系，但不构成全输入证明。"
+  },
+  "tool_items": [],
+  "errors": [],
+  "input_sha256": "b60815041d568bc36495d020da9f0b7226fced4359cdd49c1f05d93c037a658d",
+  "event_sha256": "20ba75b2c8b2fb2eaa65ce0cedd3e33c8a1a60b5084b8c4125c5ade0d8933f7c",
+  "cli_version": "codex-cli 0.160.0",
+  "model_requested": "gpt-6-astra",
+  "reasoning_effort": "high"
+}

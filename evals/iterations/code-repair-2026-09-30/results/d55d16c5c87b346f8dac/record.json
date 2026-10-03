@@ -1,0 +1,166 @@
+{
+  "case_id": "c01",
+  "condition": "A_basic",
+  "trial": 2,
+  "exit_code": 0,
+  "timed_out": false,
+  "elapsed_seconds": 231.95483666699147,
+  "usage": {
+    "input_tokens": 87112,
+    "cached_input_tokens": 65920,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 6543,
+    "reasoning_output_tokens": 1065
+  },
+  "completed": true,
+  "status": "completed",
+  "prediction": {
+    "initial_verdict": "violation",
+    "summary": "原实现因父子分支并行写入 label 而失败。已修改 app.py，将子图输出限定为 left/right，保留完整输入、累计值、公开接口和两层并行。已交付 model.json，包含实际行号依据与验证限制。",
+    "tests_executed": [
+      "./run_python smoke.py：修复前失败，修复后通过",
+      "./run_python test_app.py：6 项测试通过，覆盖双层并行、重复及并发调用、图间独立性、子图复用和异常传播",
+      "./run_python write_model.py：生成模型并通过引用和行号范围检查"
+    ],
+    "limitations": [
+      "并发验证为有限次运行，未穷尽调度。",
+      "未验证其他框架版本、检查点、重试和中断恢复。"
+    ]
+  },
+  "acceptance": {
+    "tests_run": 3,
+    "passed": true,
+    "checks": [
+      {
+        "test": "test_both_concurrency_boundaries_and_single_execution",
+        "passed": true
+      },
+      {
+        "test": "test_outputs_and_reuse",
+        "passed": true
+      },
+      {
+        "test": "test_separate_graphs_do_not_share_state",
+        "passed": true
+      }
+    ],
+    "exit_code": 0,
+    "timed_out": false,
+    "sandbox": "macos_no_network_writes_only_grade_directory",
+    "stderr": ""
+  },
+  "structure": {
+    "valid": true,
+    "errors": [],
+    "scope": "Syntax/references only; semantic criteria reviewed independently."
+  },
+  "source_changed": true,
+  "artifacts": {
+    "app.py": "a89b9a04842a57a5baad212fc5873f51d1af038d63dfc9092b075c783e612025",
+    "model.json": "ff96863c11a93fc500b9f11aeb40f553ba327351183f1a540bbdb147c6dbbaa1",
+    "test_app.py": "935e0c99b2deef5e3b763cfd2635e8ba44785c86f9200f00c678ebcf4c2e1db7",
+    "write_model.py": "56839447186f7f1e7446e088341a42e26ff4616160b19ccc2820faeced0e3bb2"
+  },
+  "protected_changes": [],
+  "outside_changes": [],
+  "artifact_errors": [],
+  "tool_audit": [
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc \"pwd; rg --files -g 'AGENTS.md' -g 'task.md' -g 'app.py' -g 'MODEL_FORMAT.md' -g 'smoke.py' -g 'run_python'\"",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc 'cat task.md app.py MODEL_FORMAT.md smoke.py'",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc 'ls -la'",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 1,
+      "command": "/bin/zsh -lc './run_python smoke.py'",
+      "review_flags": []
+    },
+    {
+      "type": "file_change",
+      "exit_code": null,
+      "changes": [
+        {
+          "path": "<workspace>/app.py",
+          "kind": "update"
+        }
+      ]
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc './run_python smoke.py'",
+      "review_flags": []
+    },
+    {
+      "type": "file_change",
+      "exit_code": null,
+      "changes": [
+        {
+          "path": "<workspace>/test_app.py",
+          "kind": "add"
+        }
+      ]
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc './run_python test_app.py'",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc 'nl -ba app.py'",
+      "review_flags": []
+    },
+    {
+      "type": "file_change",
+      "exit_code": null,
+      "changes": [
+        {
+          "path": "<workspace>/write_model.py",
+          "kind": "add"
+        }
+      ]
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc './run_python write_model.py'",
+      "review_flags": []
+    }
+  ],
+  "case_sha256": "a3a3e9d2dfd9e27b9c6decc3e3da2d3cbd75197403bb20fd182cb365bca9eb50",
+  "prompt_sha256": "1bb460fb636cc7a19abd022ed921acd8d0028460effea85ac05ce737f1f9e4ba",
+  "event_sha256": "d44de0e135d1d0d96c09c707221e392168d69a48617189fd7617e632d774c9e9",
+  "stderr_sha256": "573a6fbd7e8173d0599eee1540bf741e6b466f5466e32e7fe6a99ba1ea965cdf",
+  "model_requested": "gpt-6-astra",
+  "reasoning_effort": "high",
+  "cli_version": "codex-cli 0.158.0-alpha.2.1",
+  "review": {
+    "exit_code": 1,
+    "timed_out": false,
+    "elapsed_seconds": 18.81001966696931,
+    "usage": null,
+    "completed": false,
+    "valid": false,
+    "prediction": null,
+    "tool_items": [],
+    "input_sha256": "21fd8735a1016c658d9b9ea75f14c10ab6ba9c03431ffc066fba35eacefae711",
+    "event_sha256": "092ea08a2688e88108db3f33ff2aba51de913ff5c769fd39e40906d7a8f53312"
+  }
+}

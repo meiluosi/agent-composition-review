@@ -1,0 +1,190 @@
+{
+  "case_id": "c04",
+  "condition": "A_basic",
+  "trial": 1,
+  "exit_code": 0,
+  "timed_out": false,
+  "elapsed_seconds": 256.4525165419909,
+  "usage": {
+    "input_tokens": 107109,
+    "cached_input_tokens": 84480,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 7258,
+    "reasoning_output_tokens": 1586
+  },
+  "completed": true,
+  "status": "completed",
+  "prediction": {
+    "initial_verdict": "violation",
+    "summary": "已修复 app.py：提交失败时回滚批次，清理失败不再覆盖原异常，保留公开接口及正常行为。已交付 model.json，包含实际行号、验证结果和限制。",
+    "tests_executed": [
+      "./run_python smoke.py：原始版与修复版均通过。",
+      "./run_python test_batch.py：原始版复现问题；修复版全部 8 项测试通过，覆盖事务、保存点、失败回滚和异常保留。"
+    ],
+    "limitations": [
+      "SQLite 整体回滚或连接拒绝回滚时，无法保证恢复调用者事务；已在 model.json 说明。",
+      "未验证真实 I/O 故障、崩溃恢复、并发复用连接及任意触发器组合。"
+    ]
+  },
+  "acceptance": {
+    "tests_run": 7,
+    "passed": true,
+    "checks": [
+      {
+        "test": "test_empty_batch_and_repeat_failure_do_not_end_transaction",
+        "passed": true
+      },
+      {
+        "test": "test_existing_savepoint_is_preserved",
+        "passed": true
+      },
+      {
+        "test": "test_explicit_transaction_in_autocommit_mode",
+        "passed": true
+      },
+      {
+        "test": "test_failure_rolls_back_only_own_batch",
+        "passed": true
+      },
+      {
+        "test": "test_standalone_failure_is_atomic_and_preserves_original_error",
+        "passed": true
+      },
+      {
+        "test": "test_standalone_success_is_committed",
+        "passed": true
+      },
+      {
+        "test": "test_success_does_not_commit_callers_transaction",
+        "passed": true
+      }
+    ],
+    "exit_code": 0,
+    "timed_out": false,
+    "sandbox": "macos_no_network_writes_only_grade_directory",
+    "stderr": ""
+  },
+  "structure": {
+    "valid": true,
+    "errors": [],
+    "scope": "Syntax/references only; semantic criteria reviewed independently."
+  },
+  "source_changed": true,
+  "artifacts": {
+    "app.py": "2c8c163f6fb62e3cf39158b4769eaa76427405b0bdb324209b504031ee9abcad",
+    "model.json": "b78487b0270e9936c5e4f970a91c71c30df6eaee43f258b9a1e5dcc768bc5e65",
+    "test_batch.py": "869d95d17d8cba1be11fb76f1f21d5fe645c7f1ed2c677a0144aa959ef8b3d24"
+  },
+  "protected_changes": [],
+  "outside_changes": [],
+  "artifact_errors": [],
+  "tool_audit": [
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc \"pwd && rg --files -g 'AGENTS.md' -g 'task.md' -g 'app.py' -g 'MODEL_FORMAT.md' -g 'smoke.py' -g 'run_python'\"",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc 'cat task.md MODEL_FORMAT.md app.py smoke.py'",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc './run_python smoke.py'",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc \"nl -ba app.py && cat run_python && rg --files -g '\"'!__pycache__/**'\"' -g '\"'!original.py'\"'\"",
+      "review_flags": []
+    },
+    {
+      "type": "file_change",
+      "exit_code": null,
+      "changes": [
+        {
+          "path": "<workspace>/test_batch.py",
+          "kind": "add"
+        }
+      ]
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 1,
+      "command": "/bin/zsh -lc './run_python test_batch.py'",
+      "review_flags": []
+    },
+    {
+      "type": "file_change",
+      "exit_code": null,
+      "changes": [
+        {
+          "path": "<workspace>/app.py",
+          "kind": "update"
+        }
+      ]
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc './run_python test_batch.py && ./run_python smoke.py'",
+      "review_flags": []
+    },
+    {
+      "type": "file_change",
+      "exit_code": null,
+      "changes": [
+        {
+          "path": "<workspace>/test_batch.py",
+          "kind": "update"
+        }
+      ]
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc './run_python test_batch.py && ./run_python smoke.py && nl -ba app.py'",
+      "review_flags": []
+    },
+    {
+      "type": "file_change",
+      "exit_code": null,
+      "changes": [
+        {
+          "path": "<workspace>/model.json",
+          "kind": "add"
+        }
+      ]
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc \"./run_python -c 'import json; from pathlib import Path; m=json.loads(Path(\\\"model.json\\\").read_text()); lines=Path(\\\"app.py\\\").read_text().splitlines(); assert m[\\\"schema_version\\\"] == 1; actions={a[\\\"id\\\"] for a in m[\\\"actions\\\"]}; assert set(m[\\\"required_actions\\\"]) <= actions; assert all(a[\\\"input_type\\\"] in m[\\\"types\\\"] and a[\\\"output_type\\\"] in m[\\\"types\\\"] and set(a[\\\"reads\\\"] + a[\\\"writes\\\"]) <= m[\\\"resources\\\"].keys() and a[\\\"pre\\\"] and a[\\\"post\\\"] for a in m[\\\"actions\\\"]); assert all(e[\\\"path\\\"] == \\\"app.py\\\" and 1 <= e[\\\"start\\\"] <= e[\\\"end\\\"] <= len(lines) for e in m[\\\"scope\\\"][\\\"evidence\\\"]); print(\\\"model references and evidence ranges: OK\\\")'\"",
+      "review_flags": []
+    }
+  ],
+  "case_sha256": "f8107e089b020453286513984f4005a2688a98cd09dc381698bc7a5ef14e060f",
+  "prompt_sha256": "1bb460fb636cc7a19abd022ed921acd8d0028460effea85ac05ce737f1f9e4ba",
+  "event_sha256": "ea442a653b8b7d51e5caf6aa46ef609049dd97e2a9fa5304bf59984ca0e82729",
+  "stderr_sha256": "af1c36ecef80e02c9a7fa943d23b60f141dbcbf6cf8afaaed57bbdf1df25891f",
+  "model_requested": "gpt-6-astra",
+  "reasoning_effort": "high",
+  "cli_version": "codex-cli 0.158.0-alpha.2.1",
+  "review": {
+    "exit_code": 1,
+    "timed_out": false,
+    "elapsed_seconds": 27.78571250004461,
+    "usage": null,
+    "completed": false,
+    "valid": false,
+    "prediction": null,
+    "tool_items": [],
+    "input_sha256": "2c5aa782716643e286801a66ac5a14f5823432ec913d6f9aa9c128ed3f268836",
+    "event_sha256": "335a2ccf45ed62d207f884e3274fc15b547b2318e50932d45754586d8417d492"
+  }
+}

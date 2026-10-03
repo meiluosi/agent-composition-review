@@ -1,0 +1,31 @@
+"""Run async tool factories concurrently and return results in input order."""
+import asyncio
+
+
+async def run_group(factories):
+    tasks = []
+    group = None
+    try:
+        for factory in factories:
+            tasks.append(asyncio.create_task(factory()))
+        # Own cancellation here so a parent's cancellation cannot cancel a
+        # child a second time while that child is already cleaning up.
+        group = asyncio.gather(*tasks)
+        return await asyncio.shield(group)
+    except BaseException:
+        for task in tasks:
+            if not task.done() and not task.cancelling():
+                task.cancel()
+        cleanup = asyncio.gather(*tasks, return_exceptions=True)
+        # Cancellation arriving during failure cleanup must not cut it short.
+        while not cleanup.done():
+            try:
+                await asyncio.shield(cleanup)
+            except asyncio.CancelledError:
+                continue
+        if group is not None:
+            # Retrieve failures from the normal gather even if its shield was
+            # cancelled before gather completed.
+            group.exception()
+        # Keep the initiating exception, including its identity and traceback.
+        raise

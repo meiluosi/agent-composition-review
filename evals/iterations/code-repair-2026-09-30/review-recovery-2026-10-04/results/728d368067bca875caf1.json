@@ -1,0 +1,50 @@
+{
+  "case_id": "c01",
+  "condition": "A_basic",
+  "trial": 1,
+  "exit_code": 0,
+  "timed_out": false,
+  "elapsed_seconds": 61.1925607919693,
+  "usage": {
+    "input_tokens": 14006,
+    "cached_input_tokens": 0,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 785,
+    "reasoning_output_tokens": 59
+  },
+  "completed": true,
+  "valid": true,
+  "prediction": {
+    "criteria": [
+      {
+        "id": "r1",
+        "assessment": "covered",
+        "model_evidence": "actions.left.reads 包含 analysis.left/count/label，actions.right.reads 包含 analysis.right/count/label；relations.snapshot 明确子图保留原始 left/right、原始 label 和 count+7。两个 exact_requirement 均包含原有累加值。",
+        "code_evidence": "提交代码第 6–10 行定义完整 State，第 48 行以 State 作为子图输入状态；第 39、45 行分别读取已有 left/right、count、label 计算结果。独立验收 test_outputs_and_reuse 通过。",
+        "reason": "模型覆盖了分析所需的完整输入上下文，并明确保留原始累加值；其读集合、公式和快照描述与提交代码一致。"
+      },
+      {
+        "id": "r2",
+        "assessment": "covered",
+        "model_evidence": "resources 与 relations.snapshot 描述 prepare 后的完整入口快照；actions.analysis_output 明确只发布 left/right，不包含 count/label；relations.parent_join 区分各分支写入归属。scope.evidence 指向提交版的 AnalysisOutput 与 output_schema。",
+        "code_evidence": "原始代码第 42、50 行使用完整 State 子图输出；提交代码第 13–15、48、56 行通过 AnalysisOutput 限定编译子图的输出。第 25、31 行分别更新父图 count、label，第 62 行返回真实编译父图。独立验收的输出与复用检查通过。",
+        "reason": "模型明确区分完整输入快照和仅发布自有字段的输出边界，描述的是提交后的版本。它没有把窄输出误当作窄输入，也没有将原始版本的边界行为混入当前模型。"
+      },
+      {
+        "id": "r3",
+        "assessment": "covered",
+        "model_evidence": "relations.parent_fork 明确 prepare→refresh 与 prepare→analysis；relations.child_fork 明确 START 同时启动 left/right，且无二者之间的控制边。relations.observation 记录两层屏障；scope.limitations 明确结构检查不证明并行，有限测试不覆盖所有调度。",
+        "code_evidence": "提交代码第 58–59 行保留父层分支，第 51–52 行保留子层分支；第 29–30、35–38、43–44 行设置两层屏障等待。独立验收 test_both_concurrency_boundaries_and_single_execution 通过。",
+        "reason": "两处并行关系均有明确建模及代码依据。字段交接边被解释为经过状态合并和子图快照的数据关系，没有被误称为串行控制轨迹；模型也未声称顺序检查可以证明并发正确性。"
+      }
+    ],
+    "uncertainty": "未调用工具。判断依据为所给模型、源码和验收摘要；模型自述的额外测试未独立核实。语法检查通过仅支持结构有效性，有限行为验收不构成所有调度或框架版本下的证明。"
+  },
+  "tool_items": [],
+  "errors": [],
+  "input_sha256": "9b52f2e56bc1a173acc13dda488174f4fcf3ad8f85405ca28932c94c36534b7d",
+  "event_sha256": "aec84a36361e04b89c9695f479d697c2f7c8f877cbaea4f17decf539c789154d",
+  "cli_version": "codex-cli 0.160.0",
+  "model_requested": "gpt-6-astra",
+  "reasoning_effort": "high"
+}

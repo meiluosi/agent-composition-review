@@ -1,0 +1,148 @@
+{
+  "schema_version": 1,
+  "types": {
+    "FactoryBatch": {"factories": {"type": "array"}},
+    "OwnedBatch": {"tasks": {"type": "array"}},
+    "GroupResults": {"results": {"type": "array"}},
+    "CleanupResults": {"outcomes": {"type": "array"}}
+  },
+  "resources": {
+    "owned_tasks": "run_group 局部 tasks 列表；仅含本次调用通过 create_task 创建的任务，包含工厂中途抛错前的前缀。",
+    "group_future": "局部 group，正常聚合 Future；创建之前为 None。",
+    "cleanup_future": "局部 cleanup，以 return_exceptions=True 聚合本次所有任务。",
+    "active_exception": "except 块保存的异常上下文；清理期间的新外部取消有自己的异常上下文。"
+  },
+  "actions": [
+    {
+      "id": "schedule_factories",
+      "meaning": "run_group 的工厂循环逐一调用零参数工厂，并立即把返回协程注册为 Task。动作输出是局部 tasks 的抽象投影，不是新增公开返回值。同步失败时仍保留已创建任务前缀。",
+      "input_type": "FactoryBatch",
+      "output_type": "OwnedBatch",
+      "reads": [],
+      "writes": ["owned_tasks"],
+      "pre": [],
+      "post": [
+        {
+          "id": "one_task_per_factory_on_success",
+          "requirement": "工厂循环正常完成时，每个输入工厂对应一个任务。",
+          "must": {"op": "eq", "args": [{"count": {"path": "output.tasks"}}, {"count": {"path": "input.factories"}}]}
+        },
+        {
+          "id": "distinct_owned_tasks",
+          "requirement": "每次 create_task 产生独立的任务身份。",
+          "must": {"op": "unique", "args": [{"path": "output.tasks"}]}
+        }
+      ]
+    },
+    {
+      "id": "collect_results",
+      "meaning": "run_group 使用 gather 并发等待 tasks，再通过 shield 等待聚合 Future；成功时直接返回按输入顺序排列的结果列表，空输入返回空列表。",
+      "input_type": "OwnedBatch",
+      "output_type": "GroupResults",
+      "reads": ["owned_tasks"],
+      "writes": ["group_future"],
+      "pre": [],
+      "post": [
+        {
+          "id": "result_count",
+          "requirement": "成功返回的结果数等于任务数；结果顺序及值的对应关系另由行为测试验证。",
+          "must": {"op": "eq", "args": [{"count": {"path": "output.results"}}, {"count": {"path": "input.tasks"}}]}
+        }
+      ]
+    },
+    {
+      "id": "cancel_and_drain",
+      "meaning": "run_group 的 except BaseException 分支只对本次未完成且尚未取消的任务发出 cancel；通过 cleanup 等待所有本次任务终止。outcomes 是内部 gather 的结果投影，会被丢弃，不作为公开结果。随后以裸 raise 传播异常；清理期间出现外部取消时，先完成清理再传播该 CancelledError。finally 读取原聚合 Future 异常，避免未观察异常。",
+      "input_type": "OwnedBatch",
+      "output_type": "CleanupResults",
+      "reads": ["owned_tasks", "group_future", "active_exception"],
+      "writes": ["owned_tasks", "cleanup_future", "group_future"],
+      "pre": [],
+      "post": [
+        {
+          "id": "all_owned_tasks_joined",
+          "requirement": "内部清理聚合正常完成时，每个本次任务都贡献一个终态结果或异常。这个计数条件本身不证明清理时序。",
+          "must": {"op": "eq", "args": [{"count": {"path": "output.outcomes"}}, {"count": {"path": "input.tasks"}}]}
+        }
+      ]
+    }
+  ],
+  "edges": [
+    {
+      "from": "schedule_factories",
+      "to": "collect_results",
+      "bindings": [{"output": "tasks", "input": "tasks"}]
+    }
+  ],
+  "relations": [
+    {
+      "kind": "concurrent_lifecycle",
+      "actions": ["schedule_factories", "collect_results"],
+      "description": "工厂同步调用并注册任务，随后任务可在事件循环中并发执行；无需等待前一个任务完成才执行下一个。工厂调用本身不并行。"
+    },
+    {
+      "kind": "exception_control",
+      "from": ["schedule_factories", "collect_results"],
+      "to": "cancel_and_drain",
+      "description": "工厂错误、子任务错误或取消、父调用取消进入清理分支。清理从 owned_tasks 读取完整列表或已创建前缀；这是异常控制与共享局部状态关系，不是成功输出的顺序交接。"
+    },
+    {
+      "kind": "cancellation_boundary",
+      "actions": ["collect_results", "cancel_and_drain"],
+      "description": "shield 阻止父取消直接传播到聚合的子任务；清理中的第一次外部取消触发继续等待 cleanup，避免打断子任务异步清理。已有取消请求的任务不重复取消。"
+    }
+  ],
+  "required_actions": ["schedule_factories", "collect_results", "cancel_and_drain"],
+  "requirements": [
+    {
+      "id": "input_contract",
+      "statement": "输入为有限零参数工厂序列；每个工厂返回协程或同步抛错。",
+      "verification": "接口前提，未添加运行时输入校验。类型中用 array 抽象有限序列；工厂可调用性、协程类型无法由所用谓词完整编码。pre 的空列表表示这些前提未编码，不表示证明了无约束。"
+    },
+    {
+      "id": "success_behavior",
+      "statement": "并发执行、输入顺序返回、空输入返回空列表。",
+      "verification": "已运行 test_parallel_and_input_order、test_empty 和 smoke.py；并发测试要求全部子任务到达屏障才能继续。"
+    },
+    {
+      "id": "cleanup_before_exit",
+      "statement": "错误或取消退出之前，本次已创建任务全部终止；不取消无关后台任务。",
+      "verification": "已运行异常、工厂失败、子任务取消、父取消、清理中父取消、已开始取消的任务清理、无关后台任务测试；取消作用域还由局部 tasks 循环推断。"
+    },
+    {
+      "id": "exception_preservation",
+      "statement": "错误不作为公开结果，不构造 ExceptionGroup；保留原始异常对象。若清理期间父调用取消，则完成清理后传播该取消。",
+      "verification": "已运行 ValueError、自定义 BaseException、子任务和工厂 CancelledError 身份测试，以及清理异常不替换原异常测试；父取消测试检查 CancelledError 与取消消息。裸 raise 的对象保留由代码推断。"
+    },
+    {
+      "id": "observed_aggregation",
+      "statement": "父取消后，原始 gather 的异常也会被读取。",
+      "verification": "12 项测试的事件循环异常处理器均检查无未观察异步异常；代码 finally 显式读取 group.exception()。"
+    }
+  ],
+  "scope": {
+    "description": "当前 app.py 的单次 run_group 生命周期。动作是函数内代码段的抽象边界；条件以 input/output 为事件字段，post 只用于对应内部动作成功完成的路径。tasks 元素按任务身份解释，异常和任意返回值作为不透明 Python 值。required_actions 表示必需代码路径，不表示每次成功调用都执行清理。",
+    "limitations": [
+      "模型描述并非可执行跟踪或形式化证明；字段、条件和资源声明不自动证明实际因果关系。",
+      "未展开 asyncio 调度器、Task、gather、shield 内部实现；具体时序通过有限行为测试验证，未穷举所有调度交错。",
+      "验证环境为 Python 3.12.14 默认事件循环和任务工厂；未测试其他 Python 版本、自定义或 eager 任务工厂、任务创建机制自身故障。",
+      "只验证一次外部取消；未保证反复外部取消下的完整清理。假设协程响应取消且清理有限时间结束，不验证永不结束或持续吞掉取消的代码。",
+      "不管理子协程自行派生但未作为工厂返回协程注册的后台任务；未验证 KeyboardInterrupt/SystemExit 对 asyncio.run 整体生命周期的特殊影响。",
+      "谓词只表达成功路径的数量和身份约束；并发性、顺序、异常对象身份和终止时序依据测试与代码审查，未声称由结构检查证明。"
+    ],
+    "evidence": [
+      {"path": "app.py", "start": 5, "end": 10, "supports": "公开异步接口及本次任务所有权列表；每次工厂调用后立即注册 Task。"},
+      {"path": "app.py", "start": 11, "end": 13, "supports": "gather 按输入位置聚合并处理空输入；shield 隔离父取消的直接传播。"},
+      {"path": "app.py", "start": 14, "end": 19, "supports": "捕获包括取消在内的 BaseException，取消本次尚未取消的未完成任务，创建收尾聚合。"},
+      {"path": "app.py", "start": 20, "end": 26, "supports": "等待清理；清理期间的外部取消在继续等待后原样抛出。"},
+      {"path": "app.py", "start": 27, "end": 31, "supports": "读取原聚合异常并裸 raise 保留初始异常，内部清理结果不公开返回。"}
+    ]
+  },
+  "validation": {
+    "behavior_tests": [
+      {"command": "./run_python test_run_group.py app", "result": "12 项通过；检查无未观察异步异常。"},
+      {"command": "./run_python smoke.py", "result": "通过，输出 [2, 4]。"}
+    ],
+    "inference": "任务所有权与异常传播依据所列代码；有限测试不能证明所有调度路径。"
+  }
+}

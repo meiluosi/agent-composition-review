@@ -1,0 +1,50 @@
+{
+  "case_id": "c05",
+  "condition": "B_tools",
+  "trial": 1,
+  "exit_code": 0,
+  "timed_out": false,
+  "elapsed_seconds": 56.353238333016634,
+  "usage": {
+    "input_tokens": 12581,
+    "cached_input_tokens": 7552,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 791,
+    "reasoning_output_tokens": 88
+  },
+  "completed": true,
+  "valid": true,
+  "prediction": {
+    "criteria": [
+      {
+        "id": "r1",
+        "assessment": "covered",
+        "model_evidence": "actions.run_group_exit 建模完整调用与退出边界；relations.concurrent_execution 说明并发执行与 gather 参数顺序决定结果顺序；relations.exceptional_lifecycle 说明 shield 隔离父取消及清理等待。scope 明确针对当前 app.py。",
+        "code_evidence": "提交代码第 9–14 行先创建任务，再通过 gather 和 shield 等待；第 15–25 行处理取消并等待清理。独立验收 test_order_empty_and_concurrency、test_external_cancellation_and_unrelated_task_survives 均通过。",
+        "reason": "模型以生命周期、并发聚合和取消传播关系覆盖该项，并与提交版本一致。顺序语义由关系说明和代码支持，而非仅依赖结果数量谓词。"
+      },
+      {
+        "id": "r2",
+        "assessment": "covered",
+        "model_evidence": "all_owned_tasks_settled 要求退出时所有已创建任务终止；failure_has_no_returned_results 区分异常退出与内部清理结果；relations.exceptional_lifecycle 明确先等待 cleanup，再裸 raise。scope 将 settled 定义为 Task.done()，包含成功、失败和取消。",
+        "code_evidence": "提交代码第 19–25 行等待 cleanup 完成，第 31 行才重新抛出原异常。独立验收 test_failure_waits_for_sibling_cleanup_and_keeps_exception、test_child_cancellation_cleans_other_children 均通过。",
+        "reason": "模型明确区分异常传播和子任务终止，并说明清理先于退出的关系。该关系得到代码及有限行为验收支持，没有把合同谓词或语法检查当作执行证明。"
+      },
+      {
+        "id": "r3",
+        "assessment": "covered",
+        "model_evidence": "resources.owned_tasks 将所有权限定为本次调用的局部 tasks；cancel_only_owned_tasks 限制取消目标；relations.ownership 明确同步工厂失败时，已创建任务仍进入同一清理路径。scope 将无关任务保护限定为 run_group 自身的取消行为。",
+        "code_evidence": "提交代码第 6、9–10 行记录本次任务，工厂调用位于 try 内；第 16–19 行仅取消并等待该列表中的任务。独立验收 test_factory_failure_cleans_already_started_children、test_external_cancellation_and_unrelated_task_survives 均通过。",
+        "reason": "所有权边界与工厂创建失败路径均有明确关系及实现依据；模型没有声称约束工厂或协程自身对其他任务的任意副作用。"
+      }
+    ],
+    "uncertainty": "评审仅依据所给材料，未调用工具。模型自述的 11 项本地测试未提供完整内容；独立验收提供了 5 项通过结果。结构检查仅支持语法与引用有效性，有限测试和代码推断不构成所有调度情形的证明。"
+  },
+  "tool_items": [],
+  "errors": [],
+  "input_sha256": "bbaf0534db86b78a1abaa064c98b4787ce7a94499350410a400aa8b9f15b2fcc",
+  "event_sha256": "bc94eda4351c4c2872f7d07e77fe79eb9fc9b4e929bc1da4d6e6a4720de48a15",
+  "cli_version": "codex-cli 0.160.0",
+  "model_requested": "gpt-6-astra",
+  "reasoning_effort": "high"
+}

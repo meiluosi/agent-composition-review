@@ -1,0 +1,50 @@
+{
+  "case_id": "c01",
+  "condition": "C_v4",
+  "trial": 2,
+  "exit_code": 0,
+  "timed_out": false,
+  "elapsed_seconds": 54.9843335840269,
+  "usage": {
+    "input_tokens": 14849,
+    "cached_input_tokens": 0,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 768,
+    "reasoning_output_tokens": 56
+  },
+  "completed": true,
+  "valid": true,
+  "prediction": {
+    "criteria": [
+      {
+        "id": "r1",
+        "assessment": "covered",
+        "model_evidence": "actions.left.reads 包含 child_count、child_label、child_left；actions.right.reads 包含 child_count、child_label、child_right，两者 input_type 均为 State。relations.snapshot_fanout 明确子图输入包含原 label/left/right，count 来自 prepare 后快照。",
+        "code_evidence": "提交代码第48行使用 StateGraph(State, output_schema=AnalysisOutput)，保留完整输入；第39、45行分别读取 count、label 和原始 left/right。独立验收 test_outputs_and_reuse 通过。",
+        "reason": "模型明确区分两个子分支所需的读取上下文，并保留原始累加基数；与提交代码的输入结构及计算一致。"
+      },
+      {
+        "id": "r2",
+        "assessment": "covered",
+        "model_evidence": "analysis_export 将输入定义为子图完成后、输出投影前的 State 快照，输出为 AnalysisOutput，只写 parent_left、parent_right。analysis_export.values 与 width 描述保留计算值且仅发布两个字段；scope 声明描述当前 app.py，并将原始版本作为对照。",
+        "code_evidence": "提交代码第13—15行定义仅含 left/right 的 AnalysisOutput，第48行设置子图输出投影，第56行将编译子图接入父图。原始代码第42、50行未限制子图输出，不能套用修复后的输出声明。",
+        "reason": "模型有依据地区分完整快照、动作补丁与子图拥有字段的对外更新，且其声明对应提交版本。before/after 被明确限定为逻辑契约及未逐节点采集的状态，没有被冒充为执行证明。"
+      },
+      {
+        "id": "r3",
+        "assessment": "covered",
+        "model_evidence": "relations 中分别声明父层 refresh 与整个 analysis 子图并行、子层 left 与 right 并行，并解释 analysis_export 仅代表子图输出阶段。scope.limitations 明确未用顺序 trace 检查器证明并发性质，有限屏障测试不覆盖所有调度。",
+        "code_evidence": "提交代码第58—59行保留 prepare 后的父层分叉，第51—52行保留子层 START 分叉；第29—38、43—44行保留两处屏障。独立验收 test_both_concurrency_boundaries_and_single_execution 通过。",
+        "reason": "两层非顺序关系均被明确表达，并有代码拓扑及独立执行检查支持。模型解释了输出阶段代表整个子图的抽象方式，未将语法检查或顺序轨迹宣称为并发正确性证明。"
+      }
+    ],
+    "uncertainty": "独立验收仅提供三项通过摘要；模型自述的六项测试及原始版本失败记录未附执行明细，不能视为额外独立验证。本评审支持上述语义覆盖，不构成所有调度下的数学证明。"
+  },
+  "tool_items": [],
+  "errors": [],
+  "input_sha256": "56708a25d7edbfee977f2f6fee87523123b9351847c1c2a8b6a5dd33ab15700e",
+  "event_sha256": "d0acf1dcffcf8ed8f29bd92325862b0b106f19c311f71d9218ba335c606441ef",
+  "cli_version": "codex-cli 0.160.0",
+  "model_requested": "gpt-6-astra",
+  "reasoning_effort": "high"
+}

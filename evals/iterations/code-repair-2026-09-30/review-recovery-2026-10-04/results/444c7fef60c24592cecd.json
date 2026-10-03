@@ -1,0 +1,50 @@
+{
+  "case_id": "c06",
+  "condition": "B_tools",
+  "trial": 1,
+  "exit_code": 0,
+  "timed_out": false,
+  "elapsed_seconds": 57.28052500000922,
+  "usage": {
+    "input_tokens": 12544,
+    "cached_input_tokens": 0,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 810,
+    "reasoning_output_tokens": 106
+  },
+  "completed": true,
+  "valid": true,
+  "prediction": {
+    "criteria": [
+      {
+        "id": "r1",
+        "assessment": "covered",
+        "model_evidence": "resources 描述本次任务及其生命周期；relations.concurrency 明确 create_task 并发调度、gather 按 tasks 顺序返回；conditional_lifecycle 描述父取消经 shield 隔离后进入显式取消和清理。scope 明确针对提交版本的函数内部阶段。",
+        "code_evidence": "提交代码第 9–13 行按输入顺序创建任务并等待 shield(group)；第 14–24 行处理取消并等待清理。独立验收 test_order_empty_and_concurrency 和 test_external_cancellation_and_unrelated_task_survives 均通过。",
+        "reason": "模型有依据地关联了创建、并发执行、有序聚合及父取消后的生命周期，与提交代码一致。虽然结果值未编码进类型字段，关系说明已覆盖其顺序语义。"
+      },
+      {
+        "id": "r2",
+        "assessment": "covered",
+        "model_evidence": "settle_owned_tasks 明确先等待全部任务终止再裸 raise；all_owned_tasks_terminal 声明退出时全部终止；exception_identity 区分触发清理的异常与被内部收集的清理异常。scope 将谓词标为约束声明而非已运行证明。",
+        "code_evidence": "提交代码第 19–24 行用 gather(return_exceptions=True) 和 shield 循环等待清理完成，第 28 行才重新抛出原异常。独立验收 test_failure_waits_for_sibling_cleanup_and_keeps_exception 与 test_child_cancellation_cleans_other_children 均通过。",
+        "reason": "模型明确区分异常触发与子任务终止，展示清理完成是异常退出的前置步骤；没有把首次 gather 抛错等同于全部任务已完成。该描述有代码与有限执行证据支持。"
+      },
+      {
+        "id": "r3",
+        "assessment": "covered",
+        "model_evidence": "owned_tasks 限定为本次 create_task 成功返回的局部任务；owned_tasks_only 限定等待和取消范围；create_owned_tasks 明确工厂同步抛错时以已创建前缀进入异常处理。",
+        "code_evidence": "提交代码第 6、9–10 行维护局部 tasks，工厂调用位于 try 内；第 15–19 行仅取消并收集该列表中的任务。独立验收 test_factory_failure_cleans_already_started_children 和 test_external_cancellation_and_unrelated_task_survives 均通过。",
+        "reason": "模型同时覆盖取消归属边界和创建中途失败的交接，未将无关后台任务纳入清理范围，与提交实现一致。"
+      }
+    ],
+    "uncertainty": "结构检查仅支持语法和引用有效。模型自述的 smoke 与 10 项测试未提供独立日志；本评审依据所给代码及独立验收的 5 项结果，不将这些结果视为所有调度交错下的证明。"
+  },
+  "tool_items": [],
+  "errors": [],
+  "input_sha256": "ff5c720b64ef700d68252b364e2069eabe73b0a35740c8e3d91b34f33d64c930",
+  "event_sha256": "a90fe54e83488e98ad106045a6fc613f101c64195938c476722c2091a27f14ab",
+  "cli_version": "codex-cli 0.160.0",
+  "model_requested": "gpt-6-astra",
+  "reasoning_effort": "high"
+}

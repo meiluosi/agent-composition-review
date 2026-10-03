@@ -1,0 +1,457 @@
+{
+  "schema_version": 1,
+  "types": {
+    "State": {
+      "count": {
+        "type": "number"
+      },
+      "label": {
+        "type": "string"
+      },
+      "left": {
+        "type": "number"
+      },
+      "right": {
+        "type": "number"
+      }
+    },
+    "CountPatch": {
+      "count": {
+        "type": "number"
+      }
+    },
+    "LabelPatch": {
+      "label": {
+        "type": "string"
+      }
+    },
+    "LeftPatch": {
+      "left": {
+        "type": "number"
+      }
+    },
+    "RightPatch": {
+      "right": {
+        "type": "number"
+      }
+    },
+    "AnalysisOutput": {
+      "left": {
+        "type": "number"
+      },
+      "right": {
+        "type": "number"
+      }
+    }
+  },
+  "resources": {
+    "parent_count": "父图 State.count",
+    "parent_label": "父图 State.label",
+    "parent_left": "父图 State.left",
+    "parent_right": "父图 State.right",
+    "child_count": "子图调用局部 State.count",
+    "child_label": "子图调用局部 State.label",
+    "child_left": "子图调用局部 State.left",
+    "child_right": "子图调用局部 State.right",
+    "calls": "build_graph 调用捕获的可选外部列表；每个叶动作 append 一次，无内部全局列表。",
+    "parent_gate": "外部可选屏障，refresh 与 left 调用 wait；屏障本身具有同步状态。",
+    "child_gate": "外部可选屏障，left 与 right 调用 wait；屏障本身具有同步状态。"
+  },
+  "actions": [
+    {
+      "id": "prepare",
+      "meaning": "build_graph.prepare：记录动作，父图 count 加 7，返回单字段补丁。",
+      "input_type": "State",
+      "output_type": "CountPatch",
+      "reads": [
+        "parent_count",
+        "calls"
+      ],
+      "writes": [
+        "parent_count",
+        "calls"
+      ],
+      "pre": [],
+      "post": [
+        {
+          "id": "patch_width",
+          "requirement": "输出只包含声明的字段；字段类型由 output_type 约束。",
+          "must": {
+            "op": "eq",
+            "args": [
+              {
+                "count": {
+                  "path": "output"
+                }
+              },
+              {
+                "literal": 1
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "refresh",
+      "meaning": "build_graph.refresh：记录动作，等待可选父屏障，旧 label 加 |fresh。",
+      "input_type": "State",
+      "output_type": "LabelPatch",
+      "reads": [
+        "parent_label",
+        "calls",
+        "parent_gate"
+      ],
+      "writes": [
+        "parent_label",
+        "calls",
+        "parent_gate"
+      ],
+      "pre": [],
+      "post": [
+        {
+          "id": "patch_width",
+          "requirement": "输出只包含声明的字段；字段类型由 output_type 约束。",
+          "must": {
+            "op": "eq",
+            "args": [
+              {
+                "count": {
+                  "path": "output"
+                }
+              },
+              {
+                "literal": 1
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "left",
+      "meaning": "build_graph.left：子图并行分支；保留旧 left，使用子图输入快照计算增量。",
+      "input_type": "State",
+      "output_type": "LeftPatch",
+      "reads": [
+        "child_count",
+        "child_label",
+        "child_left",
+        "calls",
+        "parent_gate",
+        "child_gate"
+      ],
+      "writes": [
+        "child_left",
+        "calls",
+        "parent_gate",
+        "child_gate"
+      ],
+      "pre": [],
+      "post": [
+        {
+          "id": "patch_width",
+          "requirement": "输出只包含声明的字段；字段类型由 output_type 约束。",
+          "must": {
+            "op": "eq",
+            "args": [
+              {
+                "count": {
+                  "path": "output"
+                }
+              },
+              {
+                "literal": 1
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "right",
+      "meaning": "build_graph.right：子图并行分支；保留旧 right，使用子图输入快照计算增量。",
+      "input_type": "State",
+      "output_type": "RightPatch",
+      "reads": [
+        "child_count",
+        "child_label",
+        "child_right",
+        "calls",
+        "child_gate"
+      ],
+      "writes": [
+        "child_right",
+        "calls",
+        "child_gate"
+      ],
+      "pre": [],
+      "post": [
+        {
+          "id": "patch_width",
+          "requirement": "输出只包含声明的字段；字段类型由 output_type 约束。",
+          "must": {
+            "op": "eq",
+            "args": [
+              {
+                "count": {
+                  "path": "output"
+                }
+              },
+              {
+                "literal": 1
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "analysis_output",
+      "meaning": "child.compile() 的输出投影边界：output_schema=AnalysisOutput 将子图结果返回父图 analysis 节点；不是额外用户节点或 calls 动作。",
+      "input_type": "State",
+      "output_type": "AnalysisOutput",
+      "reads": [
+        "child_left",
+        "child_right"
+      ],
+      "writes": [
+        "parent_left",
+        "parent_right"
+      ],
+      "pre": [],
+      "post": [
+        {
+          "id": "patch_width",
+          "requirement": "输出只包含声明的字段；字段类型由 output_type 约束。",
+          "must": {
+            "op": "eq",
+            "args": [
+              {
+                "count": {
+                  "path": "output"
+                }
+              },
+              {
+                "literal": 2
+              }
+            ]
+          }
+        },
+        {
+          "id": "preserve_left",
+          "requirement": "输出投影保持子图已计算的 left。",
+          "must": {
+            "op": "eq",
+            "args": [
+              {
+                "path": "output.left"
+              },
+              {
+                "path": "input.left"
+              }
+            ]
+          }
+        },
+        {
+          "id": "preserve_right",
+          "requirement": "输出投影保持子图已计算的 right。",
+          "must": {
+            "op": "eq",
+            "args": [
+              {
+                "path": "output.right"
+              },
+              {
+                "path": "input.right"
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "edges": [
+    {
+      "from": "prepare",
+      "to": "refresh",
+      "bindings": [
+        {
+          "output": "count",
+          "input": "count"
+        }
+      ]
+    },
+    {
+      "from": "prepare",
+      "to": "left",
+      "bindings": [
+        {
+          "output": "count",
+          "input": "count"
+        }
+      ]
+    },
+    {
+      "from": "prepare",
+      "to": "right",
+      "bindings": [
+        {
+          "output": "count",
+          "input": "count"
+        }
+      ]
+    },
+    {
+      "from": "left",
+      "to": "analysis_output",
+      "bindings": [
+        {
+          "output": "left",
+          "input": "left"
+        }
+      ]
+    },
+    {
+      "from": "right",
+      "to": "analysis_output",
+      "bindings": [
+        {
+          "output": "right",
+          "input": "right"
+        }
+      ]
+    }
+  ],
+  "required_actions": [
+    "prepare",
+    "refresh",
+    "left",
+    "right",
+    "analysis_output"
+  ],
+  "relations": [
+    {
+      "kind": "parent_topology",
+      "description": "START -> prepare；prepare 扇出 refresh 和 analysis；两者结束后父图返回。analysis 包含 left、right 和输出投影。"
+    },
+    {
+      "kind": "parallel",
+      "members": [
+        "refresh",
+        "analysis"
+      ],
+      "description": "父图 prepare 后同一超步；父屏障由 refresh 与 analysis 内的 left 会合。analysis 是容器名，不是额外动作 ID。"
+    },
+    {
+      "kind": "parallel",
+      "members": [
+        "left",
+        "right"
+      ],
+      "description": "子图 START 同时启动两分支；child_gate 观察其并行。"
+    },
+    {
+      "kind": "snapshot",
+      "description": "prepare 补丁提交后的 State 作为 refresh 和 analysis 的输入。label、left、right 从原父状态保留，子分支不读取 refresh 产出的 label。prepare 到 left/right 的 count 绑定跨过父状态合并与子图入口，并非新增直连控制边。"
+    },
+    {
+      "kind": "join_projection",
+      "members": [
+        "left",
+        "right",
+        "analysis_output"
+      ],
+      "description": "子图合并不相交的 left/right 补丁后按 AnalysisOutput 投影；不回写 count/label。analysis_output 的 input 表示该完成子图状态。"
+    },
+    {
+      "kind": "final_state",
+      "description": "父图字段固定为 count、label、left、right；prepare 写 count，refresh 写 label，analysis 输出写 left/right。"
+    }
+  ],
+  "requirements": [
+    {
+      "id": "arithmetic",
+      "statement": "合法输入为完整 State，count/left/right 为整数、label 为字符串。令 c=count+7，n=len(label)：最终 count=c，label=label+\"|fresh\"，left=原 left+c+n，right=原 right+c-n。",
+      "verification": "test_review.py:test_values_and_repeated_invocation 实际执行 81 组笛卡尔输入及 3 次结果回馈；smoke.py 验证公开输入。"
+    },
+    {
+      "id": "parallelism",
+      "statement": "保留真实编译父图、可复用编译子图及两层并行。",
+      "verification": "test_both_parallel_levels：两个 Barrier(2, timeout=5)，连续调用 3 次；test_real_graph_topology_and_child_reuse 检查类型、边并独立调用子图 3 次。"
+    },
+    {
+      "id": "action_counts",
+      "statement": "每次成功父图调用 prepare/refresh/left/right 各记录一次。失败时不保证后续动作执行，不重试或吞掉异常。",
+      "verification": "矩阵、屏障、异步测试逐次比较 Counter；并发测试按图统计次数；test_exceptions_propagate 验证两个屏障及错误输入异常。"
+    },
+    {
+      "id": "isolation",
+      "statement": "内部状态按调用隔离，多个 build_graph 无内部共享状态；调用者主动复用 calls/gate 时，这些外部资源仍然共享。",
+      "verification": "test_concurrent_invocations_and_graph_isolation：两个图共 20 个并发调用，按输入检查结果并检查各图独立 calls；重复调用检查输入未修改。"
+    },
+    {
+      "id": "boundary",
+      "statement": "子图输出只含 left/right，避免与 refresh 争写 label。",
+      "verification": "test_boundary_patches 观察实际 stream updates；独立子图输出也检查精确字段集合。"
+    }
+  ],
+  "scope": {
+    "description": "当前 app.py 的父图叶动作、子图叶动作及子图输出投影的最小结构；只建模默认无重试、无持久化的成功调用和异常向外传播。",
+    "limitations": [
+      "类型格式 number 不能表达 Python int 的精确域；整数要求记录在 requirements。TypedDict 不提供运行时输入校验。",
+      "pre 为空表示代码未增加运行时前置检查；依赖完整 State 输入假设，不表示任意输入均有效。",
+      "给定谓词语言不支持数值加减和字符串拼接；post 只表达补丁宽度与输出投影保值，完整算术由真实行为测试验证。",
+      "reads/writes 是从代码及图边界推断的逻辑资源，不是运行时内存访问审计；不细建 LangGraph 内部通道和调度。",
+      "trace.json 为实际观测的自定义记录；没有全局 before/after 快照，不把并发事件强行当成顺序执行，也未运行通用顺序 trace 检查。",
+      "有限测试不是所有输入、所有调度、框架版本、持久化、重试或取消行为的证明。无相关外部服务。",
+      "并发调用的 calls 只按图检查总次数，未给每个并发动作加调用 ID；屏障通过证明被测执行发生会合，不证明全部调度。"
+    ],
+    "evidence": [
+      {
+        "path": "app.py",
+        "start": 6,
+        "end": 15,
+        "supports": "父状态四字段与子图输出两字段的类型边界。"
+      },
+      {
+        "path": "app.py",
+        "start": 18,
+        "end": 25,
+        "supports": "每次建图捕获参数；可选记录及 prepare 算术。"
+      },
+      {
+        "path": "app.py",
+        "start": 27,
+        "end": 45,
+        "supports": "refresh、left、right 算术、屏障、记录和无异常捕获。"
+      },
+      {
+        "path": "app.py",
+        "start": 47,
+        "end": 52,
+        "supports": "完整子图输入、受限输出以及子图并行扇出。"
+      },
+      {
+        "path": "app.py",
+        "start": 53,
+        "end": 62,
+        "supports": "编译子图嵌入父图、父图并行扇出及编译返回。"
+      }
+    ]
+  },
+  "verification": {
+    "behavior_executed": [
+      {
+        "command": "./run_python smoke.py",
+        "result": "当前交付实现成功：count=8, label=old|fresh, left=13, right=8。"
+      },
+      {
+        "command": "./run_python test_review.py",
+        "result": "8 项测试通过，实际观测保存在 trace.json。"
+      }
+    ],
+    "source_inference": "输出 schema 缩窄阻止 count/label 穿过子图输出边界；代码未添加 reducer、缓存、串行化、重试或异常兜底。",
+    "unverified": "scope.limitations 所列范围外行为。"
+  }
+}

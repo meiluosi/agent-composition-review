@@ -1,0 +1,50 @@
+{
+  "case_id": "c02",
+  "condition": "C_v4",
+  "trial": 1,
+  "exit_code": 0,
+  "timed_out": false,
+  "elapsed_seconds": 54.915205167024396,
+  "usage": {
+    "input_tokens": 15259,
+    "cached_input_tokens": 0,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 765,
+    "reasoning_output_tokens": 60
+  },
+  "completed": true,
+  "valid": true,
+  "prediction": {
+    "criteria": [
+      {
+        "id": "r1",
+        "assessment": "covered",
+        "model_evidence": "actions.analysis.reads 包含父 count、label、left、right；relations.state_merge 声明保留未写字段，compound_input 将完整四字段快照传入子图。left/right 的 reads 分别包含原有累加值及 count、label。",
+        "code_evidence": "提交代码第 25 行仅更新 count；第 39、45 行分别读取原 left/right、count 和 label；第 47 行子图输入为完整 State，第 55 行将编译子图注册为 analysis。独立验收 test_outputs_and_reuse 通过。",
+        "reason": "模型明确表达补丁合并、完整上下文传播及原有累加值的读取，与代码一致，未将 prepare 的单字段输出误作子图全部输入。"
+      },
+      {
+        "id": "r2",
+        "assessment": "covered",
+        "model_evidence": "compound_input 表示 prepare 后父快照初始化子图；compound_output_join 明确仅导出 left/right，count 和旧 label 不回写。verification.predicate_status 将 before/after 限定为局部逻辑视图，并明确未自动回放验证。source_comparison 声明当前代码未修改。",
+        "code_evidence": "原始代码与提交代码相同。第 13–15、47 行通过 AnalysisOutput 限定子图输出；第 57–58 行使 refresh 与 analysis 从 prepare 后分叉，第 31 行更新父 label，第 39、45 行更新子图所属字段。独立输出与复用验收通过。",
+        "reason": "模型区分了子图读取的完整边界快照与返回父图的字段更新，解释了旧 label 为何不会覆盖 refresh 的结果；版本声明与所给代码一致，也未把局部契约冒充已采集的执行轨迹。"
+      },
+      {
+        "id": "r3",
+        "assessment": "covered",
+        "model_evidence": "relations 中两个 parallel_fork 分别表示 prepare 后 refresh/analysis 并行及 analysis 内 left/right 并行；compound_input 明确不是 analysis 完成后再执行子节点。scope.limitations 明言模型结构通过不能证明并发正确。",
+        "code_evidence": "第 57–58 行构成父分叉，第 50–51 行构成子分叉；第 29–30、35–38、43–44 行提供两层屏障观察点。独立验收 test_both_concurrency_boundaries_and_single_execution 通过。",
+        "reason": "两处并行关系均有明确结构表达和代码依据，并获得独立行为检查支持；模型没有声称顺序轨迹检查可以证明并发正确。"
+      }
+    ],
+    "uncertainty": "结构检查仅支持语法和引用有效性。模型自述的补充测试及 trace.json 未提供原件，不能独立核实；所给独立验收是有限执行证据，不构成所有调度交错的证明。"
+  },
+  "tool_items": [],
+  "errors": [],
+  "input_sha256": "78cb317c6d300afb15eb868805c1f2023f7dde9ce3320711ef247928d091a603",
+  "event_sha256": "6b0ef743d4c2d58f0bce14aaa47479d91e5153016d733f0a6d77755177f36abc",
+  "cli_version": "codex-cli 0.160.0",
+  "model_requested": "gpt-6-astra",
+  "reasoning_effort": "high"
+}

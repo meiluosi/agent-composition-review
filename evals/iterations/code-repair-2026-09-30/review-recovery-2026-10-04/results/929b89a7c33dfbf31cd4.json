@@ -1,0 +1,50 @@
+{
+  "case_id": "c01",
+  "condition": "B_tools",
+  "trial": 2,
+  "exit_code": 0,
+  "timed_out": false,
+  "elapsed_seconds": 60.054760332976,
+  "usage": {
+    "input_tokens": 14434,
+    "cached_input_tokens": 0,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 788,
+    "reasoning_output_tokens": 111
+  },
+  "completed": true,
+  "valid": true,
+  "prediction": {
+    "criteria": [
+      {
+        "id": "r1",
+        "assessment": "covered",
+        "model_evidence": "analysis_entry 读取并传递 count、label、left、right；relations.state_inheritance 明确 prepare 只更新 count，其余输入字段保留；left/right 的 meaning 明确以原有 left/right 为基值计算。",
+        "code_evidence": "提交代码第 48 行以完整 State 作为子图状态，第 39、45 行分别读取原有 left/right、count 和 label。独立验收 test_outputs_and_reuse 通过。",
+        "reason": "模型解释了完整上下文如何经过 prepare 到达两个分析分支，明确 count 边绑定不是唯一输入来源，覆盖所需读取范围和原值保留。"
+      },
+      {
+        "id": "r2",
+        "assessment": "covered",
+        "model_evidence": "analysis_entry 表示 prepare 后的完整快照；resources.state.label 指明快照早于 refresh；analysis_exit 与 requirements.write_ownership 限定只发布 left/right。scope 明确描述限制写回字段后的当前实现。",
+        "code_evidence": "提交代码第 13–15 行定义 AnalysisResult，第 48 行设置 output_schema=AnalysisResult，第 56 行嵌入编译子图；原始代码第 42 行没有受限输出契约。提交代码第 58–59 行让两个父分支从 prepare 分叉。",
+        "reason": "模型区分了子图读取的完整快照与返回父图的字段补丁，且对应提交后的代码版本。parent_merge 说明 count 保留、label 来自 refresh、left/right 来自分析，没有将原始实现误写成已具备受限输出边界。"
+      },
+      {
+        "id": "r3",
+        "assessment": "covered",
+        "model_evidence": "relations 中两个 parallel 关系分别描述 refresh/analysis_entry 与 left/right；parent_merge 明确不是顺序边。scope.limitations 明确屏障和并发测试仅覆盖有限调度，不证明所有线程交错。",
+        "code_evidence": "提交代码第 58–59 行保留父图分叉，第 51–52 行保留子图分叉；第 29–30、35–38、43–44 行保留两层屏障。独立验收 test_both_concurrency_boundaries_and_single_execution 通过。",
+        "reason": "两层非顺序关系均有明确建模和代码依据，并有独立行为验收支持；模型没有把顺序执行记录或有限并发测试宣称为并发正确性的完整证明。"
+      }
+    ],
+    "uncertainty": "确定性结构检查仅支持语法和引用有效。模型自述的 smoke.py、9 项 test_review.py 测试未提供独立执行材料，不能视为已独立核验；所给独立验收仅报告 3 项通过，也不证明全部调度或其他框架版本。"
+  },
+  "tool_items": [],
+  "errors": [],
+  "input_sha256": "5af0869df53bd63ebc9354847deaa128851428c885c74800d1e04719095b4b53",
+  "event_sha256": "d5840b7b1e59d63d62cd489fa0f18f5b5f8d215a1c52a50546a7a5281ae2d2f1",
+  "cli_version": "codex-cli 0.160.0",
+  "model_requested": "gpt-6-astra",
+  "reasoning_effort": "high"
+}

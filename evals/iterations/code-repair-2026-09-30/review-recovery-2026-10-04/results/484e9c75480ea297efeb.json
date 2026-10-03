@@ -1,0 +1,50 @@
+{
+  "case_id": "c03",
+  "condition": "A_basic",
+  "trial": 1,
+  "exit_code": 0,
+  "timed_out": false,
+  "elapsed_seconds": 52.56685975001892,
+  "usage": {
+    "input_tokens": 12346,
+    "cached_input_tokens": 0,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 791,
+    "reasoning_output_tokens": 104
+  },
+  "completed": true,
+  "valid": true,
+  "prediction": {
+    "criteria": [
+      {
+        "id": "r1",
+        "assessment": "covered",
+        "model_evidence": "resources 分别表示 records 的批次变更、包含调用者状态的 transaction_stack、调用者连接的 connection_lifetime；write_batch 的 reads/writes 明确其访问和修改范围。",
+        "code_evidence": "提交代码第 9–18 行在传入连接上创建保存点、插入、释放或回滚；第 6–23 行没有关闭或替换连接。独立验收 test_failure_rolls_back_only_own_batch、test_existing_savepoint_is_preserved 均通过。",
+        "reason": "模型明确关联调用者拥有的连接及事务状态与本批次记录变更，且与提交代码一致。单动作边界及空 edges 已有合理解释，不影响语义覆盖。"
+      },
+      {
+        "id": "r2",
+        "assessment": "covered",
+        "model_evidence": "requirements.standalone_commit 说明释放最外层保存点会提交；caller_ownership 说明嵌套时仅操作本次保存点，保留调用者后续提交和回滚权。",
+        "code_evidence": "提交代码第 9、14 行使用 SAVEPOINT/RELEASE，没有连接级 commit。独立验收 test_standalone_success_is_committed、test_success_does_not_commit_callers_transaction、test_explicit_transaction_in_autocommit_mode 和 test_existing_savepoint_is_preserved 均通过。",
+        "reason": "模型通过保存点层级区分独立提交与嵌套参与，明确内部正常返回不终结外层工作；代码及独立行为证据支持该关系。"
+      },
+      {
+        "id": "r3",
+        "assessment": "covered",
+        "model_evidence": "requirements.batch_atomicity、caller_ownership、exception_identity 描述仅撤销批次并重抛原异常；scope 指向当前 app.py，并明确清理失败及 SQLite 主动撤销整笔事务等限制。",
+        "code_evidence": "提交代码第 15–22 行捕获 BaseException，ROLLBACK TO 本次保存点后 RELEASE，吞掉清理异常并裸 raise。独立验收覆盖批次失败隔离、独立失败原子性与原错误保留，以及空批次和重复失败保留事务，均通过。",
+        "reason": "失败路径的批次边界、调用者工作保护及原异常传播均有具体实现依据；引用行号对应提交版本，而非原始连接上下文管理实现。模型没有将清理失败或数据库整体回滚情况下的恢复宣称为已验证保证。"
+      }
+    ],
+    "uncertainty": "结构检查仅证明语法和引用有效。模型自述的额外测试未提供独立执行材料，不能全部视为已核实；上述判断依据提交源码和给出的七项独立验收。covered 表示在声明范围内覆盖判据，不证明所有 SQLite 配置及故障下均满足业务要求。"
+  },
+  "tool_items": [],
+  "errors": [],
+  "input_sha256": "9c78211c72fc0f848e90f9dfb4f6518100a6a0708169d419b041c0b7f29cdb98",
+  "event_sha256": "7e601c0fe6c6f3b03ec395d0c39c768201f5f3f3e24a21682246bf8cb726838f",
+  "cli_version": "codex-cli 0.160.0",
+  "model_requested": "gpt-6-astra",
+  "reasoning_effort": "high"
+}

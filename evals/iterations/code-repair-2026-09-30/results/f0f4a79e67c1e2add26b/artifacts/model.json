@@ -1,0 +1,121 @@
+{
+  "schema_version": 1,
+  "types": {
+    "BatchCall": {
+      "connection_ref": {"type": "string"},
+      "rows": {"type": "array"}
+    },
+    "BatchObservation": {
+      "outcome": {"type": "string", "enum": ["returned", "raised"]},
+      "result": {"type": "object"}
+    }
+  },
+  "resources": {
+    "records": "调用者 SQLite 数据库的 records 表内容；测试使用按 key 排序的查询结果。",
+    "transaction": "同一连接的事务、保存点栈和锁；in_transaction 可观察，保存点存活需实际 ROLLBACK TO/RELEASE 验证。",
+    "connection": "调用者连接的身份、开放状态和既有表结构。",
+    "uuid_source": "uuid.uuid4 生成内部保存点标识所用的随机源。"
+  },
+  "actions": [
+    {
+      "id": "write_batch",
+      "meaning": "app.write_batch(connection, rows) 的完整调用边界：在同一连接建立独立保存点，参数化批量插入，释放保存点；异常时按事务归属清理并重新抛出原异常。内部 SQL 属于同一动作，未假装成多个公开接口。",
+      "input_type": "BatchCall",
+      "output_type": "BatchObservation",
+      "reads": ["records", "transaction", "connection", "uuid_source"],
+      "writes": ["records", "transaction", "uuid_source"],
+      "pre": [
+        {
+          "id": "open_connection",
+          "requirement": "输入假设：调用者提供开放的 SQLite 连接；实现不负责创建或替换连接。",
+          "must": {"op": "eq", "args": [{"path": "before.connection.open"}, {"literal": true}]}
+        },
+        {
+          "id": "existing_table",
+          "requirement": "输入假设：records 表已存在且可访问。",
+          "must": {"op": "eq", "args": [{"path": "before.connection.records_table_exists"}, {"literal": true}]}
+        }
+      ],
+      "post": [
+        {
+          "id": "return_count",
+          "requirement": "正常返回插入数量，包括空批次返回零；适用于有限且长度稳定的 (key,value) 序列。",
+          "when": {"op": "eq", "args": [{"path": "output.outcome"}, {"literal": "returned"}]},
+          "must": {"op": "eq", "args": [{"path": "output.result.count"}, {"count": {"path": "input.rows"}}]}
+        },
+        {
+          "id": "success_transaction_ownership",
+          "requirement": "成功时，没有外层事务则提交；已有事务则保持其活动状态。此谓词仅检查活动状态，保存点及持久化另由真实测试验证。",
+          "when": {"op": "eq", "args": [{"path": "output.outcome"}, {"literal": "returned"}]},
+          "must": {"op": "eq", "args": [{"path": "after.transaction.in_transaction"}, {"path": "before.transaction.in_transaction"}]}
+        },
+        {
+          "id": "rollback_batch",
+          "requirement": "失败时批次全部撤销，已有数据保留。该保证依赖 SQLite 仍允许回滚；不能从捕获清理异常推导回滚一定成功。",
+          "when": {"op": "and", "args": [
+            {"op": "eq", "args": [{"path": "output.outcome"}, {"literal": "raised"}]},
+            {"op": "eq", "args": [{"path": "output.result.cleanup_completed"}, {"literal": true}]}
+          ]},
+          "must": {"op": "eq", "args": [{"path": "after.records"}, {"path": "before.records"}]}
+        },
+        {
+          "id": "original_exception",
+          "requirement": "插入或释放保存点失败时，重新抛出原始异常，清理异常不得替代它。",
+          "when": {"op": "eq", "args": [{"path": "output.outcome"}, {"literal": "raised"}]},
+          "must": {"op": "eq", "args": [{"path": "output.result.original_exception_preserved"}, {"literal": true}]}
+        },
+        {
+          "id": "connection_preserved",
+          "requirement": "工具不关闭或替换调用者连接，不更改其既有表结构。",
+          "must": {"op": "eq", "args": [{"path": "after.connection"}, {"path": "before.connection"}]}
+        }
+      ]
+    }
+  ],
+  "edges": [],
+  "required_actions": ["write_batch"],
+  "internal_control": [
+    "先读取 connection.in_transaction，再生成保存点名并执行 SAVEPOINT。建立保存点失败直接传播，尚未插入批次。",
+    "executemany 使用 SQL 参数绑定；成功后 RELEASE。最外层 RELEASE 等价提交，嵌套 RELEASE 保留调用者事务和先前保存点。",
+    "插入或 RELEASE 抛出异常：入口已有事务则 ROLLBACK TO 自己的保存点，再 RELEASE；入口无事务则 connection.rollback()，避免锁冲突使清理 RELEASE 再次失败。",
+    "任何清理异常被抑制，原异常通过裸 raise 重抛；正常路径返回 len(rows)。"
+  ],
+  "requirements_checked_outside_predicates": [
+    {"requirement": "成功实际写入全部值，失败不留下部分数据，特殊字符不会成为 SQL。", "method": "test_transaction_matrix、test_not_null_failure_is_atomic：查询表内容并与完整预期比较。"},
+    {"requirement": "调用者保存点仍可使用，调用者以后能提交或回滚。", "method": "test_transaction_matrix、test_caller_can_commit_after_success_or_failure：真实执行 ROLLBACK TO、RELEASE、commit、rollback。"},
+    {"requirement": "无外层事务时成功结果已提交。", "method": "test_standalone_commit_visible_from_other_connection：文件数据库上第二连接读取成功结果。"},
+    {"requirement": "提交阶段失败同样撤销批次并允许连接继续使用。", "method": "test_release_failure_rolls_back_batch、test_locked_commit_rolls_back_batch：真实延迟外键与第二连接读锁。"},
+    {"requirement": "清理失败不覆盖原异常对象。", "method": "test_cleanup_failure_preserves_original_exception：sqlite3.Connection 子类在真实回滚后注入清理异常，断言异常对象身份。"}
+  ],
+  "validation": {
+    "behavior": [
+      {"command": "./run_python test_batch.py original", "result": "原始实现发现 3 个失败断言和 1 个错误：两个连接模式的延迟外键提交失败、锁冲突提交失败、清理异常覆盖原异常。"},
+      {"command": "./run_python test_batch.py app", "result": "交付实现 8 项测试通过；事务矩阵包含 27 个子场景。"},
+      {"command": "./run_python smoke.py", "result": "通过，返回 1，读取到 [('example', 5)]。"}
+    ],
+    "inferred": [
+      "保存点名来自 UUID 十六进制值，键和值通过参数传递；调用者提供的特殊字符不进入 SQL 结构。",
+      "代码只操作原连接；外层事务存在时没有调用全局 commit 或 rollback。"
+    ],
+    "representation": "类型、谓词字段是调用边界的观测投影，并非新增 Python 返回协议。正常返回仍为 int，失败仍直接抛异常。未提供完整事件 trace；未声称运行过谓词回放。cleanup_completed 和异常身份等字段需要测试适配器观测，不能靠格式校验推断。"
+  },
+  "scope": {
+    "description": "当前 app.py 的单批 SQLite 写入边界；只建模公开 write_batch 动作及其共享资源，内部控制流另述，因此没有动作间数据交接边。支持默认 sqlite3 事务行为以及 isolation_level=None 的显式事务和保存点。",
+    "limitations": [
+      "测试覆盖有限输入和本地 SQLite 版本；未证明任意数据库模式、所有并发交错或进程崩溃后的持久性。",
+      "假设调用期间其他代码不并发操纵同一连接，rows 是长度稳定、无外部副作用的有限序列。",
+      "若 SQLite 因 I/O 故障、连接失效或拒绝执行而无法完成回滚，代码仍保留原异常，但无法保证数据库恢复；未实测这些环境故障。",
+      "触发器或 ON CONFLICT ROLLBACK 可主动撤销整个调用者事务，保存点无法恢复已被数据库撤销的外层工作；未覆盖此类表模式。",
+      "已有外层事务时，延迟约束由调用者最终提交时检查；函数成功不代表外层事务必然可提交。",
+      "UUID 保存点重名概率极低但未形式化排除；未验证 UUID 源失效。",
+      "无内部 SQL 事件的完整状态快照；资源读写依据代码与行为测试，结构格式校验不能证明这些声明。"
+    ],
+    "evidence": [
+      {"path": "app.py", "start": 5, "end": 8, "supports": "公开接口、入口事务归属快照、UUID 保存点建立。"},
+      {"path": "app.py", "start": 9, "end": 12, "supports": "参数化批量插入与释放保存点处于同一受保护区域。"},
+      {"path": "app.py", "start": 13, "end": 21, "supports": "失败恢复按事务归属分支，保护调用者工作；独立事务直接回滚。"},
+      {"path": "app.py", "start": 22, "end": 25, "supports": "清理异常不覆盖原始异常。"},
+      {"path": "app.py", "start": 26, "end": 26, "supports": "成功返回输入序列长度。"}
+    ]
+  }
+}

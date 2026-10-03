@@ -1,0 +1,26 @@
+"""Append a batch using a caller-supplied SQLite connection."""
+import uuid
+
+
+def write_batch(connection, rows):
+    caller_transaction = connection.in_transaction
+    name='batch_'+uuid.uuid4().hex
+    connection.execute('SAVEPOINT '+name)
+    try:
+        connection.executemany('INSERT INTO records(key, value) VALUES (?, ?)',rows)
+        # Releasing the outermost savepoint can itself fail to commit.
+        connection.execute('RELEASE '+name)
+    except BaseException:
+        try:
+            if caller_transaction:
+                connection.execute('ROLLBACK TO '+name)
+                # Do not release (and potentially commit) if rollback failed.
+                connection.execute('RELEASE '+name)
+            else:
+                # A failed commit can keep a write lock even after ROLLBACK TO.
+                connection.rollback()
+        except BaseException:
+            # Cleanup must not replace the original batch/commit exception.
+            pass
+        raise
+    return len(rows)

@@ -1,0 +1,50 @@
+{
+  "case_id": "c04",
+  "condition": "C_v4",
+  "trial": 1,
+  "exit_code": 0,
+  "timed_out": false,
+  "elapsed_seconds": 59.13250300002983,
+  "usage": {
+    "input_tokens": 12844,
+    "cached_input_tokens": 0,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 893,
+    "reasoning_output_tokens": 119
+  },
+  "completed": true,
+  "valid": true,
+  "prediction": {
+    "criteria": [
+      {
+        "id": "r1",
+        "assessment": "covered",
+        "model_evidence": "resources 明确列出 records、transaction（事务、保存点栈和锁）、connection（身份、开放状态和表结构）；write_batch 声明资源读写，并通过 return_count、rollback_batch、connection_preserved 描述单批效果。",
+        "code_evidence": "提交代码第6行读取调用者事务状态，第8—12行在原连接上建立保存点、参数化插入并释放，第15—21行按事务归属清理，第26行返回数量；独立验收包含批次失败原子性和调用者保存点保留检查，均通过。",
+        "reason": "模型把调用者拥有的连接及事务状态与批次数据变化关联起来，也明确观测类型不是实际 Python 返回协议。成功写入内容的检查置于谓词之外，不影响其语义覆盖。"
+      },
+      {
+        "id": "r2",
+        "assessment": "covered",
+        "model_evidence": "internal_control 明确说明“最外层 RELEASE 等价提交，嵌套 RELEASE 保留调用者事务和先前保存点”；success_transaction_ownership 明确其谓词只检查活动状态，持久化和保存点存活另行验证。",
+        "code_evidence": "提交代码第8、12行利用 SQLite 保存点语义完成独立提交或嵌套参与，成功路径没有全局 commit/rollback。独立验收的 standalone_success_is_committed、success_does_not_commit_callers_transaction、existing_savepoint_is_preserved 和 explicit_transaction_in_autocommit_mode 均通过。",
+        "reason": "模型明确区分独立事务与嵌套事务，没有把内部成功返回解释为外层工作已提交；也没有仅凭 in_transaction 相等就声称证明保存点和持久化。"
+      },
+      {
+        "id": "r3",
+        "assessment": "covered",
+        "model_evidence": "rollback_batch 将恢复前态限定为 cleanup_completed；internal_control 描述已有事务时 ROLLBACK TO 后 RELEASE、独立事务时 rollback，以及抑制清理异常后裸 raise。scope 明示回滚不可执行和数据库主动撤销外层事务等限制，证据行号对应提交版本。",
+        "code_evidence": "提交代码第9—12行将插入和 RELEASE 纳入同一 try，第15—21行限定回滚范围，第22—25行保留原异常；原始代码第15行的 RELEASE 则在该保护区域之外。独立验收的 failure_rolls_back_only_own_batch、standalone_failure_is_atomic_and_preserves_original_error、empty_batch_and_repeat_failure_do_not_end_transaction 均通过。",
+        "reason": "失败恢复关系和异常传播准确对应提交代码，并区分批次工作与调用者既有工作。模型对无法保证恢复的情形明确作了范围限定，未将清理异常被捕获当作回滚成功的证明。"
+      }
+    ],
+    "uncertainty": "结构检查仅支持语法和引用有效。独立验收通过7项检查；模型自述的额外8项测试及27个子场景没有附执行明细，不能视为独立验证。上述覆盖判断限于模型声明的范围，不证明任意表模式、环境故障或并发情形下均满足业务要求。"
+  },
+  "tool_items": [],
+  "errors": [],
+  "input_sha256": "0863468a55cef4f343ee34105d78f3e1323977c22a0e9600392ecba3af657b44",
+  "event_sha256": "e6cc61bb208557a2a27da97f0a38e1c5f19ea0e22a4184402b5cf36742a0fd21",
+  "cli_version": "codex-cli 0.160.0",
+  "model_requested": "gpt-6-astra",
+  "reasoning_effort": "high"
+}

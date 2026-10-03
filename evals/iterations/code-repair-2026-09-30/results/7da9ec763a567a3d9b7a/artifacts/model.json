@@ -1,0 +1,189 @@
+{
+  "schema_version": 1,
+  "types": {
+    "FactorySequence": {
+      "factories": {"type": "array"},
+      "finite_zero_argument_coroutine_factories": {"type": "boolean"}
+    },
+    "CreatedTasks": {
+      "tasks": {"type": "array"},
+      "creation_outcome": {"type": "string", "enum": ["complete", "raised"]}
+    },
+    "TaskSequence": {
+      "tasks": {"type": "array"}
+    },
+    "GroupObservation": {
+      "outcome": {"type": "string", "enum": ["returned", "raised", "cancelled"]},
+      "values": {"type": "array"}
+    },
+    "DrainedTasks": {
+      "settled_tasks": {"type": "array"},
+      "cancel_requested_tasks": {"type": "array"},
+      "pending_count": {"type": "number"}
+    }
+  },
+  "state": {
+    "owned_tasks": {"meaning": "本次 run_group 局部 tasks 列表与其中 Task 的生命周期状态。"},
+    "group_future": {"meaning": "正常结果收集所用 gather Future；创建工厂失败时为 None。"},
+    "drain_future": {"meaning": "finally 中 return_exceptions=True 的 gather Future。"},
+    "caller_cancellation": {"meaning": "调用者 Task 的取消请求与被投递的 CancelledError。"},
+    "callable_effects": {"meaning": "工厂及协程可能产生的任意业务效应，保守标记为可读写，未枚举或验证。"}
+  },
+  "actions": [
+    {
+      "id": "create_owned_tasks",
+      "meaning": "run_group 第 6–10 行：按序调用工厂，成功返回的协程立即创建 Task 并纳入局部所有权；同步异常中止后续创建。raised 表示异常控制出口，不是公开返回值。",
+      "input_type": "FactorySequence",
+      "output_type": "CreatedTasks",
+      "reads": ["callable_effects"],
+      "writes": ["owned_tasks", "callable_effects"],
+      "pre": [
+        {
+          "id": "factory_domain",
+          "requirement": "输入假设：有限的零参数工厂序列，工厂返回协程或同步抛错；代码不进行域校验。",
+          "must": {"op": "eq", "args": [{"path": "input.finite_zero_argument_coroutine_factories"}, {"literal": true}]}
+        }
+      ],
+      "post": [
+        {
+          "id": "owned_prefix_bound",
+          "requirement": "只收集本次成功创建的任务，同步失败允许只创建输入前缀。",
+          "must": {"op": "le", "args": [{"count": {"path": "output.tasks"}}, {"count": {"path": "input.factories"}}]}
+        },
+        {
+          "id": "complete_creation_count",
+          "requirement": "所有工厂正常返回时，每个工厂对应一个任务。",
+          "when": {"op": "eq", "args": [{"path": "output.creation_outcome"}, {"literal": "complete"}]},
+          "must": {"op": "eq", "args": [{"count": {"path": "output.tasks"}}, {"count": {"path": "input.factories"}}]}
+        }
+      ]
+    },
+    {
+      "id": "observe_group",
+      "meaning": "run_group 第 11–13 行：并发任务交给 gather，shield 隔离父取消的自动向下传播；返回值维持任务列表顺序，异常走异常控制流。",
+      "input_type": "TaskSequence",
+      "output_type": "GroupObservation",
+      "reads": ["owned_tasks", "caller_cancellation", "callable_effects"],
+      "writes": ["group_future", "owned_tasks", "callable_effects"],
+      "pre": [
+        {
+          "id": "distinct_owned_tasks",
+          "requirement": "观察输入为本次 create_task 创建并记录的不同 Task 引用。",
+          "must": {"op": "unique", "args": [{"path": "input.tasks"}]}
+        }
+      ],
+      "post": [
+        {
+          "id": "one_value_per_task",
+          "requirement": "成功时按输入顺序返回等长列表，包含空输入返回空列表。顺序及对象身份由行为测试单独验证。",
+          "when": {"op": "eq", "args": [{"path": "output.outcome"}, {"literal": "returned"}]},
+          "must": {"op": "eq", "args": [{"count": {"path": "output.values"}}, {"count": {"path": "input.tasks"}}]}
+        }
+      ]
+    },
+    {
+      "id": "cancel_and_drain",
+      "meaning": "run_group 第 14–30 行：所有出口进入 finally，只向尚未完成且未在取消的自有任务发送取消；屏蔽清理等待受到父取消的影响，并取走 group 的异常。",
+      "input_type": "TaskSequence",
+      "output_type": "DrainedTasks",
+      "reads": ["owned_tasks", "group_future", "caller_cancellation", "callable_effects"],
+      "writes": ["owned_tasks", "group_future", "drain_future", "callable_effects"],
+      "pre": [
+        {
+          "id": "drain_owned_tasks",
+          "requirement": "清理输入就是局部 tasks 列表，所有权交接见 create_owned_tasks 到 cancel_and_drain 的边。",
+          "must": {"op": "eq", "args": [{"path": "input.tasks"}, {"path": "before.owned_tasks.ids"}]}
+        }
+      ],
+      "post": [
+        {
+          "id": "all_owned_settled",
+          "requirement": "退出之前等待每个已创建任务终止，包括其有限异步清理。",
+          "must": {"op": "and", "args": [
+            {"op": "eq", "args": [{"path": "output.settled_tasks"}, {"path": "input.tasks"}]},
+            {"op": "eq", "args": [{"path": "output.pending_count"}, {"literal": 0}]}
+          ]}
+        },
+        {
+          "id": "cancel_only_owned",
+          "requirement": "run_group 发出的取消请求仅作用于本次创建的任务，不取消无关后台任务。",
+          "must": {"op": "subset", "args": [{"path": "output.cancel_requested_tasks"}, {"path": "input.tasks"}]}
+        }
+      ]
+    }
+  ],
+  "edges": [
+    {
+      "from": "create_owned_tasks",
+      "to": "observe_group",
+      "bindings": [{"output": "tasks", "input": "tasks"}],
+      "meaning": "工厂全部完成时，把同一有序任务列表传入 gather；工厂失败时此消费者不执行。"
+    },
+    {
+      "from": "create_owned_tasks",
+      "to": "cancel_and_drain",
+      "bindings": [{"output": "tasks", "input": "tasks"}],
+      "meaning": "通过局部 tasks 变量交接所有权；包含同步工厂失败时的已创建前缀。"
+    }
+  ],
+  "relations": [
+    {
+      "kind": "concurrent_execution",
+      "participants": ["create_owned_tasks", "observe_group", "cancel_and_drain"],
+      "meaning": "各协程由独立 Task 并发推进；清理时也可能有多个任务同时执行 finally。eager task factory 下子任务可在创建阶段开始。这里没有把子任务并发伪装成顺序交接。"
+    },
+    {
+      "kind": "mandatory_finally",
+      "from": "observe_group",
+      "to": "cancel_and_drain",
+      "meaning": "观察成功、异常或取消均进入清理；创建阶段异常也直接进入清理。observe_group 的逻辑结果只有在清理完毕后才离开公开边界。"
+    }
+  ],
+  "required_actions": ["create_owned_tasks", "cancel_and_drain"],
+  "requirements": [
+    {
+      "id": "preserve_public_results",
+      "guarantee": "保持 async run_group(factories) 接口；成功按输入顺序返回结果对象，不把抛出的异常当作结果。",
+      "verification": "已运行 smoke.py；test_empty、test_parallel_and_input_order 验证空输入、并行屏障、完成乱序、结果对象身份以及正常返回的异常对象。"
+    },
+    {
+      "id": "preserve_exception_channel",
+      "guarantee": "工厂或子任务抛错时保留该异常对象，不包装 ExceptionGroup；父取消保持 CancelledError，清理错误不替换已传播异常。清理期间新到达的父取消在等待完毕后传播。",
+      "verification": "已运行同步工厂、子任务异常、子任务 CancelledError、自定义 BaseException、清理失败、父取消期间清理返回或抛错的测试；异常身份用 is 检查，父取消检查类型和消息。"
+    },
+    {
+      "id": "finish_cleanup_and_isolate",
+      "guarantee": "对未取消的剩余自有任务请求取消；不重复打断已在取消中的任务；在一次外部取消的范围内等清理结束才退出。",
+      "verification": "受控 Event 阻塞清理后检查父调用尚未结束，释放后检查清理标记和任务终止；每个测试另设无关后台任务，检查它未被取消。"
+    }
+  ],
+  "validation": {
+    "structure_checks_executed": [
+      {"command": "./run_python scripts/composition.py validate model.json", "result": "通过；仅检查模型格式与引用，不验证行为。"}
+    ],
+    "behavior_checks_executed": [
+      {"command": "./run_python smoke.py", "result": "通过，输出 [2, 4]；修改前后均执行。"},
+      {"command": "./run_python test_run_group.py original", "result": "最终 12 项中 4 项失败：已有子任务取消、父取消等待清理、失败清理期间父取消、父取消信息保留；其余 8 项通过。"},
+      {"command": "./run_python test_run_group.py app", "result": "最终 12 项全部通过；包含默认及 eager 任务工厂场景。"}
+    ],
+    "inference": "一般控制流保证来自 app.py 的 finally、shield、局部任务所有权及 gather 语义；有限测试不能穷尽所有调度。模型中的谓词是待满足的结构化契约，并非已执行的并发轨迹检查结果。"
+  },
+  "scope": {
+    "description": "当前 app.py 的最小任务创建、并发观察与清理边界。类型字段是对 Python 工厂/Task 引用和控制出口的描述性投影：tasks 使用稳定引用标识，values 在非返回出口投影为空数组，settled_tasks 按原列表顺序投影。公开 API 仍直接返回列表或抛异常，并不返回这些记录。",
+    "limitations": [
+      "未生成或执行并发轨迹到模型事件的适配器；谓词与关系不是形式化证明，格式检查只验证声明结构。",
+      "输入有限、工厂零参数且返回协程是调用约定，未对无效输入作完整验证。",
+      "范围为一次外部父取消及有限清理；重复父取消、永不响应取消的协程和无限清理不在保证范围。",
+      "工厂和子协程的业务副作用以 callable_effects 保守概括；不约束它们自行取消其他任务，也不收管它们自行创建的后代任务。",
+      "行为验证限于当前 Python 3.12 asyncio 环境和测试中的调度，未覆盖所有事件循环实现；SystemExit、KeyboardInterrupt 的事件循环级行为未验证。",
+      "异常对象身份、清理时序和并发性由行为测试检查，现有字段谓词不能完整编码这些性质。"
+    ],
+    "evidence": [
+      {"path": "app.py", "start": 5, "end": 10, "supports": "公开签名、局部所有权、按序调用工厂并为每个协程创建 Task。"},
+      {"path": "app.py", "start": 11, "end": 13, "supports": "gather 收集有序结果，shield 将父取消与子任务取消传播隔离。"},
+      {"path": "app.py", "start": 14, "end": 18, "supports": "所有出口执行清理；只取消自有列表中未完成且未在取消的任务。"},
+      {"path": "app.py", "start": 18, "end": 26, "supports": "return_exceptions 仅用于内部清理；shield 等待清理，期间父取消发生时继续等待后原样抛出。"},
+      {"path": "app.py", "start": 27, "end": 30, "supports": "清理结束后取走 group 异常，避免父取消留下未取走的 gather 异常。"}
+    ]
+  }
+}

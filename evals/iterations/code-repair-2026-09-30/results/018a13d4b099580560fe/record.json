@@ -1,0 +1,189 @@
+{
+  "case_id": "c06",
+  "condition": "A_basic",
+  "trial": 1,
+  "exit_code": 0,
+  "timed_out": false,
+  "elapsed_seconds": 325.72996104101185,
+  "usage": {
+    "input_tokens": 133274,
+    "cached_input_tokens": 92288,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 9150,
+    "reasoning_output_tokens": 2892
+  },
+  "completed": true,
+  "status": "completed",
+  "prediction": {
+    "initial_verdict": "violation",
+    "summary": "已修复 app.py：原实现会被清理期间的外部取消打断。现在等待本组任务完成清理并保留原始异常，不取消无关后台任务。公开接口保持不变，实现自包含。已交付包含实际行号依据的 model.json；10 项行为测试及 smoke 均通过。",
+    "tests_executed": [
+      "./run_python smoke.py",
+      "./run_python -m unittest -v test_run_group（原实现复现失败；修复后全部 10 项通过）",
+      "./run_python -m json.tool model.json > /dev/null（仅检查 JSON 语法）"
+    ],
+    "limitations": [
+      "未穷举所有调度时序、Python 版本或多次连续外部取消。",
+      "假定工厂返回合法协程，且子任务清理在有限时间内结束；未验证永不响应取消的代码。"
+    ]
+  },
+  "acceptance": {
+    "tests_run": 5,
+    "passed": true,
+    "checks": [
+      {
+        "test": "test_child_cancellation_cleans_other_children",
+        "passed": true
+      },
+      {
+        "test": "test_external_cancellation_and_unrelated_task_survives",
+        "passed": true
+      },
+      {
+        "test": "test_factory_failure_cleans_already_started_children",
+        "passed": true
+      },
+      {
+        "test": "test_failure_waits_for_sibling_cleanup_and_keeps_exception",
+        "passed": true
+      },
+      {
+        "test": "test_order_empty_and_concurrency",
+        "passed": true
+      }
+    ],
+    "exit_code": 0,
+    "timed_out": false,
+    "sandbox": "macos_no_network_writes_only_grade_directory",
+    "stderr": ""
+  },
+  "structure": {
+    "valid": true,
+    "errors": [],
+    "scope": "Syntax/references only; semantic criteria reviewed independently."
+  },
+  "source_changed": true,
+  "artifacts": {
+    "app.py": "5c8c9b46148d2e0065aba84512258fa417728b40d714a20d5d01ec72a6523466",
+    "model.json": "ae62cf7457f142d449bb7ac7653937d0b450de5dfee102164a9c02b331a2e99d",
+    "test_run_group.py": "68201a68c2cfaa60358c598ebe7713d4cbb1dfe2a686149ae8cea6249b07dc85"
+  },
+  "protected_changes": [],
+  "outside_changes": [],
+  "artifact_errors": [],
+  "tool_audit": [
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc \"pwd; rg --files -g '\"'!__pycache__'\"' -g '\"'!original.py'\"' -g '\"'!run_python'\"' -g '\"'!model.json'\"'\"",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc 'cat task.md MODEL_FORMAT.md app.py smoke.py'",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc \"rg --files --hidden -g 'AGENTS.md' -g '\"'!.git/**'\"'; nl -ba app.py; ./run_python smoke.py\"",
+      "review_flags": []
+    },
+    {
+      "type": "file_change",
+      "exit_code": null,
+      "changes": [
+        {
+          "path": "<workspace>/test_run_group.py",
+          "kind": "add"
+        }
+      ]
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 1,
+      "command": "/bin/zsh -lc './run_python -m unittest -v test_run_group'",
+      "review_flags": []
+    },
+    {
+      "type": "file_change",
+      "exit_code": null,
+      "changes": [
+        {
+          "path": "<workspace>/app.py",
+          "kind": "update"
+        }
+      ]
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc './run_python -m unittest -v test_run_group'",
+      "review_flags": []
+    },
+    {
+      "type": "file_change",
+      "exit_code": null,
+      "changes": [
+        {
+          "path": "<workspace>/test_run_group.py",
+          "kind": "update"
+        }
+      ]
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc 'nl -ba app.py'",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc './run_python smoke.py'",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc './run_python -m unittest -v test_run_group'",
+      "review_flags": []
+    },
+    {
+      "type": "file_change",
+      "exit_code": null,
+      "changes": [
+        {
+          "path": "<workspace>/model.json",
+          "kind": "add"
+        }
+      ]
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc './run_python -m json.tool model.json > /dev/null'",
+      "review_flags": []
+    }
+  ],
+  "case_sha256": "b9b04507fd2af834ba951d62f4554c46b7a6d970bcc075ba48b85d881225bd15",
+  "prompt_sha256": "1bb460fb636cc7a19abd022ed921acd8d0028460effea85ac05ce737f1f9e4ba",
+  "event_sha256": "6494a7bd2fb71419ee487ba752faf03e58299c37c9fb8765a86b6bb7deab3aed",
+  "stderr_sha256": "d2a2bd748c4e24cd44165d2b51c065fab9da89aff3ac1c4759be17664c6a0102",
+  "model_requested": "gpt-6-astra",
+  "reasoning_effort": "high",
+  "cli_version": "codex-cli 0.158.0-alpha.2.1",
+  "review": {
+    "exit_code": 1,
+    "timed_out": false,
+    "elapsed_seconds": 23.914922291995026,
+    "usage": null,
+    "completed": false,
+    "valid": false,
+    "prediction": null,
+    "tool_items": [],
+    "input_sha256": "be4428210e197d58111e7667113728be49a0c5c219e188f1958796cea78640bc",
+    "event_sha256": "53b6174fa5769f89f249c55d5d7705960c73baa385590e8d842deede97b43fcb"
+  }
+}

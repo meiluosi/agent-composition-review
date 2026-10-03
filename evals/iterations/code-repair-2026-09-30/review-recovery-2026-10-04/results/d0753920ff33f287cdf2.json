@@ -1,0 +1,50 @@
+{
+  "case_id": "c02",
+  "condition": "C_v4",
+  "trial": 2,
+  "exit_code": 0,
+  "timed_out": false,
+  "elapsed_seconds": 61.03712458303198,
+  "usage": {
+    "input_tokens": 14526,
+    "cached_input_tokens": 0,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 782,
+    "reasoning_output_tokens": 87
+  },
+  "completed": true,
+  "valid": true,
+  "prediction": {
+    "criteria": [
+      {
+        "id": "r1",
+        "assessment": "covered",
+        "model_evidence": "actions.left.reads 包含 child.left/count/label，actions.right.reads 包含 child.right/count/label；relations.snapshot_and_projection 明确子图输入保留初始 left/right 及所需 count/label。",
+        "code_evidence": "提交代码第 39、45 行分别读取原始 left/right、count 和 label 进行累加；第 47 行以完整 State 构建子图，仅将输出限定为 AnalysisOutput。独立验收 test_outputs_and_reuse 通过。",
+        "reason": "模型明确区分完整输入上下文与窄输出，没有把输出字段限制误当成输入限制；读取范围与代码一致。"
+      },
+      {
+        "id": "r2",
+        "assessment": "covered",
+        "model_evidence": "relations.snapshot_and_projection 声明 analysis 使用 prepare 后 count、refresh 前 label，仅将 left/right 投影回父图；actions 将各节点输出表示为单字段补丁。scope 指明模型对应当前交付代码。",
+        "code_evidence": "提交代码第 25、31 行分别返回 count、label 补丁，第 39、45 行分别返回 left、right 补丁；第 47、55 行定义并注册具有窄输出边界的编译子图；第 57–58 行从 prepare 分叉。原始代码与提交代码一致，独立输出及复用验收通过。",
+        "reason": "模型将子图入口快照、子图内部字段更新与父图输出合并分别说明，准确表达子图不会将旧 label 或 count 写回父图；所声明版本与提交代码一致。"
+      },
+      {
+        "id": "r3",
+        "assessment": "covered",
+        "model_evidence": "relations.parent_parallel 明确 refresh/analysis 并行且无 refresh → analysis 依赖；relations.child_parallel 明确 left/right 并行且无相互依赖。scope.limitations 明确未构造顺序状态流 trace，validation 说明有限测试不构成所有调度的证明。",
+        "code_evidence": "提交代码第 50–51 行建立子图 START 到 left/right 的分叉，第 57–58 行建立父图 prepare 到 refresh/analysis 的分叉；第 29–30、35–44 行设置两层屏障观察点。独立验收 test_both_concurrency_boundaries_and_single_execution 通过。",
+        "reason": "两处并行关系均被直接建模并获得代码与独立执行检查支持；模型没有以顺序轨迹或语法检查冒充并发正确性证明。"
+      }
+    ],
+    "uncertainty": "结构检查仅支持语法与引用有效性。模型自述的 8 项 unittest 未提供独立执行明细，不能全部视为已核实；上述评估依据可见代码与给定的三项独立验收，不构成所有输入、调度或框架版本下的数学证明。"
+  },
+  "tool_items": [],
+  "errors": [],
+  "input_sha256": "b457691567f7c4eb5b0b56c7c46438d6e76a2bfa8a8be7c3cc7304f84fc09c52",
+  "event_sha256": "0c1758574b3378e784e80712dd672f94e800e7921bdcfec8be7a05ddbc959d27",
+  "cli_version": "codex-cli 0.160.0",
+  "model_requested": "gpt-6-astra",
+  "reasoning_effort": "high"
+}

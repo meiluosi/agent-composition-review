@@ -1,0 +1,50 @@
+{
+  "case_id": "c04",
+  "condition": "A_basic",
+  "trial": 1,
+  "exit_code": 0,
+  "timed_out": false,
+  "elapsed_seconds": 62.921276707958896,
+  "usage": {
+    "input_tokens": 12576,
+    "cached_input_tokens": 0,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 894,
+    "reasoning_output_tokens": 137
+  },
+  "completed": true,
+  "valid": true,
+  "prediction": {
+    "criteria": [
+      {
+        "id": "r1",
+        "assessment": "covered",
+        "model_evidence": "resources 分别定义 records（含插入触发的修改）、transaction（同一连接的未提交工作）和 savepoints（含调用者保存点）；write_batch 的 reads/writes 引用三者，internal_lifecycle 描述批次保存点内的插入与清理。",
+        "code_evidence": "提交代码第 8–17 行始终通过传入 connection 创建保存点、修改 records、释放或回滚本批；第 1–23 行无连接替换或关闭。独立验收 test_failure_rolls_back_only_own_batch 和 test_existing_savepoint_is_preserved 通过。",
+        "reason": "模型明确关联调用者连接上的事务资源与本批数据效果，且有源码和独立行为证据支持；并非仅列出资源名称。"
+      },
+      {
+        "id": "r2",
+        "assessment": "covered",
+        "model_evidence": "requirements.transaction_ownership 明确区分最外层 RELEASE 提交与嵌套 RELEASE 仅移除本函数保存点；scope.limitations 说明嵌套释放不保证调用者最终提交成功。",
+        "code_evidence": "提交代码第 8、12 行使用 SAVEPOINT/RELEASE，第 23 行在释放成功后返回，无直接 commit/rollback。独立验收覆盖独立成功提交、成功不提交调用者事务、autocommit 模式显式事务及调用者保存点保留，均通过。",
+        "reason": "模型准确表达由 SQLite 保存点嵌套状态决定的两种语义；代码无需显式分支也能实现该关系。正常内部返回与外层事务最终完成被清楚区分。"
+      },
+      {
+        "id": "r3",
+        "assessment": "covered",
+        "model_evidence": "atomic_batch、exception_identity 和 internal_lifecycle 描述插入或 RELEASE 失败后先 ROLLBACK TO、成功后才清理 RELEASE，并裸 raise 原异常。scope.limitations 明示整体自动回滚可能丢失调用者工作、清理失败时不能保证批次撤销。",
+        "code_evidence": "提交代码第 9–22 行将成功 RELEASE 纳入 try，抑制清理异常并重新抛出原异常；原始代码第 15 行的 RELEASE 在捕获范围外，第 11–12 行清理异常也未受保护。独立验收确认普通失败仅撤销本批、保留原错误，以及空批次和重复失败不结束外层事务。",
+        "reason": "模型与提交版本的异常边界和清理顺序一致，表达了批次局部原子性及其实际限制，没有把 SQLite 整体回滚或清理失败情况下的调用者工作保留说成无条件保证。"
+      }
+    ],
+    "uncertainty": "结构检查仅证明语法及引用有效。模型自述的延迟外键、KeyboardInterrupt、自动回滚和注入清理失败等测试，未由所给七项独立验收逐一佐证；相关执行记录仍属待评材料。以上 covered 表示声明范围内的模型覆盖充分，不代表业务要求在所有 SQLite 故障或表定义下均获保证。"
+  },
+  "tool_items": [],
+  "errors": [],
+  "input_sha256": "2c5aa782716643e286801a66ac5a14f5823432ec913d6f9aa9c128ed3f268836",
+  "event_sha256": "7660cfd027bc868d057c64204efd407bf187205002f673c8b2299f61056e61be",
+  "cli_version": "codex-cli 0.160.0",
+  "model_requested": "gpt-6-astra",
+  "reasoning_effort": "high"
+}

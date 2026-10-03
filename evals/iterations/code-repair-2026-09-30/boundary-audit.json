@@ -1,0 +1,589 @@
+{
+  "kind": "post_freeze_development_probe",
+  "discovery": "After first c05 and c04 repairs; before original 36 repairs finished",
+  "scope": "Parent cancellation during failure cleanup or child self-cancellation cleanup; busy commit followed by connection reuse. Separate exploratory probes.",
+  "normal_label_correction": "c04 and c06 are not valid normal controls; original labels and scores remain untouched.",
+  "script_sha256": {
+    "check_cleanup.py": "bb2602bac654b5fa3130756731cad171b9e1e79adabd1dee5530657ee1bed413",
+    "check_transaction.py": "5ff5eb95f3f7bf7f9b77b4534a879120a9c979922d4d41c3faa3d42f54116a08"
+  },
+  "frozen_references": {
+    "async_group": {
+      "passed": false,
+      "checks": {
+        "failure_then_parent_cancel": {
+          "passed": false,
+          "returned_before_cleanup_release": true,
+          "cleanup_finished": false,
+          "outcome": "CancelledError",
+          "original_error_identity": false
+        },
+        "self_cancel_then_parent_cancel": {
+          "passed": false,
+          "returned_before_cleanup_release": true,
+          "cleanup_finished": false,
+          "outcome": "CancelledError"
+        }
+      }
+    },
+    "transaction": {
+      "passed": false,
+      "outcome": "OperationalError",
+      "failed_batch_remaining": [
+        [
+          "batch",
+          1
+        ]
+      ],
+      "transaction_active_after_failure": true,
+      "next_batch_count": 1,
+      "next_batch_visible": null,
+      "reuse_error": "OperationalError"
+    }
+  },
+  "revised_references": {
+    "async_group": {
+      "passed": true,
+      "checks": {
+        "failure_then_parent_cancel": {
+          "passed": true,
+          "returned_before_cleanup_release": false,
+          "cleanup_finished": true,
+          "outcome": "ValueError",
+          "original_error_identity": true
+        },
+        "self_cancel_then_parent_cancel": {
+          "passed": true,
+          "returned_before_cleanup_release": false,
+          "cleanup_finished": true,
+          "outcome": "CancelledError"
+        }
+      }
+    },
+    "transaction": {
+      "passed": true,
+      "outcome": "OperationalError",
+      "failed_batch_remaining": [],
+      "transaction_active_after_failure": false,
+      "next_batch_count": 1,
+      "next_batch_visible": [
+        [
+          "next",
+          2
+        ]
+      ],
+      "reuse_error": null
+    }
+  },
+  "conditions": {
+    "async_group": {
+      "A_basic": {
+        "n": 4,
+        "completed_n": 3,
+        "pass": 2
+      },
+      "B_tools": {
+        "n": 4,
+        "completed_n": 3,
+        "pass": 3
+      },
+      "C_v4": {
+        "n": 4,
+        "completed_n": 3,
+        "pass": 3
+      }
+    },
+    "transaction": {
+      "A_basic": {
+        "n": 4,
+        "completed_n": 3,
+        "pass": 1
+      },
+      "B_tools": {
+        "n": 4,
+        "completed_n": 3,
+        "pass": 2
+      },
+      "C_v4": {
+        "n": 4,
+        "completed_n": 3,
+        "pass": 2
+      }
+    }
+  },
+  "valid_normal_control_c02": {
+    "A_basic": {
+      "n": 2,
+      "behavior_pass": 2,
+      "unchanged": 2
+    },
+    "B_tools": {
+      "n": 2,
+      "behavior_pass": 2,
+      "unchanged": 2
+    },
+    "C_v4": {
+      "n": 2,
+      "behavior_pass": 2,
+      "unchanged": 2
+    }
+  },
+  "rows": [
+    {
+      "case_id": "c05",
+      "condition": "C_v4",
+      "trial": 1,
+      "family": "async_group",
+      "source_sha256": "6838022dd6a2842389678a218e1558db04a8e5a3d3de8e3ab13c2316fd564042",
+      "valid_execution": true,
+      "passed": true,
+      "checks": {
+        "failure_then_parent_cancel": {
+          "passed": true,
+          "returned_before_cleanup_release": false,
+          "cleanup_finished": true,
+          "outcome": "ValueError",
+          "original_error_identity": true
+        },
+        "self_cancel_then_parent_cancel": {
+          "passed": true,
+          "returned_before_cleanup_release": false,
+          "cleanup_finished": true,
+          "outcome": "CancelledError"
+        }
+      }
+    },
+    {
+      "case_id": "c05",
+      "condition": "A_basic",
+      "trial": 1,
+      "family": "async_group",
+      "source_sha256": "7d8a9f492246507f420e91afdd55105de134182d953afbdaa6a9848a713d1cb2",
+      "valid_execution": true,
+      "passed": true,
+      "checks": {
+        "failure_then_parent_cancel": {
+          "passed": true,
+          "returned_before_cleanup_release": false,
+          "cleanup_finished": true,
+          "outcome": "CancelledError",
+          "original_error_identity": false
+        },
+        "self_cancel_then_parent_cancel": {
+          "passed": true,
+          "returned_before_cleanup_release": false,
+          "cleanup_finished": true,
+          "outcome": "CancelledError"
+        }
+      }
+    },
+    {
+      "case_id": "c05",
+      "condition": "B_tools",
+      "trial": 1,
+      "family": "async_group",
+      "source_sha256": "2319d7c506f4397f72357df7c2ec253fc3f65d3e00a9f4e2fe153bea4643e806",
+      "valid_execution": true,
+      "passed": true,
+      "checks": {
+        "failure_then_parent_cancel": {
+          "passed": true,
+          "returned_before_cleanup_release": false,
+          "cleanup_finished": true,
+          "outcome": "ValueError",
+          "original_error_identity": true
+        },
+        "self_cancel_then_parent_cancel": {
+          "passed": true,
+          "returned_before_cleanup_release": false,
+          "cleanup_finished": true,
+          "outcome": "CancelledError"
+        }
+      }
+    },
+    {
+      "case_id": "c04",
+      "condition": "C_v4",
+      "trial": 1,
+      "family": "transaction",
+      "source_sha256": "4bca10bfaf166f42edc257300e568ae3e342d3354987287f6b3dfa7f0f62e3b8",
+      "valid_execution": true,
+      "passed": true,
+      "outcome": "OperationalError",
+      "failed_batch_remaining": [],
+      "transaction_active_after_failure": false,
+      "next_batch_count": 1,
+      "next_batch_visible": [
+        [
+          "next",
+          2
+        ]
+      ],
+      "reuse_error": null
+    },
+    {
+      "case_id": "c04",
+      "condition": "B_tools",
+      "trial": 1,
+      "family": "transaction",
+      "source_sha256": "f3ea2823ea0fba6392dd5f60dd5885fd0520ebfea764dec043100b82f4fd2b44",
+      "valid_execution": true,
+      "passed": true,
+      "outcome": "OperationalError",
+      "failed_batch_remaining": [],
+      "transaction_active_after_failure": false,
+      "next_batch_count": 1,
+      "next_batch_visible": [
+        [
+          "next",
+          2
+        ]
+      ],
+      "reuse_error": null
+    },
+    {
+      "case_id": "c04",
+      "condition": "A_basic",
+      "trial": 1,
+      "family": "transaction",
+      "source_sha256": "2c8c163f6fb62e3cf39158b4769eaa76427405b0bdb324209b504031ee9abcad",
+      "valid_execution": true,
+      "passed": false,
+      "outcome": "OperationalError",
+      "failed_batch_remaining": [],
+      "transaction_active_after_failure": true,
+      "next_batch_count": 1,
+      "next_batch_visible": null,
+      "reuse_error": "OperationalError"
+    },
+    {
+      "case_id": "c03",
+      "condition": "B_tools",
+      "trial": 1,
+      "family": "transaction",
+      "source_sha256": "3f553fceab6e86a921f5073b64c7e28f3ebaa49c8a6cc80e4da8de66f73437c4",
+      "valid_execution": true,
+      "passed": false,
+      "outcome": "OperationalError",
+      "failed_batch_remaining": [],
+      "transaction_active_after_failure": true,
+      "next_batch_count": 1,
+      "next_batch_visible": null,
+      "reuse_error": "OperationalError"
+    },
+    {
+      "case_id": "c03",
+      "condition": "A_basic",
+      "trial": 1,
+      "family": "transaction",
+      "source_sha256": "dddb30f42054ba0006d36244445f1cd60b7d8781dd4774e8cc0f38022cd8d3ed",
+      "valid_execution": true,
+      "passed": false,
+      "outcome": "OperationalError",
+      "failed_batch_remaining": [],
+      "transaction_active_after_failure": true,
+      "next_batch_count": 1,
+      "next_batch_visible": null,
+      "reuse_error": "OperationalError"
+    },
+    {
+      "case_id": "c03",
+      "condition": "C_v4",
+      "trial": 1,
+      "family": "transaction",
+      "source_sha256": "4b17a57dc65134601adef706cb1f49dce9830202a861bc0e9e05d3d689af855d",
+      "valid_execution": true,
+      "passed": false,
+      "outcome": "OperationalError",
+      "failed_batch_remaining": [],
+      "transaction_active_after_failure": true,
+      "next_batch_count": 1,
+      "next_batch_visible": null,
+      "reuse_error": "OperationalError"
+    },
+    {
+      "case_id": "c06",
+      "condition": "B_tools",
+      "trial": 1,
+      "family": "async_group",
+      "source_sha256": "20dc4cca07d003be2e862a56ad54eb59db8d4fddbdfe87841e3f17247e271134",
+      "valid_execution": true,
+      "passed": true,
+      "checks": {
+        "failure_then_parent_cancel": {
+          "passed": true,
+          "returned_before_cleanup_release": false,
+          "cleanup_finished": true,
+          "outcome": "ValueError",
+          "original_error_identity": true
+        },
+        "self_cancel_then_parent_cancel": {
+          "passed": true,
+          "returned_before_cleanup_release": false,
+          "cleanup_finished": true,
+          "outcome": "CancelledError"
+        }
+      }
+    },
+    {
+      "case_id": "c06",
+      "condition": "C_v4",
+      "trial": 1,
+      "family": "async_group",
+      "source_sha256": "bf24a7cf2fabeb928a76fbea5e1f6b844c84927f0691a48dd323cf06e02cbd19",
+      "valid_execution": true,
+      "passed": true,
+      "checks": {
+        "failure_then_parent_cancel": {
+          "passed": true,
+          "returned_before_cleanup_release": false,
+          "cleanup_finished": true,
+          "outcome": "ValueError",
+          "original_error_identity": true
+        },
+        "self_cancel_then_parent_cancel": {
+          "passed": true,
+          "returned_before_cleanup_release": false,
+          "cleanup_finished": true,
+          "outcome": "CancelledError"
+        }
+      }
+    },
+    {
+      "case_id": "c06",
+      "condition": "A_basic",
+      "trial": 1,
+      "family": "async_group",
+      "source_sha256": "5c8c9b46148d2e0065aba84512258fa417728b40d714a20d5d01ec72a6523466",
+      "valid_execution": true,
+      "passed": false,
+      "checks": {
+        "failure_then_parent_cancel": {
+          "passed": true,
+          "returned_before_cleanup_release": false,
+          "cleanup_finished": true,
+          "outcome": "ValueError",
+          "original_error_identity": true
+        },
+        "self_cancel_then_parent_cancel": {
+          "passed": false,
+          "returned_before_cleanup_release": false,
+          "cleanup_finished": false,
+          "outcome": "CancelledError"
+        }
+      }
+    },
+    {
+      "case_id": "c06",
+      "condition": "A_basic",
+      "trial": 2,
+      "family": "async_group",
+      "source_sha256": "86affadd558fc599d169e408247ea14476e8cff814ca0d99ebf4e9b5921105f7",
+      "valid_execution": true,
+      "passed": true,
+      "checks": {
+        "failure_then_parent_cancel": {
+          "passed": true,
+          "returned_before_cleanup_release": false,
+          "cleanup_finished": true,
+          "outcome": "CancelledError",
+          "original_error_identity": false
+        },
+        "self_cancel_then_parent_cancel": {
+          "passed": true,
+          "returned_before_cleanup_release": false,
+          "cleanup_finished": true,
+          "outcome": "CancelledError"
+        }
+      }
+    },
+    {
+      "case_id": "c06",
+      "condition": "C_v4",
+      "trial": 2,
+      "family": "async_group",
+      "source_sha256": "e7b40021367630848d0eb85175c11a373ef722d43e0587eb807a537cf4821b62",
+      "valid_execution": true,
+      "passed": true,
+      "checks": {
+        "failure_then_parent_cancel": {
+          "passed": true,
+          "returned_before_cleanup_release": false,
+          "cleanup_finished": true,
+          "outcome": "CancelledError",
+          "original_error_identity": false
+        },
+        "self_cancel_then_parent_cancel": {
+          "passed": true,
+          "returned_before_cleanup_release": false,
+          "cleanup_finished": true,
+          "outcome": "CancelledError"
+        }
+      }
+    },
+    {
+      "case_id": "c06",
+      "condition": "B_tools",
+      "trial": 2,
+      "family": "async_group",
+      "source_sha256": "f2bb8e35b18ffd68a685f2542a0a1ddfd96973788c2d9fa801a3ece911d85577",
+      "valid_execution": true,
+      "passed": true,
+      "checks": {
+        "failure_then_parent_cancel": {
+          "passed": true,
+          "returned_before_cleanup_release": false,
+          "cleanup_finished": true,
+          "outcome": "CancelledError",
+          "original_error_identity": false
+        },
+        "self_cancel_then_parent_cancel": {
+          "passed": true,
+          "returned_before_cleanup_release": false,
+          "cleanup_finished": true,
+          "outcome": "CancelledError"
+        }
+      }
+    },
+    {
+      "case_id": "c04",
+      "condition": "B_tools",
+      "trial": 2,
+      "family": "transaction",
+      "source_sha256": "de8f9760bf957f2565104f6d868b473ddcffc1f14f678505e5e467998b138aed",
+      "valid_execution": true,
+      "passed": true,
+      "outcome": "OperationalError",
+      "failed_batch_remaining": [],
+      "transaction_active_after_failure": false,
+      "next_batch_count": 1,
+      "next_batch_visible": [
+        [
+          "next",
+          2
+        ]
+      ],
+      "reuse_error": null
+    },
+    {
+      "case_id": "c04",
+      "condition": "A_basic",
+      "trial": 2,
+      "family": "transaction",
+      "source_sha256": "c3e7dd1dc9154e17dd4710172b7a5a06d280036d6cf9c786722731f0568734a4",
+      "valid_execution": true,
+      "passed": true,
+      "outcome": "OperationalError",
+      "failed_batch_remaining": [],
+      "transaction_active_after_failure": false,
+      "next_batch_count": 1,
+      "next_batch_visible": [
+        [
+          "next",
+          2
+        ]
+      ],
+      "reuse_error": null
+    },
+    {
+      "case_id": "c04",
+      "condition": "C_v4",
+      "trial": 2,
+      "family": "transaction",
+      "source_sha256": "1ff6236a7dbfa11c46e0acae4a55f1f91ff3624f26ce4191e51adb52a8b494be",
+      "valid_execution": true,
+      "passed": true,
+      "outcome": "OperationalError",
+      "failed_batch_remaining": [],
+      "transaction_active_after_failure": false,
+      "next_batch_count": 1,
+      "next_batch_visible": [
+        [
+          "next",
+          2
+        ]
+      ],
+      "reuse_error": null
+    },
+    {
+      "case_id": "c03",
+      "condition": "A_basic",
+      "trial": 2,
+      "family": "transaction",
+      "source_sha256": "b767e12865ef43ef87f8c325547f084519c30dd787cd73f05f7d867261a16d44",
+      "valid_execution": false,
+      "passed": false,
+      "outcome": "OperationalError",
+      "failed_batch_remaining": [],
+      "transaction_active_after_failure": true,
+      "next_batch_count": 1,
+      "next_batch_visible": null,
+      "reuse_error": "OperationalError"
+    },
+    {
+      "case_id": "c03",
+      "condition": "B_tools",
+      "trial": 2,
+      "family": "transaction",
+      "source_sha256": "fc3fdccc9285c9972a3dd4d4b8843b139fb166e4b392023c4aa9ea6f90ce38dc",
+      "valid_execution": false,
+      "passed": false,
+      "outcome": "OperationalError",
+      "failed_batch_remaining": [],
+      "transaction_active_after_failure": true,
+      "next_batch_count": 1,
+      "next_batch_visible": null,
+      "reuse_error": "OperationalError"
+    },
+    {
+      "case_id": "c03",
+      "condition": "C_v4",
+      "trial": 2,
+      "family": "transaction",
+      "source_sha256": "999b7d8bdfc0cb9558ebae800e6a26326b84f61e77ebe33356a3140952fa7f8b",
+      "valid_execution": false,
+      "passed": true,
+      "outcome": "OperationalError",
+      "failed_batch_remaining": [],
+      "transaction_active_after_failure": false,
+      "next_batch_count": 1,
+      "next_batch_visible": [
+        [
+          "next",
+          2
+        ]
+      ],
+      "reuse_error": null
+    },
+    {
+      "case_id": "c05",
+      "condition": "A_basic",
+      "trial": 2,
+      "family": "async_group",
+      "source_sha256": "26e7a54d09710818e628796784db0a97c550b1e72f1137fbb4625d07aa009cd9",
+      "valid_execution": false,
+      "passed": false,
+      "probe_error": "JSONDecodeError"
+    },
+    {
+      "case_id": "c05",
+      "condition": "B_tools",
+      "trial": 2,
+      "family": "async_group",
+      "source_sha256": "26e7a54d09710818e628796784db0a97c550b1e72f1137fbb4625d07aa009cd9",
+      "valid_execution": false,
+      "passed": false,
+      "probe_error": "JSONDecodeError"
+    },
+    {
+      "case_id": "c05",
+      "condition": "C_v4",
+      "trial": 2,
+      "family": "async_group",
+      "source_sha256": "26e7a54d09710818e628796784db0a97c550b1e72f1137fbb4625d07aa009cd9",
+      "valid_execution": false,
+      "passed": false,
+      "probe_error": "JSONDecodeError"
+    }
+  ]
+}

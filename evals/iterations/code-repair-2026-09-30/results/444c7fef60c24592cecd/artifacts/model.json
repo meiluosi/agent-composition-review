@@ -1,0 +1,132 @@
+{
+  "schema_version": 1,
+  "types": {
+    "FactoryBatch": {
+      "factories": {"type": "array"}
+    },
+    "OwnedTasks": {
+      "tasks": {"type": "array"}
+    },
+    "GroupExit": {
+      "completed_tasks": {"type": "array"},
+      "exit_kind": {"type": "string", "enum": ["result", "error", "cancelled"]}
+    }
+  },
+  "resources": {
+    "owned_tasks": "run_group 局部 tasks 列表；只记录本次 create_task 成功返回的任务，保持输入顺序。",
+    "owned_task_lifecycle": "本次任务的运行、取消请求及终止状态；协程自身清理属于任务执行。",
+    "group_future": "局部 group，正常聚合 Future；创建前为 None。",
+    "cleanup_future": "失败分支局部 cleanup，收集所有本次任务的终止结果。"
+  },
+  "actions": [
+    {
+      "id": "create_owned_tasks",
+      "meaning": "run_group 的 tasks 初始化及工厂循环：顺序调用零参数工厂，用 create_task 调度协程，记录成功创建的任务。工厂抛错时以已创建前缀进入异常处理。",
+      "input_type": "FactoryBatch",
+      "output_type": "OwnedTasks",
+      "reads": [],
+      "writes": ["owned_tasks", "owned_task_lifecycle", "group_future"],
+      "pre": [
+        {
+          "id": "fresh_ownership",
+          "requirement": "本次调用从空的任务归属列表开始。",
+          "must": {"op": "eq", "args": [{"count": {"path": "before.owned_tasks"}}, {"literal": 0}]}
+        }
+      ],
+      "post": [
+        {
+          "id": "handoff_local_tasks",
+          "requirement": "交给等待或清理阶段的任务正是局部记录的任务。",
+          "must": {"op": "eq", "args": [{"path": "output.tasks"}, {"path": "after.owned_tasks"}]}
+        },
+        {
+          "id": "at_most_one_task_per_factory",
+          "requirement": "每个工厂至多创建一个任务；同步抛错允许只创建前缀。",
+          "must": {"op": "le", "args": [{"count": {"path": "output.tasks"}}, {"count": {"path": "input.factories"}}]}
+        }
+      ]
+    },
+    {
+      "id": "settle_owned_tasks",
+      "meaning": "run_group 正常路径通过 shield(group) 等待有序结果；工厂、子任务失败或取消则取消尚未完成且没有取消请求的本次任务，通过 shield(cleanup) 等待全部终止，取回 group 异常并裸 raise 最初的异常。",
+      "input_type": "OwnedTasks",
+      "output_type": "GroupExit",
+      "reads": ["owned_tasks", "owned_task_lifecycle", "group_future"],
+      "writes": ["owned_task_lifecycle", "group_future", "cleanup_future"],
+      "pre": [
+        {
+          "id": "owned_tasks_only",
+          "requirement": "等待和取消的范围仅为本次记录的任务。",
+          "must": {"op": "eq", "args": [{"path": "input.tasks"}, {"path": "before.owned_tasks"}]}
+        }
+      ],
+      "post": [
+        {
+          "id": "all_owned_tasks_terminal",
+          "requirement": "无论返回还是抛错，退出时本次创建的任务都已终止；completed_tasks 是按 tasks 顺序观察到的已终止任务标识。",
+          "must": {"op": "eq", "args": [{"path": "output.completed_tasks"}, {"path": "input.tasks"}]}
+        },
+        {
+          "id": "ownership_unchanged",
+          "requirement": "等待和清理不添加或移除本次任务记录。",
+          "must": {"op": "eq", "args": [{"path": "after.owned_tasks"}, {"path": "before.owned_tasks"}]}
+        }
+      ]
+    }
+  ],
+  "edges": [
+    {
+      "from": "create_owned_tasks",
+      "to": "settle_owned_tasks",
+      "bindings": [{"output": "tasks", "input": "tasks"}]
+    }
+  ],
+  "relations": [
+    {
+      "kind": "concurrency",
+      "description": "子协程由 create_task 调度，可交错推进；gather 的结果顺序取自 tasks 顺序，不取自完成顺序。此关系不是子任务之间的顺序数据交接。"
+    },
+    {
+      "kind": "conditional_lifecycle",
+      "description": "正常结果直接返回；任一创建或等待异常进入清理。shield 阻止父取消自动传播到聚合 Future，显式 cancel 避免再次取消正在清理的任务。清理期间的父取消只中断 shield 等待，循环继续等到 cleanup 完成。"
+    },
+    {
+      "kind": "exception_identity",
+      "description": "裸 raise 保留触发清理的异常对象，后续清理异常由 return_exceptions=True 收集但不作为公开结果返回。若清理期间才发生父取消，保留先前触发清理的异常。"
+    }
+  ],
+  "required_actions": ["create_owned_tasks", "settle_owned_tasks"],
+  "verification": {
+    "executed_behavior_checks": [
+      {"command": "./run_python smoke.py", "result": "通过，输出 [2, 4]。"},
+      {"command": "./run_python -m unittest -v test_run_group", "result": "交付版本 10 项测试全部通过，事件循环异常处理器未收到未处理异常报告。"}
+    ],
+    "coverage": [
+      "空输入；并发启动、逆序完成后仍按输入顺序返回原结果对象。",
+      "子任务失败与 CancelledError 的对象身份；兄弟任务异步清理完成。",
+      "工厂同步失败或取消，已创建任务终止，后续工厂不再调用。",
+      "父调用一次取消，不同耗时的两个清理均完成。",
+      "失败后的清理期间收到一次父取消，仍等待清理完成。",
+      "已在取消清理中的子任务遇到兄弟失败，不重复取消。",
+      "清理异常不覆盖首个错误；无关后台任务未被取消。"
+    ],
+    "inference": "异常分支仅遍历 tasks，正常 gather 全部完成才返回，清理 gather 全部完成才重新抛错。由代码和 asyncio 语义推断通用行为；测试仅提供有限运行证据。"
+  },
+  "scope": {
+    "description": "当前 app.py 的 run_group 最小相关结构：工厂到本次任务列表的交接，以及正常聚合或异常清理后退出。动作描述函数内部阶段，类型为观测投影而非新增公开接口；数组中的工厂和任务可用对象标识表示，GroupExit 表示退出观察，不是函数的返回包装。",
+    "limitations": [
+      "未生成逐动作 trace；模型谓词是可检查的约束声明，不是已经运行的证明。行为依据来自实际 unittest 和 smoke。",
+      "未在谓词语言中编码 Python 异常对象身份、结果对象身份、协程调度及清理因果；这些由代码审查和相应用例验证。",
+      "有限测试未穷举事件循环所有调度交错，也未验证重复外部取消、自定义事件循环或自定义 task factory。",
+      "范围假定工厂返回协程、输入有限且取消后的清理有限结束；不保证强制终止永不响应取消的代码。",
+      "资源声明只覆盖 run_group 对本次任务和 Future 的管理，不描述工厂及子协程自身对外部资源的任意读写。"
+    ],
+    "evidence": [
+      {"path": "app.py", "start": 5, "end": 10, "supports": "公开异步接口、局部归属列表、依输入顺序创建及记录任务；没有新增模块依赖。"},
+      {"path": "app.py", "start": 11, "end": 13, "supports": "gather 提供并发聚合、有序结果及空列表结果；shield 隔离父取消对聚合 Future 的传播。"},
+      {"path": "app.py", "start": 14, "end": 17, "supports": "捕获包括取消在内的异常，仅取消本次尚未结束且尚未取消的任务。"},
+      {"path": "app.py", "start": 18, "end": 24, "supports": "收集所有本次任务的清理结果，屏蔽等待期间的父取消并持续等待终止。"},
+      {"path": "app.py", "start": 25, "end": 28, "supports": "取回正常聚合 Future 的异常，裸 raise 保留最初异常，不创建 ExceptionGroup。"}
+    ]
+  }
+}

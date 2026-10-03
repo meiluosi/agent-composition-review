@@ -1,0 +1,427 @@
+{
+  "repair_failures": 6,
+  "original_review_failures": 36,
+  "note": "Historical terminal errors extracted from retained private logs; raw event hashes match published records. Current recovery is separate.",
+  "rows": [
+    {
+      "phase": "original_review",
+      "run_key": "018a13d4b099580560fe",
+      "case_id": "c06",
+      "condition": "A_basic",
+      "trial": 1,
+      "category": "usage_limit",
+      "message": "You’ve hit your usage limit. Visit https://chatgpt.com/codex/settings/usage to purchase more credits or try again at Oct 7th, 2026 12:21 PM.",
+      "event_sha256": "53b6174fa5769f89f249c55d5d7705960c73baa385590e8d842deede97b43fcb"
+    },
+    {
+      "phase": "original_review",
+      "run_key": "0b6cef411c4eef755916",
+      "case_id": "c06",
+      "condition": "A_basic",
+      "trial": 2,
+      "category": "usage_limit",
+      "message": "You’ve hit your usage limit. Visit https://chatgpt.com/codex/settings/usage to purchase more credits or try again at Oct 7th, 2026 12:21 PM.",
+      "event_sha256": "46b23bd85ffda2d1d6a25265461f4dddc40335f05e5d99a62aa879ce46efcd25"
+    },
+    {
+      "phase": "repair",
+      "run_key": "0e962050ce062090fde5",
+      "case_id": "c05",
+      "condition": "C_v4",
+      "trial": 2,
+      "category": "usage_limit",
+      "message": "You’ve hit your usage limit. Visit https://chatgpt.com/codex/settings/usage to purchase more credits or try again at Oct 7th, 2026 12:21 PM.",
+      "event_sha256": "74f49cc1b8544f5a3382015015d362ceb012092e3e23e8c2f420c58259997333"
+    },
+    {
+      "phase": "original_review",
+      "run_key": "0e962050ce062090fde5",
+      "case_id": "c05",
+      "condition": "C_v4",
+      "trial": 2,
+      "category": "usage_limit",
+      "message": "You’ve hit your usage limit. Visit https://chatgpt.com/codex/settings/usage to purchase more credits or try again at Oct 7th, 2026 12:21 PM.",
+      "event_sha256": "549a3aa3acf09b0869990a0b880ea0ae6ea3bbfe073bbfe7036b23bf619b376d"
+    },
+    {
+      "phase": "original_review",
+      "run_key": "14ed5e2e50c14e86e934",
+      "case_id": "c01",
+      "condition": "C_v4",
+      "trial": 1,
+      "category": "usage_limit",
+      "message": "You’ve hit your usage limit. Visit https://chatgpt.com/codex/settings/usage to purchase more credits or try again at Oct 7th, 2026 12:21 PM.",
+      "event_sha256": "8da574ecc4893e51db310b6aa2423e35d70997367a12e8b43d82f6fdac78b858"
+    },
+    {
+      "phase": "original_review",
+      "run_key": "393a7a8e9b6f1e97a53d",
+      "case_id": "c03",
+      "condition": "B_tools",
+      "trial": 1,
+      "category": "usage_limit",
+      "message": "You’ve hit your usage limit. Visit https://chatgpt.com/codex/settings/usage to purchase more credits or try again at Oct 7th, 2026 12:21 PM.",
+      "event_sha256": "6d313a42b7175fb6a6561e1c5870190d40fb144122d11f52c1536dcf8d994c93"
+    },
+    {
+      "phase": "original_review",
+      "run_key": "444c7fef60c24592cecd",
+      "case_id": "c06",
+      "condition": "B_tools",
+      "trial": 1,
+      "category": "usage_limit",
+      "message": "You’ve hit your usage limit. Visit https://chatgpt.com/codex/settings/usage to purchase more credits or try again at Oct 7th, 2026 12:21 PM.",
+      "event_sha256": "3adf7c0d90ae8071d80f7e8a84f296ce482cbc169824234ab1a980d660d136d1"
+    },
+    {
+      "phase": "original_review",
+      "run_key": "458b2e43082fc287fc33",
+      "case_id": "c06",
+      "condition": "C_v4",
+      "trial": 1,
+      "category": "usage_limit",
+      "message": "You’ve hit your usage limit. Visit https://chatgpt.com/codex/settings/usage to purchase more credits or try again at Oct 7th, 2026 12:21 PM.",
+      "event_sha256": "4281e3a86d636b6ab5f17e06f0d19e2af3d7cc619056953181635d1b9bd63ded"
+    },
+    {
+      "phase": "original_review",
+      "run_key": "484e9c75480ea297efeb",
+      "case_id": "c03",
+      "condition": "A_basic",
+      "trial": 1,
+      "category": "usage_limit",
+      "message": "You’ve hit your usage limit. Visit https://chatgpt.com/codex/settings/usage to purchase more credits or try again at Oct 7th, 2026 12:21 PM.",
+      "event_sha256": "8a5cc726437d7fb310077c5daa13396b4c432046745a579d2ac154ee6d597549"
+    },
+    {
+      "phase": "original_review",
+      "run_key": "4bea6b673948f82cf9b7",
+      "case_id": "c04",
+      "condition": "A_basic",
+      "trial": 2,
+      "category": "usage_limit",
+      "message": "You’ve hit your usage limit. Visit https://chatgpt.com/codex/settings/usage to purchase more credits or try again at Oct 7th, 2026 12:21 PM.",
+      "event_sha256": "df00d1db2e864cc815588c6e440666d58369be6bebb29eb6f4a76f5ef7fab9b2"
+    },
+    {
+      "phase": "original_review",
+      "run_key": "546260eb213e41d23aca",
+      "case_id": "c02",
+      "condition": "A_basic",
+      "trial": 2,
+      "category": "usage_limit",
+      "message": "You’ve hit your usage limit. Visit https://chatgpt.com/codex/settings/usage to purchase more credits or try again at Oct 7th, 2026 12:21 PM.",
+      "event_sha256": "4ee1462bcfb0a9cc82aa8f111720fd8b7cab7a16f177ee4d8b58a3b18ad102e9"
+    },
+    {
+      "phase": "original_review",
+      "run_key": "56981e70069e3a5a9d31",
+      "case_id": "c04",
+      "condition": "B_tools",
+      "trial": 2,
+      "category": "usage_limit",
+      "message": "You’ve hit your usage limit. Visit https://chatgpt.com/codex/settings/usage to purchase more credits or try again at Oct 7th, 2026 12:21 PM.",
+      "event_sha256": "ea92339fe9d5be7a7c2c7b7a68c49a3827e99c400cd0e9765c06694e9fbdac62"
+    },
+    {
+      "phase": "original_review",
+      "run_key": "56f04faf34f61f626994",
+      "case_id": "c03",
+      "condition": "C_v4",
+      "trial": 1,
+      "category": "usage_limit",
+      "message": "You’ve hit your usage limit. Visit https://chatgpt.com/codex/settings/usage to purchase more credits or try again at Oct 7th, 2026 12:21 PM.",
+      "event_sha256": "348f70c718195ac6d294ff37c4e2021f0fa966996c3c97604f7d73019c6649a5"
+    },
+    {
+      "phase": "original_review",
+      "run_key": "6c8788b0cd7626cdc110",
+      "case_id": "c05",
+      "condition": "C_v4",
+      "trial": 1,
+      "category": "usage_limit",
+      "message": "You’ve hit your usage limit. Visit https://chatgpt.com/codex/settings/usage to purchase more credits or try again at Oct 7th, 2026 12:21 PM.",
+      "event_sha256": "6ae715df10d716f2231cd4a4427ee9644bc184524ec5268fd42779fa9b306a0d"
+    },
+    {
+      "phase": "original_review",
+      "run_key": "728d368067bca875caf1",
+      "case_id": "c01",
+      "condition": "A_basic",
+      "trial": 1,
+      "category": "usage_limit",
+      "message": "You’ve hit your usage limit. Visit https://chatgpt.com/codex/settings/usage to purchase more credits or try again at Oct 7th, 2026 12:21 PM.",
+      "event_sha256": "850595f7bb3dd5f2191a6d71a8c4e2dbbb6e61fe558d51fc55f88a2800beb54e"
+    },
+    {
+      "phase": "original_review",
+      "run_key": "7da9ec763a567a3d9b7a",
+      "case_id": "c06",
+      "condition": "C_v4",
+      "trial": 2,
+      "category": "usage_limit",
+      "message": "You’ve hit your usage limit. Visit https://chatgpt.com/codex/settings/usage to purchase more credits or try again at Oct 7th, 2026 12:21 PM.",
+      "event_sha256": "d5dbf7612b504bea06d64be7a5cdd4034df92824db54494627f2f5e26f985888"
+    },
+    {
+      "phase": "repair",
+      "run_key": "83bf08e5d2450d39ad79",
+      "case_id": "c03",
+      "condition": "B_tools",
+      "trial": 2,
+      "category": "usage_limit",
+      "message": "You’ve hit your usage limit. Visit https://chatgpt.com/codex/settings/usage to purchase more credits or try again at Oct 7th, 2026 12:21 PM.",
+      "event_sha256": "28f9af8e98be6c4e200f38c0b4ed9673ed4f39549ee7929bbec834d04637cb8d"
+    },
+    {
+      "phase": "original_review",
+      "run_key": "83bf08e5d2450d39ad79",
+      "case_id": "c03",
+      "condition": "B_tools",
+      "trial": 2,
+      "category": "usage_limit",
+      "message": "You’ve hit your usage limit. Visit https://chatgpt.com/codex/settings/usage to purchase more credits or try again at Oct 7th, 2026 12:21 PM.",
+      "event_sha256": "ec22d658a8dca94d77271e145bd7efed7e92c048cc6e7f3ed67667ae2023c92c"
+    },
+    {
+      "phase": "repair",
+      "run_key": "8bf3ce23b9e65c89206c",
+      "case_id": "c03",
+      "condition": "C_v4",
+      "trial": 2,
+      "category": "usage_limit",
+      "message": "You’ve hit your usage limit. Visit https://chatgpt.com/codex/settings/usage to purchase more credits or try again at Oct 7th, 2026 12:21 PM.",
+      "event_sha256": "d4251517d3e1ed9abda4bfd6f5316dc292f587080d2b82bc4b9ee59a33a7dbdf"
+    },
+    {
+      "phase": "original_review",
+      "run_key": "8bf3ce23b9e65c89206c",
+      "case_id": "c03",
+      "condition": "C_v4",
+      "trial": 2,
+      "category": "usage_limit",
+      "message": "You’ve hit your usage limit. Visit https://chatgpt.com/codex/settings/usage to purchase more credits or try again at Oct 7th, 2026 12:21 PM.",
+      "event_sha256": "493ce11ca03a8d61964bdb7328da6291f195c57ff8efac275101527f67aee02e"
+    },
+    {
+      "phase": "original_review",
+      "run_key": "929b89a7c33dfbf31cd4",
+      "case_id": "c01",
+      "condition": "B_tools",
+      "trial": 2,
+      "category": "usage_limit",
+      "message": "You’ve hit your usage limit. Visit https://chatgpt.com/codex/settings/usage to purchase more credits or try again at Oct 7th, 2026 12:21 PM.",
+      "event_sha256": "4e91ad5c79ae20f6ce00db14a4f2087911ffd872fbda23cb56519d8bfaf32a64"
+    },
+    {
+      "phase": "original_review",
+      "run_key": "9d04829e1f9d9deae6ef",
+      "case_id": "c05",
+      "condition": "A_basic",
+      "trial": 1,
+      "category": "usage_limit",
+      "message": "You’ve hit your usage limit. Visit https://chatgpt.com/codex/settings/usage to purchase more credits or try again at Oct 7th, 2026 12:21 PM.",
+      "event_sha256": "ef934b4c4c651ef03e225135cdcc5b19d1c7bbca06e3111e707449893cc0e63e"
+    },
+    {
+      "phase": "original_review",
+      "run_key": "9f1434a3fffa7c2172e4",
+      "case_id": "c04",
+      "condition": "A_basic",
+      "trial": 1,
+      "category": "usage_limit",
+      "message": "You’ve hit your usage limit. Visit https://chatgpt.com/codex/settings/usage to purchase more credits or try again at Oct 7th, 2026 12:21 PM.",
+      "event_sha256": "335a2ccf45ed62d207f884e3274fc15b547b2318e50932d45754586d8417d492"
+    },
+    {
+      "phase": "original_review",
+      "run_key": "b259ee03ade2eab33636",
+      "case_id": "c01",
+      "condition": "C_v4",
+      "trial": 2,
+      "category": "usage_limit",
+      "message": "You’ve hit your usage limit. Visit https://chatgpt.com/codex/settings/usage to purchase more credits or try again at Oct 7th, 2026 12:21 PM.",
+      "event_sha256": "610c10b43a43474414472b007456f6348d9a4082b66607b870b3bf63ffb9969d"
+    },
+    {
+      "phase": "original_review",
+      "run_key": "bacd963b780f4e9168a3",
+      "case_id": "c01",
+      "condition": "B_tools",
+      "trial": 1,
+      "category": "usage_limit",
+      "message": "You’ve hit your usage limit. Visit https://chatgpt.com/codex/settings/usage to purchase more credits or try again at Oct 7th, 2026 12:21 PM.",
+      "event_sha256": "17eabc17329635c0b23665236822fed33c84d7ebed3271d9cba0d7363a1617f8"
+    },
+    {
+      "phase": "original_review",
+      "run_key": "bf0bbc2d3a2245c3678d",
+      "case_id": "c02",
+      "condition": "A_basic",
+      "trial": 1,
+      "category": "usage_limit",
+      "message": "You’ve hit your usage limit. Visit https://chatgpt.com/codex/settings/usage to purchase more credits or try again at Oct 7th, 2026 12:21 PM.",
+      "event_sha256": "3e3b81f0f448225a081cb819a80a0aec0fa9b53e6660ca5240516d73fd1f2c91"
+    },
+    {
+      "phase": "repair",
+      "run_key": "c0f92e22977d0eb469c4",
+      "case_id": "c03",
+      "condition": "A_basic",
+      "trial": 2,
+      "category": "usage_limit",
+      "message": "You’ve hit your usage limit. Visit https://chatgpt.com/codex/settings/usage to purchase more credits or try again at Oct 7th, 2026 12:21 PM.",
+      "event_sha256": "38b1b6bc004c9a0ed7de2d413bbca5675397aab8e8874ce23bb89de44105b356"
+    },
+    {
+      "phase": "original_review",
+      "run_key": "c0f92e22977d0eb469c4",
+      "case_id": "c03",
+      "condition": "A_basic",
+      "trial": 2,
+      "category": "usage_limit",
+      "message": "You’ve hit your usage limit. Visit https://chatgpt.com/codex/settings/usage to purchase more credits or try again at Oct 7th, 2026 12:21 PM.",
+      "event_sha256": "07041fc0cfef6a06dc38d96e32f342089edf8a6e09a334377fd516700947b653"
+    },
+    {
+      "phase": "repair",
+      "run_key": "c7b27feb451d8497ff87",
+      "case_id": "c05",
+      "condition": "B_tools",
+      "trial": 2,
+      "category": "usage_limit",
+      "message": "You’ve hit your usage limit. Visit https://chatgpt.com/codex/settings/usage to purchase more credits or try again at Oct 7th, 2026 12:21 PM.",
+      "event_sha256": "3b9ead87697325cb4096c9026a34a74a5a7d937871b702f8dfecb35df7d879d3"
+    },
+    {
+      "phase": "original_review",
+      "run_key": "c7b27feb451d8497ff87",
+      "case_id": "c05",
+      "condition": "B_tools",
+      "trial": 2,
+      "category": "usage_limit",
+      "message": "You’ve hit your usage limit. Visit https://chatgpt.com/codex/settings/usage to purchase more credits or try again at Oct 7th, 2026 12:21 PM.",
+      "event_sha256": "97d32795530d50ee96e3e1630222a984fc0223c02d0819ce43dd46b522791cb4"
+    },
+    {
+      "phase": "original_review",
+      "run_key": "d0753920ff33f287cdf2",
+      "case_id": "c02",
+      "condition": "C_v4",
+      "trial": 2,
+      "category": "usage_limit",
+      "message": "You’ve hit your usage limit. Visit https://chatgpt.com/codex/settings/usage to purchase more credits or try again at Oct 7th, 2026 12:21 PM.",
+      "event_sha256": "6ebd825c9c7756aa21e1379206d2b8f651e2dfcf19b001b030b2f4236f9228ee"
+    },
+    {
+      "phase": "original_review",
+      "run_key": "d2bef6366f3b64b3c7e7",
+      "case_id": "c05",
+      "condition": "B_tools",
+      "trial": 1,
+      "category": "usage_limit",
+      "message": "You’ve hit your usage limit. Visit https://chatgpt.com/codex/settings/usage to purchase more credits or try again at Oct 7th, 2026 12:21 PM.",
+      "event_sha256": "e8215ccbb3570bcffe7599fad36646ad8f8531515dea62d3082bf1343176a8b0"
+    },
+    {
+      "phase": "original_review",
+      "run_key": "d3e8f420f0fee69b484e",
+      "case_id": "c02",
+      "condition": "B_tools",
+      "trial": 1,
+      "category": "usage_limit",
+      "message": "You’ve hit your usage limit. Visit https://chatgpt.com/codex/settings/usage to purchase more credits or try again at Oct 7th, 2026 12:21 PM.",
+      "event_sha256": "af206dadf910ab74dd018fa9219f024ff5daed2f2b7b14c1f159d85254880275"
+    },
+    {
+      "phase": "original_review",
+      "run_key": "d55d16c5c87b346f8dac",
+      "case_id": "c01",
+      "condition": "A_basic",
+      "trial": 2,
+      "category": "usage_limit",
+      "message": "You’ve hit your usage limit. Visit https://chatgpt.com/codex/settings/usage to purchase more credits or try again at Oct 7th, 2026 12:21 PM.",
+      "event_sha256": "092ea08a2688e88108db3f33ff2aba51de913ff5c769fd39e40906d7a8f53312"
+    },
+    {
+      "phase": "original_review",
+      "run_key": "d59f3cb1c380711499f2",
+      "case_id": "c04",
+      "condition": "C_v4",
+      "trial": 2,
+      "category": "usage_limit",
+      "message": "You’ve hit your usage limit. Visit https://chatgpt.com/codex/settings/usage to purchase more credits or try again at Oct 7th, 2026 12:21 PM.",
+      "event_sha256": "0a0395eccc201aa4c9b7a5a41777e1f2778fb5751313db55c6bdada85736f4b6"
+    },
+    {
+      "phase": "repair",
+      "run_key": "d63e411acf75590358c1",
+      "case_id": "c05",
+      "condition": "A_basic",
+      "trial": 2,
+      "category": "usage_limit",
+      "message": "You’ve hit your usage limit. Visit https://chatgpt.com/codex/settings/usage to purchase more credits or try again at Oct 7th, 2026 12:21 PM.",
+      "event_sha256": "bdc7729d06657e7a315af85dc6130b5181b1026b5991adec8f4ed842a17e8d6e"
+    },
+    {
+      "phase": "original_review",
+      "run_key": "d63e411acf75590358c1",
+      "case_id": "c05",
+      "condition": "A_basic",
+      "trial": 2,
+      "category": "usage_limit",
+      "message": "You’ve hit your usage limit. Visit https://chatgpt.com/codex/settings/usage to purchase more credits or try again at Oct 7th, 2026 12:21 PM.",
+      "event_sha256": "18bb560657ca20c669aa774959b488bf441ba6a2a4426a7ea66b54d95a54cc86"
+    },
+    {
+      "phase": "original_review",
+      "run_key": "dbab71060d91cb989a46",
+      "case_id": "c06",
+      "condition": "B_tools",
+      "trial": 2,
+      "category": "usage_limit",
+      "message": "You’ve hit your usage limit. Visit https://chatgpt.com/codex/settings/usage to purchase more credits or try again at Oct 7th, 2026 12:21 PM.",
+      "event_sha256": "6ba583810d89a3e68303748afce3f98c74146b416e7bdb1d676e19c8101451be"
+    },
+    {
+      "phase": "original_review",
+      "run_key": "dbf6ddcda634cd19d3f4",
+      "case_id": "c02",
+      "condition": "C_v4",
+      "trial": 1,
+      "category": "usage_limit",
+      "message": "You’ve hit your usage limit. Visit https://chatgpt.com/codex/settings/usage to purchase more credits or try again at Oct 7th, 2026 12:21 PM.",
+      "event_sha256": "23b70de0a8d9e849b0f3eb227b9b940f20db9a42e1ed1e9bba4665c58be11dc5"
+    },
+    {
+      "phase": "original_review",
+      "run_key": "debdb7ea3c0ebf3bd33b",
+      "case_id": "c02",
+      "condition": "B_tools",
+      "trial": 2,
+      "category": "usage_limit",
+      "message": "You’ve hit your usage limit. Visit https://chatgpt.com/codex/settings/usage to purchase more credits or try again at Oct 7th, 2026 12:21 PM.",
+      "event_sha256": "8768468e76d0b54170414078d9d45ff044bfd18f393781761eb85722f66ba22e"
+    },
+    {
+      "phase": "original_review",
+      "run_key": "f0f4a79e67c1e2add26b",
+      "case_id": "c04",
+      "condition": "C_v4",
+      "trial": 1,
+      "category": "usage_limit",
+      "message": "You’ve hit your usage limit. Visit https://chatgpt.com/codex/settings/usage to purchase more credits or try again at Oct 7th, 2026 12:21 PM.",
+      "event_sha256": "b4c2e801a3721c8908a4fee0021ea3638db0da65b3775ba4c45e54853741b9d1"
+    },
+    {
+      "phase": "original_review",
+      "run_key": "f357ffe26e21bc9fe417",
+      "case_id": "c04",
+      "condition": "B_tools",
+      "trial": 1,
+      "category": "usage_limit",
+      "message": "You’ve hit your usage limit. Visit https://chatgpt.com/codex/settings/usage to purchase more credits or try again at Oct 7th, 2026 12:21 PM.",
+      "event_sha256": "291b6ec6d9b958ee96f849684a47a2ff3439748f701fad802f318b9b42152860"
+    }
+  ]
+}

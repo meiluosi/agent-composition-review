@@ -1,0 +1,173 @@
+{
+  "case_id": "c04",
+  "condition": "B_tools",
+  "trial": 1,
+  "exit_code": 0,
+  "timed_out": false,
+  "elapsed_seconds": 312.198275999981,
+  "usage": {
+    "input_tokens": 110837,
+    "cached_input_tokens": 71040,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 8568,
+    "reasoning_output_tokens": 2616
+  },
+  "completed": true,
+  "status": "completed",
+  "prediction": {
+    "initial_verdict": "violation",
+    "summary": "已修复 app.py：提交阶段失败也会撤销批次，清理错误不再掩盖原异常。保留公开接口和正常行为，交付 model.json，包含实际行号依据及验证边界。",
+    "tests_executed": [
+      "./run_python smoke.py：修改前后均通过",
+      "./run_python test_batch.py original：发现 3 个失败断言和 1 个异常错误",
+      "./run_python test_batch.py app：最终 9 项测试全部通过，含事务和保存点组合",
+      "./run_python -m json.tool model.json > /dev/null：JSON 语法检查通过"
+    ],
+    "limitations": [
+      "SQLite 主动撤销整个外层事务时，保存点无法保护调用者已有工作。",
+      "清理操作自身失败时保留原异常，但无法保证撤销完成。",
+      "未验证并发操作同一连接、进程崩溃及跨版本行为；具体边界已记录于 model.json。"
+    ]
+  },
+  "acceptance": {
+    "tests_run": 7,
+    "passed": true,
+    "checks": [
+      {
+        "test": "test_empty_batch_and_repeat_failure_do_not_end_transaction",
+        "passed": true
+      },
+      {
+        "test": "test_existing_savepoint_is_preserved",
+        "passed": true
+      },
+      {
+        "test": "test_explicit_transaction_in_autocommit_mode",
+        "passed": true
+      },
+      {
+        "test": "test_failure_rolls_back_only_own_batch",
+        "passed": true
+      },
+      {
+        "test": "test_standalone_failure_is_atomic_and_preserves_original_error",
+        "passed": true
+      },
+      {
+        "test": "test_standalone_success_is_committed",
+        "passed": true
+      },
+      {
+        "test": "test_success_does_not_commit_callers_transaction",
+        "passed": true
+      }
+    ],
+    "exit_code": 0,
+    "timed_out": false,
+    "sandbox": "macos_no_network_writes_only_grade_directory",
+    "stderr": ""
+  },
+  "structure": {
+    "valid": true,
+    "errors": [],
+    "scope": "Syntax/references only; semantic criteria reviewed independently."
+  },
+  "source_changed": true,
+  "artifacts": {
+    "app.py": "f3ea2823ea0fba6392dd5f60dd5885fd0520ebfea764dec043100b82f4fd2b44",
+    "model.json": "8a89a8bc24af9223fb98cc16040420a55384adec7c0b143f78079e5eb5643646",
+    "test_batch.py": "f1ec46a8b8b4ca1de8d10be216796ca5e0305abdcd0a9cc9ae4d018b730ff7fb"
+  },
+  "protected_changes": [],
+  "outside_changes": [],
+  "artifact_errors": [],
+  "tool_audit": [
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc \"pwd; rg --files -g 'AGENTS.md' -g 'task.md' -g 'app.py' -g 'MODEL_FORMAT.md' -g 'smoke.py' -g 'run_python'\"",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc 'cat task.md MODEL_FORMAT.md app.py smoke.py'",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc 'ls -la; cat run_python; nl -ba app.py'",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc './run_python smoke.py'",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 1,
+      "command": "/bin/zsh -lc \"cat > test_batch.py <<'PY'\nimport importlib\nimport sqlite3\nimport sys\nimport tempfile\nimport unittest\nfrom pathlib import Path\n\nimplementation = sys.argv.pop(1) if len(sys.argv) > 1 else 'app'\nwrite_batch = importlib.import_module(implementation).write_batch\n\n\nclass BatchTests(unittest.TestCase):\n    def connect(self, isolation_level=''):\n        connection = sqlite3.connect(':memory:', isolation_level=isolation_level)\n        self.addCleanup(connection.close)\n        connection.execute('CREATE TABLE records(key TEXT PRIMARY KEY, value INTEGER NOT NULL)')\n        return connection\n\n    def records(self, connection):\n        return connection.execute('SELECT key, value FROM records ORDER BY key').fetchall()\n\n    def test_standalone_success_empty_and_special_keys(self):\n        for mode in ('', None):\n            with self.subTest(mode=mode):\n                connection = self.connect(mode)\n                rows = [(\\\"quote'; --\\\", 1), ('unicode中文', 2), ('nul\\\\x00key', 3)]\n                self.assertEqual(write_batch(connection, rows), 3)\n                self.assertFalse(connection.in_transaction)\n                self.assertEqual(set(self.records(connection)), set(rows))\n                self.assertEqual(write_batch(connection, []), 0)\n                self.assertFalse(connection.in_transaction)\n                connection.rollback()\n                self.assertEqual(set(self.records(connection)), set(rows))\n\n    def test_repeated_failure_is_atomic(self):\n        for mode in ('', None):\n            with self.subTest(mode=mode):\n                connection = self.connect(mode)\n                write_batch(connection, [('old', 0)])\n                for _ in range(3):\n                    with self.assertRaises(sqlite3.IntegrityError):\n                        write_batch(connection, [('new', 1), ('old', 2)])\n                    self.assertEqual(self.records(connection), [('old', 0)])\n                    self.assertFalse(connection.in_transaction)\n                self.assertEqual(write_batch(connection, [('new', 3)]), 1)\n\n    def test_outer_transactions_and_savepoints_remain_owned_by_caller(self):\n        for mode in ('', None):\n            for start in ('BEGIN', 'SAVEPOINT caller'):\n                for finish in ('commit', 'rollback'):\n                    with self.subTest(mode=mode, start=start, finish=finish):\n                        connection = self.connect(mode)\n                        connection.execute(start)\n                        connection.execute(\\\"INSERT INTO records VALUES ('old', 0)\\\")\n                        connection.execute('SAVEPOINT inner_caller')\n                        self.assertEqual(write_batch(connection, [('good', 1)]), 1)\n                        self.assertEqual(write_batch(connection, []), 0)\n                        for _ in range(2):\n                            with self.assertRaises(sqlite3.IntegrityError):\n                                write_batch(connection, [('bad', 2), ('old', 3)])\n                        self.assertTrue(connection.in_transaction)\n                        self.assertEqual(self.records(connection), [('good', 1), ('old', 0)])\n                        connection.execute('ROLLBACK TO inner_caller')\n                        connection.execute('RELEASE inner_caller')\n                        self.assertEqual(self.records(connection), [('old', 0)])\n                        write_batch(connection, [('final', 4)])\n                        if start.startswith('SAVEPOINT'):\n                            # RELEASE must still find the caller's outer savepoint.\n                            connection.execute('SAVEPOINT probe')\n                            connection.execute('RELEASE probe')\n                            if finish == 'rollback':\n                                connection.execute('ROLLBACK TO caller')\n                            connection.execute('RELEASE caller')\n                        else:\n                            getattr(connection, finish)()\n                        expected = [('final', 4), ('old', 0)] if finish == 'commit' else []\n                        self.assertEqual(self.records(connection), expected)\n                        self.assertFalse(connection.in_transaction)\n\n    def test_default_implicit_outer_transaction(self):\n        connection = self.connect()\n        connection.execute(\\\"INSERT INTO records VALUES ('caller', 0)\\\")\n        write_batch(connection, [('batch', 1)])\n        self.assertTrue(connection.in_transaction)\n        connection.rollback()\n        self.assertEqual(self.records(connection), [])\n\n    def test_not_null_failure_rolls_back_prefix(self):\n        connection = self.connect()\n        with self.assertRaises(sqlite3.IntegrityError):\n            write_batch(connection, [('prefix', 1), ('invalid', None)])\n        self.assertEqual(self.records(connection), [])\n        self.assertFalse(connection.in_transaction)\n\n    def test_deferred_constraint_failure_on_release(self):\n        for mode in ('', None):\n            with self.subTest(mode=mode):\n                connection = self.connect(mode)\n                connection.execute('PRAGMA foreign_keys=ON')\n                connection.execute('DROP TABLE records')\n                connection.execute('CREATE TABLE parents(id INTEGER PRIMARY KEY)')\n                connection.execute('CREATE TABLE records(key TEXT PRIMARY KEY, value INTEGER REFERENCES parents(id) DEFERRABLE INITIALLY DEFERRED)')\n                with self.assertRaisesRegex(sqlite3.IntegrityError, 'FOREIGN KEY'):\n                    write_batch(connection, [('invalid', 7)])\n                self.assertEqual(self.records(connection), [])\n                self.assertFalse(connection.in_transaction)\n                connection.execute('INSERT INTO parents VALUES (7)')\n                connection.commit()\n                self.assertEqual(write_batch(connection, [('valid', 7)]), 1)\n\n    def test_busy_commit_rolls_back_batch(self):\n        with tempfile.TemporaryDirectory(dir='.') as directory:\n            database = str(Path(directory) / 'busy.sqlite')\n            writer = sqlite3.connect(database, timeout=0)\n            reader = sqlite3.connect(database, timeout=0)\n            try:\n                writer.execute('PRAGMA journal_mode=DELETE')\n                writer.execute('CREATE TABLE records(key TEXT PRIMARY KEY, value INTEGER NOT NULL)')\n                reader.execute('BEGIN')\n                reader.execute('SELECT * FROM records').fetchall()\n                with self.assertRaisesRegex(sqlite3.OperationalError, 'locked'):\n                    write_batch(writer, [('batch', 1)])\n                self.assertEqual(self.records(writer), [])\n                self.assertFalse(writer.in_transaction)\n                reader.rollback()\n                self.assertEqual(write_batch(writer, [('next', 2)]), 1)\n                self.assertEqual(self.records(reader), [('next', 2)])\n            finally:\n                reader.close()\n                writer.close()\n\n    def test_automatic_rollback_preserves_original_error(self):\n        connection = self.connect()\n        connection.execute(\\\"CREATE TRIGGER reject BEFORE INSERT ON records WHEN NEW.key='reject' BEGIN SELECT RAISE(ROLLBACK, 'original trigger failure'); END\\\")\n        with self.assertRaisesRegex(sqlite3.IntegrityError, 'original trigger failure'):\n            write_batch(connection, [('prefix', 1), ('reject', 2)])\n        self.assertEqual(self.records(connection), [])\n        self.assertFalse(connection.in_transaction)\n\n\nif __name__ == '__main__':\n    unittest.main(verbosity=2)\nPY\n./run_python test_batch.py original\"",
+      "review_flags": []
+    },
+    {
+      "type": "file_change",
+      "exit_code": null,
+      "changes": [
+        {
+          "path": "<workspace>/app.py",
+          "kind": "update"
+        }
+      ]
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc './run_python test_batch.py app; ./run_python smoke.py; nl -ba app.py'",
+      "review_flags": []
+    },
+    {
+      "type": "file_change",
+      "exit_code": null,
+      "changes": [
+        {
+          "path": "<workspace>/test_batch.py",
+          "kind": "update"
+        }
+      ]
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc './run_python test_batch.py app'",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc \"cat > model.json <<'JSON'\n{\n  \\\"schema_version\\\": 1,\n  \\\"types\\\": {\n    \\\"BatchCall\\\": {\n      \\\"connection\\\": {\\\"type\\\": \\\"object\\\"},\n      \\\"connection.in_transaction\\\": {\\\"type\\\": \\\"boolean\\\"},\n      \\\"rows\\\": {\\\"type\\\": \\\"array\\\"},\n      \\\"schema.records_columns\\\": {\\\"type\\\": \\\"array\\\"}\n    },\n    \\\"BatchReturn\\\": {\n      \\\"count\\\": {\\\"type\\\": \\\"number\\\"},\n      \\\"connection\\\": {\\\"type\\\": \\\"object\\\"},\n      \\\"connection.in_transaction\\\": {\\\"type\\\": \\\"boolean\\\"}\n    }\n  },\n  \\\"resources\\\": {\n    \\\"records\\\": \\\"调用者连接上的 records 表及本批 INSERT 产生的数据库变化。\\\",\n    \\\"transaction\\\": \\\"该连接的事务状态、尚未提交的调用者工作和本批次工作。\\\",\n    \\\"savepoints\\\": \\\"调用者保存点与本次生成的 batch_<uuid.hex> 保存点。\\\",\n    \\\"connection_lifetime\\\": \\\"调用者提供的连接对象及其可用性；函数不关闭或替换连接。\\\"\n  },\n  \\\"actions\\\": [\n    {\n      \\\"id\\\": \\\"write_batch\\\",\n      \\\"meaning\\\": \\\"app.write_batch(connection, rows)：创建局部保存点，用参数绑定插入整个批次，释放该保存点后返回 len(rows)。插入或释放失败时，按入口事务归属清理并重新抛出原异常。此动作的 output_type 只表示正常返回；异常分支见 implementation_paths 和 requirements。\\\",\n      \\\"input_type\\\": \\\"BatchCall\\\",\n      \\\"output_type\\\": \\\"BatchReturn\\\",\n      \\\"reads\\\": [\\\"records\\\", \\\"transaction\\\", \\\"savepoints\\\", \\\"connection_lifetime\\\"],\n      \\\"writes\\\": [\\\"records\\\", \\\"transaction\\\", \\\"savepoints\\\"],\n      \\\"pre\\\": [\n        {\n          \\\"id\\\": \\\"records_columns_exist\\\",\n          \\\"requirement\\\": \\\"调用者已建立 records 表，包含 INSERT 使用的 key、value 列。\\\",\n          \\\"must\\\": {\\\"op\\\": \\\"subset\\\", \\\"args\\\": [{\\\"literal\\\": [\\\"key\\\", \\\"value\\\"]}, {\\\"path\\\": \\\"input.schema.records_columns\\\"}]}\n        },\n        {\n          \\\"id\\\": \\\"finite_rows\\\",\n          \\\"requirement\\\": \\\"rows 是可计数的有限序列；每项为可被 sqlite3 绑定的 (key, value)。谓词只描述可计数性，不证明各项形状或绑定类型。\\\",\n          \\\"must\\\": {\\\"op\\\": \\\"ge\\\", \\\"args\\\": [{\\\"count\\\": {\\\"path\\\": \\\"input.rows\\\"}}, {\\\"literal\\\": 0}]}\n        }\n      ],\n      \\\"post\\\": [\n        {\n          \\\"id\\\": \\\"returned_count\\\",\n          \\\"requirement\\\": \\\"正常返回值等于提供的行数；不以 total_changes 包含触发器变化的计数替代。\\\",\n          \\\"must\\\": {\\\"op\\\": \\\"eq\\\", \\\"args\\\": [{\\\"path\\\": \\\"output.count\\\"}, {\\\"count\\\": {\\\"path\\\": \\\"input.rows\\\"}}]}\n        },\n        {\n          \\\"id\\\": \\\"successful_transaction_ownership\\\",\n          \\\"requirement\\\": \\\"正常返回时，无入口事务则批次已提交；有入口事务则其仍活动。此布尔比较仅检查活动状态，不能独立证明提交持久性或保存点存续。\\\",\n          \\\"must\\\": {\\\"op\\\": \\\"eq\\\", \\\"args\\\": [{\\\"path\\\": \\\"output.connection.in_transaction\\\"}, {\\\"path\\\": \\\"input.connection.in_transaction\\\"}]}\n        }\n      ]\n    }\n  ],\n  \\\"edges\\\": [],\n  \\\"required_actions\\\": [\\\"write_batch\\\"],\n  \\\"implementation_paths\\\": [\n    {\n      \\\"name\\\": \\\"normal_return\\\",\n      \\\"lines\\\": [6, 7, 8, 10, 12, 28],\n      \\\"description\\\": \\\"先读取事务归属，再创建保存点、执行参数化 INSERT、释放保存点并返回数量。最外层 RELEASE 提交本次事务；嵌套 RELEASE 不提交调用者事务。\\\"\n    },\n    {\n      \\\"name\\\": \\\"failure_with_outer_transaction\\\",\n      \\\"lines\\\": [13, 14, 15, 16, 17, 18, 27],\n      \\\"description\\\": \\\"SQLite 事务仍活动且入口已有事务时，仅 ROLLBACK TO / RELEASE 本工具保存点，随后裸 raise。\\\"\n    },\n    {\n      \\\"name\\\": \\\"failure_without_outer_transaction\\\",\n      \\\"lines\\\": [13, 14, 15, 16, 22, 27],\n      \\\"description\\\": \\\"入口没有事务时，本工具拥有整个新事务，失败用 ROLLBACK 撤销并结束事务；这也避开读者锁阻止 RELEASE 提交的问题。\\\"\n    },\n    {\n      \\\"name\\\": \\\"cleanup_unavailable_or_already_rolled_back\\\",\n      \\\"lines\\\": [15, 23, 26, 27],\n      \\\"description\\\": \\\"SQLite 已结束事务时跳过清理；清理自身抛错时捕获该错误，始终重新抛出最初的插入或释放异常。清理失败不等于已成功撤销。\\\"\n    }\n  ],\n  \\\"requirements\\\": [\n    {\n      \\\"id\\\": \\\"atomic_batch_and_commit_failures\\\",\n      \\\"requirement\\\": \\\"单批次全部成功或全部撤销，包含 INSERT 失败及最外层 RELEASE 提交失败。\\\",\n      \\\"verification\\\": \\\"已执行 test_batch.py app：重复键、NOT NULL、延迟外键提交失败和真实双连接读锁导致的 SQLITE_BUSY，均验证批次数据撤销及后续调用可用。\\\",\n      \\\"status\\\": \\\"在被测 SQLite 正常回滚能力下通过；清理失败及数据库强制整事务回滚的边界另列限制。\\\"\n    },\n    {\n      \\\"id\\\": \\\"caller_owns_outer_work\\\",\n      \\\"requirement\\\": \\\"已有事务或保存点时，调用者仍能提交、回滚并使用其保存点。\\\",\n      \\\"verification\\\": \\\"已执行默认隐式事务，以及默认模式和 isolation_level=None 下 BEGIN / SAVEPOINT caller × 调用者 commit / rollback 的组合；调用者嵌套保存点也经 ROLLBACK TO 和 RELEASE 验证。\\\",\n      \\\"status\\\": \\\"已运行行为验证；代码推断依据为入口事务状态分支及仅回滚工具保存点。\\\"\n    },\n    {\n      \\\"id\\\": \\\"preserve_original_exception\\\",\n      \\\"requirement\\\": \\\"失败保留原异常，清理错误不能替代它。\\\",\n      \\\"verification\\\": \\\"真实 RAISE(ROLLBACK) 触发器验证原 IntegrityError 被保留；连接子类分别在有、无外层事务时注入清理错误，并断言捕获异常与原异常是同一对象。\\\",\n      \\\"status\\\": \\\"已运行；注入测试仅验证异常身份，不将清理失败宣称为原子性成功。\\\"\n    },\n    {\n      \\\"id\\\": \\\"unchanged_public_boundary\\\",\n      \\\"requirement\\\": \\\"公开函数仍为 write_batch(connection, rows)，不关闭或替换连接，交付 app.py 自包含。\\\",\n      \\\"verification\\\": \\\"代码审查：仅依赖标准库 uuid，无 commit/close/连接创建调用；扩展测试在调用后继续使用相同连接。\\\",\n      \\\"status\\\": \\\"代码审查与后续连接操作验证通过。\\\"\n    },\n    {\n      \\\"id\\\": \\\"empty_special_and_repeat\\\",\n      \\\"requirement\\\": \\\"空批次、特殊字符键和重复失败遵循相同事务规则。\\\",\n      \\\"verification\\\": \\\"已测试空列表、引号/SQL 注释形状键、中文键、NUL 键，以及独立和外层事务内重复失败。\\\",\n      \\\"status\\\": \\\"已运行并通过。\\\"\n    }\n  ],\n  \\\"validation\\\": {\n    \\\"behavior_commands\\\": [\n      {\\\"command\\\": \\\"./run_python smoke.py\\\", \\\"result\\\": \\\"修改前后均成功，返回 1 并查询到 example 行。\\\"},\n      {\\\"command\\\": \\\"./run_python test_batch.py original\\\", \\\"result\\\": \\\"当时 8 个测试方法：3 个失败断言（延迟外键两种模式及锁提交），1 个异常错误（原异常被清理错误替代）。\\\"},\n      {\\\"command\\\": \\\"./run_python test_batch.py app\\\", \\\"result\\\": \\\"修复后最初 8 项通过；补充清理错误身份测试后共 9 项通过，含参数化子用例。\\\"}\n    ],\n    \\\"inference\\\": \\\"保存点局部性、最外层 RELEASE 的提交语义和参数绑定安全性结合代码与 SQLite 行为推断，不由 JSON 结构检查证明。\\\"\n  },\n  \\\"scope\\\": {\n    \\\"description\\\": \\\"最小相关模型以唯一公开动作 write_batch 描述正常调用边界，内部成功/异常控制流单列 implementation_paths。没有跨动作数据交接，因此 edges 为空。类型字段是说明性事件投影，不是新增 Python 参数或返回对象：input.rows 对应有限序列的数组表示，schema.records_columns 是表结构观察值，input/output.connection.in_transaction 分别是调用前后快照，output.count 是实际整数返回值。requirements 记录不适合用有限谓词表达的异常、所有权和保存点性质及其实际验证。\\\",\n    \\\"limitations\\\": [\n      \\\"未覆盖会主动破坏外层事务的数据库行为，例如触发器 RAISE(ROLLBACK)、ON CONFLICT ROLLBACK 或严重 I/O 错误；SQLite 保存点无法阻止引擎撤销整个事务。独立事务下 RAISE(ROLLBACK) 的原异常保留已测试，外层事务被强制撤销后的调用者工作无法由此函数恢复。\\\",\n      \\\"若 ROLLBACK 或 RELEASE 本身不可执行，只保证不掩盖原异常，无法保证数据与保存点已经清理；故障注入仅验证异常保留。\\\",\n      \\\"输入假设为调用期间稳定的有限二元序列，连接由调用者串行使用；未验证重入回调、其他线程同时操作同一连接、恶意连接子类或自定义序列的任意副作用。\\\",\n      \\\"仅验证本环境安装的 SQLite/sqlite3，覆盖默认 isolation_level 和 isolation_level=None；未专门验证 Python 新式 autocommit 配置、进程崩溃或跨版本行为。\\\",\n      \\\"未枚举任意触发器对实际插入数量的改写；返回值保持原接口的 len(rows) 语义。\\\",\n      \\\"UUID 名称碰撞未强制注入测试；代码不查询调用者保存点名称。JSON 仅声明结构、条件和依据，不构成全状态形式证明。\\\"\n    ],\n    \\\"evidence\\\": [\n      {\\\"path\\\": \\\"app.py\\\", \\\"start\\\": 1, \\\"end\\\": 5, \\\"supports\\\": \\\"自包含模块，仅导入 uuid，保留公开函数签名。\\\"},\n      {\\\"path\\\": \\\"app.py\\\", \\\"start\\\": 6, \\\"end\\\": 8, \\\"supports\\\": \\\"在工具创建保存点之前读取入口事务状态，并生成局部保存点名。\\\"},\n      {\\\"path\\\": \\\"app.py\\\", \\\"start\\\": 9, \\\"end\\\": 12, \\\"supports\\\": \\\"参数绑定批量插入；RELEASE 在同一个 try 内，提交失败进入异常恢复。\\\"},\n      {\\\"path\\\": \\\"app.py\\\", \\\"start\\\": 13, \\\"end\\\": 22, \\\"supports\\\": \\\"根据事务是否仍活动和入口所有权选择局部回滚或本工具事务整体回滚。\\\"},\n      {\\\"path\\\": \\\"app.py\\\", \\\"start\\\": 23, \\\"end\\\": 27, \\\"supports\\\": \\\"捕获清理异常并裸 raise 保留原异常；不宣称清理始终成功。\\\"},\n      {\\\"path\\\": \\\"app.py\\\", \\\"start\\\": 28, \\\"end\\\": 28, \\\"supports\\\": \\\"成功释放保存点之后返回 len(rows)。\\\"}\n    ]\n  }\n}\nJSON\n./run_python -m json.tool model.json > /dev/null\"",
+      "review_flags": []
+    }
+  ],
+  "case_sha256": "f8107e089b020453286513984f4005a2688a98cd09dc381698bc7a5ef14e060f",
+  "prompt_sha256": "1bb460fb636cc7a19abd022ed921acd8d0028460effea85ac05ce737f1f9e4ba",
+  "event_sha256": "ef8387c52dd7471618e6473757f5aabaf9dd485b1386b98bc511f710383a507c",
+  "stderr_sha256": "d65662a052a6e185160de89d05fc1563b7f049d6c578e9f00c83de26900dd6de",
+  "model_requested": "gpt-6-astra",
+  "reasoning_effort": "high",
+  "cli_version": "codex-cli 0.158.0-alpha.2.1",
+  "review": {
+    "exit_code": 1,
+    "timed_out": false,
+    "elapsed_seconds": 26.87066383298952,
+    "usage": null,
+    "completed": false,
+    "valid": false,
+    "prediction": null,
+    "tool_items": [],
+    "input_sha256": "ab59c22875e835e22663c1878f114333230dc0273c82be1a256fada5575ab1b0",
+    "event_sha256": "291b6ec6d9b958ee96f849684a47a2ff3439748f701fad802f318b9b42152860"
+  }
+}

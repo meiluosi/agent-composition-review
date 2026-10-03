@@ -1,0 +1,169 @@
+{
+  "case_id": "c05",
+  "condition": "A_basic",
+  "trial": 1,
+  "exit_code": 0,
+  "timed_out": false,
+  "elapsed_seconds": 328.952989833022,
+  "usage": {
+    "input_tokens": 146589,
+    "cached_input_tokens": 118912,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 9057,
+    "reasoning_output_tokens": 2910
+  },
+  "completed": true,
+  "status": "completed",
+  "prediction": {
+    "initial_verdict": "violation",
+    "summary": "已直接修复 app.py：失败或取消时收尾本次任务、等待清理并保留异常，正常并行和顺序返回行为保持不变。已交付 model.json，包含实际行号、验证依据和边界。",
+    "tests_executed": [
+      "./run_python test_run_group.py original：复现原实现缺陷",
+      "./run_python test_run_group.py app：12 项通过",
+      "./run_python smoke.py：通过，输出 [2, 4]",
+      "./run_python -m json.tool model.json：通过",
+      "./run_python - <<'PY' … PY：模型引用和证据行号范围检查通过"
+    ],
+    "limitations": [
+      "验证环境为 Python 3.12.14；未穷举调度交错。",
+      "覆盖一次外部取消及有限时间清理；未验证重复外部取消、永不结束的清理或自定义任务工厂。"
+    ]
+  },
+  "acceptance": {
+    "tests_run": 5,
+    "passed": true,
+    "checks": [
+      {
+        "test": "test_child_cancellation_cleans_other_children",
+        "passed": true
+      },
+      {
+        "test": "test_external_cancellation_and_unrelated_task_survives",
+        "passed": true
+      },
+      {
+        "test": "test_factory_failure_cleans_already_started_children",
+        "passed": true
+      },
+      {
+        "test": "test_failure_waits_for_sibling_cleanup_and_keeps_exception",
+        "passed": true
+      },
+      {
+        "test": "test_order_empty_and_concurrency",
+        "passed": true
+      }
+    ],
+    "exit_code": 0,
+    "timed_out": false,
+    "sandbox": "macos_no_network_writes_only_grade_directory",
+    "stderr": ""
+  },
+  "structure": {
+    "valid": true,
+    "errors": [],
+    "scope": "Syntax/references only; semantic criteria reviewed independently."
+  },
+  "source_changed": true,
+  "artifacts": {
+    "app.py": "7d8a9f492246507f420e91afdd55105de134182d953afbdaa6a9848a713d1cb2",
+    "model.json": "5e627876676ef96225dc4583358a3c80032d3dbc6723b178d69491317c627622",
+    "test_run_group.py": "4e5a1eafc4c808ac147330945f046326acd113f248b9905846bc20283586a4a3"
+  },
+  "protected_changes": [],
+  "outside_changes": [],
+  "artifact_errors": [],
+  "tool_audit": [
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc \"pwd && rg --files -g '\"'!__pycache__'\"' -g '\"'!.*'\"'\"",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc 'cat task.md app.py MODEL_FORMAT.md smoke.py'",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc 'ls -la && ./run_python --version && nl -ba app.py'",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 1,
+      "command": "/bin/zsh -lc \"cat > test_run_group.py <<'PY'\nimport asyncio\nimport importlib\nimport sys\nimport unittest\n\nMODULE = sys.argv.pop(1) if len(sys.argv) > 1 else 'app'\nrun_group = importlib.import_module(MODULE).run_group\n\n\nclass GroupTests(unittest.IsolatedAsyncioTestCase):\n    async def asyncSetUp(self):\n        self.owned = []\n\n    async def asyncTearDown(self):\n        for task in self.owned:\n            if not task.done():\n                task.cancel()\n        await asyncio.gather(*self.owned, return_exceptions=True)\n\n    def track(self):\n        self.owned.append(asyncio.current_task())\n\n    async def test_empty(self):\n        self.assertEqual(await run_group([]), [])\n\n    async def test_parallel_and_input_order(self):\n        started = [asyncio.Event() for _ in range(3)]\n        finished = []\n        async def work(i):\n            for_event = started[i]\n            for_event.set()\n            await asyncio.gather(*(event.wait() for event in started))\n            await asyncio.sleep((2 - i) * .01)\n            finished.append(i)\n            return i * 2\n        result = await asyncio.wait_for(run_group([lambda i=i: work(i) for i in range(3)]), 1)\n        self.assertEqual(result, [0, 2, 4])\n        self.assertEqual(finished, [2, 1, 0])\n\n    async def check_failure(self, error):\n        ready, cleaned = asyncio.Event(), asyncio.Event()\n        async def sibling():\n            self.track()\n            ready.set()\n            try:\n                await asyncio.Event().wait()\n            finally:\n                await asyncio.sleep(.01)\n                cleaned.set()\n        async def fail():\n            await ready.wait()\n            raise error\n        with self.assertRaises(type(error)) as caught:\n            await run_group([sibling, fail])\n        self.assertIs(caught.exception, error)\n        self.assertTrue(cleaned.is_set(), 'returned before sibling cleanup')\n\n    async def test_exception_identity_and_cleanup(self):\n        await self.check_failure(ValueError('original error'))\n\n    async def test_base_exception_identity_and_cleanup(self):\n        class Stop(BaseException):\n            pass\n        await self.check_failure(Stop('original base exception'))\n\n    async def test_child_cancellation(self):\n        await self.check_failure(asyncio.CancelledError('child cancelled'))\n\n    async def test_synchronous_factory_failure(self):\n        created = []\n        error = LookupError('factory failed')\n        async def work():\n            await asyncio.sleep(0)\n        def good():\n            coro = work()\n            created.append(coro)\n            return coro\n        def bad():\n            raise error\n        try:\n            with self.assertRaises(LookupError) as caught:\n                await run_group([good, bad])\n            self.assertIs(caught.exception, error)\n            self.assertIsNone(created[0].cr_frame, 'created coroutine was not closed')\n        finally:\n            for coro in created:\n                coro.close()\n\n    async def test_external_cancel_waits_for_every_cleanup(self):\n        ready = [asyncio.Event(), asyncio.Event()]\n        cleaned = []\n        async def work(i):\n            self.track()\n            ready[i].set()\n            try:\n                await asyncio.Event().wait()\n            finally:\n                await asyncio.sleep(i * .03)\n                cleaned.append(i)\n        parent = asyncio.create_task(run_group([lambda: work(0), lambda: work(1)]))\n        self.owned.append(parent)\n        await asyncio.gather(*(event.wait() for event in ready))\n        parent.cancel('external reason')\n        with self.assertRaises(asyncio.CancelledError) as caught:\n            await parent\n        self.assertEqual(caught.exception.args, ('external reason',))\n        self.assertCountEqual(cleaned, [0, 1])\n\n    async def test_cancel_during_failure_cleanup(self):\n        ready, cleaning, release, cleaned = (asyncio.Event() for _ in range(4))\n        async def sibling():\n            self.track()\n            ready.set()\n            try:\n                await asyncio.Event().wait()\n            finally:\n                cleaning.set()\n                await release.wait()\n                cleaned.set()\n        async def fail():\n            await ready.wait()\n            raise ValueError('failure before external cancellation')\n        parent = asyncio.create_task(run_group([sibling, fail]))\n        self.owned.append(parent)\n        try:\n            await asyncio.wait_for(cleaning.wait(), .3)\n            parent.cancel('during cleanup')\n            await asyncio.sleep(0)\n            self.assertFalse(parent.done(), 'parent did not wait for cleanup')\n            release.set()\n            with self.assertRaises(asyncio.CancelledError) as caught:\n                await parent\n            self.assertEqual(caught.exception.args, ('during cleanup',))\n            self.assertTrue(cleaned.is_set())\n        finally:\n            release.set()\n\n    async def test_already_cancelling_child_is_not_cancelled_twice(self):\n        ready, cleaning, release, cleaned = (asyncio.Event() for _ in range(4))\n        async def self_cancel():\n            self.track()\n            ready.set()\n            asyncio.current_task().cancel()\n            try:\n                await asyncio.sleep(0)\n            finally:\n                cleaning.set()\n                await release.wait()\n                cleaned.set()\n        async def fail():\n            await cleaning.wait()\n            raise ValueError('other child failed')\n        parent = asyncio.create_task(run_group([self_cancel, fail]))\n        self.owned.append(parent)\n        await ready.wait()\n        await cleaning.wait()\n        await asyncio.sleep(.01)\n        release.set()\n        with self.assertRaises(ValueError):\n            await parent\n        self.assertTrue(cleaned.is_set())\n\n    async def test_unrelated_background_task_survives(self):\n        background = asyncio.create_task(asyncio.Event().wait())\n        self.owned.append(background)\n        async def fail():\n            raise RuntimeError('failure')\n        with self.assertRaises(RuntimeError):\n            await run_group([fail])\n        self.assertFalse(background.done())\n        self.assertEqual(background.cancelling(), 0)\n\n\nif __name__ == '__main__':\n    unittest.main(verbosity=2)\nPY\n./run_python test_run_group.py original\"",
+      "review_flags": []
+    },
+    {
+      "type": "file_change",
+      "exit_code": null,
+      "changes": [
+        {
+          "path": "<workspace>/app.py",
+          "kind": "update"
+        }
+      ]
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc './run_python test_run_group.py app && ./run_python smoke.py && nl -ba app.py'",
+      "review_flags": []
+    },
+    {
+      "type": "file_change",
+      "exit_code": null,
+      "changes": [
+        {
+          "path": "<workspace>/app.py",
+          "kind": "update"
+        },
+        {
+          "path": "<workspace>/test_run_group.py",
+          "kind": "update"
+        }
+      ]
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc './run_python test_run_group.py app && ./run_python smoke.py && nl -ba app.py'",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc \"cat > model.json <<'JSON'\n{\n  \\\"schema_version\\\": 1,\n  \\\"types\\\": {\n    \\\"FactoryBatch\\\": {\\\"factories\\\": {\\\"type\\\": \\\"array\\\"}},\n    \\\"OwnedBatch\\\": {\\\"tasks\\\": {\\\"type\\\": \\\"array\\\"}},\n    \\\"GroupResults\\\": {\\\"results\\\": {\\\"type\\\": \\\"array\\\"}},\n    \\\"CleanupResults\\\": {\\\"outcomes\\\": {\\\"type\\\": \\\"array\\\"}}\n  },\n  \\\"resources\\\": {\n    \\\"owned_tasks\\\": \\\"run_group 局部 tasks 列表；仅含本次调用通过 create_task 创建的任务，包含工厂中途抛错前的前缀。\\\",\n    \\\"group_future\\\": \\\"局部 group，正常聚合 Future；创建之前为 None。\\\",\n    \\\"cleanup_future\\\": \\\"局部 cleanup，以 return_exceptions=True 聚合本次所有任务。\\\",\n    \\\"active_exception\\\": \\\"except 块保存的异常上下文；清理期间的新外部取消有自己的异常上下文。\\\"\n  },\n  \\\"actions\\\": [\n    {\n      \\\"id\\\": \\\"schedule_factories\\\",\n      \\\"meaning\\\": \\\"run_group 的工厂循环逐一调用零参数工厂，并立即把返回协程注册为 Task。动作输出是局部 tasks 的抽象投影，不是新增公开返回值。同步失败时仍保留已创建任务前缀。\\\",\n      \\\"input_type\\\": \\\"FactoryBatch\\\",\n      \\\"output_type\\\": \\\"OwnedBatch\\\",\n      \\\"reads\\\": [],\n      \\\"writes\\\": [\\\"owned_tasks\\\"],\n      \\\"pre\\\": [],\n      \\\"post\\\": [\n        {\n          \\\"id\\\": \\\"one_task_per_factory_on_success\\\",\n          \\\"requirement\\\": \\\"工厂循环正常完成时，每个输入工厂对应一个任务。\\\",\n          \\\"must\\\": {\\\"op\\\": \\\"eq\\\", \\\"args\\\": [{\\\"count\\\": {\\\"path\\\": \\\"output.tasks\\\"}}, {\\\"count\\\": {\\\"path\\\": \\\"input.factories\\\"}}]}\n        },\n        {\n          \\\"id\\\": \\\"distinct_owned_tasks\\\",\n          \\\"requirement\\\": \\\"每次 create_task 产生独立的任务身份。\\\",\n          \\\"must\\\": {\\\"op\\\": \\\"unique\\\", \\\"args\\\": [{\\\"path\\\": \\\"output.tasks\\\"}]}\n        }\n      ]\n    },\n    {\n      \\\"id\\\": \\\"collect_results\\\",\n      \\\"meaning\\\": \\\"run_group 使用 gather 并发等待 tasks，再通过 shield 等待聚合 Future；成功时直接返回按输入顺序排列的结果列表，空输入返回空列表。\\\",\n      \\\"input_type\\\": \\\"OwnedBatch\\\",\n      \\\"output_type\\\": \\\"GroupResults\\\",\n      \\\"reads\\\": [\\\"owned_tasks\\\"],\n      \\\"writes\\\": [\\\"group_future\\\"],\n      \\\"pre\\\": [],\n      \\\"post\\\": [\n        {\n          \\\"id\\\": \\\"result_count\\\",\n          \\\"requirement\\\": \\\"成功返回的结果数等于任务数；结果顺序及值的对应关系另由行为测试验证。\\\",\n          \\\"must\\\": {\\\"op\\\": \\\"eq\\\", \\\"args\\\": [{\\\"count\\\": {\\\"path\\\": \\\"output.results\\\"}}, {\\\"count\\\": {\\\"path\\\": \\\"input.tasks\\\"}}]}\n        }\n      ]\n    },\n    {\n      \\\"id\\\": \\\"cancel_and_drain\\\",\n      \\\"meaning\\\": \\\"run_group 的 except BaseException 分支只对本次未完成且尚未取消的任务发出 cancel；通过 cleanup 等待所有本次任务终止。outcomes 是内部 gather 的结果投影，会被丢弃，不作为公开结果。随后以裸 raise 传播异常；清理期间出现外部取消时，先完成清理再传播该 CancelledError。finally 读取原聚合 Future 异常，避免未观察异常。\\\",\n      \\\"input_type\\\": \\\"OwnedBatch\\\",\n      \\\"output_type\\\": \\\"CleanupResults\\\",\n      \\\"reads\\\": [\\\"owned_tasks\\\", \\\"group_future\\\", \\\"active_exception\\\"],\n      \\\"writes\\\": [\\\"owned_tasks\\\", \\\"cleanup_future\\\", \\\"group_future\\\"],\n      \\\"pre\\\": [],\n      \\\"post\\\": [\n        {\n          \\\"id\\\": \\\"all_owned_tasks_joined\\\",\n          \\\"requirement\\\": \\\"内部清理聚合正常完成时，每个本次任务都贡献一个终态结果或异常。这个计数条件本身不证明清理时序。\\\",\n          \\\"must\\\": {\\\"op\\\": \\\"eq\\\", \\\"args\\\": [{\\\"count\\\": {\\\"path\\\": \\\"output.outcomes\\\"}}, {\\\"count\\\": {\\\"path\\\": \\\"input.tasks\\\"}}]}\n        }\n      ]\n    }\n  ],\n  \\\"edges\\\": [\n    {\n      \\\"from\\\": \\\"schedule_factories\\\",\n      \\\"to\\\": \\\"collect_results\\\",\n      \\\"bindings\\\": [{\\\"output\\\": \\\"tasks\\\", \\\"input\\\": \\\"tasks\\\"}]\n    }\n  ],\n  \\\"relations\\\": [\n    {\n      \\\"kind\\\": \\\"concurrent_lifecycle\\\",\n      \\\"actions\\\": [\\\"schedule_factories\\\", \\\"collect_results\\\"],\n      \\\"description\\\": \\\"工厂同步调用并注册任务，随后任务可在事件循环中并发执行；无需等待前一个任务完成才执行下一个。工厂调用本身不并行。\\\"\n    },\n    {\n      \\\"kind\\\": \\\"exception_control\\\",\n      \\\"from\\\": [\\\"schedule_factories\\\", \\\"collect_results\\\"],\n      \\\"to\\\": \\\"cancel_and_drain\\\",\n      \\\"description\\\": \\\"工厂错误、子任务错误或取消、父调用取消进入清理分支。清理从 owned_tasks 读取完整列表或已创建前缀；这是异常控制与共享局部状态关系，不是成功输出的顺序交接。\\\"\n    },\n    {\n      \\\"kind\\\": \\\"cancellation_boundary\\\",\n      \\\"actions\\\": [\\\"collect_results\\\", \\\"cancel_and_drain\\\"],\n      \\\"description\\\": \\\"shield 阻止父取消直接传播到聚合的子任务；清理中的第一次外部取消触发继续等待 cleanup，避免打断子任务异步清理。已有取消请求的任务不重复取消。\\\"\n    }\n  ],\n  \\\"required_actions\\\": [\\\"schedule_factories\\\", \\\"collect_results\\\", \\\"cancel_and_drain\\\"],\n  \\\"requirements\\\": [\n    {\n      \\\"id\\\": \\\"input_contract\\\",\n      \\\"statement\\\": \\\"输入为有限零参数工厂序列；每个工厂返回协程或同步抛错。\\\",\n      \\\"verification\\\": \\\"接口前提，未添加运行时输入校验。类型中用 array 抽象有限序列；工厂可调用性、协程类型无法由所用谓词完整编码。pre 的空列表表示这些前提未编码，不表示证明了无约束。\\\"\n    },\n    {\n      \\\"id\\\": \\\"success_behavior\\\",\n      \\\"statement\\\": \\\"并发执行、输入顺序返回、空输入返回空列表。\\\",\n      \\\"verification\\\": \\\"已运行 test_parallel_and_input_order、test_empty 和 smoke.py；并发测试要求全部子任务到达屏障才能继续。\\\"\n    },\n    {\n      \\\"id\\\": \\\"cleanup_before_exit\\\",\n      \\\"statement\\\": \\\"错误或取消退出之前，本次已创建任务全部终止；不取消无关后台任务。\\\",\n      \\\"verification\\\": \\\"已运行异常、工厂失败、子任务取消、父取消、清理中父取消、已开始取消的任务清理、无关后台任务测试；取消作用域还由局部 tasks 循环推断。\\\"\n    },\n    {\n      \\\"id\\\": \\\"exception_preservation\\\",\n      \\\"statement\\\": \\\"错误不作为公开结果，不构造 ExceptionGroup；保留原始异常对象。若清理期间父调用取消，则完成清理后传播该取消。\\\",\n      \\\"verification\\\": \\\"已运行 ValueError、自定义 BaseException、子任务和工厂 CancelledError 身份测试，以及清理异常不替换原异常测试；父取消测试检查 CancelledError 与取消消息。裸 raise 的对象保留由代码推断。\\\"\n    },\n    {\n      \\\"id\\\": \\\"observed_aggregation\\\",\n      \\\"statement\\\": \\\"父取消后，原始 gather 的异常也会被读取。\\\",\n      \\\"verification\\\": \\\"12 项测试的事件循环异常处理器均检查无未观察异步异常；代码 finally 显式读取 group.exception()。\\\"\n    }\n  ],\n  \\\"scope\\\": {\n    \\\"description\\\": \\\"当前 app.py 的单次 run_group 生命周期。动作是函数内代码段的抽象边界；条件以 input/output 为事件字段，post 只用于对应内部动作成功完成的路径。tasks 元素按任务身份解释，异常和任意返回值作为不透明 Python 值。required_actions 表示必需代码路径，不表示每次成功调用都执行清理。\\\",\n    \\\"limitations\\\": [\n      \\\"模型描述并非可执行跟踪或形式化证明；字段、条件和资源声明不自动证明实际因果关系。\\\",\n      \\\"未展开 asyncio 调度器、Task、gather、shield 内部实现；具体时序通过有限行为测试验证，未穷举所有调度交错。\\\",\n      \\\"验证环境为 Python 3.12.14 默认事件循环和任务工厂；未测试其他 Python 版本、自定义或 eager 任务工厂、任务创建机制自身故障。\\\",\n      \\\"只验证一次外部取消；未保证反复外部取消下的完整清理。假设协程响应取消且清理有限时间结束，不验证永不结束或持续吞掉取消的代码。\\\",\n      \\\"不管理子协程自行派生但未作为工厂返回协程注册的后台任务；未验证 KeyboardInterrupt/SystemExit 对 asyncio.run 整体生命周期的特殊影响。\\\",\n      \\\"谓词只表达成功路径的数量和身份约束；并发性、顺序、异常对象身份和终止时序依据测试与代码审查，未声称由结构检查证明。\\\"\n    ],\n    \\\"evidence\\\": [\n      {\\\"path\\\": \\\"app.py\\\", \\\"start\\\": 5, \\\"end\\\": 10, \\\"supports\\\": \\\"公开异步接口及本次任务所有权列表；每次工厂调用后立即注册 Task。\\\"},\n      {\\\"path\\\": \\\"app.py\\\", \\\"start\\\": 11, \\\"end\\\": 13, \\\"supports\\\": \\\"gather 按输入位置聚合并处理空输入；shield 隔离父取消的直接传播。\\\"},\n      {\\\"path\\\": \\\"app.py\\\", \\\"start\\\": 14, \\\"end\\\": 19, \\\"supports\\\": \\\"捕获包括取消在内的 BaseException，取消本次尚未取消的未完成任务，创建收尾聚合。\\\"},\n      {\\\"path\\\": \\\"app.py\\\", \\\"start\\\": 20, \\\"end\\\": 26, \\\"supports\\\": \\\"等待清理；清理期间的外部取消在继续等待后原样抛出。\\\"},\n      {\\\"path\\\": \\\"app.py\\\", \\\"start\\\": 27, \\\"end\\\": 31, \\\"supports\\\": \\\"读取原聚合异常并裸 raise 保留初始异常，内部清理结果不公开返回。\\\"}\n    ]\n  },\n  \\\"validation\\\": {\n    \\\"behavior_tests\\\": [\n      {\\\"command\\\": \\\"./run_python test_run_group.py app\\\", \\\"result\\\": \\\"12 项通过；检查无未观察异步异常。\\\"},\n      {\\\"command\\\": \\\"./run_python smoke.py\\\", \\\"result\\\": \\\"通过，输出 [2, 4]。\\\"}\n    ],\n    \\\"inference\\\": \\\"任务所有权与异常传播依据所列代码；有限测试不能证明所有调度路径。\\\"\n  }\n}\nJSON\n./run_python -m json.tool model.json > /dev/null\"",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc \"./run_python - <<'PY'\nimport json\nfrom pathlib import Path\nm = json.loads(Path('model.json').read_text())\nactions = {a['id']: a for a in m['actions']}\nassert m['schema_version'] == 1\nassert len(actions) == len(m['actions'])\nassert set(m['required_actions']) <= actions.keys()\nfor action in actions.values():\n    assert action['input_type'] in m['types']\n    assert action['output_type'] in m['types']\n    assert set(action['reads'] + action['writes']) <= m['resources'].keys()\nfor edge in m['edges']:\n    source, target = actions[edge['from']], actions[edge['to']]\n    for binding in edge['bindings']:\n        assert binding['output'] in m['types'][source['output_type']]\n        assert binding['input'] in m['types'][target['input_type']]\nlines = Path('app.py').read_text().splitlines()\nfor evidence in m['scope']['evidence']:\n    assert evidence['path'] == 'app.py'\n    assert 1 <= evidence['start'] <= evidence['end'] <= len(lines)\nprint('model references and evidence ranges: OK')\nPY\"",
+      "review_flags": []
+    }
+  ],
+  "case_sha256": "8388a50d780a20f09ec3e8ea64c8dfe56b51374e49548b37ec7a2d502f716615",
+  "prompt_sha256": "1bb460fb636cc7a19abd022ed921acd8d0028460effea85ac05ce737f1f9e4ba",
+  "event_sha256": "d4271bf715e78b4afe86fecac514586446807b147f3062418cc9e7eed684a882",
+  "stderr_sha256": "e9d264a081fe7ea19105a480487a92a8a3f060c287bd38d6f11fd573802d8d98",
+  "model_requested": "gpt-6-astra",
+  "reasoning_effort": "high",
+  "cli_version": "codex-cli 0.158.0-alpha.2.1",
+  "review": {
+    "exit_code": 1,
+    "timed_out": false,
+    "elapsed_seconds": 21.44180575001519,
+    "usage": null,
+    "completed": false,
+    "valid": false,
+    "prediction": null,
+    "tool_items": [],
+    "input_sha256": "329dcb8cfa62d73d67068b2aa8d390d6aadf212ca104e5a9005077c6a4498a42",
+    "event_sha256": "ef934b4c4c651ef03e225135cdcc5b19d1c7bbca06e3111e707449893cc0e63e"
+  }
+}

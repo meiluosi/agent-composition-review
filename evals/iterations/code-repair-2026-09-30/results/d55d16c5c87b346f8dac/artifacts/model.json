@@ -1,0 +1,656 @@
+{
+  "schema_version": 1,
+  "types": {
+    "State": {
+      "count": {
+        "type": "number"
+      },
+      "label": {
+        "type": "string"
+      },
+      "left": {
+        "type": "number"
+      },
+      "right": {
+        "type": "number"
+      }
+    },
+    "CountPatch": {
+      "count": {
+        "type": "number"
+      }
+    },
+    "LabelPatch": {
+      "label": {
+        "type": "string"
+      }
+    },
+    "LeftPatch": {
+      "left": {
+        "type": "number"
+      }
+    },
+    "RightPatch": {
+      "right": {
+        "type": "number"
+      }
+    },
+    "AnalysisOutput": {
+      "left": {
+        "type": "number"
+      },
+      "right": {
+        "type": "number"
+      }
+    },
+    "PrepareMerge": {
+      "base.count": {
+        "type": "number"
+      },
+      "base.label": {
+        "type": "string"
+      },
+      "base.left": {
+        "type": "number"
+      },
+      "base.right": {
+        "type": "number"
+      },
+      "patch.count": {
+        "type": "number"
+      }
+    },
+    "FinalMerge": {
+      "prepared.count": {
+        "type": "number"
+      },
+      "prepared.label": {
+        "type": "string"
+      },
+      "prepared.left": {
+        "type": "number"
+      },
+      "prepared.right": {
+        "type": "number"
+      },
+      "refresh.label": {
+        "type": "string"
+      },
+      "analysis.left": {
+        "type": "number"
+      },
+      "analysis.right": {
+        "type": "number"
+      }
+    }
+  },
+  "resources": {
+    "parent.count": "父图 State.count 通道",
+    "parent.label": "父图 State.label 通道",
+    "parent.left": "父图 State.left 通道",
+    "parent.right": "父图 State.right 通道",
+    "child.count": "子图 State.count 通道；输入为 prepare 提交后的快照",
+    "child.label": "子图 State.label 通道；输入为 prepare 提交后的快照",
+    "child.left": "子图 State.left 通道；输入为 prepare 提交后的快照",
+    "child.right": "子图 State.right 通道；输入为 prepare 提交后的快照",
+    "calls": "可选调用方日志；每个动作入口追加名称",
+    "parent_gate": "可选屏障，由 refresh 与 left 等待",
+    "child_gate": "可选屏障，由 left 与 right 等待"
+  },
+  "actions": [
+    {
+      "id": "prepare",
+      "meaning": "build_graph.prepare：记录动作并返回 count 增量更新后的值",
+      "input_type": "State",
+      "output_type": "CountPatch",
+      "reads": [
+        "parent.count"
+      ],
+      "writes": [
+        "parent.count",
+        "calls"
+      ],
+      "pre": [],
+      "post": []
+    },
+    {
+      "id": "prepared_snapshot",
+      "meaning": "父图提交 prepare 的局部更新并为两个后继提供同一步快照；框架边界，非新增 Python 函数",
+      "input_type": "PrepareMerge",
+      "output_type": "State",
+      "reads": [
+        "parent.count",
+        "parent.label",
+        "parent.left",
+        "parent.right"
+      ],
+      "writes": [
+        "child.count",
+        "child.label",
+        "child.left",
+        "child.right"
+      ],
+      "pre": [],
+      "post": [
+        {
+          "id": "prepared_count",
+          "requirement": "output.count = input.patch.count",
+          "must": {
+            "op": "eq",
+            "args": [
+              {
+                "path": "output.count"
+              },
+              {
+                "path": "input.patch.count"
+              }
+            ]
+          }
+        },
+        {
+          "id": "preserve_label",
+          "requirement": "output.label = input.base.label",
+          "must": {
+            "op": "eq",
+            "args": [
+              {
+                "path": "output.label"
+              },
+              {
+                "path": "input.base.label"
+              }
+            ]
+          }
+        },
+        {
+          "id": "preserve_left",
+          "requirement": "output.left = input.base.left",
+          "must": {
+            "op": "eq",
+            "args": [
+              {
+                "path": "output.left"
+              },
+              {
+                "path": "input.base.left"
+              }
+            ]
+          }
+        },
+        {
+          "id": "preserve_right",
+          "requirement": "output.right = input.base.right",
+          "must": {
+            "op": "eq",
+            "args": [
+              {
+                "path": "output.right"
+              },
+              {
+                "path": "input.base.right"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "refresh",
+      "meaning": "build_graph.refresh：等待可选父屏障并给原 label 追加 |fresh",
+      "input_type": "State",
+      "output_type": "LabelPatch",
+      "reads": [
+        "parent.label",
+        "parent_gate"
+      ],
+      "writes": [
+        "parent.label",
+        "parent_gate",
+        "calls"
+      ],
+      "pre": [],
+      "post": []
+    },
+    {
+      "id": "left",
+      "meaning": "build_graph.left：在原 left 上累加 prepared count 和旧 label 的长度",
+      "input_type": "State",
+      "output_type": "LeftPatch",
+      "reads": [
+        "child.left",
+        "child.count",
+        "child.label",
+        "parent_gate",
+        "child_gate"
+      ],
+      "writes": [
+        "child.left",
+        "parent_gate",
+        "child_gate",
+        "calls"
+      ],
+      "pre": [],
+      "post": []
+    },
+    {
+      "id": "right",
+      "meaning": "build_graph.right：在原 right 上累加 prepared count 减旧 label 的长度",
+      "input_type": "State",
+      "output_type": "RightPatch",
+      "reads": [
+        "child.right",
+        "child.count",
+        "child.label",
+        "child_gate"
+      ],
+      "writes": [
+        "child.right",
+        "child_gate",
+        "calls"
+      ],
+      "pre": [],
+      "post": []
+    },
+    {
+      "id": "analysis_publish",
+      "meaning": "child.compile() 的输出边界：以 AnalysisOutput 仅发布 left/right",
+      "input_type": "AnalysisOutput",
+      "output_type": "AnalysisOutput",
+      "reads": [
+        "child.left",
+        "child.right"
+      ],
+      "writes": [
+        "parent.left",
+        "parent.right"
+      ],
+      "pre": [],
+      "post": [
+        {
+          "id": "publish_left",
+          "requirement": "output.left = input.left",
+          "must": {
+            "op": "eq",
+            "args": [
+              {
+                "path": "output.left"
+              },
+              {
+                "path": "input.left"
+              }
+            ]
+          }
+        },
+        {
+          "id": "publish_right",
+          "requirement": "output.right = input.right",
+          "must": {
+            "op": "eq",
+            "args": [
+              {
+                "path": "output.right"
+              },
+              {
+                "path": "input.right"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "final_merge",
+      "meaning": "父图在 refresh 与 analysis 完成后提交不相交更新并返回 State；框架边界",
+      "input_type": "FinalMerge",
+      "output_type": "State",
+      "reads": [
+        "parent.count",
+        "parent.label",
+        "parent.left",
+        "parent.right"
+      ],
+      "writes": [],
+      "pre": [],
+      "post": [
+        {
+          "id": "final_count",
+          "requirement": "output.count = input.prepared.count",
+          "must": {
+            "op": "eq",
+            "args": [
+              {
+                "path": "output.count"
+              },
+              {
+                "path": "input.prepared.count"
+              }
+            ]
+          }
+        },
+        {
+          "id": "final_label",
+          "requirement": "output.label = input.refresh.label",
+          "must": {
+            "op": "eq",
+            "args": [
+              {
+                "path": "output.label"
+              },
+              {
+                "path": "input.refresh.label"
+              }
+            ]
+          }
+        },
+        {
+          "id": "final_left",
+          "requirement": "output.left = input.analysis.left",
+          "must": {
+            "op": "eq",
+            "args": [
+              {
+                "path": "output.left"
+              },
+              {
+                "path": "input.analysis.left"
+              }
+            ]
+          }
+        },
+        {
+          "id": "final_right",
+          "requirement": "output.right = input.analysis.right",
+          "must": {
+            "op": "eq",
+            "args": [
+              {
+                "path": "output.right"
+              },
+              {
+                "path": "input.analysis.right"
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "edges": [
+    {
+      "from": "prepare",
+      "to": "prepared_snapshot",
+      "bindings": [
+        {
+          "output": "count",
+          "input": "patch.count"
+        }
+      ]
+    },
+    {
+      "from": "prepared_snapshot",
+      "to": "refresh",
+      "bindings": [
+        {
+          "output": "count",
+          "input": "count"
+        },
+        {
+          "output": "label",
+          "input": "label"
+        },
+        {
+          "output": "left",
+          "input": "left"
+        },
+        {
+          "output": "right",
+          "input": "right"
+        }
+      ]
+    },
+    {
+      "from": "prepared_snapshot",
+      "to": "left",
+      "bindings": [
+        {
+          "output": "count",
+          "input": "count"
+        },
+        {
+          "output": "label",
+          "input": "label"
+        },
+        {
+          "output": "left",
+          "input": "left"
+        },
+        {
+          "output": "right",
+          "input": "right"
+        }
+      ]
+    },
+    {
+      "from": "prepared_snapshot",
+      "to": "right",
+      "bindings": [
+        {
+          "output": "count",
+          "input": "count"
+        },
+        {
+          "output": "label",
+          "input": "label"
+        },
+        {
+          "output": "left",
+          "input": "left"
+        },
+        {
+          "output": "right",
+          "input": "right"
+        }
+      ]
+    },
+    {
+      "from": "left",
+      "to": "analysis_publish",
+      "bindings": [
+        {
+          "output": "left",
+          "input": "left"
+        }
+      ]
+    },
+    {
+      "from": "right",
+      "to": "analysis_publish",
+      "bindings": [
+        {
+          "output": "right",
+          "input": "right"
+        }
+      ]
+    },
+    {
+      "from": "prepared_snapshot",
+      "to": "final_merge",
+      "bindings": [
+        {
+          "output": "count",
+          "input": "prepared.count"
+        },
+        {
+          "output": "label",
+          "input": "prepared.label"
+        },
+        {
+          "output": "left",
+          "input": "prepared.left"
+        },
+        {
+          "output": "right",
+          "input": "prepared.right"
+        }
+      ]
+    },
+    {
+      "from": "refresh",
+      "to": "final_merge",
+      "bindings": [
+        {
+          "output": "label",
+          "input": "refresh.label"
+        }
+      ]
+    },
+    {
+      "from": "analysis_publish",
+      "to": "final_merge",
+      "bindings": [
+        {
+          "output": "left",
+          "input": "analysis.left"
+        },
+        {
+          "output": "right",
+          "input": "analysis.right"
+        }
+      ]
+    }
+  ],
+  "required_actions": [
+    "prepare",
+    "prepared_snapshot",
+    "refresh",
+    "left",
+    "right",
+    "analysis_publish",
+    "final_merge"
+  ],
+  "relations": [
+    {
+      "kind": "input_binding",
+      "description": "invoke 的 State 同时供给 prepare 输入和 PrepareMerge.base"
+    },
+    {
+      "kind": "parallel",
+      "members": [
+        "refresh",
+        "analysis"
+      ],
+      "description": "父图 prepare 后分叉；analysis 包含 left、right 和 analysis_publish"
+    },
+    {
+      "kind": "parallel",
+      "members": [
+        "left",
+        "right"
+      ],
+      "description": "子图 START 同时连接 left/right；两者读取相同输入快照"
+    },
+    {
+      "kind": "boundary",
+      "description": "prepared_snapshot 到 left/right 的边折叠了 analysis 输入和子图 START 的恒等传递；final_merge 的 prepared 输入是父状态保留值"
+    },
+    {
+      "kind": "barrier",
+      "members": [
+        "refresh",
+        "left"
+      ],
+      "resource": "parent_gate"
+    },
+    {
+      "kind": "barrier",
+      "members": [
+        "left",
+        "right"
+      ],
+      "resource": "child_gate"
+    }
+  ],
+  "requirements": [
+    {
+      "id": "arithmetic",
+      "requirement": "对初始 (c, label, l, r)，最终 count=c+7，label=label+\"|fresh\"，left=l+c+7+len(label)，right=r+c+7-len(label)。",
+      "verification": "直接检查 app.py 的四个动作；test_app.py 的值、重复调用、并发和异步测试使用完整结果断言。加法、减法及字符串拼接未编码为 must 谓词。"
+    },
+    {
+      "id": "single_writer",
+      "requirement": "父并行步骤 refresh 只发布 label，analysis 只发布 left/right；count 保留 prepare 的值。",
+      "verification": "由输出 schema 和返回字典推断；smoke、屏障及子图独立调用验证。"
+    },
+    {
+      "id": "once_and_isolation",
+      "requirement": "正常完成的每次调用四个动作各执行一次；调用之间和不同构建的图之间不泄漏状态。",
+      "verification": "测试 Counter 日志、重复调用、同图并发及两个图交错并发；函数没有新增可变缓存。调用方主动共享同一 calls 或 gate 时共享该观察对象。"
+    },
+    {
+      "id": "failures",
+      "requirement": "节点和屏障异常向调用方传播。",
+      "verification": "测试 parent_gate/child_gate 抛出异常和非法 count 引发 TypeError；实现无捕获异常分支。失败调用不保证其他并行分支均完成。"
+    }
+  ],
+  "scope": {
+    "description": "当前 app.py 的父图准备、双层分叉、子图输出投影及最终合并。动作返回 patch；两个 merge 动作抽象 LangGraph 通道提交。State 数值字段实际声明为 int。",
+    "limitations": [
+      "类型条目是声明而非运行时输入校验；number 无法精确表达 Python int。前提是输入包含 State 的四个合法字段。",
+      "空 pre/post 不表示无约束或已证明：四个业务动作的精确算术和字符串要求在 requirements 描述，由代码阅读和行为测试支持，未用谓词表达。",
+      "框架内部调度、线程安全实现、检查点、持久化、重试、流式事件和中断恢复未建模或验证。",
+      "屏障和并发测试是有限次运行，不能穷尽调度；未验证其他 LangGraph/Python 版本或不满足双参与者协议的自定义 gate。",
+      "日志和屏障为调用方可选对象，模型描述其使用点；不保证任意自定义对象的并发安全。"
+    ],
+    "evidence": [
+      {
+        "path": "app.py",
+        "start": 6,
+        "end": 15,
+        "supports": "完整 State 与仅有 left/right 的 AnalysisOutput"
+      },
+      {
+        "path": "app.py",
+        "start": 18,
+        "end": 25,
+        "supports": "公开接口、可选调用日志及 prepare +7"
+      },
+      {
+        "path": "app.py",
+        "start": 27,
+        "end": 45,
+        "supports": "三条动作公式、原累积值、双层屏障和异常不捕获"
+      },
+      {
+        "path": "app.py",
+        "start": 47,
+        "end": 52,
+        "supports": "子图保留完整 State 输入、限制输出 schema、START 双分支"
+      },
+      {
+        "path": "app.py",
+        "start": 53,
+        "end": 62,
+        "supports": "编译子图嵌入父图，prepare 后双分支和父图编译返回；merge 边界据这些图连接与实测推断"
+      }
+    ]
+  },
+  "validation": {
+    "executed": [
+      {
+        "command": "./run_python smoke.py",
+        "result": "修复前 InvalidUpdateError(label)；修复后 count=8,label=old|fresh,left=13,right=8"
+      },
+      {
+        "command": "./run_python test_app.py",
+        "result": "6 项测试全部通过；包含 3 次双层屏障、40 次两图交错并发和 8 次异步调用"
+      }
+    ],
+    "inferred": [
+      "输出 schema 避免并行发布旧 label/count；不同构建无内部共享可变状态"
+    ],
+    "unverified": [
+      "任意调度及框架版本",
+      "检查点、重试及中断恢复"
+    ]
+  }
+}

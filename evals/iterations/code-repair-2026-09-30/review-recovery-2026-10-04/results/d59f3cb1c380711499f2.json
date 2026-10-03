@@ -1,0 +1,50 @@
+{
+  "case_id": "c04",
+  "condition": "C_v4",
+  "trial": 2,
+  "exit_code": 0,
+  "timed_out": false,
+  "elapsed_seconds": 62.41728916700231,
+  "usage": {
+    "input_tokens": 12669,
+    "cached_input_tokens": 0,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 902,
+    "reasoning_output_tokens": 122
+  },
+  "completed": true,
+  "valid": true,
+  "prediction": {
+    "criteria": [
+      {
+        "id": "r1",
+        "assessment": "covered",
+        "model_evidence": "resources 明确描述 records 包含调用者未提交行、transaction 为连接的 in_transaction、caller_savepoints 为已有回滚边界，以及 connection 的身份和可用性；write_batch 的读写资源、returned_count、failed_batch_undone 和 successful_rows 描述批次效果。",
+        "code_evidence": "提交代码第6行读取调用前事务状态，第8行建立批次保存点，第10行在原连接上参数化插入，第27行返回 len(rows)。独立验收中的批次回滚、空批次及重复失败检查通过。",
+        "reason": "模型将调用者资源、调用前后状态与批次写入效果联系起来，并有实现及行为证据支持。成功行语义虽未全部写成形式谓词，但其文字要求与代码构成足够依据。"
+      },
+      {
+        "id": "r2",
+        "assessment": "covered",
+        "model_evidence": "transaction_ownership 区分无外层事务时提交和有外层事务时保持活跃，并明确状态布尔值只覆盖部分要求；caller_controls_completion 补充持久性及调用者后续提交、回滚权；conditional_cleanup 按事务归属区分清理。",
+        "code_evidence": "提交代码第6、8、12行记录原事务状态并创建、释放本批保存点：释放最外层保存点提交，释放嵌套保存点保留外层事务。独立验收的 standalone_success_is_committed、success_does_not_commit_callers_transaction、existing_savepoint_is_preserved 和 explicit_transaction_in_autocommit_mode 均通过。",
+        "reason": "模型明确区分独立提交与嵌套参与，没有将内层正常返回等同于外层完成；保存点机制和独立执行证据支持该关系。"
+      },
+      {
+        "id": "r3",
+        "assessment": "covered",
+        "model_evidence": "failed_batch_undone 要求失败后 records 恢复调用前状态；caller_savepoints_survive 和 original_exception 分别描述调用者边界与原异常保留。relations 明确插入及 RELEASE 同处 try、按所有权回滚、清理失败后不继续 RELEASE；scope 明确自动全局回滚和清理不可执行时的限制。",
+        "code_evidence": "提交代码第9—12行将 RELEASE 纳入异常保护，第15—21行分别回滚本批保存点或自有事务，第22—26行抑制清理异常并裸 raise。独立验收的 failure_rolls_back_only_own_batch、standalone_failure_is_atomic_and_preserves_original_error 及保存点保留检查通过。原始代码第15行的 RELEASE 位于异常保护之外，与模型描述不同。",
+        "reason": "模型对应提交版本，准确表示批次局部回滚、调用者工作保留和原异常传播之间的关系。异常环境下的原子性被明确标为要求及限制，没有冒充无条件验证保证。"
+      }
+    ],
+    "uncertainty": "结构检查仅支持语法及引用有效。未提供模型所引 test_batch.py 的源码或完整执行记录，其详细测试声明无法独立核实；所附七项独立验收也不构成对全部 SQLite 配置及故障模式的证明。"
+  },
+  "tool_items": [],
+  "errors": [],
+  "input_sha256": "93941f9208742b0626bf396e813913ba6582b2c1be365c83a54615d062218b7c",
+  "event_sha256": "c812af3cc60906b9e351f6bd5c552d2ff2e6e7001b859829691df85d4a363fbb",
+  "cli_version": "codex-cli 0.160.0",
+  "model_requested": "gpt-6-astra",
+  "reasoning_effort": "high"
+}

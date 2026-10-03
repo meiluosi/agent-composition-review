@@ -1,0 +1,117 @@
+{
+  "schema_version": 1,
+  "types": {
+    "BatchCall": {
+      "connection_id": {"type": "string"},
+      "rows": {"type": "array"}
+    },
+    "BatchOutcome": {
+      "status": {"type": "string", "enum": ["returned", "raised"]}
+    }
+  },
+  "resources": {
+    "records": "调用连接可见的 records 行集合；回滚比较需要完整快照。",
+    "transaction": "连接 in_transaction 状态及 SQLite 内部事务/保存点栈。",
+    "committed_records": "其他连接可见的已提交记录。",
+    "connection": "调用者连接的身份与打开状态；本函数不替换或关闭它。",
+    "schema": "已有 records 表、约束和触发器；本函数不修改表结构。"
+  },
+  "actions": [
+    {
+      "id": "write_batch",
+      "meaning": "公开函数 app.write_batch(connection, rows)：在独立命名保存点内参数化插入整个批次，释放成功后返回数量，异常时按事务归属清理并重新抛出原异常。",
+      "input_type": "BatchCall",
+      "output_type": "BatchOutcome",
+      "reads": ["connection", "transaction", "schema", "records"],
+      "writes": ["records", "transaction", "committed_records"],
+      "pre": [
+        {
+          "id": "open_connection",
+          "requirement": "调用者提供可用且已打开的 SQLite 连接。",
+          "must": {"op": "eq", "args": [{"path": "before.connection.open"}, {"literal": true}]}
+        },
+        {
+          "id": "existing_table",
+          "requirement": "records 表已存在。",
+          "must": {"op": "eq", "args": [{"path": "before.schema.records_exists"}, {"literal": true}]}
+        }
+      ],
+      "post": [
+        {
+          "id": "return_count",
+          "requirement": "成功返回所给有限序列的长度；测试使用普通 INSERT 的表结构。",
+          "when": {"op": "eq", "args": [{"path": "output.status"}, {"literal": "returned"}]},
+          "must": {"op": "eq", "args": [{"path": "output.count"}, {"count": {"path": "input.rows"}}]}
+        },
+        {
+          "id": "preserve_connection",
+          "requirement": "保持调用者连接身份和打开状态。",
+          "must": {"op": "eq", "args": [{"path": "after.connection"}, {"path": "before.connection"}]}
+        },
+        {
+          "id": "success_transaction_ownership",
+          "requirement": "成功时：无外层事务则释放保存点提交；已有外层事务则仍留给调用者处理。",
+          "when": {"op": "eq", "args": [{"path": "output.status"}, {"literal": "returned"}]},
+          "must": {"op": "eq", "args": [{"path": "after.transaction.active"}, {"path": "before.transaction.active"}]}
+        }
+      ],
+      "control_flow": [
+        {"lines": [6, 9], "operation": "读取批次数量与入口 in_transaction，生成 batch_ 加 UUID 十六进制名称，创建保存点。"},
+        {"lines": [10, 13], "operation": "在同一 try 中 executemany 和 RELEASE，涵盖插入错误与提交错误。"},
+        {"lines": [14, 19], "operation": "异常且入口已有事务：ROLLBACK TO 自己的保存点，再 RELEASE；不调用全局 rollback 或 commit。"},
+        {"lines": [20, 23], "operation": "异常且入口没有事务：回滚函数自己启动的整个事务，避免再次 RELEASE 遇到提交锁。"},
+        {"lines": [24, 29], "operation": "清理异常不覆盖原异常；失败 bare raise；成功返回 count。"}
+      ]
+    }
+  ],
+  "edges": [],
+  "required_actions": ["write_batch"],
+  "requirements": [
+    {
+      "id": "batch_atomicity",
+      "requirement": "普通表约束下，成功写入全批次；插入或提交失败后撤销本批次。",
+      "validation": "test_batch.py 比较完整记录快照；覆盖重复主键、迭代中断、延迟外键及真实读锁造成的 SQLITE_BUSY。",
+      "status": "已执行有限用例；依赖 SQLite 回滚操作可用。"
+    },
+    {
+      "id": "caller_ownership",
+      "requirement": "已有工作及调用者保存点不被工具提交或回滚，调用者可自行提交、回滚及 ROLLBACK TO。",
+      "validation": "test_batch.py 覆盖默认隔离配置的隐式事务、两种配置的显式 BEGIN、顶层与嵌套调用者保存点，并执行后续提交和回滚。另用第二连接检查未提交批次不可见。",
+      "status": "普通 SQLite ABORT 约束语义下用例通过；数据库自身强制回滚整个事务不在此保证内。"
+    },
+    {
+      "id": "original_exception",
+      "requirement": "失败传播原异常，不用清理错误替换它。",
+      "validation": "BaseException 对象身份断言、SQLite 异常类型及 sqlite_errorcode 断言；代码中嵌套清理异常捕获后 bare raise。",
+      "status": "上述行为测试通过；任意清理故障下的异常保留由代码审查支持，未穷举注入。"
+    }
+  ],
+  "scope": {
+    "description": "仅建模当前 app.py 的 write_batch 公共调用边界及其内部事务控制分支。一个动作的内部控制流不是多个动作间的数据交接，所以 edges 为空。类型中的 connection_id、status、count 及 before/after 路径是可观测行为的序列化描述，不是新增的 Python 接口或已采集的 trace。",
+    "limitations": [
+      "未生成执行 trace，未用谓词检查器证明业务性质；真实行为依据 test_batch.py 的 SQLite 执行及断言，格式校验仅检查结构。",
+      "未覆盖损坏数据库、磁盘写满、回滚本身失败、进程崩溃及同一连接并发/重入操作；若数据库拒绝清理，只保证尽力清理和保留原异常，不能保证恢复数据。",
+      "ON CONFLICT ROLLBACK、触发器 RAISE(ROLLBACK) 或 SQLite 严重错误可能自行撤销整个外层事务；保存点不能隔离这种引擎行为。仅验证了无外层事务时 ON CONFLICT ROLLBACK 的原异常保留。",
+      "以普通 INSERT 语义的 records 表为范围，未证明任意触发器、ON CONFLICT IGNORE/REPLACE 等表策略下返回长度等于实际新增行数。",
+      "输入为稳定有限序列，未覆盖恶意自定义序列、长度与迭代内容不一致或迭代过程中操纵连接；名称依赖 UUID 唯一性，未证明绝对无碰撞。",
+      "验证默认 sqlite3 连接和 isolation_level=None；未覆盖其他 Python/SQLite 版本及新的 autocommit=True 模式。",
+      "模型未展开 SQLite 锁、日志和保存点栈内部实现；保存点存续由后续 SQL 操作验证，持久提交由另一个连接读取验证。"
+    ],
+    "evidence": [
+      {"path": "app.py", "start": 5, "end": 9, "supports": "公开接口不变；预先取得数量和事务归属；建立独立保存点。"},
+      {"path": "app.py", "start": 10, "end": 14, "supports": "参数绑定处理特殊字符键；插入和 RELEASE 均位于异常处理范围。"},
+      {"path": "app.py", "start": 15, "end": 23, "supports": "已有事务仅回滚自己的保存点；只有入口无事务时才调用整个连接的 rollback。"},
+      {"path": "app.py", "start": 24, "end": 29, "supports": "清理异常不会替换原异常；成功返回序列长度。"},
+      {"path": "app.py", "start": 1, "end": 29, "supports": "代码自包含，仅依赖标准库 uuid；未关闭或替换调用者连接。"}
+    ]
+  },
+  "validation": {
+    "behavior": [
+      {"command": "./run_python smoke.py", "result": "修改前与交付版本均通过，输出 1 和 [('example', 5)]。"},
+      {"command": "BATCH_MODULE=original ./run_python test_batch.py", "result": "10 个测试方法，4 个子用例断言失败、2 个子用例异常：提交失败未撤销、自动回滚异常被覆盖。"},
+      {"command": "./run_python test_batch.py", "result": "当前交付实现 10 个测试方法全部通过，包含默认与 None 隔离配置的子用例。"}
+    ],
+    "structure": {"command": "./run_python scripts/composition.py validate model.json", "result": "结构与引用校验通过；不代表业务性质已证明。"},
+    "inference": "代码审查支持清理异常不覆盖原异常，且全连接 rollback 只发生在入口无事务的分支；不将该推断当成所有环境下的运行证明。"
+  }
+}

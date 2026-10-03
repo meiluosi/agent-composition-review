@@ -1,0 +1,50 @@
+{
+  "case_id": "c06",
+  "condition": "B_tools",
+  "trial": 2,
+  "exit_code": 0,
+  "timed_out": false,
+  "elapsed_seconds": 59.609175624966156,
+  "usage": {
+    "input_tokens": 12912,
+    "cached_input_tokens": 0,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 865,
+    "reasoning_output_tokens": 97
+  },
+  "completed": true,
+  "valid": true,
+  "prediction": {
+    "criteria": [
+      {
+        "id": "r1",
+        "assessment": "covered",
+        "model_evidence": "actions 的 create_owned_tasks、await_group、drain_owned_tasks 表示完整生命周期；relations.concurrency 区分同步调用工厂与并行推进子任务；await_group.meaning 说明按输入顺序返回；cancellation_boundary 和 scope.limitations 明确一次外部取消的处理及范围。",
+        "code_evidence": "提交代码第 9–10 行按输入顺序创建任务，第 11–13 行通过 gather 汇总并使用 shield 等待，第 14–27 行处理退出清理。独立验收 test_order_empty_and_concurrency、test_external_cancellation_and_unrelated_task_survives 均通过。",
+        "reason": "模型将并行执行、结果顺序、空输入和调用方取消联系到具体控制流，与提交版本一致；也明确结构谓词本身不能证明顺序或并行性，相关覆盖有代码及行为证据支持。"
+      },
+      {
+        "id": "r2",
+        "assessment": "covered",
+        "model_evidence": "relations.mandatory_finalization 明确结果交付或异常传播必须等待清理阶段退出；exception_propagation 区分主等待传播异常与清理收集异常；drain_owned_tasks 描述等待全部自有任务及已有 group 完成。",
+        "code_evidence": "提交代码第 13 行主等待可能先收到异常，第 14–23 行随后取消并等待剩余任务；第 24–27 行处理清理期间的一次外部取消。独立验收 test_failure_waits_for_sibling_cleanup_and_keeps_exception、test_child_cancellation_cleans_other_children 均通过。",
+        "reason": "模型没有将 gather 报错等同于全部子任务结束，而是显式建立退出前清理的必经关系。异常传播和清理结果的用途得到区分，且模型注明清理期间父取消时传播该取消，与代码一致。"
+      },
+      {
+        "id": "r3",
+        "assessment": "covered",
+        "model_evidence": "resources.owned_tasks 限定为本次 create_task 创建的任务；cancellation_is_local 限定取消目标属于输入任务集合；create_owned_tasks 和 conditional_handoff 明确工厂同步失败时将已登记的任务前缀交给 finally。",
+        "code_evidence": "提交代码第 6、9–10 行维护局部任务列表，第 15–18 行只遍历该列表取消任务；工厂在第 10 行同步抛错后仍进入 finally，group 为 None 时第 20–23 行等待已创建任务。独立验收 test_factory_failure_cleans_already_started_children、test_external_cancellation_and_unrelated_task_survives 均通过。",
+        "reason": "所有权边界和创建中途失败的清理路径都有明确关系及代码依据。模型还明确排除后代任务，并说明尚未开始执行的协程不保证执行其内部 finally，没有超出直接创建任务的范围作保证。"
+      }
+    ],
+    "uncertainty": "结构检查仅证明语法和引用有效。独立行为验收提供了五项通过记录；模型自述的其他测试未获独立确认。上述判断结合提交代码与明确的范围限制，不构成对所有调度交错的数学证明。"
+  },
+  "tool_items": [],
+  "errors": [],
+  "input_sha256": "217570c24970f752f7f2584e47023972447d5d45c33de68053b1c3044b6454ad",
+  "event_sha256": "9118125b8a310dcdec78aa06f0afa95e08a0e117d056e715221d3514f6d08445",
+  "cli_version": "codex-cli 0.160.0",
+  "model_requested": "gpt-6-astra",
+  "reasoning_effort": "high"
+}

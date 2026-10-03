@@ -1,0 +1,50 @@
+{
+  "case_id": "c06",
+  "condition": "A_basic",
+  "trial": 1,
+  "exit_code": 0,
+  "timed_out": false,
+  "elapsed_seconds": 62.381429750006646,
+  "usage": {
+    "input_tokens": 13018,
+    "cached_input_tokens": 0,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 901,
+    "reasoning_output_tokens": 118
+  },
+  "completed": true,
+  "valid": true,
+  "prediction": {
+    "criteria": [
+      {
+        "id": "r1",
+        "assessment": "covered",
+        "model_evidence": "actions.register_tasks、collect_results 描述本次任务登记、并行推进及按登记顺序返回；relations.exceptional_control 和 cancellation_boundary 明确父取消进入清理分支。scope 将模型限定为提交版 run_group。",
+        "code_evidence": "提交代码第 6–13 行依次登记 Task，以 gather 收集有序结果，并用 shield 隔离父取消；第 14–28 行处理异常退出。独立验收 test_order_empty_and_concurrency、test_external_cancellation_and_unrelated_task_survives 均通过。",
+        "reason": "模型通过任务登记、结果收集和异常控制关系覆盖生命周期、并发、有序结果、空输入及调用者取消，与提交版实现一致；依据包含源码和独立行为检查，并非仅凭计数谓词或语法检查。"
+      },
+      {
+        "id": "r2",
+        "assessment": "covered",
+        "model_evidence": "drain_and_reraise 及 relations.lifecycle 明确先取消未结束任务、等待 cleanup，再重新抛出原异常；ExceptionalExit 被说明为异常出口观测而非返回值。cancellation_boundary 描述清理期间取消后继续等待同一 cleanup。",
+        "code_evidence": "提交代码第 15–20 行取消剩余任务并建立包含 tasks 与原 group 的清理聚合；第 21–28 行等待清理完成后 bare raise。独立验收 test_failure_waits_for_sibling_cleanup_and_keeps_exception、test_child_cancellation_cleans_other_children 均通过。",
+        "reason": "模型明确区分失败被观察到和所有子任务结束两个时点，并以等待关系连接清理与异常出口。源码支持保留进入处理分支的异常、内部消费清理结果且不创建 ExceptionGroup；独立验收支持等待清理及保留异常的关键行为。"
+      },
+      {
+        "id": "r3",
+        "assessment": "covered",
+        "model_evidence": "resources.owned_tasks 将所有权限定为本次调用的局部 tasks；register_tasks 描述同步失败保留已登记前缀；exceptional_control 将工厂同步失败接入 drain_and_reraise。scope 明确不涵盖子任务自行创建的后代任务。",
+        "code_evidence": "提交代码第 6、9–10 行建立本次任务列表；工厂同步抛错进入第 14 行，随后第 15–17 行仅遍历该列表取消任务。group 尚未创建时，第 19–20 行仍等待已登记任务。独立验收 test_factory_failure_cleans_already_started_children、test_external_cancellation_and_unrelated_task_survives 均通过。",
+        "reason": "取消所有权和工厂创建失败均有明确建模及源码依据；已创建前缀会被清理，无关后台任务不属于取消目标。范围限定与实现一致，没有将所有权扩展至整个事件循环。"
+      }
+    ],
+    "uncertainty": "结构检查仅证明语法及引用有效。模型自述的 10 项测试、smoke 和额外清理抛错测试未提供独立执行记录，不能视为已独立验证；本评审依据所给源码和 5 项独立验收。结论限于声明的输入与取消范围，不是数学证明。"
+  },
+  "tool_items": [],
+  "errors": [],
+  "input_sha256": "be4428210e197d58111e7667113728be49a0c5c219e188f1958796cea78640bc",
+  "event_sha256": "09b53341cd413e1527bf9d3649cfd9e84b9624fe1bd61c7b555ddeaf1105db4b",
+  "cli_version": "codex-cli 0.160.0",
+  "model_requested": "gpt-6-astra",
+  "reasoning_effort": "high"
+}

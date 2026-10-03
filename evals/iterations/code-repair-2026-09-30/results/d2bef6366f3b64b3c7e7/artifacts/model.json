@@ -1,0 +1,122 @@
+{
+  "schema_version": 1,
+  "types": {
+    "FactorySequenceObservation": {
+      "factory_slots": {"type": "array"}
+    },
+    "GroupExitObservation": {
+      "exit_kind": {"type": "string", "enum": ["return", "raise"]},
+      "created_task_ids": {"type": "array"},
+      "settled_task_ids": {"type": "array"},
+      "cancel_target_ids": {"type": "array"},
+      "result_slots": {"type": "array"}
+    }
+  },
+  "resources": {
+    "owned_tasks": "run_group 的局部 tasks 列表，按工厂输入顺序持有本次创建的 Task 强引用。",
+    "owned_task_lifecycle": "仅这些 Task 的执行、取消请求和终止状态；不概括工厂或协程自身的任意业务副作用。",
+    "group_future": "局部 group：正常路径的 gather 聚合 Future。",
+    "cleanup_future": "异常路径局部 cleanup：吸收子任务异常并等待所有 owned_tasks 终止的 gather Future。"
+  },
+  "actions": [
+    {
+      "id": "run_group_exit",
+      "meaning": "app.run_group(factories) 的完整调用边界：依次创建本次拥有的任务，并发等待；正常时按输入顺序返回，异常或取消时终止其余任务并完成等待后重新抛出。输出类型是退出时的观测投影，不是新增公开返回类型。",
+      "input_type": "FactorySequenceObservation",
+      "output_type": "GroupExitObservation",
+      "reads": ["owned_tasks", "owned_task_lifecycle", "group_future", "cleanup_future"],
+      "writes": ["owned_tasks", "owned_task_lifecycle", "group_future", "cleanup_future"],
+      "pre": [],
+      "post": [
+        {
+          "id": "all_owned_tasks_settled",
+          "requirement": "任何退出路径均已等待本次创建的所有任务终止。",
+          "must": {"op": "subset", "args": [{"path": "output.created_task_ids"}, {"path": "output.settled_task_ids"}]}
+        },
+        {
+          "id": "cancel_only_owned_tasks",
+          "requirement": "run_group 主动发出的取消请求仅针对本次创建的任务。",
+          "must": {"op": "subset", "args": [{"path": "output.cancel_target_ids"}, {"path": "output.created_task_ids"}]}
+        },
+        {
+          "id": "one_result_per_input_on_success",
+          "requirement": "正常返回时每个输入位置对应一个结果，空输入返回空列表。",
+          "when": {"op": "eq", "args": [{"path": "output.exit_kind"}, {"literal": "return"}]},
+          "must": {"op": "eq", "args": [{"count": {"path": "output.result_slots"}}, {"count": {"path": "input.factory_slots"}}]}
+        },
+        {
+          "id": "failure_has_no_returned_results",
+          "requirement": "异常退出时没有公开返回的结果；内部清理 gather 的异常结果不会返回给调用方。",
+          "when": {"op": "eq", "args": [{"path": "output.exit_kind"}, {"literal": "raise"}]},
+          "must": {"op": "eq", "args": [{"count": {"path": "output.result_slots"}}, {"literal": 0}]}
+        }
+      ]
+    }
+  ],
+  "edges": [],
+  "required_actions": ["run_group_exit"],
+  "relations": [
+    {
+      "kind": "ownership",
+      "description": "run_group 在调用每个 factory 后立即 create_task 并追加 tasks；同步工厂失败时已有 tasks 仍由同一个异常路径持有并清理。"
+    },
+    {
+      "kind": "concurrent_execution",
+      "description": "所有工厂调用之间没有 await；创建的任务交给 gather 并发执行。gather 的参数次序决定结果次序，不表示任务按顺序完成。"
+    },
+    {
+      "kind": "exceptional_lifecycle",
+      "description": "BaseException 处理路径取消尚未结束且没有未清除取消请求的 owned_tasks，然后等待 cleanup；shield 防止父调用取消传播到正在清理的任务。清理期间遇到 CancelledError 继续等待，最后裸 raise 保留进入此路径时的异常。"
+    },
+    {
+      "kind": "future_observation",
+      "description": "清理完成后读取 group.exception()，避免父调用取消后正常聚合 Future 的异常无人取回。"
+    }
+  ],
+  "requirements": [
+    {
+      "id": "input_domain",
+      "statement": "调用方提供有限的零参数工厂序列；每个工厂返回协程或同步抛错。运行于有效 asyncio 事件循环中，协程取消清理在有限时间内结束。",
+      "verification": "调用前提，不是实现做过的输入校验。pre 留空是因为 JSON 谓词不能验证 Python 可调用性及终止性，不代表已经证明没有前提。"
+    },
+    {
+      "id": "parallel_order_and_identity",
+      "statement": "正常结果与输入一一对应且保留值对象；异常和 CancelledError 不被转换为结果或 ExceptionGroup，首个进入异常处理路径的异常对象被保留。",
+      "verification": "代码检查 gather、shield 和裸 raise；test_run_group.py 用事件屏障验证并发和逆序完成，并用 assertIs 验证结果及异常对象身份。JSON 长度谓词本身不证明这些语义。"
+    },
+    {
+      "id": "cancellation_cleanup",
+      "statement": "失败、子任务取消或一次外部取消时，退出前等待本次任务清理；不主动取消无关后台任务。",
+      "verification": "test_run_group.py 验证异步 finally、工厂抛错后的协程关闭、父/子取消、已有清理期间取消、失败清理期间取消、清理抛错和后台任务存活；事件循环异常处理器检查未取回异常。"
+    }
+  ],
+  "scope": {
+    "description": "仅建模当前 app.py 的 run_group 调用与退出边界，内部任务所有权、并发聚合和清理生命周期由 relations 描述。单边界模型没有跨动作数据交接，因此 edges 为空。factory_slots/result_slots 是输入/正常返回的位置观测，允许同一对象重复出现；任务 ID 表示运行时任务身份，settled 指 Task.done()，包含成功、失败、取消。异常退出的 result_slots 为空仅表示没有返回值，并非异常被转换为空列表。",
+    "limitations": [
+      "仅使用 Python 3.12.14 的本地 asyncio 运行测试，未穷举调度时序或验证其他事件循环实现。",
+      "没有生成或执行此边界观测类型的 trace；条件是合同声明，结构检查不证明条件在实际运行中成立。行为证据来自真实异步测试和代码检查。",
+      "不对任意工厂/协程的业务副作用建模；无关任务保护仅指 run_group 自身的取消行为。",
+      "未验证无限清理、永久吞掉取消而继续等待、重复外部取消、解释器退出或资源耗尽；依赖协程在取消后有限时间终止。",
+      "未验证自定义 task factory 创建失败、非法返回非协程、同一协程对象重复提交等输入或事件循环配置。",
+      "Python 异常身份、回溯、取消注入和并发因果不能由本 JSON 的集合/计数谓词完整编码；相关保证由代码推断及有限测试支持，不构成普遍证明。"
+    ],
+    "evidence": [
+      {"path": "app.py", "start": 5, "end": 10, "supports": "公开接口不变；本次 tasks 局部所有权；工厂调用及任务创建包含在异常处理范围内。"},
+      {"path": "app.py", "start": 9, "end": 14, "supports": "先创建任务再 await；gather 按输入位置返回；shield 隔离父调用的自动取消传播；空任务 gather 返回空列表。"},
+      {"path": "app.py", "start": 15, "end": 19, "supports": "覆盖工厂和子任务异常及 CancelledError；只遍历本次 tasks 取消；cleanup gather 等待这些任务并收集清理异常。"},
+      {"path": "app.py", "start": 20, "end": 25, "supports": "清理期间父调用取消不能提前结束等待或再次取消正在清理的子任务。"},
+      {"path": "app.py", "start": 26, "end": 31, "supports": "观察正常 gather 的最终异常；裸 raise 重新抛出原始异常，不返回内部清理结果。"}
+    ]
+  },
+  "validation": {
+    "behavior": {
+      "command": "./run_python -m unittest -v test_run_group",
+      "result": "11 tests passed"
+    },
+    "public_smoke": {
+      "command": "./run_python smoke.py",
+      "result": "[2, 4]"
+    },
+    "assessment": "有限行为测试通过；其余结论按 requirements 与 limitations 区分代码推断和未验证范围。"
+  }
+}

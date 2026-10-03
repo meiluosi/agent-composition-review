@@ -1,0 +1,185 @@
+{
+  "case_id": "c03",
+  "condition": "A_basic",
+  "trial": 1,
+  "exit_code": 0,
+  "timed_out": false,
+  "elapsed_seconds": 254.58235191600397,
+  "usage": {
+    "input_tokens": 124203,
+    "cached_input_tokens": 83072,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 7034,
+    "reasoning_output_tokens": 1566
+  },
+  "completed": true,
+  "status": "completed",
+  "prediction": {
+    "initial_verdict": "violation",
+    "summary": "已修改 app.py，以独立保存点实现批次原子性，保留调用者事务、保存点及原异常。已交付 model.json，包含实际行号依据与验证边界。原实现扩展测试有 33 个失败子项，修复后全部通过。",
+    "tests_executed": [
+      "./run_python smoke.py：通过",
+      "./run_python test_batches.py：修复后 6 个测试方法全部通过，包含 32 组事务场景",
+      "./run_python -：执行原实现故障复现及 model.json 引用、证据行号检查"
+    ],
+    "limitations": [
+      "未验证并发使用、锁争用或真实存储故障。",
+      "数据库主动撤销整个事务或清理 SQL 失败时，无法保证恢复调用者工作；具体边界已记录于 model.json。"
+    ]
+  },
+  "acceptance": {
+    "tests_run": 7,
+    "passed": true,
+    "checks": [
+      {
+        "test": "test_empty_batch_and_repeat_failure_do_not_end_transaction",
+        "passed": true
+      },
+      {
+        "test": "test_existing_savepoint_is_preserved",
+        "passed": true
+      },
+      {
+        "test": "test_explicit_transaction_in_autocommit_mode",
+        "passed": true
+      },
+      {
+        "test": "test_failure_rolls_back_only_own_batch",
+        "passed": true
+      },
+      {
+        "test": "test_standalone_failure_is_atomic_and_preserves_original_error",
+        "passed": true
+      },
+      {
+        "test": "test_standalone_success_is_committed",
+        "passed": true
+      },
+      {
+        "test": "test_success_does_not_commit_callers_transaction",
+        "passed": true
+      }
+    ],
+    "exit_code": 0,
+    "timed_out": false,
+    "sandbox": "macos_no_network_writes_only_grade_directory",
+    "stderr": ""
+  },
+  "structure": {
+    "valid": true,
+    "errors": [],
+    "scope": "Syntax/references only; semantic criteria reviewed independently."
+  },
+  "source_changed": true,
+  "artifacts": {
+    "app.py": "dddb30f42054ba0006d36244445f1cd60b7d8781dd4774e8cc0f38022cd8d3ed",
+    "model.json": "456799af028005e8589624308c6a49360da9250ba0ef3b331e057f348fefebda",
+    "test_batches.py": "5836d65741ef8a2a30994664ef709d21b3826eb2a4edf1aabfaed425a1c6fd6f"
+  },
+  "protected_changes": [],
+  "outside_changes": [],
+  "artifact_errors": [],
+  "tool_audit": [
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc \"pwd; rg --files -g '\"'!original.py'\"' -g '\"'!__pycache__/**'\"' -g '\"'!.*'\"'\"",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc 'cat task.md app.py MODEL_FORMAT.md smoke.py'",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc 'ls -la; cat run_python; if [ -f AGENTS.md ]; then cat AGENTS.md; fi; ./run_python smoke.py'",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc \"./run_python - <<'PY'\nimport sqlite3\nfrom app import write_batch\nfor mode in ('outer_success', 'outer_failure', 'autocommit_failure', 'caller_savepoint'):\n    c = sqlite3.connect(':memory:', isolation_level=None if mode == 'autocommit_failure' else '')\n    c.execute('CREATE TABLE records(key TEXT PRIMARY KEY, value INTEGER NOT NULL)')\n    if mode \"'!= '\"'autocommit_failure':\n        c.execute('BEGIN')\n        c.execute(\\\"INSERT INTO records VALUES ('caller', 1)\\\")\n    if mode == 'caller_savepoint':\n        c.execute('SAVEPOINT caller_sp')\n    rows = [('batch', 2)] if mode in ('outer_success', 'caller_savepoint') else [('batch', 2), ('batch', 3)]\n    try:\n        write_batch(c, rows)\n    except sqlite3.IntegrityError:\n        pass\n    print(mode, 'in_transaction=', c.in_transaction, 'rows=', c.execute('SELECT * FROM records').fetchall())\n    if mode == 'caller_savepoint':\n        try:\n            c.execute('ROLLBACK TO caller_sp')\n        except sqlite3.OperationalError as exc:\n            print('caller savepoint lost:', exc)\n    c.close()\nPY\"",
+      "review_flags": []
+    },
+    {
+      "type": "file_change",
+      "exit_code": null,
+      "changes": [
+        {
+          "path": "<workspace>/test_batches.py",
+          "kind": "add"
+        }
+      ]
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 1,
+      "command": "/bin/zsh -lc './run_python test_batches.py'",
+      "review_flags": []
+    },
+    {
+      "type": "file_change",
+      "exit_code": null,
+      "changes": [
+        {
+          "path": "<workspace>/app.py",
+          "kind": "update"
+        }
+      ]
+    },
+    {
+      "type": "file_change",
+      "exit_code": null,
+      "changes": [
+        {
+          "path": "<workspace>/app.py",
+          "kind": "update"
+        }
+      ]
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc './run_python test_batches.py; ./run_python smoke.py; nl -ba app.py'",
+      "review_flags": []
+    },
+    {
+      "type": "file_change",
+      "exit_code": null,
+      "changes": [
+        {
+          "path": "<workspace>/model.json",
+          "kind": "add"
+        }
+      ]
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc \"./run_python - <<'PY'\nimport json\nfrom pathlib import Path\nmodel = json.loads(Path('model.json').read_text())\nassert model['schema_version'] == 1\nids = {a['id'] for a in model['actions']}\nassert set(model['required_actions']) <= ids\nfor action in model['actions']:\n    assert action['input_type'] in model['types']\n    assert action['output_type'] in model['types']\n    assert set(action['reads'] + action['writes']) <= model['resources'].keys()\n    assert action['meaning'] and action['pre'] and action['post']\n    for condition in action['pre'] + action['post']:\n        assert {'id', 'requirement', 'must'} <= condition.keys()\nfor edge in model['edges']:\n    assert edge['from'] in ids and edge['to'] in ids\nlines = Path('app.py').read_text().splitlines()\nfor evidence in model['scope']['evidence']:\n    assert evidence['path'] == 'app.py'\n    assert 1 <= evidence['start'] <= evidence['end'] <= len(lines)\nprint('model.json: references and evidence line bounds valid; behavior verified separately')\nPY\"",
+      "review_flags": []
+    }
+  ],
+  "case_sha256": "869b6661534ff5fada727853ef16de29d88ed3987bb6fa0a8a2ce2eb7d5e9ef5",
+  "prompt_sha256": "1bb460fb636cc7a19abd022ed921acd8d0028460effea85ac05ce737f1f9e4ba",
+  "event_sha256": "b651856887f4047de156514de3beb65697e1c4c9bff21261e80155082c6b34df",
+  "stderr_sha256": "5e1fdabf433d3b8754a6cfc62f3bf39b91c565938f7b93aea55aaab1b654f1b1",
+  "model_requested": "gpt-6-astra",
+  "reasoning_effort": "high",
+  "cli_version": "codex-cli 0.158.0-alpha.2.1",
+  "review": {
+    "exit_code": 1,
+    "timed_out": false,
+    "elapsed_seconds": 29.975463083013892,
+    "usage": null,
+    "completed": false,
+    "valid": false,
+    "prediction": null,
+    "tool_items": [],
+    "input_sha256": "9c78211c72fc0f848e90f9dfb4f6518100a6a0708169d419b041c0b7f29cdb98",
+    "event_sha256": "8a5cc726437d7fb310077c5daa13396b4c432046745a579d2ac154ee6d597549"
+  }
+}

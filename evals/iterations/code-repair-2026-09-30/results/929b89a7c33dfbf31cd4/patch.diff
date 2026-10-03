@@ -1,0 +1,24 @@
+--- original.py
++++ app.py
+@@ -6,6 +6,11 @@
+ class State(TypedDict):
+     count: int
+     label: str
++    left: int
++    right: int
++
++
++class AnalysisResult(TypedDict):
+     left: int
+     right: int
+ 
+@@ -39,7 +44,8 @@
+             child_gate.wait()
+         return {'right':s['right']+s['count']-len(s['label'])}
+ 
+-    child=StateGraph(State)
++    # Read the full snapshot, but only publish fields owned by analysis.
++    child=StateGraph(State, output_schema=AnalysisResult)
+     child.add_node('left',left)
+     child.add_node('right',right)
+     child.add_edge(START,'left')

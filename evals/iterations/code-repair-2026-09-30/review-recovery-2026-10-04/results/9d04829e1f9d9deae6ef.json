@@ -1,0 +1,50 @@
+{
+  "case_id": "c05",
+  "condition": "A_basic",
+  "trial": 1,
+  "exit_code": 0,
+  "timed_out": false,
+  "elapsed_seconds": 60.372351541009266,
+  "usage": {
+    "input_tokens": 12820,
+    "cached_input_tokens": 0,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 760,
+    "reasoning_output_tokens": 81
+  },
+  "completed": true,
+  "valid": true,
+  "prediction": {
+    "criteria": [
+      {
+        "id": "r1",
+        "assessment": "covered",
+        "model_evidence": "scope 将范围限定为当前 app.py 的单次 run_group 生命周期；concurrent_lifecycle 区分同步工厂调用与子任务并发；collect_results 描述输入顺序及空输入；cancellation_boundary 描述 shield 和父取消后的清理。",
+        "code_evidence": "提交代码第 6–13 行创建局部任务列表并通过 gather、shield 等待；第 14–26 行处理取消。独立验收 test_order_empty_and_concurrency、test_external_cancellation_and_unrelated_task_survives 均通过。",
+        "reason": "模型以任务创建、聚合与取消控制关系覆盖完整生命周期，与提交版本一致；没有把数量谓词误当作并发或顺序的证明。"
+      },
+      {
+        "id": "r2",
+        "assessment": "covered",
+        "model_evidence": "exception_control 将失败引向 cancel_and_drain；该动作明确先等待本次任务终止，再裸 raise，内部 outcomes 不公开返回。all_owned_tasks_joined 明确说明计数本身不证明清理时序。",
+        "code_evidence": "提交代码第 15–21 行取消并等待本次任务，第 22–26 行处理清理期间的外部取消，第 31 行重新抛出原异常。独立验收 test_failure_waits_for_sibling_cleanup_and_keeps_exception、test_child_cancellation_cleans_other_children 均通过。",
+        "reason": "模型明确区分异常触发与子任务完成，把清理完成作为异常退出前的步骤；代码及验收支持该关系，且保证范围限定为一次外部取消、有限清理。"
+      },
+      {
+        "id": "r3",
+        "assessment": "covered",
+        "model_evidence": "resources.owned_tasks 仅包含本次创建的任务及工厂失败前的前缀；schedule_factories 和 exception_control 明确覆盖同步工厂失败；scope 排除子协程自行派生的后台任务。",
+        "code_evidence": "提交代码第 6、9–10 行记录本次任务；工厂调用位于 try 内，第 15–19 行仅遍历并聚合局部 tasks。独立验收 test_factory_failure_cleans_already_started_children、test_external_cancellation_and_unrelated_task_survives 均通过。",
+        "reason": "取消所有权由局部任务集合界定，工厂创建中途失败有明确控制流和状态依据；没有声称取消或管理无关后台任务。"
+      }
+    ],
+    "uncertainty": "结构检查仅支持语法和引用有效。模型自述的 12 项测试未提供独立明细，本评审依据可见代码及独立验收的 5 项检查；结论不构成所有调度交错的证明，也不扩展到模型明确排除的重复外部取消等情形。"
+  },
+  "tool_items": [],
+  "errors": [],
+  "input_sha256": "329dcb8cfa62d73d67068b2aa8d390d6aadf212ca104e5a9005077c6a4498a42",
+  "event_sha256": "d5037e4824c88500e3da8bc040d4f7d69636abb0195350674b9a3a7f0b0968c2",
+  "cli_version": "codex-cli 0.160.0",
+  "model_requested": "gpt-6-astra",
+  "reasoning_effort": "high"
+}

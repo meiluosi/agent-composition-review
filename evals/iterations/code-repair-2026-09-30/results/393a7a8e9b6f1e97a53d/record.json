@@ -1,0 +1,247 @@
+{
+  "case_id": "c03",
+  "condition": "B_tools",
+  "trial": 1,
+  "exit_code": 0,
+  "timed_out": false,
+  "elapsed_seconds": 318.34205650002696,
+  "usage": {
+    "input_tokens": 158584,
+    "cached_input_tokens": 131328,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 8761,
+    "reasoning_output_tokens": 2120
+  },
+  "completed": true,
+  "status": "completed",
+  "prediction": {
+    "initial_verdict": "violation",
+    "summary": "已修复 app.py：通过独立保存点保证批次原子性，保留调用者事务、保存点及原异常，保持公开接口和自包含。已交付含实际行号依据的 model.json。修复后七个测试方法全部通过，覆盖70个事务组合；smoke及模型结构检查通过。",
+    "tests_executed": [
+      "./run_python smoke.py",
+      "./run_python test_write_batch.py > baseline-tests.log 2>&1（原实现失败）",
+      "./run_python test_write_batch.py（修复后通过）",
+      "./run_python scripts/composition.py validate model.json（通过）"
+    ],
+    "limitations": [
+      "未验证并发、磁盘故障或特殊触发器及冲突策略。",
+      "若 SQLite 强制撤销整个事务或保存点清理失败，无法保证恢复调用者工作；清理异常不会覆盖原异常。",
+      "模型结构检查不构成行为证明，具体测试与推断范围已记录在 model.json。"
+    ]
+  },
+  "acceptance": {
+    "tests_run": 7,
+    "passed": true,
+    "checks": [
+      {
+        "test": "test_empty_batch_and_repeat_failure_do_not_end_transaction",
+        "passed": true
+      },
+      {
+        "test": "test_existing_savepoint_is_preserved",
+        "passed": true
+      },
+      {
+        "test": "test_explicit_transaction_in_autocommit_mode",
+        "passed": true
+      },
+      {
+        "test": "test_failure_rolls_back_only_own_batch",
+        "passed": true
+      },
+      {
+        "test": "test_standalone_failure_is_atomic_and_preserves_original_error",
+        "passed": true
+      },
+      {
+        "test": "test_standalone_success_is_committed",
+        "passed": true
+      },
+      {
+        "test": "test_success_does_not_commit_callers_transaction",
+        "passed": true
+      }
+    ],
+    "exit_code": 0,
+    "timed_out": false,
+    "sandbox": "macos_no_network_writes_only_grade_directory",
+    "stderr": ""
+  },
+  "structure": {
+    "valid": true,
+    "errors": [],
+    "scope": "Syntax/references only; semantic criteria reviewed independently."
+  },
+  "source_changed": true,
+  "artifacts": {
+    "app.py": "3f553fceab6e86a921f5073b64c7e28f3ebaa49c8a6cc80e4da8de66f73437c4",
+    "model.json": "f75517c770c0bb2ef082f7457b06aeb61f3a2e9a44b85f09bdc46aa3ce7c7801",
+    "test_write_batch.py": "495cafb231ad08e5193f0df47a76789e7066034e498e5612da7e0f5a326d7973"
+  },
+  "protected_changes": [],
+  "outside_changes": [],
+  "artifact_errors": [],
+  "tool_audit": [
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc \"pwd; rg --files -g '\"'!original.py'\"' -g '\"'!run_python'\"' -g '\"'!__pycache__/**'\"' -g '\"'!.*'\"'\"",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc 'cat task.md MODEL_FORMAT.md app.py smoke.py'",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc \"rg --files --hidden -g 'AGENTS.md' -g '\"'!'\"\\\\.git/**'; cat TOOLS.md; ls -l\"",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc './run_python smoke.py'",
+      "review_flags": []
+    },
+    {
+      "type": "file_change",
+      "exit_code": null,
+      "changes": [
+        {
+          "path": "<workspace>/test_write_batch.py",
+          "kind": "add"
+        }
+      ]
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 1,
+      "command": "/bin/zsh -lc './run_python test_write_batch.py > baseline-tests.log 2>&1'",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc 'tail -n 24 baseline-tests.log'",
+      "review_flags": []
+    },
+    {
+      "type": "file_change",
+      "exit_code": null,
+      "changes": [
+        {
+          "path": "<workspace>/app.py",
+          "kind": "update"
+        }
+      ]
+    },
+    {
+      "type": "file_change",
+      "exit_code": null,
+      "changes": [
+        {
+          "path": "<workspace>/app.py",
+          "kind": "update"
+        }
+      ]
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc \"nl -ba app.py; sed -n '1,220p' scripts/composition.py\"",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc './run_python smoke.py'",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc './run_python test_write_batch.py'",
+      "review_flags": []
+    },
+    {
+      "type": "file_change",
+      "exit_code": null,
+      "changes": [
+        {
+          "path": "<workspace>/test_write_batch.py",
+          "kind": "update"
+        }
+      ]
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc './run_python test_write_batch.py'",
+      "review_flags": []
+    },
+    {
+      "type": "file_change",
+      "exit_code": null,
+      "changes": [
+        {
+          "path": "<workspace>/app.py",
+          "kind": "update"
+        },
+        {
+          "path": "<workspace>/model.json",
+          "kind": "add"
+        }
+      ]
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc './run_python scripts/composition.py validate model.json'",
+      "review_flags": []
+    },
+    {
+      "type": "file_change",
+      "exit_code": null,
+      "changes": [
+        {
+          "path": "<workspace>/model.json",
+          "kind": "update"
+        }
+      ]
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc './run_python scripts/composition.py validate model.json'",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 1,
+      "command": "/bin/zsh -lc 'diff -u original.py app.py'",
+      "review_flags": []
+    }
+  ],
+  "case_sha256": "869b6661534ff5fada727853ef16de29d88ed3987bb6fa0a8a2ce2eb7d5e9ef5",
+  "prompt_sha256": "1bb460fb636cc7a19abd022ed921acd8d0028460effea85ac05ce737f1f9e4ba",
+  "event_sha256": "e0233c1ada50d02de2ee62a7326aa499cb1c9c3f3dbc74d24c6e02fe411067e6",
+  "stderr_sha256": "beab220de23bf22b719615cbc7d9d0ad1ac64b789a9fa1190dda11e892df00f9",
+  "model_requested": "gpt-6-astra",
+  "reasoning_effort": "high",
+  "cli_version": "codex-cli 0.158.0-alpha.2.1",
+  "review": {
+    "exit_code": 1,
+    "timed_out": false,
+    "elapsed_seconds": 27.078086958965287,
+    "usage": null,
+    "completed": false,
+    "valid": false,
+    "prediction": null,
+    "tool_items": [],
+    "input_sha256": "e87ecca1922f8639f88b27ff98c20e0839367b3868a83a5828b423372597e350",
+    "event_sha256": "6d313a42b7175fb6a6561e1c5870190d40fb144122d11f52c1536dcf8d994c93"
+  }
+}

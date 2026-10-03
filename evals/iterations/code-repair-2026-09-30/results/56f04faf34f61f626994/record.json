@@ -1,0 +1,195 @@
+{
+  "case_id": "c03",
+  "condition": "C_v4",
+  "trial": 1,
+  "exit_code": 0,
+  "timed_out": false,
+  "elapsed_seconds": 248.40391804103274,
+  "usage": {
+    "input_tokens": 131419,
+    "cached_input_tokens": 92032,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 6494,
+    "reasoning_output_tokens": 916
+  },
+  "completed": true,
+  "status": "completed",
+  "prediction": {
+    "initial_verdict": "violation",
+    "summary": "已修改 app.py，使用私有保存点保证批次原子性，保留调用者事务、保存点及原异常。已交付含实际行号依据的 model.json。原实现出现 21 个子测试断言失败；修复后全部 8 个测试方法及 smoke 通过，模型结构校验通过。",
+    "tests_executed": [
+      "./run_python smoke.py（修复前后）",
+      "./run_python test_batch.py original > baseline-tests.txt 2>&1",
+      "./run_python test_batch.py app",
+      "./run_python scripts/composition.py validate model.json"
+    ],
+    "limitations": [
+      "未验证并发、进程崩溃、特殊触发器及事务级冲突策略。",
+      "数据库故障导致保存点无法回滚时，保留原异常，但无法保证数据恢复；详细范围见 model.json。"
+    ]
+  },
+  "acceptance": {
+    "tests_run": 7,
+    "passed": true,
+    "checks": [
+      {
+        "test": "test_empty_batch_and_repeat_failure_do_not_end_transaction",
+        "passed": true
+      },
+      {
+        "test": "test_existing_savepoint_is_preserved",
+        "passed": true
+      },
+      {
+        "test": "test_explicit_transaction_in_autocommit_mode",
+        "passed": true
+      },
+      {
+        "test": "test_failure_rolls_back_only_own_batch",
+        "passed": true
+      },
+      {
+        "test": "test_standalone_failure_is_atomic_and_preserves_original_error",
+        "passed": true
+      },
+      {
+        "test": "test_standalone_success_is_committed",
+        "passed": true
+      },
+      {
+        "test": "test_success_does_not_commit_callers_transaction",
+        "passed": true
+      }
+    ],
+    "exit_code": 0,
+    "timed_out": false,
+    "sandbox": "macos_no_network_writes_only_grade_directory",
+    "stderr": ""
+  },
+  "structure": {
+    "valid": true,
+    "errors": [],
+    "scope": "Syntax/references only; semantic criteria reviewed independently."
+  },
+  "source_changed": true,
+  "artifacts": {
+    "app.py": "4b17a57dc65134601adef706cb1f49dce9830202a861bc0e9e05d3d689af855d",
+    "baseline-tests.txt": "ac61f1e3f54aeb4e4810a378c53f7b18e2a539dc279ca578b2307503ce336bb2",
+    "model.json": "bc3bc00f78eac3393a93564a5bf268437b44775a3e6db40694c615f9ce0487bc",
+    "test_batch.py": "a051548de44e3134df928d92b6277efe204558fb10c592beaa141d5f67f017f9"
+  },
+  "protected_changes": [],
+  "outside_changes": [],
+  "artifact_errors": [],
+  "tool_audit": [
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc \"pwd; rg --files -g '\"'!__pycache__'\"' -g '\"'!*.pyc'\"'\"",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc 'cat task.md MODEL_FORMAT.md app.py smoke.py'",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc 'cat SKILL.md references/executable-contracts.md references/contracts.md references/effects.md'",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc './run_python smoke.py'",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc \"cat run_python; sed -n '1,180p' scripts/composition.py\"",
+      "review_flags": []
+    },
+    {
+      "type": "file_change",
+      "exit_code": null,
+      "changes": [
+        {
+          "path": "<workspace>/test_batch.py",
+          "kind": "add"
+        }
+      ]
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 1,
+      "command": "/bin/zsh -lc './run_python test_batch.py original > baseline-tests.txt 2>&1'",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc 'tail -n 28 baseline-tests.txt'",
+      "review_flags": []
+    },
+    {
+      "type": "file_change",
+      "exit_code": null,
+      "changes": [
+        {
+          "path": "<workspace>/app.py",
+          "kind": "update"
+        }
+      ]
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc './run_python smoke.py; nl -ba app.py'",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc './run_python test_batch.py app'",
+      "review_flags": []
+    },
+    {
+      "type": "file_change",
+      "exit_code": null,
+      "changes": [
+        {
+          "path": "<workspace>/model.json",
+          "kind": "add"
+        }
+      ]
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc './run_python scripts/composition.py validate model.json'",
+      "review_flags": []
+    }
+  ],
+  "case_sha256": "869b6661534ff5fada727853ef16de29d88ed3987bb6fa0a8a2ce2eb7d5e9ef5",
+  "prompt_sha256": "e50f6f07a426e3c16576d6474bf162cb5d63f92dee943e576e526ec2dcb6bbff",
+  "event_sha256": "f15be24f828f44272fbd0a6178cdf1782c97b8e5083aa89f51362408ff89c0df",
+  "stderr_sha256": "1c7b350b3517a9332e2858b8132a2291cd1b16aab5b8c6df404766429099ed6b",
+  "model_requested": "gpt-6-astra",
+  "reasoning_effort": "high",
+  "cli_version": "codex-cli 0.158.0-alpha.2.1",
+  "review": {
+    "exit_code": 1,
+    "timed_out": false,
+    "elapsed_seconds": 15.708802958019078,
+    "usage": null,
+    "completed": false,
+    "valid": false,
+    "prediction": null,
+    "tool_items": [],
+    "input_sha256": "b60815041d568bc36495d020da9f0b7226fced4359cdd49c1f05d93c037a658d",
+    "event_sha256": "348f70c718195ac6d294ff37c4e2021f0fa966996c3c97604f7d73019c6649a5"
+  }
+}

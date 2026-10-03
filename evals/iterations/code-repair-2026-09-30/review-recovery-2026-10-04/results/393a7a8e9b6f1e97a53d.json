@@ -1,0 +1,50 @@
+{
+  "case_id": "c03",
+  "condition": "B_tools",
+  "trial": 1,
+  "exit_code": 0,
+  "timed_out": false,
+  "elapsed_seconds": 55.93789154099068,
+  "usage": {
+    "input_tokens": 12920,
+    "cached_input_tokens": 0,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 862,
+    "reasoning_output_tokens": 122
+  },
+  "completed": true,
+  "valid": true,
+  "prediction": {
+    "criteria": [
+      {
+        "id": "r1",
+        "assessment": "covered",
+        "model_evidence": "resources 定义 records、transaction_active、caller_savepoints 和 connection；post 中 batch_present、prior_rows_preserved、failed_batch_undone、same_open_connection 将调用前后状态与批次结果关联。",
+        "code_evidence": "提交代码第 9–18 行在传入连接上建立保存点、插入及释放或回滚；第 6–23 行没有关闭或替换连接。独立验收 test_failure_rolls_back_only_own_batch、test_existing_savepoint_is_preserved 通过。",
+        "reason": "模型明确表达连接归调用者所有、事务与保存点边界，以及成功和失败对 records 的不同影响；这些关系有当前代码及独立行为检查支持。"
+      },
+      {
+        "id": "r2",
+        "assessment": "covered",
+        "model_evidence": "transaction_boundary 明确区分无外层事务时提交与原有事务保持开启，并指出事务布尔值相等不足以证明未提交；verification.inferred 区分最外层与嵌套 SAVEPOINT 的 RELEASE 语义。",
+        "code_evidence": "提交代码第 10 行建立 SAVEPOINT，第 14 行仅释放本批次保存点。独立验收 test_standalone_success_is_committed、test_success_does_not_commit_callers_transaction、test_explicit_transaction_in_autocommit_mode 均通过。",
+        "reason": "模型不仅记录事务是否开启，还解释提交责任与嵌套参与关系；独立检查支持正常内部返回不会提交调用者事务，也支持独立调用成功提交。"
+      },
+      {
+        "id": "r3",
+        "assessment": "covered",
+        "model_evidence": "failed_batch_undone 要求失败前后 records 相等；original_exception 要求保留异常对象；caller_savepoints_preserved 要求保留调用者回滚边界。conditional_lifecycle 描述 INSERT、len 或首次 RELEASE 失败后的清理与裸 raise，并单独说明建立保存点失败直接传播。scope 明示清理不可用及事务级中止的限制。",
+        "code_evidence": "提交代码第 15–22 行执行 ROLLBACK TO、RELEASE，抑制清理异常后裸 raise；第 9–14 行与模型描述的保存点实现一致。独立验收 test_failure_rolls_back_only_own_batch、test_standalone_failure_is_atomic_and_preserves_original_error、test_empty_batch_and_repeat_failure_do_not_end_transaction 均通过。",
+        "reason": "模型覆盖其声明范围内的批次失败原子性、调用者工作保留和原异常传播，且对应提交版本而非原始 with connection 实现。明确排除的引擎级回滚及清理失败没有被当作已验证保证。"
+      }
+    ],
+    "uncertainty": "结构检查仅支持语法与引用有效。模型自述的完整测试矩阵、故障注入和异常身份检查未附原始材料，不能全部独立确认；提供的七项验收支持主要事务行为。covered 不表示已证明任意表结构、事务级中止或清理失败下均满足全部业务要求。"
+  },
+  "tool_items": [],
+  "errors": [],
+  "input_sha256": "e87ecca1922f8639f88b27ff98c20e0839367b3868a83a5828b423372597e350",
+  "event_sha256": "8110904659d1c376531a9578189f46223fe5aef47c8001c7a27c0a7f81d47fc4",
+  "cli_version": "codex-cli 0.160.0",
+  "model_requested": "gpt-6-astra",
+  "reasoning_effort": "high"
+}

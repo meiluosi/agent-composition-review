@@ -1,0 +1,50 @@
+{
+  "case_id": "c01",
+  "condition": "C_v4",
+  "trial": 1,
+  "exit_code": 0,
+  "timed_out": false,
+  "elapsed_seconds": 50.967665250005666,
+  "usage": {
+    "input_tokens": 14159,
+    "cached_input_tokens": 0,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 683,
+    "reasoning_output_tokens": 57
+  },
+  "completed": true,
+  "valid": true,
+  "prediction": {
+    "criteria": [
+      {
+        "id": "r1",
+        "assessment": "covered",
+        "model_evidence": "actions.left.reads 包含 child_count、child_label、child_left；actions.right.reads 包含 child_count、child_label、child_right。relations.snapshot 说明保留原 label、left、right，并使用 prepare 提交后的状态。",
+        "code_evidence": "提交代码第48行以完整 State 作为子图状态，仅限制输出；第39、45行分别读取原 left/right、count 和 label。独立验收 test_outputs_and_reuse 通过。",
+        "reason": "模型同时覆盖计算所需上下文和原有累积值，并通过快照关系解释这些字段如何进入子图，与提交实现一致。"
+      },
+      {
+        "id": "r2",
+        "assessment": "covered",
+        "model_evidence": "scope 声明建模当前 app.py；relations.snapshot 区分输入快照，relations.join_projection 明确合并后只投影 left/right、不回写 count/label；analysis_output 指明它是输出边界而非额外用户动作。",
+        "code_evidence": "原始代码第42、50行使用未缩窄输出的编译子图；提交代码第13—15、48、56行通过 AnalysisOutput 限制子图输出。第58—59行仍让 refresh 和 analysis 从 prepare 后分支。",
+        "reason": "模型准确区分完整读取范围与拥有字段的更新范围，明确分析使用 refresh 前的 label。其投影描述对应提交版本，没有误用于原始版本。"
+      },
+      {
+        "id": "r3",
+        "assessment": "covered",
+        "model_evidence": "relations 中分别声明 refresh/analysis 与 left/right 两组 parallel；scope.limitations 明确未运行通用顺序 trace 检查，且屏障会合不证明全部调度。",
+        "code_evidence": "提交代码第51—52行保留子图并行扇出，第58—59行保留父图并行扇出；第29—30、35—44行保留两处屏障。独立验收 test_both_concurrency_boundaries_and_single_execution 通过。",
+        "reason": "两层非顺序关系均有明确建模和代码依据；模型没有把顺序轨迹检查或有限屏障测试宣称为并发正确性的普遍证明。"
+      }
+    ],
+    "uncertainty": "未提供模型所引 test_review.py、trace.json 的内容，无法独立核实其详细测试声明。上述判断依据可见代码、模型关系及提供的三项独立验收结果；语法检查通过不作为语义覆盖依据，本评审不构成数学证明。"
+  },
+  "tool_items": [],
+  "errors": [],
+  "input_sha256": "9c9633e3271214c6ea27ddd01a36aa405ed4644a8a371d3ac47fd2d9c2fdfcb2",
+  "event_sha256": "cd74f54f2439cf60e63bac2502bb1ef17619a8403575a567d45f270c23d7c9c4",
+  "cli_version": "codex-cli 0.160.0",
+  "model_requested": "gpt-6-astra",
+  "reasoning_effort": "high"
+}

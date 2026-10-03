@@ -1,0 +1,219 @@
+{
+  "case_id": "c06",
+  "condition": "C_v4",
+  "trial": 1,
+  "exit_code": 0,
+  "timed_out": false,
+  "elapsed_seconds": 296.3065085830167,
+  "usage": {
+    "input_tokens": 183969,
+    "cached_input_tokens": 152576,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 7908,
+    "reasoning_output_tokens": 1867
+  },
+  "completed": true,
+  "status": "completed",
+  "prediction": {
+    "initial_verdict": "violation",
+    "summary": "原实现会重复取消并打断异步清理。已修改 app.py，隔离取消传播、等待本组任务清理并保留原始异常；公开接口不变且保持自包含。已交付 model.json，包含实际行号依据和验证边界。",
+    "tests_executed": [
+      "./run_python smoke.py：通过",
+      "./run_python test_run_group.py original：初版 7 项测试中复现 2 项失败",
+      "./run_python test_run_group.py app：最终 10 项全部通过",
+      "./run_python scripts/composition.py validate model.json：通过，仅验证结构"
+    ],
+    "limitations": [
+      "仅验证当前 Python 3.12 环境和有限调度场景。",
+      "未验证多次外部取消、自定义事件循环或永不结束的清理。",
+      "模型未配套完整执行轨迹；行为结论来自实际测试与代码审查。"
+    ]
+  },
+  "acceptance": {
+    "tests_run": 5,
+    "passed": true,
+    "checks": [
+      {
+        "test": "test_child_cancellation_cleans_other_children",
+        "passed": true
+      },
+      {
+        "test": "test_external_cancellation_and_unrelated_task_survives",
+        "passed": true
+      },
+      {
+        "test": "test_factory_failure_cleans_already_started_children",
+        "passed": true
+      },
+      {
+        "test": "test_failure_waits_for_sibling_cleanup_and_keeps_exception",
+        "passed": true
+      },
+      {
+        "test": "test_order_empty_and_concurrency",
+        "passed": true
+      }
+    ],
+    "exit_code": 0,
+    "timed_out": false,
+    "sandbox": "macos_no_network_writes_only_grade_directory",
+    "stderr": ""
+  },
+  "structure": {
+    "valid": true,
+    "errors": [],
+    "scope": "Syntax/references only; semantic criteria reviewed independently."
+  },
+  "source_changed": true,
+  "artifacts": {
+    "app.py": "bf24a7cf2fabeb928a76fbea5e1f6b844c84927f0691a48dd323cf06e02cbd19",
+    "model.json": "d574ae9203e3b39156c60f9abbcfa3b71481c095df1d6d631d4e2aa23c713808",
+    "test_run_group.py": "73753d64b38ec5756d494c5fb30c9051a91976ca3ca7d04fb7ff3b4576bd1f6c"
+  },
+  "protected_changes": [],
+  "outside_changes": [],
+  "artifact_errors": [],
+  "tool_audit": [
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc \"pwd; rg --files -g '\"'!__pycache__'\"' -g '\"'!*.pyc'\"'\"",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc 'cat task.md MODEL_FORMAT.md app.py smoke.py'",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc 'cat SKILL.md references/executable-contracts.md references/contracts.md references/effects.md'",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc 'cat TOOLS.md run_python; nl -ba app.py; ./run_python smoke.py'",
+      "review_flags": []
+    },
+    {
+      "type": "file_change",
+      "exit_code": null,
+      "changes": [
+        {
+          "path": "<workspace>/test_run_group.py",
+          "kind": "add"
+        }
+      ]
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 1,
+      "command": "/bin/zsh -lc './run_python test_run_group.py original'",
+      "review_flags": []
+    },
+    {
+      "type": "file_change",
+      "exit_code": null,
+      "changes": [
+        {
+          "path": "<workspace>/app.py",
+          "kind": "update"
+        }
+      ]
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc './run_python test_run_group.py app'",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc './run_python smoke.py'",
+      "review_flags": []
+    },
+    {
+      "type": "file_change",
+      "exit_code": null,
+      "changes": [
+        {
+          "path": "<workspace>/test_run_group.py",
+          "kind": "update"
+        }
+      ]
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc './run_python test_run_group.py app'",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc \"nl -ba app.py; sed -n '1,220p' scripts/composition.py\"",
+      "review_flags": []
+    },
+    {
+      "type": "file_change",
+      "exit_code": null,
+      "changes": [
+        {
+          "path": "<workspace>/model.json",
+          "kind": "add"
+        }
+      ]
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc './run_python scripts/composition.py validate model.json'",
+      "review_flags": []
+    },
+    {
+      "type": "file_change",
+      "exit_code": null,
+      "changes": [
+        {
+          "path": "<workspace>/model.json",
+          "kind": "update"
+        }
+      ]
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc './run_python scripts/composition.py validate model.json'",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 1,
+      "command": "/bin/zsh -lc 'diff -u original.py app.py'",
+      "review_flags": []
+    }
+  ],
+  "case_sha256": "b9b04507fd2af834ba951d62f4554c46b7a6d970bcc075ba48b85d881225bd15",
+  "prompt_sha256": "e50f6f07a426e3c16576d6474bf162cb5d63f92dee943e576e526ec2dcb6bbff",
+  "event_sha256": "75873ed383e14399874b31aa8a3ed3eb89b8c38d4a7022cf19ac699e134530d6",
+  "stderr_sha256": "0019c89722efc10d560e1497e33b276740548f53cd09e8781d0ef852fa930a74",
+  "model_requested": "gpt-6-astra",
+  "reasoning_effort": "high",
+  "cli_version": "codex-cli 0.158.0-alpha.2.1",
+  "review": {
+    "exit_code": 1,
+    "timed_out": false,
+    "elapsed_seconds": 27.62339108402375,
+    "usage": null,
+    "completed": false,
+    "valid": false,
+    "prediction": null,
+    "tool_items": [],
+    "input_sha256": "eba0b3ac69f653fa15a9a4a8a4a9199521b2182abcbae100aabf77edc687de5a",
+    "event_sha256": "4281e3a86d636b6ab5f17e06f0d19e2af3d7cc619056953181635d1b9bd63ded"
+  }
+}

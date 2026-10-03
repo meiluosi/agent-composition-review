@@ -1,0 +1,32 @@
+--- original.py
++++ app.py
+@@ -3,14 +3,21 @@
+ 
+ 
+ def write_batch(connection, rows):
+-    name='batch_'+uuid.uuid4().hex
+-    connection.execute('SAVEPOINT '+name)
++    count = len(rows)
++    name = 'batch_' + uuid.uuid4().hex
++    connection.execute('SAVEPOINT ' + name)
+     try:
+-        connection.executemany('INSERT INTO records(key, value) VALUES (?, ?)',rows)
++        connection.executemany('INSERT INTO records(key, value) VALUES (?, ?)', rows)
++        # Releasing the outermost savepoint commits and can itself fail.
++        connection.execute('RELEASE ' + name)
+     except BaseException:
+-        connection.execute('ROLLBACK TO '+name)
+-        connection.execute('RELEASE '+name)
++        try:
++            connection.execute('ROLLBACK TO ' + name)
++            # Only release after rollback succeeds; never commit a failed batch.
++            connection.execute('RELEASE ' + name)
++        except BaseException:
++            # SQLite may already have rolled back and removed this savepoint.
++            # Cleanup must not replace the original exception.
++            pass
+         raise
+-    else:
+-        connection.execute('RELEASE '+name)
+-    return len(rows)
++    return count

@@ -1,0 +1,162 @@
+{
+  "case_id": "c02",
+  "condition": "C_v4",
+  "trial": 2,
+  "exit_code": 0,
+  "timed_out": false,
+  "elapsed_seconds": 267.22315329202684,
+  "usage": {
+    "input_tokens": 134751,
+    "cached_input_tokens": 103552,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 7220,
+    "reasoning_output_tokens": 878
+  },
+  "completed": true,
+  "status": "completed",
+  "prediction": {
+    "initial_verdict": "satisfied",
+    "summary": "原实现满足已检查要求，app.py 保持不变。已交付 model.json（含实际行号依据及验证边界）和 test_review.py；8 项补充测试全部通过，覆盖双层并行、子图复用、调用隔离、动作次数及异常传播。",
+    "tests_executed": [
+      "./run_python smoke.py",
+      "./run_python test_review.py",
+      "./run_python scripts/composition.py validate model.json",
+      "cmp app.py original.py"
+    ],
+    "limitations": [
+      "验证限于当前依赖环境和有限输入、调度，未穷举所有并发交错。",
+      "未验证异步调用、自定义重试、取消或持久化配置；模型格式检查不代替行为验证。"
+    ]
+  },
+  "acceptance": {
+    "tests_run": 3,
+    "passed": true,
+    "checks": [
+      {
+        "test": "test_both_concurrency_boundaries_and_single_execution",
+        "passed": true
+      },
+      {
+        "test": "test_outputs_and_reuse",
+        "passed": true
+      },
+      {
+        "test": "test_separate_graphs_do_not_share_state",
+        "passed": true
+      }
+    ],
+    "exit_code": 0,
+    "timed_out": false,
+    "sandbox": "macos_no_network_writes_only_grade_directory",
+    "stderr": ""
+  },
+  "structure": {
+    "valid": true,
+    "errors": [],
+    "scope": "Syntax/references only; semantic criteria reviewed independently."
+  },
+  "source_changed": false,
+  "artifacts": {
+    "app.py": "15c40b7686ac55f3a104c38c336d452f6de47daa714a35ffd4c3e5538bed573b",
+    "model.json": "674953182400b9c852a414e12bfd0aa344324de993e82fdc7785ac550f70ca2a",
+    "test_review.py": "77325f75db2d1bfb581f41e98bce90502f3a328fe3637f726c748fb95243d340"
+  },
+  "protected_changes": [],
+  "outside_changes": [],
+  "artifact_errors": [],
+  "tool_audit": [
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc \"pwd; rg --files -g '\"'!__pycache__'\"' -g '\"'!*.pyc'\"'\"",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc 'cat task.md MODEL_FORMAT.md app.py smoke.py'",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc 'cat SKILL.md references/executable-contracts.md references/contracts.md references/effects.md'",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 1,
+      "command": "/bin/zsh -lc \"cat TOOLS.md run_python; nl -ba app.py; rg --files --hidden -g AGENTS.md -g '\"'!'\"\\\\.git/**'\"",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc './run_python smoke.py'",
+      "review_flags": []
+    },
+    {
+      "type": "file_change",
+      "exit_code": null,
+      "changes": [
+        {
+          "path": "<workspace>/test_review.py",
+          "kind": "add"
+        }
+      ]
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc './run_python test_review.py'",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc \"cat assets/retrieval.model.json; rg -n 'def validate|state|resources|pre|post' scripts/composition.py\"",
+      "review_flags": []
+    },
+    {
+      "type": "file_change",
+      "exit_code": null,
+      "changes": [
+        {
+          "path": "<workspace>/model.json",
+          "kind": "add"
+        }
+      ]
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc './run_python scripts/composition.py validate model.json'",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc 'cmp app.py original.py'",
+      "review_flags": []
+    }
+  ],
+  "case_sha256": "22f5508cf32aa0ff8c0096e952650b2e6ff5729bb4d7d5d57b37ed5e2de2e8eb",
+  "prompt_sha256": "e50f6f07a426e3c16576d6474bf162cb5d63f92dee943e576e526ec2dcb6bbff",
+  "event_sha256": "5eef8138b487e70dc3ac23299a74461ac83a5cf072fb4e2dc1ea143264c7901c",
+  "stderr_sha256": "7667e9711642aee8fcf528a03fe8ee18b94113f2685af5c94a697dacb1838039",
+  "model_requested": "gpt-6-astra",
+  "reasoning_effort": "high",
+  "cli_version": "codex-cli 0.158.0-alpha.2.1",
+  "review": {
+    "exit_code": 1,
+    "timed_out": false,
+    "elapsed_seconds": 23.68322220799746,
+    "usage": null,
+    "completed": false,
+    "valid": false,
+    "prediction": null,
+    "tool_items": [],
+    "input_sha256": "b457691567f7c4eb5b0b56c7c46438d6e76a2bfa8a8be7c3cc7304f84fc09c52",
+    "event_sha256": "6ebd825c9c7756aa21e1379206d2b8f651e2dfcf19b001b030b2f4236f9228ee"
+  }
+}

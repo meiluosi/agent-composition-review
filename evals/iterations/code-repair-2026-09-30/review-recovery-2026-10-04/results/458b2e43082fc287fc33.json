@@ -1,0 +1,50 @@
+{
+  "case_id": "c06",
+  "condition": "C_v4",
+  "trial": 1,
+  "exit_code": 0,
+  "timed_out": false,
+  "elapsed_seconds": 56.34528045798652,
+  "usage": {
+    "input_tokens": 12751,
+    "cached_input_tokens": 7552,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 855,
+    "reasoning_output_tokens": 94
+  },
+  "completed": true,
+  "valid": true,
+  "prediction": {
+    "criteria": [
+      {
+        "id": "r1",
+        "assessment": "covered",
+        "model_evidence": "resources 区分 owned_tasks、group_future、cleanup_future；relations.creation_and_parallel_execution 描述按序创建、并发执行及 gather 保持结果顺序；exceptional_lifecycle 描述 shield 将父取消交由本函数处理。",
+        "code_evidence": "提交代码第 6–14 行登记本次任务，通过 gather 聚合并以 shield 等待；第 15–30 行处理父取消及清理。独立验收 test_order_empty_and_concurrency、test_external_cancellation_and_unrelated_task_survives 均通过。",
+        "reason": "模型在明确的当前提交代码范围内覆盖调用生命周期、并发子任务、结果顺序和调用方取消。单一复合动作的内部关系足以表达这些行为；模型也明确说明结果基数谓词本身不能证明顺序或并行。"
+      },
+      {
+        "id": "r2",
+        "assessment": "covered",
+        "model_evidence": "group_future 被描述为传播第一个已观察到的失败，cleanup_future 则收集本组任务和 group 的所有终态；exceptional_lifecycle 明确清理等待结束后才 bare raise。all_owned_tasks_finished 列为退出契约，scope 明确其不是已执行断言。",
+        "code_evidence": "提交代码第 15–19 行在异常后请求取消其余任务，第 21–29 行聚合并屏蔽等待清理，第 30 行重新抛出。独立验收 test_failure_waits_for_sibling_cleanup_and_keeps_exception、test_child_cancellation_cleans_other_children 均通过。",
+        "reason": "模型明确区分聚合器传播异常与子任务全部完成，给出异常进入清理、等待终态、保留原始异常的关系，并获得代码和执行证据支持。没有把清理中的 return_exceptions=True 误作公开接口返回异常结果。"
+      },
+      {
+        "id": "r3",
+        "assessment": "covered",
+        "model_evidence": "owned_tasks 明确限定为本次调用的局部 tasks；local_cancellation_only 要求取消对象属于本次所有任务；creation_and_parallel_execution 描述同步工厂失败后停止调用后续工厂，scope.evidence 将第 6–10 行关联到工厂异常进入共同处理路径。",
+        "code_evidence": "提交代码第 9–10 行的 factory() 位于 try 内；第 16–19 行只遍历局部 tasks 取消，第 21–25 行等待已登记任务。独立验收 test_factory_failure_cleans_already_started_children、test_external_cancellation_and_unrelated_task_survives 均通过。",
+        "reason": "模型同时覆盖取消所有权和创建阶段失败：同步工厂异常会触发此前已创建任务的清理，取消操作不会遍历无关后台任务。该范围与代码及独立验收一致。"
+      }
+    ],
+    "uncertainty": "结构检查仅支持语法与引用有效。模型自述的额外 10 项测试未提供独立执行材料；本评审依据所给代码及独立验收的 5 项通过结果，不据此推导穷举调度、多次外部取消或跨运行环境保证。"
+  },
+  "tool_items": [],
+  "errors": [],
+  "input_sha256": "eba0b3ac69f653fa15a9a4a8a4a9199521b2182abcbae100aabf77edc687de5a",
+  "event_sha256": "e5ca297a6d9f0aad008c2f0ae7e9ffe823c3e8cf120a759d13d5941474910002",
+  "cli_version": "codex-cli 0.160.0",
+  "model_requested": "gpt-6-astra",
+  "reasoning_effort": "high"
+}

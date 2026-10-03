@@ -1,0 +1,50 @@
+{
+  "case_id": "c04",
+  "condition": "B_tools",
+  "trial": 2,
+  "exit_code": 0,
+  "timed_out": false,
+  "elapsed_seconds": 69.9388937500189,
+  "usage": {
+    "input_tokens": 12765,
+    "cached_input_tokens": 0,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 838,
+    "reasoning_output_tokens": 93
+  },
+  "completed": true,
+  "valid": true,
+  "prediction": {
+    "criteria": [
+      {
+        "id": "r1",
+        "assessment": "covered",
+        "model_evidence": "resources 定义 records、transaction（含保存点栈）、committed_records 和 connection；write_batch 标注读写资源，batch_atomicity 描述整批写入或撤销，preserve_connection 描述连接身份与打开状态不变。",
+        "code_evidence": "提交代码第7行读取入口事务状态，第9行建立批次保存点，第11行参数化插入，第17—23行执行相应回滚；没有关闭或替换连接。独立验收 test_failure_rolls_back_only_own_batch 通过。",
+        "reason": "模型将调用者资源、事务状态与单批次记录效果关联起来，并与提交实现一致。记录效果虽主要以文字关系表达，仍足以覆盖该判据。"
+      },
+      {
+        "id": "r2",
+        "assessment": "covered",
+        "model_evidence": "success_transaction_ownership 明确区分无外层事务时释放保存点提交、已有事务时留给调用者处理；caller_ownership 要求保留调用者保存点及后续提交、回滚能力。",
+        "code_evidence": "提交代码第9、13行创建并释放自己的保存点：顶层释放提交，嵌套释放不结束外层事务。独立验收 standalone_success_is_committed、success_does_not_commit_callers_transaction、existing_savepoint_is_preserved 和 explicit_transaction_in_autocommit_mode 均通过。",
+        "reason": "模型不仅比较事务是否活跃，还说明保存点层级与提交归属，覆盖正常返回不得结束调用者事务的要求。单独的 active 相等谓词不足以证明这一点，但相关文字关系、代码及验收共同提供了依据。"
+      },
+      {
+        "id": "r3",
+        "assessment": "covered",
+        "model_evidence": "control_flow[1—4] 将插入及 RELEASE 纳入异常处理，并区分局部保存点回滚和自有事务回滚；original_exception 描述清理异常不能替换原异常。scope 明确针对当前 app.py，并列出回滚失败、引擎强制全事务回滚等限制。",
+        "code_evidence": "提交代码第10—13行捕获范围包含提交时的 RELEASE；第16—23行按入口事务归属清理；第24—28行吞掉清理异常后 bare raise。独立验收批次局部回滚、独立失败原子性及原异常保留、空批次与重复失败均通过。原始代码的 RELEASE 位于 else，模型没有错误地沿用该控制流。",
+        "reason": "失败撤销范围、调用者工作保留及原异常传播均有明确关系和实现依据，行号也匹配提交版本。覆盖结论限于模型声明的范围，不将清理失败或数据库自行撤销外层事务时的行为当作已保证性质。"
+      }
+    ],
+    "uncertainty": "未提供模型所引 test_batch.py、执行 trace 或其完整输出，因此无法独立核实模型自述的全部测试。现有独立验收仅证明列出的有限用例；结构校验通过不构成语义证明。"
+  },
+  "tool_items": [],
+  "errors": [],
+  "input_sha256": "88d8e470bbad0fd3816cfc9e015e258ad316bdc59cefd71fba8e509eb26074b2",
+  "event_sha256": "337ee911a8573cd19f994dbf18d1154b623628e09a46c1ac162bdddcd128b8c3",
+  "cli_version": "codex-cli 0.160.0",
+  "model_requested": "gpt-6-astra",
+  "reasoning_effort": "high"
+}

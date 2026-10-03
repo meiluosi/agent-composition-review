@@ -1,0 +1,137 @@
+{
+  "schema_version": 1,
+  "types": {
+    "GroupInput": {
+      "factories": {"type": "array"},
+      "finite_zero_argument_factory_sequence": {"type": "boolean"},
+      "cleanup_finishes_in_finite_time": {"type": "boolean"}
+    },
+    "GroupExit": {
+      "kind": {"type": "string", "enum": ["returned", "raised"]},
+      "results": {"type": "array"},
+      "owned_task_ids": {"type": "array"},
+      "unfinished_task_ids": {"type": "array"},
+      "cancel_requested_task_ids": {"type": "array"},
+      "original_exit_exception_preserved": {"type": "boolean"}
+    }
+  },
+  "resources": {
+    "owned_tasks": "本次 run_group 的局部 tasks 列表及其中 Task 的执行、取消和完成状态。",
+    "group_future": "局部 group：按 tasks 的顺序聚合结果或传播第一个已观察到的失败。",
+    "cleanup_future": "异常路径的局部 cleanup：收集本组 tasks 和已有 group 的所有终态。"
+  },
+  "actions": [
+    {
+      "id": "run_group",
+      "meaning": "app.py:run_group 的完整调用边界；正常路径返回列表，异常路径完成清理后重新抛出异常。GroupExit 是观察表示，raised 并非 API 返回值。",
+      "input_type": "GroupInput",
+      "output_type": "GroupExit",
+      "reads": ["owned_tasks", "group_future", "cleanup_future"],
+      "writes": ["owned_tasks", "group_future", "cleanup_future"],
+      "pre": [
+        {
+          "id": "factory_domain",
+          "requirement": "输入假设：有限的零参数工厂序列，各工厂返回协程或同步抛错。该假设不是实现新增的运行时校验。",
+          "must": {"op": "eq", "args": [{"path": "input.finite_zero_argument_factory_sequence"}, {"literal": true}]}
+        },
+        {
+          "id": "finite_cleanup",
+          "requirement": "终止假设：协程响应取消且清理会在有限时间内结束。",
+          "must": {"op": "eq", "args": [{"path": "input.cleanup_finishes_in_finite_time"}, {"literal": true}]}
+        }
+      ],
+      "post": [
+        {
+          "id": "successful_cardinality",
+          "requirement": "正常返回时，每个工厂对应一个结果；空输入对应空列表。",
+          "when": {"op": "eq", "args": [{"path": "output.kind"}, {"literal": "returned"}]},
+          "must": {"op": "eq", "args": [{"count": {"path": "output.results"}}, {"count": {"path": "input.factories"}}]}
+        },
+        {
+          "id": "all_owned_tasks_finished",
+          "requirement": "任何退出之前，本次已创建的任务必须完成，包括异常与取消后的清理。",
+          "must": {"op": "eq", "args": [{"path": "output.unfinished_task_ids"}, {"literal": []}]}
+        },
+        {
+          "id": "local_cancellation_only",
+          "requirement": "run_group 主动请求取消的对象只能是本次创建的任务，不包括无关后台任务。",
+          "must": {"op": "subset", "args": [{"path": "output.cancel_requested_task_ids"}, {"path": "output.owned_task_ids"}]}
+        },
+        {
+          "id": "exception_preservation",
+          "requirement": "异常退出保留触发退出的异常对象或 CancelledError；清理的次生异常与取消不能替换它，不返回异常、不创建 ExceptionGroup。",
+          "when": {"op": "eq", "args": [{"path": "output.kind"}, {"literal": "raised"}]},
+          "must": {"op": "eq", "args": [{"path": "output.original_exit_exception_preserved"}, {"literal": true}]}
+        }
+      ]
+    }
+  ],
+  "edges": [],
+  "required_actions": ["run_group"],
+  "relations": [
+    {
+      "kind": "creation_and_parallel_execution",
+      "within": "run_group",
+      "description": "第 9–10 行同步按序调用工厂并登记 create_task 结果；第 11–14 行并发等待，gather 保持输入结果顺序。同步工厂失败时，后续工厂不再调用。"
+    },
+    {
+      "kind": "exceptional_lifecycle",
+      "within": "run_group",
+      "description": "第 15–30 行仅在异常路径执行。主等待的 shield 将父取消交给本函数处理；仅取消未完成且未处于取消状态的本组 Task，避免再次打断清理。cleanup 同时收集 group，避免聚合异常无人读取。循环屏蔽清理期间的取消，最后 bare raise 保留原始退出原因。"
+    }
+  ],
+  "requirements": [
+    {
+      "id": "parallel_ordered_results",
+      "description": "结果按输入顺序且保留对象身份；子协程可以并行推进。",
+      "verification": "test_run_group.py 的 normal_empty_parallel_order_identity 使用全员启动屏障、逆序完成和身份断言；基数谓词本身不证明顺序或并行。",
+      "status": "observed_in_tests_and_supported_by_code"
+    },
+    {
+      "id": "cleanup_before_exit",
+      "description": "失败、子任务取消或一次外部父取消后，退出必须等待所有本组任务清理。",
+      "verification": "lifecycle 用 Event 控制清理暂停与释放，检查提前退出、清理完成、所有已记录 Task.done()；覆盖清理中取消和次生清理异常。already_cancelling_child 检查没有重复取消正在清理的子任务。",
+      "status": "observed_in_tests_and_supported_by_code"
+    },
+    {
+      "id": "failure_identity_and_isolation",
+      "description": "工厂与子任务异常不转成结果；原始异常保留；无关后台任务不被取消。",
+      "verification": "factory_failure 与 lifecycle 对异常进行 is 或 CancelledError 类型断言；lifecycle 另检查后台 Task 未完成且 cancelling()==0，事件循环异常处理器未报告无人读取的异常。",
+      "status": "observed_in_tests_and_supported_by_code"
+    }
+  ],
+  "verification": {
+    "behavior_commands": [
+      {"command": "./run_python smoke.py", "result": "passed; [2, 4]"},
+      {"command": "./run_python test_run_group.py app", "result": "passed; 10 cases"}
+    ],
+    "structural_check": {
+      "command": "./run_python scripts/composition.py validate model.json",
+      "result": "passed",
+      "scope": "仅结构与引用；不证明行为。"
+    },
+    "reasoned_properties": [
+      "app.py 仅依赖 asyncio；run_group(factories) 公开接口未变。",
+      "取消循环只遍历局部 tasks，不枚举或操作其他后台任务。",
+      "所有成功创建并登记的任务均进入异常清理聚合；正常返回由 gather 保证本组全部成功完成。"
+    ]
+  },
+  "scope": {
+    "description": "当前 app.py 的最小调用边界模型。只有一个复合动作，所以没有跨动作数据交接 edges；内部并行和条件清理列在 relations。类型是 Python 工厂、Task 与任意结果的 JSON 观察投影，不改变真实 API，不声称 app.py 已输出这些记录。资源覆盖编排自身持有的状态。",
+    "limitations": [
+      "本次直接执行行为测试，没有生成或检查与该观察投影对应的完整 action trace；谓词列出契约，不能当成已执行的断言记录。",
+      "验证限于当前 Python 3.12 asyncio 环境与有限事件交错，没有穷举调度，也没有跨 Python 版本或自定义事件循环验证。",
+      "外部取消测试每次只发出一次父调用取消；多次外部取消、拒绝响应取消、永不完成的清理不在验收结论内。",
+      "不建模工厂及协程内部业务副作用、它们自行创建的后台任务、系统退出、内存耗尽或自定义 task factory。",
+      "异常身份、结果身份、并行性与异步清理完成依赖真实 Python 测试及代码证据，JSON 类型和格式检查无法独立验证。"
+    ],
+    "evidence": [
+      {"path": "app.py", "start": 1, "end": 5, "supports": "自包含的 asyncio 依赖及不变的 async run_group(factories) 接口。"},
+      {"path": "app.py", "start": 6, "end": 10, "supports": "本组局部所有权、按工厂顺序创建任务；工厂同步异常落入共同处理路径。"},
+      {"path": "app.py", "start": 11, "end": 14, "supports": "gather 并行等待及顺序结果；shield 隔离父取消的自动下传。"},
+      {"path": "app.py", "start": 15, "end": 19, "supports": "捕获包括取消在内的异常，只取消本组未完成且尚未取消的任务。"},
+      {"path": "app.py", "start": 20, "end": 29, "supports": "收集任务和原聚合 Future 的终态；清理期间取消不会传播给子任务。"},
+      {"path": "app.py", "start": 30, "end": 30, "supports": "清理结束后重新抛出原始异常，不包装为 ExceptionGroup 或作为结果返回。"}
+    ]
+  }
+}

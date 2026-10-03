@@ -1,0 +1,50 @@
+{
+  "case_id": "c01",
+  "condition": "A_basic",
+  "trial": 2,
+  "exit_code": 0,
+  "timed_out": false,
+  "elapsed_seconds": 57.37925337499473,
+  "usage": {
+    "input_tokens": 14512,
+    "cached_input_tokens": 0,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 757,
+    "reasoning_output_tokens": 92
+  },
+  "completed": true,
+  "valid": true,
+  "prediction": {
+    "criteria": [
+      {
+        "id": "r1",
+        "assessment": "covered",
+        "model_evidence": "actions.left 读取 child.left/count/label，actions.right 读取 child.right/count/label；prepared_snapshot 保留原 label、left、right，并通过 edges 向两个分析动作传递完整四字段快照。",
+        "code_evidence": "提交代码第48行使用 State 作为子图状态输入，仅限制 output_schema；第39、45行分别使用既有 left/right、count 和 label 计算结果。独立验收 test_outputs_and_reuse 通过。",
+        "reason": "模型明确表示分析所需的完整上下文及原累积值的传递，与提交代码一致；输出字段收窄没有被误当成输入字段收窄。"
+      },
+      {
+        "id": "r2",
+        "assessment": "covered",
+        "model_evidence": "scope 声明描述当前 app.py；prepared_snapshot 表示 prepare 提交后的完整快照，analysis_publish 表示“以 AnalysisOutput 仅发布 left/right”；final_merge 分别取 prepared.count、refresh.label 和 analysis.left/right。",
+        "code_evidence": "提交代码第13—15行定义 AnalysisOutput，第48行将其设为子图输出 schema，第56行嵌入编译子图，第58—59行令 refresh 与 analysis 同为 prepare 的后继。原始代码第42行没有输出投影。",
+        "reason": "模型区分了子图读取的快照与向父图发布的自有字段，准确对应修改后的代码版本，没有把原始子图的完整状态输出当作修复后的行为。单写者性质标为推断，未冒充形式证明。"
+      },
+      {
+        "id": "r3",
+        "assessment": "covered",
+        "model_evidence": "relations 明确列出 refresh/analysis 与 left/right 两组 parallel 关系，解释 analysis 包含子图动作，并列出两组 barrier；scope.limitations 明确说明并发测试不能穷尽调度。",
+        "code_evidence": "提交代码第58—59行保留父图分叉，第51—52行保留子图分叉；第29—30、35—36行使用父屏障，第37—38、43—44行使用子屏障。独立验收 test_both_concurrency_boundaries_and_single_execution 通过。",
+        "reason": "模型同时表达两层并行及屏障参与关系，未将数据依赖边误述为全局串行执行，也未声称顺序轨迹检查或有限并发测试足以证明所有调度正确。"
+      }
+    ],
+    "uncertainty": "独立验收仅提供通过摘要，模型另述的 smoke.py/test_app.py 执行细节未附原始记录；上述判断依据模型关系、所给代码及独立验收，不构成并发正确性的数学证明。"
+  },
+  "tool_items": [],
+  "errors": [],
+  "input_sha256": "21fd8735a1016c658d9b9ea75f14c10ab6ba9c03431ffc066fba35eacefae711",
+  "event_sha256": "53d80ebe05d6768dcb972dbf489c451a22a00ad519cdc9e9ca1b7fb35310f8d6",
+  "cli_version": "codex-cli 0.160.0",
+  "model_requested": "gpt-6-astra",
+  "reasoning_effort": "high"
+}

@@ -1,0 +1,30 @@
+--- original.py
++++ app.py
+@@ -1,7 +1,24 @@
+ """Append a batch using a caller-supplied SQLite connection."""
++
++from uuid import uuid4
+ 
+ 
+ def write_batch(connection, rows):
+-    with connection:
+-        connection.executemany('INSERT INTO records(key, value) VALUES (?, ?)',rows)
+-    return len(rows)
++    count = len(rows)
++    # A private savepoint nests inside caller transactions/savepoints. Without
++    # an outer transaction, releasing it commits this batch (also in autocommit).
++    savepoint = 'write_batch_' + uuid4().hex
++    connection.execute('SAVEPOINT ' + savepoint)
++    try:
++        connection.executemany('INSERT INTO records(key, value) VALUES (?, ?)', rows)
++        connection.execute('RELEASE SAVEPOINT ' + savepoint)
++    except BaseException:
++        # Cleanup must not replace the insertion/release exception. Never use
++        # connection.rollback(): that would also discard the caller's work.
++        try:
++            connection.execute('ROLLBACK TO SAVEPOINT ' + savepoint)
++            connection.execute('RELEASE SAVEPOINT ' + savepoint)
++        except BaseException:
++            pass
++        raise
++    return count

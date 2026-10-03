@@ -1,0 +1,202 @@
+{
+  "case_id": "c01",
+  "condition": "B_tools",
+  "trial": 2,
+  "exit_code": 0,
+  "timed_out": false,
+  "elapsed_seconds": 293.94490920798853,
+  "usage": {
+    "input_tokens": 122358,
+    "cached_input_tokens": 98944,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 7860,
+    "reasoning_output_tokens": 1600
+  },
+  "completed": true,
+  "status": "completed",
+  "prediction": {
+    "initial_verdict": "violation",
+    "summary": "原实现因子图回写 label 与 refresh 并行冲突而失败。已将子图输出限定为 left/right，保留公开接口、真实编译图及两层并行。已交付包含实际行号依据的 model.json。",
+    "tests_executed": [
+      "./run_python smoke.py：修复前失败，修复后通过",
+      "./run_python test_review.py：9 项测试通过，覆盖计算、并行、复用、调用独立性和异常传播",
+      "./run_python check_model.py：模型声明、引用和证据行号检查通过"
+    ],
+    "limitations": [
+      "并发测试覆盖有限调度，未验证所有线程交错。",
+      "未验证其他框架版本、持久化、故障重试及取消；模型中已注明。"
+    ]
+  },
+  "acceptance": {
+    "tests_run": 3,
+    "passed": true,
+    "checks": [
+      {
+        "test": "test_both_concurrency_boundaries_and_single_execution",
+        "passed": true
+      },
+      {
+        "test": "test_outputs_and_reuse",
+        "passed": true
+      },
+      {
+        "test": "test_separate_graphs_do_not_share_state",
+        "passed": true
+      }
+    ],
+    "exit_code": 0,
+    "timed_out": false,
+    "sandbox": "macos_no_network_writes_only_grade_directory",
+    "stderr": ""
+  },
+  "structure": {
+    "valid": true,
+    "errors": [],
+    "scope": "Syntax/references only; semantic criteria reviewed independently."
+  },
+  "source_changed": true,
+  "artifacts": {
+    "app.py": "10e7e8e24598944ce97be9cb555308c401de57636a37b132a6f7d779348458e2",
+    "check_model.py": "14abc29e0d62a75f23d49a16811376a95fb067134d3eb4624bed1e4088f156af",
+    "model.json": "5c0240dbe25148d2215b0d8f6629a6c2c70916fee73e6c251bc596f32c5f148e",
+    "test_review.py": "8b646d1b6b54110b4a54e9cc166487c760b64e74a172a25f2691805133fca547"
+  },
+  "protected_changes": [],
+  "outside_changes": [],
+  "artifact_errors": [],
+  "tool_audit": [
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc \"pwd; rg --files -g 'AGENTS.md' -g 'task.md' -g 'app.py' -g 'MODEL_FORMAT.md' -g 'smoke.py' -g 'run_python'\"",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc 'cat app.py'",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc 'cat MODEL_FORMAT.md'",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc 'cat task.md'",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc 'cat smoke.py'",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc 'cat run_python'",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 1,
+      "command": "/bin/zsh -lc './run_python smoke.py'",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc \"rg --files --hidden -g '\"'!.git/**'\"'\"",
+      "review_flags": []
+    },
+    {
+      "type": "file_change",
+      "exit_code": null,
+      "changes": [
+        {
+          "path": "<workspace>/app.py",
+          "kind": "update"
+        }
+      ]
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc './run_python smoke.py'",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc 'nl -ba app.py'",
+      "review_flags": []
+    },
+    {
+      "type": "file_change",
+      "exit_code": null,
+      "changes": [
+        {
+          "path": "<workspace>/test_review.py",
+          "kind": "add"
+        }
+      ]
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc './run_python test_review.py'",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc \"./run_python - <<'PY'\nimport json\n\nstate_fields = {'count': {'type': 'number'}, 'label': {'type': 'string'},\n                'left': {'type': 'number'}, 'right': {'type': 'number'}}\n\ndef condition(identifier, requirement, op, *args):\n    return {'id': identifier, 'requirement': requirement, 'must': {'op': op, 'args': list(args)}}\n\ndef path(value):\n    return {'path': value}\n\ndef literal(value):\n    return {'literal': value}\n\ndef identity(fields, prefix):\n    return [condition(prefix + '_' + f, '边界传递字段 ' + f + '，不改变其值。',\n                      'eq', path('output.' + f), path('input.' + f)) for f in fields]\n\ndef action(identifier, input_type, output_type, reads, writes, meaning, post=None):\n    return dict(id=identifier, input_type=input_type, output_type=output_type,\n                reads=reads, writes=writes, pre=[], post=post or [], meaning=meaning)\n\ndef edge(source, target, fields):\n    return {'from': source, 'to': target,\n            'bindings': [{'output': f, 'input': f} for f in fields]}\n\nmodel = {\n    'schema_version': 1,\n    'types': {\n        'State': state_fields,\n        'CountPatch': {'count': {'type': 'number'}},\n        'LabelPatch': {'label': {'type': 'string'}},\n        'LeftPatch': {'left': {'type': 'number'}},\n        'RightPatch': {'right': {'type': 'number'}},\n        'AnalysisResult': {f: state_fields[f] for f in ('left', 'right')},\n    },\n    'resources': {\n        'state.count': '当前调用的父/子图 count 状态通道。',\n        'state.label': '当前调用的父/子图 label 状态通道；子图取得 refresh 之前的快照。',\n        'state.left': '当前调用的 left 状态通道，分析以传入基值计算新值。',\n        'state.right': '当前调用的 right 状态通道，分析以传入基值计算新值。',\n        'calls': '调用者可选的动作记录容器；闭包捕获，非模块全局变量。',\n        'parent_gate': '调用者可选的屏障对象，refresh 与 left 调用 wait。',\n        'child_gate': '调用者可选的屏障对象，left 与 right 调用 wait。',\n    },\n    'actions': [\n        action('prepare', 'State', 'CountPatch', ['state.count'], ['state.count', 'calls'],\n               'build_graph.prepare：记录 prepare，返回 count + 7 补丁。',\n               [condition('count_increases', '必要条件：count 增加；精确增量另见 requirements。',\n                          'ge', path('output.count'), path('input.count'))]),\n        action('refresh', 'State', 'LabelPatch', ['state.label', 'parent_gate'],\n               ['state.label', 'calls', 'parent_gate'],\n               'build_graph.refresh：记录 refresh，等待可选父屏障，返回追加 |fresh 的 label 补丁。',\n               [condition('retains_label', '必要条件：输出包含原 label。', 'contains',\n                          path('output.label'), path('input.label')),\n                condition('has_fresh', '必要条件：输出包含 |fresh；精确后缀规则另见 requirements。',\n                          'contains', path('output.label'), literal('|fresh'))]),\n        action('analysis_entry', 'State', 'State', ['state.' + f for f in state_fields], [],\n               'child 的 START 输入边界（结构事件，不是新增 Python 动作）：接收 prepare 后的完整状态快照，供两个分析节点读取。',\n               identity(state_fields, 'snapshot')),\n        action('left', 'State', 'LeftPatch',\n               ['state.left', 'state.count', 'state.label', 'parent_gate', 'child_gate'],\n               ['state.left', 'calls', 'parent_gate', 'child_gate'],\n               'build_graph.left：记录 left，等待可选父/子屏障，计算 left + count + len(label)。'),\n        action('right', 'State', 'RightPatch',\n               ['state.right', 'state.count', 'state.label', 'child_gate'],\n               ['state.right', 'calls', 'child_gate'],\n               'build_graph.right：记录 right，等待可选子屏障，计算 right + count - len(label)。'),\n        action('analysis_exit', 'AnalysisResult', 'AnalysisResult',\n               ['state.left', 'state.right'], ['state.left', 'state.right'],\n               'child.compile() 的输出边界：合并两个分支的补丁，通过 AnalysisResult 只向父 analysis 节点发布 left/right。边界本身不记录 calls。',\n               identity(['left', 'right'], 'publish')),\n    ],\n    'edges': [\n        edge('prepare', 'refresh', ['count']),\n        edge('prepare', 'analysis_entry', ['count']),\n        edge('analysis_entry', 'left', list(state_fields)),\n        edge('analysis_entry', 'right', list(state_fields)),\n        edge('left', 'analysis_exit', ['left']),\n        edge('right', 'analysis_exit', ['right']),\n    ],\n    'relations': [\n        {'kind': 'state_inheritance', 'description': 'prepare 只写 count。父状态保留调用输入的 label、left、right，并将完整合并状态交给 refresh 和 analysis_entry。edges 中的 count 绑定不是完整输入的唯一来源。'},\n        {'kind': 'parallel', 'members': ['refresh', 'analysis_entry'], 'after': 'prepare',\n         'description': '父图两条出边启动同一轮的 refresh 与 analysis。analysis_entry 到 analysis_exit 为可复用编译子图的生命周期。'},\n        {'kind': 'parallel', 'members': ['left', 'right'], 'after': 'analysis_entry',\n         'description': 'child START 同时连接 left 与 right；两者无先后依赖。'},\n        {'kind': 'parent_merge', 'members': ['refresh', 'analysis_exit'],\n         'description': '父图 END 前保留 prepare 的 count，合并 refresh 的 label 和 analysis_exit 的 left/right。最终只有 State 的四个字段。此关系不是 refresh 到 analysis 的顺序边。'},\n        {'kind': 'optional_effects', 'description': 'calls 非 None 时，每个业务动作开始时 append 一次；gate 非 None 时执行 wait。失败时保留已发生的记录，异常不被本实现捕获。'},\n    ],\n    'required_actions': ['prepare', 'refresh', 'analysis_entry', 'left', 'right', 'analysis_exit'],\n    'requirements': [\n        {'id': 'exact_result', 'requirement': '对于完整合法输入 s，令 c=s.count+7、n=len(s.label)。输出必须为 count=c、label=s.label+\\\"|fresh\\\"、left=s.left+c+n、right=s.right+c-n。',\n         'verification': 'test_review.py 的值测试、连续调用测试、并发和异步测试对完整输出字典进行精确比较；代码中的四个公式支持此推断。当前谓词词汇无法直接表示所需的加法与字符串拼接，因此 post 中的必要条件不是该公式的完整证明。'},\n        {'id': 'write_ownership', 'requirement': '子图读取完整 State，但向父图只发布 left/right，不回写 count/label。',\n         'verification': 'AnalysisResult 与 output_schema 静态依据；直接复用子图测试和父图 stream 更新测试检查实际输出字段。'},\n        {'id': 'parallelism', 'requirement': '保留父分支与子分支两处并行及真实编译子图。',\n         'verification': 'test_both_parallel_boundaries 在两层同时使用有超时的两方 Barrier，连续完成 6 次；拓扑与 CompiledStateGraph 类型检查。'},\n        {'id': 'isolation_and_calls', 'requirement': '完整成功调用的四个业务动作分别记录一次；重复调用和不同图不泄漏状态。',\n         'verification': '逐次动作 Counter、输入不变测试、连续调用、同图 24 次并发、6 个图独立屏障与日志测试、8 次异步调用。'},\n        {'id': 'error_propagation', 'requirement': '不得吞掉动作或屏障异常。',\n         'verification': '父/子 gate 注入异常并检查原异常实例传播；缺失字段和错误 count 类型分别验证 KeyError、TypeError。代码中无异常捕获。'},\n    ],\n    'scope': {\n        'description': '当前 app.py 的 prepare、父图并行 refresh/analysis、子图并行 left/right，以及限制写回字段的子图边界。analysis_entry/exit 为实际框架交接的结构事件，不是 calls 中的额外动作。',\n        'limitations': [\n            '类型声明中的 number 对应代码 int；JSON 类型词汇无法区分整数。TypedDict 不提供运行时输入校验，本模型的业务契约针对 count/left/right 为整数且 label 为字符串的完整输入。',\n            'pre 的空列表表示类型和正常执行前提以文字说明，未编码为谓词；left/right 的空 post 表示精确算术条件未编码。它们均不表示没有约束或已经证明。',\n            '未展开 LangGraph 内部调度、状态通道实现、隐式子图结束与父 END 节点；snapshot 传递和合并依赖已安装框架的语义，并由实际行为测试佐证。',\n            '屏障和并发测试覆盖有限调度，不构成所有运行环境和线程交错的证明。未验证跨进程、持久化检查点、故障重试、取消、外部自定义配置或其他框架版本。',\n            'calls/gate 是调用者持有的可变对象；故意向多个图传入相同对象会共享该对象，调用者自定义对象的线程安全不由 build_graph 保证。未设置的或永不释放的外部屏障无法保证完成。',\n            '每个动作恰好一次的测试针对正常完成且无外部重试的调用；失败调用可以只留下已启动动作的记录。',\n        ],\n        'evidence': [\n            {'path': 'app.py', 'start': 6, 'end': 15, 'supports': '完整 State 与只含 left/right 的 AnalysisResult 输出契约。'},\n            {'path': 'app.py', 'start': 18, 'end': 25, 'supports': '每个构图调用的局部闭包、可选 calls 记录、prepare 精确加 7。'},\n            {'path': 'app.py', 'start': 27, 'end': 45, 'supports': 'refresh 后缀、left/right 保留原基值的算术、动作记录、两个可选屏障；无异常吞掉逻辑。'},\n            {'path': 'app.py', 'start': 47, 'end': 52, 'supports': '子图使用完整输入与受限输出，START 分叉到 left/right。'},\n            {'path': 'app.py', 'start': 53, 'end': 62, 'supports': '父图包含真实编译子图，prepare 后并行 refresh 与 analysis，两个分支连接 END，返回编译父图。'},\n        ],\n    },\n    'validation': {\n        'executed': [\n            {'command': './run_python smoke.py', 'result': '当前实现通过，输出 count=8、label=old|fresh、left=13、right=8。'},\n            {'command': './run_python test_review.py', 'result': '9 项测试全部通过。'},\n        ],\n        'inferred': ['output_schema 划定父子图写回边界，消除 refresh 与 analysis 对 label 的并行写入冲突。', '实现中没有额外全局状态或辅助模块依赖。'],\n        'unverified': ['所有可能的线程交错、其他框架版本，以及 scope.limitations 中列出的扩展运行方式。'],\n    },\n}\nwith open('model.json', 'w') as f:\n    json.dump(model, f, ensure_ascii=False, indent=2)\n    f.write('\\\\n')\nprint('Wrote model.json')\nPY\"",
+      "review_flags": []
+    },
+    {
+      "type": "file_change",
+      "exit_code": null,
+      "changes": [
+        {
+          "path": "<workspace>/check_model.py",
+          "kind": "add"
+        }
+      ]
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 1,
+      "command": "/bin/zsh -lc 'diff -u original.py app.py'",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc './run_python check_model.py'",
+      "review_flags": []
+    }
+  ],
+  "case_sha256": "a3a3e9d2dfd9e27b9c6decc3e3da2d3cbd75197403bb20fd182cb365bca9eb50",
+  "prompt_sha256": "1bb460fb636cc7a19abd022ed921acd8d0028460effea85ac05ce737f1f9e4ba",
+  "event_sha256": "20c56473e185cdc2a266bfc8c92bf2cff2675e01da1df038819639a8008e6714",
+  "stderr_sha256": "9cab2818a83cef4cc4ab71255b16c99d63e27f946d15bb00c65d4c805c64758d",
+  "model_requested": "gpt-6-astra",
+  "reasoning_effort": "high",
+  "cli_version": "codex-cli 0.158.0-alpha.2.1",
+  "review": {
+    "exit_code": 1,
+    "timed_out": false,
+    "elapsed_seconds": 23.424194333027117,
+    "usage": null,
+    "completed": false,
+    "valid": false,
+    "prediction": null,
+    "tool_items": [],
+    "input_sha256": "5af0869df53bd63ebc9354847deaa128851428c885c74800d1e04719095b4b53",
+    "event_sha256": "4e91ad5c79ae20f6ce00db14a4f2087911ffd872fbda23cb56519d8bfaf32a64"
+  }
+}

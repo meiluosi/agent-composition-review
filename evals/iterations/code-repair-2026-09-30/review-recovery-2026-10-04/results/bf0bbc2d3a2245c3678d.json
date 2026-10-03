@@ -1,0 +1,50 @@
+{
+  "case_id": "c02",
+  "condition": "A_basic",
+  "trial": 1,
+  "exit_code": 0,
+  "timed_out": false,
+  "elapsed_seconds": 57.63716320798267,
+  "usage": {
+    "input_tokens": 15990,
+    "cached_input_tokens": 0,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 807,
+    "reasoning_output_tokens": 109
+  },
+  "completed": true,
+  "valid": true,
+  "prediction": {
+    "criteria": [
+      {
+        "id": "r1",
+        "assessment": "covered",
+        "model_evidence": "actions.analysis_input 读取父图 count/label/left/right，并以四个 analysis_copy_* 后置条件描述完整传入；left/right 分别读取 child.left/child.right，meaning 明确保留原值进行累加。",
+        "code_evidence": "原始与提交代码一致：第 47 行以 State 作为子图输入；第 39、45 行分别使用原 left/right、count 和 label 计算。独立验收 test_outputs_and_reuse 通过。",
+        "reason": "模型明确交代子图所需的全部输入及原累加值的来源，与代码一致；没有将仅含 left/right 的输出 schema 误作输入限制。"
+      },
+      {
+        "id": "r2",
+        "assessment": "covered",
+        "model_evidence": "analysis_input.meaning 指定 prepare 提交后、与 refresh 同一父图超步的四字段快照；analysis_output 明确仅发布 left/right，不发布 count/label。relations 区分初始字段保留、字段交接和控制拓扑；scope 声明保持原实现。",
+        "code_evidence": "两份代码相同。第 25 行 prepare 更新 count；第 57–58 行将 refresh 与 analysis 放在 prepare 后的两个分支；第 13–15、47 行限定子图输出为 left/right；第 55 行直接使用编译子图。独立输出与复用验收通过。",
+        "reason": "模型区分了供分析读取的完整边界快照与子图拥有的输出更新字段，正确表达使用刷新前 label、准备后 count，并与其声明的当前未修改代码版本一致。"
+      },
+      {
+        "id": "r3",
+        "assessment": "covered",
+        "model_evidence": "relations 中两个 control_fanout 分别表示 prepare → refresh/analysis_input 和 analysis_input → left/right，并明确无分支间先后依赖；两个 join 描述汇合。scope.limitations 明确屏障测试仅证实本次运行的并行，不是所有调度的形式证明。",
+        "code_evidence": "第 50–51 行保留子图双分支，第 57–58 行保留父图双分支；第 29–30、35–38、43–44 行设置两组屏障参与点。独立验收 test_both_concurrency_boundaries_and_single_execution 通过。",
+        "reason": "两层并行均有明确结构关系及代码依据，且独立执行检查提供支持。模型没有把字段交接边当作串行执行轨迹，也没有声称顺序检查证明并发正确性。"
+      }
+    ],
+    "uncertainty": "确定性模型检查仅验证语法和引用。模型自述的七项测试未附独立执行材料；本评审仅将所给三项独立验收作为执行证据，不据此推及所有调度、配置或依赖版本。"
+  },
+  "tool_items": [],
+  "errors": [],
+  "input_sha256": "c0d3c5046f2ce090282bc1f52b27e2675a805a665767b414f1ef3a52adf5c91a",
+  "event_sha256": "b194b7c32bec283b938299fb2bf0f3890e96960ed2823259c79b4b588eb1f72d",
+  "cli_version": "codex-cli 0.160.0",
+  "model_requested": "gpt-6-astra",
+  "reasoning_effort": "high"
+}

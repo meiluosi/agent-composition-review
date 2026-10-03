@@ -1,0 +1,25 @@
+"""Append a batch using a caller-supplied SQLite connection."""
+
+from uuid import uuid4
+
+
+def write_batch(connection, rows):
+    count = len(rows)
+    savepoint = 'write_batch_' + uuid4().hex
+    connection.execute(f'SAVEPOINT "{savepoint}"')
+    try:
+        connection.executemany(
+            'INSERT INTO records(key, value) VALUES (?, ?)', rows
+        )
+        # Releasing an outermost savepoint commits; a nested one leaves the
+        # caller's transaction and savepoints intact.
+        connection.execute(f'RELEASE SAVEPOINT "{savepoint}"')
+    except BaseException:
+        try:
+            connection.execute(f'ROLLBACK TO SAVEPOINT "{savepoint}"')
+            connection.execute(f'RELEASE SAVEPOINT "{savepoint}"')
+        except BaseException:
+            # Cleanup must not replace the original insertion/commit error.
+            pass
+        raise
+    return count

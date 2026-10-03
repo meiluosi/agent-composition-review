@@ -1,0 +1,50 @@
+{
+  "case_id": "c04",
+  "condition": "A_basic",
+  "trial": 2,
+  "exit_code": 0,
+  "timed_out": false,
+  "elapsed_seconds": 59.84638595901197,
+  "usage": {
+    "input_tokens": 13102,
+    "cached_input_tokens": 0,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 935,
+    "reasoning_output_tokens": 139
+  },
+  "completed": true,
+  "valid": true,
+  "prediction": {
+    "criteria": [
+      {
+        "id": "r1",
+        "assessment": "covered",
+        "model_evidence": "BatchInvocation/BatchOutcome 表示连接身份与可用性、入口/出口事务状态、records 快照及调用者保存点；resources 和 write_batch.reads/writes 明确记录本批次影响，connection_ownership 规定不关闭或替换连接。",
+        "code_evidence": "提交代码第 7 行读取 connection.in_transaction，第 9–21 行在同一连接上创建保存点、插入及清理，第 6、27 行取得并返回序列长度；没有关闭或替换连接的操作。",
+        "reason": "模型将调用者持有的资源、事务状态和批次记录变化关联到具体操作，并说明观测字段不是实际接口。成功计数依赖普通 INSERT 语义的限制已明确披露。"
+      },
+      {
+        "id": "r2",
+        "assessment": "covered",
+        "model_evidence": "standalone_commit 将入口无事务的成功调用关联到批次已提交及出口无事务；caller_ownership 表示已有事务继续存续、调用者保存点和工作保留。validation.inferred 区分最外层与嵌套 RELEASE 的语义。",
+        "code_evidence": "提交代码第 9、13 行创建并释放本函数保存点，没有显式提交外层事务。独立验收中 standalone_success_is_committed、success_does_not_commit_callers_transaction、existing_savepoint_is_preserved 和 explicit_transaction_in_autocommit_mode 均通过。",
+        "reason": "模型清楚区分独立提交和嵌套参与，并有代码及独立行为证据支持正常返回不会结束调用者事务；其声明范围包含默认连接和 isolation_level=None 下的显式事务。"
+      },
+      {
+        "id": "r3",
+        "assessment": "covered",
+        "model_evidence": "batch_rollback 规定在清理可用且数据库保留事务边界时恢复入口记录和事务状态；caller_ownership 保留调用者工作与保存点；exception_identity 要求原异常不被替换。scope.evidence 第 10–26 行的引用对应提交版本，并明确排除无法清理及数据库强制整体回滚的绝对保证。",
+        "code_evidence": "提交代码第 10–13 行把 INSERT 和 RELEASE 纳入同一 try；第 16–21 行按入口事务状态选择局部或整体回滚；第 22–26 行抑制清理异常并裸 raise。独立验收中的批次局部回滚、独立失败原子性与原异常保留、空批次及重复失败均通过。原代码第 15 行的 RELEASE 位于捕获范围之外，清理异常也未被抑制。",
+        "reason": "模型准确对应提交版本的失败路径及修复点，并将批次撤销、调用者资源保留和异常保留分别表达。覆盖结论限于明确声明且有证据支持的范围，不将条件性要求视为所有 SQLite 故障下的保证。"
+      }
+    ],
+    "uncertainty": "结构检查仅证明语法与引用有效。独立验收提供了 7 项通过结果；模型自述的另 9 项测试未附完整执行记录，不能视为额外独立验证。破坏性触发器、特殊冲突策略和清理失败等已披露边界仍未获普遍保证。"
+  },
+  "tool_items": [],
+  "errors": [],
+  "input_sha256": "0d95dd628e55cfe599814229a41add5fcc780d50d744d355c811dc1392e9e2dc",
+  "event_sha256": "bfb8d98dd27d00894c61783da14dc1a08957a03a42b4a117bef5203fd043a65e",
+  "cli_version": "codex-cli 0.160.0",
+  "model_requested": "gpt-6-astra",
+  "reasoning_effort": "high"
+}

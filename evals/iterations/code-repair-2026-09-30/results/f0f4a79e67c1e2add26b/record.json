@@ -1,0 +1,226 @@
+{
+  "case_id": "c04",
+  "condition": "C_v4",
+  "trial": 1,
+  "exit_code": 0,
+  "timed_out": false,
+  "elapsed_seconds": 285.06770020799013,
+  "usage": {
+    "input_tokens": 160072,
+    "cached_input_tokens": 127872,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 7371,
+    "reasoning_output_tokens": 1152
+  },
+  "completed": true,
+  "status": "completed",
+  "prediction": {
+    "initial_verdict": "violation",
+    "summary": "已修复 app.py：提交阶段失败也会撤销批次，按事务归属保护调用者工作，并保留原始异常。公开接口保持不变，实现自包含。已交付 model.json，包含实际行号依据和验证边界。",
+    "tests_executed": [
+      "./run_python test_batch.py original：3 个失败断言、1 个错误，复现原始缺陷",
+      "./run_python test_batch.py app：8 项测试全部通过，包含 27 组事务场景",
+      "./run_python smoke.py：通过",
+      "./run_python scripts/composition.py validate model.json：结构校验通过"
+    ],
+    "limitations": [
+      "未穷尽并发交错、进程崩溃或 I/O 故障；回滚自身无法执行时不能保证恢复。",
+      "未覆盖触发器主动回滚整个事务的表模式；完整边界已记录在 model.json。"
+    ]
+  },
+  "acceptance": {
+    "tests_run": 7,
+    "passed": true,
+    "checks": [
+      {
+        "test": "test_empty_batch_and_repeat_failure_do_not_end_transaction",
+        "passed": true
+      },
+      {
+        "test": "test_existing_savepoint_is_preserved",
+        "passed": true
+      },
+      {
+        "test": "test_explicit_transaction_in_autocommit_mode",
+        "passed": true
+      },
+      {
+        "test": "test_failure_rolls_back_only_own_batch",
+        "passed": true
+      },
+      {
+        "test": "test_standalone_failure_is_atomic_and_preserves_original_error",
+        "passed": true
+      },
+      {
+        "test": "test_standalone_success_is_committed",
+        "passed": true
+      },
+      {
+        "test": "test_success_does_not_commit_callers_transaction",
+        "passed": true
+      }
+    ],
+    "exit_code": 0,
+    "timed_out": false,
+    "sandbox": "macos_no_network_writes_only_grade_directory",
+    "stderr": ""
+  },
+  "structure": {
+    "valid": true,
+    "errors": [],
+    "scope": "Syntax/references only; semantic criteria reviewed independently."
+  },
+  "source_changed": true,
+  "artifacts": {
+    "app.py": "4bca10bfaf166f42edc257300e568ae3e342d3354987287f6b3dfa7f0f62e3b8",
+    "model.json": "19b3b01ce4b088f74e6ce6cc1333dac9dbbdcc9ab707d7d8ab74dcdcebf7fa6a",
+    "test_batch.py": "3a5214c434a1eae55e74a9ab8c2bb17f8ab16140cdff6f1567913cb1a9f98a7a"
+  },
+  "protected_changes": [],
+  "outside_changes": [],
+  "artifact_errors": [],
+  "tool_audit": [
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc \"pwd; rg --files -g '\"'!__pycache__'\"' -g '\"'!*.pyc'\"'\"",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc 'cat task.md MODEL_FORMAT.md app.py smoke.py'",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc 'cat SKILL.md references/executable-contracts.md references/contracts.md references/effects.md'",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc \"./run_python - <<'PY'\nimport sqlite3\nfrom app import write_batch\nc = sqlite3.connect(':memory:')\nc.execute('PRAGMA foreign_keys = ON')\nc.execute('CREATE TABLE parents(id INTEGER PRIMARY KEY)')\nc.execute('CREATE TABLE records(key TEXT PRIMARY KEY, value INTEGER REFERENCES parents(id) DEFERRABLE INITIALLY DEFERRED)')\ntry:\n    write_batch(c, [('uncommitted', 123)])\nexcept Exception as error:\n    print(type(error).__name__, str(error))\nprint('rows after failure:', c.execute('SELECT * FROM records').fetchall())\nprint('transaction still open:', c.in_transaction)\nPY\"",
+      "review_flags": []
+    },
+    {
+      "type": "file_change",
+      "exit_code": null,
+      "changes": [
+        {
+          "path": "<workspace>/test_batch.py",
+          "kind": "add"
+        }
+      ]
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 1,
+      "command": "/bin/zsh -lc './run_python test_batch.py original'",
+      "review_flags": []
+    },
+    {
+      "type": "file_change",
+      "exit_code": null,
+      "changes": [
+        {
+          "path": "<workspace>/app.py",
+          "kind": "update"
+        }
+      ]
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc \"nl -ba app.py; sed -n '1,200p' scripts/composition.py\"",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc './run_python smoke.py'",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 1,
+      "command": "/bin/zsh -lc './run_python test_batch.py app'",
+      "review_flags": []
+    },
+    {
+      "type": "file_change",
+      "exit_code": null,
+      "changes": [
+        {
+          "path": "<workspace>/app.py",
+          "kind": "update"
+        },
+        {
+          "path": "<workspace>/test_batch.py",
+          "kind": "update"
+        }
+      ]
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc './run_python test_batch.py app'",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc 'nl -ba app.py'",
+      "review_flags": []
+    },
+    {
+      "type": "file_change",
+      "exit_code": null,
+      "changes": [
+        {
+          "path": "<workspace>/model.json",
+          "kind": "add"
+        }
+      ]
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc './run_python smoke.py'",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc './run_python scripts/composition.py validate model.json'",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 1,
+      "command": "/bin/zsh -lc './run_python test_batch.py original'",
+      "review_flags": []
+    }
+  ],
+  "case_sha256": "f8107e089b020453286513984f4005a2688a98cd09dc381698bc7a5ef14e060f",
+  "prompt_sha256": "e50f6f07a426e3c16576d6474bf162cb5d63f92dee943e576e526ec2dcb6bbff",
+  "event_sha256": "8a212f6da25fc1a223da4413a24e844b0991c4b2b993fc253ad4ec9e63642dc8",
+  "stderr_sha256": "748cc7d0fc6f7bb7fe2d6d120ddb9df150845e391eb66238aa90eea04eaf1a70",
+  "model_requested": "gpt-6-astra",
+  "reasoning_effort": "high",
+  "cli_version": "codex-cli 0.158.0-alpha.2.1",
+  "review": {
+    "exit_code": 1,
+    "timed_out": false,
+    "elapsed_seconds": 27.197008915944025,
+    "usage": null,
+    "completed": false,
+    "valid": false,
+    "prediction": null,
+    "tool_items": [],
+    "input_sha256": "0863468a55cef4f343ee34105d78f3e1323977c22a0e9600392ecba3af657b44",
+    "event_sha256": "b4c2e801a3721c8908a4fee0021ea3638db0da65b3775ba4c45e54853741b9d1"
+  }
+}

@@ -1,0 +1,50 @@
+{
+  "case_id": "c06",
+  "condition": "C_v4",
+  "trial": 2,
+  "exit_code": 0,
+  "timed_out": false,
+  "elapsed_seconds": 53.60799958294956,
+  "usage": {
+    "input_tokens": 13404,
+    "cached_input_tokens": 7552,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 817,
+    "reasoning_output_tokens": 61
+  },
+  "completed": true,
+  "valid": true,
+  "prediction": {
+    "criteria": [
+      {
+        "id": "r1",
+        "assessment": "covered",
+        "model_evidence": "actions.create_owned_tasks、observe_group 和 cancel_and_drain 描述完整生命周期；relations.concurrent_execution 表明独立 Task 并发推进；observe_group 明确有序结果及 shield 隔离父取消；scope 将保证限定为一次外部父取消和有限清理。",
+        "code_evidence": "提交代码第 6–13 行记录本次任务，以 gather 按输入顺序收集结果并通过 shield 等待；第 14–26 行处理取消及清理。独立验收 test_order_empty_and_concurrency、test_external_cancellation_and_unrelated_task_survives 均通过。",
+        "reason": "模型通过具体动作、状态与关系覆盖并发子任务、有序结果、调用生命周期和父取消，与提交代码及声明范围一致。顺序并非仅由等长谓词推出，还有 gather 对应关系和独立行为证据支持。"
+      },
+      {
+        "id": "r2",
+        "assessment": "covered",
+        "model_evidence": "relations.mandatory_finally 明确“逻辑结果只有在清理完毕后才离开公开边界”；cancel_and_drain 单独表示任务终止与清理等待；preserve_exception_channel 区分公开异常传播和内部清理结果。",
+        "code_evidence": "提交代码第 13–26 行在观察结果或异常后执行 finally，通过 return_exceptions=True 的 drain 等待任务终止；清理等待期间收到取消时继续等待再裸 raise。独立验收 test_failure_waits_for_sibling_cleanup_and_keeps_exception、test_child_cancellation_cleans_other_children 均通过。",
+        "reason": "模型明确区分观察到失败与所有子任务完成，说明公开返回或抛出前必须完成清理，并将内部异常收集与公开异常通道分开。相关描述有代码控制流和行为检查支持，不依赖结构谓词被实际执行。"
+      },
+      {
+        "id": "r3",
+        "assessment": "covered",
+        "model_evidence": "create_owned_tasks 描述同步异常中止创建；其到 cancel_and_drain 的边明确交接“已创建前缀”；drain_owned_tasks 和 cancel_only_owned 将清理对象限定为局部 tasks。scope 明确不收管子任务自行创建的后代任务。",
+        "code_evidence": "提交代码第 6、9–10 行仅记录本次成功创建的任务；工厂调用位于 try 内，失败后进入第 14–18 行，仅遍历局部 tasks 取消并等待。独立验收 test_factory_failure_cleans_already_started_children、test_external_cancellation_and_unrelated_task_survives 均通过。",
+        "reason": "所有权从创建到清理的交接清楚，包含工厂同步失败留下的任务前缀；取消范围与代码一致，并有无关后台任务存活的验收证据。"
+      }
+    ],
+    "uncertainty": "结构检查仅支持语法与引用有效。模型自述的完整 12 项测试未提供独立执行材料，本评审依据所给代码和独立的 5 项验收；结论限于声明范围，不构成所有并发调度下的数学证明。"
+  },
+  "tool_items": [],
+  "errors": [],
+  "input_sha256": "2c095283ee827746fb934fe9fd926245f623b4351f80773a44654f9e04aea9c1",
+  "event_sha256": "a0f44ad5efe53dacd43349c9eff3f9af35d394314a3dfbfb3bc44429d98939b8",
+  "cli_version": "codex-cli 0.160.0",
+  "model_requested": "gpt-6-astra",
+  "reasoning_effort": "high"
+}

@@ -1,0 +1,252 @@
+test_binding_and_not_null_errors_rollback_partial_batch (__main__.BatchTests.test_binding_and_not_null_errors_rollback_partial_batch) ... 
+  test_binding_and_not_null_errors_rollback_partial_batch (__main__.BatchTests.test_binding_and_not_null_errors_rollback_partial_batch) (isolation=None, error=<class 'sqlite3.IntegrityError'>, bad=('bad', None)) ... FAIL
+  test_binding_and_not_null_errors_rollback_partial_batch (__main__.BatchTests.test_binding_and_not_null_errors_rollback_partial_batch) (isolation=None, error=<class 'sqlite3.ProgrammingError'>, bad=('bad', <object object at 0x105360910>)) ... FAIL
+  test_binding_and_not_null_errors_rollback_partial_batch (__main__.BatchTests.test_binding_and_not_null_errors_rollback_partial_batch) (isolation=None, error=<class 'sqlite3.ProgrammingError'>, bad=('bad',)) ... FAIL
+test_commit_visible_to_other_connection (__main__.BatchTests.test_commit_visible_to_other_connection) ... 
+  test_commit_visible_to_other_connection (__main__.BatchTests.test_commit_visible_to_other_connection) (isolation='') ... FAIL
+  test_commit_visible_to_other_connection (__main__.BatchTests.test_commit_visible_to_other_connection) (isolation=None) ... FAIL
+test_deferred_constraint_failure_at_commit (__main__.BatchTests.test_deferred_constraint_failure_at_commit) ... ok
+test_original_exception_identity_even_if_cleanup_raises (__main__.BatchTests.test_original_exception_identity_even_if_cleanup_raises) ... ok
+test_outer_failure_preserves_work_and_allows_commit (__main__.BatchTests.test_outer_failure_preserves_work_and_allows_commit) ... 
+  test_outer_failure_preserves_work_and_allows_commit (__main__.BatchTests.test_outer_failure_preserves_work_and_allows_commit) (isolation='', kind='implicit') ... FAIL
+  test_outer_failure_preserves_work_and_allows_commit (__main__.BatchTests.test_outer_failure_preserves_work_and_allows_commit) (isolation='', kind='begin') ... FAIL
+  test_outer_failure_preserves_work_and_allows_commit (__main__.BatchTests.test_outer_failure_preserves_work_and_allows_commit) (isolation='', kind='savepoint') ... FAIL
+  test_outer_failure_preserves_work_and_allows_commit (__main__.BatchTests.test_outer_failure_preserves_work_and_allows_commit) (isolation=None, kind='begin') ... FAIL
+  test_outer_failure_preserves_work_and_allows_commit (__main__.BatchTests.test_outer_failure_preserves_work_and_allows_commit) (isolation=None, kind='savepoint') ... FAIL
+test_outer_success_and_empty_preserve_savepoints (__main__.BatchTests.test_outer_success_and_empty_preserve_savepoints) ... 
+  test_outer_success_and_empty_preserve_savepoints (__main__.BatchTests.test_outer_success_and_empty_preserve_savepoints) (isolation='', kind='implicit', rows=[]) ... FAIL
+  test_outer_success_and_empty_preserve_savepoints (__main__.BatchTests.test_outer_success_and_empty_preserve_savepoints) (isolation='', kind='implicit', rows=[('batch', 2)]) ... FAIL
+  test_outer_success_and_empty_preserve_savepoints (__main__.BatchTests.test_outer_success_and_empty_preserve_savepoints) (isolation='', kind='begin', rows=[]) ... FAIL
+  test_outer_success_and_empty_preserve_savepoints (__main__.BatchTests.test_outer_success_and_empty_preserve_savepoints) (isolation='', kind='begin', rows=[('batch', 2)]) ... FAIL
+  test_outer_success_and_empty_preserve_savepoints (__main__.BatchTests.test_outer_success_and_empty_preserve_savepoints) (isolation='', kind='savepoint', rows=[]) ... FAIL
+  test_outer_success_and_empty_preserve_savepoints (__main__.BatchTests.test_outer_success_and_empty_preserve_savepoints) (isolation='', kind='savepoint', rows=[('batch', 2)]) ... FAIL
+  test_outer_success_and_empty_preserve_savepoints (__main__.BatchTests.test_outer_success_and_empty_preserve_savepoints) (isolation=None, kind='begin', rows=[]) ... FAIL
+  test_outer_success_and_empty_preserve_savepoints (__main__.BatchTests.test_outer_success_and_empty_preserve_savepoints) (isolation=None, kind='begin', rows=[('batch', 2)]) ... FAIL
+  test_outer_success_and_empty_preserve_savepoints (__main__.BatchTests.test_outer_success_and_empty_preserve_savepoints) (isolation=None, kind='savepoint', rows=[]) ... FAIL
+  test_outer_success_and_empty_preserve_savepoints (__main__.BatchTests.test_outer_success_and_empty_preserve_savepoints) (isolation=None, kind='savepoint', rows=[('batch', 2)]) ... FAIL
+test_standalone_repeated_failures_are_atomic (__main__.BatchTests.test_standalone_repeated_failures_are_atomic) ... 
+  test_standalone_repeated_failures_are_atomic (__main__.BatchTests.test_standalone_repeated_failures_are_atomic) (isolation=None) ... FAIL
+test_standalone_success_empty_and_special_keys (__main__.BatchTests.test_standalone_success_empty_and_special_keys) ... ok
+
+======================================================================
+FAIL: test_binding_and_not_null_errors_rollback_partial_batch (__main__.BatchTests.test_binding_and_not_null_errors_rollback_partial_batch) (isolation=None, error=<class 'sqlite3.IntegrityError'>, bad=('bad', None))
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/composition-code-_iirl48f/test_batch.py", line 103, in test_binding_and_not_null_errors_rollback_partial_batch
+    self.assertEqual(self.records(c), [])
+AssertionError: Lists differ: [('partial', 1)] != []
+
+First list contains 1 additional elements.
+First extra element 0:
+('partial', 1)
+
+- [('partial', 1)]
++ []
+
+======================================================================
+FAIL: test_binding_and_not_null_errors_rollback_partial_batch (__main__.BatchTests.test_binding_and_not_null_errors_rollback_partial_batch) (isolation=None, error=<class 'sqlite3.ProgrammingError'>, bad=('bad', <object object at 0x105360910>))
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/composition-code-_iirl48f/test_batch.py", line 103, in test_binding_and_not_null_errors_rollback_partial_batch
+    self.assertEqual(self.records(c), [])
+AssertionError: Lists differ: [('partial', 1)] != []
+
+First list contains 1 additional elements.
+First extra element 0:
+('partial', 1)
+
+- [('partial', 1)]
++ []
+
+======================================================================
+FAIL: test_binding_and_not_null_errors_rollback_partial_batch (__main__.BatchTests.test_binding_and_not_null_errors_rollback_partial_batch) (isolation=None, error=<class 'sqlite3.ProgrammingError'>, bad=('bad',))
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/composition-code-_iirl48f/test_batch.py", line 103, in test_binding_and_not_null_errors_rollback_partial_batch
+    self.assertEqual(self.records(c), [])
+AssertionError: Lists differ: [('partial', 1)] != []
+
+First list contains 1 additional elements.
+First extra element 0:
+('partial', 1)
+
+- [('partial', 1)]
++ []
+
+======================================================================
+FAIL: test_commit_visible_to_other_connection (__main__.BatchTests.test_commit_visible_to_other_connection) (isolation='')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/composition-code-_iirl48f/test_batch.py", line 132, in test_commit_visible_to_other_connection
+    self.assertEqual(self.records(observer), [('committed', 1)])
+AssertionError: Lists differ: [('caller', 2), ('committed', 1), ('pending', 3)] != [('committed', 1)]
+
+First differing element 0:
+('caller', 2)
+('committed', 1)
+
+First list contains 2 additional elements.
+First extra element 1:
+('committed', 1)
+
+- [('caller', 2), ('committed', 1), ('pending', 3)]
++ [('committed', 1)]
+
+======================================================================
+FAIL: test_commit_visible_to_other_connection (__main__.BatchTests.test_commit_visible_to_other_connection) (isolation=None)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/composition-code-_iirl48f/test_batch.py", line 132, in test_commit_visible_to_other_connection
+    self.assertEqual(self.records(observer), [('committed', 1)])
+AssertionError: Lists differ: [('caller', 2), ('committed', 1), ('pending', 3)] != [('committed', 1)]
+
+First differing element 0:
+('caller', 2)
+('committed', 1)
+
+First list contains 2 additional elements.
+First extra element 1:
+('committed', 1)
+
+- [('caller', 2), ('committed', 1), ('pending', 3)]
++ [('committed', 1)]
+
+======================================================================
+FAIL: test_outer_failure_preserves_work_and_allows_commit (__main__.BatchTests.test_outer_failure_preserves_work_and_allows_commit) (isolation='', kind='implicit')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/composition-code-_iirl48f/test_batch.py", line 85, in test_outer_failure_preserves_work_and_allows_commit
+    self.assertTrue(c.in_transaction)
+AssertionError: False is not true
+
+======================================================================
+FAIL: test_outer_failure_preserves_work_and_allows_commit (__main__.BatchTests.test_outer_failure_preserves_work_and_allows_commit) (isolation='', kind='begin')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/composition-code-_iirl48f/test_batch.py", line 85, in test_outer_failure_preserves_work_and_allows_commit
+    self.assertTrue(c.in_transaction)
+AssertionError: False is not true
+
+======================================================================
+FAIL: test_outer_failure_preserves_work_and_allows_commit (__main__.BatchTests.test_outer_failure_preserves_work_and_allows_commit) (isolation='', kind='savepoint')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/composition-code-_iirl48f/test_batch.py", line 85, in test_outer_failure_preserves_work_and_allows_commit
+    self.assertTrue(c.in_transaction)
+AssertionError: False is not true
+
+======================================================================
+FAIL: test_outer_failure_preserves_work_and_allows_commit (__main__.BatchTests.test_outer_failure_preserves_work_and_allows_commit) (isolation=None, kind='begin')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/composition-code-_iirl48f/test_batch.py", line 85, in test_outer_failure_preserves_work_and_allows_commit
+    self.assertTrue(c.in_transaction)
+AssertionError: False is not true
+
+======================================================================
+FAIL: test_outer_failure_preserves_work_and_allows_commit (__main__.BatchTests.test_outer_failure_preserves_work_and_allows_commit) (isolation=None, kind='savepoint')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/composition-code-_iirl48f/test_batch.py", line 85, in test_outer_failure_preserves_work_and_allows_commit
+    self.assertTrue(c.in_transaction)
+AssertionError: False is not true
+
+======================================================================
+FAIL: test_outer_success_and_empty_preserve_savepoints (__main__.BatchTests.test_outer_success_and_empty_preserve_savepoints) (isolation='', kind='implicit', rows=[])
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/composition-code-_iirl48f/test_batch.py", line 63, in test_outer_success_and_empty_preserve_savepoints
+    self.assertTrue(c.in_transaction)
+AssertionError: False is not true
+
+======================================================================
+FAIL: test_outer_success_and_empty_preserve_savepoints (__main__.BatchTests.test_outer_success_and_empty_preserve_savepoints) (isolation='', kind='implicit', rows=[('batch', 2)])
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/composition-code-_iirl48f/test_batch.py", line 63, in test_outer_success_and_empty_preserve_savepoints
+    self.assertTrue(c.in_transaction)
+AssertionError: False is not true
+
+======================================================================
+FAIL: test_outer_success_and_empty_preserve_savepoints (__main__.BatchTests.test_outer_success_and_empty_preserve_savepoints) (isolation='', kind='begin', rows=[])
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/composition-code-_iirl48f/test_batch.py", line 63, in test_outer_success_and_empty_preserve_savepoints
+    self.assertTrue(c.in_transaction)
+AssertionError: False is not true
+
+======================================================================
+FAIL: test_outer_success_and_empty_preserve_savepoints (__main__.BatchTests.test_outer_success_and_empty_preserve_savepoints) (isolation='', kind='begin', rows=[('batch', 2)])
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/composition-code-_iirl48f/test_batch.py", line 63, in test_outer_success_and_empty_preserve_savepoints
+    self.assertTrue(c.in_transaction)
+AssertionError: False is not true
+
+======================================================================
+FAIL: test_outer_success_and_empty_preserve_savepoints (__main__.BatchTests.test_outer_success_and_empty_preserve_savepoints) (isolation='', kind='savepoint', rows=[])
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/composition-code-_iirl48f/test_batch.py", line 63, in test_outer_success_and_empty_preserve_savepoints
+    self.assertTrue(c.in_transaction)
+AssertionError: False is not true
+
+======================================================================
+FAIL: test_outer_success_and_empty_preserve_savepoints (__main__.BatchTests.test_outer_success_and_empty_preserve_savepoints) (isolation='', kind='savepoint', rows=[('batch', 2)])
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/composition-code-_iirl48f/test_batch.py", line 63, in test_outer_success_and_empty_preserve_savepoints
+    self.assertTrue(c.in_transaction)
+AssertionError: False is not true
+
+======================================================================
+FAIL: test_outer_success_and_empty_preserve_savepoints (__main__.BatchTests.test_outer_success_and_empty_preserve_savepoints) (isolation=None, kind='begin', rows=[])
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/composition-code-_iirl48f/test_batch.py", line 63, in test_outer_success_and_empty_preserve_savepoints
+    self.assertTrue(c.in_transaction)
+AssertionError: False is not true
+
+======================================================================
+FAIL: test_outer_success_and_empty_preserve_savepoints (__main__.BatchTests.test_outer_success_and_empty_preserve_savepoints) (isolation=None, kind='begin', rows=[('batch', 2)])
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/composition-code-_iirl48f/test_batch.py", line 63, in test_outer_success_and_empty_preserve_savepoints
+    self.assertTrue(c.in_transaction)
+AssertionError: False is not true
+
+======================================================================
+FAIL: test_outer_success_and_empty_preserve_savepoints (__main__.BatchTests.test_outer_success_and_empty_preserve_savepoints) (isolation=None, kind='savepoint', rows=[])
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/composition-code-_iirl48f/test_batch.py", line 63, in test_outer_success_and_empty_preserve_savepoints
+    self.assertTrue(c.in_transaction)
+AssertionError: False is not true
+
+======================================================================
+FAIL: test_outer_success_and_empty_preserve_savepoints (__main__.BatchTests.test_outer_success_and_empty_preserve_savepoints) (isolation=None, kind='savepoint', rows=[('batch', 2)])
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/composition-code-_iirl48f/test_batch.py", line 63, in test_outer_success_and_empty_preserve_savepoints
+    self.assertTrue(c.in_transaction)
+AssertionError: False is not true
+
+======================================================================
+FAIL: test_standalone_repeated_failures_are_atomic (__main__.BatchTests.test_standalone_repeated_failures_are_atomic) (isolation=None)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/composition-code-_iirl48f/test_batch.py", line 51, in test_standalone_repeated_failures_are_atomic
+    self.assertEqual(self.records(c), [])
+AssertionError: Lists differ: [('partial', 1)] != []
+
+First list contains 1 additional elements.
+First extra element 0:
+('partial', 1)
+
+- [('partial', 1)]
++ []
+
+----------------------------------------------------------------------
+Ran 8 tests in 0.017s
+
+FAILED (failures=21)

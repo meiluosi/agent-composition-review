@@ -1,0 +1,94 @@
+{
+  "kind": "separate_quota_recovery_reviews",
+  "n": 31,
+  "excluded_missing_model": 5,
+  "cli_version": "codex-cli 0.160.0",
+  "model_requested": "gpt-6-astra",
+  "conditions": {
+    "A_basic": {
+      "eligible": 10,
+      "valid": 10,
+      "completed_repair_eligible": 10,
+      "valid_completed_repair_reviews": 10,
+      "all_covered_completed_repair": 10,
+      "all_covered_all_artifacts": 10,
+      "criteria_counts_all_artifacts": {
+        "covered": 30
+      },
+      "usage_missing": 0,
+      "tokens": {
+        "input_tokens": 135861,
+        "cached_input_tokens": 0,
+        "output_tokens": 8316
+      }
+    },
+    "B_tools": {
+      "eligible": 11,
+      "valid": 11,
+      "completed_repair_eligible": 10,
+      "valid_completed_repair_reviews": 10,
+      "all_covered_completed_repair": 10,
+      "all_covered_all_artifacts": 11,
+      "criteria_counts_all_artifacts": {
+        "covered": 33
+      },
+      "usage_missing": 0,
+      "tokens": {
+        "input_tokens": 148257,
+        "cached_input_tokens": 30208,
+        "output_tokens": 8955
+      }
+    },
+    "C_v4": {
+      "eligible": 10,
+      "valid": 10,
+      "completed_repair_eligible": 10,
+      "valid_completed_repair_reviews": 10,
+      "all_covered_completed_repair": 10,
+      "all_covered_all_artifacts": 10,
+      "criteria_counts_all_artifacts": {
+        "covered": 30
+      },
+      "usage_missing": 0,
+      "tokens": {
+        "input_tokens": 135433,
+        "cached_input_tokens": 15104,
+        "output_tokens": 8080
+      }
+    }
+  },
+  "interrupted_repair_artifacts": [
+    {
+      "case_id": "c03",
+      "condition": "B_tools",
+      "trial": 2,
+      "valid": true,
+      "prediction": {
+        "criteria": [
+          {
+            "id": "r1",
+            "assessment": "covered",
+            "model_evidence": "resources 明确列出 records、transaction_stack 和 connection_lifetime；actions[0] 将整个调用建模为读取三者、修改记录与事务栈。scope 说明输入输出是公开接口的视图。",
+            "code_evidence": "提交代码第 9 行在传入连接创建保存点，第 11–13 行插入记录，第 16、19–20 行操作保存点；第 6–25 行没有关闭或替换连接。",
+            "reason": "模型表示了调用者已有事务状态、本批次记录效果及连接生命周期，并以代码操作支持这些关系。单个公开动作的建模范围合理，不需要额外动作间边才能覆盖本项。"
+          },
+          {
+            "id": "r2",
+            "assessment": "covered",
+            "model_evidence": "requirements.transaction_ownership 明确区分“最外层 RELEASE 提交”和“嵌套 RELEASE 保留外层事务”，并描述调用者后续提交、回滚及保存点控制权。",
+            "code_evidence": "提交代码第 9、16 行使用 SAVEPOINT / RELEASE，没有直接调用整连接 commit。独立验收 test_standalone_success_is_committed、test_success_does_not_commit_callers_transaction、test_existing_savepoint_is_preserved 和 test_explicit_transaction_in_autocommit_mode 均通过。",
+            "reason": "模型明确说明独立调用和嵌套参与的不同提交语义，且源码与独立执行证据共同支持正常返回不会结束调用者外层事务。"
+          },
+          {
+            "id": "r3",
+            "assessment": "covered",
+            "model_evidence": "requirements.batch_atomicity 和 original_exception 描述回滚到本次保存点、释放并裸 raise；scope.limitations 明确排除清理失败及 SQLite 自动撤销整个事务等情形下的恢复保证。行号指向提交版本。",
+            "code_evidence": "提交代码第 17–24 行捕获插入或释放异常，尝试 ROLLBACK TO 本次保存点，屏蔽清理异常后重新抛出原异常。独立验收中的批次失败隔离、独立失败原子性及原异常保留、空批次与重复失败测试均通过。",
+            "reason": "模型将失败撤销限定在本批次，描述了调用者工作与原异常的保留机制，并与提交代码一致。其未验证情形被明确标注为限制，没有被冒充为无条件保证；这些限制也意味着不能据此证明全部业务情形均满足要求。"
+          }
+        ],
+        "uncertainty": "确定性结构检查仅支持语法与引用有效。模型自述的额外测试未附独立执行材料；独立验收仅确认列出的七项检查，不能据此验证所有故障、触发器或冲突策略。"
+      }
+    }
+  ]
+}

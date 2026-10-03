@@ -1,0 +1,158 @@
+{
+  "conditions": {
+    "A_basic": {
+      "n": 12,
+      "behavior_pass": 10,
+      "incident_pass": 4,
+      "incident_n": 6,
+      "normal_pass": 6,
+      "normal_n": 6,
+      "normal_unchanged": 2,
+      "structure_valid": 10,
+      "initial_verdict_correct": 6,
+      "review_valid": 0,
+      "review_all_covered": 0,
+      "review_criteria_counts": {},
+      "tool_execution_command_runs": 0,
+      "median_seconds": 272.0486009379965,
+      "status_counts": {
+        "completed": 10,
+        "infrastructure_failure": 2
+      },
+      "repair_usage_missing": 2,
+      "repair_tokens": {
+        "input_tokens": 1231665,
+        "cached_input_tokens": 957056,
+        "output_tokens": 79654
+      },
+      "review_usage_missing": 12,
+      "review_tokens": {
+        "input_tokens": 0,
+        "cached_input_tokens": 0,
+        "output_tokens": 0
+      }
+    },
+    "B_tools": {
+      "n": 12,
+      "behavior_pass": 10,
+      "incident_pass": 4,
+      "incident_n": 6,
+      "normal_pass": 6,
+      "normal_n": 6,
+      "normal_unchanged": 2,
+      "structure_valid": 10,
+      "initial_verdict_correct": 6,
+      "review_valid": 0,
+      "review_all_covered": 0,
+      "review_criteria_counts": {},
+      "tool_execution_command_runs": 7,
+      "median_seconds": 297.61176187501405,
+      "status_counts": {
+        "completed": 10,
+        "infrastructure_failure": 2
+      },
+      "repair_usage_missing": 2,
+      "repair_tokens": {
+        "input_tokens": 1296781,
+        "cached_input_tokens": 1005184,
+        "output_tokens": 77669
+      },
+      "review_usage_missing": 12,
+      "review_tokens": {
+        "input_tokens": 0,
+        "cached_input_tokens": 0,
+        "output_tokens": 0
+      }
+    },
+    "C_v4": {
+      "n": 12,
+      "behavior_pass": 10,
+      "incident_pass": 4,
+      "incident_n": 6,
+      "normal_pass": 6,
+      "normal_n": 6,
+      "normal_unchanged": 2,
+      "structure_valid": 10,
+      "initial_verdict_correct": 6,
+      "review_valid": 0,
+      "review_all_covered": 0,
+      "review_criteria_counts": {},
+      "tool_execution_command_runs": 10,
+      "median_seconds": 264.3309135835152,
+      "status_counts": {
+        "completed": 10,
+        "infrastructure_failure": 2
+      },
+      "repair_usage_missing": 2,
+      "repair_tokens": {
+        "input_tokens": 1629543,
+        "cached_input_tokens": 1300224,
+        "output_tokens": 73068
+      },
+      "review_usage_missing": 12,
+      "review_tokens": {
+        "input_tokens": 0,
+        "cached_input_tokens": 0,
+        "output_tokens": 0
+      }
+    }
+  },
+  "paired_family_differences": {
+    "B_tools minus A_basic": {
+      "family_order": [
+        "async_group",
+        "graph",
+        "transaction"
+      ],
+      "family_differences": [
+        0.0,
+        0,
+        0.0
+      ],
+      "mean": 0.0,
+      "bootstrap_27_range": [
+        0.0,
+        0.0
+      ],
+      "warning": "Only 3 development families; full 27-resample range, not a reliable population confidence interval."
+    },
+    "C_v4 minus B_tools": {
+      "family_order": [
+        "async_group",
+        "graph",
+        "transaction"
+      ],
+      "family_differences": [
+        0.0,
+        0,
+        0.0
+      ],
+      "mean": 0.0,
+      "bootstrap_27_range": [
+        0.0,
+        0.0
+      ],
+      "warning": "Only 3 development families; full 27-resample range, not a reliable population confidence interval."
+    },
+    "C_v4 minus A_basic": {
+      "family_order": [
+        "async_group",
+        "graph",
+        "transaction"
+      ],
+      "family_differences": [
+        0.0,
+        0,
+        0.0
+      ],
+      "mean": 0.0,
+      "bootstrap_27_range": [
+        0.0,
+        0.0
+      ],
+      "warning": "Only 3 development families; full 27-resample range, not a reliable population confidence interval."
+    }
+  },
+  "planned_runs": 36,
+  "development_only": true
+}

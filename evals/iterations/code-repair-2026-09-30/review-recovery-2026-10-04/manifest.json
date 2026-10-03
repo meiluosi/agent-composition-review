@@ -1,0 +1,234 @@
+{
+  "registered_at": "2026-10-03T18:05:21.073378+00:00",
+  "model_requested": "gpt-6-astra",
+  "reasoning_effort": "high",
+  "cli_version": "codex-cli 0.160.0",
+  "timeout_seconds": 180,
+  "concurrency": 3,
+  "schedule": [
+    {
+      "case_id": "c02",
+      "condition": "A_basic",
+      "trial": 2
+    },
+    {
+      "case_id": "c05",
+      "condition": "A_basic",
+      "trial": 1
+    },
+    {
+      "case_id": "c01",
+      "condition": "A_basic",
+      "trial": 1
+    },
+    {
+      "case_id": "c04",
+      "condition": "C_v4",
+      "trial": 2
+    },
+    {
+      "case_id": "c06",
+      "condition": "B_tools",
+      "trial": 2
+    },
+    {
+      "case_id": "c04",
+      "condition": "C_v4",
+      "trial": 1
+    },
+    {
+      "case_id": "c02",
+      "condition": "A_basic",
+      "trial": 1
+    },
+    {
+      "case_id": "c06",
+      "condition": "A_basic",
+      "trial": 2
+    },
+    {
+      "case_id": "c01",
+      "condition": "C_v4",
+      "trial": 2
+    },
+    {
+      "case_id": "c02",
+      "condition": "B_tools",
+      "trial": 1
+    },
+    {
+      "case_id": "c01",
+      "condition": "B_tools",
+      "trial": 2
+    },
+    {
+      "case_id": "c06",
+      "condition": "A_basic",
+      "trial": 1
+    },
+    {
+      "case_id": "c03",
+      "condition": "B_tools",
+      "trial": 1
+    },
+    {
+      "case_id": "c04",
+      "condition": "A_basic",
+      "trial": 1
+    },
+    {
+      "case_id": "c03",
+      "condition": "A_basic",
+      "trial": 1
+    },
+    {
+      "case_id": "c01",
+      "condition": "B_tools",
+      "trial": 1
+    },
+    {
+      "case_id": "c06",
+      "condition": "C_v4",
+      "trial": 2
+    },
+    {
+      "case_id": "c01",
+      "condition": "A_basic",
+      "trial": 2
+    },
+    {
+      "case_id": "c04",
+      "condition": "B_tools",
+      "trial": 1
+    },
+    {
+      "case_id": "c06",
+      "condition": "C_v4",
+      "trial": 1
+    },
+    {
+      "case_id": "c05",
+      "condition": "B_tools",
+      "trial": 1
+    },
+    {
+      "case_id": "c01",
+      "condition": "C_v4",
+      "trial": 1
+    },
+    {
+      "case_id": "c06",
+      "condition": "B_tools",
+      "trial": 1
+    },
+    {
+      "case_id": "c02",
+      "condition": "B_tools",
+      "trial": 2
+    },
+    {
+      "case_id": "c02",
+      "condition": "C_v4",
+      "trial": 2
+    },
+    {
+      "case_id": "c04",
+      "condition": "A_basic",
+      "trial": 2
+    },
+    {
+      "case_id": "c03",
+      "condition": "C_v4",
+      "trial": 1
+    },
+    {
+      "case_id": "c05",
+      "condition": "C_v4",
+      "trial": 1
+    },
+    {
+      "case_id": "c02",
+      "condition": "C_v4",
+      "trial": 1
+    },
+    {
+      "case_id": "c03",
+      "condition": "B_tools",
+      "trial": 2
+    },
+    {
+      "case_id": "c04",
+      "condition": "B_tools",
+      "trial": 2
+    }
+  ],
+  "excluded": [
+    {
+      "case_id": "c03",
+      "condition": "A_basic",
+      "trial": 2,
+      "reason": "No parseable model artifact"
+    },
+    {
+      "case_id": "c03",
+      "condition": "C_v4",
+      "trial": 2,
+      "reason": "No parseable model artifact"
+    },
+    {
+      "case_id": "c05",
+      "condition": "A_basic",
+      "trial": 2,
+      "reason": "No parseable model artifact"
+    },
+    {
+      "case_id": "c05",
+      "condition": "B_tools",
+      "trial": 2,
+      "reason": "No parseable model artifact"
+    },
+    {
+      "case_id": "c05",
+      "condition": "C_v4",
+      "trial": 2,
+      "reason": "No parseable model artifact"
+    }
+  ],
+  "selection": "All parseable model artifacts, including interrupted repairs. No repair reruns.",
+  "original_manifest_sha256": "2725d5a15e9dc8e3ca6fca5e360127e345a520e734a828317ae3dc211d98f50d",
+  "protocol_sha256": "ed6cb3420f597b058aa333224c69076396eb0e0d8d0dd300dc20f62819c71805",
+  "runner_sha256": "310c29058978edeee47908bfa217841c503d8ce4c527b10cbb650797b3c76450",
+  "input_sha256": {
+    "546260eb213e41d23aca": "6e82ac0e346e9ec0a614cdf9487788e010b4cd6dd2568ed0c31ebbbeac65a523",
+    "9d04829e1f9d9deae6ef": "329dcb8cfa62d73d67068b2aa8d390d6aadf212ca104e5a9005077c6a4498a42",
+    "728d368067bca875caf1": "9b52f2e56bc1a173acc13dda488174f4fcf3ad8f85405ca28932c94c36534b7d",
+    "d59f3cb1c380711499f2": "93941f9208742b0626bf396e813913ba6582b2c1be365c83a54615d062218b7c",
+    "dbab71060d91cb989a46": "217570c24970f752f7f2584e47023972447d5d45c33de68053b1c3044b6454ad",
+    "f0f4a79e67c1e2add26b": "0863468a55cef4f343ee34105d78f3e1323977c22a0e9600392ecba3af657b44",
+    "bf0bbc2d3a2245c3678d": "c0d3c5046f2ce090282bc1f52b27e2675a805a665767b414f1ef3a52adf5c91a",
+    "0b6cef411c4eef755916": "e7b6a1c1c6b6a0deab16a5696fbfba41c5e88049f798bd5dd1f171e882d1d455",
+    "b259ee03ade2eab33636": "56708a25d7edbfee977f2f6fee87523123b9351847c1c2a8b6a5dd33ab15700e",
+    "d3e8f420f0fee69b484e": "8966a071ae1524605e41314d4558c895c4441dc7da45144f7acb249a79e90f8b",
+    "929b89a7c33dfbf31cd4": "5af0869df53bd63ebc9354847deaa128851428c885c74800d1e04719095b4b53",
+    "018a13d4b099580560fe": "be4428210e197d58111e7667113728be49a0c5c219e188f1958796cea78640bc",
+    "393a7a8e9b6f1e97a53d": "e87ecca1922f8639f88b27ff98c20e0839367b3868a83a5828b423372597e350",
+    "9f1434a3fffa7c2172e4": "2c5aa782716643e286801a66ac5a14f5823432ec913d6f9aa9c128ed3f268836",
+    "484e9c75480ea297efeb": "9c78211c72fc0f848e90f9dfb4f6518100a6a0708169d419b041c0b7f29cdb98",
+    "bacd963b780f4e9168a3": "ec73f4af22aa55a2d2fcfde72a6ecc37f301118a0888b4336b6b9c6450363270",
+    "7da9ec763a567a3d9b7a": "2c095283ee827746fb934fe9fd926245f623b4351f80773a44654f9e04aea9c1",
+    "d55d16c5c87b346f8dac": "21fd8735a1016c658d9b9ea75f14c10ab6ba9c03431ffc066fba35eacefae711",
+    "f357ffe26e21bc9fe417": "ab59c22875e835e22663c1878f114333230dc0273c82be1a256fada5575ab1b0",
+    "458b2e43082fc287fc33": "eba0b3ac69f653fa15a9a4a8a4a9199521b2182abcbae100aabf77edc687de5a",
+    "d2bef6366f3b64b3c7e7": "bbaf0534db86b78a1abaa064c98b4787ce7a94499350410a400aa8b9f15b2fcc",
+    "14ed5e2e50c14e86e934": "9c9633e3271214c6ea27ddd01a36aa405ed4644a8a371d3ac47fd2d9c2fdfcb2",
+    "444c7fef60c24592cecd": "ff5c720b64ef700d68252b364e2069eabe73b0a35740c8e3d91b34f33d64c930",
+    "debdb7ea3c0ebf3bd33b": "0ea42fda7a45871e6f3947e0d78e4f3930392015344241f900ca965764d4c9dd",
+    "d0753920ff33f287cdf2": "b457691567f7c4eb5b0b56c7c46438d6e76a2bfa8a8be7c3cc7304f84fc09c52",
+    "4bea6b673948f82cf9b7": "0d95dd628e55cfe599814229a41add5fcc780d50d744d355c811dc1392e9e2dc",
+    "56f04faf34f61f626994": "b60815041d568bc36495d020da9f0b7226fced4359cdd49c1f05d93c037a658d",
+    "6c8788b0cd7626cdc110": "97164bf6674ec149612e10b87c2b89d673e4346c7f8b56219bafac4c107d3590",
+    "dbf6ddcda634cd19d3f4": "78cb317c6d300afb15eb868805c1f2023f7dde9ce3320711ef247928d091a603",
+    "83bf08e5d2450d39ad79": "44d893f9c670ca1515bce6ead04e8f8f11137922cd94ea951835cc45885474ef",
+    "56981e70069e3a5a9d31": "88d8e470bbad0fd3816cfc9e015e258ad316bdc59cefd71fba8e509eb26074b2"
+  }
+}

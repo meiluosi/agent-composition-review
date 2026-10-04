@@ -51,6 +51,8 @@ jobs:
           python -S evals/model_interaction/tasks/retrieval_cache/mutation_audit.py
           python -S evals/model_interaction/tasks/stream_events/mutation_audit.py
           python -S evals/model_interaction/tasks/tool_results/mutation_audit.py
+      - name: Preserve cross-model post-freeze JSON counterexample
+        run: python -B -S -m unittest evals.model_interaction_followup.test_stream_json -v
       - name: Verify published scores and redraw benchmark figures (no model calls)
         run: python scripts/plot_external_eval.py
       - name: Verify development ablation scores and figures (no model calls)
@@ -69,7 +71,9 @@ jobs:
           python scripts/audit_code_repair_boundaries.py
           python scripts/render_code_repair_report.py
       - name: Replay frozen cross-model outcomes (no model calls)
-        run: python scripts/analyze_model_interaction.py
+        run: |
+          python scripts/analyze_model_interaction.py
+          python scripts/render_model_interaction_report.py
       - name: Package runtime skill
         run: python scripts/build_skill.py
       - name: Package unpromoted modular candidate separately

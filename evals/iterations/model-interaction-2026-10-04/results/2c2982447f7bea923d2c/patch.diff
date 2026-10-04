@@ -1,0 +1,23 @@
+--- original.py
++++ app.py
+@@ -4,6 +4,11 @@
+ 
+ class StreamError(ValueError):
+     pass
++
++
++def _reject_json_constant(value):
++    # json.loads otherwise accepts non-JSON NaN and Infinity literals.
++    raise ValueError("invalid JSON constant: " + value)
+ 
+ 
+ def text_metrics(text):
+@@ -28,7 +33,7 @@
+ 
+     def _record(self, raw):
+         try:
+-            record = json.loads(raw.decode("utf-8"))
++            record = json.loads(raw.decode("utf-8"), parse_constant=_reject_json_constant)
+         except (UnicodeDecodeError, ValueError, RecursionError):
+             self._fail("invalid UTF-8 JSON frame")
+         if not isinstance(record, dict):

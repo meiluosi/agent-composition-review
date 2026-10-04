@@ -1,0 +1,111 @@
+{
+  "post_hoc": true,
+  "purpose": "Counterexample and revised reference; not a replacement score or a holdout.",
+  "case_id": "m08",
+  "discovery": {
+    "model": "gpt-6-astra",
+    "condition": "A_tools",
+    "trial": 1,
+    "result_key": "2c2982447f7bea923d2c"
+  },
+  "frozen_source_sha256": "a850a6792093cab1242039f4854ef9d6846a9dc3ecaa4a3055ac369d6e680ec2",
+  "revised_source_sha256": "13971ec2764862b31e513788b90a2e275817abe252e9cf9e88f21dc422df403f",
+  "counterexamples": [
+    {
+      "constant": "NaN",
+      "wire": "{\"event\":NaN,\"event\":\"done\"}\n",
+      "frozen_reference": {
+        "outcome": "accepted",
+        "state": "DONE",
+        "buffered_bytes": 0,
+        "events": [
+          {
+            "event": "done",
+            "text": "",
+            "characters": 0,
+            "words": 0
+          }
+        ]
+      },
+      "revised_reference": {
+        "outcome": "StreamError",
+        "state": "FAILED",
+        "buffered_bytes": 0
+      }
+    },
+    {
+      "constant": "Infinity",
+      "wire": "{\"event\":Infinity,\"event\":\"done\"}\n",
+      "frozen_reference": {
+        "outcome": "accepted",
+        "state": "DONE",
+        "buffered_bytes": 0,
+        "events": [
+          {
+            "event": "done",
+            "text": "",
+            "characters": 0,
+            "words": 0
+          }
+        ]
+      },
+      "revised_reference": {
+        "outcome": "StreamError",
+        "state": "FAILED",
+        "buffered_bytes": 0
+      }
+    },
+    {
+      "constant": "-Infinity",
+      "wire": "{\"event\":-Infinity,\"event\":\"done\"}\n",
+      "frozen_reference": {
+        "outcome": "accepted",
+        "state": "DONE",
+        "buffered_bytes": 0,
+        "events": [
+          {
+            "event": "done",
+            "text": "",
+            "characters": 0,
+            "words": 0
+          }
+        ]
+      },
+      "revised_reference": {
+        "outcome": "StreamError",
+        "state": "FAILED",
+        "buffered_bytes": 0
+      }
+    }
+  ],
+  "duplicate_only_control": {
+    "wire": "{\"event\":\"done\",\"event\":\"done\"}\n",
+    "frozen_reference": {
+      "outcome": "accepted",
+      "state": "DONE",
+      "buffered_bytes": 0,
+      "events": [
+        {
+          "event": "done",
+          "text": "",
+          "characters": 0,
+          "words": 0
+        }
+      ]
+    },
+    "revised_reference": {
+      "outcome": "accepted",
+      "state": "DONE",
+      "buffered_bytes": 0,
+      "events": [
+        {
+          "event": "done",
+          "text": "",
+          "characters": 0,
+          "words": 0
+        }
+      ]
+    },
+    "note": "The revision preserves the original last-value behavior; the task did not explicitly ban duplicate names."
+  }
+}

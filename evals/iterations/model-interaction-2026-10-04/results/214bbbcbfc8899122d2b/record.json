@@ -1,0 +1,199 @@
+{
+  "case_id": "m02",
+  "condition": "B_checklist",
+  "trial": 1,
+  "model_requested": "gpt-6-luna",
+  "exit_code": 0,
+  "timed_out": false,
+  "elapsed_seconds": 86.39511158299865,
+  "usage": {
+    "input_tokens": 76183,
+    "cached_input_tokens": 59136,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 2908,
+    "reasoning_output_tokens": 1583
+  },
+  "completed": true,
+  "status": "completed",
+  "infra_kind": null,
+  "prediction": {
+    "initial_verdict": "violation",
+    "summary": "原实现接受 lease_seconds=True，因为 Python 将 bool 视为 int；这违反了排除布尔值的契约。我修改了 [app.py](/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/model-interaction-task-7xmii_tw/app.py)，使布尔时长抛出 ValueError。其余已检查的队列行为予以保留。",
+    "tests_executed": [
+      "./run_python smoke.py — 通过。",
+      "./run_python - <<'PY' … PY — 通过；检查了布尔时长被拒且队列不受影响、载荷入队时快照、租约边界与过期重领、陈旧及重复 ack、非有限 JSON 数值拒绝、完成后 ID 仍不可复用。"
+    ],
+    "limitations": [
+      "未执行并发压力测试。"
+    ]
+  },
+  "acceptance": {
+    "passed": true,
+    "tests_run": 9,
+    "checks": [
+      {
+        "test": "test_empty_and_persistence",
+        "passed": true
+      },
+      {
+        "test": "test_fifo_and_active_exclusion",
+        "passed": true
+      },
+      {
+        "test": "test_same_worker_stale_receipt",
+        "passed": true
+      },
+      {
+        "test": "test_other_worker_stale_receipt",
+        "passed": true
+      },
+      {
+        "test": "test_expiry_and_fractional_duration",
+        "passed": true
+      },
+      {
+        "test": "test_payload_isolation",
+        "passed": true
+      },
+      {
+        "test": "test_failed_put_and_duplicate_reuse",
+        "passed": true
+      },
+      {
+        "test": "test_invalid_duration_preserves_jobs",
+        "passed": true
+      },
+      {
+        "test": "test_atomic_claim_across_connections",
+        "passed": true
+      }
+    ],
+    "exit_code": 0,
+    "timed_out": false,
+    "sandbox": "macos_no_network_writes_only_grade_directory",
+    "stderr": ""
+  },
+  "acceptance_signature": {
+    "passed": true,
+    "tests_run": 9,
+    "checks": [
+      {
+        "test": "test_empty_and_persistence",
+        "passed": true
+      },
+      {
+        "test": "test_fifo_and_active_exclusion",
+        "passed": true
+      },
+      {
+        "test": "test_same_worker_stale_receipt",
+        "passed": true
+      },
+      {
+        "test": "test_other_worker_stale_receipt",
+        "passed": true
+      },
+      {
+        "test": "test_expiry_and_fractional_duration",
+        "passed": true
+      },
+      {
+        "test": "test_payload_isolation",
+        "passed": true
+      },
+      {
+        "test": "test_failed_put_and_duplicate_reuse",
+        "passed": true
+      },
+      {
+        "test": "test_invalid_duration_preserves_jobs",
+        "passed": true
+      },
+      {
+        "test": "test_atomic_claim_across_connections",
+        "passed": true
+      }
+    ],
+    "exit_code": 0,
+    "timed_out": false,
+    "invalid_output": false,
+    "isolation_failure": false
+  },
+  "source_changed": true,
+  "artifacts": {
+    "app.py": "72469e4ee1e3e630e3f07aedab1e2aa806abf5ded6de15baec5c51af872a79a7"
+  },
+  "protected_changes": [],
+  "outside_changes": [],
+  "artifact_errors": [],
+  "tool_audit": [
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc \"pwd && rg --files -g 'task.md' -g 'app.py' -g 'original.py' -g 'smoke.py' -g 'TOOLS.md' -g 'run_python' -g 'AGENTS.md'\"",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc 'cat smoke.py && cat TOOLS.md'",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc 'cat task.md && cat app.py'",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 128,
+      "command": "/bin/zsh -lc 'git status --short'",
+      "review_flags": []
+    },
+    {
+      "type": "file_change",
+      "exit_code": null,
+      "changes": [
+        {
+          "path": "<workspace>/app.py",
+          "kind": "update"
+        }
+      ]
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc \"sed -n '1,200p' app.py\"",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc 'cat run_python'",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc './run_python smoke.py'",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc \"./run_python - <<'PY'\nimport pathlib, tempfile\nfrom app import Queue\n\nwith tempfile.TemporaryDirectory() as d:\n    path = pathlib.Path(d) / 'q.sqlite'\n    q1 = Queue(path)\n    original = {'items': [1, {'ok': True}]}\n    q1.put('a', original)\n    original['items'][1]['ok'] = False\n    try:\n        q1.claim('worker', 0, True)\n    except ValueError:\n        pass\n    else:\n        raise AssertionError('bool lease duration accepted')\n    first = q1.claim('worker', 0, 5)\n    assert first['payload'] == {'items': [1, {'ok': True}]}\n    assert set(first) == {'payload', 'expires_at', 'receipt'}\n    first['payload']['items'].append('caller mutation')\n    q2 = Queue(path)\n    assert q2.claim('worker', 4, 1) is None\n    second = q2.claim('worker2', 5, 1)\n    assert second['payload'] == {'items': [1, {'ok': True}]}\n    assert q1.ack(first['receipt'], 5) is False\n    assert q1.ack(second['receipt'], 6) is False\n    # At exact expiry, the claim is already expired.\n    third = q1.claim('worker', 6, 2)\n    assert third['payload'] == {'items': [1, {'ok': True}]}\n    assert q2.ack(third['receipt'], 7) is True\n    assert q1.ack(third['receipt'], 7) is False\n    assert q2.claim('worker', 7, 1) is None\n    try:\n        q1.put('bad', {'x': float('nan')})\n    except ValueError:\n        pass\n    else:\n        raise AssertionError('non-finite JSON number accepted')\n    q2.put('bad', {'x': 1})\n    try:\n        q2.put('a', None)\n    except ValueError:\n        pass\n    else:\n        raise AssertionError('completed ID was reusable')\nprint('queue boundary checks passed')\nPY\"",
+      "review_flags": []
+    }
+  ],
+  "case_sha256": "b430bd19eda97f4a2ca4703e5fd5622b1bf4d3ac4a4b930d92e446c63b753165",
+  "prompt_sha256": "6fd62ac6100d8b6cfbd0a2b2d2c570f6e2df884143fea61f287365cec2b7280f",
+  "event_sha256": "34633751b5b1cc8c003816ae128a79b7e9ecc85dd7d3fa90ba4d313d481f4e6d",
+  "stderr_sha256": "711b2be2dc6b66c0369d9b1520cfb4441f6a652bbaf683a7a3d2200b90c3c787",
+  "reasoning_effort": "high",
+  "cli_version": "codex-cli 0.160.0",
+  "canary": false,
+  "python_version": "3.12.14",
+  "execution_platform": "Darwin",
+  "terminal_errors": []
+}

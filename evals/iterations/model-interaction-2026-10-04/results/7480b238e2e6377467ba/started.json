@@ -1,0 +1,8 @@
+{
+  "case_id": "m10",
+  "condition": "B_checklist",
+  "trial": 1,
+  "model_requested": "gpt-6-astra",
+  "time": "2026-10-04T06:35:29.653227+00:00",
+  "canary": false
+}

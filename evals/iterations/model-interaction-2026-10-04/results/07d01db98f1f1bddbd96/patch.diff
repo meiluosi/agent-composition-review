@@ -1,0 +1,40 @@
+--- original.py
++++ app.py
+@@ -27,8 +27,16 @@
+         raise StreamError(message)
+ 
+     def _record(self, raw):
++        def object_from_pairs(pairs):
++            record = {}
++            for key, value in pairs:
++                if key in record:
++                    raise ValueError("duplicate object field")
++                record[key] = value
++            return record
++
+         try:
+-            record = json.loads(raw.decode("utf-8"))
++            record = json.loads(raw.decode("utf-8"), object_pairs_hook=object_from_pairs)
+         except (UnicodeDecodeError, ValueError, RecursionError):
+             self._fail("invalid UTF-8 JSON frame")
+         if not isinstance(record, dict):
+@@ -53,10 +61,6 @@
+             return []
+         if self.state != "OPEN":
+             self._fail("data after terminal event")
+-        try:
+-            data = data.decode("utf-8").encode("utf-8")
+-        except UnicodeDecodeError:
+-            self._fail("invalid UTF-8 input chunk")
+         output = []
+         start = 0
+         while start < len(data):
+@@ -72,6 +76,8 @@
+             self._buffer.clear()
+             output.append(self._record(raw))
+             start = newline + 1
++            if self.state != "OPEN" and start < len(data):
++                self._fail("data after terminal event")
+         return output
+ 
+     def finish(self):

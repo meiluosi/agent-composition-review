@@ -1,0 +1,248 @@
+{
+  "case_id": "m12",
+  "condition": "A_tools",
+  "trial": 1,
+  "model_requested": "gpt-6-astra",
+  "exit_code": 0,
+  "timed_out": false,
+  "elapsed_seconds": 202.49264974996913,
+  "usage": {
+    "input_tokens": 99823,
+    "cached_input_tokens": 80768,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 3740,
+    "reasoning_output_tokens": 241
+  },
+  "completed": true,
+  "status": "completed",
+  "infra_kind": null,
+  "prediction": {
+    "initial_verdict": "violation",
+    "summary": "已修复 app.py：score 改为 sum(values) * weight，正确保留负数贡献。其余符合要求的行为和公开接口保持不变；交付文件自包含，仅依赖标准库。",
+    "tests_executed": [
+      "./run_python smoke.py：修复前后均通过。",
+      "./run_python test_contract.py original > original_test_results.txt 2>&1：原实现出现 11 个失败，均涉及负数计分。",
+      "./run_python test_contract.py app：12 项测试全部通过，覆盖校验、版本顺序、冲突回滚、原子性、封存和数据隔离。"
+    ],
+    "limitations": [
+      "验证基于公开 smoke 和新增本地测试，未运行未提供的隐藏验收。"
+    ]
+  },
+  "acceptance": {
+    "passed": true,
+    "tests_run": 12,
+    "checks": [
+      {
+        "test": "order_and_pending",
+        "passed": true
+      },
+      {
+        "test": "scores",
+        "passed": true
+      },
+      {
+        "test": "stale_and_retry",
+        "passed": true
+      },
+      {
+        "test": "duplicate_and_conflict",
+        "passed": true
+      },
+      {
+        "test": "atomic_conflicts",
+        "passed": true
+      },
+      {
+        "test": "atomic_validation",
+        "passed": true
+      },
+      {
+        "test": "failure_then_recovery",
+        "passed": true
+      },
+      {
+        "test": "finalized_lifecycle",
+        "passed": true
+      },
+      {
+        "test": "caller_input_isolation",
+        "passed": true
+      },
+      {
+        "test": "output_isolation",
+        "passed": true
+      },
+      {
+        "test": "specifications_and_empty",
+        "passed": true
+      },
+      {
+        "test": "independent_batches",
+        "passed": true
+      }
+    ],
+    "exit_code": 0,
+    "timed_out": false,
+    "sandbox": "macos_no_network_writes_only_grade_directory",
+    "stderr": ""
+  },
+  "acceptance_signature": {
+    "passed": true,
+    "tests_run": 12,
+    "checks": [
+      {
+        "test": "order_and_pending",
+        "passed": true
+      },
+      {
+        "test": "scores",
+        "passed": true
+      },
+      {
+        "test": "stale_and_retry",
+        "passed": true
+      },
+      {
+        "test": "duplicate_and_conflict",
+        "passed": true
+      },
+      {
+        "test": "atomic_conflicts",
+        "passed": true
+      },
+      {
+        "test": "atomic_validation",
+        "passed": true
+      },
+      {
+        "test": "failure_then_recovery",
+        "passed": true
+      },
+      {
+        "test": "finalized_lifecycle",
+        "passed": true
+      },
+      {
+        "test": "caller_input_isolation",
+        "passed": true
+      },
+      {
+        "test": "output_isolation",
+        "passed": true
+      },
+      {
+        "test": "specifications_and_empty",
+        "passed": true
+      },
+      {
+        "test": "independent_batches",
+        "passed": true
+      }
+    ],
+    "exit_code": 0,
+    "timed_out": false,
+    "invalid_output": false,
+    "isolation_failure": false
+  },
+  "source_changed": true,
+  "artifacts": {
+    "test_contract.py": "eed4eb08d6b351e1d5617dc78947aa3b05ad2d476bb233f388a96501dde2412c",
+    "original_test_results.txt": "8be1a05f1d2d506cdf69576423bdcf5f1299ee1e64779ad407dccf2d5388cd7e",
+    "app.py": "d856fbce39bd2b4fedbf9279cd0be4cef5d1a3560120f46a2623dd1c73dcdb89"
+  },
+  "protected_changes": [],
+  "outside_changes": [],
+  "artifact_errors": [],
+  "tool_audit": [
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc \"pwd; rg --files -g '\"'!__pycache__/**'\"' -g '\"'!.git/**'\"'\"",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc 'cat TOOLS.md'",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc 'cat app.py'",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc 'cat smoke.py'",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc 'cat run_python'",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc 'cat task.md'",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 1,
+      "command": "/bin/zsh -lc \"cmp app.py original.py\n./run_python smoke.py\n./run_python -c 'import app; actual = app.score([-3, 2], 4); print(\\\"score([-3, 2], 4):\\\", actual); assert actual == -4, (actual, -4)'\"",
+      "review_flags": []
+    },
+    {
+      "type": "file_change",
+      "exit_code": null,
+      "changes": [
+        {
+          "path": "<workspace>/app.py",
+          "kind": "update"
+        },
+        {
+          "path": "<workspace>/test_contract.py",
+          "kind": "add"
+        }
+      ]
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc './run_python smoke.py'",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 1,
+      "command": "/bin/zsh -lc './run_python test_contract.py original > original_test_results.txt 2>&1'",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc './run_python test_contract.py app'",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 1,
+      "command": "/bin/zsh -lc \"rg -n '\"'^(FAIL:|Ran |FAILED|AssertionError)'\"' original_test_results.txt\ndiff -u original.py app.py\"",
+      "review_flags": []
+    }
+  ],
+  "case_sha256": "1a51987d22f9633b9ad30cee5d3761811013439115ffefc97822dbf0a0424555",
+  "prompt_sha256": "754741dedf8f45f17a6cba0d28c804d1273d67e30452f4503e8797defde6c5c4",
+  "event_sha256": "b3a1a6271183fdb7675dc5f8f608ed8879489dd22ad2f1980d9d75ca8782de97",
+  "stderr_sha256": "da4b699330c5ab0bf43ef0d7b55439ba934247aa72fbab43b4b285c438d637f5",
+  "reasoning_effort": "high",
+  "cli_version": "codex-cli 0.160.0",
+  "canary": false,
+  "python_version": "3.12.14",
+  "execution_platform": "Darwin",
+  "terminal_errors": []
+}

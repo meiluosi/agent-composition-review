@@ -1,0 +1,214 @@
+{
+  "case_id": "m03",
+  "condition": "C_skill",
+  "trial": 1,
+  "model_requested": "gpt-6-luna",
+  "exit_code": 0,
+  "timed_out": false,
+  "elapsed_seconds": 167.7656405000016,
+  "usage": {
+    "input_tokens": 187776,
+    "cached_input_tokens": 158464,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 6238,
+    "reasoning_output_tokens": 2908
+  },
+  "completed": true,
+  "status": "completed",
+  "infra_kind": null,
+  "prediction": {
+    "initial_verdict": "violation",
+    "summary": "修复了 `claim` 将小数租约时长截断为整数的问题，并确保布尔值或非数值租约时长抛出 `ValueError`。其余已检查的队列行为予以保留。新增本地验证脚本 `verify_queue.py`。",
+    "tests_executed": [
+      "`./run_python smoke.py` — 通过",
+      "`./run_python verify_queue.py` — 通过；覆盖小数租约到期、回执有效性、跨实例操作、payload 隔离、无效 payload、非法租约和并发 claim",
+      "`./run_python --version` — Python 3.12.14",
+      "`./run_python -m py_compile app.py` — 通过"
+    ],
+    "limitations": []
+  },
+  "acceptance": {
+    "passed": true,
+    "tests_run": 9,
+    "checks": [
+      {
+        "test": "test_empty_and_persistence",
+        "passed": true
+      },
+      {
+        "test": "test_fifo_and_active_exclusion",
+        "passed": true
+      },
+      {
+        "test": "test_same_worker_stale_receipt",
+        "passed": true
+      },
+      {
+        "test": "test_other_worker_stale_receipt",
+        "passed": true
+      },
+      {
+        "test": "test_expiry_and_fractional_duration",
+        "passed": true
+      },
+      {
+        "test": "test_payload_isolation",
+        "passed": true
+      },
+      {
+        "test": "test_failed_put_and_duplicate_reuse",
+        "passed": true
+      },
+      {
+        "test": "test_invalid_duration_preserves_jobs",
+        "passed": true
+      },
+      {
+        "test": "test_atomic_claim_across_connections",
+        "passed": true
+      }
+    ],
+    "exit_code": 0,
+    "timed_out": false,
+    "sandbox": "macos_no_network_writes_only_grade_directory",
+    "stderr": ""
+  },
+  "acceptance_signature": {
+    "passed": true,
+    "tests_run": 9,
+    "checks": [
+      {
+        "test": "test_empty_and_persistence",
+        "passed": true
+      },
+      {
+        "test": "test_fifo_and_active_exclusion",
+        "passed": true
+      },
+      {
+        "test": "test_same_worker_stale_receipt",
+        "passed": true
+      },
+      {
+        "test": "test_other_worker_stale_receipt",
+        "passed": true
+      },
+      {
+        "test": "test_expiry_and_fractional_duration",
+        "passed": true
+      },
+      {
+        "test": "test_payload_isolation",
+        "passed": true
+      },
+      {
+        "test": "test_failed_put_and_duplicate_reuse",
+        "passed": true
+      },
+      {
+        "test": "test_invalid_duration_preserves_jobs",
+        "passed": true
+      },
+      {
+        "test": "test_atomic_claim_across_connections",
+        "passed": true
+      }
+    ],
+    "exit_code": 0,
+    "timed_out": false,
+    "invalid_output": false,
+    "isolation_failure": false
+  },
+  "source_changed": true,
+  "artifacts": {
+    "verify_queue.py": "f689892808c44f15145d75bb805fc4b8729bf4a585fc3df0da3fa9956c6939b8",
+    "app.py": "5fd020bf8e66d321d2896fd2a5acfae11f999774e5ced649c7f1574ee92e45ae"
+  },
+  "protected_changes": [],
+  "outside_changes": [],
+  "artifact_errors": [],
+  "tool_audit": [
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc \"pwd && rg --files -g 'task.md' -g 'app.py' -g 'original.py' -g 'smoke.py' -g 'TOOLS.md' -g 'AGENTS.md' -g 'SKILL.md' -g 'CHECKLIST.md' -g 'references/**' -g 'scripts/**'\"",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc 'cat task.md && cat app.py && cat smoke.py && cat TOOLS.md'",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc 'cat SKILL.md && cat references/executable-contracts.md && cat references/contracts.md'",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 128,
+      "command": "/bin/zsh -lc 'git status --short && git diff -- app.py'",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc \"cat > app.py <<'PY'\n\\\"\\\"\\\"A small persistent work queue with time-bounded delivery receipts.\\\"\\\"\\\"\nimport json\nimport math\nimport sqlite3\nfrom contextlib import closing\n\n\nclass Queue:\n    def __init__(self, path):\n        self.path = str(path)\n        with closing(sqlite3.connect(self.path)) as db, db:\n            db.execute(\\\"\\\"\\\"CREATE TABLE IF NOT EXISTS jobs (\n                seq INTEGER PRIMARY KEY AUTOINCREMENT, job_id TEXT UNIQUE NOT NULL,\n                payload TEXT NOT NULL, state TEXT NOT NULL DEFAULT 'ready',\n                worker TEXT, generation INTEGER NOT NULL DEFAULT 0, expires_at REAL\n            )\\\"\\\"\\\")\n\n    def put(self, job_id, payload):\n        # Encode before opening a transaction so invalid payloads cannot affect\n        # any existing queue state.\n        encoded = json.dumps(payload, allow_nan=False)\n        with closing(sqlite3.connect(self.path)) as db, db:\n            try:\n                db.execute(\\\"INSERT INTO jobs(job_id, payload) VALUES (?, ?)\\\", (job_id, encoded))\n            except sqlite3.IntegrityError as exc:\n                raise ValueError(\\\"job_id already exists\\\") from exc\n\n    def claim(self, worker, now, lease_seconds):\n        if (isinstance(lease_seconds, bool)\n                or not isinstance(lease_seconds, (int, float))\n                or not math.isfinite(lease_seconds)\n                or lease_seconds <= 0):\n            raise ValueError(\\\"lease_seconds must be finite and positive\\\")\n\n        with closing(sqlite3.connect(self.path)) as db, db:\n            # Serialize selection and update across separate Queue instances.\n            db.execute(\\\"BEGIN IMMEDIATE\\\")\n            row = db.execute(\\\"\\\"\\\"SELECT job_id, payload, generation FROM jobs\n                WHERE state = 'ready' OR (state = 'leased' AND expires_at <= ?)\n                ORDER BY seq LIMIT 1\\\"\\\"\\\", (now,)).fetchone()\n            if row is None:\n                return None\n            job_id, payload, previous_generation = row\n            generation = previous_generation + 1\n            expires_at = now + lease_seconds\n            db.execute(\\\"\\\"\\\"UPDATE jobs SET state = 'leased', worker = ?,\n                generation = ?, expires_at = ? WHERE job_id = ?\\\"\\\"\\\",\n                (worker, generation, expires_at, job_id))\n            return {\\\"payload\\\": json.loads(payload), \\\"expires_at\\\": expires_at,\n                    \\\"receipt\\\": {\\\"job_id\\\": job_id, \\\"worker\\\": worker, \\\"generation\\\": generation}}\n\n    def ack(self, receipt, now):\n        with closing(sqlite3.connect(self.path)) as db, db:\n            changed = db.execute(\\\"\\\"\\\"UPDATE jobs SET state = 'done'\n                WHERE job_id = ? AND worker = ? AND generation = ?\n                AND state = 'leased' AND expires_at > ?\\\"\\\"\\\",\n                (receipt[\\\"job_id\\\"], receipt[\\\"worker\\\"], receipt[\\\"generation\\\"], now)).rowcount\n            return changed == 1\nPY\n./run_python smoke.py && ./run_python - <<'PY'\nPY\"",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc \"cat > verify_queue.py <<'PY'\nimport math\nimport pathlib\nimport tempfile\nimport threading\nfrom app import Queue\n\nwith tempfile.TemporaryDirectory() as d:\n    path = pathlib.Path(d) / 'q.db'\n    q1, q2 = Queue(path), Queue(path)\n    original = {'items': [1, {'ok': True}]}\n    q1.put('fractional', original)\n    original['items'][1]['ok'] = False\n    first = q1.claim('w', 10, 0.25)\n    assert set(first) == {'payload', 'expires_at', 'receipt'}\n    assert first['expires_at'] == 10.25\n    first['payload']['items'].clear()\n    assert q2.claim('w', 10.249, 1) is None\n    assert q2.ack(first['receipt'], 10.25) is False\n    replacement = q2.claim('w', 10.25, 0.5)\n    assert replacement['payload'] == {'items': [1, {'ok': True}]}\n    assert q1.ack(first['receipt'], 10.25) is False\n    assert q1.ack(replacement['receipt'], 10.5) is False\n    assert q2.claim('w', 10.75, 1) is not None\n\n    q1.put('done', None)\n    c = q2.claim('worker', 20, 1)\n    assert q1.ack(c['receipt'], 20.5) is True\n    assert q2.ack(c['receipt'], 20.5) is False\n    try:\n        q1.put('done', 'duplicate')\n    except ValueError:\n        pass\n    else:\n        raise AssertionError('completed ID was reusable')\n\n    for payload, error in [(float('nan'), ValueError), (object(), TypeError)]:\n        try:\n            q1.put('invalid', payload)\n        except error:\n            pass\n        else:\n            raise AssertionError('invalid payload accepted')\n        assert q2.claim('w', 30, 1) is None\n\n    for duration in [0, -1, float('inf'), float('nan'), True]:\n        try:\n            q1.claim('w', 30, duration)\n        except ValueError:\n            pass\n        else:\n            raise AssertionError('invalid lease accepted')\n\n    q1.put('race', {'n': 1})\n    barrier = threading.Barrier(3)\n    outcomes = []\n    def run(queue, name):\n        barrier.wait()\n        outcomes.append(queue.claim(name, 40, 5))\n    threads = [threading.Thread(target=run, args=(q1, 'a')),\n               threading.Thread(target=run, args=(q2, 'b'))]\n    for t in threads: t.start()\n    barrier.wait()\n    for t in threads: t.join()\n    assert sum(result is not None for result in outcomes) == 1\nprint('queue verification passed')\nPY\n./run_python verify_queue.py\n./run_python smoke.py\"",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 1,
+      "command": "/bin/zsh -lc \"python3 - <<'PY'\np='verify_queue.py'\ns=open(p).read().replace(\\\"q1.ack(replacement['receipt'], 10.5)\\\", \\\"q1.ack(replacement['receipt'], 10.75)\\\")\nopen(p,'w').write(s)\nPY\n./run_python verify_queue.py && ./run_python smoke.py\"",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 1,
+      "command": "/bin/zsh -lc \"python3 - <<'PY'\np='verify_queue.py'\ns=open(p).read().replace(\\\"    for payload, error in [(float('nan'), ValueError), (object(), TypeError)]:\\\\n        try:\\\\n            q1.put('invalid', payload)\\\", \\\"    clean = Queue(pathlib.Path(d) / 'clean.db')\\\\n    for payload, error in [(float('nan'), ValueError), (object(), TypeError)]:\\\\n        try:\\\\n            clean.put('invalid', payload)\\\").replace(\\\"        assert q2.claim('w', 30, 1) is None\\\", \\\"        assert clean.claim('w', 30, 1) is None\\\")\nopen(p,'w').write(s)\nPY\n./run_python verify_queue.py && ./run_python smoke.py\"",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc \"python3 - <<'PY'\np='verify_queue.py'\ns=open(p).read().replace(\\\"    q1.put('race', {'n': 1})\\\", \\\"    race1 = Queue(pathlib.Path(d) / 'race.db')\\\\n    race2 = Queue(pathlib.Path(d) / 'race.db')\\\\n    race1.put('race', {'n': 1})\\\").replace(\\\"threading.Thread(target=run, args=(q1, 'a'))\\\", \\\"threading.Thread(target=run, args=(race1, 'a'))\\\").replace(\\\"threading.Thread(target=run, args=(q2, 'b'))\\\", \\\"threading.Thread(target=run, args=(race2, 'b'))\\\")\nopen(p,'w').write(s)\nPY\n./run_python verify_queue.py && ./run_python smoke.py\"",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc 'cat verify_queue.py'",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc 'diff -u original.py app.py; test $? -le 1'",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc './run_python --version && ./run_python -m py_compile app.py'",
+      "review_flags": []
+    }
+  ],
+  "case_sha256": "05cc4514e6c427e8a33e6db39321fdf657e1ed8ad3d8d2db68ba85e1c13f8fcd",
+  "prompt_sha256": "890e8e7238a3d11b98065646547e36c2563ff652e966a0baa5a66ed0cca78937",
+  "event_sha256": "0b215401f03605001ffe8691e646a703c398966efd7710aef574e20dacba10b7",
+  "stderr_sha256": "6fd0ee701ee2297a22f16af4fc9bd4e9c7b8b469f97c11131f531e3d6ba91b4b",
+  "reasoning_effort": "high",
+  "cli_version": "codex-cli 0.160.0",
+  "canary": false,
+  "python_version": "3.12.14",
+  "execution_platform": "Darwin",
+  "terminal_errors": []
+}

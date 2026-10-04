@@ -1,0 +1,235 @@
+{
+  "case_id": "m09",
+  "condition": "C_skill",
+  "trial": 1,
+  "model_requested": "gpt-6-luna",
+  "exit_code": 0,
+  "timed_out": false,
+  "elapsed_seconds": 131.1774093330023,
+  "usage": {
+    "input_tokens": 183202,
+    "cached_input_tokens": 163328,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 5128,
+    "reasoning_output_tokens": 1958
+  },
+  "completed": true,
+  "status": "completed",
+  "infra_kind": null,
+  "prediction": {
+    "initial_verdict": "violation",
+    "summary": "`text_metrics` 原先只按 ASCII 空格计词，不符合 Unicode 空白分隔要求。已改用 `text.split()`；其余检查到的行为予以保留。",
+    "tests_executed": [
+      "`python3 smoke.py` — 通过。",
+      "针对性内联检查 — 通过；覆盖 Unicode 空白、UTF-8 任意分块、帧缓冲上限、大块多帧输入、错误状态和终止行为。"
+    ],
+    "limitations": [
+      "当前环境为 Python 3.14.7，未在 Python 3.12 上执行验证。"
+    ]
+  },
+  "acceptance": {
+    "passed": true,
+    "tests_run": 12,
+    "checks": [
+      {
+        "test": "basic",
+        "passed": true
+      },
+      {
+        "test": "byte_boundaries",
+        "passed": true
+      },
+      {
+        "test": "metrics",
+        "passed": true
+      },
+      {
+        "test": "unfinished_buffer",
+        "passed": true
+      },
+      {
+        "test": "size_limits",
+        "passed": true
+      },
+      {
+        "test": "error_terminal",
+        "passed": true
+      },
+      {
+        "test": "terminal_once",
+        "passed": true
+      },
+      {
+        "test": "malformed_frames",
+        "passed": true
+      },
+      {
+        "test": "premature_eof",
+        "passed": true
+      },
+      {
+        "test": "poison_state",
+        "passed": true
+      },
+      {
+        "test": "failed_call_has_no_partial_output",
+        "passed": true
+      },
+      {
+        "test": "independent_streams",
+        "passed": true
+      }
+    ],
+    "exit_code": 0,
+    "timed_out": false,
+    "sandbox": "macos_no_network_writes_only_grade_directory",
+    "stderr": ""
+  },
+  "acceptance_signature": {
+    "passed": true,
+    "tests_run": 12,
+    "checks": [
+      {
+        "test": "basic",
+        "passed": true
+      },
+      {
+        "test": "byte_boundaries",
+        "passed": true
+      },
+      {
+        "test": "metrics",
+        "passed": true
+      },
+      {
+        "test": "unfinished_buffer",
+        "passed": true
+      },
+      {
+        "test": "size_limits",
+        "passed": true
+      },
+      {
+        "test": "error_terminal",
+        "passed": true
+      },
+      {
+        "test": "terminal_once",
+        "passed": true
+      },
+      {
+        "test": "malformed_frames",
+        "passed": true
+      },
+      {
+        "test": "premature_eof",
+        "passed": true
+      },
+      {
+        "test": "poison_state",
+        "passed": true
+      },
+      {
+        "test": "failed_call_has_no_partial_output",
+        "passed": true
+      },
+      {
+        "test": "independent_streams",
+        "passed": true
+      }
+    ],
+    "exit_code": 0,
+    "timed_out": false,
+    "invalid_output": false,
+    "isolation_failure": false
+  },
+  "source_changed": true,
+  "artifacts": {
+    "app.py": "a850a6792093cab1242039f4854ef9d6846a9dc3ecaa4a3055ac369d6e680ec2"
+  },
+  "protected_changes": [],
+  "outside_changes": [],
+  "artifact_errors": [],
+  "tool_audit": [
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc \"pwd && rg --files -g 'task.md' -g 'app.py' -g 'original.py' -g 'smoke.py' -g 'TOOLS.md' -g 'SKILL.md' -g 'references/**' -g 'scripts/**' -g 'CHECKLIST.md'\"",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc \"cat task.md && printf '\\\\n--- APP ---\\\\n' && cat app.py && printf '\\\\n--- ORIGINAL ---\\\\n' && cat original.py && printf '\\\\n--- SMOKE ---\\\\n' && cat smoke.py && printf '\\\\n--- TOOLS ---\\\\n' && cat TOOLS.md && printf '\\\\n--- SKILL ---\\\\n' && cat SKILL.md && printf '\\\\n--- CONTRACTS ---\\\\n' && cat references/contracts.md && printf '\\\\n--- EXECUTABLE ---\\\\n' && cat references/executable-contracts.md\"",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc 'cat references/effects.md && cat run_python'",
+      "review_flags": []
+    },
+    {
+      "type": "file_change",
+      "exit_code": null,
+      "changes": [
+        {
+          "path": "<workspace>/app.py",
+          "kind": "update"
+        }
+      ]
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc 'python3 smoke.py'",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 1,
+      "command": "/bin/zsh -lc \"python3 - <<'PY'\nimport app\n\nassert app.text_metrics('a\\\\tb\\\\u00a0c\\\\n') == {'characters': 6, 'words': 3}\n\nwire = '{\\\"event\\\":\\\"token\\\",\\\"text\\\":\\\"雪🙂 a\\\\\\\\tb\\\"}\\\\n{\\\"event\\\":\\\"done\\\"}\\\\n'.encode()\nfor split in range(len(wire) + 1):\n    p = app.EventStream()\n    got = p.feed(wire[:split]) + p.feed(wire[split:])\n    expected_text = '雪🙂 a\\\\tb'\n    assert got == [\n        {'event': 'token', 'text': expected_text},\n        {'event': 'done', 'text': expected_text, 'characters': len(expected_text), 'words': 2},\n    ], split\n    assert p.state == 'DONE' and p.buffered_bytes == 0\n    assert p.finish() == [] and p.finish() == []\n\np = app.EventStream(max_buffer=7)\nassert p.feed(b'{\\\"event\\\"') == []\nassert p.buffered_bytes == 7\nassert p.feed(b':\\\"done\\\"}\\\\n') == [{'event': 'done', 'text': '', 'characters': 0, 'words': 0}]\nassert p.buffered_bytes == 0\n\np = app.EventStream(max_buffer=4)\nassert p.feed(b'{\\\"event\\\":\\\"done\\\"}\\\\n' * 2) == [\n    {'event': 'done', 'text': '', 'characters': 0, 'words': 0}\n] if False else True\n# Large chunks of small frames must not count toward a per-frame bound.\np = app.EventStream(max_buffer=32)\nchunk = b'{\\\"event\\\":\\\"token\\\",\\\"text\\\":\\\"\\\"}\\\\n' * 100 + b'{\\\"event\\\":\\\"done\\\"}\\\\n'\nevents = p.feed(chunk)\nassert len(events) == 101 and p.state == 'DONE'\n\nfor payload in (b'\\\\n', b'{\\\"event\\\":\\\"token\\\",\\\"text\\\":1}\\\\n', b'{}\\\\n'):\n    p = app.EventStream()\n    try:\n        p.feed(payload)\n    except app.StreamError:\n        pass\n    else:\n        raise AssertionError(payload)\n    assert p.state == 'FAILED' and p.buffered_bytes == 0\n    for op in (lambda: p.feed(b''), p.finish):\n        try:\n            op()\n        except app.StreamError:\n            pass\n        else:\n            raise AssertionError('failed stream was reusable')\n\np = app.EventStream()\ntry:\n    p.feed(b'{\\\"event\\\":\\\"done\\\"}\\\\nX')\nexcept app.StreamError:\n    pass\nelse:\n    raise AssertionError('trailing data accepted')\nassert p.state == 'FAILED' and p.buffered_bytes == 0\n\np = app.EventStream()\nassert p.feed(b'{\\\"event\\\":\\\"error\\\",\\\"message\\\":\\\"no\\\"}\\\\n') == [{'event': 'error', 'message': 'no'}]\nassert p.state == 'ERROR' and p.finish() == []\ntry:\n    p.feed(b'x')\nexcept app.StreamError:\n    pass\nelse:\n    raise AssertionError('post-terminal data accepted')\nprint('contract checks passed')\nPY\"",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 1,
+      "command": "/bin/zsh -lc \"python3 - <<'PY'\nimport app\n\nassert app.text_metrics('a\\\\tb\\\\u00a0c\\\\n') == {'characters': 6, 'words': 3}\n\nwire = '{\\\"event\\\":\\\"token\\\",\\\"text\\\":\\\"雪🙂 a\\\\\\\\tb\\\"}\\\\n{\\\"event\\\":\\\"done\\\"}\\\\n'.encode()\nfor split in range(len(wire) + 1):\n    p = app.EventStream()\n    got = p.feed(wire[:split]) + p.feed(wire[split:])\n    expected_text = '雪🙂 a\\\\tb'\n    assert got == [\n        {'event': 'token', 'text': expected_text},\n        {'event': 'done', 'text': expected_text, 'characters': len(expected_text), 'words': 3},\n    ], split\n    assert p.state == 'DONE' and p.buffered_bytes == 0\n    assert p.finish() == [] and p.finish() == []\n\np = app.EventStream(max_buffer=16)\nassert p.feed(b'{\\\"event\\\"') == []\nassert p.buffered_bytes == 7\nassert p.feed(b':\\\"done\\\"}\\\\n') == [{'event': 'done', 'text': '', 'characters': 0, 'words': 0}]\nassert p.buffered_bytes == 0\n\np = app.EventStream(max_buffer=32)\nchunk = b'{\\\"event\\\":\\\"token\\\",\\\"text\\\":\\\"\\\"}\\\\n' * 100 + b'{\\\"event\\\":\\\"done\\\"}\\\\n'\nevents = p.feed(chunk)\nassert len(events) == 101 and p.state == 'DONE'\n\nfor payload in (b'\\\\n', b'{\\\"event\\\":\\\"token\\\",\\\"text\\\":1}\\\\n', b'{}\\\\n'):\n    p = app.EventStream()\n    try:\n        p.feed(payload)\n    except app.StreamError:\n        pass\n    else:\n        raise AssertionError(payload)\n    assert p.state == 'FAILED' and p.buffered_bytes == 0\n    for op in (lambda: p.feed(b''), p.finish):\n        try:\n            op()\n        except app.StreamError:\n            pass\n        else:\n            raise AssertionError('failed stream was reusable')\n\np = app.EventStream()\ntry:\n    p.feed(b'{\\\"event\\\":\\\"done\\\"}\\\\nX')\nexcept app.StreamError:\n    pass\nelse:\n    raise AssertionError('trailing data accepted')\nassert p.state == 'FAILED' and p.buffered_bytes == 0\n\np = app.EventStream()\nassert p.feed(b'{\\\"event\\\":\\\"error\\\",\\\"message\\\":\\\"no\\\"}\\\\n') == [{'event': 'error', 'message': 'no'}]\nassert p.state == 'ERROR' and p.finish() == []\ntry:\n    p.feed(b'x')\nexcept app.StreamError:\n    pass\nelse:\n    raise AssertionError('post-terminal data accepted')\nprint('contract checks passed')\nPY\"",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc \"python3 - <<'PY'\nimport app\n\nassert app.text_metrics('a\\\\tb\\\\u00a0c\\\\n') == {'characters': 6, 'words': 3}\nwire = '{\\\"event\\\":\\\"token\\\",\\\"text\\\":\\\"雪🙂 a\\\\\\\\tb\\\"}\\\\n{\\\"event\\\":\\\"done\\\"}\\\\n'.encode()\nfor split in range(len(wire) + 1):\n    p = app.EventStream()\n    got = p.feed(wire[:split]) + p.feed(wire[split:])\n    expected_text = '雪🙂 a\\\\tb'\n    assert got == [\n        {'event': 'token', 'text': expected_text},\n        {'event': 'done', 'text': expected_text, 'characters': len(expected_text), 'words': 3},\n    ], split\n    assert p.state == 'DONE' and p.buffered_bytes == 0\n    assert p.finish() == [] and p.finish() == []\n\np = app.EventStream(max_buffer=16)\nassert p.feed(b'{\\\"event\\\"') == []\nassert p.buffered_bytes == 8\nassert p.feed(b':\\\"done\\\"}\\\\n') == [{'event': 'done', 'text': '', 'characters': 0, 'words': 0}]\nassert p.buffered_bytes == 0\n\np = app.EventStream(max_buffer=32)\nchunk = b'{\\\"event\\\":\\\"token\\\",\\\"text\\\":\\\"\\\"}\\\\n' * 100 + b'{\\\"event\\\":\\\"done\\\"}\\\\n'\nevents = p.feed(chunk)\nassert len(events) == 101 and p.state == 'DONE'\n\nfor payload in (b'\\\\n', b'{\\\"event\\\":\\\"token\\\",\\\"text\\\":1}\\\\n', b'{}\\\\n'):\n    p = app.EventStream()\n    try:\n        p.feed(payload)\n    except app.StreamError:\n        pass\n    else:\n        raise AssertionError(payload)\n    assert p.state == 'FAILED' and p.buffered_bytes == 0\n    for op in (lambda: p.feed(b''), p.finish):\n        try:\n            op()\n        except app.StreamError:\n            pass\n        else:\n            raise AssertionError('failed stream was reusable')\n\np = app.EventStream()\ntry:\n    p.feed(b'{\\\"event\\\":\\\"done\\\"}\\\\nX')\nexcept app.StreamError:\n    pass\nelse:\n    raise AssertionError('trailing data accepted')\nassert p.state == 'FAILED' and p.buffered_bytes == 0\n\np = app.EventStream()\nassert p.feed(b'{\\\"event\\\":\\\"error\\\",\\\"message\\\":\\\"no\\\"}\\\\n') == [{'event': 'error', 'message': 'no'}]\nassert p.state == 'ERROR' and p.finish() == []\ntry:\n    p.feed(b'x')\nexcept app.StreamError:\n    pass\nelse:\n    raise AssertionError('post-terminal data accepted')\nprint('contract checks passed')\nPY\"",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 129,
+      "command": "/bin/zsh -lc 'git diff -- app.py && git status --short'",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 1,
+      "command": "/bin/zsh -lc 'diff -u original.py app.py'",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc 'python3 --version'",
+      "review_flags": []
+    }
+  ],
+  "case_sha256": "0d2c88d3c157b6f8dca70033db34109afd8da2414a9427648257fb8a14dc921f",
+  "prompt_sha256": "890e8e7238a3d11b98065646547e36c2563ff652e966a0baa5a66ed0cca78937",
+  "event_sha256": "72e8bc089f043146c4b53640161f97c9dc7b45dbfa6fb5b2bba2366802c10e01",
+  "stderr_sha256": "0e0fe87e1430cdd07a12dff806b2df72e372cd88bb391634d265663c710bfd8d",
+  "reasoning_effort": "high",
+  "cli_version": "codex-cli 0.160.0",
+  "canary": false,
+  "python_version": "3.12.14",
+  "execution_platform": "Darwin",
+  "terminal_errors": []
+}

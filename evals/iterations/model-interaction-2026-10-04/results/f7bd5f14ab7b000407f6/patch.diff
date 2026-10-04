@@ -1,0 +1,66 @@
+--- original.py
++++ app.py
+@@ -3,6 +3,26 @@
+ import math
+ import sqlite3
+ from contextlib import closing
++
++
++def _stored_string(value):
++    """Keep ordinary SQLite text compatible with existing queue files.
++
++    Python strings may also contain surrogate code points, which SQLite's
++    UTF-8 text adapter rejects. Store only those strings as lossless blobs;
++    this also keeps surrogate pairs distinct from single Unicode characters.
++    """
++    try:
++        value.encode('utf-8')
++    except UnicodeEncodeError:
++        return value.encode('utf-8', errors='surrogatepass')
++    return value
++
++
++def _loaded_string(value):
++    if isinstance(value, bytes):
++        return value.decode('utf-8', errors='surrogatepass')
++    return value
+ 
+ 
+ class Queue:
+@@ -16,10 +36,13 @@
+             )""")
+ 
+     def put(self, job_id, payload):
+-        encoded = json.dumps(payload, allow_nan=False)
++        # ASCII escaping would collapse a literal surrogate pair and its
++        # corresponding Unicode character when the JSON is decoded.
++        encoded = _stored_string(json.dumps(payload, allow_nan=False, ensure_ascii=False))
+         with closing(sqlite3.connect(self.path)) as db, db:
+             try:
+-                db.execute("INSERT INTO jobs(job_id, payload) VALUES (?, ?)", (job_id, encoded))
++                db.execute("INSERT INTO jobs(job_id, payload) VALUES (?, ?)",
++                           (_stored_string(job_id), encoded))
+             except sqlite3.IntegrityError as exc:
+                 raise ValueError("job_id already exists") from exc
+ 
+@@ -38,14 +61,16 @@
+             expires_at = now + lease_seconds
+             db.execute("""UPDATE jobs SET state = 'leased', worker = ?,
+                 generation = ?, expires_at = ? WHERE job_id = ?""",
+-                (worker, generation, expires_at, job_id))
+-            return {"payload": json.loads(payload), "expires_at": expires_at,
+-                    "receipt": {"job_id": job_id, "worker": worker, "generation": generation}}
++                (_stored_string(worker), generation, expires_at, job_id))
++            return {"payload": json.loads(_loaded_string(payload)), "expires_at": expires_at,
++                    "receipt": {"job_id": _loaded_string(job_id), "worker": worker,
++                                "generation": generation}}
+ 
+     def ack(self, receipt, now):
+         with closing(sqlite3.connect(self.path)) as db, db:
+             changed = db.execute("""UPDATE jobs SET state = 'done'
+                 WHERE job_id = ? AND worker = ? AND generation = ?
+                 AND state = 'leased' AND expires_at > ?""",
+-                (receipt["job_id"], receipt["worker"], receipt["generation"], now)).rowcount
++                (_stored_string(receipt["job_id"]), _stored_string(receipt["worker"]),
++                 receipt["generation"], now)).rowcount
+             return changed == 1

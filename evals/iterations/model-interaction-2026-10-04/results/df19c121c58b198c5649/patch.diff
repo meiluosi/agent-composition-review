@@ -1,0 +1,27 @@
+--- original.py
++++ app.py
+@@ -4,6 +4,15 @@
+ 
+ class StreamError(ValueError):
+     pass
++
++
++def _unique_object(pairs):
++    record = {}
++    for key, value in pairs:
++        if key in record:
++            raise ValueError("duplicate JSON field")
++        record[key] = value
++    return record
+ 
+ 
+ def text_metrics(text):
+@@ -28,7 +37,7 @@
+ 
+     def _record(self, raw):
+         try:
+-            record = json.loads(raw.decode("utf-8"))
++            record = json.loads(raw.decode("utf-8"), object_pairs_hook=_unique_object)
+         except (UnicodeDecodeError, ValueError, RecursionError):
+             self._fail("invalid UTF-8 JSON frame")
+         if not isinstance(record, dict):

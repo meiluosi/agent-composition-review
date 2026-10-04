@@ -1,0 +1,11 @@
+--- original.py
++++ app.py
+@@ -3,7 +3,7 @@
+ 
+ 
+ def score(values, weight):
+-    return sum(abs(value) for value in values) * weight
++    return sum(values) * weight
+ 
+ 
+ class ToolBatch:

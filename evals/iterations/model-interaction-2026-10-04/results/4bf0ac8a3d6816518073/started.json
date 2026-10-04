@@ -1,0 +1,8 @@
+{
+  "case_id": "m12",
+  "condition": "C_skill",
+  "trial": 1,
+  "model_requested": "gpt-6-astra",
+  "time": "2026-10-04T06:48:18.364871+00:00",
+  "canary": false
+}

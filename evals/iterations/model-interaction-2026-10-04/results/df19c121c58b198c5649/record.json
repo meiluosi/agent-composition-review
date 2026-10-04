@@ -1,0 +1,260 @@
+{
+  "case_id": "m08",
+  "condition": "B_checklist",
+  "trial": 1,
+  "model_requested": "gpt-6-luna",
+  "exit_code": 0,
+  "timed_out": false,
+  "elapsed_seconds": 152.50460245803697,
+  "usage": {
+    "input_tokens": 212078,
+    "cached_input_tokens": 174848,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 5902,
+    "reasoning_output_tokens": 2375
+  },
+  "completed": true,
+  "status": "completed",
+  "infra_kind": null,
+  "prediction": {
+    "initial_verdict": "violation",
+    "summary": "修复了重复 JSON 字段被默认解码器折叠、从而绕过精确字段形状校验的问题。重复键现在会触发 StreamError，并将流置为 FAILED、清空帧缓冲。其余已检查的解析行为保留。",
+    "tests_executed": [
+      "./run_python smoke.py — 通过",
+      "./run_python probe.py — 通过：多帧大块输入、跨调用 UTF-8、终止与 EOF 行为、重复字段拒绝、帧大小恰好达到上限"
+    ],
+    "limitations": [
+      "验证覆盖公开 smoke 和定向边界用例，未覆盖完整验收测试。"
+    ]
+  },
+  "acceptance": {
+    "passed": true,
+    "tests_run": 12,
+    "checks": [
+      {
+        "test": "basic",
+        "passed": true
+      },
+      {
+        "test": "byte_boundaries",
+        "passed": true
+      },
+      {
+        "test": "metrics",
+        "passed": true
+      },
+      {
+        "test": "unfinished_buffer",
+        "passed": true
+      },
+      {
+        "test": "size_limits",
+        "passed": true
+      },
+      {
+        "test": "error_terminal",
+        "passed": true
+      },
+      {
+        "test": "terminal_once",
+        "passed": true
+      },
+      {
+        "test": "malformed_frames",
+        "passed": true
+      },
+      {
+        "test": "premature_eof",
+        "passed": true
+      },
+      {
+        "test": "poison_state",
+        "passed": true
+      },
+      {
+        "test": "failed_call_has_no_partial_output",
+        "passed": true
+      },
+      {
+        "test": "independent_streams",
+        "passed": true
+      }
+    ],
+    "exit_code": 0,
+    "timed_out": false,
+    "sandbox": "macos_no_network_writes_only_grade_directory",
+    "stderr": ""
+  },
+  "acceptance_signature": {
+    "passed": true,
+    "tests_run": 12,
+    "checks": [
+      {
+        "test": "basic",
+        "passed": true
+      },
+      {
+        "test": "byte_boundaries",
+        "passed": true
+      },
+      {
+        "test": "metrics",
+        "passed": true
+      },
+      {
+        "test": "unfinished_buffer",
+        "passed": true
+      },
+      {
+        "test": "size_limits",
+        "passed": true
+      },
+      {
+        "test": "error_terminal",
+        "passed": true
+      },
+      {
+        "test": "terminal_once",
+        "passed": true
+      },
+      {
+        "test": "malformed_frames",
+        "passed": true
+      },
+      {
+        "test": "premature_eof",
+        "passed": true
+      },
+      {
+        "test": "poison_state",
+        "passed": true
+      },
+      {
+        "test": "failed_call_has_no_partial_output",
+        "passed": true
+      },
+      {
+        "test": "independent_streams",
+        "passed": true
+      }
+    ],
+    "exit_code": 0,
+    "timed_out": false,
+    "invalid_output": false,
+    "isolation_failure": false
+  },
+  "source_changed": true,
+  "artifacts": {
+    "probe.py": "a7a5af6c58d18a2e9989bc16edaea6334ca7e32d98b119ba0d3c45c07a3d9611",
+    "app.py": "e4359611c7cb59a2ff9a3d1e5a9a8b86c8ec48896016ef810ec0e3f74cae8497"
+  },
+  "protected_changes": [],
+  "outside_changes": [],
+  "artifact_errors": [],
+  "tool_audit": [
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc \"pwd && rg --files -g 'task.md' -g 'app.py' -g 'original.py' -g 'smoke.py' -g 'TOOLS.md' -g 'AGENTS.md' -g 'CHECKLIST.md'\"",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc 'cat task.md && cat app.py && cat smoke.py && cat TOOLS.md'",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc './run_python smoke.py'",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 1,
+      "command": "/bin/zsh -lc \"./run_python -c 'import app; p=app.EventStream(max_buffer=16); assert p.feed(b\\\"{\\\\\\\"event\\\\\\\":\\\\\\\"done\\\\\\\"}\\\\n\\\" * 100)[-1][\\\"characters\\\"] == 0; assert p.state == \\\"DONE\\\"; assert p.buffered_bytes == 0; assert p.feed(b\\\"\\\") == []; assert p.finish() == []; q=app.EventStream(max_buffer=16); raw=\\\"{\\\\\\\"event\\\\\\\":\\\\\\\"token\\\\\\\",\\\\\\\"text\\\\\\\":\\\\\\\"雪🙂\\\\\\\"}\\\\n\\\".encode(); out=[]; out += q.feed(raw[:27]); out += q.feed(raw[27:]); out += q.feed(b\\\"{\\\\\\\"event\\\\\\\":\\\\\\\"done\\\\\\\"}\\\\n\\\"); assert out[-1] == {\\\"event\\\":\\\"done\\\",\\\"text\\\":\\\"雪🙂\\\",\\\"characters\\\":2,\\\"words\\\":1}; assert q.finish() == []; r=app.EventStream(max_buffer=15); assert r.feed(b\\\"{\\\" + b\\\" \\\"*14) == [] and r.buffered_bytes == 15; r.finish() if False else None; s=app.EventStream(); s.feed(b\\\"{\\\\\\\"event\\\\\\\":\\\\\\\"done\\\\\\\"}\\\\n\\\");\ntry: s.feed(b\\\"x\\\")\nexcept app.StreamError: assert s.state == \\\"FAILED\\\" and s.buffered_bytes == 0\nelse: raise AssertionError; t=app.EventStream();\ntry: t.finish()\nexcept app.StreamError: assert t.state == \\\"FAILED\\\" and t.buffered_bytes == 0\nelse: raise AssertionError; print(\\\"boundary probes passed\\\")'\"",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 1,
+      "command": "/bin/zsh -lc \"./run_python -c 'import app; p=app.EventStream(max_buffer=16); frames=b\\\"{\\\\\\\"event\\\\\\\":\\\\\\\"token\\\\\\\",\\\\\\\"text\\\\\\\":\\\\\\\"\\\\\\\"}\\\\n\\\" * 100 + b\\\"{\\\\\\\"event\\\\\\\":\\\\\\\"done\\\\\\\"}\\\\n\\\"; result=p.feed(frames); assert len(result)==101 and result[-1][\\\"characters\\\"]==0; assert p.state==\\\"DONE\\\" and p.buffered_bytes==0; assert p.feed(b\\\"\\\")==[] and p.finish()==[]; q=app.EventStream(max_buffer=64); raw=\\\"{\\\\\\\"event\\\\\\\":\\\\\\\"token\\\\\\\",\\\\\\\"text\\\\\\\":\\\\\\\"雪🙂\\\\\\\"}\\\\n\\\".encode(); out=[]; out+=q.feed(raw[:27]); out+=q.feed(raw[27:]); out+=q.feed(b\\\"{\\\\\\\"event\\\\\\\":\\\\\\\"done\\\\\\\"}\\\\n\\\"); assert out[-1]=={\\\"event\\\":\\\"done\\\",\\\"text\\\":\\\"雪🙂\\\",\\\"characters\\\":2,\\\"words\\\":1}; assert q.finish()==[]; r=app.EventStream(max_buffer=15); assert r.feed(b\\\"{\\\"+b\\\" \\\"*14)==[] and r.buffered_bytes==15; s=app.EventStream(); s.feed(b\\\"{\\\\\\\"event\\\\\\\":\\\\\\\"done\\\\\\\"}\\\\n\\\");\ntry: s.feed(b\\\"x\\\")\nexcept app.StreamError: assert s.state==\\\"FAILED\\\" and s.buffered_bytes==0\nelse: raise AssertionError; t=app.EventStream();\ntry: t.finish()\nexcept app.StreamError: assert t.state==\\\"FAILED\\\" and t.buffered_bytes==0\nelse: raise AssertionError; print(\\\"boundary probes passed\\\")'\"",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 1,
+      "command": "/bin/zsh -lc \"./run_python -c 'import app; p=app.EventStream(max_buffer=32); frames=b\\\"{\\\\\\\"event\\\\\\\":\\\\\\\"token\\\\\\\",\\\\\\\"text\\\\\\\":\\\\\\\"\\\\\\\"}\\\\n\\\" * 100 + b\\\"{\\\\\\\"event\\\\\\\":\\\\\\\"done\\\\\\\"}\\\\n\\\"; result=p.feed(frames); assert len(result)==101 and result[-1][\\\"characters\\\"]==0; assert p.state==\\\"DONE\\\" and p.buffered_bytes==0; assert p.feed(b\\\"\\\")==[] and p.finish()==[]; q=app.EventStream(max_buffer=64); raw=\\\"{\\\\\\\"event\\\\\\\":\\\\\\\"token\\\\\\\",\\\\\\\"text\\\\\\\":\\\\\\\"雪🙂\\\\\\\"}\\\\n\\\".encode(); out=[]; out+=q.feed(raw[:27]); out+=q.feed(raw[27:]); out+=q.feed(b\\\"{\\\\\\\"event\\\\\\\":\\\\\\\"done\\\\\\\"}\\\\n\\\"); assert out[-1]=={\\\"event\\\":\\\"done\\\",\\\"text\\\":\\\"雪🙂\\\",\\\"characters\\\":2,\\\"words\\\":1}; assert q.finish()==[]; r=app.EventStream(max_buffer=15); assert r.feed(b\\\"{\\\"+b\\\" \\\"*14)==[] and r.buffered_bytes==15; s=app.EventStream(); s.feed(b\\\"{\\\\\\\"event\\\\\\\":\\\\\\\"done\\\\\\\"}\\\\n\\\");\ntry: s.feed(b\\\"x\\\")\nexcept app.StreamError: assert s.state==\\\"FAILED\\\" and s.buffered_bytes==0\nelse: raise AssertionError; t=app.EventStream();\ntry: t.finish()\nexcept app.StreamError: assert t.state==\\\"FAILED\\\" and t.buffered_bytes==0\nelse: raise AssertionError; print(\\\"boundary probes passed\\\")'\"",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 1,
+      "command": "/bin/zsh -lc \"./run_python -c '\nimport app\np = app.EventStream(max_buffer=32)\nframes = b\\\"{\\\\\\\"event\\\\\\\":\\\\\\\"token\\\\\\\",\\\\\\\"text\\\\\\\":\\\\\\\"\\\\\\\"}\\\\\\\\n\\\" * 100 + b\\\"{\\\\\\\"event\\\\\\\":\\\\\\\"done\\\\\\\"}\\\\\\\\n\\\"\nresult = p.feed(frames)\nassert len(result) == 101 and result[-1][\\\"characters\\\"] == 0\nassert p.state == \\\"DONE\\\" and p.buffered_bytes == 0\nassert p.feed(b\\\"\\\") == [] and p.finish() == []\nq = app.EventStream(max_buffer=64)\nraw = \\\"{\\\\\\\"event\\\\\\\":\\\\\\\"token\\\\\\\",\\\\\\\"text\\\\\\\":\\\\\\\"雪🙂\\\\\\\"}\\\\\\\\n\\\".encode()\nout = q.feed(raw[:27]) + q.feed(raw[27:]) + q.feed(b\\\"{\\\\\\\"event\\\\\\\":\\\\\\\"done\\\\\\\"}\\\\\\\\n\\\")\nassert out[-1] == {\\\"event\\\": \\\"done\\\", \\\"text\\\": \\\"雪🙂\\\", \\\"characters\\\": 2, \\\"words\\\": 1}\nassert q.finish() == []\nr = app.EventStream(max_buffer=15)\nassert r.feed(b\\\"{\\\" + b\\\" \\\" * 14) == [] and r.buffered_bytes == 15\ns = app.EventStream()\ns.feed(b\\\"{\\\\\\\"event\\\\\\\":\\\\\\\"done\\\\\\\"}\\\\\\\\n\\\")\ntry:\n    s.feed(b\\\"x\\\")\nexcept app.StreamError:\n    assert s.state == \\\"FAILED\\\" and s.buffered_bytes == 0\nelse:\n    raise AssertionError\n t = app.EventStream()\n'\"",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc \"cat > probe.py <<'PY'\nimport app\n\np = app.EventStream(max_buffer=32)\nframes = b'{\\\"event\\\":\\\"token\\\",\\\"text\\\":\\\"\\\"}\\\\n' * 100 + b'{\\\"event\\\":\\\"done\\\"}\\\\n'\nresult = p.feed(frames)\nassert len(result) == 101 and result[-1][\\\"characters\\\"] == 0\nassert p.state == \\\"DONE\\\" and p.buffered_bytes == 0\nassert p.feed(b\\\"\\\") == [] and p.finish() == []\n\nq = app.EventStream(max_buffer=64)\nraw = '{\\\"event\\\":\\\"token\\\",\\\"text\\\":\\\"雪🙂\\\"}\\\\n'.encode()\nout = q.feed(raw[:27]) + q.feed(raw[27:]) + q.feed(b'{\\\"event\\\":\\\"done\\\"}\\\\n')\nassert out[-1] == {\\\"event\\\": \\\"done\\\", \\\"text\\\": \\\"雪🙂\\\", \\\"characters\\\": 2, \\\"words\\\": 1}\nassert q.finish() == []\n\nr = app.EventStream(max_buffer=15)\nassert r.feed(b\\\"{\\\" + b\\\" \\\" * 14) == [] and r.buffered_bytes == 15\ns = app.EventStream()\ns.feed(b'{\\\"event\\\":\\\"done\\\"}\\\\n')\ntry:\n    s.feed(b\\\"x\\\")\nexcept app.StreamError:\n    assert s.state == \\\"FAILED\\\" and s.buffered_bytes == 0\nelse:\n    raise AssertionError\n\nt = app.EventStream()\ntry:\n    t.finish()\nexcept app.StreamError:\n    assert t.state == \\\"FAILED\\\" and t.buffered_bytes == 0\nelse:\n    raise AssertionError\nprint(\\\"boundary probes passed\\\")\nPY\n./run_python probe.py\"",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc \"./run_python -c 'import app; p=app.EventStream(); print(p.feed(b\\\"{\\\\\\\"event\\\\\\\":\\\\\\\"token\\\\\\\",\\\\\\\"text\\\\\\\":\\\\\\\"a\\\\\\\",\\\\\\\"text\\\\\\\":\\\\\\\"b\\\\\\\"}\\\\n\\\")); print(p.feed(b\\\"{\\\\\\\"event\\\\\\\":\\\\\\\"done\\\\\\\"}\\\\n\\\"))'\"",
+      "review_flags": []
+    },
+    {
+      "type": "file_change",
+      "exit_code": null,
+      "changes": [
+        {
+          "path": "<workspace>/app.py",
+          "kind": "update"
+        }
+      ]
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc './run_python probe.py'",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 1,
+      "command": "/bin/zsh -lc \"./run_python -c 'import app; p=app.EventStream();\ntry: p.feed(b\\\"{\\\\\\\"event\\\\\\\":\\\\\\\"token\\\\\\\",\\\\\\\"text\\\\\\\":\\\\\\\"a\\\\\\\",\\\\\\\"text\\\\\\\":\\\\\\\"b\\\\\\\"}\\\\\\\\n\\\")\nexcept app.StreamError: assert p.state == \\\"FAILED\\\" and p.buffered_bytes == 0\nelse: raise AssertionError(\\\"duplicate field accepted\\\")\ntry: p.feed(b\\\"\\\")\nexcept app.StreamError: pass\nelse: raise AssertionError(\\\"failed parser reused\\\")\nprint(\\\"duplicate-field rejection passed\\\")'\"",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc './run_python smoke.py'",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc \"cat >> probe.py <<'PY'\n\nu = app.EventStream()\ntry:\n    u.feed(b'{\\\"event\\\":\\\"token\\\",\\\"text\\\":\\\"a\\\",\\\"text\\\":\\\"b\\\"}\\\\n')\nexcept app.StreamError:\n    assert u.state == \\\"FAILED\\\" and u.buffered_bytes == 0\nelse:\n    raise AssertionError(\\\"duplicate field accepted\\\")\ntry:\n    u.feed(b\\\"\\\")\nexcept app.StreamError:\n    pass\nelse:\n    raise AssertionError(\\\"failed parser reused\\\")\n\n# A completed frame exactly at the byte limit is accepted.\nv = app.EventStream(max_buffer=len(b'{\\\"event\\\":\\\"done\\\"}'))\nassert v.feed(b'{\\\"event\\\":\\\"done\\\"}\\\\n') == [\n    {\\\"event\\\": \\\"done\\\", \\\"text\\\": \\\"\\\", \\\"characters\\\": 0, \\\"words\\\": 0}\n]\nprint(\\\"duplicate and exact-limit probes passed\\\")\nPY\n./run_python probe.py\"",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 129,
+      "command": "/bin/zsh -lc 'git diff -- app.py && git status --short'",
+      "review_flags": []
+    }
+  ],
+  "case_sha256": "aa283be38484e98df1892798214a2ebeaf2956488751322bee24043d262061d5",
+  "prompt_sha256": "6fd62ac6100d8b6cfbd0a2b2d2c570f6e2df884143fea61f287365cec2b7280f",
+  "event_sha256": "4eee6269dca8642953b9813f9175569f901d4602f517e5e47a6dadf6b801dc9e",
+  "stderr_sha256": "a7f1ad8ed61b7220e857680b660a5e4c2e4ebf0f3e9faae1f2d73420d15d63a9",
+  "reasoning_effort": "high",
+  "cli_version": "codex-cli 0.160.0",
+  "canary": false,
+  "python_version": "3.12.14",
+  "execution_platform": "Darwin",
+  "terminal_errors": []
+}

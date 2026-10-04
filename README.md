@@ -2,7 +2,7 @@
 
 一个以组合思想为指导的 Agent 架构诊断 Skill。沿数据流检查类型、语义契约、状态与不变量，把异常转化为有证据的根因判断、最小修复和可执行验证。
 
-**当前状态：`0.1.0-dev`，可运行的发布草案。** 项目独立维护于 [meiluosi/agent-composition-review](https://github.com/meiluosi/agent-composition-review)，当前为私有仓库。最新自主建模与代码修复完成 30/36 次，另 6 次因额度限制中断；随后完成独立登记的 31 份结构评审。发现了两处错误的正常标签，修订与限制均保留，v4 继续作为候选。[查看最新复盘](docs/code-repair-findings.md)。自动检查状态见 [GitHub Actions](https://github.com/meiluosi/agent-composition-review/actions)。许可证尚未选择，不宣称已经完成开源发布。
+**当前状态：`0.1.0-dev`，可运行的发布草案。** 项目独立维护于 [meiluosi/agent-composition-review](https://github.com/meiluosi/agent-composition-review)，当前为私有仓库。最新模型与指导交互实验已记录 64/144 次，正在单独登记恢复剩余 80 项；结果尚未完整，v4 继续作为候选。[查看本轮复核](docs/model-interaction-findings.md)。自动检查状态见 [GitHub Actions](https://github.com/meiluosi/agent-composition-review/actions)。许可证尚未选择，不宣称已经完成开源发布。
 
 ## 它适合什么
 
@@ -91,7 +91,17 @@ python3.12 -m venv .venv
 
 本轮新增参考指令另做了 [独立前向试用](evals/runs/2026-09-29-forward/report.md)：执行者识别出违规的查询写入，给出并验证修复，也没有把明确允许的缓存写入误报为故障。这是两个简化组件的一次开发集检查，无对照组；判据登记晚于任务分发，不能视为完整协议下的效果评测。范围与证据见 [记录](evals/runs/2026-09-29-forward/result.json)。
 
-## 最新：自主建模与跨运行机制代码修复
+## 最新：不同模型是否从指导中获益
+
+固定共同工具，比较无附加指导、普通工程清单和 v4 Skill；使用 Astra/high、Luna/high，12 道自建开发任务各重复两次，共计划 144 次。共同提示不强制契约建模。正式调用前已冻结题目、输入、评分和决策门槛，不能把 Luna 预先当作在这些题上更弱的模型。
+
+当前已有 64 份记录。原执行器把日志文件名中的 `401` 误判成鉴权错误而停止；该次实际超时、仍算失败，原记录不改。[独立恢复登记](evals/iterations/model-interaction-2026-10-04/RECOVERY_PLAN.md)只允许继续 80 个从未开始的任务，没有重跑或增加总调用数。
+
+**尚不能判断弱模型是否更受益。** 两个“正常”样例又暴露了原验收遗漏：非法 JSON 接受，以及 Python 字符串存储/往返边界。正常误报计数因此不能按字面解释，原分数全部保留。部分结果只作为执行快照，不授权升级默认 Skill。
+
+[当前完整记录与图表](evals/iterations/model-interaction-2026-10-04/REPORT.md) · [复现方法](docs/model-interaction-evaluation.md) · [执行审计](evals/iterations/model-interaction-2026-10-04/EXECUTION_REVIEW.md) · [框架复盘](docs/model-interaction-findings.md)
+
+## 前轮：自主建模与跨运行机制代码修复
 
 LangGraph 子图、SQLite 事务、asyncio 任务组各两个变体，比较基本工具、增加契约工具、再增加 v4 指导。不给当前任务的参考模型，直接交付代码和自行建立的结构。三组各两次重复，共 36 次尝试；都是开发材料。
 

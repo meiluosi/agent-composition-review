@@ -1,0 +1,244 @@
+{
+  "case_id": "m01",
+  "condition": "A_tools",
+  "trial": 1,
+  "model_requested": "gpt-6-astra",
+  "exit_code": -9,
+  "timed_out": true,
+  "elapsed_seconds": 360.05498266604263,
+  "usage": {
+    "input_tokens": 219447,
+    "cached_input_tokens": 201088,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 7716,
+    "reasoning_output_tokens": 2122
+  },
+  "completed": true,
+  "status": "infrastructure_failure",
+  "infra_kind": "auth",
+  "prediction": null,
+  "acceptance": {
+    "passed": true,
+    "tests_run": 9,
+    "checks": [
+      {
+        "test": "test_empty_and_persistence",
+        "passed": true
+      },
+      {
+        "test": "test_fifo_and_active_exclusion",
+        "passed": true
+      },
+      {
+        "test": "test_same_worker_stale_receipt",
+        "passed": true
+      },
+      {
+        "test": "test_other_worker_stale_receipt",
+        "passed": true
+      },
+      {
+        "test": "test_expiry_and_fractional_duration",
+        "passed": true
+      },
+      {
+        "test": "test_payload_isolation",
+        "passed": true
+      },
+      {
+        "test": "test_failed_put_and_duplicate_reuse",
+        "passed": true
+      },
+      {
+        "test": "test_invalid_duration_preserves_jobs",
+        "passed": true
+      },
+      {
+        "test": "test_atomic_claim_across_connections",
+        "passed": true
+      }
+    ],
+    "exit_code": 0,
+    "timed_out": false,
+    "sandbox": "macos_no_network_writes_only_grade_directory",
+    "stderr": ""
+  },
+  "acceptance_signature": {
+    "passed": true,
+    "tests_run": 9,
+    "checks": [
+      {
+        "test": "test_empty_and_persistence",
+        "passed": true
+      },
+      {
+        "test": "test_fifo_and_active_exclusion",
+        "passed": true
+      },
+      {
+        "test": "test_same_worker_stale_receipt",
+        "passed": true
+      },
+      {
+        "test": "test_other_worker_stale_receipt",
+        "passed": true
+      },
+      {
+        "test": "test_expiry_and_fractional_duration",
+        "passed": true
+      },
+      {
+        "test": "test_payload_isolation",
+        "passed": true
+      },
+      {
+        "test": "test_failed_put_and_duplicate_reuse",
+        "passed": true
+      },
+      {
+        "test": "test_invalid_duration_preserves_jobs",
+        "passed": true
+      },
+      {
+        "test": "test_atomic_claim_across_connections",
+        "passed": true
+      }
+    ],
+    "exit_code": 0,
+    "timed_out": false,
+    "invalid_output": false,
+    "isolation_failure": false
+  },
+  "source_changed": true,
+  "artifacts": {
+    "test_queue.py": "59586ed40ef38abbe049c0994e2cc3fd9cdba431240a6701f91e51201c1e3207",
+    "app.py": "c0eac24731fc538ae0f9c16fd552dce0bc368769d6b3fba0e30192a2d7afbf60"
+  },
+  "protected_changes": [],
+  "outside_changes": [],
+  "artifact_errors": [],
+  "tool_audit": [
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc \"pwd; rg --files -g '\"'!__pycache__/**'\"' -g '\"'!'\"\\\\.git/**'\"",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc 'cat task.md app.py smoke.py TOOLS.md run_python'",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc \"cmp app.py original.py; ./run_python - <<'PY'\nfrom pathlib import Path\nimport tempfile\nfrom app import Queue\nwith tempfile.TemporaryDirectory(dir=Path.cwd()) as directory:\n    q = Queue(Path(directory) / 'queue.db')\n    q.put('job', {})\n    old = q.claim('worker', 0, 1)\n    current = q.claim('worker', 1, 2)\n    print('stale acknowledgement:', q.ack(old['receipt'], 1))\n    print('current acknowledgement:', q.ack(current['receipt'], 1))\nwith tempfile.TemporaryDirectory(dir=Path.cwd()) as directory:\n    q = Queue(Path(directory) / 'queue.db')\n    q.put('job', {})\n    try:\n        print('boolean duration:', q.claim('worker', 0, True))\n    except ValueError:\n        print('boolean duration rejected')\nPY\"",
+      "review_flags": []
+    },
+    {
+      "type": "file_change",
+      "exit_code": null,
+      "changes": [
+        {
+          "path": "<workspace>/app.py",
+          "kind": "update"
+        }
+      ]
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc \"./run_python - <<'PY'\nfrom pathlib import Path\nimport tempfile\nfrom app import Queue\nwith tempfile.TemporaryDirectory(dir=Path.cwd()) as directory:\n    q = Queue(Path(directory) / 'queue.db')\n    for job_id in ['ordinary', '\\\\ud800']:\n        try:\n            q.put(job_id, None)\n            print(ascii(job_id), 'enqueued')\n        except Exception as exc:\n            print(ascii(job_id), type(exc).__name__)\n    try:\n        q.claim('\\\\ud800', 0, 1)\n    except Exception as exc:\n        print('surrogate worker:', type(exc).__name__)\nPY\"",
+      "review_flags": []
+    },
+    {
+      "type": "file_change",
+      "exit_code": null,
+      "changes": [
+        {
+          "path": "<workspace>/app.py",
+          "kind": "update"
+        }
+      ]
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 1,
+      "command": "/bin/zsh -lc \"cat > test_queue.py <<'PY'\n\\\"\\\"\\\"Contract regressions; optional argument selects the implementation module.\\\"\\\"\\\"\nimport concurrent.futures\nimport importlib\nimport math\nfrom pathlib import Path\nimport random\nimport sys\nimport tempfile\nimport threading\nimport unittest\n\nimplementation = importlib.import_module(sys.argv.pop(1) if len(sys.argv) > 1 else 'app')\n\n\nclass QueueContract(unittest.TestCase):\n    def setUp(self):\n        self.directory = tempfile.TemporaryDirectory(dir=Path(__file__).parent)\n        self.addCleanup(self.directory.cleanup)\n        self.path = Path(self.directory.name) / 'queue.db'\n        self.q = implementation.Queue(self.path)\n\n    def reopen(self):\n        return implementation.Queue(self.path)\n\n    def test_stale_same_worker_receipt(self):\n        self.q.put('job', {'value': 1})\n        old = self.q.claim('worker', 0, 0.5)\n        current = self.reopen().claim('worker', 0.5, 2)\n        self.assertFalse(self.reopen().ack(old['receipt'], 0.5))\n        self.assertTrue(self.q.ack(current['receipt'], 0.5))\n        self.assertFalse(self.reopen().ack(current['receipt'], 0.5))\n\n    def test_stale_other_worker_receipt(self):\n        self.q.put('job', None)\n        old = self.q.claim('a', -1, 0.5)\n        self.assertIsNone(self.reopen().claim('a', -0.75, 1))\n        self.assertIsNone(self.reopen().claim('b', -0.5 - 0.01, 1))\n        self.assertFalse(self.q.ack(old['receipt'], -0.5))\n        current = self.q.claim('b', -0.5, 0.25)\n        self.assertFalse(self.q.ack(old['receipt'], -0.5))\n        self.assertTrue(self.reopen().ack(current['receipt'], -0.5))\n\n    def test_invalid_durations_leave_ready_and_leased_jobs_intact(self):\n        self.q.put('job', [1])\n        invalid = [True, False, 0, 0.0, -0.0, -1, -0.1,\n                   float('nan'), float('inf'), -float('inf')]\n        for duration in invalid:\n            with self.subTest(state='ready', duration=duration):\n                with self.assertRaises(ValueError):\n                    self.q.claim('worker', 0, duration)\n        current = self.q.claim('worker', 0, 1)\n        for duration in invalid:\n            with self.subTest(state='leased', duration=duration):\n                with self.assertRaises(ValueError):\n                    self.q.claim('other', 0, duration)\n        self.assertTrue(self.reopen().ack(current['receipt'], 0))\n        with self.assertRaises(ValueError):\n            self.q.claim('worker', 1, True)\n\n    def test_fifo_reclaims_and_completed_ids(self):\n        for job_id in ['a', 'b', 'c']:\n            self.q.put(job_id, job_id)\n        first = self.q.claim('worker', 0, 1)\n        second = self.q.claim('worker', 0, 10)\n        self.assertEqual([first['payload'], second['payload']], ['a', 'b'])\n        for job_id in ['a', 'b', 'c']:\n            with self.assertRaises(ValueError):\n                self.reopen().put(job_id, 'changed')\n        reclaimed = self.reopen().claim('worker', 1, 2)\n        self.assertEqual(reclaimed['payload'], 'a')\n        self.assertTrue(self.q.ack(reclaimed['receipt'], 1))\n        with self.assertRaises(ValueError):\n            self.reopen().put('a', 'replacement')\n        self.assertEqual(self.q.claim('worker', 1, 2)['payload'], 'c')\n        self.assertIsNone(self.q.claim('worker', 1, 2))\n\n    def test_payload_values_and_isolation(self):\n        values = [None, True, False, '', '文字\\\\x00\\\\ud800', 0, -42, 2**100,\n                  -0.0, 0.125, 1e200, [], {},\n                  {'': [], 'nested': [None, {'x': [1, 2]}]}]\n        for index, value in enumerate(values):\n            self.q.put(str(index), value)\n        for index, value in enumerate(values):\n            result = self.reopen().claim('worker', 0, 1)\n            self.assertEqual(set(result), {'payload', 'expires_at', 'receipt'})\n            self.assertEqual(result['payload'], value)\n            if isinstance(value, float) and value == 0:\n                self.assertEqual(math.copysign(1, result['payload']), -1)\n            self.assertTrue(self.q.ack(result['receipt'], 0))\n        payload = {'nested': [{'values': [1, 2]}]}\n        self.q.put('snapshot', payload)\n        payload['nested'][0]['values'].append(3)\n        first = self.q.claim('worker', 0, 1)\n        first['payload']['nested'][0]['values'].clear()\n        first['receipt']['worker'] = 'mutated locally'\n        next_claim = self.reopen().claim('worker', 1, 1)\n        self.assertEqual(next_claim['payload'], {'nested': [{'values': [1, 2]}]})\n        self.assertTrue(self.reopen().ack(next_claim['receipt'], 1))\n\n    def test_encoder_errors_are_atomic(self):\n        cycle = []\n        cycle.append(cycle)\n        deep = []\n        for _ in range(sys.getrecursionlimit() + 100):\n            deep = [deep]\n        invalid = [object(), b'bytes', {1, 2}, {('key',): 1}, cycle, deep,\n                   float('nan'), float('inf'), -float('inf'),\n                   {'nested': [float('nan')]}]\n        self.q.put('existing', ['original'])\n        for value in invalid:\n            for job_id in ['bad', 'existing']:\n                with self.assertRaises((TypeError, ValueError, RecursionError)):\n                    self.q.put(job_id, value)\n        result = self.reopen().claim('worker', 0, 1)\n        self.assertEqual(result['payload'], ['original'])\n        self.assertTrue(self.q.ack(result['receipt'], 0))\n        self.assertIsNone(self.q.claim('worker', 0, 1))\n        self.reopen().put('bad', 'valid now')\n        self.assertEqual(self.q.claim('worker', 0, 1)['payload'], 'valid now')\n\n    def test_python_expiry_arithmetic(self):\n        cases = [(0.1, 0.2), (-10**12, 10**12), (10**12, 10**12),\n                 (10**12, 0.000001), (-0.25, 0.125)]\n        for index, (now, duration) in enumerate(cases):\n            # Independent queues keep each scenario's time nondecreasing.\n            q = implementation.Queue(Path(self.directory.name) / f'numeric{index}.db')\n            q.put('job', None)\n            claim = q.claim('worker', now, duration)\n            expiry = now + duration\n            self.assertEqual(claim['expires_at'], expiry)\n            self.assertFalse(q.ack(claim['receipt'], expiry))\n            self.assertIsNotNone(q.claim('worker', expiry, 1))\n\n    def test_all_python_strings_for_identifiers(self):\n        names = ['普通', 'embedded\\\\x00nul', '\\\\ud800', '\\\\udfff', '\\\\ud800\\\\udfff']\n        for name in names:\n            self.q.put(name, {'id': name})\n        for name in names:\n            result = self.reopen().claim(name, 0, 1)\n            self.assertEqual(result['payload'], {'id': name})\n            self.assertTrue(self.reopen().ack(result['receipt'], 0))\n            with self.assertRaises(ValueError):\n                self.q.put(name, None)\n\n    def test_existing_database_and_receipt_compatibility(self):\n        original = importlib.import_module('original')\n        old = original.Queue(self.path)\n        old.put('legacy', {'legacy': True})\n        receipt = old.claim('worker', 0, 2)['receipt']\n        self.assertTrue(self.reopen().ack(receipt, 1))\n        self.assertIsNone(self.reopen().claim('worker', 2, 1))\n        with self.assertRaises(ValueError):\n            self.reopen().put('legacy', None)\n\n    def test_atomic_concurrent_claims_and_acks(self):\n        workers = 12\n        barrier = threading.Barrier(workers)\n        self.q.put('one', 1)\n        def claim(_):\n            q = self.reopen()\n            barrier.wait(timeout=10)\n            return q.claim('shared-worker', 0, 1)\n        with concurrent.futures.ThreadPoolExecutor(max_workers=workers) as executor:\n            results = list(executor.map(claim, range(workers)))\n        active = [result for result in results if result is not None]\n        self.assertEqual(len(active), 1)\n        barrier = threading.Barrier(workers)\n        def ack(_):\n            q = self.reopen()\n            barrier.wait(timeout=10)\n            return q.ack(active[0]['receipt'], 0)\n        with concurrent.futures.ThreadPoolExecutor(max_workers=workers) as executor:\n            results = list(executor.map(ack, range(workers)))\n        self.assertEqual(results.count(True), 1)\n        self.assertIsNone(self.reopen().claim('worker', 1, 1))\n\n    def test_deterministic_model_sequence(self):\n        rng = random.Random(6021)\n        jobs = []\n        receipts = []\n        now = -10.0\n        for step in range(600):\n            now += rng.choice([0, 0.125, 0.5])\n            q = self.reopen()\n            operation = rng.choice(['put', 'claim', 'claim', 'ack'])\n            if operation == 'put':\n                job = {'id': str(step), 'done': False, 'generation': 0, 'expiry': None}\n                q.put(job['id'], {'id': job['id']})\n                jobs.append(job)\n            elif operation == 'claim':\n                duration = rng.choice([0.125, 0.5, 2])\n                worker = rng.choice(['same', 'other'])\n                expected = next((j for j in jobs if not j['done'] and\n                                 (j['expiry'] is None or j['expiry'] <= now)), None)\n                result = q.claim(worker, now, duration)\n                if expected is None:\n                    self.assertIsNone(result)\n                else:\n                    self.assertEqual(result['payload'], {'id': expected['id']})\n                    self.assertEqual(result['expires_at'], now + duration)\n                    expected['generation'] += 1\n                    expected['expiry'] = now + duration\n                    receipts.append((result['receipt'], expected, expected['generation']))\n            elif receipts:\n                receipt, job, generation = rng.choice(receipts)\n                expected = (not job['done'] and generation == job['generation']\n                            and now < job['expiry'])\n                self.assertEqual(q.ack(receipt, now), expected)\n                if expected:\n                    job['done'] = True\n\n\nif __name__ == '__main__':\n    unittest.main(verbosity=2)\nPY\n./run_python test_queue.py\"",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc \"./run_python - <<'PY'\nimport json\nimport sys\ncycle=[]\ncycle.append(cycle)\ndeep=[]\nfor _ in range(sys.getrecursionlimit()+100):\n    deep=[deep]\nvalues=[object(), b'bytes', {1,2}, {('key',):1}, cycle, deep, float('nan'), float('inf'), -float('inf'), {'nested':[float('nan')]}]\nfor i,v in enumerate(values):\n    try:\n        encoded=json.dumps(v,allow_nan=False)\n        print(i, 'accepted', len(encoded))\n    except Exception as exc:\n        print(i,type(exc).__name__)\nprint('depth limit',sys.getrecursionlimit())\nprint('JSON escaped',ascii(json.dumps('\\\\ud800\\\\udfff')))\nprint('JSON literal round trip', ascii(json.loads(json.dumps('\\\\ud800\\\\udfff', ensure_ascii=False))))\nPY\"",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc \"./run_python - <<'PY'\nimport json,sys\nprint(sys.version)\nfor depth in [900,1100,1500,2000,5000,10000]:\n    value=[]\n    for _ in range(depth): value=[value]\n    try:\n        encoded=json.dumps(value,allow_nan=False)\n        print(depth,'encoded',end=' ')\n        try:\n            json.loads(encoded)\n            print('decoded')\n        except Exception as exc: print(type(exc).__name__)\n    except Exception as exc: print(depth,type(exc).__name__)\nPY\"",
+      "review_flags": []
+    },
+    {
+      "type": "file_change",
+      "exit_code": null,
+      "changes": [
+        {
+          "path": "<workspace>/app.py",
+          "kind": "update"
+        }
+      ]
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc \"./run_python - <<'PY'\nfrom pathlib import Path\np = Path('test_queue.py')\ns = p.read_text()\ns = s.replace('import importlib\\\\n', 'import importlib\\\\nimport json\\\\n')\ns = s.replace(\\\"{'': [], 'nested': [None, {'x': [1, 2]}]}]\\\", \\\"{'': [], 'nested': [None, {'x': [1, 2]}]},\\\\n                  {'\\\\\\\\ud800\\\\\\\\udfff': 'surrogate pair', '\\\\\\\\U000103ff': 'code point'}]\\\")\ns = s.replace('range(sys.getrecursionlimit() + 100)', 'range(10000)')\ns = s.replace(\\\"        invalid = [object(), b'bytes'\\\", \\\"        # Python 3.12's C encoder depth limit differs from getrecursionlimit().\\\\n        with self.assertRaises(RecursionError):\\\\n            json.dumps(deep, allow_nan=False)\\\\n        invalid = [object(), b'bytes'\\\")\np.write_text(s)\nPY\n./run_python test_queue.py\"",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 1,
+      "command": "/bin/zsh -lc 'diff -u original.py app.py'",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc 'mkdir -p .test_tmp\nTMPDIR=\"$PWD/.test_tmp\" ./run_python smoke.py app.py\nTMPDIR=\"$PWD/.test_tmp\" ./run_python smoke.py original.py'",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 1,
+      "command": "/bin/zsh -lc './run_python test_queue.py original'",
+      "review_flags": []
+    },
+    {
+      "type": "file_change",
+      "exit_code": null,
+      "changes": [
+        {
+          "path": "<workspace>/test_queue.py",
+          "kind": "update"
+        }
+      ]
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc './run_python test_queue.py\nTMPDIR=\"$PWD/.test_tmp\" ./run_python smoke.py app.py'",
+      "review_flags": []
+    }
+  ],
+  "case_sha256": "73ed6a9b5cadf130e63f8b694219699c9066891c161550bfda592c524551ba82",
+  "prompt_sha256": "754741dedf8f45f17a6cba0d28c804d1273d67e30452f4503e8797defde6c5c4",
+  "event_sha256": "b71ae0fbf1107411062f24761a096a1dbcfc570f41ddbd128f77bb5cbc329e9c",
+  "stderr_sha256": "fdbc13de5c5d6a88abb48dc7559cfb756f53619b4f25f014d7838e1c7148451e",
+  "reasoning_effort": "high",
+  "cli_version": "codex-cli 0.160.0",
+  "canary": false,
+  "python_version": "3.12.14",
+  "execution_platform": "Darwin",
+  "terminal_errors": []
+}

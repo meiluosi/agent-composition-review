@@ -1,0 +1,11 @@
+--- original.py
++++ app.py
+@@ -7,7 +7,7 @@
+ 
+ 
+ def text_metrics(text):
+-    return {"characters": len(text), "words": len(text.split(" "))}
++    return {"characters": len(text), "words": len(text.split())}
+ 
+ 
+ class EventStream:

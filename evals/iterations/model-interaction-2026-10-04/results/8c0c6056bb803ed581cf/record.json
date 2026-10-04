@@ -1,0 +1,222 @@
+{
+  "case_id": "m04",
+  "condition": "A_tools",
+  "trial": 1,
+  "model_requested": "gpt-6-luna",
+  "exit_code": 0,
+  "timed_out": false,
+  "elapsed_seconds": 126.17656487500062,
+  "usage": {
+    "input_tokens": 109566,
+    "cached_input_tokens": 88320,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 4913,
+    "reasoning_output_tokens": 1880
+  },
+  "completed": true,
+  "status": "completed",
+  "infra_kind": null,
+  "prediction": {
+    "initial_verdict": "violation",
+    "summary": "已修复 app.py：缓存键纳入租户、排序无关的 filters 和 revision；调用 source 时复制 query，并复制成功结果后再缓存；验证 ttl 为不含布尔值的正整数。原有文档排序、零 limit 快速返回、缓存有效期及结果复制行为得以保留。",
+    "tests_executed": [
+      "`./run_python smoke.py`：通过。",
+      "`./run_python -c '…'`（排序、输入与结果复制、query 隔离、缓存键、TTL 边界、参数校验）：修正一条测试预期后通过；初次失败是该预期错误地忽略了过期后 source 返回的更新数据。",
+      "`./run_python -c '…'`（source 异常传播、失败不缓存、其他有效缓存项保留）：通过。"
+    ],
+    "limitations": []
+  },
+  "acceptance": {
+    "passed": true,
+    "tests_run": 12,
+    "checks": [
+      {
+        "test": "rank_order_and_limit",
+        "passed": true
+      },
+      {
+        "test": "full_result_cache",
+        "passed": true
+      },
+      {
+        "test": "tenant_revision_isolation",
+        "passed": true
+      },
+      {
+        "test": "query_identity",
+        "passed": true
+      },
+      {
+        "test": "expiry_without_sliding",
+        "passed": true
+      },
+      {
+        "test": "caller_query_isolation",
+        "passed": true
+      },
+      {
+        "test": "source_result_isolation",
+        "passed": true
+      },
+      {
+        "test": "returned_result_isolation",
+        "passed": true
+      },
+      {
+        "test": "failure_not_cached",
+        "passed": true
+      },
+      {
+        "test": "expired_failure_retry",
+        "passed": true
+      },
+      {
+        "test": "empty_results_and_zero_limit",
+        "passed": true
+      },
+      {
+        "test": "independent_instances",
+        "passed": true
+      }
+    ],
+    "exit_code": 0,
+    "timed_out": false,
+    "sandbox": "macos_no_network_writes_only_grade_directory",
+    "stderr": ""
+  },
+  "acceptance_signature": {
+    "passed": true,
+    "tests_run": 12,
+    "checks": [
+      {
+        "test": "rank_order_and_limit",
+        "passed": true
+      },
+      {
+        "test": "full_result_cache",
+        "passed": true
+      },
+      {
+        "test": "tenant_revision_isolation",
+        "passed": true
+      },
+      {
+        "test": "query_identity",
+        "passed": true
+      },
+      {
+        "test": "expiry_without_sliding",
+        "passed": true
+      },
+      {
+        "test": "caller_query_isolation",
+        "passed": true
+      },
+      {
+        "test": "source_result_isolation",
+        "passed": true
+      },
+      {
+        "test": "returned_result_isolation",
+        "passed": true
+      },
+      {
+        "test": "failure_not_cached",
+        "passed": true
+      },
+      {
+        "test": "expired_failure_retry",
+        "passed": true
+      },
+      {
+        "test": "empty_results_and_zero_limit",
+        "passed": true
+      },
+      {
+        "test": "independent_instances",
+        "passed": true
+      }
+    ],
+    "exit_code": 0,
+    "timed_out": false,
+    "invalid_output": false,
+    "isolation_failure": false
+  },
+  "source_changed": true,
+  "artifacts": {
+    "app.py": "6db1eb2801694c15371a95fe00c5537995e13d5cb498749a7342dc82f2fc85d1"
+  },
+  "protected_changes": [],
+  "outside_changes": [],
+  "artifact_errors": [],
+  "tool_audit": [
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc \"pwd && rg --files -g 'task.md' -g 'app.py' -g 'original.py' -g 'smoke.py' -g 'TOOLS.md' -g 'run_python' -g 'AGENTS.md' -g 'SKILL.md' -g 'CHECKLIST.md'\"",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc 'cat task.md app.py original.py smoke.py TOOLS.md'",
+      "review_flags": []
+    },
+    {
+      "type": "file_change",
+      "exit_code": null,
+      "changes": [
+        {
+          "path": "<workspace>/app.py",
+          "kind": "update"
+        }
+      ]
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc 'cat run_python'",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc './run_python smoke.py'",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 1,
+      "command": "/bin/zsh -lc \"./run_python -c 'from app import RetrievalCache, rank_documents\nimport copy\n\nsource_docs = [\n    {\\\"id\\\": \\\"z\\\", \\\"score\\\": -2, \\\"payload\\\": {\\\"items\\\": [1]}},\n    {\\\"id\\\": \\\"a\\\", \\\"score\\\": 3, \\\"payload\\\": {\\\"items\\\": [2]}},\n    {\\\"id\\\": \\\"b\\\", \\\"score\\\": 3, \\\"payload\\\": {\\\"items\\\": [3]}},\n]\nbefore = copy.deepcopy(source_docs)\nr = rank_documents(source_docs, 2)\nassert [d[\\\"id\\\"] for d in r] == [\\\"a\\\", \\\"b\\\"]\nassert source_docs == before\nr[0][\\\"payload\\\"][\\\"items\\\"].append(99)\nassert source_docs == before and rank_documents(source_docs, 3) == [before[1], before[2], before[0]]\nassert rank_documents(source_docs, 0) == []\n\ncalls = []\nowned = [{\\\"id\\\": \\\"one\\\", \\\"score\\\": 1, \\\"payload\\\": {\\\"nested\\\": [\\\"source\\\"]}}]\ndef src(tenant, query, revision):\n    calls.append((tenant, revision, copy.deepcopy(query)))\n    query[\\\"text\\\"] = \\\"source changed\\\"\n    query[\\\"filters\\\"][\\\"x\\\"] = \\\"source changed\\\"\n    return owned\ncache = RetrievalCache(src, ttl=3)\nq = {\\\"text\\\": \\\"q\\\", \\\"filters\\\": {\\\"b\\\": \\\"2\\\", \\\"a\\\": \\\"1\\\"}}\nassert cache.search(\\\"t1\\\", q, \\\"v1\\\", 0, limit=0) == [] and not calls\nassert cache.search(\\\"t1\\\", q, \\\"v1\\\", 0, limit=1)[0][\\\"id\\\"] == \\\"one\\\"\nassert q == {\\\"text\\\": \\\"q\\\", \\\"filters\\\": {\\\"b\\\": \\\"2\\\", \\\"a\\\": \\\"1\\\"}}\nassert cache.search(\\\"t1\\\", {\\\"filters\\\": {\\\"a\\\": \\\"1\\\", \\\"b\\\": \\\"2\\\"}, \\\"text\\\": \\\"q\\\"}, \\\"v1\\\", 1, limit=10)[0][\\\"id\\\"] == \\\"one\\\"\nassert len(calls) == 1\nowned[0][\\\"payload\\\"][\\\"nested\\\"].append(\\\"late\\\")\nassert cache.search(\\\"t1\\\", q, \\\"v1\\\", 2)[0][\\\"payload\\\"][\\\"nested\\\"] == [\\\"source\\\"]\nassert len(calls) == 1\nassert cache.search(\\\"t2\\\", q, \\\"v1\\\", 2)[0][\\\"id\\\"] == \\\"one\\\"\nassert cache.search(\\\"t1\\\", q, \\\"v2\\\", 2)[0][\\\"id\\\"] == \\\"one\\\"\nassert len(calls) == 3\nresult = cache.search(\\\"t1\\\", q, \\\"v1\\\", 3)\nresult[0][\\\"payload\\\"][\\\"nested\\\"].append(\\\"caller\\\")\nassert cache.search(\\\"t1\\\", q, \\\"v1\\\", 3)[0][\\\"payload\\\"][\\\"nested\\\"] == [\\\"source\\\"]\nassert len(calls) == 4\n\nfor bad in (0, -1, True, 1.5):\n    try:\n        RetrievalCache(src, ttl=bad)\n    except ValueError:\n        pass\n    else:\n        raise AssertionError(f\\\"accepted ttl {bad\"'!r}\")\nprint(\"extended retrieval cache checks passed\")'\"'\"",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 129,
+      "command": "/bin/zsh -lc 'git diff -- app.py'",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc \"./run_python -c 'from app import RetrievalCache, rank_documents\nimport copy\n\nsource_docs = [\n    {\\\"id\\\": \\\"z\\\", \\\"score\\\": -2, \\\"payload\\\": {\\\"items\\\": [1]}},\n    {\\\"id\\\": \\\"a\\\", \\\"score\\\": 3, \\\"payload\\\": {\\\"items\\\": [2]}},\n    {\\\"id\\\": \\\"b\\\", \\\"score\\\": 3, \\\"payload\\\": {\\\"items\\\": [3]}},\n]\nbefore = copy.deepcopy(source_docs)\nr = rank_documents(source_docs, 2)\nassert [d[\\\"id\\\"] for d in r] == [\\\"a\\\", \\\"b\\\"]\nassert source_docs == before\nr[0][\\\"payload\\\"][\\\"items\\\"].append(99)\nassert source_docs == before and rank_documents(source_docs, 3) == [before[1], before[2], before[0]]\nassert rank_documents(source_docs, 0) == []\n\ncalls = []\nowned = [{\\\"id\\\": \\\"one\\\", \\\"score\\\": 1, \\\"payload\\\": {\\\"nested\\\": [\\\"source\\\"]}}]\ndef src(tenant, query, revision):\n    calls.append((tenant, revision, copy.deepcopy(query)))\n    query[\\\"text\\\"] = \\\"source changed\\\"\n    query[\\\"filters\\\"][\\\"x\\\"] = \\\"source changed\\\"\n    return owned\ncache = RetrievalCache(src, ttl=3)\nq = {\\\"text\\\": \\\"q\\\", \\\"filters\\\": {\\\"b\\\": \\\"2\\\", \\\"a\\\": \\\"1\\\"}}\nassert cache.search(\\\"t1\\\", q, \\\"v1\\\", 0, limit=0) == [] and not calls\nassert cache.search(\\\"t1\\\", q, \\\"v1\\\", 0, limit=1)[0][\\\"id\\\"] == \\\"one\\\"\nassert q == {\\\"text\\\": \\\"q\\\", \\\"filters\\\": {\\\"b\\\": \\\"2\\\", \\\"a\\\": \\\"1\\\"}}\nassert cache.search(\\\"t1\\\", {\\\"filters\\\": {\\\"a\\\": \\\"1\\\", \\\"b\\\": \\\"2\\\"}, \\\"text\\\": \\\"q\\\"}, \\\"v1\\\", 1, limit=10)[0][\\\"id\\\"] == \\\"one\\\"\nassert len(calls) == 1\nowned[0][\\\"payload\\\"][\\\"nested\\\"].append(\\\"late\\\")\nassert cache.search(\\\"t1\\\", q, \\\"v1\\\", 2)[0][\\\"payload\\\"][\\\"nested\\\"] == [\\\"source\\\"]\nassert len(calls) == 1\nassert cache.search(\\\"t2\\\", q, \\\"v1\\\", 2)[0][\\\"id\\\"] == \\\"one\\\"\nassert cache.search(\\\"t1\\\", q, \\\"v2\\\", 2)[0][\\\"id\\\"] == \\\"one\\\"\nassert len(calls) == 3\nresult = cache.search(\\\"t1\\\", q, \\\"v1\\\", 3)\nassert result[0][\\\"payload\\\"][\\\"nested\\\"] == [\\\"source\\\", \\\"late\\\"]\nresult[0][\\\"payload\\\"][\\\"nested\\\"].append(\\\"caller\\\")\nassert cache.search(\\\"t1\\\", q, \\\"v1\\\", 3)[0][\\\"payload\\\"][\\\"nested\\\"] == [\\\"source\\\", \\\"late\\\"]\nassert len(calls) == 4\nfor bad in (0, -1, True, 1.5):\n    try:\n        RetrievalCache(src, ttl=bad)\n    except ValueError:\n        pass\n    else:\n        raise AssertionError(f\\\"accepted ttl {bad\"'!r}\")\nprint(\"extended retrieval cache checks passed\")'\"'\"",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc \"./run_python -c 'from app import RetrievalCache\ncalls = []\ndef source(tenant, query, revision):\n    calls.append(tenant)\n    if tenant == \\\"bad\\\":\n        raise LookupError(\\\"same exception\\\")\n    return [{\\\"id\\\": tenant, \\\"score\\\": 1, \\\"payload\\\": {}}]\ncache = RetrievalCache(source, ttl=5)\nassert cache.search(\\\"good\\\", {\\\"text\\\": \\\"q\\\", \\\"filters\\\": {}}, \\\"v\\\", 0)[0][\\\"id\\\"] == \\\"good\\\"\nerr = None\ntry:\n    cache.search(\\\"bad\\\", {\\\"text\\\": \\\"q\\\", \\\"filters\\\": {}}, \\\"v\\\", 1)\nexcept LookupError as exc:\n    err = exc\nassert type(err) is LookupError and str(err) == \\\"same exception\\\"\nassert cache.search(\\\"good\\\", {\\\"text\\\": \\\"q\\\", \\\"filters\\\": {}}, \\\"v\\\", 2)[0][\\\"id\\\"] == \\\"good\\\"\ntry:\n    cache.search(\\\"bad\\\", {\\\"text\\\": \\\"q\\\", \\\"filters\\\": {}}, \\\"v\\\", 3)\nexcept LookupError:\n    pass\nelse:\n    raise AssertionError(\\\"failed result was cached\\\")\nassert calls == [\\\"good\\\", \\\"bad\\\", \\\"bad\\\"]\nprint(\\\"exception and cross-entry preservation checks passed\\\")' && cat app.py\"",
+      "review_flags": []
+    }
+  ],
+  "case_sha256": "69a4bde6f201370e64aee8eb0b47a4c727fdea08f99b2d96bddd9557fc833aa4",
+  "prompt_sha256": "754741dedf8f45f17a6cba0d28c804d1273d67e30452f4503e8797defde6c5c4",
+  "event_sha256": "a368567d84d2d38918f720ffddd062290ece8fdeeb290aa75d81cdd60d137a0d",
+  "stderr_sha256": "d3cd7468594ec5a4d29b41d26937b01945f118c485122f67dcde2565dc35a767",
+  "reasoning_effort": "high",
+  "cli_version": "codex-cli 0.160.0",
+  "canary": false,
+  "python_version": "3.12.14",
+  "execution_platform": "Darwin",
+  "terminal_errors": []
+}

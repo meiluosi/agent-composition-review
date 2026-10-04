@@ -1,0 +1,30 @@
+--- original.py
++++ app.py
+@@ -4,6 +4,16 @@
+ 
+ class StreamError(ValueError):
+     pass
++
++
++def _object_without_duplicate_keys(pairs):
++    """Build a JSON object while rejecting ambiguous repeated field names."""
++    result = {}
++    for key, value in pairs:
++        if key in result:
++            raise ValueError("duplicate JSON object key")
++        result[key] = value
++    return result
+ 
+ 
+ def text_metrics(text):
+@@ -28,7 +38,9 @@
+ 
+     def _record(self, raw):
+         try:
+-            record = json.loads(raw.decode("utf-8"))
++            record = json.loads(
++                raw.decode("utf-8"), object_pairs_hook=_object_without_duplicate_keys
++            )
+         except (UnicodeDecodeError, ValueError, RecursionError):
+             self._fail("invalid UTF-8 JSON frame")
+         if not isinstance(record, dict):

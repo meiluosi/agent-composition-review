@@ -1,0 +1,207 @@
+{
+  "case_id": "m11",
+  "condition": "A_tools",
+  "trial": 1,
+  "model_requested": "gpt-6-astra",
+  "exit_code": 0,
+  "timed_out": false,
+  "elapsed_seconds": 185.6484277919517,
+  "usage": {
+    "input_tokens": 80767,
+    "cached_input_tokens": 63232,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 3548,
+    "reasoning_output_tokens": 162
+  },
+  "completed": true,
+  "status": "completed",
+  "infra_kind": null,
+  "prediction": {
+    "initial_verdict": "satisfied",
+    "summary": "原实现符合业务要求，app.py 保持不变，公开接口及正确行为均保留。新增 test_contract.py，7 项测试全部通过，覆盖输入校验、版本冲突、原子回滚、生命周期、数据隔离及 3000 次随机事务验证。",
+    "tests_executed": [
+      "./run_python smoke.py",
+      "./run_python test_contract.py",
+      "diff -u original.py app.py（无差异）"
+    ],
+    "limitations": [
+      "随机测试为固定种子的有限采样，未穷举全部输入。"
+    ]
+  },
+  "acceptance": {
+    "passed": true,
+    "tests_run": 12,
+    "checks": [
+      {
+        "test": "order_and_pending",
+        "passed": true
+      },
+      {
+        "test": "scores",
+        "passed": true
+      },
+      {
+        "test": "stale_and_retry",
+        "passed": true
+      },
+      {
+        "test": "duplicate_and_conflict",
+        "passed": true
+      },
+      {
+        "test": "atomic_conflicts",
+        "passed": true
+      },
+      {
+        "test": "atomic_validation",
+        "passed": true
+      },
+      {
+        "test": "failure_then_recovery",
+        "passed": true
+      },
+      {
+        "test": "finalized_lifecycle",
+        "passed": true
+      },
+      {
+        "test": "caller_input_isolation",
+        "passed": true
+      },
+      {
+        "test": "output_isolation",
+        "passed": true
+      },
+      {
+        "test": "specifications_and_empty",
+        "passed": true
+      },
+      {
+        "test": "independent_batches",
+        "passed": true
+      }
+    ],
+    "exit_code": 0,
+    "timed_out": false,
+    "sandbox": "macos_no_network_writes_only_grade_directory",
+    "stderr": ""
+  },
+  "acceptance_signature": {
+    "passed": true,
+    "tests_run": 12,
+    "checks": [
+      {
+        "test": "order_and_pending",
+        "passed": true
+      },
+      {
+        "test": "scores",
+        "passed": true
+      },
+      {
+        "test": "stale_and_retry",
+        "passed": true
+      },
+      {
+        "test": "duplicate_and_conflict",
+        "passed": true
+      },
+      {
+        "test": "atomic_conflicts",
+        "passed": true
+      },
+      {
+        "test": "atomic_validation",
+        "passed": true
+      },
+      {
+        "test": "failure_then_recovery",
+        "passed": true
+      },
+      {
+        "test": "finalized_lifecycle",
+        "passed": true
+      },
+      {
+        "test": "caller_input_isolation",
+        "passed": true
+      },
+      {
+        "test": "output_isolation",
+        "passed": true
+      },
+      {
+        "test": "specifications_and_empty",
+        "passed": true
+      },
+      {
+        "test": "independent_batches",
+        "passed": true
+      }
+    ],
+    "exit_code": 0,
+    "timed_out": false,
+    "invalid_output": false,
+    "isolation_failure": false
+  },
+  "source_changed": false,
+  "artifacts": {
+    "test_contract.py": "1a5ac1b505d12a8edd77ae24f92bf22cce273d62f4c7b1b3dd63d5c0a63db257",
+    "app.py": "d856fbce39bd2b4fedbf9279cd0be4cef5d1a3560120f46a2623dd1c73dcdb89"
+  },
+  "protected_changes": [],
+  "outside_changes": [],
+  "artifact_errors": [],
+  "tool_audit": [
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc \"pwd; rg --files -g '\"'!__pycache__/**'\"' -g '\"'!*.pyc'\"'\"",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc 'cat task.md app.py smoke.py TOOLS.md run_python'",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc \"rg --files --hidden -g 'AGENTS.md' -g '\"'!'\"\\\\.git/**'; diff -u original.py app.py; ./run_python smoke.py\"",
+      "review_flags": []
+    },
+    {
+      "type": "file_change",
+      "exit_code": null,
+      "changes": [
+        {
+          "path": "<workspace>/test_contract.py",
+          "kind": "add"
+        }
+      ]
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc './run_python smoke.py; diff -u original.py app.py'",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc './run_python test_contract.py'",
+      "review_flags": []
+    }
+  ],
+  "case_sha256": "af9521c6d7c04d09aa3db4c8591ebd1a1a8f8015432b0b4281e51e24d6de5a54",
+  "prompt_sha256": "754741dedf8f45f17a6cba0d28c804d1273d67e30452f4503e8797defde6c5c4",
+  "event_sha256": "fc2dd016bdf03da2e0db1af62bd1a8a05f0db68236e2fc1756b18f02931cf5b7",
+  "stderr_sha256": "367f9264253521e7b37505d1deaacb08e2df6410dff2d0b5a324a6a4284f24c7",
+  "reasoning_effort": "high",
+  "cli_version": "codex-cli 0.160.0",
+  "canary": false,
+  "python_version": "3.12.14",
+  "execution_platform": "Darwin",
+  "terminal_errors": []
+}

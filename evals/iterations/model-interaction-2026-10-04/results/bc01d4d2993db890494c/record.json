@@ -1,0 +1,217 @@
+{
+  "case_id": "m09",
+  "condition": "A_tools",
+  "trial": 1,
+  "model_requested": "gpt-6-luna",
+  "exit_code": 0,
+  "timed_out": false,
+  "elapsed_seconds": 95.98897958302405,
+  "usage": {
+    "input_tokens": 128907,
+    "cached_input_tokens": 105472,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 3602,
+    "reasoning_output_tokens": 1684
+  },
+  "completed": true,
+  "status": "completed",
+  "infra_kind": null,
+  "prediction": {
+    "initial_verdict": "violation",
+    "summary": "修复了 text_metrics 的词数统计，使其按 Python 默认 Unicode 空白规则切词；解析 JSON 对象时拒绝重复字段，避免字段被静默覆盖。",
+    "tests_executed": [
+      "./run_python smoke.py — 通过。",
+      "内联针对性检查 — 通过：Unicode 空白、逐字节分片、终止事件、重复字段拒绝及无效 schema 失败状态。此前两次检查命令因测试参数过小和命令字符串语法错误未通过，调整后通过。"
+    ],
+    "limitations": [
+      "smoke.py 只验证基本行为；未执行完整验收测试。"
+    ]
+  },
+  "acceptance": {
+    "passed": true,
+    "tests_run": 12,
+    "checks": [
+      {
+        "test": "basic",
+        "passed": true
+      },
+      {
+        "test": "byte_boundaries",
+        "passed": true
+      },
+      {
+        "test": "metrics",
+        "passed": true
+      },
+      {
+        "test": "unfinished_buffer",
+        "passed": true
+      },
+      {
+        "test": "size_limits",
+        "passed": true
+      },
+      {
+        "test": "error_terminal",
+        "passed": true
+      },
+      {
+        "test": "terminal_once",
+        "passed": true
+      },
+      {
+        "test": "malformed_frames",
+        "passed": true
+      },
+      {
+        "test": "premature_eof",
+        "passed": true
+      },
+      {
+        "test": "poison_state",
+        "passed": true
+      },
+      {
+        "test": "failed_call_has_no_partial_output",
+        "passed": true
+      },
+      {
+        "test": "independent_streams",
+        "passed": true
+      }
+    ],
+    "exit_code": 0,
+    "timed_out": false,
+    "sandbox": "macos_no_network_writes_only_grade_directory",
+    "stderr": ""
+  },
+  "acceptance_signature": {
+    "passed": true,
+    "tests_run": 12,
+    "checks": [
+      {
+        "test": "basic",
+        "passed": true
+      },
+      {
+        "test": "byte_boundaries",
+        "passed": true
+      },
+      {
+        "test": "metrics",
+        "passed": true
+      },
+      {
+        "test": "unfinished_buffer",
+        "passed": true
+      },
+      {
+        "test": "size_limits",
+        "passed": true
+      },
+      {
+        "test": "error_terminal",
+        "passed": true
+      },
+      {
+        "test": "terminal_once",
+        "passed": true
+      },
+      {
+        "test": "malformed_frames",
+        "passed": true
+      },
+      {
+        "test": "premature_eof",
+        "passed": true
+      },
+      {
+        "test": "poison_state",
+        "passed": true
+      },
+      {
+        "test": "failed_call_has_no_partial_output",
+        "passed": true
+      },
+      {
+        "test": "independent_streams",
+        "passed": true
+      }
+    ],
+    "exit_code": 0,
+    "timed_out": false,
+    "invalid_output": false,
+    "isolation_failure": false
+  },
+  "source_changed": true,
+  "artifacts": {
+    "app.py": "20ac552502f57e5c1e09c6b4bc49ea4273f059ddfbcac6aa07432483b1e6297a"
+  },
+  "protected_changes": [],
+  "outside_changes": [],
+  "artifact_errors": [],
+  "tool_audit": [
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc \"pwd && rg --files -g 'app.py' -g 'original.py' -g 'task.md' -g 'smoke.py' -g 'TOOLS.md' -g 'run_python' -g 'scripts/**' -g 'references/**' -g 'assets/**' -g 'agents/**' -g 'SKILL.md' -g 'CHECKLIST.md'\"",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc 'cat task.md && cat app.py && cat original.py && cat smoke.py && cat TOOLS.md'",
+      "review_flags": []
+    },
+    {
+      "type": "file_change",
+      "exit_code": null,
+      "changes": [
+        {
+          "path": "<workspace>/app.py",
+          "kind": "update"
+        }
+      ]
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc './run_python smoke.py'",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 129,
+      "command": "/bin/zsh -lc 'cat run_python && git diff -- app.py'",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 1,
+      "command": "/bin/zsh -lc \"./run_python -c 'import app\nassert app.text_metrics(\\\"one\\\\ttwo\\\\nthree\\\\u2003four\\\") == {\\\"characters\\\": 18, \\\"words\\\": 4}\np = app.EventStream(max_buffer=31)\nframe = \\\"{\\\\\\\"event\\\\\\\":\\\\\\\"token\\\\\\\",\\\\\\\"text\\\\\\\":\\\\\\\"é\\\\\\\"}\\\\n\\\".encode()\nout = []\nfor byte in frame:\n    out.extend(p.feed(bytes([byte])))\nout.extend(p.feed(b\\\"{\\\\\\\"event\\\\\\\":\\\\\\\"done\\\\\\\"}\\\\n\\\"))\nassert out == [{\\\"event\\\":\\\"token\\\",\\\"text\\\":\\\"é\\\"}, {\\\"event\\\":\\\"done\\\",\\\"text\\\":\\\"é\\\",\\\"characters\\\":1,\\\"words\\\":1}]\nassert p.finish() == [] and p.buffered_bytes == 0\np = app.EventStream()\ntry:\n    p.feed(b\\\"{\\\\\\\"event\\\\\\\":\\\\\\\"token\\\\\\\",\\\\\\\"text\\\\\\\":\\\\\\\"a\\\\\\\",\\\\\\\"text\\\\\\\":\\\\\\\"b\\\\\\\"}\\\\n\\\")\nexcept app.StreamError:\n    assert p.state == \\\"FAILED\\\" and p.buffered_bytes == 0\nelse:\n    raise AssertionError(\\\"duplicate fields accepted\\\")\np = app.EventStream(max_buffer=12)\nassert len(p.feed(b\\\"{\\\\\\\"event\\\\\\\":\\\\\\\"done\\\\\\\"}\\\\n\\\")) == 1\nassert p.finish() == []\np = app.EventStream(max_buffer=12)\ntry:\n    p.feed(b\\\"{\\\\\\\"event\\\\\\\":\\\\\\\"token\\\\\\\"}\\\\n\\\")\nexcept app.StreamError:\n    assert p.state == \\\"FAILED\\\" and p.buffered_bytes == 0\nelse:\n    raise AssertionError(\\\"invalid schema accepted\\\")\nprint(\\\"targeted checks passed\\\")'\"",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 1,
+      "command": "/bin/zsh -lc \"./run_python -c 'import app\nassert app.text_metrics(\\\"one\\\\ttwo\\\\nthree\\\\u2003four\\\") == {\\\"characters\\\": 18, \\\"words\\\": 4}\np = app.EventStream(max_buffer=31)\nframe = \\\"{\\\\\\\"event\\\\\\\":\\\\\\\"token\\\\\\\",\\\\\\\"text\\\\\\\":\\\\\\\"é\\\\\\\"}\\\\n\\\".encode()\nout = []\nfor byte in frame:\n    out.extend(p.feed(bytes([byte])))\nout.extend(p.feed(b\\\"{\\\\\\\"event\\\\\\\":\\\\\\\"done\\\\\\\"}\\\\n\\\"))\nassert out == [{\\\"event\\\":\\\"token\\\",\\\"text\\\":\\\"é\\\"}, {\\\"event\\\":\\\"done\\\\\\\",\\\\\\\"text\\\\\\\":\\\\\\\"é\\\\\\\",\\\\\\\"characters\\\\\\\":1,\\\\\\\"words\\\\\\\":1}]'\"",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc \"./run_python - <<'PY'\nimport app\n\nassert app.text_metrics(\\\"one\\\\ttwo\\\\nthree\\\\u2003four\\\") == {\\\"characters\\\": 18, \\\"words\\\": 4}\np = app.EventStream(max_buffer=31)\nframe = '{\\\"event\\\":\\\"token\\\",\\\"text\\\":\\\"é\\\"}\\\\n'.encode()\nout = []\nfor byte in frame:\n    out.extend(p.feed(bytes([byte])))\nout.extend(p.feed(b'{\\\"event\\\":\\\"done\\\"}\\\\n'))\nassert out == [\n    {\\\"event\\\": \\\"token\\\", \\\"text\\\": \\\"é\\\"},\n    {\\\"event\\\": \\\"done\\\", \\\"text\\\": \\\"é\\\", \\\"characters\\\": 1, \\\"words\\\": 1},\n]\nassert p.finish() == [] and p.buffered_bytes == 0\np = app.EventStream()\ntry:\n    p.feed(b'{\\\"event\\\":\\\"token\\\",\\\"text\\\":\\\"a\\\",\\\"text\\\":\\\"b\\\"}\\\\n')\nexcept app.StreamError:\n    assert p.state == \\\"FAILED\\\" and p.buffered_bytes == 0\nelse:\n    raise AssertionError(\\\"duplicate fields accepted\\\")\np = app.EventStream(max_buffer=16)\nassert p.feed(b'{\\\"event\\\":\\\"done\\\"}\\\\n') == [\n    {\\\"event\\\": \\\"done\\\", \\\"text\\\": \\\"\\\", \\\"characters\\\": 0, \\\"words\\\": 0}\n]\nassert p.finish() == []\np = app.EventStream(max_buffer=31)\ntry:\n    p.feed(b'{\\\"event\\\":\\\"token\\\"}\\\\n')\nexcept app.StreamError:\n    assert p.state == \\\"FAILED\\\" and p.buffered_bytes == 0\nelse:\n    raise AssertionError(\\\"invalid schema accepted\\\")\nprint(\\\"targeted checks passed\\\")\nPY\"",
+      "review_flags": []
+    }
+  ],
+  "case_sha256": "0d2c88d3c157b6f8dca70033db34109afd8da2414a9427648257fb8a14dc921f",
+  "prompt_sha256": "754741dedf8f45f17a6cba0d28c804d1273d67e30452f4503e8797defde6c5c4",
+  "event_sha256": "47055fc78b730e02fe1dd17d9987a1deb7b47f7a87e2083db8265a5b1a21d509",
+  "stderr_sha256": "f1369ab7a4fad49541bf7aab939aae196810ad92ae796ff2477ea82aaad273a4",
+  "reasoning_effort": "high",
+  "cli_version": "codex-cli 0.160.0",
+  "canary": false,
+  "python_version": "3.12.14",
+  "execution_platform": "Darwin",
+  "terminal_errors": []
+}

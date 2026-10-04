@@ -1,0 +1,226 @@
+{
+  "case_id": "m08",
+  "condition": "C_skill",
+  "trial": 1,
+  "model_requested": "gpt-6-astra",
+  "exit_code": 0,
+  "timed_out": false,
+  "elapsed_seconds": 216.84533008397557,
+  "usage": {
+    "input_tokens": 125510,
+    "cached_input_tokens": 101632,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 4171,
+    "reasoning_output_tokens": 398
+  },
+  "completed": true,
+  "status": "completed",
+  "infra_kind": null,
+  "prediction": {
+    "initial_verdict": "satisfied",
+    "summary": "未发现原实现违反业务契约，保留 app.py，且确认与 original.py 逐字节一致。新增 test_review.py；12 组测试在两份实现上均通过，覆盖分片、UTF-8、逐帧限额、异常处理及终止状态。",
+    "tests_executed": [
+      "./run_python smoke.py",
+      "./run_python test_review.py original",
+      "./run_python test_review.py app",
+      "./run_python -c 'import sys; from pathlib import Path; print(sys.version); assert Path(\"app.py\").read_bytes() == Path(\"original.py\").read_bytes(); print(\"app.py matches original.py byte-for-byte\")'"
+    ],
+    "limitations": [
+      "验证使用 Python 3.12.14；测试为有限边界案例及固定种子的分片测试，并非穷尽全部输入。"
+    ]
+  },
+  "acceptance": {
+    "passed": true,
+    "tests_run": 12,
+    "checks": [
+      {
+        "test": "basic",
+        "passed": true
+      },
+      {
+        "test": "byte_boundaries",
+        "passed": true
+      },
+      {
+        "test": "metrics",
+        "passed": true
+      },
+      {
+        "test": "unfinished_buffer",
+        "passed": true
+      },
+      {
+        "test": "size_limits",
+        "passed": true
+      },
+      {
+        "test": "error_terminal",
+        "passed": true
+      },
+      {
+        "test": "terminal_once",
+        "passed": true
+      },
+      {
+        "test": "malformed_frames",
+        "passed": true
+      },
+      {
+        "test": "premature_eof",
+        "passed": true
+      },
+      {
+        "test": "poison_state",
+        "passed": true
+      },
+      {
+        "test": "failed_call_has_no_partial_output",
+        "passed": true
+      },
+      {
+        "test": "independent_streams",
+        "passed": true
+      }
+    ],
+    "exit_code": 0,
+    "timed_out": false,
+    "sandbox": "macos_no_network_writes_only_grade_directory",
+    "stderr": ""
+  },
+  "acceptance_signature": {
+    "passed": true,
+    "tests_run": 12,
+    "checks": [
+      {
+        "test": "basic",
+        "passed": true
+      },
+      {
+        "test": "byte_boundaries",
+        "passed": true
+      },
+      {
+        "test": "metrics",
+        "passed": true
+      },
+      {
+        "test": "unfinished_buffer",
+        "passed": true
+      },
+      {
+        "test": "size_limits",
+        "passed": true
+      },
+      {
+        "test": "error_terminal",
+        "passed": true
+      },
+      {
+        "test": "terminal_once",
+        "passed": true
+      },
+      {
+        "test": "malformed_frames",
+        "passed": true
+      },
+      {
+        "test": "premature_eof",
+        "passed": true
+      },
+      {
+        "test": "poison_state",
+        "passed": true
+      },
+      {
+        "test": "failed_call_has_no_partial_output",
+        "passed": true
+      },
+      {
+        "test": "independent_streams",
+        "passed": true
+      }
+    ],
+    "exit_code": 0,
+    "timed_out": false,
+    "invalid_output": false,
+    "isolation_failure": false
+  },
+  "source_changed": false,
+  "artifacts": {
+    "app.py": "a850a6792093cab1242039f4854ef9d6846a9dc3ecaa4a3055ac369d6e680ec2",
+    "test_review.py": "1156e8a84a1a8b71f6b95cb8ec9091c54f32d14b90dbfe948f50cfa51abc33d4"
+  },
+  "protected_changes": [],
+  "outside_changes": [],
+  "artifact_errors": [],
+  "tool_audit": [
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc \"pwd; rg --files -g '\"'!__pycache__'\"' -g '\"'!*.pyc'\"'\"",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc 'cat task.md app.py smoke.py TOOLS.md SKILL.md references/executable-contracts.md'",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc 'cat original.py run_python references/contracts.md references/effects.md'",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 1,
+      "command": "/bin/zsh -lc \"rg --files --hidden -g AGENTS.md -g '\"'!__pycache__'\"'\"",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc './run_python smoke.py'",
+      "review_flags": []
+    },
+    {
+      "type": "file_change",
+      "exit_code": null,
+      "changes": [
+        {
+          "path": "<workspace>/test_review.py",
+          "kind": "add"
+        }
+      ]
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc './run_python test_review.py original'",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc './run_python test_review.py app'",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc \"./run_python -c 'import sys; from pathlib import Path; print(sys.version); assert Path(\\\"app.py\\\").read_bytes() == Path(\\\"original.py\\\").read_bytes(); print(\\\"app.py matches original.py byte-for-byte\\\")'\"",
+      "review_flags": []
+    }
+  ],
+  "case_sha256": "aa283be38484e98df1892798214a2ebeaf2956488751322bee24043d262061d5",
+  "prompt_sha256": "890e8e7238a3d11b98065646547e36c2563ff652e966a0baa5a66ed0cca78937",
+  "event_sha256": "e97a70943a42e9537dff0afb85c2605fdd4f3261b66abbf512fd0ed1a0f0f086",
+  "stderr_sha256": "64623e4152c2cccaad351282c59548f779338bd2cbb75dcafdd0664c61a91934",
+  "reasoning_effort": "high",
+  "cli_version": "codex-cli 0.160.0",
+  "canary": false,
+  "python_version": "3.12.14",
+  "execution_platform": "Darwin",
+  "terminal_errors": []
+}

@@ -1,0 +1,797 @@
+{
+  "kind": "post_freeze_development_observations_not_registered_scores",
+  "request_sha256": "6755a4f4c2c5d75988f410008ab36b41a1914dd6822ed044057aba0d56d0f356",
+  "reference_sha256": "3f200a07b30548ae6845c24e5b9c22ded8f9c05b83aef7f41fe65e6a36f4262e",
+  "results": [
+    {
+      "label": "frozen_normal",
+      "source": "evals/model_interaction/tasks/lease_queue/normal.py",
+      "source_sha256": "3f200a07b30548ae6845c24e5b9c22ded8f9c05b83aef7f41fe65e6a36f4262e",
+      "probes": [
+        {
+          "probe": "surrogate_job_id",
+          "scope": "unqualified_nonempty_str_contract",
+          "ran": true,
+          "exception": "UnicodeEncodeError",
+          "error": "'utf-8' codec can't encode character '\\ud800' in position 0: surrogates not allowed"
+        },
+        {
+          "probe": "surrogate_worker",
+          "scope": "unqualified_nonempty_str_contract",
+          "ran": true,
+          "exception": "UnicodeEncodeError",
+          "error": "'utf-8' codec can't encode character '\\ud800' in position 0: surrogates not allowed"
+        },
+        {
+          "probe": "payload_pair_preserved",
+          "scope": "literal_python_string_preservation",
+          "ran": true,
+          "preserved": false,
+          "expected_codepoints": [
+            [
+              55296,
+              56320
+            ],
+            [
+              65536
+            ]
+          ],
+          "observed_codepoints": [
+            [
+              65536
+            ],
+            [
+              65536
+            ]
+          ],
+          "expected_string_lengths": [
+            2,
+            1
+          ],
+          "observed_string_lengths": [
+            1,
+            1
+          ]
+        },
+        {
+          "probe": "payload_keys_preserved",
+          "scope": "literal_python_string_preservation",
+          "ran": true,
+          "preserved": false,
+          "expected_entries": [
+            {
+              "key_codepoints": [
+                55296,
+                56320
+              ],
+              "value": "pair"
+            },
+            {
+              "key_codepoints": [
+                65536
+              ],
+              "value": "scalar"
+            }
+          ],
+          "observed_entries": [
+            {
+              "key_codepoints": [
+                65536
+              ],
+              "value": "scalar"
+            }
+          ],
+          "expected_keys": 2,
+          "observed_keys": 1
+        },
+        {
+          "probe": "in_range_expiry",
+          "scope": "within_frozen_numeric_domain",
+          "ran": true,
+          "now": 999999999998,
+          "expires_at": 999999999999,
+          "ack_at_expiry": false
+        },
+        {
+          "probe": "bool_duration",
+          "scope": "outside_caller_precondition_observation_only",
+          "ran": true,
+          "outcome": "accepted",
+          "expires_at": 1
+        },
+        {
+          "probe": "large_integer_expiry",
+          "scope": "outside_frozen_numeric_domain_observation_only",
+          "ran": true,
+          "now": 9007199254740994,
+          "expires_at": 9007199254740995,
+          "ack_at_expiry": true
+        }
+      ]
+    },
+    {
+      "label": "gpt-6-astra/A_tools",
+      "record": "evals/iterations/model-interaction-2026-10-04/results/f7bd5f14ab7b000407f6/record.json",
+      "completed": true,
+      "status": "completed",
+      "original_acceptance_passed": true,
+      "source": "evals/iterations/model-interaction-2026-10-04/results/f7bd5f14ab7b000407f6/artifacts/app.py",
+      "source_sha256": "9387f3d3741c00dde388e19ca25fabf8504b07c791abb0ac786b1a89fcef8942",
+      "probes": [
+        {
+          "probe": "surrogate_job_id",
+          "scope": "unqualified_nonempty_str_contract",
+          "ran": true,
+          "nonempty_python_string": true,
+          "delivered_and_acknowledged": true
+        },
+        {
+          "probe": "surrogate_worker",
+          "scope": "unqualified_nonempty_str_contract",
+          "ran": true,
+          "nonempty_python_string": true,
+          "delivered_and_acknowledged": true
+        },
+        {
+          "probe": "payload_pair_preserved",
+          "scope": "literal_python_string_preservation",
+          "ran": true,
+          "preserved": true,
+          "expected_codepoints": [
+            [
+              55296,
+              56320
+            ],
+            [
+              65536
+            ]
+          ],
+          "observed_codepoints": [
+            [
+              55296,
+              56320
+            ],
+            [
+              65536
+            ]
+          ],
+          "expected_string_lengths": [
+            2,
+            1
+          ],
+          "observed_string_lengths": [
+            2,
+            1
+          ]
+        },
+        {
+          "probe": "payload_keys_preserved",
+          "scope": "literal_python_string_preservation",
+          "ran": true,
+          "preserved": true,
+          "expected_entries": [
+            {
+              "key_codepoints": [
+                55296,
+                56320
+              ],
+              "value": "pair"
+            },
+            {
+              "key_codepoints": [
+                65536
+              ],
+              "value": "scalar"
+            }
+          ],
+          "observed_entries": [
+            {
+              "key_codepoints": [
+                55296,
+                56320
+              ],
+              "value": "pair"
+            },
+            {
+              "key_codepoints": [
+                65536
+              ],
+              "value": "scalar"
+            }
+          ],
+          "expected_keys": 2,
+          "observed_keys": 2
+        },
+        {
+          "probe": "in_range_expiry",
+          "scope": "within_frozen_numeric_domain",
+          "ran": true,
+          "now": 999999999998,
+          "expires_at": 999999999999,
+          "ack_at_expiry": false
+        },
+        {
+          "probe": "bool_duration",
+          "scope": "outside_caller_precondition_observation_only",
+          "ran": true,
+          "outcome": "accepted",
+          "expires_at": 1
+        },
+        {
+          "probe": "large_integer_expiry",
+          "scope": "outside_frozen_numeric_domain_observation_only",
+          "ran": true,
+          "now": 9007199254740994,
+          "expires_at": 9007199254740995,
+          "ack_at_expiry": true
+        }
+      ]
+    },
+    {
+      "label": "gpt-6-astra/B_checklist",
+      "record": "evals/iterations/model-interaction-2026-10-04/results/1d5ef2cdcb1a3f58646f/record.json",
+      "completed": true,
+      "status": "completed",
+      "original_acceptance_passed": true,
+      "source": "evals/iterations/model-interaction-2026-10-04/results/1d5ef2cdcb1a3f58646f/artifacts/app.py",
+      "source_sha256": "74316f0dd54cdb8452477ea4f3228d59efb3e371ca01bec1e6c75f41355b7be4",
+      "probes": [
+        {
+          "probe": "surrogate_job_id",
+          "scope": "unqualified_nonempty_str_contract",
+          "ran": true,
+          "nonempty_python_string": true,
+          "delivered_and_acknowledged": true
+        },
+        {
+          "probe": "surrogate_worker",
+          "scope": "unqualified_nonempty_str_contract",
+          "ran": true,
+          "nonempty_python_string": true,
+          "delivered_and_acknowledged": true
+        },
+        {
+          "probe": "payload_pair_preserved",
+          "scope": "literal_python_string_preservation",
+          "ran": true,
+          "preserved": true,
+          "expected_codepoints": [
+            [
+              55296,
+              56320
+            ],
+            [
+              65536
+            ]
+          ],
+          "observed_codepoints": [
+            [
+              55296,
+              56320
+            ],
+            [
+              65536
+            ]
+          ],
+          "expected_string_lengths": [
+            2,
+            1
+          ],
+          "observed_string_lengths": [
+            2,
+            1
+          ]
+        },
+        {
+          "probe": "payload_keys_preserved",
+          "scope": "literal_python_string_preservation",
+          "ran": true,
+          "preserved": true,
+          "expected_entries": [
+            {
+              "key_codepoints": [
+                55296,
+                56320
+              ],
+              "value": "pair"
+            },
+            {
+              "key_codepoints": [
+                65536
+              ],
+              "value": "scalar"
+            }
+          ],
+          "observed_entries": [
+            {
+              "key_codepoints": [
+                55296,
+                56320
+              ],
+              "value": "pair"
+            },
+            {
+              "key_codepoints": [
+                65536
+              ],
+              "value": "scalar"
+            }
+          ],
+          "expected_keys": 2,
+          "observed_keys": 2
+        },
+        {
+          "probe": "in_range_expiry",
+          "scope": "within_frozen_numeric_domain",
+          "ran": true,
+          "now": 999999999998,
+          "expires_at": 999999999999,
+          "ack_at_expiry": false
+        },
+        {
+          "probe": "bool_duration",
+          "scope": "outside_caller_precondition_observation_only",
+          "ran": true,
+          "outcome": "accepted",
+          "expires_at": 1
+        },
+        {
+          "probe": "large_integer_expiry",
+          "scope": "outside_frozen_numeric_domain_observation_only",
+          "ran": true,
+          "now": 9007199254740994,
+          "expires_at": 9007199254740995,
+          "ack_at_expiry": true
+        }
+      ]
+    },
+    {
+      "label": "gpt-6-astra/C_skill",
+      "record": "evals/iterations/model-interaction-2026-10-04/results/4c80ba162f375b6b8dc5/record.json",
+      "completed": false,
+      "status": "task_timeout",
+      "original_acceptance_passed": true,
+      "source": "evals/iterations/model-interaction-2026-10-04/results/4c80ba162f375b6b8dc5/artifacts/app.py",
+      "source_sha256": "adb2eef4c59a5613d4efca7a93c4f848a40aed88718d2e8d54c80a243c26ee7e",
+      "probes": [
+        {
+          "probe": "surrogate_job_id",
+          "scope": "unqualified_nonempty_str_contract",
+          "ran": true,
+          "nonempty_python_string": true,
+          "delivered_and_acknowledged": true
+        },
+        {
+          "probe": "surrogate_worker",
+          "scope": "unqualified_nonempty_str_contract",
+          "ran": true,
+          "nonempty_python_string": true,
+          "delivered_and_acknowledged": true
+        },
+        {
+          "probe": "payload_pair_preserved",
+          "scope": "literal_python_string_preservation",
+          "ran": true,
+          "preserved": true,
+          "expected_codepoints": [
+            [
+              55296,
+              56320
+            ],
+            [
+              65536
+            ]
+          ],
+          "observed_codepoints": [
+            [
+              55296,
+              56320
+            ],
+            [
+              65536
+            ]
+          ],
+          "expected_string_lengths": [
+            2,
+            1
+          ],
+          "observed_string_lengths": [
+            2,
+            1
+          ]
+        },
+        {
+          "probe": "payload_keys_preserved",
+          "scope": "literal_python_string_preservation",
+          "ran": true,
+          "preserved": true,
+          "expected_entries": [
+            {
+              "key_codepoints": [
+                55296,
+                56320
+              ],
+              "value": "pair"
+            },
+            {
+              "key_codepoints": [
+                65536
+              ],
+              "value": "scalar"
+            }
+          ],
+          "observed_entries": [
+            {
+              "key_codepoints": [
+                55296,
+                56320
+              ],
+              "value": "pair"
+            },
+            {
+              "key_codepoints": [
+                65536
+              ],
+              "value": "scalar"
+            }
+          ],
+          "expected_keys": 2,
+          "observed_keys": 2
+        },
+        {
+          "probe": "in_range_expiry",
+          "scope": "within_frozen_numeric_domain",
+          "ran": true,
+          "now": 999999999998,
+          "expires_at": 999999999999,
+          "ack_at_expiry": false
+        },
+        {
+          "probe": "bool_duration",
+          "scope": "outside_caller_precondition_observation_only",
+          "ran": true,
+          "outcome": "rejected",
+          "exception": "ValueError"
+        },
+        {
+          "probe": "large_integer_expiry",
+          "scope": "outside_frozen_numeric_domain_observation_only",
+          "ran": true,
+          "now": 9007199254740994,
+          "expires_at": 9007199254740995,
+          "ack_at_expiry": true
+        }
+      ]
+    },
+    {
+      "label": "gpt-6-luna/A_tools",
+      "record": "evals/iterations/model-interaction-2026-10-04/results/961bf410811b7fa7c329/record.json",
+      "completed": true,
+      "status": "completed",
+      "original_acceptance_passed": true,
+      "source": "evals/iterations/model-interaction-2026-10-04/results/961bf410811b7fa7c329/artifacts/app.py",
+      "source_sha256": "7c07701bd0a9f8ca78e9b8872bc2a19c2c07efb2c1c2667f19fe0ce6fc9a8dff",
+      "probes": [
+        {
+          "probe": "surrogate_job_id",
+          "scope": "unqualified_nonempty_str_contract",
+          "ran": true,
+          "exception": "UnicodeEncodeError",
+          "error": "'utf-8' codec can't encode character '\\ud800' in position 0: surrogates not allowed"
+        },
+        {
+          "probe": "surrogate_worker",
+          "scope": "unqualified_nonempty_str_contract",
+          "ran": true,
+          "exception": "UnicodeEncodeError",
+          "error": "'utf-8' codec can't encode character '\\ud800' in position 0: surrogates not allowed"
+        },
+        {
+          "probe": "payload_pair_preserved",
+          "scope": "literal_python_string_preservation",
+          "ran": true,
+          "preserved": false,
+          "expected_codepoints": [
+            [
+              55296,
+              56320
+            ],
+            [
+              65536
+            ]
+          ],
+          "observed_codepoints": [
+            [
+              65536
+            ],
+            [
+              65536
+            ]
+          ],
+          "expected_string_lengths": [
+            2,
+            1
+          ],
+          "observed_string_lengths": [
+            1,
+            1
+          ]
+        },
+        {
+          "probe": "payload_keys_preserved",
+          "scope": "literal_python_string_preservation",
+          "ran": true,
+          "preserved": false,
+          "expected_entries": [
+            {
+              "key_codepoints": [
+                55296,
+                56320
+              ],
+              "value": "pair"
+            },
+            {
+              "key_codepoints": [
+                65536
+              ],
+              "value": "scalar"
+            }
+          ],
+          "observed_entries": [
+            {
+              "key_codepoints": [
+                65536
+              ],
+              "value": "scalar"
+            }
+          ],
+          "expected_keys": 2,
+          "observed_keys": 1
+        },
+        {
+          "probe": "in_range_expiry",
+          "scope": "within_frozen_numeric_domain",
+          "ran": true,
+          "now": 999999999998,
+          "expires_at": 999999999999,
+          "ack_at_expiry": false
+        },
+        {
+          "probe": "bool_duration",
+          "scope": "outside_caller_precondition_observation_only",
+          "ran": true,
+          "outcome": "rejected",
+          "exception": "ValueError"
+        },
+        {
+          "probe": "large_integer_expiry",
+          "scope": "outside_frozen_numeric_domain_observation_only",
+          "ran": true,
+          "now": 9007199254740994,
+          "expires_at": 9007199254740995,
+          "ack_at_expiry": true
+        }
+      ]
+    },
+    {
+      "label": "gpt-6-luna/B_checklist",
+      "record": "evals/iterations/model-interaction-2026-10-04/results/214bbbcbfc8899122d2b/record.json",
+      "completed": true,
+      "status": "completed",
+      "original_acceptance_passed": true,
+      "source": "evals/iterations/model-interaction-2026-10-04/results/214bbbcbfc8899122d2b/artifacts/app.py",
+      "source_sha256": "72469e4ee1e3e630e3f07aedab1e2aa806abf5ded6de15baec5c51af872a79a7",
+      "probes": [
+        {
+          "probe": "surrogate_job_id",
+          "scope": "unqualified_nonempty_str_contract",
+          "ran": true,
+          "exception": "UnicodeEncodeError",
+          "error": "'utf-8' codec can't encode character '\\ud800' in position 0: surrogates not allowed"
+        },
+        {
+          "probe": "surrogate_worker",
+          "scope": "unqualified_nonempty_str_contract",
+          "ran": true,
+          "exception": "UnicodeEncodeError",
+          "error": "'utf-8' codec can't encode character '\\ud800' in position 0: surrogates not allowed"
+        },
+        {
+          "probe": "payload_pair_preserved",
+          "scope": "literal_python_string_preservation",
+          "ran": true,
+          "preserved": false,
+          "expected_codepoints": [
+            [
+              55296,
+              56320
+            ],
+            [
+              65536
+            ]
+          ],
+          "observed_codepoints": [
+            [
+              65536
+            ],
+            [
+              65536
+            ]
+          ],
+          "expected_string_lengths": [
+            2,
+            1
+          ],
+          "observed_string_lengths": [
+            1,
+            1
+          ]
+        },
+        {
+          "probe": "payload_keys_preserved",
+          "scope": "literal_python_string_preservation",
+          "ran": true,
+          "preserved": false,
+          "expected_entries": [
+            {
+              "key_codepoints": [
+                55296,
+                56320
+              ],
+              "value": "pair"
+            },
+            {
+              "key_codepoints": [
+                65536
+              ],
+              "value": "scalar"
+            }
+          ],
+          "observed_entries": [
+            {
+              "key_codepoints": [
+                65536
+              ],
+              "value": "scalar"
+            }
+          ],
+          "expected_keys": 2,
+          "observed_keys": 1
+        },
+        {
+          "probe": "in_range_expiry",
+          "scope": "within_frozen_numeric_domain",
+          "ran": true,
+          "now": 999999999998,
+          "expires_at": 999999999999,
+          "ack_at_expiry": false
+        },
+        {
+          "probe": "bool_duration",
+          "scope": "outside_caller_precondition_observation_only",
+          "ran": true,
+          "outcome": "rejected",
+          "exception": "ValueError"
+        },
+        {
+          "probe": "large_integer_expiry",
+          "scope": "outside_frozen_numeric_domain_observation_only",
+          "ran": true,
+          "now": 9007199254740994,
+          "expires_at": 9007199254740995,
+          "ack_at_expiry": true
+        }
+      ]
+    },
+    {
+      "label": "gpt-6-luna/C_skill",
+      "record": "evals/iterations/model-interaction-2026-10-04/results/ee65994a22f18ce6d8c4/record.json",
+      "completed": true,
+      "status": "completed",
+      "original_acceptance_passed": true,
+      "source": "evals/iterations/model-interaction-2026-10-04/results/ee65994a22f18ce6d8c4/artifacts/app.py",
+      "source_sha256": "8ad2c30eb99f2ec6af6ee855c036390d9796dc1f10084083fa2a6cd9b90e85ff",
+      "probes": [
+        {
+          "probe": "surrogate_job_id",
+          "scope": "unqualified_nonempty_str_contract",
+          "ran": true,
+          "exception": "UnicodeEncodeError",
+          "error": "'utf-8' codec can't encode character '\\ud800' in position 0: surrogates not allowed"
+        },
+        {
+          "probe": "surrogate_worker",
+          "scope": "unqualified_nonempty_str_contract",
+          "ran": true,
+          "exception": "UnicodeEncodeError",
+          "error": "'utf-8' codec can't encode character '\\ud800' in position 0: surrogates not allowed"
+        },
+        {
+          "probe": "payload_pair_preserved",
+          "scope": "literal_python_string_preservation",
+          "ran": true,
+          "preserved": false,
+          "expected_codepoints": [
+            [
+              55296,
+              56320
+            ],
+            [
+              65536
+            ]
+          ],
+          "observed_codepoints": [
+            [
+              65536
+            ],
+            [
+              65536
+            ]
+          ],
+          "expected_string_lengths": [
+            2,
+            1
+          ],
+          "observed_string_lengths": [
+            1,
+            1
+          ]
+        },
+        {
+          "probe": "payload_keys_preserved",
+          "scope": "literal_python_string_preservation",
+          "ran": true,
+          "preserved": false,
+          "expected_entries": [
+            {
+              "key_codepoints": [
+                55296,
+                56320
+              ],
+              "value": "pair"
+            },
+            {
+              "key_codepoints": [
+                65536
+              ],
+              "value": "scalar"
+            }
+          ],
+          "observed_entries": [
+            {
+              "key_codepoints": [
+                65536
+              ],
+              "value": "scalar"
+            }
+          ],
+          "expected_keys": 2,
+          "observed_keys": 1
+        },
+        {
+          "probe": "in_range_expiry",
+          "scope": "within_frozen_numeric_domain",
+          "ran": true,
+          "now": 999999999998,
+          "expires_at": 999999999999,
+          "ack_at_expiry": false
+        },
+        {
+          "probe": "bool_duration",
+          "scope": "outside_caller_precondition_observation_only",
+          "ran": true,
+          "outcome": "rejected",
+          "exception": "ValueError"
+        },
+        {
+          "probe": "large_integer_expiry",
+          "scope": "outside_frozen_numeric_domain_observation_only",
+          "ran": true,
+          "now": 9007199254740994,
+          "expires_at": 9007199254740995,
+          "ack_at_expiry": false
+        }
+      ]
+    }
+  ]
+}

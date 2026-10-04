@@ -1,0 +1,229 @@
+{
+  "case_id": "m09",
+  "condition": "B_checklist",
+  "trial": 1,
+  "model_requested": "gpt-6-astra",
+  "exit_code": 0,
+  "timed_out": false,
+  "elapsed_seconds": 167.9550757499528,
+  "usage": {
+    "input_tokens": 76676,
+    "cached_input_tokens": 56960,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 3083,
+    "reasoning_output_tokens": 199
+  },
+  "completed": true,
+  "status": "completed",
+  "infra_kind": null,
+  "prediction": {
+    "initial_verdict": "violation",
+    "summary": "已修复 app.py 的词数统计，使用 text.split() 正确处理空文本、连续空格及 Unicode 空白，并同步修正 done 事件。保留公开接口及原有协议处理行为；app.py 自包含且仅依赖标准库。新增独立回归测试，未修改提供的测试。",
+    "tests_executed": [
+      "./run_python smoke.py：通过",
+      "./run_python test_stream.py original：复现 9 个失败子案例，均涉及词数统计",
+      "./run_python test_stream.py app：11 项测试全部通过，覆盖 UTF-8 分片、帧大小边界、终止状态、非法帧、提前 EOF 和失败后不可复用"
+    ],
+    "limitations": [
+      "验证环境为 Python 3.12.14；本地测试未穷举所有可能输入。"
+    ]
+  },
+  "acceptance": {
+    "passed": true,
+    "tests_run": 12,
+    "checks": [
+      {
+        "test": "basic",
+        "passed": true
+      },
+      {
+        "test": "byte_boundaries",
+        "passed": true
+      },
+      {
+        "test": "metrics",
+        "passed": true
+      },
+      {
+        "test": "unfinished_buffer",
+        "passed": true
+      },
+      {
+        "test": "size_limits",
+        "passed": true
+      },
+      {
+        "test": "error_terminal",
+        "passed": true
+      },
+      {
+        "test": "terminal_once",
+        "passed": true
+      },
+      {
+        "test": "malformed_frames",
+        "passed": true
+      },
+      {
+        "test": "premature_eof",
+        "passed": true
+      },
+      {
+        "test": "poison_state",
+        "passed": true
+      },
+      {
+        "test": "failed_call_has_no_partial_output",
+        "passed": true
+      },
+      {
+        "test": "independent_streams",
+        "passed": true
+      }
+    ],
+    "exit_code": 0,
+    "timed_out": false,
+    "sandbox": "macos_no_network_writes_only_grade_directory",
+    "stderr": ""
+  },
+  "acceptance_signature": {
+    "passed": true,
+    "tests_run": 12,
+    "checks": [
+      {
+        "test": "basic",
+        "passed": true
+      },
+      {
+        "test": "byte_boundaries",
+        "passed": true
+      },
+      {
+        "test": "metrics",
+        "passed": true
+      },
+      {
+        "test": "unfinished_buffer",
+        "passed": true
+      },
+      {
+        "test": "size_limits",
+        "passed": true
+      },
+      {
+        "test": "error_terminal",
+        "passed": true
+      },
+      {
+        "test": "terminal_once",
+        "passed": true
+      },
+      {
+        "test": "malformed_frames",
+        "passed": true
+      },
+      {
+        "test": "premature_eof",
+        "passed": true
+      },
+      {
+        "test": "poison_state",
+        "passed": true
+      },
+      {
+        "test": "failed_call_has_no_partial_output",
+        "passed": true
+      },
+      {
+        "test": "independent_streams",
+        "passed": true
+      }
+    ],
+    "exit_code": 0,
+    "timed_out": false,
+    "invalid_output": false,
+    "isolation_failure": false
+  },
+  "source_changed": true,
+  "artifacts": {
+    "app.py": "a850a6792093cab1242039f4854ef9d6846a9dc3ecaa4a3055ac369d6e680ec2",
+    "test_stream.py": "c2f2498ade8c3c6fff5c7259bfd58f53dc34c49eafc4bc8ddac4879ff6141088"
+  },
+  "protected_changes": [],
+  "outside_changes": [],
+  "artifact_errors": [],
+  "tool_audit": [
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc \"pwd; rg --files -g '\"'!__pycache__/**'\"' -g '\"'!.git/**'\"'\"",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc 'cat task.md app.py original.py smoke.py TOOLS.md'",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc \"cat run_python; ./run_python smoke.py; ./run_python - <<'PY'\nimport original\nfor value in ['', 'a  b', 'a\\\\tb', ' a ', '甲\\\\u3000乙']:\n    actual = original.text_metrics(value)\n    expected = {'characters': len(value), 'words': len(value.split())}\n    print(repr(value), 'actual:', actual, 'expected:', expected)\np = original.EventStream()\nprint('empty done:', p.feed(b'{\\\"event\\\":\\\"done\\\"}\\\\n'))\nPY\"",
+      "review_flags": []
+    },
+    {
+      "type": "file_change",
+      "exit_code": null,
+      "changes": [
+        {
+          "path": "<workspace>/test_stream.py",
+          "kind": "add"
+        }
+      ]
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 1,
+      "command": "/bin/zsh -lc './run_python test_stream.py original'",
+      "review_flags": []
+    },
+    {
+      "type": "file_change",
+      "exit_code": null,
+      "changes": [
+        {
+          "path": "<workspace>/app.py",
+          "kind": "update"
+        }
+      ]
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 1,
+      "command": "/bin/zsh -lc './run_python --version; diff -u original.py app.py'",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc './run_python smoke.py'",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc './run_python test_stream.py app'",
+      "review_flags": []
+    }
+  ],
+  "case_sha256": "0d2c88d3c157b6f8dca70033db34109afd8da2414a9427648257fb8a14dc921f",
+  "prompt_sha256": "6fd62ac6100d8b6cfbd0a2b2d2c570f6e2df884143fea61f287365cec2b7280f",
+  "event_sha256": "c82cffd637cb1c5d48aeca86c253bb1b3ece13c88d715ace4d32cba52b32b21a",
+  "stderr_sha256": "3571e87eb6d2c9553b9beb16ca730370d24baec9af80bd82568d34427ec683d7",
+  "reasoning_effort": "high",
+  "cli_version": "codex-cli 0.160.0",
+  "canary": false,
+  "python_version": "3.12.14",
+  "execution_platform": "Darwin",
+  "terminal_errors": []
+}

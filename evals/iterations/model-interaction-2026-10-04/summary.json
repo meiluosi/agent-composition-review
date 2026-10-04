@@ -1,0 +1,510 @@
+{
+  "development_only": true,
+  "planned": 144,
+  "attempted": 64,
+  "pending": 80,
+  "fully_paired_blocks": 10,
+  "block_unit": "case and repeat; six model-condition cells",
+  "conditions": {
+    "gpt-6-astra": {
+      "A_tools": {
+        "planned": 24,
+        "attempted": 11,
+        "pending": 13,
+        "completed": 10,
+        "passed": 10,
+        "pass_rate_attempted": 0.9090909090909091,
+        "source_behavior_passed": 11,
+        "normal_attempted": 4,
+        "normal_behavior_regressions": 0,
+        "normal_behavior_unavailable": 0,
+        "normal_false_positives": 2,
+        "normal_insufficient": 0,
+        "normal_missing_verdict": 0,
+        "normal_source_changes": 2,
+        "normal_source_missing": 0,
+        "initial_verdict_correct": 8,
+        "by_variant": {
+          "incident": {
+            "attempted": 4,
+            "passed": 3
+          },
+          "normal": {
+            "attempted": 4,
+            "passed": 4
+          },
+          "local": {
+            "attempted": 3,
+            "passed": 3
+          }
+        },
+        "status_counts": {
+          "completed": 10,
+          "infrastructure_failure": 1
+        },
+        "usage_missing": 0,
+        "tokens": {
+          "input_tokens": 1260995,
+          "cached_input_tokens": 1016320,
+          "output_tokens": 49893
+        },
+        "median_seconds_all_attempts": 202.49264974996913,
+        "median_seconds_completed": 195.35432789596962
+      },
+      "B_checklist": {
+        "planned": 24,
+        "attempted": 11,
+        "pending": 13,
+        "completed": 11,
+        "passed": 11,
+        "pass_rate_attempted": 1,
+        "source_behavior_passed": 11,
+        "normal_attempted": 4,
+        "normal_behavior_regressions": 0,
+        "normal_behavior_unavailable": 0,
+        "normal_false_positives": 1,
+        "normal_insufficient": 0,
+        "normal_missing_verdict": 0,
+        "normal_source_changes": 1,
+        "normal_source_missing": 0,
+        "initial_verdict_correct": 10,
+        "by_variant": {
+          "incident": {
+            "attempted": 4,
+            "passed": 4
+          },
+          "normal": {
+            "attempted": 4,
+            "passed": 4
+          },
+          "local": {
+            "attempted": 3,
+            "passed": 3
+          }
+        },
+        "status_counts": {
+          "completed": 11
+        },
+        "usage_missing": 0,
+        "tokens": {
+          "input_tokens": 1241330,
+          "cached_input_tokens": 1023616,
+          "output_tokens": 48878
+        },
+        "median_seconds_all_attempts": 183.9455110830022,
+        "median_seconds_completed": 183.9455110830022
+      },
+      "C_skill": {
+        "planned": 24,
+        "attempted": 11,
+        "pending": 13,
+        "completed": 10,
+        "passed": 10,
+        "pass_rate_attempted": 0.9090909090909091,
+        "source_behavior_passed": 11,
+        "normal_attempted": 4,
+        "normal_behavior_regressions": 0,
+        "normal_behavior_unavailable": 0,
+        "normal_false_positives": 0,
+        "normal_insufficient": 0,
+        "normal_missing_verdict": 1,
+        "normal_source_changes": 1,
+        "normal_source_missing": 0,
+        "initial_verdict_correct": 10,
+        "by_variant": {
+          "incident": {
+            "attempted": 4,
+            "passed": 4
+          },
+          "normal": {
+            "attempted": 4,
+            "passed": 3
+          },
+          "local": {
+            "attempted": 3,
+            "passed": 3
+          }
+        },
+        "status_counts": {
+          "completed": 10,
+          "task_timeout": 1
+        },
+        "usage_missing": 1,
+        "tokens": {
+          "input_tokens": 1214061,
+          "cached_input_tokens": 958464,
+          "output_tokens": 41317
+        },
+        "median_seconds_all_attempts": 202.59758279199013,
+        "median_seconds_completed": 197.00644337499398
+      }
+    },
+    "gpt-6-luna": {
+      "A_tools": {
+        "planned": 24,
+        "attempted": 11,
+        "pending": 13,
+        "completed": 11,
+        "passed": 10,
+        "pass_rate_attempted": 0.9090909090909091,
+        "source_behavior_passed": 10,
+        "normal_attempted": 4,
+        "normal_behavior_regressions": 0,
+        "normal_behavior_unavailable": 0,
+        "normal_false_positives": 2,
+        "normal_insufficient": 0,
+        "normal_missing_verdict": 0,
+        "normal_source_changes": 2,
+        "normal_source_missing": 0,
+        "initial_verdict_correct": 9,
+        "by_variant": {
+          "incident": {
+            "attempted": 4,
+            "passed": 3
+          },
+          "normal": {
+            "attempted": 4,
+            "passed": 4
+          },
+          "local": {
+            "attempted": 3,
+            "passed": 3
+          }
+        },
+        "status_counts": {
+          "completed": 11
+        },
+        "usage_missing": 0,
+        "tokens": {
+          "input_tokens": 1314621,
+          "cached_input_tokens": 1111296,
+          "output_tokens": 42217
+        },
+        "median_seconds_all_attempts": 126.17656487500062,
+        "median_seconds_completed": 126.17656487500062
+      },
+      "B_checklist": {
+        "planned": 24,
+        "attempted": 10,
+        "pending": 14,
+        "completed": 10,
+        "passed": 10,
+        "pass_rate_attempted": 1,
+        "source_behavior_passed": 10,
+        "normal_attempted": 4,
+        "normal_behavior_regressions": 0,
+        "normal_behavior_unavailable": 0,
+        "normal_false_positives": 2,
+        "normal_insufficient": 0,
+        "normal_missing_verdict": 0,
+        "normal_source_changes": 2,
+        "normal_source_missing": 0,
+        "initial_verdict_correct": 8,
+        "by_variant": {
+          "incident": {
+            "attempted": 3,
+            "passed": 3
+          },
+          "normal": {
+            "attempted": 4,
+            "passed": 4
+          },
+          "local": {
+            "attempted": 3,
+            "passed": 3
+          }
+        },
+        "status_counts": {
+          "completed": 10
+        },
+        "usage_missing": 0,
+        "tokens": {
+          "input_tokens": 1104949,
+          "cached_input_tokens": 915456,
+          "output_tokens": 34036
+        },
+        "median_seconds_all_attempts": 92.23314552099328,
+        "median_seconds_completed": 92.23314552099328
+      },
+      "C_skill": {
+        "planned": 24,
+        "attempted": 10,
+        "pending": 14,
+        "completed": 10,
+        "passed": 10,
+        "pass_rate_attempted": 1,
+        "source_behavior_passed": 10,
+        "normal_attempted": 4,
+        "normal_behavior_regressions": 0,
+        "normal_behavior_unavailable": 0,
+        "normal_false_positives": 2,
+        "normal_insufficient": 0,
+        "normal_missing_verdict": 0,
+        "normal_source_changes": 2,
+        "normal_source_missing": 0,
+        "initial_verdict_correct": 8,
+        "by_variant": {
+          "incident": {
+            "attempted": 3,
+            "passed": 3
+          },
+          "normal": {
+            "attempted": 4,
+            "passed": 4
+          },
+          "local": {
+            "attempted": 3,
+            "passed": 3
+          }
+        },
+        "status_counts": {
+          "completed": 10
+        },
+        "usage_missing": 0,
+        "tokens": {
+          "input_tokens": 1503265,
+          "cached_input_tokens": 1261312,
+          "output_tokens": 46727
+        },
+        "median_seconds_all_attempts": 137.44149954148452,
+        "median_seconds_completed": 137.44149954148452
+      }
+    }
+  },
+  "paired_family_pass_rates": {
+    "lease_queue": {
+      "gpt-6-astra": {
+        "A_tools": 1,
+        "B_checklist": 1,
+        "C_skill": 0.5
+      },
+      "gpt-6-luna": {
+        "A_tools": 1,
+        "B_checklist": 1,
+        "C_skill": 1
+      }
+    },
+    "retrieval_cache": {
+      "gpt-6-astra": {
+        "A_tools": 1,
+        "B_checklist": 1,
+        "C_skill": 1
+      },
+      "gpt-6-luna": {
+        "A_tools": 1,
+        "B_checklist": 1,
+        "C_skill": 1
+      }
+    },
+    "stream_events": {
+      "gpt-6-astra": {
+        "A_tools": 1,
+        "B_checklist": 1,
+        "C_skill": 1
+      },
+      "gpt-6-luna": {
+        "A_tools": 1,
+        "B_checklist": 1,
+        "C_skill": 1
+      }
+    },
+    "tool_results": {
+      "gpt-6-astra": {
+        "A_tools": 1,
+        "B_checklist": 1,
+        "C_skill": 1
+      },
+      "gpt-6-luna": {
+        "A_tools": 0.6666666666666666,
+        "B_checklist": 1,
+        "C_skill": 1
+      }
+    }
+  },
+  "comparisons": {
+    "gpt-6-astra": {
+      "C_skill_minus_A_tools": {
+        "family_order": [
+          "lease_queue",
+          "retrieval_cache",
+          "stream_events",
+          "tool_results"
+        ],
+        "family_differences": [
+          -0.5,
+          0,
+          0,
+          0
+        ],
+        "mean": -0.125,
+        "positive_families": 0,
+        "resampling_percentile_95_descriptive": [
+          -0.375,
+          0.0
+        ],
+        "resample_count": 256,
+        "note": "Four authored development families; empirical sensitivity only, not a reliable population confidence interval."
+      },
+      "C_skill_minus_B_checklist": {
+        "family_order": [
+          "lease_queue",
+          "retrieval_cache",
+          "stream_events",
+          "tool_results"
+        ],
+        "family_differences": [
+          -0.5,
+          0,
+          0,
+          0
+        ],
+        "mean": -0.125,
+        "positive_families": 0,
+        "resampling_percentile_95_descriptive": [
+          -0.375,
+          0.0
+        ],
+        "resample_count": 256,
+        "note": "Four authored development families; empirical sensitivity only, not a reliable population confidence interval."
+      },
+      "B_checklist_minus_A_tools": {
+        "family_order": [
+          "lease_queue",
+          "retrieval_cache",
+          "stream_events",
+          "tool_results"
+        ],
+        "family_differences": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "mean": 0,
+        "positive_families": 0,
+        "resampling_percentile_95_descriptive": [
+          0.0,
+          0.0
+        ],
+        "resample_count": 256,
+        "note": "Four authored development families; empirical sensitivity only, not a reliable population confidence interval."
+      }
+    },
+    "gpt-6-luna": {
+      "C_skill_minus_A_tools": {
+        "family_order": [
+          "lease_queue",
+          "retrieval_cache",
+          "stream_events",
+          "tool_results"
+        ],
+        "family_differences": [
+          0,
+          0,
+          0,
+          0.33333333333333337
+        ],
+        "mean": 0.08333333333333334,
+        "positive_families": 1,
+        "resampling_percentile_95_descriptive": [
+          0.0,
+          0.25
+        ],
+        "resample_count": 256,
+        "note": "Four authored development families; empirical sensitivity only, not a reliable population confidence interval."
+      },
+      "C_skill_minus_B_checklist": {
+        "family_order": [
+          "lease_queue",
+          "retrieval_cache",
+          "stream_events",
+          "tool_results"
+        ],
+        "family_differences": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "mean": 0,
+        "positive_families": 0,
+        "resampling_percentile_95_descriptive": [
+          0.0,
+          0.0
+        ],
+        "resample_count": 256,
+        "note": "Four authored development families; empirical sensitivity only, not a reliable population confidence interval."
+      },
+      "B_checklist_minus_A_tools": {
+        "family_order": [
+          "lease_queue",
+          "retrieval_cache",
+          "stream_events",
+          "tool_results"
+        ],
+        "family_differences": [
+          0,
+          0,
+          0,
+          0.33333333333333337
+        ],
+        "mean": 0.08333333333333334,
+        "positive_families": 1,
+        "resampling_percentile_95_descriptive": [
+          0.0,
+          0.25
+        ],
+        "resample_count": 256,
+        "note": "Four authored development families; empirical sensitivity only, not a reliable population confidence interval."
+      }
+    }
+  },
+  "attempted_rate_differences_unpaired": {
+    "gpt-6-astra": {
+      "C_skill_minus_A_tools": 0.0,
+      "C_skill_minus_B_checklist": -0.09090909090909094,
+      "B_checklist_minus_A_tools": 0.09090909090909094
+    },
+    "gpt-6-luna": {
+      "C_skill_minus_A_tools": 0.09090909090909094,
+      "C_skill_minus_B_checklist": 0,
+      "B_checklist_minus_A_tools": 0.09090909090909094
+    }
+  },
+  "luna_minus_astra_skill_increment": {
+    "family_order": [
+      "lease_queue",
+      "retrieval_cache",
+      "stream_events",
+      "tool_results"
+    ],
+    "family_differences": [
+      0.5,
+      0,
+      0,
+      0.33333333333333337
+    ],
+    "mean": 0.20833333333333334,
+    "positive_families": 2,
+    "resampling_percentile_95_descriptive": [
+      0.0,
+      0.4166666666666667
+    ],
+    "resample_count": 256,
+    "note": "Four authored development families; empirical sensitivity only, not a reliable population confidence interval."
+  },
+  "gate_eligible": false,
+  "infrastructure_or_isolation_blockers": 1,
+  "development_gates": {
+    "gpt-6-astra": {
+      "skill_confirmatory_candidate": false,
+      "checklist_confirmatory_candidate": false
+    },
+    "gpt-6-luna": {
+      "skill_confirmatory_candidate": false,
+      "checklist_confirmatory_candidate": false
+    }
+  },
+  "both_baselines_at_least_22_of_24": false,
+  "decision": "incomplete_or_infrastructure_confounded_no_promotion"
+}

@@ -1,0 +1,218 @@
+{
+  "case_id": "m01",
+  "condition": "A_tools",
+  "trial": 1,
+  "model_requested": "gpt-6-luna",
+  "exit_code": 0,
+  "timed_out": false,
+  "elapsed_seconds": 231.61152600002242,
+  "usage": {
+    "input_tokens": 186570,
+    "cached_input_tokens": 154624,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 4510,
+    "reasoning_output_tokens": 2110
+  },
+  "completed": true,
+  "status": "completed",
+  "infra_kind": null,
+  "prediction": {
+    "initial_verdict": "violation",
+    "summary": "已修复 app.py：拒绝布尔租期，并在 ack 中校验回执代次，避免旧回执确认同一 worker 后续领取的任务。其余符合要求的行为予以保留。",
+    "tests_executed": [
+      "./run_python smoke.py",
+      "./run_python -c '…'（契约探针：租约过期、回执有效性、实例间共享、载荷隔离、重复 ID 和非法租期）",
+      "./run_python -c '…'（并发探针：8 个独立队列实例竞争同一任务）"
+    ],
+    "limitations": [
+      "smoke.py 不是完整验收；未运行完整验收套件。"
+    ]
+  },
+  "acceptance": {
+    "passed": true,
+    "tests_run": 9,
+    "checks": [
+      {
+        "test": "test_empty_and_persistence",
+        "passed": true
+      },
+      {
+        "test": "test_fifo_and_active_exclusion",
+        "passed": true
+      },
+      {
+        "test": "test_same_worker_stale_receipt",
+        "passed": true
+      },
+      {
+        "test": "test_other_worker_stale_receipt",
+        "passed": true
+      },
+      {
+        "test": "test_expiry_and_fractional_duration",
+        "passed": true
+      },
+      {
+        "test": "test_payload_isolation",
+        "passed": true
+      },
+      {
+        "test": "test_failed_put_and_duplicate_reuse",
+        "passed": true
+      },
+      {
+        "test": "test_invalid_duration_preserves_jobs",
+        "passed": true
+      },
+      {
+        "test": "test_atomic_claim_across_connections",
+        "passed": true
+      }
+    ],
+    "exit_code": 0,
+    "timed_out": false,
+    "sandbox": "macos_no_network_writes_only_grade_directory",
+    "stderr": ""
+  },
+  "acceptance_signature": {
+    "passed": true,
+    "tests_run": 9,
+    "checks": [
+      {
+        "test": "test_empty_and_persistence",
+        "passed": true
+      },
+      {
+        "test": "test_fifo_and_active_exclusion",
+        "passed": true
+      },
+      {
+        "test": "test_same_worker_stale_receipt",
+        "passed": true
+      },
+      {
+        "test": "test_other_worker_stale_receipt",
+        "passed": true
+      },
+      {
+        "test": "test_expiry_and_fractional_duration",
+        "passed": true
+      },
+      {
+        "test": "test_payload_isolation",
+        "passed": true
+      },
+      {
+        "test": "test_failed_put_and_duplicate_reuse",
+        "passed": true
+      },
+      {
+        "test": "test_invalid_duration_preserves_jobs",
+        "passed": true
+      },
+      {
+        "test": "test_atomic_claim_across_connections",
+        "passed": true
+      }
+    ],
+    "exit_code": 0,
+    "timed_out": false,
+    "invalid_output": false,
+    "isolation_failure": false
+  },
+  "source_changed": true,
+  "artifacts": {
+    "app.py": "4adef076d9875f7518360ab3fc890cbcb567799cfc44a2bc3f824dbe3c55f6f4"
+  },
+  "protected_changes": [],
+  "outside_changes": [],
+  "artifact_errors": [],
+  "tool_audit": [
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc \"pwd && rg --files -g 'app.py' -g 'original.py' -g 'task.md' -g 'smoke.py' -g 'TOOLS.md' -g 'AGENTS.md'\"",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc 'cat task.md && cat app.py && cat original.py && cat smoke.py && cat TOOLS.md'",
+      "review_flags": []
+    },
+    {
+      "type": "file_change",
+      "exit_code": null,
+      "changes": [
+        {
+          "path": "<workspace>/app.py",
+          "kind": "update"
+        }
+      ]
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc './run_python smoke.py'",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc \"./run_python -c 'print(\\\"runner supports -c\\\")'\"",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 1,
+      "command": "/bin/zsh -lc \"./run_python -c 'import tempfile, pathlib, math; from app import Queue\nwith tempfile.TemporaryDirectory() as d:\n p=pathlib.Path(d)/\\\"q.db\\\"; a=Queue(p); b=Queue(p)\n source={\\\"nested\\\":[1,{\\\"ok\\\":True}]}; a.put(\\\"x\\\",source); source[\\\"nested\\\"][1][\\\"ok\\\"]=False\nc=a.claim(\\\"worker\\\",0,1); assert c[\\\"payload\\\"]=={\\\"nested\\\":[1,{\\\"ok\\\":True}]}; assert set(c)=={\\\"payload\\\",\\\"expires_at\\\",\\\"receipt\\\"}\nc[\\\"payload\\\"][\\\"nested\\\"].clear(); old=c[\\\"receipt\\\"]\nassert b.claim(\\\"worker\\\",0.5,1) is None\nnew=b.claim(\\\"worker\\\",1,2); assert new[\\\"payload\\\"]=={\\\"nested\\\":[1,{\\\"ok\\\":True}]}\nassert a.ack(old,1) is False\nassert b.ack(new[\\\"receipt\\\"],1) is True\nassert a.ack(new[\\\"receipt\\\"],1) is False\nassert a.claim(\\\"worker\\\",2,1) is None\ntry: a.put(\\\"x\\\",None)\nexcept ValueError: pass\nelse: raise AssertionError(\\\"completed ID was reusable\\\")\na.put(\\\"y\\\",[1])\nfor duration in (True, False, 0, -1, float(\\\"inf\\\"), float(\\\"nan\\\")):\n try: a.claim(\\\"worker\\\",3,duration)\n except ValueError: pass\n else: raise AssertionError(f\\\"accepted lease {duration\"'!r}\")\nassert a.claim(\"worker\",3,0.25)[\"expires_at\"]==3.25\nprint(\"contract probe passed\")'\"'\"",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc 'cat run_python'",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc \"./run_python -c 'import tempfile,pathlib; from app import Queue; d=tempfile.TemporaryDirectory(); p=pathlib.Path(d.name)/\\\"q.db\\\"; print(p); q=Queue(p); print(q.claim(\\\"w\\\",0,1))'\"",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc \"./run_python -c 'import tempfile, pathlib; from app import Queue\nwith tempfile.TemporaryDirectory() as d:\n path = pathlib.Path(d) / \\\"queue.db\\\"\n first = Queue(path)\n second = Queue(path)\n first.put(\\\"x\\\", {\\\"v\\\": 1})\n first_claim = first.claim(\\\"worker\\\", 0, 1)\n print(first_claim)\n print(second.claim(\\\"worker\\\", 1, 2))'\"",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 1,
+      "command": "/bin/zsh -lc \"./run_python -c 'import tempfile, pathlib; from app import Queue\nwith tempfile.TemporaryDirectory() as d:\n path=pathlib.Path(d)/\\\"q.db\\\"; a=Queue(path); b=Queue(path)\n a.put(\\\"x\\\", {\\\"nested\\\":[1,{\\\"ok\\\":True}]}); c=a.claim(\\\"worker\\\",0,1); old=c[\\\"receipt\\\"]\n print(\\\"before reclaim\\\", b.claim(\\\"worker\\\",1,2))\n new=b.claim(\\\"worker\\\",1,2); print(\\\"new\\\",new)\n print(\\\"old ack\\\",a.ack(old,1)); print(\\\"new ack\\\",b.ack(new[\\\"receipt\\\"],1))\n print(\\\"post done\\\", a.claim(\\\"worker\\\",2,1))\n a.put(\\\"y\\\",[1])\n print(\\\"final\\\",a.claim(\\\"worker\\\",3,.25))'\"",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc \"./run_python -c 'import tempfile, pathlib; from app import Queue\nwith tempfile.TemporaryDirectory() as d:\n path=pathlib.Path(d)/\\\"q.db\\\"; a=Queue(path); b=Queue(path)\n source={\\\"nested\\\":[1,{\\\"ok\\\":True}]}; a.put(\\\"x\\\",source); source[\\\"nested\\\"][1][\\\"ok\\\"]=False\n c=a.claim(\\\"worker\\\",0,1); assert c[\\\"payload\\\"]=={\\\"nested\\\":[1,{\\\"ok\\\":True}]}; assert set(c)=={\\\"payload\\\",\\\"expires_at\\\",\\\"receipt\\\"}\n c[\\\"payload\\\"][\\\"nested\\\"].clear(); old=c[\\\"receipt\\\"]\n assert b.claim(\\\"worker\\\",0.5,1) is None\n new=b.claim(\\\"worker\\\",1,2); assert new[\\\"payload\\\"]=={\\\"nested\\\":[1,{\\\"ok\\\":True}]}\n assert a.ack(old,1) is False\n assert b.ack(new[\\\"receipt\\\"],1) is True\n assert a.ack(new[\\\"receipt\\\"],1) is False\n assert a.claim(\\\"worker\\\",2,1) is None\n try: a.put(\\\"x\\\",None)\n except ValueError: pass\n else: raise AssertionError(\\\"completed ID was reusable\\\")\n a.put(\\\"y\\\",[1])\n for duration in (True, False, 0, -1, float(\\\"inf\\\"), float(\\\"nan\\\")):\n  try: a.claim(\\\"worker\\\",3,duration)\n  except ValueError: pass\n  else: raise AssertionError(f\\\"accepted lease {duration\"'!r}\")\n assert a.claim(\"worker\",3,0.25)[\"expires_at\"]==3.25\n print(\"contract probe passed\")'\"'\"",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 129,
+      "command": "/bin/zsh -lc \"./run_python -c 'import tempfile, pathlib, threading; from app import Queue\nwith tempfile.TemporaryDirectory() as d:\n path=pathlib.Path(d)/\\\"q.db\\\"; Queue(path).put(\\\"only\\\", {\\\"x\\\":1}); gate=threading.Barrier(8); results=[]; errors=[]\n def run(i):\n  try:\n   q=Queue(path); gate.wait(); results.append(q.claim(f\\\"w{i}\\\",0,10))\n  except BaseException as e: errors.append(e)\n threads=[threading.Thread(target=run,args=(i,)) for i in range(8)]\n [t.start() for t in threads]; [t.join() for t in threads]\n assert not errors, errors\n assert sum(x is not None for x in results)==1, results\n print(\\\"concurrency probe passed\\\")' && git diff -- app.py\"",
+      "review_flags": []
+    }
+  ],
+  "case_sha256": "73ed6a9b5cadf130e63f8b694219699c9066891c161550bfda592c524551ba82",
+  "prompt_sha256": "754741dedf8f45f17a6cba0d28c804d1273d67e30452f4503e8797defde6c5c4",
+  "event_sha256": "4e4956034a4daac2ec379ff072b4e56ae49346590ee198739e22cdce57d66275",
+  "stderr_sha256": "8ba7d4b80f678c68f41a621e944eadb0d182c8619bd81f42f31af7bcd9502227",
+  "reasoning_effort": "high",
+  "cli_version": "codex-cli 0.160.0",
+  "canary": false,
+  "python_version": "3.12.14",
+  "execution_platform": "Darwin",
+  "terminal_errors": []
+}

@@ -1,0 +1,218 @@
+{
+  "case_id": "m12",
+  "condition": "C_skill",
+  "trial": 1,
+  "model_requested": "gpt-6-luna",
+  "exit_code": 0,
+  "timed_out": false,
+  "elapsed_seconds": 145.91718216595473,
+  "usage": {
+    "input_tokens": 137190,
+    "cached_input_tokens": 116736,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 4511,
+    "reasoning_output_tokens": 1530
+  },
+  "completed": true,
+  "status": "completed",
+  "infra_kind": null,
+  "prediction": {
+    "initial_verdict": "violation",
+    "summary": "原实现的 score 对负数取绝对值，违反按原值求和再乘权重的要求。已在 app.py 修正该计算，并保留其余符合要求的公开接口和行为。",
+    "tests_executed": [
+      "./run_python smoke.py — 通过。",
+      "./run_python - <<'PY' … PY — 契约验证通过，覆盖负数与大整数、版本更新和冲突、原子拒绝、输入验证、快照隔离及 finalize 状态。",
+      "初版附加验证脚本因用例已包含全部结果却预期 finalize 不完整而失败；修正该用例后重跑通过。"
+    ],
+    "limitations": [
+      "验证覆盖了公开 smoke 和选定契约路径，未覆盖隐藏验收。"
+    ]
+  },
+  "acceptance": {
+    "passed": true,
+    "tests_run": 12,
+    "checks": [
+      {
+        "test": "order_and_pending",
+        "passed": true
+      },
+      {
+        "test": "scores",
+        "passed": true
+      },
+      {
+        "test": "stale_and_retry",
+        "passed": true
+      },
+      {
+        "test": "duplicate_and_conflict",
+        "passed": true
+      },
+      {
+        "test": "atomic_conflicts",
+        "passed": true
+      },
+      {
+        "test": "atomic_validation",
+        "passed": true
+      },
+      {
+        "test": "failure_then_recovery",
+        "passed": true
+      },
+      {
+        "test": "finalized_lifecycle",
+        "passed": true
+      },
+      {
+        "test": "caller_input_isolation",
+        "passed": true
+      },
+      {
+        "test": "output_isolation",
+        "passed": true
+      },
+      {
+        "test": "specifications_and_empty",
+        "passed": true
+      },
+      {
+        "test": "independent_batches",
+        "passed": true
+      }
+    ],
+    "exit_code": 0,
+    "timed_out": false,
+    "sandbox": "macos_no_network_writes_only_grade_directory",
+    "stderr": ""
+  },
+  "acceptance_signature": {
+    "passed": true,
+    "tests_run": 12,
+    "checks": [
+      {
+        "test": "order_and_pending",
+        "passed": true
+      },
+      {
+        "test": "scores",
+        "passed": true
+      },
+      {
+        "test": "stale_and_retry",
+        "passed": true
+      },
+      {
+        "test": "duplicate_and_conflict",
+        "passed": true
+      },
+      {
+        "test": "atomic_conflicts",
+        "passed": true
+      },
+      {
+        "test": "atomic_validation",
+        "passed": true
+      },
+      {
+        "test": "failure_then_recovery",
+        "passed": true
+      },
+      {
+        "test": "finalized_lifecycle",
+        "passed": true
+      },
+      {
+        "test": "caller_input_isolation",
+        "passed": true
+      },
+      {
+        "test": "output_isolation",
+        "passed": true
+      },
+      {
+        "test": "specifications_and_empty",
+        "passed": true
+      },
+      {
+        "test": "independent_batches",
+        "passed": true
+      }
+    ],
+    "exit_code": 0,
+    "timed_out": false,
+    "invalid_output": false,
+    "isolation_failure": false
+  },
+  "source_changed": true,
+  "artifacts": {
+    "app.py": "d856fbce39bd2b4fedbf9279cd0be4cef5d1a3560120f46a2623dd1c73dcdb89"
+  },
+  "protected_changes": [],
+  "outside_changes": [],
+  "artifact_errors": [],
+  "tool_audit": [
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc \"pwd && rg --files -g 'task.md' -g 'app.py' -g 'original.py' -g 'smoke.py' -g 'TOOLS.md' -g 'SKILL.md' -g 'CHECKLIST.md' -g 'references/**' -g 'scripts/**'\"",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc 'cat task.md && cat app.py && cat original.py && cat smoke.py && cat TOOLS.md && cat SKILL.md'",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc 'cat references/contracts.md && cat references/effects.md && cat references/executable-contracts.md'",
+      "review_flags": []
+    },
+    {
+      "type": "file_change",
+      "exit_code": null,
+      "changes": [
+        {
+          "path": "<workspace>/app.py",
+          "kind": "update"
+        }
+      ]
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc './run_python smoke.py'",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 1,
+      "command": "/bin/zsh -lc \"./run_python - <<'PY'\nimport app\n\ndef raises(exc, fn):\n    try:\n        fn()\n    except exc:\n        return\n    raise AssertionError(f\\\"expected {exc.__name__}\\\")\n\nassert app.score([3, -5, 2], -2) == 0\nassert app.score([], 10**100) == 0\nraises(ValueError, lambda: app.ToolBatch([{\\\"call_id\\\": \\\"a\\\", \\\"weight\\\": True}]))\n\nspecs = [{\\\"call_id\\\": \\\"a\\\", \\\"weight\\\": -3}, {\\\"call_id\\\": \\\"b\\\", \\\"weight\\\": 2}]\nb = app.ToolBatch(specs)\nspecs[0][\\\"weight\\\"] = 50\nassert b.snapshot() == [\n    {\\\"call_id\\\": \\\"a\\\", \\\"version\\\": None, \\\"status\\\": \\\"pending\\\", \\\"value\\\": None, \\\"error\\\": None},\n    {\\\"call_id\\\": \\\"b\\\", \\\"version\\\": None, \\\"status\\\": \\\"pending\\\", \\\"value\\\": None, \\\"error\\\": None},\n]\n# List-order updates: retries replace prior versions; ties must match the current payload.\nb.ingest([\n    {\\\"call_id\\\": \\\"a\\\", \\\"version\\\": 2, \\\"status\\\": \\\"success\\\", \\\"values\\\": [4, -1]},\n    {\\\"call_id\\\": \\\"a\\\", \\\"version\\\": 1, \\\"status\\\": \\\"error\\\", \\\"message\\\": \\\"stale\\\"},\n    {\\\"call_id\\\": \\\"b\\\", \\\"version\\\": 1, \\\"status\\\": \\\"error\\\", \\\"message\\\": \\\"\\\"},\n])\nassert b.snapshot()[0][\\\"value\\\"] == -9\nassert b.snapshot()[1][\\\"error\\\"] == \\\"\\\"\nb.ingest([{\\\"call_id\\\": \\\"a\\\", \\\"version\\\": 2, \\\"status\\\": \\\"success\\\", \\\"values\\\": [4, -1]}])\nraises(ValueError, lambda: b.ingest([{\\\"call_id\\\": \\\"a\\\", \\\"version\\\": 2, \\\"status\\\": \\\"error\\\", \\\"message\\\": \\\"conflict\\\"}]))\n# Stale updates are still validated and rejection is atomic.\nold = b.snapshot()\nraises(ValueError, lambda: b.ingest([\n    {\\\"call_id\\\": \\\"a\\\", \\\"version\\\": 3, \\\"status\\\": \\\"success\\\", \\\"values\\\": [8]},\n    {\\\"call_id\\\": \\\"a\\\", \\\"version\\\": 1, \\\"status\\\": \\\"success\\\", \\\"values\\\": [True]},\n]))\nassert b.snapshot() == old\n# Once version 3 is current, payloads at old versions need not be retained.\nb.ingest([\n    {\\\"call_id\\\": \\\"a\\\", \\\"version\\\": 3, \\\"status\\\": \\\"error\\\", \\\"message\\\": \\\"new\\\"},\n    {\\\"call_id\\\": \\\"a\\\", \\\"version\\\": 1, \\\"status\\\": \\\"error\\\", \\\"message\\\": \\\"different stale payload\\\"},\n])\nassert b.snapshot()[0] == {\\\"call_id\\\": \\\"a\\\", \\\"version\\\": 3, \\\"status\\\": \\\"error\\\", \\\"value\\\": None, \\\"error\\\": \\\"new\\\"}\n# Incomplete finalize remains open; finalized reads are fresh and ingestion is always rejected.\nraises(ValueError, b.finalize)\nb.ingest([{\\\"call_id\\\": \\\"b\\\", \\\"version\\\": 9, \\\"status\\\": \\\"success\\\", \\\"values\\\": []}])\nresult = b.finalize()\nassert result == b.snapshot()\nresult[0][\\\"error\\\"] = \\\"mutated\\\"\nassert b.finalize()[0][\\\"error\\\"] == \\\"new\\\"\nraises(RuntimeError, lambda: b.ingest([]))\n# Empty expected batches can finalize, but become sealed.\ne = app.ToolBatch([])\nassert e.finalize() == []\nassert e.snapshot() == []\nraises(RuntimeError, lambda: e.ingest([]))\n# Caller update mutation cannot alter retained state; malformed specs/updates rejected.\nupdates = [{\\\"call_id\\\": \\\"x\\\", \\\"version\\\": 1, \\\"status\\\": \\\"success\\\", \\\"values\\\": [2]}]\nx = app.ToolBatch([{\\\"call_id\\\": \\\"x\\\", \\\"weight\\\": 1}])\nx.ingest(updates)\nupdates[0][\\\"values\\\"].append(100)\nassert x.snapshot()[0][\\\"value\\\"] == 2\nfor bad in [\n    {\\\"call_id\\\": \\\"x\\\", \\\"version\\\": 0, \\\"status\\\": \\\"success\\\", \\\"values\\\": []},\n    {\\\"call_id\\\": \\\"unknown\\\", \\\"version\\\": 1, \\\"status\\\": \\\"error\\\", \\\"message\\\": \\\"x\\\"},\n    {\\\"call_id\\\": \\\"x\\\", \\\"version\\\": 1, \\\"status\\\": \\\"success\\\", \\\"values\\\": [], \\\"extra\\\": 1},\n]:\n    raises(ValueError, lambda bad=bad: x.ingest([bad]))\nprint(\\\"contract checks passed\\\")\nPY\"",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc \"./run_python - <<'PY'\nimport app\n\ndef raises(exc, fn):\n    try:\n        fn()\n    except exc:\n        return\n    raise AssertionError(f\\\"expected {exc.__name__}\\\")\n\nassert app.score([3, -5, 2], -2) == 0\nassert app.score([3, -5], 4) == -8\nassert app.score([], 10**100) == 0\nraises(ValueError, lambda: app.ToolBatch([{\\\"call_id\\\": \\\"a\\\", \\\"weight\\\": True}]))\n\nspecs = [{\\\"call_id\\\": \\\"a\\\", \\\"weight\\\": -3}, {\\\"call_id\\\": \\\"b\\\", \\\"weight\\\": 2}]\nb = app.ToolBatch(specs)\nspecs[0][\\\"weight\\\"] = 50\nassert b.snapshot() == [\n    {\\\"call_id\\\": \\\"a\\\", \\\"version\\\": None, \\\"status\\\": \\\"pending\\\", \\\"value\\\": None, \\\"error\\\": None},\n    {\\\"call_id\\\": \\\"b\\\", \\\"version\\\": None, \\\"status\\\": \\\"pending\\\", \\\"value\\\": None, \\\"error\\\": None},\n]\nb.ingest([\n    {\\\"call_id\\\": \\\"a\\\", \\\"version\\\": 2, \\\"status\\\": \\\"success\\\", \\\"values\\\": [4, -1]},\n    {\\\"call_id\\\": \\\"a\\\", \\\"version\\\": 1, \\\"status\\\": \\\"error\\\", \\\"message\\\": \\\"stale\\\"},\n    {\\\"call_id\\\": \\\"b\\\", \\\"version\\\": 1, \\\"status\\\": \\\"error\\\", \\\"message\\\": \\\"\\\"},\n])\nassert b.snapshot()[0][\\\"value\\\"] == -9\nassert b.snapshot()[1][\\\"error\\\"] == \\\"\\\"\nb.ingest([{\\\"call_id\\\": \\\"a\\\", \\\"version\\\": 2, \\\"status\\\": \\\"success\\\", \\\"values\\\": [4, -1]}])\nraises(ValueError, lambda: b.ingest([{\\\"call_id\\\": \\\"a\\\", \\\"version\\\": 2, \\\"status\\\": \\\"error\\\", \\\"message\\\": \\\"conflict\\\"}]))\nold = b.snapshot()\nraises(ValueError, lambda: b.ingest([\n    {\\\"call_id\\\": \\\"a\\\", \\\"version\\\": 3, \\\"status\\\": \\\"success\\\", \\\"values\\\": [8]},\n    {\\\"call_id\\\": \\\"a\\\", \\\"version\\\": 1, \\\"status\\\": \\\"success\\\", \\\"values\\\": [True]},\n]))\nassert b.snapshot() == old\nb.ingest([\n    {\\\"call_id\\\": \\\"a\\\", \\\"version\\\": 3, \\\"status\\\": \\\"error\\\", \\\"message\\\": \\\"new\\\"},\n    {\\\"call_id\\\": \\\"a\\\", \\\"version\\\": 1, \\\"status\\\": \\\"error\\\", \\\"message\\\": \\\"different stale payload\\\"},\n])\nassert b.snapshot()[0] == {\\\"call_id\\\": \\\"a\\\", \\\"version\\\": 3, \\\"status\\\": \\\"error\\\", \\\"value\\\": None, \\\"error\\\": \\\"new\\\"}\nresult = b.finalize()\nassert result == b.snapshot()\nresult[0][\\\"error\\\"] = \\\"mutated\\\"\nassert b.finalize()[0][\\\"error\\\"] == \\\"new\\\"\nraises(RuntimeError, lambda: b.ingest([]))\n\np = app.ToolBatch([{\\\"call_id\\\": \\\"only\\\", \\\"weight\\\": 1}])\nraises(ValueError, p.finalize)\np.ingest([{\\\"call_id\\\": \\\"only\\\", \\\"version\\\": 1, \\\"status\\\": \\\"success\\\", \\\"values\\\": []}])\nassert p.finalize()[0][\\\"value\\\"] == 0\n\ne = app.ToolBatch([])\nassert e.finalize() == []\nassert e.snapshot() == []\nraises(RuntimeError, lambda: e.ingest([]))\n\nupdates = [{\\\"call_id\\\": \\\"x\\\", \\\"version\\\": 1, \\\"status\\\": \\\"success\\\", \\\"values\\\": [2]}]\nx = app.ToolBatch([{\\\"call_id\\\": \\\"x\\\", \\\"weight\\\": 1}])\nx.ingest(updates)\nupdates[0][\\\"values\\\"].append(100)\nassert x.snapshot()[0][\\\"value\\\"] == 2\nfor bad in [\n    {\\\"call_id\\\": \\\"x\\\", \\\"version\\\": 0, \\\"status\\\": \\\"success\\\", \\\"values\\\": []},\n    {\\\"call_id\\\": \\\"unknown\\\", \\\"version\\\": 1, \\\"status\\\": \\\"error\\\", \\\"message\\\": \\\"x\\\"},\n    {\\\"call_id\\\": \\\"x\\\", \\\"version\\\": 1, \\\"status\\\": \\\"success\\\", \\\"values\\\": [], \\\"extra\\\": 1},\n]:\n    raises(ValueError, lambda bad=bad: x.ingest([bad]))\nprint(\\\"contract checks passed\\\")\nPY\"",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 129,
+      "command": "/bin/zsh -lc 'git diff -- app.py'",
+      "review_flags": []
+    }
+  ],
+  "case_sha256": "1a51987d22f9633b9ad30cee5d3761811013439115ffefc97822dbf0a0424555",
+  "prompt_sha256": "890e8e7238a3d11b98065646547e36c2563ff652e966a0baa5a66ed0cca78937",
+  "event_sha256": "a0a20dd2f42851dcb29cac8501e162aac85e2355471b67efbc4bef0a827d4f54",
+  "stderr_sha256": "fd51a5497e9d5e5b164e2f5a450bd3ca1b14a858b091e9065ce083147992109d",
+  "reasoning_effort": "high",
+  "cli_version": "codex-cli 0.160.0",
+  "canary": false,
+  "python_version": "3.12.14",
+  "execution_platform": "Darwin",
+  "terminal_errors": []
+}

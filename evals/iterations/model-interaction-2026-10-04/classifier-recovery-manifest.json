@@ -1,0 +1,1460 @@
+{
+  "kind": "registered_numeric_classifier_false_positive_recovery",
+  "execution_phase": "classifier_recovery",
+  "frozen_at": "2026-10-04T07:31:22.590389+00:00",
+  "original_planned": 144,
+  "existing_attempts": [
+    {
+      "case_id": "m03",
+      "condition": "A_tools",
+      "trial": 1,
+      "model_requested": "gpt-6-astra"
+    },
+    {
+      "case_id": "m03",
+      "condition": "B_checklist",
+      "trial": 1,
+      "model_requested": "gpt-6-luna"
+    },
+    {
+      "case_id": "m03",
+      "condition": "B_checklist",
+      "trial": 1,
+      "model_requested": "gpt-6-astra"
+    },
+    {
+      "case_id": "m03",
+      "condition": "C_skill",
+      "trial": 1,
+      "model_requested": "gpt-6-astra"
+    },
+    {
+      "case_id": "m03",
+      "condition": "C_skill",
+      "trial": 1,
+      "model_requested": "gpt-6-luna"
+    },
+    {
+      "case_id": "m03",
+      "condition": "A_tools",
+      "trial": 1,
+      "model_requested": "gpt-6-luna"
+    },
+    {
+      "case_id": "m08",
+      "condition": "A_tools",
+      "trial": 1,
+      "model_requested": "gpt-6-astra"
+    },
+    {
+      "case_id": "m08",
+      "condition": "C_skill",
+      "trial": 1,
+      "model_requested": "gpt-6-luna"
+    },
+    {
+      "case_id": "m08",
+      "condition": "B_checklist",
+      "trial": 1,
+      "model_requested": "gpt-6-luna"
+    },
+    {
+      "case_id": "m08",
+      "condition": "B_checklist",
+      "trial": 1,
+      "model_requested": "gpt-6-astra"
+    },
+    {
+      "case_id": "m08",
+      "condition": "A_tools",
+      "trial": 1,
+      "model_requested": "gpt-6-luna"
+    },
+    {
+      "case_id": "m08",
+      "condition": "C_skill",
+      "trial": 1,
+      "model_requested": "gpt-6-astra"
+    },
+    {
+      "case_id": "m09",
+      "condition": "A_tools",
+      "trial": 1,
+      "model_requested": "gpt-6-luna"
+    },
+    {
+      "case_id": "m09",
+      "condition": "B_checklist",
+      "trial": 1,
+      "model_requested": "gpt-6-astra"
+    },
+    {
+      "case_id": "m09",
+      "condition": "C_skill",
+      "trial": 1,
+      "model_requested": "gpt-6-luna"
+    },
+    {
+      "case_id": "m09",
+      "condition": "A_tools",
+      "trial": 1,
+      "model_requested": "gpt-6-astra"
+    },
+    {
+      "case_id": "m09",
+      "condition": "B_checklist",
+      "trial": 1,
+      "model_requested": "gpt-6-luna"
+    },
+    {
+      "case_id": "m09",
+      "condition": "C_skill",
+      "trial": 1,
+      "model_requested": "gpt-6-astra"
+    },
+    {
+      "case_id": "m02",
+      "condition": "A_tools",
+      "trial": 1,
+      "model_requested": "gpt-6-luna"
+    },
+    {
+      "case_id": "m02",
+      "condition": "B_checklist",
+      "trial": 1,
+      "model_requested": "gpt-6-astra"
+    },
+    {
+      "case_id": "m02",
+      "condition": "B_checklist",
+      "trial": 1,
+      "model_requested": "gpt-6-luna"
+    },
+    {
+      "case_id": "m02",
+      "condition": "C_skill",
+      "trial": 1,
+      "model_requested": "gpt-6-luna"
+    },
+    {
+      "case_id": "m02",
+      "condition": "A_tools",
+      "trial": 1,
+      "model_requested": "gpt-6-astra"
+    },
+    {
+      "case_id": "m02",
+      "condition": "C_skill",
+      "trial": 1,
+      "model_requested": "gpt-6-astra"
+    },
+    {
+      "case_id": "m04",
+      "condition": "B_checklist",
+      "trial": 1,
+      "model_requested": "gpt-6-astra"
+    },
+    {
+      "case_id": "m04",
+      "condition": "A_tools",
+      "trial": 1,
+      "model_requested": "gpt-6-luna"
+    },
+    {
+      "case_id": "m04",
+      "condition": "C_skill",
+      "trial": 1,
+      "model_requested": "gpt-6-luna"
+    },
+    {
+      "case_id": "m04",
+      "condition": "C_skill",
+      "trial": 1,
+      "model_requested": "gpt-6-astra"
+    },
+    {
+      "case_id": "m04",
+      "condition": "B_checklist",
+      "trial": 1,
+      "model_requested": "gpt-6-luna"
+    },
+    {
+      "case_id": "m04",
+      "condition": "A_tools",
+      "trial": 1,
+      "model_requested": "gpt-6-astra"
+    },
+    {
+      "case_id": "m11",
+      "condition": "C_skill",
+      "trial": 1,
+      "model_requested": "gpt-6-luna"
+    },
+    {
+      "case_id": "m11",
+      "condition": "B_checklist",
+      "trial": 1,
+      "model_requested": "gpt-6-luna"
+    },
+    {
+      "case_id": "m11",
+      "condition": "B_checklist",
+      "trial": 1,
+      "model_requested": "gpt-6-astra"
+    },
+    {
+      "case_id": "m11",
+      "condition": "C_skill",
+      "trial": 1,
+      "model_requested": "gpt-6-astra"
+    },
+    {
+      "case_id": "m11",
+      "condition": "A_tools",
+      "trial": 1,
+      "model_requested": "gpt-6-astra"
+    },
+    {
+      "case_id": "m11",
+      "condition": "A_tools",
+      "trial": 1,
+      "model_requested": "gpt-6-luna"
+    },
+    {
+      "case_id": "m10",
+      "condition": "B_checklist",
+      "trial": 1,
+      "model_requested": "gpt-6-astra"
+    },
+    {
+      "case_id": "m10",
+      "condition": "C_skill",
+      "trial": 1,
+      "model_requested": "gpt-6-astra"
+    },
+    {
+      "case_id": "m10",
+      "condition": "A_tools",
+      "trial": 1,
+      "model_requested": "gpt-6-astra"
+    },
+    {
+      "case_id": "m10",
+      "condition": "B_checklist",
+      "trial": 1,
+      "model_requested": "gpt-6-luna"
+    },
+    {
+      "case_id": "m10",
+      "condition": "A_tools",
+      "trial": 1,
+      "model_requested": "gpt-6-luna"
+    },
+    {
+      "case_id": "m10",
+      "condition": "C_skill",
+      "trial": 1,
+      "model_requested": "gpt-6-luna"
+    },
+    {
+      "case_id": "m07",
+      "condition": "C_skill",
+      "trial": 1,
+      "model_requested": "gpt-6-luna"
+    },
+    {
+      "case_id": "m07",
+      "condition": "C_skill",
+      "trial": 1,
+      "model_requested": "gpt-6-astra"
+    },
+    {
+      "case_id": "m07",
+      "condition": "A_tools",
+      "trial": 1,
+      "model_requested": "gpt-6-luna"
+    },
+    {
+      "case_id": "m07",
+      "condition": "B_checklist",
+      "trial": 1,
+      "model_requested": "gpt-6-luna"
+    },
+    {
+      "case_id": "m07",
+      "condition": "B_checklist",
+      "trial": 1,
+      "model_requested": "gpt-6-astra"
+    },
+    {
+      "case_id": "m07",
+      "condition": "A_tools",
+      "trial": 1,
+      "model_requested": "gpt-6-astra"
+    },
+    {
+      "case_id": "m12",
+      "condition": "A_tools",
+      "trial": 1,
+      "model_requested": "gpt-6-luna"
+    },
+    {
+      "case_id": "m12",
+      "condition": "B_checklist",
+      "trial": 1,
+      "model_requested": "gpt-6-astra"
+    },
+    {
+      "case_id": "m12",
+      "condition": "C_skill",
+      "trial": 1,
+      "model_requested": "gpt-6-luna"
+    },
+    {
+      "case_id": "m12",
+      "condition": "B_checklist",
+      "trial": 1,
+      "model_requested": "gpt-6-luna"
+    },
+    {
+      "case_id": "m12",
+      "condition": "C_skill",
+      "trial": 1,
+      "model_requested": "gpt-6-astra"
+    },
+    {
+      "case_id": "m12",
+      "condition": "A_tools",
+      "trial": 1,
+      "model_requested": "gpt-6-astra"
+    },
+    {
+      "case_id": "m05",
+      "condition": "A_tools",
+      "trial": 1,
+      "model_requested": "gpt-6-luna"
+    },
+    {
+      "case_id": "m05",
+      "condition": "B_checklist",
+      "trial": 1,
+      "model_requested": "gpt-6-luna"
+    },
+    {
+      "case_id": "m05",
+      "condition": "A_tools",
+      "trial": 1,
+      "model_requested": "gpt-6-astra"
+    },
+    {
+      "case_id": "m05",
+      "condition": "C_skill",
+      "trial": 1,
+      "model_requested": "gpt-6-luna"
+    },
+    {
+      "case_id": "m05",
+      "condition": "B_checklist",
+      "trial": 1,
+      "model_requested": "gpt-6-astra"
+    },
+    {
+      "case_id": "m05",
+      "condition": "C_skill",
+      "trial": 1,
+      "model_requested": "gpt-6-astra"
+    },
+    {
+      "case_id": "m01",
+      "condition": "A_tools",
+      "trial": 1,
+      "model_requested": "gpt-6-astra"
+    },
+    {
+      "case_id": "m01",
+      "condition": "B_checklist",
+      "trial": 1,
+      "model_requested": "gpt-6-astra"
+    },
+    {
+      "case_id": "m01",
+      "condition": "A_tools",
+      "trial": 1,
+      "model_requested": "gpt-6-luna"
+    },
+    {
+      "case_id": "m01",
+      "condition": "C_skill",
+      "trial": 1,
+      "model_requested": "gpt-6-astra"
+    }
+  ],
+  "schedule": [
+    {
+      "case_id": "m01",
+      "condition": "C_skill",
+      "trial": 1,
+      "model_requested": "gpt-6-luna"
+    },
+    {
+      "case_id": "m01",
+      "condition": "B_checklist",
+      "trial": 1,
+      "model_requested": "gpt-6-luna"
+    },
+    {
+      "case_id": "m06",
+      "condition": "C_skill",
+      "trial": 1,
+      "model_requested": "gpt-6-luna"
+    },
+    {
+      "case_id": "m06",
+      "condition": "C_skill",
+      "trial": 1,
+      "model_requested": "gpt-6-astra"
+    },
+    {
+      "case_id": "m06",
+      "condition": "A_tools",
+      "trial": 1,
+      "model_requested": "gpt-6-astra"
+    },
+    {
+      "case_id": "m06",
+      "condition": "A_tools",
+      "trial": 1,
+      "model_requested": "gpt-6-luna"
+    },
+    {
+      "case_id": "m06",
+      "condition": "B_checklist",
+      "trial": 1,
+      "model_requested": "gpt-6-luna"
+    },
+    {
+      "case_id": "m06",
+      "condition": "B_checklist",
+      "trial": 1,
+      "model_requested": "gpt-6-astra"
+    },
+    {
+      "case_id": "m04",
+      "condition": "B_checklist",
+      "trial": 2,
+      "model_requested": "gpt-6-astra"
+    },
+    {
+      "case_id": "m04",
+      "condition": "A_tools",
+      "trial": 2,
+      "model_requested": "gpt-6-luna"
+    },
+    {
+      "case_id": "m04",
+      "condition": "A_tools",
+      "trial": 2,
+      "model_requested": "gpt-6-astra"
+    },
+    {
+      "case_id": "m04",
+      "condition": "B_checklist",
+      "trial": 2,
+      "model_requested": "gpt-6-luna"
+    },
+    {
+      "case_id": "m04",
+      "condition": "C_skill",
+      "trial": 2,
+      "model_requested": "gpt-6-astra"
+    },
+    {
+      "case_id": "m04",
+      "condition": "C_skill",
+      "trial": 2,
+      "model_requested": "gpt-6-luna"
+    },
+    {
+      "case_id": "m01",
+      "condition": "C_skill",
+      "trial": 2,
+      "model_requested": "gpt-6-astra"
+    },
+    {
+      "case_id": "m01",
+      "condition": "B_checklist",
+      "trial": 2,
+      "model_requested": "gpt-6-astra"
+    },
+    {
+      "case_id": "m01",
+      "condition": "A_tools",
+      "trial": 2,
+      "model_requested": "gpt-6-astra"
+    },
+    {
+      "case_id": "m01",
+      "condition": "C_skill",
+      "trial": 2,
+      "model_requested": "gpt-6-luna"
+    },
+    {
+      "case_id": "m01",
+      "condition": "A_tools",
+      "trial": 2,
+      "model_requested": "gpt-6-luna"
+    },
+    {
+      "case_id": "m01",
+      "condition": "B_checklist",
+      "trial": 2,
+      "model_requested": "gpt-6-luna"
+    },
+    {
+      "case_id": "m07",
+      "condition": "A_tools",
+      "trial": 2,
+      "model_requested": "gpt-6-astra"
+    },
+    {
+      "case_id": "m07",
+      "condition": "B_checklist",
+      "trial": 2,
+      "model_requested": "gpt-6-luna"
+    },
+    {
+      "case_id": "m07",
+      "condition": "B_checklist",
+      "trial": 2,
+      "model_requested": "gpt-6-astra"
+    },
+    {
+      "case_id": "m07",
+      "condition": "A_tools",
+      "trial": 2,
+      "model_requested": "gpt-6-luna"
+    },
+    {
+      "case_id": "m07",
+      "condition": "C_skill",
+      "trial": 2,
+      "model_requested": "gpt-6-luna"
+    },
+    {
+      "case_id": "m07",
+      "condition": "C_skill",
+      "trial": 2,
+      "model_requested": "gpt-6-astra"
+    },
+    {
+      "case_id": "m03",
+      "condition": "C_skill",
+      "trial": 2,
+      "model_requested": "gpt-6-luna"
+    },
+    {
+      "case_id": "m03",
+      "condition": "B_checklist",
+      "trial": 2,
+      "model_requested": "gpt-6-luna"
+    },
+    {
+      "case_id": "m03",
+      "condition": "C_skill",
+      "trial": 2,
+      "model_requested": "gpt-6-astra"
+    },
+    {
+      "case_id": "m03",
+      "condition": "A_tools",
+      "trial": 2,
+      "model_requested": "gpt-6-astra"
+    },
+    {
+      "case_id": "m03",
+      "condition": "B_checklist",
+      "trial": 2,
+      "model_requested": "gpt-6-astra"
+    },
+    {
+      "case_id": "m03",
+      "condition": "A_tools",
+      "trial": 2,
+      "model_requested": "gpt-6-luna"
+    },
+    {
+      "case_id": "m02",
+      "condition": "C_skill",
+      "trial": 2,
+      "model_requested": "gpt-6-astra"
+    },
+    {
+      "case_id": "m02",
+      "condition": "B_checklist",
+      "trial": 2,
+      "model_requested": "gpt-6-astra"
+    },
+    {
+      "case_id": "m02",
+      "condition": "C_skill",
+      "trial": 2,
+      "model_requested": "gpt-6-luna"
+    },
+    {
+      "case_id": "m02",
+      "condition": "B_checklist",
+      "trial": 2,
+      "model_requested": "gpt-6-luna"
+    },
+    {
+      "case_id": "m02",
+      "condition": "A_tools",
+      "trial": 2,
+      "model_requested": "gpt-6-astra"
+    },
+    {
+      "case_id": "m02",
+      "condition": "A_tools",
+      "trial": 2,
+      "model_requested": "gpt-6-luna"
+    },
+    {
+      "case_id": "m08",
+      "condition": "B_checklist",
+      "trial": 2,
+      "model_requested": "gpt-6-luna"
+    },
+    {
+      "case_id": "m08",
+      "condition": "A_tools",
+      "trial": 2,
+      "model_requested": "gpt-6-luna"
+    },
+    {
+      "case_id": "m08",
+      "condition": "C_skill",
+      "trial": 2,
+      "model_requested": "gpt-6-astra"
+    },
+    {
+      "case_id": "m08",
+      "condition": "C_skill",
+      "trial": 2,
+      "model_requested": "gpt-6-luna"
+    },
+    {
+      "case_id": "m08",
+      "condition": "B_checklist",
+      "trial": 2,
+      "model_requested": "gpt-6-astra"
+    },
+    {
+      "case_id": "m08",
+      "condition": "A_tools",
+      "trial": 2,
+      "model_requested": "gpt-6-astra"
+    },
+    {
+      "case_id": "m10",
+      "condition": "A_tools",
+      "trial": 2,
+      "model_requested": "gpt-6-astra"
+    },
+    {
+      "case_id": "m10",
+      "condition": "B_checklist",
+      "trial": 2,
+      "model_requested": "gpt-6-astra"
+    },
+    {
+      "case_id": "m10",
+      "condition": "A_tools",
+      "trial": 2,
+      "model_requested": "gpt-6-luna"
+    },
+    {
+      "case_id": "m10",
+      "condition": "B_checklist",
+      "trial": 2,
+      "model_requested": "gpt-6-luna"
+    },
+    {
+      "case_id": "m10",
+      "condition": "C_skill",
+      "trial": 2,
+      "model_requested": "gpt-6-luna"
+    },
+    {
+      "case_id": "m10",
+      "condition": "C_skill",
+      "trial": 2,
+      "model_requested": "gpt-6-astra"
+    },
+    {
+      "case_id": "m06",
+      "condition": "B_checklist",
+      "trial": 2,
+      "model_requested": "gpt-6-luna"
+    },
+    {
+      "case_id": "m06",
+      "condition": "A_tools",
+      "trial": 2,
+      "model_requested": "gpt-6-luna"
+    },
+    {
+      "case_id": "m06",
+      "condition": "C_skill",
+      "trial": 2,
+      "model_requested": "gpt-6-astra"
+    },
+    {
+      "case_id": "m06",
+      "condition": "B_checklist",
+      "trial": 2,
+      "model_requested": "gpt-6-astra"
+    },
+    {
+      "case_id": "m06",
+      "condition": "C_skill",
+      "trial": 2,
+      "model_requested": "gpt-6-luna"
+    },
+    {
+      "case_id": "m06",
+      "condition": "A_tools",
+      "trial": 2,
+      "model_requested": "gpt-6-astra"
+    },
+    {
+      "case_id": "m05",
+      "condition": "C_skill",
+      "trial": 2,
+      "model_requested": "gpt-6-luna"
+    },
+    {
+      "case_id": "m05",
+      "condition": "B_checklist",
+      "trial": 2,
+      "model_requested": "gpt-6-luna"
+    },
+    {
+      "case_id": "m05",
+      "condition": "A_tools",
+      "trial": 2,
+      "model_requested": "gpt-6-luna"
+    },
+    {
+      "case_id": "m05",
+      "condition": "B_checklist",
+      "trial": 2,
+      "model_requested": "gpt-6-astra"
+    },
+    {
+      "case_id": "m05",
+      "condition": "C_skill",
+      "trial": 2,
+      "model_requested": "gpt-6-astra"
+    },
+    {
+      "case_id": "m05",
+      "condition": "A_tools",
+      "trial": 2,
+      "model_requested": "gpt-6-astra"
+    },
+    {
+      "case_id": "m09",
+      "condition": "A_tools",
+      "trial": 2,
+      "model_requested": "gpt-6-astra"
+    },
+    {
+      "case_id": "m09",
+      "condition": "B_checklist",
+      "trial": 2,
+      "model_requested": "gpt-6-luna"
+    },
+    {
+      "case_id": "m09",
+      "condition": "B_checklist",
+      "trial": 2,
+      "model_requested": "gpt-6-astra"
+    },
+    {
+      "case_id": "m09",
+      "condition": "A_tools",
+      "trial": 2,
+      "model_requested": "gpt-6-luna"
+    },
+    {
+      "case_id": "m09",
+      "condition": "C_skill",
+      "trial": 2,
+      "model_requested": "gpt-6-astra"
+    },
+    {
+      "case_id": "m09",
+      "condition": "C_skill",
+      "trial": 2,
+      "model_requested": "gpt-6-luna"
+    },
+    {
+      "case_id": "m11",
+      "condition": "A_tools",
+      "trial": 2,
+      "model_requested": "gpt-6-luna"
+    },
+    {
+      "case_id": "m11",
+      "condition": "B_checklist",
+      "trial": 2,
+      "model_requested": "gpt-6-astra"
+    },
+    {
+      "case_id": "m11",
+      "condition": "C_skill",
+      "trial": 2,
+      "model_requested": "gpt-6-astra"
+    },
+    {
+      "case_id": "m11",
+      "condition": "A_tools",
+      "trial": 2,
+      "model_requested": "gpt-6-astra"
+    },
+    {
+      "case_id": "m11",
+      "condition": "C_skill",
+      "trial": 2,
+      "model_requested": "gpt-6-luna"
+    },
+    {
+      "case_id": "m11",
+      "condition": "B_checklist",
+      "trial": 2,
+      "model_requested": "gpt-6-luna"
+    },
+    {
+      "case_id": "m12",
+      "condition": "B_checklist",
+      "trial": 2,
+      "model_requested": "gpt-6-luna"
+    },
+    {
+      "case_id": "m12",
+      "condition": "C_skill",
+      "trial": 2,
+      "model_requested": "gpt-6-luna"
+    },
+    {
+      "case_id": "m12",
+      "condition": "B_checklist",
+      "trial": 2,
+      "model_requested": "gpt-6-astra"
+    },
+    {
+      "case_id": "m12",
+      "condition": "A_tools",
+      "trial": 2,
+      "model_requested": "gpt-6-astra"
+    },
+    {
+      "case_id": "m12",
+      "condition": "C_skill",
+      "trial": 2,
+      "model_requested": "gpt-6-astra"
+    },
+    {
+      "case_id": "m12",
+      "condition": "A_tools",
+      "trial": 2,
+      "model_requested": "gpt-6-luna"
+    }
+  ],
+  "reason": "One exact preserved timeout record was misclassified because 401 occurred inside a shell-snapshot timestamp filename.",
+  "exception_job": {
+    "case_id": "m01",
+    "condition": "A_tools",
+    "trial": 1,
+    "model_requested": "gpt-6-astra"
+  },
+  "exception_job_digest": "f4e02ac31dd8396bcc69",
+  "exception_evidence_sha256": {
+    "record.json": "6ec46b8ba64f3bba30bc22e60ceef07195208272d870276d0c1822a0d3e6484f",
+    "events.jsonl": "b71ae0fbf1107411062f24761a096a1dbcfc570f41ddbd128f77bb5cbc329e9c",
+    "stderr.txt": "fdbc13de5c5d6a88abb48dc7559cfb756f53619b4f25f014d7838e1c7148451e"
+  },
+  "original_record_preserved": true,
+  "retries_authorized": 0,
+  "cli_version": "codex-cli 0.160.0",
+  "python_version": "3.12.14",
+  "execution_platform": "Darwin",
+  "reasoning_effort": "high",
+  "concurrency": 3,
+  "timeout_seconds": 360,
+  "files_sha256": {
+    "scripts/resume_model_interaction.py": "3d9af5ee55589d23fae90070379b3507d3c21ad18f05b1f94b59e3508a3adcc2",
+    "evals/model_interaction_followup/test_infrastructure_classifier.py": "b2cc66bb5991e41c986f18c1a27f76b665eb3b9c4acf66a06bd67543b8b8a01e",
+    "evals/iterations/model-interaction-2026-10-04/RECOVERY_PLAN.md": "240cab5381008333483a4964e3b9d40da08767a09b5f72efab15d3726c67c3af",
+    "evals/iterations/model-interaction-2026-10-04/manifest.json": "5fb6106ef2252be9d5de506bf9ba35bdcaad6140d89517cdb08894e290ef4ebe",
+    "evals/iterations/model-interaction-2026-10-04/results/40abd92bd612e355f199/artifacts/app.py": "3f200a07b30548ae6845c24e5b9c22ded8f9c05b83aef7f41fe65e6a36f4262e",
+    "evals/iterations/model-interaction-2026-10-04/results/40abd92bd612e355f199/artifacts/test_queue.py": "6a5f80adc6c7947de765533e9fcd0f07e6355eab1645da098e9fd6fec2fc3c18",
+    "evals/iterations/model-interaction-2026-10-04/results/40abd92bd612e355f199/patch.diff": "8b9ba85611094f9c74cfb0c9eae75be8fd534668034e60b2f1ee231b6bc0e0f2",
+    "evals/iterations/model-interaction-2026-10-04/results/40abd92bd612e355f199/record.json": "9892657bd368c31cdcf32df9774fd3fd14f9b5468bd9723075ad59ff9385e26a",
+    "evals/iterations/model-interaction-2026-10-04/results/40abd92bd612e355f199/started.json": "8ef9bebb1a6951810b083cef5c8e778f8d0609027b56206edbbcf55909874ab3",
+    "evals/iterations/model-interaction-2026-10-04/results/39175d2a06b7f4aad3f0/artifacts/app.py": "cb7cffb201bd056b541959c7f6cfdd7252d872c069a9e2cd4845a754585fb1b5",
+    "evals/iterations/model-interaction-2026-10-04/results/39175d2a06b7f4aad3f0/patch.diff": "2c97c0d5cf539fb06e043e711ce8d0127dc7c130bbde99518fff99aa3b7c42bb",
+    "evals/iterations/model-interaction-2026-10-04/results/39175d2a06b7f4aad3f0/record.json": "ebb949dd2a345dfd0c10d34466687de4ab75a22078411a5acabd8d80f226bb7c",
+    "evals/iterations/model-interaction-2026-10-04/results/39175d2a06b7f4aad3f0/started.json": "24800600c43533a4ad452e58ccbc52dfe03e92bc6653a989a56822b1f2aa367f",
+    "evals/iterations/model-interaction-2026-10-04/results/26213827aa57e02a7a89/artifacts/app.py": "b0726aa2661a3d19788e83854cc1233f14186ba7f64f74100b0fe84ff12de4f4",
+    "evals/iterations/model-interaction-2026-10-04/results/26213827aa57e02a7a89/artifacts/test_queue.py": "f31ab8b3e47a50c1c1e1cb960d624e7b8690572bcbccefde77a02f04e5834a14",
+    "evals/iterations/model-interaction-2026-10-04/results/26213827aa57e02a7a89/patch.diff": "d14b88d395b59203e76fb4fe6e579fa6e2a695513d3b3786f51a6155b377f492",
+    "evals/iterations/model-interaction-2026-10-04/results/26213827aa57e02a7a89/record.json": "81785c9cd21101165e24a5db98a912f4ac483ba8d8ca22ba9d2d299b10b062b5",
+    "evals/iterations/model-interaction-2026-10-04/results/26213827aa57e02a7a89/started.json": "50cd6faf6c47561934054a7c723ad5e82bb26014aad1422c6336472efa2fbb74",
+    "evals/iterations/model-interaction-2026-10-04/results/45565ffb1b4105ee1f1b/artifacts/app.py": "b0726aa2661a3d19788e83854cc1233f14186ba7f64f74100b0fe84ff12de4f4",
+    "evals/iterations/model-interaction-2026-10-04/results/45565ffb1b4105ee1f1b/artifacts/test_contract.py": "028b8f7b1cff8781959138598e63dbcb28f3163c0535b570e4840724e02a0107",
+    "evals/iterations/model-interaction-2026-10-04/results/45565ffb1b4105ee1f1b/patch.diff": "d14b88d395b59203e76fb4fe6e579fa6e2a695513d3b3786f51a6155b377f492",
+    "evals/iterations/model-interaction-2026-10-04/results/45565ffb1b4105ee1f1b/record.json": "264200a78125309b2048425a11da6cd5d8fd38a1584c47ff0d8a66ad3b14a2ec",
+    "evals/iterations/model-interaction-2026-10-04/results/45565ffb1b4105ee1f1b/started.json": "ffcf042e7b4dfa2267a960724783ad2cc693825dee53a9b48c281625f8c9e20d",
+    "evals/iterations/model-interaction-2026-10-04/results/c4e1b1d1cfc1e7f509c7/artifacts/app.py": "5fd020bf8e66d321d2896fd2a5acfae11f999774e5ced649c7f1574ee92e45ae",
+    "evals/iterations/model-interaction-2026-10-04/results/c4e1b1d1cfc1e7f509c7/artifacts/verify_queue.py": "f689892808c44f15145d75bb805fc4b8729bf4a585fc3df0da3fa9956c6939b8",
+    "evals/iterations/model-interaction-2026-10-04/results/c4e1b1d1cfc1e7f509c7/patch.diff": "22403928274b5fe835f119086f648fe5e07f49898cf1ff16f353a3bf76d2a9bb",
+    "evals/iterations/model-interaction-2026-10-04/results/c4e1b1d1cfc1e7f509c7/record.json": "81b211d6b2d7cc7a820da332192442fb1b35a6b7784b830b521de9c2f7ab4313",
+    "evals/iterations/model-interaction-2026-10-04/results/c4e1b1d1cfc1e7f509c7/started.json": "ffda76cd6fa2b0055710f9446447b4bf51fd4aee5ea128e3711eaa039177e3c9",
+    "evals/iterations/model-interaction-2026-10-04/results/cdc4f31ffe0a20bc7ff8/artifacts/app.py": "cb7cffb201bd056b541959c7f6cfdd7252d872c069a9e2cd4845a754585fb1b5",
+    "evals/iterations/model-interaction-2026-10-04/results/cdc4f31ffe0a20bc7ff8/patch.diff": "2c97c0d5cf539fb06e043e711ce8d0127dc7c130bbde99518fff99aa3b7c42bb",
+    "evals/iterations/model-interaction-2026-10-04/results/cdc4f31ffe0a20bc7ff8/record.json": "b1aa6c17297d99d8725856925ccaaa465d87f2aecf9620bb9ed059702eb76ba8",
+    "evals/iterations/model-interaction-2026-10-04/results/cdc4f31ffe0a20bc7ff8/started.json": "be4828a34b278836d004d66b26182047043149131df9134cbd5b3a3683592047",
+    "evals/iterations/model-interaction-2026-10-04/results/2c2982447f7bea923d2c/artifacts/app.py": "7163d3864c19021f6fd9327d1e957324f812debe9dd933ec6c58b06c5e39b61d",
+    "evals/iterations/model-interaction-2026-10-04/results/2c2982447f7bea923d2c/artifacts/test_contract.py": "3a22188661d2cb6156f6a9670ae4e03d5f520def140cc28ab31235c5f76b53d9",
+    "evals/iterations/model-interaction-2026-10-04/results/2c2982447f7bea923d2c/patch.diff": "6d742005ea6c0d59a0871a75027379b7e999aeec93d542b89dd8383e71ca868d",
+    "evals/iterations/model-interaction-2026-10-04/results/2c2982447f7bea923d2c/record.json": "a7d47541d39b4dfc56887f112a06e14aa3700a0885b2eb2278683903f2248929",
+    "evals/iterations/model-interaction-2026-10-04/results/2c2982447f7bea923d2c/started.json": "62891c3fadaa5af2bff6f70f0e9e3e77243ff237515329f96c81426c949b9aa6",
+    "evals/iterations/model-interaction-2026-10-04/results/a981c733b9764ddb5412/artifacts/app.py": "eca365433cc5a5c8153b006e9b24a3f76e10336e6dc973a4e61af48c79f9fdde",
+    "evals/iterations/model-interaction-2026-10-04/results/a981c733b9764ddb5412/patch.diff": "65baa34800c9e9e50aa3f6e8006a1f7caaeab1e8dd52a08829085506ba405ac5",
+    "evals/iterations/model-interaction-2026-10-04/results/a981c733b9764ddb5412/record.json": "9fe80b9c92a14345d3c8908639dc82fe2c8eaeeeef5f89e847f4af876b74f3ca",
+    "evals/iterations/model-interaction-2026-10-04/results/a981c733b9764ddb5412/started.json": "0d90f79c889b2b8603def2c6dcbd36a914c12cf8ce1662cecb249f300aef78ec",
+    "evals/iterations/model-interaction-2026-10-04/results/df19c121c58b198c5649/artifacts/app.py": "e4359611c7cb59a2ff9a3d1e5a9a8b86c8ec48896016ef810ec0e3f74cae8497",
+    "evals/iterations/model-interaction-2026-10-04/results/df19c121c58b198c5649/artifacts/probe.py": "a7a5af6c58d18a2e9989bc16edaea6334ca7e32d98b119ba0d3c45c07a3d9611",
+    "evals/iterations/model-interaction-2026-10-04/results/df19c121c58b198c5649/patch.diff": "f72b4e48d04d7487cde0d3935cf64421f23ac102e06dd9ed0ca910a8938d9211",
+    "evals/iterations/model-interaction-2026-10-04/results/df19c121c58b198c5649/record.json": "602565f185cb684cc6d131929d8363d9e7f6d7c89a4e06fcfc70b3e0b539579e",
+    "evals/iterations/model-interaction-2026-10-04/results/df19c121c58b198c5649/started.json": "baaeac69149d460095418d71aab2be3c8e17ae0208e90784c86e310d2b395db8",
+    "evals/iterations/model-interaction-2026-10-04/results/95242aa6aa1855bfa9e8/artifacts/app.py": "a850a6792093cab1242039f4854ef9d6846a9dc3ecaa4a3055ac369d6e680ec2",
+    "evals/iterations/model-interaction-2026-10-04/results/95242aa6aa1855bfa9e8/artifacts/test_contract.py": "811be620619838e3c98382493442a831dd5421e22444e11c3dd339061ad4e652",
+    "evals/iterations/model-interaction-2026-10-04/results/95242aa6aa1855bfa9e8/patch.diff": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "evals/iterations/model-interaction-2026-10-04/results/95242aa6aa1855bfa9e8/record.json": "06ca12335f18e805258c826a17ba9cc1777a37c2c9729e6a9242ae5ba1dfa3d7",
+    "evals/iterations/model-interaction-2026-10-04/results/95242aa6aa1855bfa9e8/started.json": "dc31486e9e5cb5630c3326fc97a40515b913cf0478cad671d6b7f6b5b2381479",
+    "evals/iterations/model-interaction-2026-10-04/results/ca38b108fcc0361d2853/artifacts/app.py": "6f1c45858920559fbee66cca2e7bdae2738df092ad8d87e21cdf9265e7b9d2ee",
+    "evals/iterations/model-interaction-2026-10-04/results/ca38b108fcc0361d2853/patch.diff": "143136a7d94ed0cd86c1bcfd280ad5198e5b1c0aa14cc347f7b21a1c36a4f601",
+    "evals/iterations/model-interaction-2026-10-04/results/ca38b108fcc0361d2853/record.json": "6f4ec454c4142de070bc153e9b4868708215fce6a1abee5811fb94480799d771",
+    "evals/iterations/model-interaction-2026-10-04/results/ca38b108fcc0361d2853/started.json": "d9bf9583245f3f4e5e35006bd82a77c46a96381a994cbe62e40dc1c81f327034",
+    "evals/iterations/model-interaction-2026-10-04/results/5969efb6fe22c0cb4237/artifacts/app.py": "a850a6792093cab1242039f4854ef9d6846a9dc3ecaa4a3055ac369d6e680ec2",
+    "evals/iterations/model-interaction-2026-10-04/results/5969efb6fe22c0cb4237/artifacts/test_review.py": "1156e8a84a1a8b71f6b95cb8ec9091c54f32d14b90dbfe948f50cfa51abc33d4",
+    "evals/iterations/model-interaction-2026-10-04/results/5969efb6fe22c0cb4237/patch.diff": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "evals/iterations/model-interaction-2026-10-04/results/5969efb6fe22c0cb4237/record.json": "8d8d68d4005cdc1e7ec00619c92242c9e664aad55fdfac966e22d48d5632dc55",
+    "evals/iterations/model-interaction-2026-10-04/results/5969efb6fe22c0cb4237/started.json": "ce3171fa267661b1142f01df41b8915f528c8c77cb25a167b5db37a160e436c1",
+    "evals/iterations/model-interaction-2026-10-04/results/bc01d4d2993db890494c/artifacts/app.py": "20ac552502f57e5c1e09c6b4bc49ea4273f059ddfbcac6aa07432483b1e6297a",
+    "evals/iterations/model-interaction-2026-10-04/results/bc01d4d2993db890494c/patch.diff": "e9582c140af3da30d53affa543d236b60de9f5391f526628c97be707bf7ececb",
+    "evals/iterations/model-interaction-2026-10-04/results/bc01d4d2993db890494c/record.json": "977c401d2129a9dee0cd76a61635675e5dc17b78998826bf24592158bda3aadf",
+    "evals/iterations/model-interaction-2026-10-04/results/bc01d4d2993db890494c/started.json": "3c9453c681be2ec67e4bf07553e52e91dd2efb9c4e180a756fd0b85f851039c3",
+    "evals/iterations/model-interaction-2026-10-04/results/a9603e2a6e4bca46a5a0/artifacts/app.py": "a850a6792093cab1242039f4854ef9d6846a9dc3ecaa4a3055ac369d6e680ec2",
+    "evals/iterations/model-interaction-2026-10-04/results/a9603e2a6e4bca46a5a0/artifacts/test_stream.py": "c2f2498ade8c3c6fff5c7259bfd58f53dc34c49eafc4bc8ddac4879ff6141088",
+    "evals/iterations/model-interaction-2026-10-04/results/a9603e2a6e4bca46a5a0/patch.diff": "273ae254f928d654290febb558852878b502bfa6d5113c7aec19208075fd9ef1",
+    "evals/iterations/model-interaction-2026-10-04/results/a9603e2a6e4bca46a5a0/record.json": "f4937e3377f0ab80122dc3a5b063629e544ea9ef6ef94e832f65785c0d86c3a9",
+    "evals/iterations/model-interaction-2026-10-04/results/a9603e2a6e4bca46a5a0/started.json": "cb26b3172da7712483e472481d891e52cf69e006adb6b5a64ffa5a9bd2c4b7b5",
+    "evals/iterations/model-interaction-2026-10-04/results/3017cd304035323c2f38/artifacts/app.py": "a850a6792093cab1242039f4854ef9d6846a9dc3ecaa4a3055ac369d6e680ec2",
+    "evals/iterations/model-interaction-2026-10-04/results/3017cd304035323c2f38/patch.diff": "273ae254f928d654290febb558852878b502bfa6d5113c7aec19208075fd9ef1",
+    "evals/iterations/model-interaction-2026-10-04/results/3017cd304035323c2f38/record.json": "fb95ed100f19d2c35a572da8147bcf5ae51ce96f78d9f1839b51acc371d81d31",
+    "evals/iterations/model-interaction-2026-10-04/results/3017cd304035323c2f38/started.json": "4ce6b97de43797d65d4aea6d50cc6478a5047e57dfa1127b741ed8b9783486eb",
+    "evals/iterations/model-interaction-2026-10-04/results/3ee0ab1cface11450192/artifacts/app.py": "a850a6792093cab1242039f4854ef9d6846a9dc3ecaa4a3055ac369d6e680ec2",
+    "evals/iterations/model-interaction-2026-10-04/results/3ee0ab1cface11450192/artifacts/test_review.py": "967ea1b9b71813186495747cbbc2987295b09fef89a9977cb2a71d889a041755",
+    "evals/iterations/model-interaction-2026-10-04/results/3ee0ab1cface11450192/patch.diff": "273ae254f928d654290febb558852878b502bfa6d5113c7aec19208075fd9ef1",
+    "evals/iterations/model-interaction-2026-10-04/results/3ee0ab1cface11450192/record.json": "26360b59db7c7e1c668f11c67abb99008cdfdd973b51806aa7a227126a95afe3",
+    "evals/iterations/model-interaction-2026-10-04/results/3ee0ab1cface11450192/started.json": "60f4bd28a8586a5cfe1acff76e083a8f3b73eaa6b620fe8b32ee990249e6af82",
+    "evals/iterations/model-interaction-2026-10-04/results/774f2aabce4b1f12e288/artifacts/app.py": "a850a6792093cab1242039f4854ef9d6846a9dc3ecaa4a3055ac369d6e680ec2",
+    "evals/iterations/model-interaction-2026-10-04/results/774f2aabce4b1f12e288/artifacts/verify_repair.py": "3494dd845a4adea1bda6e41c1e3e5226af9aa767250e8e26004b663279a807bf",
+    "evals/iterations/model-interaction-2026-10-04/results/774f2aabce4b1f12e288/patch.diff": "273ae254f928d654290febb558852878b502bfa6d5113c7aec19208075fd9ef1",
+    "evals/iterations/model-interaction-2026-10-04/results/774f2aabce4b1f12e288/record.json": "d248baadf6158178f4dd242ddac8ed4ddced3b0261226acefc4302cbe6eb1558",
+    "evals/iterations/model-interaction-2026-10-04/results/774f2aabce4b1f12e288/started.json": "3aba1a269fea66fc293490c9d30d92de014ce487d145e6ddf95c4930055dbc86",
+    "evals/iterations/model-interaction-2026-10-04/results/b0bed9f1f1612611ee3c/artifacts/app.py": "a850a6792093cab1242039f4854ef9d6846a9dc3ecaa4a3055ac369d6e680ec2",
+    "evals/iterations/model-interaction-2026-10-04/results/b0bed9f1f1612611ee3c/artifacts/test_contract.py": "f38a6987054743610566fb6cd07ad4842e85b02cc725fb122ce39ccef8497863",
+    "evals/iterations/model-interaction-2026-10-04/results/b0bed9f1f1612611ee3c/patch.diff": "273ae254f928d654290febb558852878b502bfa6d5113c7aec19208075fd9ef1",
+    "evals/iterations/model-interaction-2026-10-04/results/b0bed9f1f1612611ee3c/record.json": "eb42dd59d75ca6bd21d3818eb8f4089e29a3c6a832ad8e250a69334d304fc2c9",
+    "evals/iterations/model-interaction-2026-10-04/results/b0bed9f1f1612611ee3c/started.json": "620ec1c0d6db76653f384d6193cc2592a7484a50cb6b597ed418af4c3c8a181a",
+    "evals/iterations/model-interaction-2026-10-04/results/961bf410811b7fa7c329/artifacts/app.py": "7c07701bd0a9f8ca78e9b8872bc2a19c2c07efb2c1c2667f19fe0ce6fc9a8dff",
+    "evals/iterations/model-interaction-2026-10-04/results/961bf410811b7fa7c329/patch.diff": "28fee25c80056c22455bbae66ed265e7c313ff34b7ee73e30a05a3219cf82e95",
+    "evals/iterations/model-interaction-2026-10-04/results/961bf410811b7fa7c329/record.json": "67eba7b57c7d9626ab8bf10d1b34fce7360fdc8ffdefaf435ec1da16cb127189",
+    "evals/iterations/model-interaction-2026-10-04/results/961bf410811b7fa7c329/started.json": "4824a721ee9cf4bdf81936872b8d9f1d2b1c61bc4459174f4dc68a9c37d3eeeb",
+    "evals/iterations/model-interaction-2026-10-04/results/1d5ef2cdcb1a3f58646f/artifacts/app.py": "74316f0dd54cdb8452477ea4f3228d59efb3e371ca01bec1e6c75f41355b7be4",
+    "evals/iterations/model-interaction-2026-10-04/results/1d5ef2cdcb1a3f58646f/artifacts/test_queue.py": "c8ad5971856fbc72f9b8b2b753e8403c23eef61aeef0aef61002f001e3191167",
+    "evals/iterations/model-interaction-2026-10-04/results/1d5ef2cdcb1a3f58646f/patch.diff": "c72865234110a08008efcbf5592fada0bcb1838753fa11c71dc17715f2ecd00b",
+    "evals/iterations/model-interaction-2026-10-04/results/1d5ef2cdcb1a3f58646f/record.json": "bb004f472f343db900b1ba35b15119eb2a234068eb1f5ae9df42c2116d38b41e",
+    "evals/iterations/model-interaction-2026-10-04/results/1d5ef2cdcb1a3f58646f/started.json": "1fd82a9ac83f5a5b6d879b1bc05cae7a255a8dda2223094df332b7e4bccaccea",
+    "evals/iterations/model-interaction-2026-10-04/results/214bbbcbfc8899122d2b/artifacts/app.py": "72469e4ee1e3e630e3f07aedab1e2aa806abf5ded6de15baec5c51af872a79a7",
+    "evals/iterations/model-interaction-2026-10-04/results/214bbbcbfc8899122d2b/patch.diff": "16d759a6aec577e7d58902567bfdf79d3eb5a1bee4e1a282f64d440218b2a783",
+    "evals/iterations/model-interaction-2026-10-04/results/214bbbcbfc8899122d2b/record.json": "d6043813be1dc53f60aabf1ffb88ababa201301c990014040259f824605f598b",
+    "evals/iterations/model-interaction-2026-10-04/results/214bbbcbfc8899122d2b/started.json": "a61128859b8345d83e4e161433b57019da26512f4be3b56a4d883fc6ced5de4d",
+    "evals/iterations/model-interaction-2026-10-04/results/ee65994a22f18ce6d8c4/artifacts/app.py": "8ad2c30eb99f2ec6af6ee855c036390d9796dc1f10084083fa2a6cd9b90e85ff",
+    "evals/iterations/model-interaction-2026-10-04/results/ee65994a22f18ce6d8c4/artifacts/verify_queue.py": "cc65f380a28444a09ddc3195ed3eeed26dc7b2b5be571a471ac426dd452609b5",
+    "evals/iterations/model-interaction-2026-10-04/results/ee65994a22f18ce6d8c4/patch.diff": "a23f3ff3139e3f61a4787310eec42417201d636ad9c1ad611bb94ec2f6e2cbfb",
+    "evals/iterations/model-interaction-2026-10-04/results/ee65994a22f18ce6d8c4/record.json": "8fb3ed2f2256c783ae6425799f6eff8bed09adc2348421fd96256532c1a7222b",
+    "evals/iterations/model-interaction-2026-10-04/results/ee65994a22f18ce6d8c4/started.json": "9ae1adbaadd77e7f0d5e3bca37d247669ca7be6dda25a06c437c39a3f360a53a",
+    "evals/iterations/model-interaction-2026-10-04/results/f7bd5f14ab7b000407f6/artifacts/app.py": "9387f3d3741c00dde388e19ca25fabf8504b07c791abb0ac786b1a89fcef8942",
+    "evals/iterations/model-interaction-2026-10-04/results/f7bd5f14ab7b000407f6/artifacts/test_queue.py": "3616619a9cb05e393598eb72f4cb6e659712ca930c99e1bdc5d21a7eb594daa2",
+    "evals/iterations/model-interaction-2026-10-04/results/f7bd5f14ab7b000407f6/patch.diff": "fd1a6dbc11c83d0f668ed2ea63d2f42b5c239a63fbabb328a0ef046278d6b3d4",
+    "evals/iterations/model-interaction-2026-10-04/results/f7bd5f14ab7b000407f6/record.json": "51f8b70d39b5d7ceb4cb8b0ef908fcc4066c7fe0c0573e64d6cb2008035934ce",
+    "evals/iterations/model-interaction-2026-10-04/results/f7bd5f14ab7b000407f6/started.json": "57a9c166ceaa6fc93f0161dd32a9b4ff24cd31d86a758fd5502ec075ca956392",
+    "evals/iterations/model-interaction-2026-10-04/results/4c80ba162f375b6b8dc5/artifacts/app.py": "adb2eef4c59a5613d4efca7a93c4f848a40aed88718d2e8d54c80a243c26ee7e",
+    "evals/iterations/model-interaction-2026-10-04/results/4c80ba162f375b6b8dc5/artifacts/test_queue.py": "d47d0ac12dbf58f0f5c1c52f3dbaf2d0dc35a5d80463f98b40dda4890768758e",
+    "evals/iterations/model-interaction-2026-10-04/results/4c80ba162f375b6b8dc5/patch.diff": "c9b93c9d07885df5c9ac5588dbc5a1f5e772e5d9539965ba163ca1924a7c5972",
+    "evals/iterations/model-interaction-2026-10-04/results/4c80ba162f375b6b8dc5/record.json": "e2e275d82a2b41b02f63140b13cc8920b8573e50b10a5a9e97c7a156afad261b",
+    "evals/iterations/model-interaction-2026-10-04/results/4c80ba162f375b6b8dc5/started.json": "c2a0c0126d43c7dd7bc847d626e235049f45806be0048814333b83764a7ba351",
+    "evals/iterations/model-interaction-2026-10-04/results/c5f7273841ccb43bc695/artifacts/app.py": "140d0dbcf5eb93e5e42c3d420531957c3e7e8e8c57d8b902c90a40cacaf228dd",
+    "evals/iterations/model-interaction-2026-10-04/results/c5f7273841ccb43bc695/artifacts/test_cache.py": "5f4f3a678f5498e9bc35135f2c8629827936fe4037fe8f68abcae7dc3b6bd11b",
+    "evals/iterations/model-interaction-2026-10-04/results/c5f7273841ccb43bc695/patch.diff": "cbeab79efb563242735ea6ab00c83af317139ca3194000587e21b3e6300636df",
+    "evals/iterations/model-interaction-2026-10-04/results/c5f7273841ccb43bc695/record.json": "3b0b874a94f2fd91ab7ffa1520e28dfc7214047d2cfa0335ac5ab0d95b8032e0",
+    "evals/iterations/model-interaction-2026-10-04/results/c5f7273841ccb43bc695/started.json": "4938631e51bd4e1b792584bd4e49b4d1fe3a66087981251f08d84f552f2c26a0",
+    "evals/iterations/model-interaction-2026-10-04/results/8c0c6056bb803ed581cf/artifacts/app.py": "6db1eb2801694c15371a95fe00c5537995e13d5cb498749a7342dc82f2fc85d1",
+    "evals/iterations/model-interaction-2026-10-04/results/8c0c6056bb803ed581cf/patch.diff": "42fd59651b5b27023e8b613b738b0964fbe30a10efbda437e686380ec50eccab",
+    "evals/iterations/model-interaction-2026-10-04/results/8c0c6056bb803ed581cf/record.json": "0bc4114eeb98ae2455bf143667bdd11ad46d3893d6e9617de4d4ef46111f3d4b",
+    "evals/iterations/model-interaction-2026-10-04/results/8c0c6056bb803ed581cf/started.json": "ababcb788941b5ef07db7137529e79ddcb518bd47dbe264933afa4f13c477f56",
+    "evals/iterations/model-interaction-2026-10-04/results/b83640f13ef853d628e2/artifacts/acceptance_test.py": "1cbe02401c68266115af66d90c0af7f8f1277bdfb2534f236e67199ab2ac41ea",
+    "evals/iterations/model-interaction-2026-10-04/results/b83640f13ef853d628e2/artifacts/app.py": "452ff201e24d2bda5aec96eaf1f337a42793bc08757f0da37deade701b02dc17",
+    "evals/iterations/model-interaction-2026-10-04/results/b83640f13ef853d628e2/patch.diff": "ffaf03d933a47fe1b8a31731b2a4d945849d9ff391d66157ae2b52f874c47e9d",
+    "evals/iterations/model-interaction-2026-10-04/results/b83640f13ef853d628e2/record.json": "d48c681f4dd4357d1302716d295f5c19c8467a65c9fe7cea7990f7cbf51342ef",
+    "evals/iterations/model-interaction-2026-10-04/results/b83640f13ef853d628e2/started.json": "964834f83e7a34303be5ff72cdc0c65fe8b28796833145a137b383233aad4c39",
+    "evals/iterations/model-interaction-2026-10-04/results/ba9236fd310295106d61/artifacts/app.py": "242baa111e50179816cfa7de44ca4bd9b2852bd5c8ab4f1adda2aeab1cb65e86",
+    "evals/iterations/model-interaction-2026-10-04/results/ba9236fd310295106d61/artifacts/test_contract.py": "9c387a0ad1af7d063b3dddf34d729c8b53c4721c238520eaf5337f07c6eb13b5",
+    "evals/iterations/model-interaction-2026-10-04/results/ba9236fd310295106d61/patch.diff": "1e799e71bd0bdb867f9eadd2afda47c39952577f1e0deb83735a00f798380cc4",
+    "evals/iterations/model-interaction-2026-10-04/results/ba9236fd310295106d61/record.json": "849b07e3b4d512beaa25ef10fcdb055541378a39ae11b0207c8056a0a31c253d",
+    "evals/iterations/model-interaction-2026-10-04/results/ba9236fd310295106d61/started.json": "a075da6bb904c6877b10837e7da695652af243122f75eabb0840b8ceb99a1005",
+    "evals/iterations/model-interaction-2026-10-04/results/58745a60066ccb2da661/artifacts/app.py": "be00f3cacd1e65bef438a027a4a29a89f4b54e82aff001a3a56e90a238627d9f",
+    "evals/iterations/model-interaction-2026-10-04/results/58745a60066ccb2da661/patch.diff": "d019cc6d99974dfd1d326d8d867474ab0b1ce27dd58520a70d9390f9efdf3646",
+    "evals/iterations/model-interaction-2026-10-04/results/58745a60066ccb2da661/record.json": "9b0c193ddfb0b19956ba54fc45edd2d0358f1868d16c17e96c012141936b4237",
+    "evals/iterations/model-interaction-2026-10-04/results/58745a60066ccb2da661/started.json": "af6b960066147e5c576971c5e9e47ab11ff8d9134162c8142ca500f659a03794",
+    "evals/iterations/model-interaction-2026-10-04/results/d0753241ccd67a9cf696/artifacts/app.py": "f43b5d3ad6d7ddc1aeb38e351cd6cb448bc81d564148ced2ed3e3d84748ab791",
+    "evals/iterations/model-interaction-2026-10-04/results/d0753241ccd67a9cf696/artifacts/test_cache.py": "c6b733738d422529489d7eb567618ea4127175617e2a0207c7b5a499134b6cd3",
+    "evals/iterations/model-interaction-2026-10-04/results/d0753241ccd67a9cf696/patch.diff": "82e5a78d97a24f7bfac5c68d20a69d08e428ac4195d75c043c53288868c88c16",
+    "evals/iterations/model-interaction-2026-10-04/results/d0753241ccd67a9cf696/record.json": "8e00a09c3d0d694ecba3ca23470ff9267425916cdad2d6f3f622bf9c59198ad9",
+    "evals/iterations/model-interaction-2026-10-04/results/d0753241ccd67a9cf696/started.json": "a0bb072460d1f67d96eb7caa38e23e35ba77654281d89910e274f73d206996d4",
+    "evals/iterations/model-interaction-2026-10-04/results/644c674f5275473eb33f/artifacts/app.py": "d856fbce39bd2b4fedbf9279cd0be4cef5d1a3560120f46a2623dd1c73dcdb89",
+    "evals/iterations/model-interaction-2026-10-04/results/644c674f5275473eb33f/patch.diff": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "evals/iterations/model-interaction-2026-10-04/results/644c674f5275473eb33f/record.json": "ad24d8c79628f26e536410b4853de52190d478dab94e26ce501335cd61094a25",
+    "evals/iterations/model-interaction-2026-10-04/results/644c674f5275473eb33f/started.json": "ea79e3289db4076a994eceea94105089bb21a227e7fe6f723f6fc54bbed8abc5",
+    "evals/iterations/model-interaction-2026-10-04/results/632109a2db4d47a954a8/artifacts/app.py": "d856fbce39bd2b4fedbf9279cd0be4cef5d1a3560120f46a2623dd1c73dcdb89",
+    "evals/iterations/model-interaction-2026-10-04/results/632109a2db4d47a954a8/patch.diff": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "evals/iterations/model-interaction-2026-10-04/results/632109a2db4d47a954a8/record.json": "6e90e412d4675fedc0818c97e3a473fb38d75bfcad8c3aa2458f958d52fa8631",
+    "evals/iterations/model-interaction-2026-10-04/results/632109a2db4d47a954a8/started.json": "eded21ed4e7ec8cf296008c2ea1f14f82febb28bdfb39742a4188689ad795e4e",
+    "evals/iterations/model-interaction-2026-10-04/results/d642bd66cbbc8716239e/artifacts/app.py": "d856fbce39bd2b4fedbf9279cd0be4cef5d1a3560120f46a2623dd1c73dcdb89",
+    "evals/iterations/model-interaction-2026-10-04/results/d642bd66cbbc8716239e/artifacts/test_contract.py": "7e7b1c489d00557ab75f6d55e69ee19b9701c46fb687f14deb37cd89c5733ca5",
+    "evals/iterations/model-interaction-2026-10-04/results/d642bd66cbbc8716239e/patch.diff": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "evals/iterations/model-interaction-2026-10-04/results/d642bd66cbbc8716239e/record.json": "aaef703e8872e2a36bd03f250ddad65bc71c94d196b94c53cc6041750b9309e5",
+    "evals/iterations/model-interaction-2026-10-04/results/d642bd66cbbc8716239e/started.json": "44fd61214d8c30302816850ab8c50e52748257652a1df8fb87508abe4b009852",
+    "evals/iterations/model-interaction-2026-10-04/results/95fba576b1aa1e143fdd/artifacts/app.py": "d856fbce39bd2b4fedbf9279cd0be4cef5d1a3560120f46a2623dd1c73dcdb89",
+    "evals/iterations/model-interaction-2026-10-04/results/95fba576b1aa1e143fdd/artifacts/test_contract.py": "c43e6bc6e7ebbc4bd52b3c72fad7fe2dc2e7201d07bd3187396bb799caf22d6e",
+    "evals/iterations/model-interaction-2026-10-04/results/95fba576b1aa1e143fdd/patch.diff": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "evals/iterations/model-interaction-2026-10-04/results/95fba576b1aa1e143fdd/record.json": "612fbf9871896786dfd8326eb2375e6024869fdcaded4bf30dcc666693406dff",
+    "evals/iterations/model-interaction-2026-10-04/results/95fba576b1aa1e143fdd/started.json": "b87fa1e11a36adc9d1a7aea1b72196c3303ba1f4d4c65a7eab4f4a97e6d71948",
+    "evals/iterations/model-interaction-2026-10-04/results/1179c204aae03c7a2581/artifacts/app.py": "d856fbce39bd2b4fedbf9279cd0be4cef5d1a3560120f46a2623dd1c73dcdb89",
+    "evals/iterations/model-interaction-2026-10-04/results/1179c204aae03c7a2581/artifacts/test_contract.py": "1a5ac1b505d12a8edd77ae24f92bf22cce273d62f4c7b1b3dd63d5c0a63db257",
+    "evals/iterations/model-interaction-2026-10-04/results/1179c204aae03c7a2581/patch.diff": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "evals/iterations/model-interaction-2026-10-04/results/1179c204aae03c7a2581/record.json": "480e0127270b74a0065143c4bced394c68819c266c3c4b205274983cfa094582",
+    "evals/iterations/model-interaction-2026-10-04/results/1179c204aae03c7a2581/started.json": "0189c7925905de4f36bb47b9b40b8e8f97e948c395813c816816e210c96baa50",
+    "evals/iterations/model-interaction-2026-10-04/results/1c719db559c2d2d00040/artifacts/app.py": "d856fbce39bd2b4fedbf9279cd0be4cef5d1a3560120f46a2623dd1c73dcdb89",
+    "evals/iterations/model-interaction-2026-10-04/results/1c719db559c2d2d00040/patch.diff": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "evals/iterations/model-interaction-2026-10-04/results/1c719db559c2d2d00040/record.json": "70851533646d3a3038e8fbe99f83abde1f6f9edb40a3b18ded65218316413ca0",
+    "evals/iterations/model-interaction-2026-10-04/results/1c719db559c2d2d00040/started.json": "cad7b7b76cf73e5239cccdc9280e31acc842abef406b97ee229af8994bbba9b7",
+    "evals/iterations/model-interaction-2026-10-04/results/7480b238e2e6377467ba/artifacts/app.py": "35485e35352ced0c17ea3ac9964d4f24d520d48b2c047a302fb409e82e95fad3",
+    "evals/iterations/model-interaction-2026-10-04/results/7480b238e2e6377467ba/artifacts/test_contract.py": "4c908db87c78d9105e3f9978ec6ed27fd3414c25e674b994af7f1a1c05242196",
+    "evals/iterations/model-interaction-2026-10-04/results/7480b238e2e6377467ba/patch.diff": "9aaebcc6d0aca206cbf99bdd3d59b8fbbbf98fef2b055e10f0a87a742e1f4661",
+    "evals/iterations/model-interaction-2026-10-04/results/7480b238e2e6377467ba/record.json": "20563e6fb9cb71a2d531486cb653db0d23b6b3a9fd46e688c12163bf241d4a33",
+    "evals/iterations/model-interaction-2026-10-04/results/7480b238e2e6377467ba/started.json": "6aa4b7397969c8c1a670b2d39a983e6375a0b65f8358d542c31e2e7af59e8276",
+    "evals/iterations/model-interaction-2026-10-04/results/2498df15439c10dc39de/artifacts/app.py": "2b546caa07fe4f98ecf3bee761315261d00a6d5c00c804b97895a39d37a009bb",
+    "evals/iterations/model-interaction-2026-10-04/results/2498df15439c10dc39de/artifacts/test_contract.py": "60aac8581047284ac49514909fa547cef361867ca77ff9d58213fb7465db277d",
+    "evals/iterations/model-interaction-2026-10-04/results/2498df15439c10dc39de/patch.diff": "20f3858f4e58ceb385d7f4892b24b09bd1039f86b881a1ecdd00c90ccd2a2597",
+    "evals/iterations/model-interaction-2026-10-04/results/2498df15439c10dc39de/record.json": "2236ddad5713207d1f7adfd8d22f8b6edab5882b9275c0e1e9da59ad7e7f28fc",
+    "evals/iterations/model-interaction-2026-10-04/results/2498df15439c10dc39de/started.json": "b6a32101d69735d5982adf20467c3db3ba42cfb18fb3657dd60457eb778d9b91",
+    "evals/iterations/model-interaction-2026-10-04/results/afe0717795e58ac7e4c2/artifacts/app.py": "edc979774214e8230a9d2825b75558cea177256046263a725152856000d9fd93",
+    "evals/iterations/model-interaction-2026-10-04/results/afe0717795e58ac7e4c2/artifacts/test_contract.py": "50a6c55a87de0d947e050c226e53c84be24a62f6354bfbf094a912820c50cef5",
+    "evals/iterations/model-interaction-2026-10-04/results/afe0717795e58ac7e4c2/patch.diff": "3bfe8d28d103a9f75318b48483b9e0008f30157885ffac12c4648902371caa73",
+    "evals/iterations/model-interaction-2026-10-04/results/afe0717795e58ac7e4c2/record.json": "4640da95305eb9a16a3fee2274bfdb18caeef59dc4ae91018f185047f2001c25",
+    "evals/iterations/model-interaction-2026-10-04/results/afe0717795e58ac7e4c2/started.json": "894b9524cdef8ad23a4f89c84cd1605abafce5d0c15b351f45ea65c043a253f1",
+    "evals/iterations/model-interaction-2026-10-04/results/9841a2472d7974d504a5/artifacts/app.py": "437db5ccef4f7ae6505d602e3e1c9755953467317286efe314c4b12af9d6136a",
+    "evals/iterations/model-interaction-2026-10-04/results/9841a2472d7974d504a5/patch.diff": "62ec9d4c258e34960b9815b7dbdb23c051a20bb09aa5cb7617d3cc7bacf63b51",
+    "evals/iterations/model-interaction-2026-10-04/results/9841a2472d7974d504a5/record.json": "6005896d540019c9a51e17ae3e0ec8857ade121783c0da1abea6f7c0acc49b7b",
+    "evals/iterations/model-interaction-2026-10-04/results/9841a2472d7974d504a5/started.json": "4339212641d16591b8b8159764a2edc85858ca86185fc1a3f0611bfe3a26ffc2",
+    "evals/iterations/model-interaction-2026-10-04/results/29039d5c8af0e20726ef/artifacts/app.py": "1be0d4e0feb7e6247444a677394df4d8c345b2af5e6a13502325ec6362071a09",
+    "evals/iterations/model-interaction-2026-10-04/results/29039d5c8af0e20726ef/patch.diff": "2e3edd1f0ef2df8166d3e4aac35cb789c7d51e336d652982d773d05c285b6f29",
+    "evals/iterations/model-interaction-2026-10-04/results/29039d5c8af0e20726ef/record.json": "afd73cf69a02daea1508dcb9d7463a76dc3d76bf103eb1ee8788ccd6e34a734b",
+    "evals/iterations/model-interaction-2026-10-04/results/29039d5c8af0e20726ef/started.json": "e72debac0dd3e6b5a27f49c565990bb21341a8c97ed182c77be29948fb6068e6",
+    "evals/iterations/model-interaction-2026-10-04/results/acef7c42b254901f57e3/artifacts/app.py": "af3979be2f06d767ae7e12b95e5ad6abe152cce2411d1148c2032645ed76a009",
+    "evals/iterations/model-interaction-2026-10-04/results/acef7c42b254901f57e3/artifacts/test_review.py": "bf3d38169218dbcf6557b24acd9c4a4b13606d8fb82bbe356db3eea68c1f8461",
+    "evals/iterations/model-interaction-2026-10-04/results/acef7c42b254901f57e3/patch.diff": "b7418a52ae6121c1bb3da941d771bbee906507cb14e2f99e995243f50677ac7f",
+    "evals/iterations/model-interaction-2026-10-04/results/acef7c42b254901f57e3/record.json": "13f25a2ea8e97c0e4d0ffcefb91e32e7d9c8f2408021d2671da247dd392d415d",
+    "evals/iterations/model-interaction-2026-10-04/results/acef7c42b254901f57e3/started.json": "cd41e7a4079c5af55907695951e1a6af6eddf6d4559c7cec5ad2f1030fd5a7a2",
+    "evals/iterations/model-interaction-2026-10-04/results/6edd20b0ccae5b6ec2c1/artifacts/app.py": "a850a6792093cab1242039f4854ef9d6846a9dc3ecaa4a3055ac369d6e680ec2",
+    "evals/iterations/model-interaction-2026-10-04/results/6edd20b0ccae5b6ec2c1/patch.diff": "2aba719087ce4bcf829e270cb7a2fb721c26ab9770c76a0a52440463def99e8e",
+    "evals/iterations/model-interaction-2026-10-04/results/6edd20b0ccae5b6ec2c1/record.json": "db5bc0c1436a039f8efa10e624c3b2b8ccd4189fa6161f6f7f0fac292f92774b",
+    "evals/iterations/model-interaction-2026-10-04/results/6edd20b0ccae5b6ec2c1/started.json": "7612973d31bf8da3687c2f384b1b7cf334ee4caf3242f661a79e12cb155639c1",
+    "evals/iterations/model-interaction-2026-10-04/results/9910aea57a5f8653a9e4/artifacts/app.py": "a86b645ee027b576577e0646fec66784d8bad7df6dca065704c78fcaefd478e9",
+    "evals/iterations/model-interaction-2026-10-04/results/9910aea57a5f8653a9e4/artifacts/original_test_results.txt": "10ff3aadcd82f6af37218812de2c3231afe355f6f0ed64969d280d529949fe47",
+    "evals/iterations/model-interaction-2026-10-04/results/9910aea57a5f8653a9e4/artifacts/test_contract.py": "40b81bc1c2b2842f5cdfe3230c33c4d5f0f00f08495445382950792c4cd44f06",
+    "evals/iterations/model-interaction-2026-10-04/results/9910aea57a5f8653a9e4/patch.diff": "154b6ca503ae8ad4f4b75f69bc06d30da6ebccf836d81dfdf7b94e1ca2b183a5",
+    "evals/iterations/model-interaction-2026-10-04/results/9910aea57a5f8653a9e4/record.json": "ef4ff98f5d86eb107312f04ae040acee2dfda860d1c5afca77d85db7b396b78f",
+    "evals/iterations/model-interaction-2026-10-04/results/9910aea57a5f8653a9e4/started.json": "cde73cf23d5c07b36cf9ff03b836adcdf9a9949a02d90328c4d3274e9ae561d9",
+    "evals/iterations/model-interaction-2026-10-04/results/07d01db98f1f1bddbd96/artifacts/app.py": "7fa530843643914b450e5ebfd720642068394f935c13163cb3cee83fc1d926d6",
+    "evals/iterations/model-interaction-2026-10-04/results/07d01db98f1f1bddbd96/patch.diff": "919d40120430ea66bf50a97aa8421517376a9363927041d6b34cadc641a429f6",
+    "evals/iterations/model-interaction-2026-10-04/results/07d01db98f1f1bddbd96/record.json": "8536693caf665ed365f3d99bfb5467feed1351e02bab3527f8df1547f58b3c0f",
+    "evals/iterations/model-interaction-2026-10-04/results/07d01db98f1f1bddbd96/started.json": "cb53773cb23fe4bf129de99079fb9155d7b5cd81ba748497627c49d32cf8219b",
+    "evals/iterations/model-interaction-2026-10-04/results/3cdd13e426484d3dafb8/artifacts/app.py": "65d1fd321104a6c1d536ba35b5a6d5b85c802e74cf597a093bb7f5692808ef83",
+    "evals/iterations/model-interaction-2026-10-04/results/3cdd13e426484d3dafb8/artifacts/review_checks.py": "21f377cd102589c47ed8c7ff1941c292848878dfc05701f9f990a831d91f54ac",
+    "evals/iterations/model-interaction-2026-10-04/results/3cdd13e426484d3dafb8/patch.diff": "2ecaad755d7e6e78aa37af0581702e177da1b6db728a4c244d9737d73a41d402",
+    "evals/iterations/model-interaction-2026-10-04/results/3cdd13e426484d3dafb8/record.json": "88e21160267501116b4375d6c8d5eff8771142d586888a1a277237a8f961469c",
+    "evals/iterations/model-interaction-2026-10-04/results/3cdd13e426484d3dafb8/started.json": "1c2e68080e37626b9b8d382f668c1a8d6d4870258b78616940736680e2eca73a",
+    "evals/iterations/model-interaction-2026-10-04/results/9607976f1dbc05974181/artifacts/app.py": "5f7151ab657632ea7a88ecc9aec516bfaa3a8f1e555a6557d2cb1705876288f7",
+    "evals/iterations/model-interaction-2026-10-04/results/9607976f1dbc05974181/artifacts/test_app.py": "3b27c5cb432eb516aac2b423f0d4c95ef551e2dfd9f2486d0499ea6e7706173a",
+    "evals/iterations/model-interaction-2026-10-04/results/9607976f1dbc05974181/patch.diff": "f62851daec32734e5f453c0ad6718fe4371e4cac7ab13d19719d54268c1fd993",
+    "evals/iterations/model-interaction-2026-10-04/results/9607976f1dbc05974181/record.json": "c582aab9faa1e0b1c42e40092d850b071cc1a87e9e2e0a1ccb377fe79b029b05",
+    "evals/iterations/model-interaction-2026-10-04/results/9607976f1dbc05974181/started.json": "49e7957dcd8b37703062ff9e77b0f23544c12edac6987f1c7583f4b06e49c65a",
+    "evals/iterations/model-interaction-2026-10-04/results/7bdb9234801fae0a4655/artifacts/app.py": "70e4eb5918fba2b589bde0d95adc5ba7127ad84ea7e8b30cc78966a0cf45cb2c",
+    "evals/iterations/model-interaction-2026-10-04/results/7bdb9234801fae0a4655/artifacts/original_test_results.txt": "6cb432c5b7ac8285ea87992fde6710c2fee9b21a46c10f153cfda81259d832fd",
+    "evals/iterations/model-interaction-2026-10-04/results/7bdb9234801fae0a4655/artifacts/test_adapter.py": "f94f96785dc64d4a8a0c4807891834a3e5412004b332c734b02a6909e62965a8",
+    "evals/iterations/model-interaction-2026-10-04/results/7bdb9234801fae0a4655/patch.diff": "a7544ba32a4446f754383f156dc7fc8e82d45fc87a7f577057ae042aa331824e",
+    "evals/iterations/model-interaction-2026-10-04/results/7bdb9234801fae0a4655/record.json": "7d9401d6f2d93a9e7b8ef0e8d35cba3348cdccb2dbdaaaf6e921c7c9e05fda57",
+    "evals/iterations/model-interaction-2026-10-04/results/7bdb9234801fae0a4655/started.json": "c09de9f9d239434e7c8cbc12de78a835aacfa7ad84e008b2679d0fb4db53e42b",
+    "evals/iterations/model-interaction-2026-10-04/results/4ba73fd7ba3b838d1d9f/artifacts/app.py": "d856fbce39bd2b4fedbf9279cd0be4cef5d1a3560120f46a2623dd1c73dcdb89",
+    "evals/iterations/model-interaction-2026-10-04/results/4ba73fd7ba3b838d1d9f/patch.diff": "c9e1828219808053b915ba4bd796edbe450d8fe92eaf51ac183b0e546abf91c6",
+    "evals/iterations/model-interaction-2026-10-04/results/4ba73fd7ba3b838d1d9f/record.json": "7315e88e394f440c3e87179890483e181734e6699bfa08a35fbfeb2e91e8b12d",
+    "evals/iterations/model-interaction-2026-10-04/results/4ba73fd7ba3b838d1d9f/started.json": "4c20ee830b667b3030af130005cbff1771ea5845b66b1432dbcc82250f1e566a",
+    "evals/iterations/model-interaction-2026-10-04/results/63eee80d5c01690fc10e/artifacts/app.py": "d856fbce39bd2b4fedbf9279cd0be4cef5d1a3560120f46a2623dd1c73dcdb89",
+    "evals/iterations/model-interaction-2026-10-04/results/63eee80d5c01690fc10e/artifacts/test_contract.py": "41f1a5723823a54a3e2ed6609ac21e4b67168134c647d95952dbccf6c287c7f7",
+    "evals/iterations/model-interaction-2026-10-04/results/63eee80d5c01690fc10e/patch.diff": "c9e1828219808053b915ba4bd796edbe450d8fe92eaf51ac183b0e546abf91c6",
+    "evals/iterations/model-interaction-2026-10-04/results/63eee80d5c01690fc10e/record.json": "ec68348c5c3b0ba24d1f488fc1d9dd4f54954f86ae196af9a2054c65c45f2a0e",
+    "evals/iterations/model-interaction-2026-10-04/results/63eee80d5c01690fc10e/started.json": "1ba128ae5a4f644c33969c99d424873adeef49d14a5c01ea8c61a82359001f29",
+    "evals/iterations/model-interaction-2026-10-04/results/8273eeb3cff15ded1a99/artifacts/app.py": "d856fbce39bd2b4fedbf9279cd0be4cef5d1a3560120f46a2623dd1c73dcdb89",
+    "evals/iterations/model-interaction-2026-10-04/results/8273eeb3cff15ded1a99/patch.diff": "c9e1828219808053b915ba4bd796edbe450d8fe92eaf51ac183b0e546abf91c6",
+    "evals/iterations/model-interaction-2026-10-04/results/8273eeb3cff15ded1a99/record.json": "09e4447d0e95d13872350a04fe75d91f50d69f0b60fb89fc0dde7b463d6835f1",
+    "evals/iterations/model-interaction-2026-10-04/results/8273eeb3cff15ded1a99/started.json": "ef454b7912a6c15fc9c999b3b53b954bbb0ddddbf276a23e6f2005058266c9ef",
+    "evals/iterations/model-interaction-2026-10-04/results/1bf433f8d710c05987c5/artifacts/app.py": "d856fbce39bd2b4fedbf9279cd0be4cef5d1a3560120f46a2623dd1c73dcdb89",
+    "evals/iterations/model-interaction-2026-10-04/results/1bf433f8d710c05987c5/patch.diff": "c9e1828219808053b915ba4bd796edbe450d8fe92eaf51ac183b0e546abf91c6",
+    "evals/iterations/model-interaction-2026-10-04/results/1bf433f8d710c05987c5/record.json": "316c5740233c3adb19556b63f7899a7a181fc4c46a8b93201e0df90d4c4025f7",
+    "evals/iterations/model-interaction-2026-10-04/results/1bf433f8d710c05987c5/started.json": "a9c899a3ce1346c693a42e3d666c3488640c20d8f57adc9c979e200954b26f05",
+    "evals/iterations/model-interaction-2026-10-04/results/4bf0ac8a3d6816518073/artifacts/app.py": "d856fbce39bd2b4fedbf9279cd0be4cef5d1a3560120f46a2623dd1c73dcdb89",
+    "evals/iterations/model-interaction-2026-10-04/results/4bf0ac8a3d6816518073/artifacts/test_contract.py": "22a318d9e76a48024d745410e09cff913bcac4d2bbe9924d8e114fc6f8cbffa4",
+    "evals/iterations/model-interaction-2026-10-04/results/4bf0ac8a3d6816518073/patch.diff": "c9e1828219808053b915ba4bd796edbe450d8fe92eaf51ac183b0e546abf91c6",
+    "evals/iterations/model-interaction-2026-10-04/results/4bf0ac8a3d6816518073/record.json": "e59bbd23f63699d7bc8fe1e090e8e02c653cb795e304f91f5077268361b88960",
+    "evals/iterations/model-interaction-2026-10-04/results/4bf0ac8a3d6816518073/started.json": "78d8ee028c133d81b43207c3e46fb251f2e3aead7f068f7cc2c90c15ce9c9ea6",
+    "evals/iterations/model-interaction-2026-10-04/results/bbad6d392ea6d401dda6/artifacts/app.py": "d856fbce39bd2b4fedbf9279cd0be4cef5d1a3560120f46a2623dd1c73dcdb89",
+    "evals/iterations/model-interaction-2026-10-04/results/bbad6d392ea6d401dda6/artifacts/original_test_results.txt": "8be1a05f1d2d506cdf69576423bdcf5f1299ee1e64779ad407dccf2d5388cd7e",
+    "evals/iterations/model-interaction-2026-10-04/results/bbad6d392ea6d401dda6/artifacts/test_contract.py": "eed4eb08d6b351e1d5617dc78947aa3b05ad2d476bb233f388a96501dde2412c",
+    "evals/iterations/model-interaction-2026-10-04/results/bbad6d392ea6d401dda6/patch.diff": "c9e1828219808053b915ba4bd796edbe450d8fe92eaf51ac183b0e546abf91c6",
+    "evals/iterations/model-interaction-2026-10-04/results/bbad6d392ea6d401dda6/record.json": "aad8b895aa51de261327a374f05cb7e40da935f65fecad42e8d41d280bd22327",
+    "evals/iterations/model-interaction-2026-10-04/results/bbad6d392ea6d401dda6/started.json": "ed0018726f55d27cf82661abeb7a77a3e39f140c5fa7e25de48e766cf87d9195",
+    "evals/iterations/model-interaction-2026-10-04/results/451e84b1835bda8113e1/artifacts/app.py": "140d0dbcf5eb93e5e42c3d420531957c3e7e8e8c57d8b902c90a40cacaf228dd",
+    "evals/iterations/model-interaction-2026-10-04/results/451e84b1835bda8113e1/patch.diff": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "evals/iterations/model-interaction-2026-10-04/results/451e84b1835bda8113e1/record.json": "c1c2a5beb7f9bf99515d1ad9d992634c313cf5a726b57815bc7488753ff8af92",
+    "evals/iterations/model-interaction-2026-10-04/results/451e84b1835bda8113e1/started.json": "855c7c4be1ea690a8e4aee7a0b7293f6766e74cb2135111fa1e4729159906aa7",
+    "evals/iterations/model-interaction-2026-10-04/results/99b448f01c5e43137b6f/artifacts/app.py": "140d0dbcf5eb93e5e42c3d420531957c3e7e8e8c57d8b902c90a40cacaf228dd",
+    "evals/iterations/model-interaction-2026-10-04/results/99b448f01c5e43137b6f/patch.diff": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "evals/iterations/model-interaction-2026-10-04/results/99b448f01c5e43137b6f/record.json": "e5e6d2f4c5d9415e6d07e541e25848232338dcc9783e400f19d41e545c16f9bb",
+    "evals/iterations/model-interaction-2026-10-04/results/99b448f01c5e43137b6f/started.json": "43bd483cc11ba5d5c0161a98b5679ae4a26e74207d5caeb9591355af211cbe10",
+    "evals/iterations/model-interaction-2026-10-04/results/ef796ccbebb1ae348ee0/artifacts/app.py": "140d0dbcf5eb93e5e42c3d420531957c3e7e8e8c57d8b902c90a40cacaf228dd",
+    "evals/iterations/model-interaction-2026-10-04/results/ef796ccbebb1ae348ee0/artifacts/test_contract.py": "96604658beb924e5dd9c6308cd36ae0cf47e03929271791b8a6569a620221a8e",
+    "evals/iterations/model-interaction-2026-10-04/results/ef796ccbebb1ae348ee0/patch.diff": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "evals/iterations/model-interaction-2026-10-04/results/ef796ccbebb1ae348ee0/record.json": "b1ca59cd2b2f6f7abcb85a61d9c0f0c07e293962fe5de1972356cc76c7c600e7",
+    "evals/iterations/model-interaction-2026-10-04/results/ef796ccbebb1ae348ee0/started.json": "073d0fe5b312311cfce94ceeaa1dad6fe39ba36856a3feeb45c7c5d6ed776c57",
+    "evals/iterations/model-interaction-2026-10-04/results/76a9eaffb9224d0eb077/artifacts/acceptance.py": "9f04a5ebc4d4dfefc71d8585e8e3cd5238ee3fc1c363eb8e7ef63396a1f6dd12",
+    "evals/iterations/model-interaction-2026-10-04/results/76a9eaffb9224d0eb077/artifacts/app.py": "140d0dbcf5eb93e5e42c3d420531957c3e7e8e8c57d8b902c90a40cacaf228dd",
+    "evals/iterations/model-interaction-2026-10-04/results/76a9eaffb9224d0eb077/patch.diff": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "evals/iterations/model-interaction-2026-10-04/results/76a9eaffb9224d0eb077/record.json": "d5d2014ca3458540eb472010703bab52bea7e812df1860480f244732a84873d1",
+    "evals/iterations/model-interaction-2026-10-04/results/76a9eaffb9224d0eb077/started.json": "3c0376b8d20fce68591ffba396c38244eddc6ff785e0a2940de5338b988cba61",
+    "evals/iterations/model-interaction-2026-10-04/results/48d3332900d60bee2a50/artifacts/app.py": "140d0dbcf5eb93e5e42c3d420531957c3e7e8e8c57d8b902c90a40cacaf228dd",
+    "evals/iterations/model-interaction-2026-10-04/results/48d3332900d60bee2a50/artifacts/test_review.py": "5d02b653c0ffa7b652e194532dcad337fdb49ab8a0ad37f17aa0ba882e2daf78",
+    "evals/iterations/model-interaction-2026-10-04/results/48d3332900d60bee2a50/patch.diff": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "evals/iterations/model-interaction-2026-10-04/results/48d3332900d60bee2a50/record.json": "44e87e355f3d4b91140bd2a89b6652248efce81c1769e13299e259e8709393f8",
+    "evals/iterations/model-interaction-2026-10-04/results/48d3332900d60bee2a50/started.json": "3a47e8445e3b93b182c74be0144cedc1ab260978550329abc1c3977828aa96f1",
+    "evals/iterations/model-interaction-2026-10-04/results/7ece3558faa9fb6f0c05/artifacts/app.py": "140d0dbcf5eb93e5e42c3d420531957c3e7e8e8c57d8b902c90a40cacaf228dd",
+    "evals/iterations/model-interaction-2026-10-04/results/7ece3558faa9fb6f0c05/artifacts/test_contract.py": "5447fc8af2dc0635d9d734347ee37f52fadab26477538952bfdd691033e9a420",
+    "evals/iterations/model-interaction-2026-10-04/results/7ece3558faa9fb6f0c05/patch.diff": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "evals/iterations/model-interaction-2026-10-04/results/7ece3558faa9fb6f0c05/record.json": "d05baaa098f9f55e2ee2731158cfc46cc7fe66122a787215b06d8bd7586de16a",
+    "evals/iterations/model-interaction-2026-10-04/results/7ece3558faa9fb6f0c05/started.json": "e383cd48c560fd660937ab9e0fe7edb8ff1b19fa98f457ea2a0951053b0969de",
+    "evals/iterations/model-interaction-2026-10-04/results/f4e02ac31dd8396bcc69/artifacts/app.py": "c0eac24731fc538ae0f9c16fd552dce0bc368769d6b3fba0e30192a2d7afbf60",
+    "evals/iterations/model-interaction-2026-10-04/results/f4e02ac31dd8396bcc69/artifacts/test_queue.py": "59586ed40ef38abbe049c0994e2cc3fd9cdba431240a6701f91e51201c1e3207",
+    "evals/iterations/model-interaction-2026-10-04/results/f4e02ac31dd8396bcc69/patch.diff": "a000d40829246bd8e1737b0d2e6678d9c8dc67aa1486a865c52efede23688cb4",
+    "evals/iterations/model-interaction-2026-10-04/results/f4e02ac31dd8396bcc69/record.json": "6ec46b8ba64f3bba30bc22e60ceef07195208272d870276d0c1822a0d3e6484f",
+    "evals/iterations/model-interaction-2026-10-04/results/f4e02ac31dd8396bcc69/started.json": "89433840073a2e688fdbf93d582f23d59a0335fbaa5a9caf868b78f1349708f4",
+    "evals/iterations/model-interaction-2026-10-04/results/0c6a05d2459ab05ff01a/artifacts/app.py": "b0726aa2661a3d19788e83854cc1233f14186ba7f64f74100b0fe84ff12de4f4",
+    "evals/iterations/model-interaction-2026-10-04/results/0c6a05d2459ab05ff01a/artifacts/test_queue.py": "5abf9c0fa109a01733c307c61a1889f324083bb7c42220f24a94a735f01e25a0",
+    "evals/iterations/model-interaction-2026-10-04/results/0c6a05d2459ab05ff01a/patch.diff": "80fef7026f8897395707540c806a490421a3896ac294e7df775173dded89179b",
+    "evals/iterations/model-interaction-2026-10-04/results/0c6a05d2459ab05ff01a/record.json": "20f73369d340a8fb6937418199ddb265e39eff674685a1de22113efb44acde7a",
+    "evals/iterations/model-interaction-2026-10-04/results/0c6a05d2459ab05ff01a/started.json": "c0b972d74d3254890a891359fc7885e6b039a011208cf2a3a2061001139b468c",
+    "evals/iterations/model-interaction-2026-10-04/results/4e845bde96c42b0731a5/artifacts/app.py": "4adef076d9875f7518360ab3fc890cbcb567799cfc44a2bc3f824dbe3c55f6f4",
+    "evals/iterations/model-interaction-2026-10-04/results/4e845bde96c42b0731a5/patch.diff": "05149e6a0995214b9dc5c509edf217f7dffa74f7e204039fdb32a9c71281e19d",
+    "evals/iterations/model-interaction-2026-10-04/results/4e845bde96c42b0731a5/record.json": "2706d1202647d90c2095c3bc859b92a0ebc53cd5245ee762716ffa3c0bb0ccb9",
+    "evals/iterations/model-interaction-2026-10-04/results/4e845bde96c42b0731a5/started.json": "498ba207665c212042db06c6e84d0a6bbc4b11ee19e6bcb583dc8a403c4d0496",
+    "evals/iterations/model-interaction-2026-10-04/results/71f64b55dc44a4222afd/artifacts/REVIEW.md": "68a25baf87243995473cd1353807297310a05339418890e38545fe683165ca64",
+    "evals/iterations/model-interaction-2026-10-04/results/71f64b55dc44a4222afd/artifacts/app.py": "3c8b32e9729d5aaa1502bec9c8e85cb47d5ce1b2f03750274a488d9a594bbe5d",
+    "evals/iterations/model-interaction-2026-10-04/results/71f64b55dc44a4222afd/artifacts/test_queue.py": "9eea63bb101c752427c4caa645ca4ba919d73bd7f9da3473586c5c2b6d0cd52d",
+    "evals/iterations/model-interaction-2026-10-04/results/71f64b55dc44a4222afd/patch.diff": "9aadd0773425836bd92be214c373d94f8426b963b238757616feefb9701754fa",
+    "evals/iterations/model-interaction-2026-10-04/results/71f64b55dc44a4222afd/record.json": "b097fb8ef5efd4c326c3758a0a96fc1bca2bf6f65733a9075a0d51014d2ebbfd",
+    "evals/iterations/model-interaction-2026-10-04/results/71f64b55dc44a4222afd/started.json": "59f9dd8e798a0320ace32a92138df35e9c88e960e7bc673310840351bc1d71d4"
+  },
+  "raw_files_sha256": {
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/40abd92bd612e355f199/events.jsonl": "6d312ff94147d10f490137b478112942fa6e770644d1d8cd8e66908fb2c4746e",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/40abd92bd612e355f199/stderr.txt": "654e395fb8474dd418d880c8a163916071a635d8d9bc461d4396e1546f7d93db",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/40abd92bd612e355f199/record.json": "9892657bd368c31cdcf32df9774fd3fd14f9b5468bd9723075ad59ff9385e26a",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/40abd92bd612e355f199/started.json": "8ef9bebb1a6951810b083cef5c8e778f8d0609027b56206edbbcf55909874ab3",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/39175d2a06b7f4aad3f0/events.jsonl": "1d6467dd01f9942f5a386c613cc86cc3e6a813933012d582948bf01509644109",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/39175d2a06b7f4aad3f0/stderr.txt": "d8700227a9f5907d82af5093f212fd36017c8cdb4120e43e1facae826d5c7ab5",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/39175d2a06b7f4aad3f0/record.json": "ebb949dd2a345dfd0c10d34466687de4ab75a22078411a5acabd8d80f226bb7c",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/39175d2a06b7f4aad3f0/started.json": "24800600c43533a4ad452e58ccbc52dfe03e92bc6653a989a56822b1f2aa367f",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/26213827aa57e02a7a89/events.jsonl": "50706e69cb0d07589b98c2f554f96941454eff178939dc8c8c2e70742741fe9d",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/26213827aa57e02a7a89/stderr.txt": "6c689177d5b91020fefd510f20d27dcc6219a532484d141cdb5d04c1d860d3a8",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/26213827aa57e02a7a89/record.json": "81785c9cd21101165e24a5db98a912f4ac483ba8d8ca22ba9d2d299b10b062b5",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/26213827aa57e02a7a89/started.json": "50cd6faf6c47561934054a7c723ad5e82bb26014aad1422c6336472efa2fbb74",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/45565ffb1b4105ee1f1b/events.jsonl": "18433440e14e21448abe08f97792f89ca4a806dffe4159a2c25bd40cd372db10",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/45565ffb1b4105ee1f1b/stderr.txt": "8f529a6abefdc34136e07e49f981d39b52d5075e2db0dec2f16c2acb38c158b2",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/45565ffb1b4105ee1f1b/record.json": "264200a78125309b2048425a11da6cd5d8fd38a1584c47ff0d8a66ad3b14a2ec",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/45565ffb1b4105ee1f1b/started.json": "ffcf042e7b4dfa2267a960724783ad2cc693825dee53a9b48c281625f8c9e20d",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/c4e1b1d1cfc1e7f509c7/events.jsonl": "0b215401f03605001ffe8691e646a703c398966efd7710aef574e20dacba10b7",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/c4e1b1d1cfc1e7f509c7/stderr.txt": "6fd0ee701ee2297a22f16af4fc9bd4e9c7b8b469f97c11131f531e3d6ba91b4b",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/c4e1b1d1cfc1e7f509c7/record.json": "81b211d6b2d7cc7a820da332192442fb1b35a6b7784b830b521de9c2f7ab4313",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/c4e1b1d1cfc1e7f509c7/started.json": "ffda76cd6fa2b0055710f9446447b4bf51fd4aee5ea128e3711eaa039177e3c9",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/cdc4f31ffe0a20bc7ff8/events.jsonl": "5dcabff17658cc25336abdb6f816d24a111f2b5dc826a8402291bcc586f84202",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/cdc4f31ffe0a20bc7ff8/stderr.txt": "86e76085773ceff9e7a569920ab5d2753fc681d0d681946ca22cf301ad5d33e9",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/cdc4f31ffe0a20bc7ff8/record.json": "b1aa6c17297d99d8725856925ccaaa465d87f2aecf9620bb9ed059702eb76ba8",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/cdc4f31ffe0a20bc7ff8/started.json": "be4828a34b278836d004d66b26182047043149131df9134cbd5b3a3683592047",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/2c2982447f7bea923d2c/events.jsonl": "fa9270e75101dbf8ad348c1df4b72315f07f006ab3280c22a099322268d61ca8",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/2c2982447f7bea923d2c/stderr.txt": "3657b529f35d61153a6418d99ef0f91b4f8823ce245d620675e66669b25191db",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/2c2982447f7bea923d2c/record.json": "a7d47541d39b4dfc56887f112a06e14aa3700a0885b2eb2278683903f2248929",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/2c2982447f7bea923d2c/started.json": "62891c3fadaa5af2bff6f70f0e9e3e77243ff237515329f96c81426c949b9aa6",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/a981c733b9764ddb5412/events.jsonl": "786e0ff59a7fad23a7da66537d717c6a5c08e7d2ad770e79ff7fe87bbe29a9e7",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/a981c733b9764ddb5412/stderr.txt": "178e75b669571535e39b14c5a4bd9041c7e20e41be951d535a29b38f5721f44d",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/a981c733b9764ddb5412/record.json": "9fe80b9c92a14345d3c8908639dc82fe2c8eaeeeef5f89e847f4af876b74f3ca",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/a981c733b9764ddb5412/started.json": "0d90f79c889b2b8603def2c6dcbd36a914c12cf8ce1662cecb249f300aef78ec",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/df19c121c58b198c5649/events.jsonl": "4eee6269dca8642953b9813f9175569f901d4602f517e5e47a6dadf6b801dc9e",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/df19c121c58b198c5649/stderr.txt": "a7f1ad8ed61b7220e857680b660a5e4c2e4ebf0f3e9faae1f2d73420d15d63a9",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/df19c121c58b198c5649/record.json": "602565f185cb684cc6d131929d8363d9e7f6d7c89a4e06fcfc70b3e0b539579e",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/df19c121c58b198c5649/started.json": "baaeac69149d460095418d71aab2be3c8e17ae0208e90784c86e310d2b395db8",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/95242aa6aa1855bfa9e8/events.jsonl": "3dbe8d2943bf35d6c3bd497d292e46a31afdeb2f0ced36a9a8ad22cd3778dc11",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/95242aa6aa1855bfa9e8/stderr.txt": "03d9cfb2175fe13f0d4322ca17eee7f2bef5dd51721cd884ca45e48f162eb5db",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/95242aa6aa1855bfa9e8/record.json": "06ca12335f18e805258c826a17ba9cc1777a37c2c9729e6a9242ae5ba1dfa3d7",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/95242aa6aa1855bfa9e8/started.json": "dc31486e9e5cb5630c3326fc97a40515b913cf0478cad671d6b7f6b5b2381479",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/ca38b108fcc0361d2853/events.jsonl": "1157a5f9307a2d85518d66858f8517b31a92d80777fe1a018507dbf273cc59b7",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/ca38b108fcc0361d2853/stderr.txt": "52f56d8d1ccf2e35f613c93a616361c7e346a8ce37b960d2754fb0f1befb6a04",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/ca38b108fcc0361d2853/record.json": "6f4ec454c4142de070bc153e9b4868708215fce6a1abee5811fb94480799d771",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/ca38b108fcc0361d2853/started.json": "d9bf9583245f3f4e5e35006bd82a77c46a96381a994cbe62e40dc1c81f327034",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/5969efb6fe22c0cb4237/events.jsonl": "e97a70943a42e9537dff0afb85c2605fdd4f3261b66abbf512fd0ed1a0f0f086",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/5969efb6fe22c0cb4237/stderr.txt": "64623e4152c2cccaad351282c59548f779338bd2cbb75dcafdd0664c61a91934",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/5969efb6fe22c0cb4237/record.json": "8d8d68d4005cdc1e7ec00619c92242c9e664aad55fdfac966e22d48d5632dc55",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/5969efb6fe22c0cb4237/started.json": "ce3171fa267661b1142f01df41b8915f528c8c77cb25a167b5db37a160e436c1",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/bc01d4d2993db890494c/events.jsonl": "47055fc78b730e02fe1dd17d9987a1deb7b47f7a87e2083db8265a5b1a21d509",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/bc01d4d2993db890494c/stderr.txt": "f1369ab7a4fad49541bf7aab939aae196810ad92ae796ff2477ea82aaad273a4",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/bc01d4d2993db890494c/record.json": "977c401d2129a9dee0cd76a61635675e5dc17b78998826bf24592158bda3aadf",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/bc01d4d2993db890494c/started.json": "3c9453c681be2ec67e4bf07553e52e91dd2efb9c4e180a756fd0b85f851039c3",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/a9603e2a6e4bca46a5a0/events.jsonl": "c82cffd637cb1c5d48aeca86c253bb1b3ece13c88d715ace4d32cba52b32b21a",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/a9603e2a6e4bca46a5a0/stderr.txt": "3571e87eb6d2c9553b9beb16ca730370d24baec9af80bd82568d34427ec683d7",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/a9603e2a6e4bca46a5a0/record.json": "f4937e3377f0ab80122dc3a5b063629e544ea9ef6ef94e832f65785c0d86c3a9",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/a9603e2a6e4bca46a5a0/started.json": "cb26b3172da7712483e472481d891e52cf69e006adb6b5a64ffa5a9bd2c4b7b5",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/3017cd304035323c2f38/events.jsonl": "72e8bc089f043146c4b53640161f97c9dc7b45dbfa6fb5b2bba2366802c10e01",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/3017cd304035323c2f38/stderr.txt": "0e0fe87e1430cdd07a12dff806b2df72e372cd88bb391634d265663c710bfd8d",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/3017cd304035323c2f38/record.json": "fb95ed100f19d2c35a572da8147bcf5ae51ce96f78d9f1839b51acc371d81d31",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/3017cd304035323c2f38/started.json": "4ce6b97de43797d65d4aea6d50cc6478a5047e57dfa1127b741ed8b9783486eb",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/3ee0ab1cface11450192/events.jsonl": "2f0ee0b40a568d422c9dad2e4324f312686ff193c8513bba9b1de914caa2c976",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/3ee0ab1cface11450192/stderr.txt": "1b232e70cedae9718fb33ccc2a2f95c81a7b24dbc81bf79070c505300a7599f1",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/3ee0ab1cface11450192/record.json": "26360b59db7c7e1c668f11c67abb99008cdfdd973b51806aa7a227126a95afe3",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/3ee0ab1cface11450192/started.json": "60f4bd28a8586a5cfe1acff76e083a8f3b73eaa6b620fe8b32ee990249e6af82",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/774f2aabce4b1f12e288/events.jsonl": "8c162e2182edc2513cfdf8e29a825af996cfe4bab0e4b34fdf2a96af7f798223",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/774f2aabce4b1f12e288/stderr.txt": "e4acee2f8c7482b0acbfea21d135b6091b405f3c484d7d32fbbdc9640eb76ef6",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/774f2aabce4b1f12e288/record.json": "d248baadf6158178f4dd242ddac8ed4ddced3b0261226acefc4302cbe6eb1558",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/774f2aabce4b1f12e288/started.json": "3aba1a269fea66fc293490c9d30d92de014ce487d145e6ddf95c4930055dbc86",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/b0bed9f1f1612611ee3c/events.jsonl": "237de87ada8b7409ddff8ce0b291d2c922e43bfe5dd0679985a67f6aea0bf2ab",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/b0bed9f1f1612611ee3c/stderr.txt": "71f146e0abe9493faaaa034c9632f135ae12f0121b2567756a77694c72b02cae",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/b0bed9f1f1612611ee3c/record.json": "eb42dd59d75ca6bd21d3818eb8f4089e29a3c6a832ad8e250a69334d304fc2c9",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/b0bed9f1f1612611ee3c/started.json": "620ec1c0d6db76653f384d6193cc2592a7484a50cb6b597ed418af4c3c8a181a",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/961bf410811b7fa7c329/events.jsonl": "27d5a207e86213d460aebd9850fda4e4fe1392cc6f926335ce368726f5466029",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/961bf410811b7fa7c329/stderr.txt": "bd980a24e3cc31c3060aeb8e3dcc6f076fc131e237c58cc8df1eb2c13c9e1693",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/961bf410811b7fa7c329/record.json": "67eba7b57c7d9626ab8bf10d1b34fce7360fdc8ffdefaf435ec1da16cb127189",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/961bf410811b7fa7c329/started.json": "4824a721ee9cf4bdf81936872b8d9f1d2b1c61bc4459174f4dc68a9c37d3eeeb",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/1d5ef2cdcb1a3f58646f/events.jsonl": "88179d663ae7e269f61e9db8935cd0329055658b35b7b32182d02fa0a5814a86",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/1d5ef2cdcb1a3f58646f/stderr.txt": "1109fbe95f4a0cc8b3305a2203d08bedd7212cba77af1fc60a2a5be1e0e41519",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/1d5ef2cdcb1a3f58646f/record.json": "bb004f472f343db900b1ba35b15119eb2a234068eb1f5ae9df42c2116d38b41e",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/1d5ef2cdcb1a3f58646f/started.json": "1fd82a9ac83f5a5b6d879b1bc05cae7a255a8dda2223094df332b7e4bccaccea",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/214bbbcbfc8899122d2b/events.jsonl": "34633751b5b1cc8c003816ae128a79b7e9ecc85dd7d3fa90ba4d313d481f4e6d",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/214bbbcbfc8899122d2b/stderr.txt": "711b2be2dc6b66c0369d9b1520cfb4441f6a652bbaf683a7a3d2200b90c3c787",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/214bbbcbfc8899122d2b/record.json": "d6043813be1dc53f60aabf1ffb88ababa201301c990014040259f824605f598b",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/214bbbcbfc8899122d2b/started.json": "a61128859b8345d83e4e161433b57019da26512f4be3b56a4d883fc6ced5de4d",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/ee65994a22f18ce6d8c4/events.jsonl": "996a0abb6e523b1249376971487a72406afa2d441b5b0595e7235cc2e8ee4f9f",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/ee65994a22f18ce6d8c4/stderr.txt": "5288e446884403bac03afcfe95a72dcf52c17b53bf8234290c7f2e413a846897",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/ee65994a22f18ce6d8c4/record.json": "8fb3ed2f2256c783ae6425799f6eff8bed09adc2348421fd96256532c1a7222b",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/ee65994a22f18ce6d8c4/started.json": "9ae1adbaadd77e7f0d5e3bca37d247669ca7be6dda25a06c437c39a3f360a53a",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/f7bd5f14ab7b000407f6/events.jsonl": "124a631d9fbdabde38b15613879b658968629840f3abf8305d5385b991d44489",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/f7bd5f14ab7b000407f6/stderr.txt": "94afe7b4b0924eec1539893f49c6b0e9be98abed5defb2d8ec38ac9f570bddde",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/f7bd5f14ab7b000407f6/record.json": "51f8b70d39b5d7ceb4cb8b0ef908fcc4066c7fe0c0573e64d6cb2008035934ce",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/f7bd5f14ab7b000407f6/started.json": "57a9c166ceaa6fc93f0161dd32a9b4ff24cd31d86a758fd5502ec075ca956392",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/4c80ba162f375b6b8dc5/events.jsonl": "21ee052925c35c6914b0d227b508171882b99a3512be817176dc7e3c857f4677",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/4c80ba162f375b6b8dc5/stderr.txt": "96af16cad6977e4d3024a5a69ab5483172a1530e81b332b8a0333404a52971bc",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/4c80ba162f375b6b8dc5/record.json": "e2e275d82a2b41b02f63140b13cc8920b8573e50b10a5a9e97c7a156afad261b",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/4c80ba162f375b6b8dc5/started.json": "c2a0c0126d43c7dd7bc847d626e235049f45806be0048814333b83764a7ba351",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/c5f7273841ccb43bc695/events.jsonl": "1c79a20c7c54ffc5ab1b35d67ecfb82202853e0d64710719d65a3ef8f2116f1f",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/c5f7273841ccb43bc695/stderr.txt": "ca7cdfd959cdeea1f308ff6cc4686aa0e3db857bff666f7f5084a6364a3fc78a",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/c5f7273841ccb43bc695/record.json": "3b0b874a94f2fd91ab7ffa1520e28dfc7214047d2cfa0335ac5ab0d95b8032e0",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/c5f7273841ccb43bc695/started.json": "4938631e51bd4e1b792584bd4e49b4d1fe3a66087981251f08d84f552f2c26a0",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/8c0c6056bb803ed581cf/events.jsonl": "a368567d84d2d38918f720ffddd062290ece8fdeeb290aa75d81cdd60d137a0d",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/8c0c6056bb803ed581cf/stderr.txt": "d3cd7468594ec5a4d29b41d26937b01945f118c485122f67dcde2565dc35a767",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/8c0c6056bb803ed581cf/record.json": "0bc4114eeb98ae2455bf143667bdd11ad46d3893d6e9617de4d4ef46111f3d4b",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/8c0c6056bb803ed581cf/started.json": "ababcb788941b5ef07db7137529e79ddcb518bd47dbe264933afa4f13c477f56",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/b83640f13ef853d628e2/events.jsonl": "1fe7ddef188bf6d4b07ac8b2fe27c8f4f76f30c5dd59609ed1bcea32a5342609",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/b83640f13ef853d628e2/stderr.txt": "5483ae2f1817debf8cae0909a6103f8beea51401555768a178e03e69b4049a76",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/b83640f13ef853d628e2/record.json": "d48c681f4dd4357d1302716d295f5c19c8467a65c9fe7cea7990f7cbf51342ef",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/b83640f13ef853d628e2/started.json": "964834f83e7a34303be5ff72cdc0c65fe8b28796833145a137b383233aad4c39",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/ba9236fd310295106d61/events.jsonl": "5b7027ba997cffbe9ac9eb2d80e1a329cc0acd553b1fcca9068e947dfc54d81a",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/ba9236fd310295106d61/stderr.txt": "a7b59d9982ef7e474e8f775a2584f203a1cd1faa877f0c82faea10706bcfd071",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/ba9236fd310295106d61/record.json": "849b07e3b4d512beaa25ef10fcdb055541378a39ae11b0207c8056a0a31c253d",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/ba9236fd310295106d61/started.json": "a075da6bb904c6877b10837e7da695652af243122f75eabb0840b8ceb99a1005",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/58745a60066ccb2da661/events.jsonl": "73856c837fbcca36ed1005bf41e1d4748267e7ee8f195a50e74dd27fc57d8406",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/58745a60066ccb2da661/stderr.txt": "f0e6cca48063bebb73e1291d0dd983fdf08ebd4279974d1af6ab0eb8eac28bae",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/58745a60066ccb2da661/record.json": "9b0c193ddfb0b19956ba54fc45edd2d0358f1868d16c17e96c012141936b4237",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/58745a60066ccb2da661/started.json": "af6b960066147e5c576971c5e9e47ab11ff8d9134162c8142ca500f659a03794",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/d0753241ccd67a9cf696/events.jsonl": "54e161f1e5ef4b67b6157037b782138427dced948c1b8463cfd8952b6e192a91",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/d0753241ccd67a9cf696/stderr.txt": "0b5a960bee3844d7b00b5620ff1264e29b67c5f1ef7b06ada19ddd71964e5079",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/d0753241ccd67a9cf696/record.json": "8e00a09c3d0d694ecba3ca23470ff9267425916cdad2d6f3f622bf9c59198ad9",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/d0753241ccd67a9cf696/started.json": "a0bb072460d1f67d96eb7caa38e23e35ba77654281d89910e274f73d206996d4",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/644c674f5275473eb33f/events.jsonl": "c3ecad04048ee4b7e1565797da53a71aaa292bc7745e0c84e281ca787d35404e",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/644c674f5275473eb33f/stderr.txt": "a9c45377d54759498f0888a40a4d7b02ce9740caa5f4b975bf4e417392582e81",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/644c674f5275473eb33f/record.json": "ad24d8c79628f26e536410b4853de52190d478dab94e26ce501335cd61094a25",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/644c674f5275473eb33f/started.json": "ea79e3289db4076a994eceea94105089bb21a227e7fe6f723f6fc54bbed8abc5",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/632109a2db4d47a954a8/events.jsonl": "4cd42263a09c44840a3deb16feacb39109470ce0b96ea1e62778f1c0491fd22e",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/632109a2db4d47a954a8/stderr.txt": "5f4b298df820d848da5f9a3dac1a77f9cdb12385ca885310e09b4cc6ff4477df",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/632109a2db4d47a954a8/record.json": "6e90e412d4675fedc0818c97e3a473fb38d75bfcad8c3aa2458f958d52fa8631",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/632109a2db4d47a954a8/started.json": "eded21ed4e7ec8cf296008c2ea1f14f82febb28bdfb39742a4188689ad795e4e",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/d642bd66cbbc8716239e/events.jsonl": "d526d809634372c900e106749894a4a90860ffd347a15f2b55dd5aafdc135124",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/d642bd66cbbc8716239e/stderr.txt": "45b1ed14c93d3df1a0ce7ad894ccb7ca74718b5de490cfecce27e026c9a8244b",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/d642bd66cbbc8716239e/record.json": "aaef703e8872e2a36bd03f250ddad65bc71c94d196b94c53cc6041750b9309e5",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/d642bd66cbbc8716239e/started.json": "44fd61214d8c30302816850ab8c50e52748257652a1df8fb87508abe4b009852",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/95fba576b1aa1e143fdd/events.jsonl": "29d0c042785747a8b0f556a2dac6300acdf91b6fe259751fb9e4e1f9d9017390",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/95fba576b1aa1e143fdd/stderr.txt": "ad797c1fb7e8d788ef7fdaf7e76ac2c60c97478959b3e0640475e6c097f45c94",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/95fba576b1aa1e143fdd/record.json": "612fbf9871896786dfd8326eb2375e6024869fdcaded4bf30dcc666693406dff",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/95fba576b1aa1e143fdd/started.json": "b87fa1e11a36adc9d1a7aea1b72196c3303ba1f4d4c65a7eab4f4a97e6d71948",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/1179c204aae03c7a2581/events.jsonl": "fc2dd016bdf03da2e0db1af62bd1a8a05f0db68236e2fc1756b18f02931cf5b7",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/1179c204aae03c7a2581/stderr.txt": "367f9264253521e7b37505d1deaacb08e2df6410dff2d0b5a324a6a4284f24c7",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/1179c204aae03c7a2581/record.json": "480e0127270b74a0065143c4bced394c68819c266c3c4b205274983cfa094582",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/1179c204aae03c7a2581/started.json": "0189c7925905de4f36bb47b9b40b8e8f97e948c395813c816816e210c96baa50",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/1c719db559c2d2d00040/events.jsonl": "8e4a2ab8376e7251497b677d6832e71e9917113df8121b71265bc2735f3ef09d",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/1c719db559c2d2d00040/stderr.txt": "4d1e28b50d78b4a49084ff9b82ea9112e11d7f0aec983326b305cb3d7353c2e8",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/1c719db559c2d2d00040/record.json": "70851533646d3a3038e8fbe99f83abde1f6f9edb40a3b18ded65218316413ca0",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/1c719db559c2d2d00040/started.json": "cad7b7b76cf73e5239cccdc9280e31acc842abef406b97ee229af8994bbba9b7",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/7480b238e2e6377467ba/events.jsonl": "0281975254cd0dea9f20e2db59dae03b511620f3768e50d68fd01cf0e85c2215",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/7480b238e2e6377467ba/stderr.txt": "ecd05ab11b4d217ae93905ea421c970395a7beb5f7eb3406d0b658523f4ac741",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/7480b238e2e6377467ba/record.json": "20563e6fb9cb71a2d531486cb653db0d23b6b3a9fd46e688c12163bf241d4a33",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/7480b238e2e6377467ba/started.json": "6aa4b7397969c8c1a670b2d39a983e6375a0b65f8358d542c31e2e7af59e8276",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/2498df15439c10dc39de/events.jsonl": "c9fe2ffea913f0e42217ae70df2885e1b8e3a47a45c0726c61eeaacb9bca186c",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/2498df15439c10dc39de/stderr.txt": "e54a8f1ecdf3e022844f128d6e29007e8c74c41e7a9a465791504ae5569dec0e",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/2498df15439c10dc39de/record.json": "2236ddad5713207d1f7adfd8d22f8b6edab5882b9275c0e1e9da59ad7e7f28fc",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/2498df15439c10dc39de/started.json": "b6a32101d69735d5982adf20467c3db3ba42cfb18fb3657dd60457eb778d9b91",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/afe0717795e58ac7e4c2/events.jsonl": "94ee75e526c4e5f8f52250c566b846bceb862deb81c56647c4ca24b6e3cd2850",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/afe0717795e58ac7e4c2/stderr.txt": "8cc7c6464b762d0cb3dbe462afa11a29fb58e483101e8bb2cd0a596d717c990d",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/afe0717795e58ac7e4c2/record.json": "4640da95305eb9a16a3fee2274bfdb18caeef59dc4ae91018f185047f2001c25",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/afe0717795e58ac7e4c2/started.json": "894b9524cdef8ad23a4f89c84cd1605abafce5d0c15b351f45ea65c043a253f1",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/9841a2472d7974d504a5/events.jsonl": "2ab1128b0b6ca15f8249711af8dfd94da53d2d3142bf3a74f2427a3fec470063",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/9841a2472d7974d504a5/stderr.txt": "ca46b41db230017bd2bf412d18a6ff2eac59a5768b6f39c0d5b2c296bd4b9dbf",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/9841a2472d7974d504a5/record.json": "6005896d540019c9a51e17ae3e0ec8857ade121783c0da1abea6f7c0acc49b7b",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/9841a2472d7974d504a5/started.json": "4339212641d16591b8b8159764a2edc85858ca86185fc1a3f0611bfe3a26ffc2",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/29039d5c8af0e20726ef/events.jsonl": "5c53dcaf1b9d99ffdf88a8cc4a6e2e1372d8af374d9b0e01cf97cd30662eb227",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/29039d5c8af0e20726ef/stderr.txt": "5a4b5a7ca06d0004e0eb5b2ff526da7f0ce23c48bd2c8c3aba7ab3419301fd24",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/29039d5c8af0e20726ef/record.json": "afd73cf69a02daea1508dcb9d7463a76dc3d76bf103eb1ee8788ccd6e34a734b",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/29039d5c8af0e20726ef/started.json": "e72debac0dd3e6b5a27f49c565990bb21341a8c97ed182c77be29948fb6068e6",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/acef7c42b254901f57e3/events.jsonl": "e80bf6debe543d07dd830333b292446de672f9b80ea0d081c5d6112254d165c4",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/acef7c42b254901f57e3/stderr.txt": "71cd013e799dee3f1d922a2ecc6be6080847f0917b50ab430f08bf7d83887ec9",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/acef7c42b254901f57e3/record.json": "13f25a2ea8e97c0e4d0ffcefb91e32e7d9c8f2408021d2671da247dd392d415d",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/acef7c42b254901f57e3/started.json": "cd41e7a4079c5af55907695951e1a6af6eddf6d4559c7cec5ad2f1030fd5a7a2",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/6edd20b0ccae5b6ec2c1/events.jsonl": "ef0257f2c804db5ee0068476819afb07c19529bac1e120f12d7307d12d826c7e",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/6edd20b0ccae5b6ec2c1/stderr.txt": "6661fd3fd10751ec0343b447c42b9c807516ddacfc54f6a963f8dd40970f0c6a",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/6edd20b0ccae5b6ec2c1/record.json": "db5bc0c1436a039f8efa10e624c3b2b8ccd4189fa6161f6f7f0fac292f92774b",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/6edd20b0ccae5b6ec2c1/started.json": "7612973d31bf8da3687c2f384b1b7cf334ee4caf3242f661a79e12cb155639c1",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/9910aea57a5f8653a9e4/events.jsonl": "a621285ea0927f1897174a2caa9d0b7af7b62ba603f52c0b7331d4f4958f01b4",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/9910aea57a5f8653a9e4/stderr.txt": "6e721b2fb758be360f42a16b0e4bdd208d9fc4939a82564f4f253e0bf4b2637b",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/9910aea57a5f8653a9e4/record.json": "ef4ff98f5d86eb107312f04ae040acee2dfda860d1c5afca77d85db7b396b78f",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/9910aea57a5f8653a9e4/started.json": "cde73cf23d5c07b36cf9ff03b836adcdf9a9949a02d90328c4d3274e9ae561d9",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/07d01db98f1f1bddbd96/events.jsonl": "c952b59e6c33dcfcb7916db7bd61ad975200e49ca21c9356e1f9b55ecbab4571",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/07d01db98f1f1bddbd96/stderr.txt": "e4879b86f027c147396758c435a2ca3758f2c80c81e8a0a0182ae6e322d421b4",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/07d01db98f1f1bddbd96/record.json": "8536693caf665ed365f3d99bfb5467feed1351e02bab3527f8df1547f58b3c0f",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/07d01db98f1f1bddbd96/started.json": "cb53773cb23fe4bf129de99079fb9155d7b5cd81ba748497627c49d32cf8219b",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/3cdd13e426484d3dafb8/events.jsonl": "b44e97089d17278bb26891a0ed93069cba5dae4bcf6b00f065f100aee2f9bfc3",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/3cdd13e426484d3dafb8/stderr.txt": "05dc97cb0c7cdf30575005e4413c52cf7429f545d102fc886586f0e258f64501",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/3cdd13e426484d3dafb8/record.json": "88e21160267501116b4375d6c8d5eff8771142d586888a1a277237a8f961469c",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/3cdd13e426484d3dafb8/started.json": "1c2e68080e37626b9b8d382f668c1a8d6d4870258b78616940736680e2eca73a",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/9607976f1dbc05974181/events.jsonl": "57302f74037533e515267374abab0eecde0c73df48da622408d411c6042e29d3",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/9607976f1dbc05974181/stderr.txt": "20bffc2cf8188553b679f4899e0fe119087adb24034efb964a6998681d91a91d",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/9607976f1dbc05974181/record.json": "c582aab9faa1e0b1c42e40092d850b071cc1a87e9e2e0a1ccb377fe79b029b05",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/9607976f1dbc05974181/started.json": "49e7957dcd8b37703062ff9e77b0f23544c12edac6987f1c7583f4b06e49c65a",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/7bdb9234801fae0a4655/events.jsonl": "5db904e102d313daced3a6b48726d1998ecb59ccbfba38a8e12d3b1c44d9a39c",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/7bdb9234801fae0a4655/stderr.txt": "984eaefed280f16facb0dc93f23eb05e5cf9db235715485ca6967582451aea5c",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/7bdb9234801fae0a4655/record.json": "7d9401d6f2d93a9e7b8ef0e8d35cba3348cdccb2dbdaaaf6e921c7c9e05fda57",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/7bdb9234801fae0a4655/started.json": "c09de9f9d239434e7c8cbc12de78a835aacfa7ad84e008b2679d0fb4db53e42b",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/4ba73fd7ba3b838d1d9f/events.jsonl": "abb96f2ba54e44779f8a5e47b2da929ab439fe775e04374ca2ae97017442d462",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/4ba73fd7ba3b838d1d9f/stderr.txt": "a5a105d0f0a739bf866c1e8c5776ed005f46bbd92c7bf535967fe9089ebde2c2",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/4ba73fd7ba3b838d1d9f/record.json": "7315e88e394f440c3e87179890483e181734e6699bfa08a35fbfeb2e91e8b12d",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/4ba73fd7ba3b838d1d9f/started.json": "4c20ee830b667b3030af130005cbff1771ea5845b66b1432dbcc82250f1e566a",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/63eee80d5c01690fc10e/events.jsonl": "22146b4508522df966e3995337e87f26012b4fc5dd856313759a29b3f67e16d5",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/63eee80d5c01690fc10e/stderr.txt": "a51801d93436cf39f65467b11c8e9debe1c28963ce4eebf9be03e31ff016ad02",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/63eee80d5c01690fc10e/record.json": "ec68348c5c3b0ba24d1f488fc1d9dd4f54954f86ae196af9a2054c65c45f2a0e",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/63eee80d5c01690fc10e/started.json": "1ba128ae5a4f644c33969c99d424873adeef49d14a5c01ea8c61a82359001f29",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/8273eeb3cff15ded1a99/events.jsonl": "a0a20dd2f42851dcb29cac8501e162aac85e2355471b67efbc4bef0a827d4f54",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/8273eeb3cff15ded1a99/stderr.txt": "fd51a5497e9d5e5b164e2f5a450bd3ca1b14a858b091e9065ce083147992109d",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/8273eeb3cff15ded1a99/record.json": "09e4447d0e95d13872350a04fe75d91f50d69f0b60fb89fc0dde7b463d6835f1",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/8273eeb3cff15ded1a99/started.json": "ef454b7912a6c15fc9c999b3b53b954bbb0ddddbf276a23e6f2005058266c9ef",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/1bf433f8d710c05987c5/events.jsonl": "0e10b99ce19e3e7cc6c5df1e1a804b4d326022025168130326508fd15638271c",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/1bf433f8d710c05987c5/stderr.txt": "6c258df48b6b93bd046347402a6a6cc4445ab5bcbe879a58dc1fc5ffbced2bbb",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/1bf433f8d710c05987c5/record.json": "316c5740233c3adb19556b63f7899a7a181fc4c46a8b93201e0df90d4c4025f7",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/1bf433f8d710c05987c5/started.json": "a9c899a3ce1346c693a42e3d666c3488640c20d8f57adc9c979e200954b26f05",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/4bf0ac8a3d6816518073/events.jsonl": "e9286bdd42a32b88435662ee368a96de638941639e0e7f43711d8c967ea80e3e",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/4bf0ac8a3d6816518073/stderr.txt": "46ee14852dfe77c98e854771b1c105795c7669bf832ddb32fa2dcf15324aaf73",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/4bf0ac8a3d6816518073/record.json": "e59bbd23f63699d7bc8fe1e090e8e02c653cb795e304f91f5077268361b88960",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/4bf0ac8a3d6816518073/started.json": "78d8ee028c133d81b43207c3e46fb251f2e3aead7f068f7cc2c90c15ce9c9ea6",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/bbad6d392ea6d401dda6/events.jsonl": "b3a1a6271183fdb7675dc5f8f608ed8879489dd22ad2f1980d9d75ca8782de97",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/bbad6d392ea6d401dda6/stderr.txt": "da4b699330c5ab0bf43ef0d7b55439ba934247aa72fbab43b4b285c438d637f5",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/bbad6d392ea6d401dda6/record.json": "aad8b895aa51de261327a374f05cb7e40da935f65fecad42e8d41d280bd22327",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/bbad6d392ea6d401dda6/started.json": "ed0018726f55d27cf82661abeb7a77a3e39f140c5fa7e25de48e766cf87d9195",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/451e84b1835bda8113e1/events.jsonl": "8f2694d34c93f0c499cf4e4330c21269eb0cbf35147b53d0952667a34ed44855",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/451e84b1835bda8113e1/stderr.txt": "06917e4745eb8b502c806d999b5cb3c0b7c496a58d26aeed8aec133951bb8c26",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/451e84b1835bda8113e1/record.json": "c1c2a5beb7f9bf99515d1ad9d992634c313cf5a726b57815bc7488753ff8af92",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/451e84b1835bda8113e1/started.json": "855c7c4be1ea690a8e4aee7a0b7293f6766e74cb2135111fa1e4729159906aa7",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/99b448f01c5e43137b6f/events.jsonl": "bbe65b7bdbd02c8b33e3ee3781cfcca3c47c82cdc240afb68f61b5f4436269dc",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/99b448f01c5e43137b6f/stderr.txt": "b0980b2a856b41feda7a3c908c8b761ae32056a1625970f38717df0e7321d536",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/99b448f01c5e43137b6f/record.json": "e5e6d2f4c5d9415e6d07e541e25848232338dcc9783e400f19d41e545c16f9bb",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/99b448f01c5e43137b6f/started.json": "43bd483cc11ba5d5c0161a98b5679ae4a26e74207d5caeb9591355af211cbe10",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/ef796ccbebb1ae348ee0/events.jsonl": "8eca0761d6c75500c7656ca89658a4bbbfff5b234a2b1022788fcb0be96a9aed",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/ef796ccbebb1ae348ee0/stderr.txt": "68edae199b39148658b117cf74532694c4425a6224e19fef432b0dd336ee8405",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/ef796ccbebb1ae348ee0/record.json": "b1ca59cd2b2f6f7abcb85a61d9c0f0c07e293962fe5de1972356cc76c7c600e7",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/ef796ccbebb1ae348ee0/started.json": "073d0fe5b312311cfce94ceeaa1dad6fe39ba36856a3feeb45c7c5d6ed776c57",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/76a9eaffb9224d0eb077/events.jsonl": "d2cbe9b78b381a298ed1b9de4c0bcfa874ca174c9cfc5b5d94c9c87c3516b179",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/76a9eaffb9224d0eb077/stderr.txt": "96c8c223e7985a29a9759c0bf38486d6e9ce38f0d15b7ffbce81858ef5bb7719",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/76a9eaffb9224d0eb077/record.json": "d5d2014ca3458540eb472010703bab52bea7e812df1860480f244732a84873d1",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/76a9eaffb9224d0eb077/started.json": "3c0376b8d20fce68591ffba396c38244eddc6ff785e0a2940de5338b988cba61",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/48d3332900d60bee2a50/events.jsonl": "7ede409e539c5a0c9beaac383f6ee3f1c60646231adca2796023b072ee419e93",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/48d3332900d60bee2a50/stderr.txt": "3ddd83786a4a7d51cdccc15eb893180cd06008c91ebe4560db4b02eaa677b10e",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/48d3332900d60bee2a50/record.json": "44e87e355f3d4b91140bd2a89b6652248efce81c1769e13299e259e8709393f8",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/48d3332900d60bee2a50/started.json": "3a47e8445e3b93b182c74be0144cedc1ab260978550329abc1c3977828aa96f1",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/7ece3558faa9fb6f0c05/events.jsonl": "17baf98d01fd915463f70c7f1342756303b4d9af4a3dfccb5eef9267c30711c3",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/7ece3558faa9fb6f0c05/stderr.txt": "09372142a0cfbc9c0db9bf5b14f5773c4f390435cddbc627e5d15419403a6de9",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/7ece3558faa9fb6f0c05/record.json": "d05baaa098f9f55e2ee2731158cfc46cc7fe66122a787215b06d8bd7586de16a",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/7ece3558faa9fb6f0c05/started.json": "e383cd48c560fd660937ab9e0fe7edb8ff1b19fa98f457ea2a0951053b0969de",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/f4e02ac31dd8396bcc69/events.jsonl": "b71ae0fbf1107411062f24761a096a1dbcfc570f41ddbd128f77bb5cbc329e9c",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/f4e02ac31dd8396bcc69/stderr.txt": "fdbc13de5c5d6a88abb48dc7559cfb756f53619b4f25f014d7838e1c7148451e",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/f4e02ac31dd8396bcc69/record.json": "6ec46b8ba64f3bba30bc22e60ceef07195208272d870276d0c1822a0d3e6484f",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/f4e02ac31dd8396bcc69/started.json": "89433840073a2e688fdbf93d582f23d59a0335fbaa5a9caf868b78f1349708f4",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/0c6a05d2459ab05ff01a/events.jsonl": "fa5f362b63aaa1d8dccf5c75867389a67b3b8ae97aff6f910c1789754c859428",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/0c6a05d2459ab05ff01a/stderr.txt": "2b832a5e1086a5c532382ed40070c2f98d14dda3700c4c74dedafc46d857cea9",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/0c6a05d2459ab05ff01a/record.json": "20f73369d340a8fb6937418199ddb265e39eff674685a1de22113efb44acde7a",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/0c6a05d2459ab05ff01a/started.json": "c0b972d74d3254890a891359fc7885e6b039a011208cf2a3a2061001139b468c",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/4e845bde96c42b0731a5/events.jsonl": "4e4956034a4daac2ec379ff072b4e56ae49346590ee198739e22cdce57d66275",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/4e845bde96c42b0731a5/stderr.txt": "8ba7d4b80f678c68f41a621e944eadb0d182c8619bd81f42f31af7bcd9502227",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/4e845bde96c42b0731a5/record.json": "2706d1202647d90c2095c3bc859b92a0ebc53cd5245ee762716ffa3c0bb0ccb9",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/4e845bde96c42b0731a5/started.json": "498ba207665c212042db06c6e84d0a6bbc4b11ee19e6bcb583dc8a403c4d0496",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/71f64b55dc44a4222afd/events.jsonl": "c29e49fb6cdbf194dc0f3d3484c7790d7f802f54d1e7c6c22d7f226f74a4b67a",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/71f64b55dc44a4222afd/stderr.txt": "c6788e759bd3edd4f5429a9b82c6a017a175db2fc2f771d126da0392b808b217",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/71f64b55dc44a4222afd/record.json": "b097fb8ef5efd4c326c3758a0a96fc1bca2bf6f65733a9075a0d51014d2ebbfd",
+    "evals/iterations/model-interaction-2026-10-04/raw-runs/71f64b55dc44a4222afd/started.json": "59f9dd8e798a0320ace32a92138df35e9c88e960e7bc673310840351bc1d71d4"
+  }
+}

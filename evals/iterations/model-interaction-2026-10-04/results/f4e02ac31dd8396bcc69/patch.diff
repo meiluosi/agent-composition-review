@@ -1,0 +1,63 @@
+--- original.py
++++ app.py
+@@ -3,6 +3,15 @@
+ import math
+ import sqlite3
+ from contextlib import closing
++
++
++def _sql_string(value):
++    """Preserve Python strings that SQLite cannot encode as UTF-8 TEXT."""
++    try:
++        value.encode("utf-8")
++    except UnicodeEncodeError:
++        return value.encode("utf-8", "surrogatepass")
++    return value
+ 
+ 
+ class Queue:
+@@ -16,15 +25,18 @@
+             )""")
+ 
+     def put(self, job_id, payload):
+-        encoded = json.dumps(payload, allow_nan=False)
++        # Literal Unicode preserves even explicit surrogate pairs as supplied.
++        encoded = json.dumps(payload, allow_nan=False, ensure_ascii=False)
+         with closing(sqlite3.connect(self.path)) as db, db:
+             try:
+-                db.execute("INSERT INTO jobs(job_id, payload) VALUES (?, ?)", (job_id, encoded))
++                db.execute("INSERT INTO jobs(job_id, payload) VALUES (?, ?)",
++                           (_sql_string(job_id), _sql_string(encoded)))
+             except sqlite3.IntegrityError as exc:
+                 raise ValueError("job_id already exists") from exc
+ 
+     def claim(self, worker, now, lease_seconds):
+-        if not math.isfinite(lease_seconds) or lease_seconds <= 0:
++        if (isinstance(lease_seconds, bool)
++                or not math.isfinite(lease_seconds) or lease_seconds <= 0):
+             raise ValueError("lease_seconds must be finite and positive")
+         with closing(sqlite3.connect(self.path)) as db, db:
+             db.execute("BEGIN IMMEDIATE")
+@@ -38,14 +50,19 @@
+             expires_at = now + lease_seconds
+             db.execute("""UPDATE jobs SET state = 'leased', worker = ?,
+                 generation = ?, expires_at = ? WHERE job_id = ?""",
+-                (worker, generation, expires_at, job_id))
++                (_sql_string(worker), generation, expires_at, job_id))
++            if isinstance(job_id, bytes):
++                job_id = job_id.decode("utf-8", "surrogatepass")
++            if isinstance(payload, bytes):
++                payload = payload.decode("utf-8", "surrogatepass")
+             return {"payload": json.loads(payload), "expires_at": expires_at,
+                     "receipt": {"job_id": job_id, "worker": worker, "generation": generation}}
+ 
+     def ack(self, receipt, now):
+         with closing(sqlite3.connect(self.path)) as db, db:
+             changed = db.execute("""UPDATE jobs SET state = 'done'
+-                WHERE job_id = ? AND worker = ?
++                WHERE job_id = ? AND worker = ? AND generation = ?
+                 AND state = 'leased' AND expires_at > ?""",
+-                (receipt["job_id"], receipt["worker"], now)).rowcount
++                (_sql_string(receipt["job_id"]), _sql_string(receipt["worker"]),
++                 receipt["generation"], now)).rowcount
+             return changed == 1

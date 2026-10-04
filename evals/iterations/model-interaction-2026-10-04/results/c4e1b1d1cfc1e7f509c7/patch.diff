@@ -1,0 +1,36 @@
+--- original.py
++++ app.py
+@@ -16,6 +16,8 @@
+             )""")
+ 
+     def put(self, job_id, payload):
++        # Encode before opening a transaction so invalid payloads cannot affect
++        # any existing queue state.
+         encoded = json.dumps(payload, allow_nan=False)
+         with closing(sqlite3.connect(self.path)) as db, db:
+             try:
+@@ -24,9 +26,14 @@
+                 raise ValueError("job_id already exists") from exc
+ 
+     def claim(self, worker, now, lease_seconds):
+-        if not math.isfinite(lease_seconds) or lease_seconds <= 0:
++        if (isinstance(lease_seconds, bool)
++                or not isinstance(lease_seconds, (int, float))
++                or not math.isfinite(lease_seconds)
++                or lease_seconds <= 0):
+             raise ValueError("lease_seconds must be finite and positive")
++
+         with closing(sqlite3.connect(self.path)) as db, db:
++            # Serialize selection and update across separate Queue instances.
+             db.execute("BEGIN IMMEDIATE")
+             row = db.execute("""SELECT job_id, payload, generation FROM jobs
+                 WHERE state = 'ready' OR (state = 'leased' AND expires_at <= ?)
+@@ -35,7 +42,7 @@
+                 return None
+             job_id, payload, previous_generation = row
+             generation = previous_generation + 1
+-            expires_at = now + int(lease_seconds)
++            expires_at = now + lease_seconds
+             db.execute("""UPDATE jobs SET state = 'leased', worker = ?,
+                 generation = ?, expires_at = ? WHERE job_id = ?""",
+                 (worker, generation, expires_at, job_id))

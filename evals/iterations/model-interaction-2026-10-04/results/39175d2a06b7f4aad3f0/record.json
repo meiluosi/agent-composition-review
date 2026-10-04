@@ -1,0 +1,200 @@
+{
+  "case_id": "m03",
+  "condition": "B_checklist",
+  "trial": 1,
+  "model_requested": "gpt-6-luna",
+  "exit_code": 0,
+  "timed_out": false,
+  "elapsed_seconds": 181.62637970905052,
+  "usage": {
+    "input_tokens": 134462,
+    "cached_input_tokens": 112384,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 3951,
+    "reasoning_output_tokens": 1934
+  },
+  "completed": true,
+  "status": "completed",
+  "infra_kind": null,
+  "prediction": {
+    "initial_verdict": "violation",
+    "summary": "原实现截断了小数租期，导致任务可能提前过期；也接受了布尔租期。已在 app.py 保留完整租期数值并拒绝布尔值，其他行为保持不变。",
+    "tests_executed": [
+      "./run_python smoke.py",
+      "./run_python -c '…'（检查小数到期边界、跨实例领取与回执、布尔租期拒绝）",
+      "./run_python -c '…'（检查载荷快照与隔离、无效载荷拒绝、失败确认）"
+    ],
+    "limitations": [
+      "未进行并发压力测试。补充验证中有一次因测试断言错误而失败；修正过期任务的预期后，相关检查通过。"
+    ]
+  },
+  "acceptance": {
+    "passed": true,
+    "tests_run": 9,
+    "checks": [
+      {
+        "test": "test_empty_and_persistence",
+        "passed": true
+      },
+      {
+        "test": "test_fifo_and_active_exclusion",
+        "passed": true
+      },
+      {
+        "test": "test_same_worker_stale_receipt",
+        "passed": true
+      },
+      {
+        "test": "test_other_worker_stale_receipt",
+        "passed": true
+      },
+      {
+        "test": "test_expiry_and_fractional_duration",
+        "passed": true
+      },
+      {
+        "test": "test_payload_isolation",
+        "passed": true
+      },
+      {
+        "test": "test_failed_put_and_duplicate_reuse",
+        "passed": true
+      },
+      {
+        "test": "test_invalid_duration_preserves_jobs",
+        "passed": true
+      },
+      {
+        "test": "test_atomic_claim_across_connections",
+        "passed": true
+      }
+    ],
+    "exit_code": 0,
+    "timed_out": false,
+    "sandbox": "macos_no_network_writes_only_grade_directory",
+    "stderr": ""
+  },
+  "acceptance_signature": {
+    "passed": true,
+    "tests_run": 9,
+    "checks": [
+      {
+        "test": "test_empty_and_persistence",
+        "passed": true
+      },
+      {
+        "test": "test_fifo_and_active_exclusion",
+        "passed": true
+      },
+      {
+        "test": "test_same_worker_stale_receipt",
+        "passed": true
+      },
+      {
+        "test": "test_other_worker_stale_receipt",
+        "passed": true
+      },
+      {
+        "test": "test_expiry_and_fractional_duration",
+        "passed": true
+      },
+      {
+        "test": "test_payload_isolation",
+        "passed": true
+      },
+      {
+        "test": "test_failed_put_and_duplicate_reuse",
+        "passed": true
+      },
+      {
+        "test": "test_invalid_duration_preserves_jobs",
+        "passed": true
+      },
+      {
+        "test": "test_atomic_claim_across_connections",
+        "passed": true
+      }
+    ],
+    "exit_code": 0,
+    "timed_out": false,
+    "invalid_output": false,
+    "isolation_failure": false
+  },
+  "source_changed": true,
+  "artifacts": {
+    "app.py": "cb7cffb201bd056b541959c7f6cfdd7252d872c069a9e2cd4845a754585fb1b5"
+  },
+  "protected_changes": [],
+  "outside_changes": [],
+  "artifact_errors": [],
+  "tool_audit": [
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc \"pwd && rg --files -g 'task.md' -g 'app.py' -g 'original.py' -g 'smoke.py' -g 'TOOLS.md' -g 'AGENTS.md' -g 'CHECKLIST.md' -g 'SKILL.md'\"",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc 'cat task.md && cat app.py && cat smoke.py && cat TOOLS.md'",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc './run_python smoke.py'",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc \"cat run_python && ./run_python -c 'import app' \"",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc \"./run_python -c 'import tempfile, app; from pathlib import Path\nwith tempfile.TemporaryDirectory() as d:\n p=Path(d)/\\\"q.db\\\"; a=app.Queue(p); b=app.Queue(p); a.put(\\\"fraction\\\", {\\\"x\\\": []}); c=a.claim(\\\"w\\\", 10, 0.25); print(\\\"fraction_expiry\\\", c[\\\"expires_at\\\"], \\\"reclaim_at_expected\\\", 10.25, \\\"early_claim\\\", b.claim(\\\"w2\\\", 10.25, 1) is not None)\n a.put(\\\"bool\\\", None)\n try: print(\\\"bool_lease_claim\\\", a.claim(\\\"w\\\", 11, True))\n except Exception as e: print(\\\"bool_lease_error\\\", type(e).__name__)\n print(\\\"jobs_after\\\", [b.claim(\\\"z\\\", 12, 1) is not None])' \"",
+      "review_flags": []
+    },
+    {
+      "type": "file_change",
+      "exit_code": null,
+      "changes": [
+        {
+          "path": "<workspace>/app.py",
+          "kind": "update"
+        }
+      ]
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc \"./run_python smoke.py && ./run_python -c 'import tempfile, app; from pathlib import Path\nwith tempfile.TemporaryDirectory() as d:\n p=Path(d)/\\\"q.db\\\"; a=app.Queue(p); b=app.Queue(p); a.put(\\\"fraction\\\", {\\\"x\\\": []}); first=a.claim(\\\"w\\\", 10, 0.25); assert first[\\\"expires_at\\\"] == 10.25; assert b.claim(\\\"w2\\\", 10.249, 1) is None; second=b.claim(\\\"w\\\", 10.25, 0.5); assert second[\\\"expires_at\\\"] == 10.75; assert a.ack(first[\\\"receipt\\\"], 10.25) is False; assert b.ack(second[\\\"receipt\\\"], 10.749) is True; assert a.ack(second[\\\"receipt\\\"], 10.75) is False\n a.put(\\\"bool\\\", None)\n try: a.claim(\\\"w\\\", 0, True)\n except ValueError: pass\n else: raise AssertionError(\\\"bool lease accepted\\\")\n still_there=b.claim(\\\"w\\\", 0, 1); assert still_there[\\\"payload\\\"] is None\n print(\\\"fractional expiry, ack boundary, cross-instance receipt, and boolean lease checks passed\\\")' \"",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 1,
+      "command": "/bin/zsh -lc \"./run_python -c 'import tempfile, app; from pathlib import Path\nwith tempfile.TemporaryDirectory() as d:\n q=app.Queue(Path(d)/\\\"q.db\\\"); src={\\\"items\\\":[1,{\\\"ok\\\":True}]}; q.put(\\\"a\\\",src); src[\\\"items\\\"].append(2); claim=q.claim(\\\"w\\\",0,1); assert claim[\\\"payload\\\"] == {\\\"items\\\":[1,{\\\"ok\\\":True}]}; claim[\\\"payload\\\"][\\\"items\\\"].clear(); assert q.claim(\\\"w2\\\",0,1) is None; assert q.claim(\\\"w2\\\",1,1)[\\\"payload\\\"] == {\\\"items\\\":[1,{\\\"ok\\\":True}]}\n try: q.put(\\\"bad\\\", float(\\\"nan\\\"))\n except ValueError: pass\n else: raise AssertionError(\\\"NaN accepted\\\")\n try: q.put(\\\"bad\\\", object())\n except TypeError: pass\n else: raise AssertionError(\\\"unsupported value accepted\\\")\n assert q.claim(\\\"w\\\",2,1) is None\n assert q.ack(claim[\\\"receipt\\\"],2) is False\n print(\\\"payload snapshot/isolation, invalid payload rejection, and unsuccessful ack checks passed\\\")' && git diff -- app.py\"",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 129,
+      "command": "/bin/zsh -lc \"./run_python -c 'import tempfile, app; from pathlib import Path\nwith tempfile.TemporaryDirectory() as d:\n q=app.Queue(Path(d)/\\\"q.db\\\"); src={\\\"items\\\":[1,{\\\"ok\\\":True}]}; q.put(\\\"a\\\",src); src[\\\"items\\\"].append(2); claim=q.claim(\\\"w\\\",0,1); assert claim[\\\"payload\\\"] == {\\\"items\\\":[1,{\\\"ok\\\":True}]}; claim[\\\"payload\\\"][\\\"items\\\"].clear(); assert q.claim(\\\"w2\\\",0,1) is None; assert q.claim(\\\"w2\\\",1,1)[\\\"payload\\\"] == {\\\"items\\\":[1,{\\\"ok\\\":True}]}\n try: q.put(\\\"bad\\\", float(\\\"nan\\\"))\n except ValueError: pass\n else: raise AssertionError(\\\"NaN accepted\\\")\n try: q.put(\\\"bad\\\", object())\n except TypeError: pass\n else: raise AssertionError(\\\"unsupported value accepted\\\")\n assert q.claim(\\\"w\\\",1.5,1) is None\n assert q.ack(claim[\\\"receipt\\\"],2) is False\n print(\\\"payload snapshot/isolation, invalid payload rejection, and unsuccessful ack checks passed\\\")' && git diff -- app.py\"",
+      "review_flags": []
+    }
+  ],
+  "case_sha256": "05cc4514e6c427e8a33e6db39321fdf657e1ed8ad3d8d2db68ba85e1c13f8fcd",
+  "prompt_sha256": "6fd62ac6100d8b6cfbd0a2b2d2c570f6e2df884143fea61f287365cec2b7280f",
+  "event_sha256": "1d6467dd01f9942f5a386c613cc86cc3e6a813933012d582948bf01509644109",
+  "stderr_sha256": "d8700227a9f5907d82af5093f212fd36017c8cdb4120e43e1facae826d5c7ab5",
+  "reasoning_effort": "high",
+  "cli_version": "codex-cli 0.160.0",
+  "canary": false,
+  "python_version": "3.12.14",
+  "execution_platform": "Darwin",
+  "terminal_errors": []
+}

@@ -1,0 +1,129 @@
+F......FFFFFFFFFF...
+======================================================================
+FAIL: test_arbitrary_completion_order (__main__.ContractTests.test_arbitrary_completion_order)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/model-interaction-task-bet4g2zf/test_contract.py", line 139, in test_arbitrary_completion_order
+    self.assertEqual(batch.finalize(), expected)
+AssertionError: Lists differ: [{'ca[53 chars]ue': 18, 'error': None}, {'call_id': 'b', 'ver[52 chars] ''}] != [{'ca[53 chars]ue': -10, 'error': None}, {'call_id': 'b', 've[53 chars] ''}]
+
+First differing element 0:
+{'cal[13 chars]version': 20, 'status': 'success', 'value': 18, 'error': None}
+{'cal[13 chars]version': 20, 'status': 'success', 'value': -10, 'error': None}
+
+  [{'call_id': 'a',
+    'error': None,
+    'status': 'success',
+-   'value': 18,
+?             ^
+
++   'value': -10,
+?            + ^
+
+    'version': 20},
+   {'call_id': 'b', 'error': '', 'status': 'error', 'value': None, 'version': 5}]
+
+======================================================================
+FAIL: test_signed_score (__main__.ContractTests.test_signed_score) (values=[-3, 2], weight=1)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/model-interaction-task-bet4g2zf/test_contract.py", line 32, in test_signed_score
+    self.assertEqual(app.score(values, weight), sum(values) * weight)
+AssertionError: 5 != -1
+
+======================================================================
+FAIL: test_signed_score (__main__.ContractTests.test_signed_score) (values=[-3, 2], weight=-2)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/model-interaction-task-bet4g2zf/test_contract.py", line 32, in test_signed_score
+    self.assertEqual(app.score(values, weight), sum(values) * weight)
+AssertionError: -10 != 2
+
+======================================================================
+FAIL: test_signed_score (__main__.ContractTests.test_signed_score) (values=[-3, 2], weight=10000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/model-interaction-task-bet4g2zf/test_contract.py", line 32, in test_signed_score
+    self.assertEqual(app.score(values, weight), sum(values) * weight)
+AssertionError: 50000000000000000000000000000000000000000[55 chars]00000 != -1000000000000000000000000000000000000000[56 chars]00000
+
+======================================================================
+FAIL: test_signed_score (__main__.ContractTests.test_signed_score) (values=[-7, -4], weight=1)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/model-interaction-task-bet4g2zf/test_contract.py", line 32, in test_signed_score
+    self.assertEqual(app.score(values, weight), sum(values) * weight)
+AssertionError: 11 != -11
+
+======================================================================
+FAIL: test_signed_score (__main__.ContractTests.test_signed_score) (values=[-7, -4], weight=-2)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/model-interaction-task-bet4g2zf/test_contract.py", line 32, in test_signed_score
+    self.assertEqual(app.score(values, weight), sum(values) * weight)
+AssertionError: -22 != 22
+
+======================================================================
+FAIL: test_signed_score (__main__.ContractTests.test_signed_score) (values=[-7, -4], weight=10000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/model-interaction-task-bet4g2zf/test_contract.py", line 32, in test_signed_score
+    self.assertEqual(app.score(values, weight), sum(values) * weight)
+AssertionError: 11000000000000000000000000000000000000000[56 chars]00000 != -1100000000000000000000000000000000000000[57 chars]00000
+
+======================================================================
+FAIL: test_signed_score (__main__.ContractTests.test_signed_score) (values=[10000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000, -1000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000], weight=1)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/model-interaction-task-bet4g2zf/test_contract.py", line 32, in test_signed_score
+    self.assertEqual(app.score(values, weight), sum(values) * weight)
+AssertionError: 11000000000000000000000000000000000000000[55 chars]00000 != 90000000000000000000000000000000000000000[54 chars]00000
+
+======================================================================
+FAIL: test_signed_score (__main__.ContractTests.test_signed_score) (values=[10000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000, -1000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000], weight=-2)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/model-interaction-task-bet4g2zf/test_contract.py", line 32, in test_signed_score
+    self.assertEqual(app.score(values, weight), sum(values) * weight)
+AssertionError: -22000000000000000000000000000000000000000[55 chars]00000 != -18000000000000000000000000000000000000000[55 chars]00000
+
+======================================================================
+FAIL: test_signed_score (__main__.ContractTests.test_signed_score) (values=[10000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000, -1000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000], weight=10000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/model-interaction-task-bet4g2zf/test_contract.py", line 32, in test_signed_score
+    self.assertEqual(app.score(values, weight), sum(values) * weight)
+AssertionError: 11000000000000000000000000000000000000000[155 chars]00000 != 90000000000000000000000000000000000000000[154 chars]00000
+
+======================================================================
+FAIL: test_snapshot_order_and_shape (__main__.ContractTests.test_snapshot_order_and_shape)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/model-interaction-task-bet4g2zf/test_contract.py", line 54, in test_snapshot_order_and_shape
+    self.assertEqual(batch.snapshot(), [
+AssertionError: Lists differ: [{'ca[52 chars]ue': 14, 'error': None}, {'call_id': 'b', 'ver[58 chars]ed'}] != [{'ca[52 chars]ue': -6, 'error': None}, {'call_id': 'b', 'ver[58 chars]ed'}]
+
+First differing element 0:
+{'call_id': 'a', 'version': 4, 'status': 'success', 'value': 14, 'error': None}
+{'call_id': 'a', 'version': 4, 'status': 'success', 'value': -6, 'error': None}
+
+  [{'call_id': 'a',
+    'error': None,
+    'status': 'success',
+-   'value': 14,
+?            ^^
+
++   'value': -6,
+?            ^^
+
+    'version': 4},
+   {'call_id': 'b',
+    'error': 'failed',
+    'status': 'error',
+    'value': None,
+    'version': 7}]
+
+----------------------------------------------------------------------
+Ran 12 tests in 0.020s
+
+FAILED (failures=11)

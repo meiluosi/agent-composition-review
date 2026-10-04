@@ -1,0 +1,221 @@
+{
+  "case_id": "m04",
+  "condition": "B_checklist",
+  "trial": 1,
+  "model_requested": "gpt-6-luna",
+  "exit_code": 0,
+  "timed_out": false,
+  "elapsed_seconds": 120.6985827080207,
+  "usage": {
+    "input_tokens": 119852,
+    "cached_input_tokens": 103168,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 4292,
+    "reasoning_output_tokens": 1174
+  },
+  "completed": true,
+  "status": "completed",
+  "infra_kind": null,
+  "prediction": {
+    "initial_verdict": "violation",
+    "summary": "修复了缓存键遗漏租户和版本的问题，并隔离传给来源的查询及来源返回的文档，防止后续修改影响调用方或缓存。保留原有排序和返回结果深拷贝行为；只修改了 app.py。",
+    "tests_executed": [
+      "./run_python smoke.py — 通过。",
+      "./run_python - <<'PY' ... — 首次扩展验证因测试夹具的断言写错而失败；修正夹具后重跑通过，覆盖排序与拷贝、缓存身份、TTL 到期、零条数请求、来源副作用及异常重试。"
+    ],
+    "limitations": [
+      "未运行完整验收套件；参数形状以题目规定的有效输入为准。"
+    ]
+  },
+  "acceptance": {
+    "passed": true,
+    "tests_run": 12,
+    "checks": [
+      {
+        "test": "rank_order_and_limit",
+        "passed": true
+      },
+      {
+        "test": "full_result_cache",
+        "passed": true
+      },
+      {
+        "test": "tenant_revision_isolation",
+        "passed": true
+      },
+      {
+        "test": "query_identity",
+        "passed": true
+      },
+      {
+        "test": "expiry_without_sliding",
+        "passed": true
+      },
+      {
+        "test": "caller_query_isolation",
+        "passed": true
+      },
+      {
+        "test": "source_result_isolation",
+        "passed": true
+      },
+      {
+        "test": "returned_result_isolation",
+        "passed": true
+      },
+      {
+        "test": "failure_not_cached",
+        "passed": true
+      },
+      {
+        "test": "expired_failure_retry",
+        "passed": true
+      },
+      {
+        "test": "empty_results_and_zero_limit",
+        "passed": true
+      },
+      {
+        "test": "independent_instances",
+        "passed": true
+      }
+    ],
+    "exit_code": 0,
+    "timed_out": false,
+    "sandbox": "macos_no_network_writes_only_grade_directory",
+    "stderr": ""
+  },
+  "acceptance_signature": {
+    "passed": true,
+    "tests_run": 12,
+    "checks": [
+      {
+        "test": "rank_order_and_limit",
+        "passed": true
+      },
+      {
+        "test": "full_result_cache",
+        "passed": true
+      },
+      {
+        "test": "tenant_revision_isolation",
+        "passed": true
+      },
+      {
+        "test": "query_identity",
+        "passed": true
+      },
+      {
+        "test": "expiry_without_sliding",
+        "passed": true
+      },
+      {
+        "test": "caller_query_isolation",
+        "passed": true
+      },
+      {
+        "test": "source_result_isolation",
+        "passed": true
+      },
+      {
+        "test": "returned_result_isolation",
+        "passed": true
+      },
+      {
+        "test": "failure_not_cached",
+        "passed": true
+      },
+      {
+        "test": "expired_failure_retry",
+        "passed": true
+      },
+      {
+        "test": "empty_results_and_zero_limit",
+        "passed": true
+      },
+      {
+        "test": "independent_instances",
+        "passed": true
+      }
+    ],
+    "exit_code": 0,
+    "timed_out": false,
+    "invalid_output": false,
+    "isolation_failure": false
+  },
+  "source_changed": true,
+  "artifacts": {
+    "app.py": "be00f3cacd1e65bef438a027a4a29a89f4b54e82aff001a3a56e90a238627d9f"
+  },
+  "protected_changes": [],
+  "outside_changes": [],
+  "artifact_errors": [],
+  "tool_audit": [
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc \"pwd && rg --files -g 'task.md' -g 'app.py' -g 'original.py' -g 'smoke.py' -g 'TOOLS.md' -g 'AGENTS.md' -g 'CHECKLIST.md'\"",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc 'cat task.md && cat app.py && cat original.py && cat smoke.py && cat TOOLS.md'",
+      "review_flags": []
+    },
+    {
+      "type": "file_change",
+      "exit_code": null,
+      "changes": [
+        {
+          "path": "<workspace>/app.py",
+          "kind": "update"
+        }
+      ]
+    },
+    {
+      "type": "file_change",
+      "exit_code": null,
+      "changes": [
+        {
+          "path": "<workspace>/app.py",
+          "kind": "update"
+        }
+      ]
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc './run_python smoke.py'",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 1,
+      "command": "/bin/zsh -lc \"./run_python - <<'PY'\nfrom app import RetrievalCache, rank_documents\n\n# Ranking: score ties use string order; outputs and inputs are independent.\ndocs = [\n    {'id': 'z', 'score': 2, 'payload': {'nested': [1]}},\n    {'id': 'a', 'score': 2, 'payload': {'nested': [2]}},\n    {'id': 'low', 'score': -9, 'payload': {}},\n]\noriginal = [{'id': d['id'], 'score': d['score'], 'payload': {'nested': d['payload'].get('nested', [])[:]}} for d in docs]\nranked = rank_documents(docs, 2)\nassert [d['id'] for d in ranked] == ['a', 'z']\nranked[0]['payload']['nested'].append(3)\nassert docs == original\nassert rank_documents(docs, 0) == []\n\ncalls = []\nheld = {}\ndef source(tenant, query, revision):\n    calls.append((tenant, query['text'], tuple(sorted(query['filters'].items())), revision))\n    held['query'] = query\n    held['docs'] = [\n        {'id': 'second', 'score': 1, 'payload': {'x': [2]}},\n        {'id': 'first', 'score': 3, 'payload': {'x': [1]}},\n    ]\n    query['filters']['mutated'] = 'by source'\n    held['docs'][0]['payload']['x'].append(8)\n    return held['docs']\n\ncache = RetrievalCache(source, ttl=3)\nquery = {'text': 'q', 'filters': {'b': '2', 'a': '1'}}\nassert cache.search('t1', query, 'r1', 0, limit=1)[0]['id'] == 'first'\nassert 'mutated' not in query['filters']\nheld['query']['filters']['later'] = 'mutation'\nheld['docs'][1]['payload']['x'].append(9)\nassert [d['id'] for d in cache.search('t1', {'text': 'q', 'filters': {'a': '1', 'b': '2'}}, 'r1', 2, limit=10)] == ['first', 'second']\nassert len(calls) == 1\nassert cache.search('t1', query, 'r1', 3, limit=10)[0]['id'] == 'first'\nassert len(calls) == 2  # expires at equality\nfor tenant, revision, text, filters in [\n    ('t2', 'r1', 'q', {'a': '1', 'b': '2'}),\n    ('t1', 'r2', 'q', {'a': '1', 'b': '2'}),\n    ('t1', 'r1', 'other', {'a': '1', 'b': '2'}),\n    ('t1', 'r1', 'q', {'a': '1', 'b': 'changed'}),\n]:\n    cache.search(tenant, {'text': text, 'filters': filters}, revision, 4)\nassert len(calls) == 6\nprior_calls = len(calls)\nassert cache.search('x', {'text': 'q', 'filters': {}}, 'r', 5, limit=0) == []\nassert len(calls) == prior_calls\n\n# Failed misses propagate and can be retried; valid entries remain available.\nstate = {'fail': False, 'n': 0}\ndef flaky(tenant, query, revision):\n    state['n'] += 1\n    if state['fail']:\n        raise RuntimeError('source failed')\n    return [{'id': tenant, 'score': 0, 'payload': {}}]\nfc = RetrievalCache(flaky, ttl=10)\nassert fc.search('ok', {'text': '', 'filters': {}}, 'v', 0)[0]['id'] == 'ok'\nstate['fail'] = True\ntry:\n    fc.search('bad', {'text': '', 'filters': {}}, 'v', 1)\nexcept RuntimeError as exc:\n    assert str(exc) == 'source failed'\nelse:\n    raise AssertionError('source exception did not propagate')\nassert fc.search('ok', {'text': '', 'filters': {}}, 'v', 2)[0]['id'] == 'ok'\nstate['fail'] = False\nassert fc.search('bad', {'text': '', 'filters': {}}, 'v', 2)[0]['id'] == 'bad'\nassert state['n'] == 3\nprint('extended retrieval cache checks passed')\nPY\"",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc \"./run_python - <<'PY'\nfrom app import RetrievalCache, rank_documents\n\ndocs = [\n    {'id': 'z', 'score': 2, 'payload': {'nested': [1]}},\n    {'id': 'a', 'score': 2, 'payload': {'nested': [2]}},\n    {'id': 'low', 'score': -9, 'payload': {}},\n]\noriginal = [\n    {'id': d['id'], 'score': d['score'], 'payload': {k: v[:] if isinstance(v, list) else v for k, v in d['payload'].items()}}\n    for d in docs\n]\nranked = rank_documents(docs, 2)\nassert [d['id'] for d in ranked] == ['a', 'z']\nranked[0]['payload']['nested'].append(3)\nassert docs == original\nassert rank_documents(docs, 0) == []\n\ncalls = []\nheld = {}\ndef source(tenant, query, revision):\n    calls.append((tenant, query['text'], tuple(sorted(query['filters'].items())), revision))\n    held['query'] = query\n    held['docs'] = [\n        {'id': 'second', 'score': 1, 'payload': {'x': [2]}},\n        {'id': 'first', 'score': 3, 'payload': {'x': [1]}},\n    ]\n    return held['docs']\n\ncache = RetrievalCache(source, ttl=3)\nquery = {'text': 'q', 'filters': {'b': '2', 'a': '1'}}\nassert cache.search('t1', query, 'r1', 0, limit=1)[0]['id'] == 'first'\nassert 'mutated' not in query['filters']\nheld['query']['filters']['later'] = 'mutation'\nheld['docs'][1]['payload']['x'].append(9)\nassert [d['id'] for d in cache.search('t1', {'text': 'q', 'filters': {'a': '1', 'b': '2'}}, 'r1', 2, limit=10)] == ['first', 'second']\nassert len(calls) == 1\nassert cache.search('t1', query, 'r1', 3, limit=10)[0]['id'] == 'first'\nassert len(calls) == 2\nfor tenant, revision, text, filters in [\n    ('t2', 'r1', 'q', {'a': '1', 'b': '2'}),\n    ('t1', 'r2', 'q', {'a': '1', 'b': '2'}),\n    ('t1', 'r1', 'other', {'a': '1', 'b': '2'}),\n    ('t1', 'r1', 'q', {'a': '1', 'b': 'changed'}),\n]:\n    cache.search(tenant, {'text': text, 'filters': filters}, revision, 4)\nassert len(calls) == 6\nprior_calls = len(calls)\nassert cache.search('x', {'text': 'q', 'filters': {}}, 'r', 5, limit=0) == []\nassert len(calls) == prior_calls\n\nstate = {'fail': False, 'n': 0}\ndef flaky(tenant, query, revision):\n    state['n'] += 1\n    if state['fail']:\n        raise RuntimeError('source failed')\n    return [{'id': tenant, 'score': 0, 'payload': {}}]\nfc = RetrievalCache(flaky, ttl=10)\nassert fc.search('ok', {'text': '', 'filters': {}}, 'v', 0)[0]['id'] == 'ok'\nstate['fail'] = True\ntry:\n    fc.search('bad', {'text': '', 'filters': {}}, 'v', 1)\nexcept RuntimeError as exc:\n    assert str(exc) == 'source failed'\nelse:\n    raise AssertionError('source exception did not propagate')\nassert fc.search('ok', {'text': '', 'filters': {}}, 'v', 2)[0]['id'] == 'ok'\nstate['fail'] = False\nassert fc.search('bad', {'text': '', 'filters': {}}, 'v', 2)[0]['id'] == 'bad'\nassert state['n'] == 3\nprint('extended retrieval cache checks passed')\nPY\"",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 129,
+      "command": "/bin/zsh -lc 'git diff -- app.py && git status --short'",
+      "review_flags": []
+    }
+  ],
+  "case_sha256": "69a4bde6f201370e64aee8eb0b47a4c727fdea08f99b2d96bddd9557fc833aa4",
+  "prompt_sha256": "6fd62ac6100d8b6cfbd0a2b2d2c570f6e2df884143fea61f287365cec2b7280f",
+  "event_sha256": "73856c837fbcca36ed1005bf41e1d4748267e7ee8f195a50e74dd27fc57d8406",
+  "stderr_sha256": "f0e6cca48063bebb73e1291d0dd983fdf08ebd4279974d1af6ab0eb8eac28bae",
+  "reasoning_effort": "high",
+  "cli_version": "codex-cli 0.160.0",
+  "canary": false,
+  "python_version": "3.12.14",
+  "execution_platform": "Darwin",
+  "terminal_errors": []
+}

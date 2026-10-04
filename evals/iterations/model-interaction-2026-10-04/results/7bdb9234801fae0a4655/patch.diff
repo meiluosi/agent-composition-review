@@ -1,0 +1,30 @@
+--- original.py
++++ app.py
+@@ -53,21 +53,20 @@
+             return []
+         if self.state != "OPEN":
+             self._fail("data after terminal event")
+-        try:
+-            data = data.decode("utf-8").encode("utf-8")
+-        except UnicodeDecodeError:
+-            self._fail("invalid UTF-8 input chunk")
+         output = []
+         start = 0
+         while start < len(data):
++            if self.state != "OPEN":
++                self._fail("data after terminal event")
+             newline = data.find(b"\n", start)
+             end = len(data) if newline < 0 else newline
+-            part = data[start:end]
+-            if len(self._buffer) + len(part) > self.max_buffer:
++            # Check wire length before copying any bytes from the chunk.
++            if len(self._buffer) + end - start > self.max_buffer:
+                 self._fail("frame exceeds max_buffer")
+-            self._buffer.extend(part)
++            self._buffer.extend(data[start:end])
+             if newline < 0:
+                 break
++            # Decode only a complete frame: UTF-8 characters may span feeds.
+             raw = bytes(self._buffer)
+             self._buffer.clear()
+             output.append(self._record(raw))

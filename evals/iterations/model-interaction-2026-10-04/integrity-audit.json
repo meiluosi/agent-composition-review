@@ -1,0 +1,3931 @@
+{
+  "audit_kind": "model_interaction_public_and_local_raw_integrity",
+  "started_at": "2026-10-04T07:28:47.585731+00:00",
+  "finished_at": "2026-10-04T07:28:47.711036+00:00",
+  "script_sha256": "29aa9d1bb6523dd8ca37bc9ba9b5c0e96924fafd5d90172d1d7e31826bf15ced",
+  "manifest_sha256": "5fb6106ef2252be9d5de506bf9ba35bdcaad6140d89517cdb08894e290ef4ebe",
+  "frozen_inputs_verified": true,
+  "regraded": false,
+  "model_calls": 0,
+  "require_complete": false,
+  "integrity_checks_passed": true,
+  "all_scheduled_public_records_verified": false,
+  "snapshot_note": "Best used after stopping execution or at a batch boundary. Started/unpublished is not proof of a live process; partial publication is deferred, not declared corrupt. No effects or task labels are judged.",
+  "planned": 144,
+  "public_records_observed": 64,
+  "public_records_verified": 64,
+  "pending_not_started": 80,
+  "unpublished_started_or_publication_incomplete": 0,
+  "snapshot_state_counts": {
+    "published": 64,
+    "pending": 80
+  },
+  "recorded_status_counts": {
+    "completed": 62,
+    "task_timeout": 1,
+    "infrastructure_failure": 1
+  },
+  "usage_missing_in_verified_records": 1,
+  "raw_availability_counts": {
+    "present": 64,
+    "absent": 80
+  },
+  "local_raw_records_verified": 64,
+  "local_raw_unavailable_for_verified_public_records": 0,
+  "unexpected_results_entries": [],
+  "deferred_publications": [],
+  "workspace_violation_records": [],
+  "commands_requiring_review": [],
+  "review_note": "Flags only index existing recorded commands for maintainer review; no flag is itself a violation, and no flags do not prove confinement.",
+  "errors": [],
+  "jobs": [
+    {
+      "case_id": "m03",
+      "condition": "A_tools",
+      "trial": 1,
+      "model_requested": "gpt-6-astra",
+      "job_digest": "40abd92bd612e355f199",
+      "record_path": "evals/iterations/model-interaction-2026-10-04/results/40abd92bd612e355f199/record.json",
+      "record_sha256": "9892657bd368c31cdcf32df9774fd3fd14f9b5468bd9723075ad59ff9385e26a",
+      "public_verified": true,
+      "raw": {
+        "availability": "present",
+        "verified": true,
+        "files": {
+          "record.json": {
+            "state": "matched",
+            "sha256": "9892657bd368c31cdcf32df9774fd3fd14f9b5468bd9723075ad59ff9385e26a",
+            "verified": true
+          },
+          "started.json": {
+            "state": "matched",
+            "sha256": "8ef9bebb1a6951810b083cef5c8e778f8d0609027b56206edbbcf55909874ab3",
+            "verified": true
+          },
+          "events.jsonl": {
+            "state": "matched",
+            "sha256": "6d312ff94147d10f490137b478112942fa6e770644d1d8cd8e66908fb2c4746e",
+            "verified": true
+          },
+          "stderr.txt": {
+            "state": "matched",
+            "sha256": "654e395fb8474dd418d880c8a163916071a635d8d9bc461d4396e1546f7d93db",
+            "verified": true
+          }
+        }
+      },
+      "started_at": "2026-10-04T06:02:17.870617+00:00",
+      "started_sha256": "8ef9bebb1a6951810b083cef5c8e778f8d0609027b56206edbbcf55909874ab3",
+      "snapshot_state": "published",
+      "recorded_status": "completed",
+      "infra_kind": null,
+      "usage_missing": false
+    },
+    {
+      "case_id": "m03",
+      "condition": "B_checklist",
+      "trial": 1,
+      "model_requested": "gpt-6-luna",
+      "job_digest": "39175d2a06b7f4aad3f0",
+      "record_path": "evals/iterations/model-interaction-2026-10-04/results/39175d2a06b7f4aad3f0/record.json",
+      "record_sha256": "ebb949dd2a345dfd0c10d34466687de4ab75a22078411a5acabd8d80f226bb7c",
+      "public_verified": true,
+      "raw": {
+        "availability": "present",
+        "verified": true,
+        "files": {
+          "record.json": {
+            "state": "matched",
+            "sha256": "ebb949dd2a345dfd0c10d34466687de4ab75a22078411a5acabd8d80f226bb7c",
+            "verified": true
+          },
+          "started.json": {
+            "state": "matched",
+            "sha256": "24800600c43533a4ad452e58ccbc52dfe03e92bc6653a989a56822b1f2aa367f",
+            "verified": true
+          },
+          "events.jsonl": {
+            "state": "matched",
+            "sha256": "1d6467dd01f9942f5a386c613cc86cc3e6a813933012d582948bf01509644109",
+            "verified": true
+          },
+          "stderr.txt": {
+            "state": "matched",
+            "sha256": "d8700227a9f5907d82af5093f212fd36017c8cdb4120e43e1facae826d5c7ab5",
+            "verified": true
+          }
+        }
+      },
+      "started_at": "2026-10-04T06:02:17.871292+00:00",
+      "started_sha256": "24800600c43533a4ad452e58ccbc52dfe03e92bc6653a989a56822b1f2aa367f",
+      "snapshot_state": "published",
+      "recorded_status": "completed",
+      "infra_kind": null,
+      "usage_missing": false
+    },
+    {
+      "case_id": "m03",
+      "condition": "B_checklist",
+      "trial": 1,
+      "model_requested": "gpt-6-astra",
+      "job_digest": "26213827aa57e02a7a89",
+      "record_path": "evals/iterations/model-interaction-2026-10-04/results/26213827aa57e02a7a89/record.json",
+      "record_sha256": "81785c9cd21101165e24a5db98a912f4ac483ba8d8ca22ba9d2d299b10b062b5",
+      "public_verified": true,
+      "raw": {
+        "availability": "present",
+        "verified": true,
+        "files": {
+          "record.json": {
+            "state": "matched",
+            "sha256": "81785c9cd21101165e24a5db98a912f4ac483ba8d8ca22ba9d2d299b10b062b5",
+            "verified": true
+          },
+          "started.json": {
+            "state": "matched",
+            "sha256": "50cd6faf6c47561934054a7c723ad5e82bb26014aad1422c6336472efa2fbb74",
+            "verified": true
+          },
+          "events.jsonl": {
+            "state": "matched",
+            "sha256": "50706e69cb0d07589b98c2f554f96941454eff178939dc8c8c2e70742741fe9d",
+            "verified": true
+          },
+          "stderr.txt": {
+            "state": "matched",
+            "sha256": "6c689177d5b91020fefd510f20d27dcc6219a532484d141cdb5d04c1d860d3a8",
+            "verified": true
+          }
+        }
+      },
+      "started_at": "2026-10-04T06:02:17.871247+00:00",
+      "started_sha256": "50cd6faf6c47561934054a7c723ad5e82bb26014aad1422c6336472efa2fbb74",
+      "snapshot_state": "published",
+      "recorded_status": "completed",
+      "infra_kind": null,
+      "usage_missing": false
+    },
+    {
+      "case_id": "m03",
+      "condition": "C_skill",
+      "trial": 1,
+      "model_requested": "gpt-6-astra",
+      "job_digest": "45565ffb1b4105ee1f1b",
+      "record_path": "evals/iterations/model-interaction-2026-10-04/results/45565ffb1b4105ee1f1b/record.json",
+      "record_sha256": "264200a78125309b2048425a11da6cd5d8fd38a1584c47ff0d8a66ad3b14a2ec",
+      "public_verified": true,
+      "raw": {
+        "availability": "present",
+        "verified": true,
+        "files": {
+          "record.json": {
+            "state": "matched",
+            "sha256": "264200a78125309b2048425a11da6cd5d8fd38a1584c47ff0d8a66ad3b14a2ec",
+            "verified": true
+          },
+          "started.json": {
+            "state": "matched",
+            "sha256": "ffcf042e7b4dfa2267a960724783ad2cc693825dee53a9b48c281625f8c9e20d",
+            "verified": true
+          },
+          "events.jsonl": {
+            "state": "matched",
+            "sha256": "18433440e14e21448abe08f97792f89ca4a806dffe4159a2c25bd40cd372db10",
+            "verified": true
+          },
+          "stderr.txt": {
+            "state": "matched",
+            "sha256": "8f529a6abefdc34136e07e49f981d39b52d5075e2db0dec2f16c2acb38c158b2",
+            "verified": true
+          }
+        }
+      },
+      "started_at": "2026-10-04T06:04:30.854210+00:00",
+      "started_sha256": "ffcf042e7b4dfa2267a960724783ad2cc693825dee53a9b48c281625f8c9e20d",
+      "snapshot_state": "published",
+      "recorded_status": "completed",
+      "infra_kind": null,
+      "usage_missing": false
+    },
+    {
+      "case_id": "m03",
+      "condition": "C_skill",
+      "trial": 1,
+      "model_requested": "gpt-6-luna",
+      "job_digest": "c4e1b1d1cfc1e7f509c7",
+      "record_path": "evals/iterations/model-interaction-2026-10-04/results/c4e1b1d1cfc1e7f509c7/record.json",
+      "record_sha256": "81b211d6b2d7cc7a820da332192442fb1b35a6b7784b830b521de9c2f7ab4313",
+      "public_verified": true,
+      "raw": {
+        "availability": "present",
+        "verified": true,
+        "files": {
+          "record.json": {
+            "state": "matched",
+            "sha256": "81b211d6b2d7cc7a820da332192442fb1b35a6b7784b830b521de9c2f7ab4313",
+            "verified": true
+          },
+          "started.json": {
+            "state": "matched",
+            "sha256": "ffda76cd6fa2b0055710f9446447b4bf51fd4aee5ea128e3711eaa039177e3c9",
+            "verified": true
+          },
+          "events.jsonl": {
+            "state": "matched",
+            "sha256": "0b215401f03605001ffe8691e646a703c398966efd7710aef574e20dacba10b7",
+            "verified": true
+          },
+          "stderr.txt": {
+            "state": "matched",
+            "sha256": "6fd0ee701ee2297a22f16af4fc9bd4e9c7b8b469f97c11131f531e3d6ba91b4b",
+            "verified": true
+          }
+        }
+      },
+      "started_at": "2026-10-04T06:05:19.611021+00:00",
+      "started_sha256": "ffda76cd6fa2b0055710f9446447b4bf51fd4aee5ea128e3711eaa039177e3c9",
+      "snapshot_state": "published",
+      "recorded_status": "completed",
+      "infra_kind": null,
+      "usage_missing": false
+    },
+    {
+      "case_id": "m03",
+      "condition": "A_tools",
+      "trial": 1,
+      "model_requested": "gpt-6-luna",
+      "job_digest": "cdc4f31ffe0a20bc7ff8",
+      "record_path": "evals/iterations/model-interaction-2026-10-04/results/cdc4f31ffe0a20bc7ff8/record.json",
+      "record_sha256": "b1aa6c17297d99d8725856925ccaaa465d87f2aecf9620bb9ed059702eb76ba8",
+      "public_verified": true,
+      "raw": {
+        "availability": "present",
+        "verified": true,
+        "files": {
+          "record.json": {
+            "state": "matched",
+            "sha256": "b1aa6c17297d99d8725856925ccaaa465d87f2aecf9620bb9ed059702eb76ba8",
+            "verified": true
+          },
+          "started.json": {
+            "state": "matched",
+            "sha256": "be4828a34b278836d004d66b26182047043149131df9134cbd5b3a3683592047",
+            "verified": true
+          },
+          "events.jsonl": {
+            "state": "matched",
+            "sha256": "5dcabff17658cc25336abdb6f816d24a111f2b5dc826a8402291bcc586f84202",
+            "verified": true
+          },
+          "stderr.txt": {
+            "state": "matched",
+            "sha256": "86e76085773ceff9e7a569920ab5d2753fc681d0d681946ca22cf301ad5d33e9",
+            "verified": true
+          }
+        }
+      },
+      "started_at": "2026-10-04T06:05:41.202037+00:00",
+      "started_sha256": "be4828a34b278836d004d66b26182047043149131df9134cbd5b3a3683592047",
+      "snapshot_state": "published",
+      "recorded_status": "completed",
+      "infra_kind": null,
+      "usage_missing": false
+    },
+    {
+      "case_id": "m08",
+      "condition": "A_tools",
+      "trial": 1,
+      "model_requested": "gpt-6-astra",
+      "job_digest": "2c2982447f7bea923d2c",
+      "record_path": "evals/iterations/model-interaction-2026-10-04/results/2c2982447f7bea923d2c/record.json",
+      "record_sha256": "a7d47541d39b4dfc56887f112a06e14aa3700a0885b2eb2278683903f2248929",
+      "public_verified": true,
+      "raw": {
+        "availability": "present",
+        "verified": true,
+        "files": {
+          "record.json": {
+            "state": "matched",
+            "sha256": "a7d47541d39b4dfc56887f112a06e14aa3700a0885b2eb2278683903f2248929",
+            "verified": true
+          },
+          "started.json": {
+            "state": "matched",
+            "sha256": "62891c3fadaa5af2bff6f70f0e9e3e77243ff237515329f96c81426c949b9aa6",
+            "verified": true
+          },
+          "events.jsonl": {
+            "state": "matched",
+            "sha256": "fa9270e75101dbf8ad348c1df4b72315f07f006ab3280c22a099322268d61ca8",
+            "verified": true
+          },
+          "stderr.txt": {
+            "state": "matched",
+            "sha256": "3657b529f35d61153a6418d99ef0f91b4f8823ce245d620675e66669b25191db",
+            "verified": true
+          }
+        }
+      },
+      "started_at": "2026-10-04T06:09:22.796562+00:00",
+      "started_sha256": "62891c3fadaa5af2bff6f70f0e9e3e77243ff237515329f96c81426c949b9aa6",
+      "snapshot_state": "published",
+      "recorded_status": "completed",
+      "infra_kind": null,
+      "usage_missing": false
+    },
+    {
+      "case_id": "m08",
+      "condition": "C_skill",
+      "trial": 1,
+      "model_requested": "gpt-6-luna",
+      "job_digest": "a981c733b9764ddb5412",
+      "record_path": "evals/iterations/model-interaction-2026-10-04/results/a981c733b9764ddb5412/record.json",
+      "record_sha256": "9fe80b9c92a14345d3c8908639dc82fe2c8eaeeeef5f89e847f4af876b74f3ca",
+      "public_verified": true,
+      "raw": {
+        "availability": "present",
+        "verified": true,
+        "files": {
+          "record.json": {
+            "state": "matched",
+            "sha256": "9fe80b9c92a14345d3c8908639dc82fe2c8eaeeeef5f89e847f4af876b74f3ca",
+            "verified": true
+          },
+          "started.json": {
+            "state": "matched",
+            "sha256": "0d90f79c889b2b8603def2c6dcbd36a914c12cf8ce1662cecb249f300aef78ec",
+            "verified": true
+          },
+          "events.jsonl": {
+            "state": "matched",
+            "sha256": "786e0ff59a7fad23a7da66537d717c6a5c08e7d2ad770e79ff7fe87bbe29a9e7",
+            "verified": true
+          },
+          "stderr.txt": {
+            "state": "matched",
+            "sha256": "178e75b669571535e39b14c5a4bd9041c7e20e41be951d535a29b38f5721f44d",
+            "verified": true
+          }
+        }
+      },
+      "started_at": "2026-10-04T06:09:22.797038+00:00",
+      "started_sha256": "0d90f79c889b2b8603def2c6dcbd36a914c12cf8ce1662cecb249f300aef78ec",
+      "snapshot_state": "published",
+      "recorded_status": "completed",
+      "infra_kind": null,
+      "usage_missing": false
+    },
+    {
+      "case_id": "m08",
+      "condition": "B_checklist",
+      "trial": 1,
+      "model_requested": "gpt-6-luna",
+      "job_digest": "df19c121c58b198c5649",
+      "record_path": "evals/iterations/model-interaction-2026-10-04/results/df19c121c58b198c5649/record.json",
+      "record_sha256": "602565f185cb684cc6d131929d8363d9e7f6d7c89a4e06fcfc70b3e0b539579e",
+      "public_verified": true,
+      "raw": {
+        "availability": "present",
+        "verified": true,
+        "files": {
+          "record.json": {
+            "state": "matched",
+            "sha256": "602565f185cb684cc6d131929d8363d9e7f6d7c89a4e06fcfc70b3e0b539579e",
+            "verified": true
+          },
+          "started.json": {
+            "state": "matched",
+            "sha256": "baaeac69149d460095418d71aab2be3c8e17ae0208e90784c86e310d2b395db8",
+            "verified": true
+          },
+          "events.jsonl": {
+            "state": "matched",
+            "sha256": "4eee6269dca8642953b9813f9175569f901d4602f517e5e47a6dadf6b801dc9e",
+            "verified": true
+          },
+          "stderr.txt": {
+            "state": "matched",
+            "sha256": "a7f1ad8ed61b7220e857680b660a5e4c2e4ebf0f3e9faae1f2d73420d15d63a9",
+            "verified": true
+          }
+        }
+      },
+      "started_at": "2026-10-04T06:09:22.797080+00:00",
+      "started_sha256": "baaeac69149d460095418d71aab2be3c8e17ae0208e90784c86e310d2b395db8",
+      "snapshot_state": "published",
+      "recorded_status": "completed",
+      "infra_kind": null,
+      "usage_missing": false
+    },
+    {
+      "case_id": "m08",
+      "condition": "B_checklist",
+      "trial": 1,
+      "model_requested": "gpt-6-astra",
+      "job_digest": "95242aa6aa1855bfa9e8",
+      "record_path": "evals/iterations/model-interaction-2026-10-04/results/95242aa6aa1855bfa9e8/record.json",
+      "record_sha256": "06ca12335f18e805258c826a17ba9cc1777a37c2c9729e6a9242ae5ba1dfa3d7",
+      "public_verified": true,
+      "raw": {
+        "availability": "present",
+        "verified": true,
+        "files": {
+          "record.json": {
+            "state": "matched",
+            "sha256": "06ca12335f18e805258c826a17ba9cc1777a37c2c9729e6a9242ae5ba1dfa3d7",
+            "verified": true
+          },
+          "started.json": {
+            "state": "matched",
+            "sha256": "dc31486e9e5cb5630c3326fc97a40515b913cf0478cad671d6b7f6b5b2381479",
+            "verified": true
+          },
+          "events.jsonl": {
+            "state": "matched",
+            "sha256": "3dbe8d2943bf35d6c3bd497d292e46a31afdeb2f0ced36a9a8ad22cd3778dc11",
+            "verified": true
+          },
+          "stderr.txt": {
+            "state": "matched",
+            "sha256": "03d9cfb2175fe13f0d4322ca17eee7f2bef5dd51721cd884ca45e48f162eb5db",
+            "verified": true
+          }
+        }
+      },
+      "started_at": "2026-10-04T06:11:28.676495+00:00",
+      "started_sha256": "dc31486e9e5cb5630c3326fc97a40515b913cf0478cad671d6b7f6b5b2381479",
+      "snapshot_state": "published",
+      "recorded_status": "completed",
+      "infra_kind": null,
+      "usage_missing": false
+    },
+    {
+      "case_id": "m08",
+      "condition": "A_tools",
+      "trial": 1,
+      "model_requested": "gpt-6-luna",
+      "job_digest": "ca38b108fcc0361d2853",
+      "record_path": "evals/iterations/model-interaction-2026-10-04/results/ca38b108fcc0361d2853/record.json",
+      "record_sha256": "6f4ec454c4142de070bc153e9b4868708215fce6a1abee5811fb94480799d771",
+      "public_verified": true,
+      "raw": {
+        "availability": "present",
+        "verified": true,
+        "files": {
+          "record.json": {
+            "state": "matched",
+            "sha256": "6f4ec454c4142de070bc153e9b4868708215fce6a1abee5811fb94480799d771",
+            "verified": true
+          },
+          "started.json": {
+            "state": "matched",
+            "sha256": "d9bf9583245f3f4e5e35006bd82a77c46a96381a994cbe62e40dc1c81f327034",
+            "verified": true
+          },
+          "events.jsonl": {
+            "state": "matched",
+            "sha256": "1157a5f9307a2d85518d66858f8517b31a92d80777fe1a018507dbf273cc59b7",
+            "verified": true
+          },
+          "stderr.txt": {
+            "state": "matched",
+            "sha256": "52f56d8d1ccf2e35f613c93a616361c7e346a8ce37b960d2754fb0f1befb6a04",
+            "verified": true
+          }
+        }
+      },
+      "started_at": "2026-10-04T06:11:55.427412+00:00",
+      "started_sha256": "d9bf9583245f3f4e5e35006bd82a77c46a96381a994cbe62e40dc1c81f327034",
+      "snapshot_state": "published",
+      "recorded_status": "completed",
+      "infra_kind": null,
+      "usage_missing": false
+    },
+    {
+      "case_id": "m08",
+      "condition": "C_skill",
+      "trial": 1,
+      "model_requested": "gpt-6-astra",
+      "job_digest": "5969efb6fe22c0cb4237",
+      "record_path": "evals/iterations/model-interaction-2026-10-04/results/5969efb6fe22c0cb4237/record.json",
+      "record_sha256": "8d8d68d4005cdc1e7ec00619c92242c9e664aad55fdfac966e22d48d5632dc55",
+      "public_verified": true,
+      "raw": {
+        "availability": "present",
+        "verified": true,
+        "files": {
+          "record.json": {
+            "state": "matched",
+            "sha256": "8d8d68d4005cdc1e7ec00619c92242c9e664aad55fdfac966e22d48d5632dc55",
+            "verified": true
+          },
+          "started.json": {
+            "state": "matched",
+            "sha256": "ce3171fa267661b1142f01df41b8915f528c8c77cb25a167b5db37a160e436c1",
+            "verified": true
+          },
+          "events.jsonl": {
+            "state": "matched",
+            "sha256": "e97a70943a42e9537dff0afb85c2605fdd4f3261b66abbf512fd0ed1a0f0f086",
+            "verified": true
+          },
+          "stderr.txt": {
+            "state": "matched",
+            "sha256": "64623e4152c2cccaad351282c59548f779338bd2cbb75dcafdd0664c61a91934",
+            "verified": true
+          }
+        }
+      },
+      "started_at": "2026-10-04T06:13:23.022122+00:00",
+      "started_sha256": "ce3171fa267661b1142f01df41b8915f528c8c77cb25a167b5db37a160e436c1",
+      "snapshot_state": "published",
+      "recorded_status": "completed",
+      "infra_kind": null,
+      "usage_missing": false
+    },
+    {
+      "case_id": "m09",
+      "condition": "A_tools",
+      "trial": 1,
+      "model_requested": "gpt-6-luna",
+      "job_digest": "bc01d4d2993db890494c",
+      "record_path": "evals/iterations/model-interaction-2026-10-04/results/bc01d4d2993db890494c/record.json",
+      "record_sha256": "977c401d2129a9dee0cd76a61635675e5dc17b78998826bf24592158bda3aadf",
+      "public_verified": true,
+      "raw": {
+        "availability": "present",
+        "verified": true,
+        "files": {
+          "record.json": {
+            "state": "matched",
+            "sha256": "977c401d2129a9dee0cd76a61635675e5dc17b78998826bf24592158bda3aadf",
+            "verified": true
+          },
+          "started.json": {
+            "state": "matched",
+            "sha256": "3c9453c681be2ec67e4bf07553e52e91dd2efb9c4e180a756fd0b85f851039c3",
+            "verified": true
+          },
+          "events.jsonl": {
+            "state": "matched",
+            "sha256": "47055fc78b730e02fe1dd17d9987a1deb7b47f7a87e2083db8265a5b1a21d509",
+            "verified": true
+          },
+          "stderr.txt": {
+            "state": "matched",
+            "sha256": "f1369ab7a4fad49541bf7aab939aae196810ad92ae796ff2477ea82aaad273a4",
+            "verified": true
+          }
+        }
+      },
+      "started_at": "2026-10-04T06:14:11.016419+00:00",
+      "started_sha256": "3c9453c681be2ec67e4bf07553e52e91dd2efb9c4e180a756fd0b85f851039c3",
+      "snapshot_state": "published",
+      "recorded_status": "completed",
+      "infra_kind": null,
+      "usage_missing": false
+    },
+    {
+      "case_id": "m09",
+      "condition": "B_checklist",
+      "trial": 1,
+      "model_requested": "gpt-6-astra",
+      "job_digest": "a9603e2a6e4bca46a5a0",
+      "record_path": "evals/iterations/model-interaction-2026-10-04/results/a9603e2a6e4bca46a5a0/record.json",
+      "record_sha256": "f4937e3377f0ab80122dc3a5b063629e544ea9ef6ef94e832f65785c0d86c3a9",
+      "public_verified": true,
+      "raw": {
+        "availability": "present",
+        "verified": true,
+        "files": {
+          "record.json": {
+            "state": "matched",
+            "sha256": "f4937e3377f0ab80122dc3a5b063629e544ea9ef6ef94e832f65785c0d86c3a9",
+            "verified": true
+          },
+          "started.json": {
+            "state": "matched",
+            "sha256": "cb26b3172da7712483e472481d891e52cf69e006adb6b5a64ffa5a9bd2c4b7b5",
+            "verified": true
+          },
+          "events.jsonl": {
+            "state": "matched",
+            "sha256": "c82cffd637cb1c5d48aeca86c253bb1b3ece13c88d715ace4d32cba52b32b21a",
+            "verified": true
+          },
+          "stderr.txt": {
+            "state": "matched",
+            "sha256": "3571e87eb6d2c9553b9beb16ca730370d24baec9af80bd82568d34427ec683d7",
+            "verified": true
+          }
+        }
+      },
+      "started_at": "2026-10-04T06:14:19.420713+00:00",
+      "started_sha256": "cb26b3172da7712483e472481d891e52cf69e006adb6b5a64ffa5a9bd2c4b7b5",
+      "snapshot_state": "published",
+      "recorded_status": "completed",
+      "infra_kind": null,
+      "usage_missing": false
+    },
+    {
+      "case_id": "m09",
+      "condition": "C_skill",
+      "trial": 1,
+      "model_requested": "gpt-6-luna",
+      "job_digest": "3017cd304035323c2f38",
+      "record_path": "evals/iterations/model-interaction-2026-10-04/results/3017cd304035323c2f38/record.json",
+      "record_sha256": "fb95ed100f19d2c35a572da8147bcf5ae51ce96f78d9f1839b51acc371d81d31",
+      "public_verified": true,
+      "raw": {
+        "availability": "present",
+        "verified": true,
+        "files": {
+          "record.json": {
+            "state": "matched",
+            "sha256": "fb95ed100f19d2c35a572da8147bcf5ae51ce96f78d9f1839b51acc371d81d31",
+            "verified": true
+          },
+          "started.json": {
+            "state": "matched",
+            "sha256": "4ce6b97de43797d65d4aea6d50cc6478a5047e57dfa1127b741ed8b9783486eb",
+            "verified": true
+          },
+          "events.jsonl": {
+            "state": "matched",
+            "sha256": "72e8bc089f043146c4b53640161f97c9dc7b45dbfa6fb5b2bba2366802c10e01",
+            "verified": true
+          },
+          "stderr.txt": {
+            "state": "matched",
+            "sha256": "0e0fe87e1430cdd07a12dff806b2df72e372cd88bb391634d265663c710bfd8d",
+            "verified": true
+          }
+        }
+      },
+      "started_at": "2026-10-04T06:15:47.119583+00:00",
+      "started_sha256": "4ce6b97de43797d65d4aea6d50cc6478a5047e57dfa1127b741ed8b9783486eb",
+      "snapshot_state": "published",
+      "recorded_status": "completed",
+      "infra_kind": null,
+      "usage_missing": false
+    },
+    {
+      "case_id": "m09",
+      "condition": "A_tools",
+      "trial": 1,
+      "model_requested": "gpt-6-astra",
+      "job_digest": "3ee0ab1cface11450192",
+      "record_path": "evals/iterations/model-interaction-2026-10-04/results/3ee0ab1cface11450192/record.json",
+      "record_sha256": "26360b59db7c7e1c668f11c67abb99008cdfdd973b51806aa7a227126a95afe3",
+      "public_verified": true,
+      "raw": {
+        "availability": "present",
+        "verified": true,
+        "files": {
+          "record.json": {
+            "state": "matched",
+            "sha256": "26360b59db7c7e1c668f11c67abb99008cdfdd973b51806aa7a227126a95afe3",
+            "verified": true
+          },
+          "started.json": {
+            "state": "matched",
+            "sha256": "60f4bd28a8586a5cfe1acff76e083a8f3b73eaa6b620fe8b32ee990249e6af82",
+            "verified": true
+          },
+          "events.jsonl": {
+            "state": "matched",
+            "sha256": "2f0ee0b40a568d422c9dad2e4324f312686ff193c8513bba9b1de914caa2c976",
+            "verified": true
+          },
+          "stderr.txt": {
+            "state": "matched",
+            "sha256": "1b232e70cedae9718fb33ccc2a2f95c81a7b24dbc81bf79070c505300a7599f1",
+            "verified": true
+          }
+        }
+      },
+      "started_at": "2026-10-04T06:17:00.064312+00:00",
+      "started_sha256": "60f4bd28a8586a5cfe1acff76e083a8f3b73eaa6b620fe8b32ee990249e6af82",
+      "snapshot_state": "published",
+      "recorded_status": "completed",
+      "infra_kind": null,
+      "usage_missing": false
+    },
+    {
+      "case_id": "m09",
+      "condition": "B_checklist",
+      "trial": 1,
+      "model_requested": "gpt-6-luna",
+      "job_digest": "774f2aabce4b1f12e288",
+      "record_path": "evals/iterations/model-interaction-2026-10-04/results/774f2aabce4b1f12e288/record.json",
+      "record_sha256": "d248baadf6158178f4dd242ddac8ed4ddced3b0261226acefc4302cbe6eb1558",
+      "public_verified": true,
+      "raw": {
+        "availability": "present",
+        "verified": true,
+        "files": {
+          "record.json": {
+            "state": "matched",
+            "sha256": "d248baadf6158178f4dd242ddac8ed4ddced3b0261226acefc4302cbe6eb1558",
+            "verified": true
+          },
+          "started.json": {
+            "state": "matched",
+            "sha256": "3aba1a269fea66fc293490c9d30d92de014ce487d145e6ddf95c4930055dbc86",
+            "verified": true
+          },
+          "events.jsonl": {
+            "state": "matched",
+            "sha256": "8c162e2182edc2513cfdf8e29a825af996cfe4bab0e4b34fdf2a96af7f798223",
+            "verified": true
+          },
+          "stderr.txt": {
+            "state": "matched",
+            "sha256": "e4acee2f8c7482b0acbfea21d135b6091b405f3c484d7d32fbbdc9640eb76ef6",
+            "verified": true
+          }
+        }
+      },
+      "started_at": "2026-10-04T06:17:07.558688+00:00",
+      "started_sha256": "3aba1a269fea66fc293490c9d30d92de014ce487d145e6ddf95c4930055dbc86",
+      "snapshot_state": "published",
+      "recorded_status": "completed",
+      "infra_kind": null,
+      "usage_missing": false
+    },
+    {
+      "case_id": "m09",
+      "condition": "C_skill",
+      "trial": 1,
+      "model_requested": "gpt-6-astra",
+      "job_digest": "b0bed9f1f1612611ee3c",
+      "record_path": "evals/iterations/model-interaction-2026-10-04/results/b0bed9f1f1612611ee3c/record.json",
+      "record_sha256": "eb42dd59d75ca6bd21d3818eb8f4089e29a3c6a832ad8e250a69334d304fc2c9",
+      "public_verified": true,
+      "raw": {
+        "availability": "present",
+        "verified": true,
+        "files": {
+          "record.json": {
+            "state": "matched",
+            "sha256": "eb42dd59d75ca6bd21d3818eb8f4089e29a3c6a832ad8e250a69334d304fc2c9",
+            "verified": true
+          },
+          "started.json": {
+            "state": "matched",
+            "sha256": "620ec1c0d6db76653f384d6193cc2592a7484a50cb6b597ed418af4c3c8a181a",
+            "verified": true
+          },
+          "events.jsonl": {
+            "state": "matched",
+            "sha256": "237de87ada8b7409ddff8ce0b291d2c922e43bfe5dd0679985a67f6aea0bf2ab",
+            "verified": true
+          },
+          "stderr.txt": {
+            "state": "matched",
+            "sha256": "71f146e0abe9493faaaa034c9632f135ae12f0121b2567756a77694c72b02cae",
+            "verified": true
+          }
+        }
+      },
+      "started_at": "2026-10-04T06:17:58.460791+00:00",
+      "started_sha256": "620ec1c0d6db76653f384d6193cc2592a7484a50cb6b597ed418af4c3c8a181a",
+      "snapshot_state": "published",
+      "recorded_status": "completed",
+      "infra_kind": null,
+      "usage_missing": false
+    },
+    {
+      "case_id": "m02",
+      "condition": "A_tools",
+      "trial": 1,
+      "model_requested": "gpt-6-luna",
+      "job_digest": "961bf410811b7fa7c329",
+      "record_path": "evals/iterations/model-interaction-2026-10-04/results/961bf410811b7fa7c329/record.json",
+      "record_sha256": "67eba7b57c7d9626ab8bf10d1b34fce7360fdc8ffdefaf435ec1da16cb127189",
+      "public_verified": true,
+      "raw": {
+        "availability": "present",
+        "verified": true,
+        "files": {
+          "record.json": {
+            "state": "matched",
+            "sha256": "67eba7b57c7d9626ab8bf10d1b34fce7360fdc8ffdefaf435ec1da16cb127189",
+            "verified": true
+          },
+          "started.json": {
+            "state": "matched",
+            "sha256": "4824a721ee9cf4bdf81936872b8d9f1d2b1c61bc4459174f4dc68a9c37d3eeeb",
+            "verified": true
+          },
+          "events.jsonl": {
+            "state": "matched",
+            "sha256": "27d5a207e86213d460aebd9850fda4e4fe1392cc6f926335ce368726f5466029",
+            "verified": true
+          },
+          "stderr.txt": {
+            "state": "matched",
+            "sha256": "bd980a24e3cc31c3060aeb8e3dcc6f076fc131e237c58cc8df1eb2c13c9e1693",
+            "verified": true
+          }
+        }
+      },
+      "started_at": "2026-10-04T06:18:40.585188+00:00",
+      "started_sha256": "4824a721ee9cf4bdf81936872b8d9f1d2b1c61bc4459174f4dc68a9c37d3eeeb",
+      "snapshot_state": "published",
+      "recorded_status": "completed",
+      "infra_kind": null,
+      "usage_missing": false
+    },
+    {
+      "case_id": "m02",
+      "condition": "B_checklist",
+      "trial": 1,
+      "model_requested": "gpt-6-astra",
+      "job_digest": "1d5ef2cdcb1a3f58646f",
+      "record_path": "evals/iterations/model-interaction-2026-10-04/results/1d5ef2cdcb1a3f58646f/record.json",
+      "record_sha256": "bb004f472f343db900b1ba35b15119eb2a234068eb1f5ae9df42c2116d38b41e",
+      "public_verified": true,
+      "raw": {
+        "availability": "present",
+        "verified": true,
+        "files": {
+          "record.json": {
+            "state": "matched",
+            "sha256": "bb004f472f343db900b1ba35b15119eb2a234068eb1f5ae9df42c2116d38b41e",
+            "verified": true
+          },
+          "started.json": {
+            "state": "matched",
+            "sha256": "1fd82a9ac83f5a5b6d879b1bc05cae7a255a8dda2223094df332b7e4bccaccea",
+            "verified": true
+          },
+          "events.jsonl": {
+            "state": "matched",
+            "sha256": "88179d663ae7e269f61e9db8935cd0329055658b35b7b32182d02fa0a5814a86",
+            "verified": true
+          },
+          "stderr.txt": {
+            "state": "matched",
+            "sha256": "1109fbe95f4a0cc8b3305a2203d08bedd7212cba77af1fc60a2a5be1e0e41519",
+            "verified": true
+          }
+        }
+      },
+      "started_at": "2026-10-04T06:18:57.947209+00:00",
+      "started_sha256": "1fd82a9ac83f5a5b6d879b1bc05cae7a255a8dda2223094df332b7e4bccaccea",
+      "snapshot_state": "published",
+      "recorded_status": "completed",
+      "infra_kind": null,
+      "usage_missing": false
+    },
+    {
+      "case_id": "m02",
+      "condition": "B_checklist",
+      "trial": 1,
+      "model_requested": "gpt-6-luna",
+      "job_digest": "214bbbcbfc8899122d2b",
+      "record_path": "evals/iterations/model-interaction-2026-10-04/results/214bbbcbfc8899122d2b/record.json",
+      "record_sha256": "d6043813be1dc53f60aabf1ffb88ababa201301c990014040259f824605f598b",
+      "public_verified": true,
+      "raw": {
+        "availability": "present",
+        "verified": true,
+        "files": {
+          "record.json": {
+            "state": "matched",
+            "sha256": "d6043813be1dc53f60aabf1ffb88ababa201301c990014040259f824605f598b",
+            "verified": true
+          },
+          "started.json": {
+            "state": "matched",
+            "sha256": "a61128859b8345d83e4e161433b57019da26512f4be3b56a4d883fc6ced5de4d",
+            "verified": true
+          },
+          "events.jsonl": {
+            "state": "matched",
+            "sha256": "34633751b5b1cc8c003816ae128a79b7e9ecc85dd7d3fa90ba4d313d481f4e6d",
+            "verified": true
+          },
+          "stderr.txt": {
+            "state": "matched",
+            "sha256": "711b2be2dc6b66c0369d9b1520cfb4441f6a652bbaf683a7a3d2200b90c3c787",
+            "verified": true
+          }
+        }
+      },
+      "started_at": "2026-10-04T06:20:38.499240+00:00",
+      "started_sha256": "a61128859b8345d83e4e161433b57019da26512f4be3b56a4d883fc6ced5de4d",
+      "snapshot_state": "published",
+      "recorded_status": "completed",
+      "infra_kind": null,
+      "usage_missing": false
+    },
+    {
+      "case_id": "m02",
+      "condition": "C_skill",
+      "trial": 1,
+      "model_requested": "gpt-6-luna",
+      "job_digest": "ee65994a22f18ce6d8c4",
+      "record_path": "evals/iterations/model-interaction-2026-10-04/results/ee65994a22f18ce6d8c4/record.json",
+      "record_sha256": "8fb3ed2f2256c783ae6425799f6eff8bed09adc2348421fd96256532c1a7222b",
+      "public_verified": true,
+      "raw": {
+        "availability": "present",
+        "verified": true,
+        "files": {
+          "record.json": {
+            "state": "matched",
+            "sha256": "8fb3ed2f2256c783ae6425799f6eff8bed09adc2348421fd96256532c1a7222b",
+            "verified": true
+          },
+          "started.json": {
+            "state": "matched",
+            "sha256": "9ae1adbaadd77e7f0d5e3bca37d247669ca7be6dda25a06c437c39a3f360a53a",
+            "verified": true
+          },
+          "events.jsonl": {
+            "state": "matched",
+            "sha256": "996a0abb6e523b1249376971487a72406afa2d441b5b0595e7235cc2e8ee4f9f",
+            "verified": true
+          },
+          "stderr.txt": {
+            "state": "matched",
+            "sha256": "5288e446884403bac03afcfe95a72dcf52c17b53bf8234290c7f2e413a846897",
+            "verified": true
+          }
+        }
+      },
+      "started_at": "2026-10-04T06:20:47.681457+00:00",
+      "started_sha256": "9ae1adbaadd77e7f0d5e3bca37d247669ca7be6dda25a06c437c39a3f360a53a",
+      "snapshot_state": "published",
+      "recorded_status": "completed",
+      "infra_kind": null,
+      "usage_missing": false
+    },
+    {
+      "case_id": "m02",
+      "condition": "A_tools",
+      "trial": 1,
+      "model_requested": "gpt-6-astra",
+      "job_digest": "f7bd5f14ab7b000407f6",
+      "record_path": "evals/iterations/model-interaction-2026-10-04/results/f7bd5f14ab7b000407f6/record.json",
+      "record_sha256": "51f8b70d39b5d7ceb4cb8b0ef908fcc4066c7fe0c0573e64d6cb2008035934ce",
+      "public_verified": true,
+      "raw": {
+        "availability": "present",
+        "verified": true,
+        "files": {
+          "record.json": {
+            "state": "matched",
+            "sha256": "51f8b70d39b5d7ceb4cb8b0ef908fcc4066c7fe0c0573e64d6cb2008035934ce",
+            "verified": true
+          },
+          "started.json": {
+            "state": "matched",
+            "sha256": "57a9c166ceaa6fc93f0161dd32a9b4ff24cd31d86a758fd5502ec075ca956392",
+            "verified": true
+          },
+          "events.jsonl": {
+            "state": "matched",
+            "sha256": "124a631d9fbdabde38b15613879b658968629840f3abf8305d5385b991d44489",
+            "verified": true
+          },
+          "stderr.txt": {
+            "state": "matched",
+            "sha256": "94afe7b4b0924eec1539893f49c6b0e9be98abed5defb2d8ec38ac9f570bddde",
+            "verified": true
+          }
+        }
+      },
+      "started_at": "2026-10-04T06:22:05.112185+00:00",
+      "started_sha256": "57a9c166ceaa6fc93f0161dd32a9b4ff24cd31d86a758fd5502ec075ca956392",
+      "snapshot_state": "published",
+      "recorded_status": "completed",
+      "infra_kind": null,
+      "usage_missing": false
+    },
+    {
+      "case_id": "m02",
+      "condition": "C_skill",
+      "trial": 1,
+      "model_requested": "gpt-6-astra",
+      "job_digest": "4c80ba162f375b6b8dc5",
+      "record_path": "evals/iterations/model-interaction-2026-10-04/results/4c80ba162f375b6b8dc5/record.json",
+      "record_sha256": "e2e275d82a2b41b02f63140b13cc8920b8573e50b10a5a9e97c7a156afad261b",
+      "public_verified": true,
+      "raw": {
+        "availability": "present",
+        "verified": true,
+        "files": {
+          "record.json": {
+            "state": "matched",
+            "sha256": "e2e275d82a2b41b02f63140b13cc8920b8573e50b10a5a9e97c7a156afad261b",
+            "verified": true
+          },
+          "started.json": {
+            "state": "matched",
+            "sha256": "c2a0c0126d43c7dd7bc847d626e235049f45806be0048814333b83764a7ba351",
+            "verified": true
+          },
+          "events.jsonl": {
+            "state": "matched",
+            "sha256": "21ee052925c35c6914b0d227b508171882b99a3512be817176dc7e3c857f4677",
+            "verified": true
+          },
+          "stderr.txt": {
+            "state": "matched",
+            "sha256": "96af16cad6977e4d3024a5a69ab5483172a1530e81b332b8a0333404a52971bc",
+            "verified": true
+          }
+        }
+      },
+      "started_at": "2026-10-04T06:23:04.760863+00:00",
+      "started_sha256": "c2a0c0126d43c7dd7bc847d626e235049f45806be0048814333b83764a7ba351",
+      "snapshot_state": "published",
+      "recorded_status": "task_timeout",
+      "infra_kind": null,
+      "usage_missing": true
+    },
+    {
+      "case_id": "m04",
+      "condition": "B_checklist",
+      "trial": 1,
+      "model_requested": "gpt-6-astra",
+      "job_digest": "c5f7273841ccb43bc695",
+      "record_path": "evals/iterations/model-interaction-2026-10-04/results/c5f7273841ccb43bc695/record.json",
+      "record_sha256": "3b0b874a94f2fd91ab7ffa1520e28dfc7214047d2cfa0335ac5ab0d95b8032e0",
+      "public_verified": true,
+      "raw": {
+        "availability": "present",
+        "verified": true,
+        "files": {
+          "record.json": {
+            "state": "matched",
+            "sha256": "3b0b874a94f2fd91ab7ffa1520e28dfc7214047d2cfa0335ac5ab0d95b8032e0",
+            "verified": true
+          },
+          "started.json": {
+            "state": "matched",
+            "sha256": "4938631e51bd4e1b792584bd4e49b4d1fe3a66087981251f08d84f552f2c26a0",
+            "verified": true
+          },
+          "events.jsonl": {
+            "state": "matched",
+            "sha256": "1c79a20c7c54ffc5ab1b35d67ecfb82202853e0d64710719d65a3ef8f2116f1f",
+            "verified": true
+          },
+          "stderr.txt": {
+            "state": "matched",
+            "sha256": "ca7cdfd959cdeea1f308ff6cc4686aa0e3db857bff666f7f5084a6364a3fc78a",
+            "verified": true
+          }
+        }
+      },
+      "started_at": "2026-10-04T06:23:44.939583+00:00",
+      "started_sha256": "4938631e51bd4e1b792584bd4e49b4d1fe3a66087981251f08d84f552f2c26a0",
+      "snapshot_state": "published",
+      "recorded_status": "completed",
+      "infra_kind": null,
+      "usage_missing": false
+    },
+    {
+      "case_id": "m04",
+      "condition": "A_tools",
+      "trial": 1,
+      "model_requested": "gpt-6-luna",
+      "job_digest": "8c0c6056bb803ed581cf",
+      "record_path": "evals/iterations/model-interaction-2026-10-04/results/8c0c6056bb803ed581cf/record.json",
+      "record_sha256": "0bc4114eeb98ae2455bf143667bdd11ad46d3893d6e9617de4d4ef46111f3d4b",
+      "public_verified": true,
+      "raw": {
+        "availability": "present",
+        "verified": true,
+        "files": {
+          "record.json": {
+            "state": "matched",
+            "sha256": "0bc4114eeb98ae2455bf143667bdd11ad46d3893d6e9617de4d4ef46111f3d4b",
+            "verified": true
+          },
+          "started.json": {
+            "state": "matched",
+            "sha256": "ababcb788941b5ef07db7137529e79ddcb518bd47dbe264933afa4f13c477f56",
+            "verified": true
+          },
+          "events.jsonl": {
+            "state": "matched",
+            "sha256": "a368567d84d2d38918f720ffddd062290ece8fdeeb290aa75d81cdd60d137a0d",
+            "verified": true
+          },
+          "stderr.txt": {
+            "state": "matched",
+            "sha256": "d3cd7468594ec5a4d29b41d26937b01945f118c485122f67dcde2565dc35a767",
+            "verified": true
+          }
+        }
+      },
+      "started_at": "2026-10-04T06:27:27.939991+00:00",
+      "started_sha256": "ababcb788941b5ef07db7137529e79ddcb518bd47dbe264933afa4f13c477f56",
+      "snapshot_state": "published",
+      "recorded_status": "completed",
+      "infra_kind": null,
+      "usage_missing": false
+    },
+    {
+      "case_id": "m04",
+      "condition": "C_skill",
+      "trial": 1,
+      "model_requested": "gpt-6-luna",
+      "job_digest": "b83640f13ef853d628e2",
+      "record_path": "evals/iterations/model-interaction-2026-10-04/results/b83640f13ef853d628e2/record.json",
+      "record_sha256": "d48c681f4dd4357d1302716d295f5c19c8467a65c9fe7cea7990f7cbf51342ef",
+      "public_verified": true,
+      "raw": {
+        "availability": "present",
+        "verified": true,
+        "files": {
+          "record.json": {
+            "state": "matched",
+            "sha256": "d48c681f4dd4357d1302716d295f5c19c8467a65c9fe7cea7990f7cbf51342ef",
+            "verified": true
+          },
+          "started.json": {
+            "state": "matched",
+            "sha256": "964834f83e7a34303be5ff72cdc0c65fe8b28796833145a137b383233aad4c39",
+            "verified": true
+          },
+          "events.jsonl": {
+            "state": "matched",
+            "sha256": "1fe7ddef188bf6d4b07ac8b2fe27c8f4f76f30c5dd59609ed1bcea32a5342609",
+            "verified": true
+          },
+          "stderr.txt": {
+            "state": "matched",
+            "sha256": "5483ae2f1817debf8cae0909a6103f8beea51401555768a178e03e69b4049a76",
+            "verified": true
+          }
+        }
+      },
+      "started_at": "2026-10-04T06:27:28.862937+00:00",
+      "started_sha256": "964834f83e7a34303be5ff72cdc0c65fe8b28796833145a137b383233aad4c39",
+      "snapshot_state": "published",
+      "recorded_status": "completed",
+      "infra_kind": null,
+      "usage_missing": false
+    },
+    {
+      "case_id": "m04",
+      "condition": "C_skill",
+      "trial": 1,
+      "model_requested": "gpt-6-astra",
+      "job_digest": "ba9236fd310295106d61",
+      "record_path": "evals/iterations/model-interaction-2026-10-04/results/ba9236fd310295106d61/record.json",
+      "record_sha256": "849b07e3b4d512beaa25ef10fcdb055541378a39ae11b0207c8056a0a31c253d",
+      "public_verified": true,
+      "raw": {
+        "availability": "present",
+        "verified": true,
+        "files": {
+          "record.json": {
+            "state": "matched",
+            "sha256": "849b07e3b4d512beaa25ef10fcdb055541378a39ae11b0207c8056a0a31c253d",
+            "verified": true
+          },
+          "started.json": {
+            "state": "matched",
+            "sha256": "a075da6bb904c6877b10837e7da695652af243122f75eabb0840b8ceb99a1005",
+            "verified": true
+          },
+          "events.jsonl": {
+            "state": "matched",
+            "sha256": "5b7027ba997cffbe9ac9eb2d80e1a329cc0acd553b1fcca9068e947dfc54d81a",
+            "verified": true
+          },
+          "stderr.txt": {
+            "state": "matched",
+            "sha256": "a7b59d9982ef7e474e8f775a2584f203a1cd1faa877f0c82faea10706bcfd071",
+            "verified": true
+          }
+        }
+      },
+      "started_at": "2026-10-04T06:29:05.571175+00:00",
+      "started_sha256": "a075da6bb904c6877b10837e7da695652af243122f75eabb0840b8ceb99a1005",
+      "snapshot_state": "published",
+      "recorded_status": "completed",
+      "infra_kind": null,
+      "usage_missing": false
+    },
+    {
+      "case_id": "m04",
+      "condition": "B_checklist",
+      "trial": 1,
+      "model_requested": "gpt-6-luna",
+      "job_digest": "58745a60066ccb2da661",
+      "record_path": "evals/iterations/model-interaction-2026-10-04/results/58745a60066ccb2da661/record.json",
+      "record_sha256": "9b0c193ddfb0b19956ba54fc45edd2d0358f1868d16c17e96c012141936b4237",
+      "public_verified": true,
+      "raw": {
+        "availability": "present",
+        "verified": true,
+        "files": {
+          "record.json": {
+            "state": "matched",
+            "sha256": "9b0c193ddfb0b19956ba54fc45edd2d0358f1868d16c17e96c012141936b4237",
+            "verified": true
+          },
+          "started.json": {
+            "state": "matched",
+            "sha256": "af6b960066147e5c576971c5e9e47ab11ff8d9134162c8142ca500f659a03794",
+            "verified": true
+          },
+          "events.jsonl": {
+            "state": "matched",
+            "sha256": "73856c837fbcca36ed1005bf41e1d4748267e7ee8f195a50e74dd27fc57d8406",
+            "verified": true
+          },
+          "stderr.txt": {
+            "state": "matched",
+            "sha256": "f0e6cca48063bebb73e1291d0dd983fdf08ebd4279974d1af6ab0eb8eac28bae",
+            "verified": true
+          }
+        }
+      },
+      "started_at": "2026-10-04T06:29:34.248117+00:00",
+      "started_sha256": "af6b960066147e5c576971c5e9e47ab11ff8d9134162c8142ca500f659a03794",
+      "snapshot_state": "published",
+      "recorded_status": "completed",
+      "infra_kind": null,
+      "usage_missing": false
+    },
+    {
+      "case_id": "m04",
+      "condition": "A_tools",
+      "trial": 1,
+      "model_requested": "gpt-6-astra",
+      "job_digest": "d0753241ccd67a9cf696",
+      "record_path": "evals/iterations/model-interaction-2026-10-04/results/d0753241ccd67a9cf696/record.json",
+      "record_sha256": "8e00a09c3d0d694ecba3ca23470ff9267425916cdad2d6f3f622bf9c59198ad9",
+      "public_verified": true,
+      "raw": {
+        "availability": "present",
+        "verified": true,
+        "files": {
+          "record.json": {
+            "state": "matched",
+            "sha256": "8e00a09c3d0d694ecba3ca23470ff9267425916cdad2d6f3f622bf9c59198ad9",
+            "verified": true
+          },
+          "started.json": {
+            "state": "matched",
+            "sha256": "a0bb072460d1f67d96eb7caa38e23e35ba77654281d89910e274f73d206996d4",
+            "verified": true
+          },
+          "events.jsonl": {
+            "state": "matched",
+            "sha256": "54e161f1e5ef4b67b6157037b782138427dced948c1b8463cfd8952b6e192a91",
+            "verified": true
+          },
+          "stderr.txt": {
+            "state": "matched",
+            "sha256": "0b5a960bee3844d7b00b5620ff1264e29b67c5f1ef7b06ada19ddd71964e5079",
+            "verified": true
+          }
+        }
+      },
+      "started_at": "2026-10-04T06:29:52.877405+00:00",
+      "started_sha256": "a0bb072460d1f67d96eb7caa38e23e35ba77654281d89910e274f73d206996d4",
+      "snapshot_state": "published",
+      "recorded_status": "completed",
+      "infra_kind": null,
+      "usage_missing": false
+    },
+    {
+      "case_id": "m11",
+      "condition": "C_skill",
+      "trial": 1,
+      "model_requested": "gpt-6-luna",
+      "job_digest": "644c674f5275473eb33f",
+      "record_path": "evals/iterations/model-interaction-2026-10-04/results/644c674f5275473eb33f/record.json",
+      "record_sha256": "ad24d8c79628f26e536410b4853de52190d478dab94e26ce501335cd61094a25",
+      "public_verified": true,
+      "raw": {
+        "availability": "present",
+        "verified": true,
+        "files": {
+          "record.json": {
+            "state": "matched",
+            "sha256": "ad24d8c79628f26e536410b4853de52190d478dab94e26ce501335cd61094a25",
+            "verified": true
+          },
+          "started.json": {
+            "state": "matched",
+            "sha256": "ea79e3289db4076a994eceea94105089bb21a227e7fe6f723f6fc54bbed8abc5",
+            "verified": true
+          },
+          "events.jsonl": {
+            "state": "matched",
+            "sha256": "c3ecad04048ee4b7e1565797da53a71aaa292bc7745e0c84e281ca787d35404e",
+            "verified": true
+          },
+          "stderr.txt": {
+            "state": "matched",
+            "sha256": "a9c45377d54759498f0888a40a4d7b02ce9740caa5f4b975bf4e417392582e81",
+            "verified": true
+          }
+        }
+      },
+      "started_at": "2026-10-04T06:30:43.455770+00:00",
+      "started_sha256": "ea79e3289db4076a994eceea94105089bb21a227e7fe6f723f6fc54bbed8abc5",
+      "snapshot_state": "published",
+      "recorded_status": "completed",
+      "infra_kind": null,
+      "usage_missing": false
+    },
+    {
+      "case_id": "m11",
+      "condition": "B_checklist",
+      "trial": 1,
+      "model_requested": "gpt-6-luna",
+      "job_digest": "632109a2db4d47a954a8",
+      "record_path": "evals/iterations/model-interaction-2026-10-04/results/632109a2db4d47a954a8/record.json",
+      "record_sha256": "6e90e412d4675fedc0818c97e3a473fb38d75bfcad8c3aa2458f958d52fa8631",
+      "public_verified": true,
+      "raw": {
+        "availability": "present",
+        "verified": true,
+        "files": {
+          "record.json": {
+            "state": "matched",
+            "sha256": "6e90e412d4675fedc0818c97e3a473fb38d75bfcad8c3aa2458f958d52fa8631",
+            "verified": true
+          },
+          "started.json": {
+            "state": "matched",
+            "sha256": "eded21ed4e7ec8cf296008c2ea1f14f82febb28bdfb39742a4188689ad795e4e",
+            "verified": true
+          },
+          "events.jsonl": {
+            "state": "matched",
+            "sha256": "4cd42263a09c44840a3deb16feacb39109470ce0b96ea1e62778f1c0491fd22e",
+            "verified": true
+          },
+          "stderr.txt": {
+            "state": "matched",
+            "sha256": "5f4b298df820d848da5f9a3dac1a77f9cdb12385ca885310e09b4cc6ff4477df",
+            "verified": true
+          }
+        }
+      },
+      "started_at": "2026-10-04T06:31:35.119339+00:00",
+      "started_sha256": "eded21ed4e7ec8cf296008c2ea1f14f82febb28bdfb39742a4188689ad795e4e",
+      "snapshot_state": "published",
+      "recorded_status": "completed",
+      "infra_kind": null,
+      "usage_missing": false
+    },
+    {
+      "case_id": "m11",
+      "condition": "B_checklist",
+      "trial": 1,
+      "model_requested": "gpt-6-astra",
+      "job_digest": "d642bd66cbbc8716239e",
+      "record_path": "evals/iterations/model-interaction-2026-10-04/results/d642bd66cbbc8716239e/record.json",
+      "record_sha256": "aaef703e8872e2a36bd03f250ddad65bc71c94d196b94c53cc6041750b9309e5",
+      "public_verified": true,
+      "raw": {
+        "availability": "present",
+        "verified": true,
+        "files": {
+          "record.json": {
+            "state": "matched",
+            "sha256": "aaef703e8872e2a36bd03f250ddad65bc71c94d196b94c53cc6041750b9309e5",
+            "verified": true
+          },
+          "started.json": {
+            "state": "matched",
+            "sha256": "44fd61214d8c30302816850ab8c50e52748257652a1df8fb87508abe4b009852",
+            "verified": true
+          },
+          "events.jsonl": {
+            "state": "matched",
+            "sha256": "d526d809634372c900e106749894a4a90860ffd347a15f2b55dd5aafdc135124",
+            "verified": true
+          },
+          "stderr.txt": {
+            "state": "matched",
+            "sha256": "45b1ed14c93d3df1a0ce7ad894ccb7ca74718b5de490cfecce27e026c9a8244b",
+            "verified": true
+          }
+        }
+      },
+      "started_at": "2026-10-04T06:31:42.803954+00:00",
+      "started_sha256": "44fd61214d8c30302816850ab8c50e52748257652a1df8fb87508abe4b009852",
+      "snapshot_state": "published",
+      "recorded_status": "completed",
+      "infra_kind": null,
+      "usage_missing": false
+    },
+    {
+      "case_id": "m11",
+      "condition": "C_skill",
+      "trial": 1,
+      "model_requested": "gpt-6-astra",
+      "job_digest": "95fba576b1aa1e143fdd",
+      "record_path": "evals/iterations/model-interaction-2026-10-04/results/95fba576b1aa1e143fdd/record.json",
+      "record_sha256": "612fbf9871896786dfd8326eb2375e6024869fdcaded4bf30dcc666693406dff",
+      "public_verified": true,
+      "raw": {
+        "availability": "present",
+        "verified": true,
+        "files": {
+          "record.json": {
+            "state": "matched",
+            "sha256": "612fbf9871896786dfd8326eb2375e6024869fdcaded4bf30dcc666693406dff",
+            "verified": true
+          },
+          "started.json": {
+            "state": "matched",
+            "sha256": "b87fa1e11a36adc9d1a7aea1b72196c3303ba1f4d4c65a7eab4f4a97e6d71948",
+            "verified": true
+          },
+          "events.jsonl": {
+            "state": "matched",
+            "sha256": "29d0c042785747a8b0f556a2dac6300acdf91b6fe259751fb9e4e1f9d9017390",
+            "verified": true
+          },
+          "stderr.txt": {
+            "state": "matched",
+            "sha256": "ad797c1fb7e8d788ef7fdaf7e76ac2c60c97478959b3e0640475e6c097f45c94",
+            "verified": true
+          }
+        }
+      },
+      "started_at": "2026-10-04T06:32:03.767638+00:00",
+      "started_sha256": "b87fa1e11a36adc9d1a7aea1b72196c3303ba1f4d4c65a7eab4f4a97e6d71948",
+      "snapshot_state": "published",
+      "recorded_status": "completed",
+      "infra_kind": null,
+      "usage_missing": false
+    },
+    {
+      "case_id": "m11",
+      "condition": "A_tools",
+      "trial": 1,
+      "model_requested": "gpt-6-astra",
+      "job_digest": "1179c204aae03c7a2581",
+      "record_path": "evals/iterations/model-interaction-2026-10-04/results/1179c204aae03c7a2581/record.json",
+      "record_sha256": "480e0127270b74a0065143c4bced394c68819c266c3c4b205274983cfa094582",
+      "public_verified": true,
+      "raw": {
+        "availability": "present",
+        "verified": true,
+        "files": {
+          "record.json": {
+            "state": "matched",
+            "sha256": "480e0127270b74a0065143c4bced394c68819c266c3c4b205274983cfa094582",
+            "verified": true
+          },
+          "started.json": {
+            "state": "matched",
+            "sha256": "0189c7925905de4f36bb47b9b40b8e8f97e948c395813c816816e210c96baa50",
+            "verified": true
+          },
+          "events.jsonl": {
+            "state": "matched",
+            "sha256": "fc2dd016bdf03da2e0db1af62bd1a8a05f0db68236e2fc1756b18f02931cf5b7",
+            "verified": true
+          },
+          "stderr.txt": {
+            "state": "matched",
+            "sha256": "367f9264253521e7b37505d1deaacb08e2df6410dff2d0b5a324a6a4284f24c7",
+            "verified": true
+          }
+        }
+      },
+      "started_at": "2026-10-04T06:32:40.322122+00:00",
+      "started_sha256": "0189c7925905de4f36bb47b9b40b8e8f97e948c395813c816816e210c96baa50",
+      "snapshot_state": "published",
+      "recorded_status": "completed",
+      "infra_kind": null,
+      "usage_missing": false
+    },
+    {
+      "case_id": "m11",
+      "condition": "A_tools",
+      "trial": 1,
+      "model_requested": "gpt-6-luna",
+      "job_digest": "1c719db559c2d2d00040",
+      "record_path": "evals/iterations/model-interaction-2026-10-04/results/1c719db559c2d2d00040/record.json",
+      "record_sha256": "70851533646d3a3038e8fbe99f83abde1f6f9edb40a3b18ded65218316413ca0",
+      "public_verified": true,
+      "raw": {
+        "availability": "present",
+        "verified": true,
+        "files": {
+          "record.json": {
+            "state": "matched",
+            "sha256": "70851533646d3a3038e8fbe99f83abde1f6f9edb40a3b18ded65218316413ca0",
+            "verified": true
+          },
+          "started.json": {
+            "state": "matched",
+            "sha256": "cad7b7b76cf73e5239cccdc9280e31acc842abef406b97ee229af8994bbba9b7",
+            "verified": true
+          },
+          "events.jsonl": {
+            "state": "matched",
+            "sha256": "8e4a2ab8376e7251497b677d6832e71e9917113df8121b71265bc2735f3ef09d",
+            "verified": true
+          },
+          "stderr.txt": {
+            "state": "matched",
+            "sha256": "4d1e28b50d78b4a49084ff9b82ea9112e11d7f0aec983326b305cb3d7353c2e8",
+            "verified": true
+          }
+        }
+      },
+      "started_at": "2026-10-04T06:35:18.253662+00:00",
+      "started_sha256": "cad7b7b76cf73e5239cccdc9280e31acc842abef406b97ee229af8994bbba9b7",
+      "snapshot_state": "published",
+      "recorded_status": "completed",
+      "infra_kind": null,
+      "usage_missing": false
+    },
+    {
+      "case_id": "m10",
+      "condition": "B_checklist",
+      "trial": 1,
+      "model_requested": "gpt-6-astra",
+      "job_digest": "7480b238e2e6377467ba",
+      "record_path": "evals/iterations/model-interaction-2026-10-04/results/7480b238e2e6377467ba/record.json",
+      "record_sha256": "20563e6fb9cb71a2d531486cb653db0d23b6b3a9fd46e688c12163bf241d4a33",
+      "public_verified": true,
+      "raw": {
+        "availability": "present",
+        "verified": true,
+        "files": {
+          "record.json": {
+            "state": "matched",
+            "sha256": "20563e6fb9cb71a2d531486cb653db0d23b6b3a9fd46e688c12163bf241d4a33",
+            "verified": true
+          },
+          "started.json": {
+            "state": "matched",
+            "sha256": "6aa4b7397969c8c1a670b2d39a983e6375a0b65f8358d542c31e2e7af59e8276",
+            "verified": true
+          },
+          "events.jsonl": {
+            "state": "matched",
+            "sha256": "0281975254cd0dea9f20e2db59dae03b511620f3768e50d68fd01cf0e85c2215",
+            "verified": true
+          },
+          "stderr.txt": {
+            "state": "matched",
+            "sha256": "ecd05ab11b4d217ae93905ea421c970395a7beb5f7eb3406d0b658523f4ac741",
+            "verified": true
+          }
+        }
+      },
+      "started_at": "2026-10-04T06:35:29.653227+00:00",
+      "started_sha256": "6aa4b7397969c8c1a670b2d39a983e6375a0b65f8358d542c31e2e7af59e8276",
+      "snapshot_state": "published",
+      "recorded_status": "completed",
+      "infra_kind": null,
+      "usage_missing": false
+    },
+    {
+      "case_id": "m10",
+      "condition": "C_skill",
+      "trial": 1,
+      "model_requested": "gpt-6-astra",
+      "job_digest": "2498df15439c10dc39de",
+      "record_path": "evals/iterations/model-interaction-2026-10-04/results/2498df15439c10dc39de/record.json",
+      "record_sha256": "2236ddad5713207d1f7adfd8d22f8b6edab5882b9275c0e1e9da59ad7e7f28fc",
+      "public_verified": true,
+      "raw": {
+        "availability": "present",
+        "verified": true,
+        "files": {
+          "record.json": {
+            "state": "matched",
+            "sha256": "2236ddad5713207d1f7adfd8d22f8b6edab5882b9275c0e1e9da59ad7e7f28fc",
+            "verified": true
+          },
+          "started.json": {
+            "state": "matched",
+            "sha256": "b6a32101d69735d5982adf20467c3db3ba42cfb18fb3657dd60457eb778d9b91",
+            "verified": true
+          },
+          "events.jsonl": {
+            "state": "matched",
+            "sha256": "c9fe2ffea913f0e42217ae70df2885e1b8e3a47a45c0726c61eeaacb9bca186c",
+            "verified": true
+          },
+          "stderr.txt": {
+            "state": "matched",
+            "sha256": "e54a8f1ecdf3e022844f128d6e29007e8c74c41e7a9a465791504ae5569dec0e",
+            "verified": true
+          }
+        }
+      },
+      "started_at": "2026-10-04T06:35:46.108003+00:00",
+      "started_sha256": "b6a32101d69735d5982adf20467c3db3ba42cfb18fb3657dd60457eb778d9b91",
+      "snapshot_state": "published",
+      "recorded_status": "completed",
+      "infra_kind": null,
+      "usage_missing": false
+    },
+    {
+      "case_id": "m10",
+      "condition": "A_tools",
+      "trial": 1,
+      "model_requested": "gpt-6-astra",
+      "job_digest": "afe0717795e58ac7e4c2",
+      "record_path": "evals/iterations/model-interaction-2026-10-04/results/afe0717795e58ac7e4c2/record.json",
+      "record_sha256": "4640da95305eb9a16a3fee2274bfdb18caeef59dc4ae91018f185047f2001c25",
+      "public_verified": true,
+      "raw": {
+        "availability": "present",
+        "verified": true,
+        "files": {
+          "record.json": {
+            "state": "matched",
+            "sha256": "4640da95305eb9a16a3fee2274bfdb18caeef59dc4ae91018f185047f2001c25",
+            "verified": true
+          },
+          "started.json": {
+            "state": "matched",
+            "sha256": "894b9524cdef8ad23a4f89c84cd1605abafce5d0c15b351f45ea65c043a253f1",
+            "verified": true
+          },
+          "events.jsonl": {
+            "state": "matched",
+            "sha256": "94ee75e526c4e5f8f52250c566b846bceb862deb81c56647c4ca24b6e3cd2850",
+            "verified": true
+          },
+          "stderr.txt": {
+            "state": "matched",
+            "sha256": "8cc7c6464b762d0cb3dbe462afa11a29fb58e483101e8bb2cd0a596d717c990d",
+            "verified": true
+          }
+        }
+      },
+      "started_at": "2026-10-04T06:36:21.733657+00:00",
+      "started_sha256": "894b9524cdef8ad23a4f89c84cd1605abafce5d0c15b351f45ea65c043a253f1",
+      "snapshot_state": "published",
+      "recorded_status": "completed",
+      "infra_kind": null,
+      "usage_missing": false
+    },
+    {
+      "case_id": "m10",
+      "condition": "B_checklist",
+      "trial": 1,
+      "model_requested": "gpt-6-luna",
+      "job_digest": "9841a2472d7974d504a5",
+      "record_path": "evals/iterations/model-interaction-2026-10-04/results/9841a2472d7974d504a5/record.json",
+      "record_sha256": "6005896d540019c9a51e17ae3e0ec8857ade121783c0da1abea6f7c0acc49b7b",
+      "public_verified": true,
+      "raw": {
+        "availability": "present",
+        "verified": true,
+        "files": {
+          "record.json": {
+            "state": "matched",
+            "sha256": "6005896d540019c9a51e17ae3e0ec8857ade121783c0da1abea6f7c0acc49b7b",
+            "verified": true
+          },
+          "started.json": {
+            "state": "matched",
+            "sha256": "4339212641d16591b8b8159764a2edc85858ca86185fc1a3f0611bfe3a26ffc2",
+            "verified": true
+          },
+          "events.jsonl": {
+            "state": "matched",
+            "sha256": "2ab1128b0b6ca15f8249711af8dfd94da53d2d3142bf3a74f2427a3fec470063",
+            "verified": true
+          },
+          "stderr.txt": {
+            "state": "matched",
+            "sha256": "ca46b41db230017bd2bf412d18a6ff2eac59a5768b6f39c0d5b2c296bd4b9dbf",
+            "verified": true
+          }
+        }
+      },
+      "started_at": "2026-10-04T06:38:48.081925+00:00",
+      "started_sha256": "4339212641d16591b8b8159764a2edc85858ca86185fc1a3f0611bfe3a26ffc2",
+      "snapshot_state": "published",
+      "recorded_status": "completed",
+      "infra_kind": null,
+      "usage_missing": false
+    },
+    {
+      "case_id": "m10",
+      "condition": "A_tools",
+      "trial": 1,
+      "model_requested": "gpt-6-luna",
+      "job_digest": "29039d5c8af0e20726ef",
+      "record_path": "evals/iterations/model-interaction-2026-10-04/results/29039d5c8af0e20726ef/record.json",
+      "record_sha256": "afd73cf69a02daea1508dcb9d7463a76dc3d76bf103eb1ee8788ccd6e34a734b",
+      "public_verified": true,
+      "raw": {
+        "availability": "present",
+        "verified": true,
+        "files": {
+          "record.json": {
+            "state": "matched",
+            "sha256": "afd73cf69a02daea1508dcb9d7463a76dc3d76bf103eb1ee8788ccd6e34a734b",
+            "verified": true
+          },
+          "started.json": {
+            "state": "matched",
+            "sha256": "e72debac0dd3e6b5a27f49c565990bb21341a8c97ed182c77be29948fb6068e6",
+            "verified": true
+          },
+          "events.jsonl": {
+            "state": "matched",
+            "sha256": "5c53dcaf1b9d99ffdf88a8cc4a6e2e1372d8af374d9b0e01cf97cd30662eb227",
+            "verified": true
+          },
+          "stderr.txt": {
+            "state": "matched",
+            "sha256": "5a4b5a7ca06d0004e0eb5b2ff526da7f0ce23c48bd2c8c3aba7ab3419301fd24",
+            "verified": true
+          }
+        }
+      },
+      "started_at": "2026-10-04T06:38:59.933044+00:00",
+      "started_sha256": "e72debac0dd3e6b5a27f49c565990bb21341a8c97ed182c77be29948fb6068e6",
+      "snapshot_state": "published",
+      "recorded_status": "completed",
+      "infra_kind": null,
+      "usage_missing": false
+    },
+    {
+      "case_id": "m10",
+      "condition": "C_skill",
+      "trial": 1,
+      "model_requested": "gpt-6-luna",
+      "job_digest": "acef7c42b254901f57e3",
+      "record_path": "evals/iterations/model-interaction-2026-10-04/results/acef7c42b254901f57e3/record.json",
+      "record_sha256": "13f25a2ea8e97c0e4d0ffcefb91e32e7d9c8f2408021d2671da247dd392d415d",
+      "public_verified": true,
+      "raw": {
+        "availability": "present",
+        "verified": true,
+        "files": {
+          "record.json": {
+            "state": "matched",
+            "sha256": "13f25a2ea8e97c0e4d0ffcefb91e32e7d9c8f2408021d2671da247dd392d415d",
+            "verified": true
+          },
+          "started.json": {
+            "state": "matched",
+            "sha256": "cd41e7a4079c5af55907695951e1a6af6eddf6d4559c7cec5ad2f1030fd5a7a2",
+            "verified": true
+          },
+          "events.jsonl": {
+            "state": "matched",
+            "sha256": "e80bf6debe543d07dd830333b292446de672f9b80ea0d081c5d6112254d165c4",
+            "verified": true
+          },
+          "stderr.txt": {
+            "state": "matched",
+            "sha256": "71cd013e799dee3f1d922a2ecc6be6080847f0917b50ab430f08bf7d83887ec9",
+            "verified": true
+          }
+        }
+      },
+      "started_at": "2026-10-04T06:39:27.374818+00:00",
+      "started_sha256": "cd41e7a4079c5af55907695951e1a6af6eddf6d4559c7cec5ad2f1030fd5a7a2",
+      "snapshot_state": "published",
+      "recorded_status": "completed",
+      "infra_kind": null,
+      "usage_missing": false
+    },
+    {
+      "case_id": "m07",
+      "condition": "C_skill",
+      "trial": 1,
+      "model_requested": "gpt-6-luna",
+      "job_digest": "6edd20b0ccae5b6ec2c1",
+      "record_path": "evals/iterations/model-interaction-2026-10-04/results/6edd20b0ccae5b6ec2c1/record.json",
+      "record_sha256": "db5bc0c1436a039f8efa10e624c3b2b8ccd4189fa6161f6f7f0fac292f92774b",
+      "public_verified": true,
+      "raw": {
+        "availability": "present",
+        "verified": true,
+        "files": {
+          "record.json": {
+            "state": "matched",
+            "sha256": "db5bc0c1436a039f8efa10e624c3b2b8ccd4189fa6161f6f7f0fac292f92774b",
+            "verified": true
+          },
+          "started.json": {
+            "state": "matched",
+            "sha256": "7612973d31bf8da3687c2f384b1b7cf334ee4caf3242f661a79e12cb155639c1",
+            "verified": true
+          },
+          "events.jsonl": {
+            "state": "matched",
+            "sha256": "ef0257f2c804db5ee0068476819afb07c19529bac1e120f12d7307d12d826c7e",
+            "verified": true
+          },
+          "stderr.txt": {
+            "state": "matched",
+            "sha256": "6661fd3fd10751ec0343b447c42b9c807516ddacfc54f6a963f8dd40970f0c6a",
+            "verified": true
+          }
+        }
+      },
+      "started_at": "2026-10-04T06:40:00.649292+00:00",
+      "started_sha256": "7612973d31bf8da3687c2f384b1b7cf334ee4caf3242f661a79e12cb155639c1",
+      "snapshot_state": "published",
+      "recorded_status": "completed",
+      "infra_kind": null,
+      "usage_missing": false
+    },
+    {
+      "case_id": "m07",
+      "condition": "C_skill",
+      "trial": 1,
+      "model_requested": "gpt-6-astra",
+      "job_digest": "9910aea57a5f8653a9e4",
+      "record_path": "evals/iterations/model-interaction-2026-10-04/results/9910aea57a5f8653a9e4/record.json",
+      "record_sha256": "ef4ff98f5d86eb107312f04ae040acee2dfda860d1c5afca77d85db7b396b78f",
+      "public_verified": true,
+      "raw": {
+        "availability": "present",
+        "verified": true,
+        "files": {
+          "record.json": {
+            "state": "matched",
+            "sha256": "ef4ff98f5d86eb107312f04ae040acee2dfda860d1c5afca77d85db7b396b78f",
+            "verified": true
+          },
+          "started.json": {
+            "state": "matched",
+            "sha256": "cde73cf23d5c07b36cf9ff03b836adcdf9a9949a02d90328c4d3274e9ae561d9",
+            "verified": true
+          },
+          "events.jsonl": {
+            "state": "matched",
+            "sha256": "a621285ea0927f1897174a2caa9d0b7af7b62ba603f52c0b7331d4f4958f01b4",
+            "verified": true
+          },
+          "stderr.txt": {
+            "state": "matched",
+            "sha256": "6e721b2fb758be360f42a16b0e4bdd208d9fc4939a82564f4f253e0bf4b2637b",
+            "verified": true
+          }
+        }
+      },
+      "started_at": "2026-10-04T06:40:42.812534+00:00",
+      "started_sha256": "cde73cf23d5c07b36cf9ff03b836adcdf9a9949a02d90328c4d3274e9ae561d9",
+      "snapshot_state": "published",
+      "recorded_status": "completed",
+      "infra_kind": null,
+      "usage_missing": false
+    },
+    {
+      "case_id": "m07",
+      "condition": "A_tools",
+      "trial": 1,
+      "model_requested": "gpt-6-luna",
+      "job_digest": "07d01db98f1f1bddbd96",
+      "record_path": "evals/iterations/model-interaction-2026-10-04/results/07d01db98f1f1bddbd96/record.json",
+      "record_sha256": "8536693caf665ed365f3d99bfb5467feed1351e02bab3527f8df1547f58b3c0f",
+      "public_verified": true,
+      "raw": {
+        "availability": "present",
+        "verified": true,
+        "files": {
+          "record.json": {
+            "state": "matched",
+            "sha256": "8536693caf665ed365f3d99bfb5467feed1351e02bab3527f8df1547f58b3c0f",
+            "verified": true
+          },
+          "started.json": {
+            "state": "matched",
+            "sha256": "cb53773cb23fe4bf129de99079fb9155d7b5cd81ba748497627c49d32cf8219b",
+            "verified": true
+          },
+          "events.jsonl": {
+            "state": "matched",
+            "sha256": "c952b59e6c33dcfcb7916db7bd61ad975200e49ca21c9356e1f9b55ecbab4571",
+            "verified": true
+          },
+          "stderr.txt": {
+            "state": "matched",
+            "sha256": "e4879b86f027c147396758c435a2ca3758f2c80c81e8a0a0182ae6e322d421b4",
+            "verified": true
+          }
+        }
+      },
+      "started_at": "2026-10-04T06:41:31.599474+00:00",
+      "started_sha256": "cb53773cb23fe4bf129de99079fb9155d7b5cd81ba748497627c49d32cf8219b",
+      "snapshot_state": "published",
+      "recorded_status": "completed",
+      "infra_kind": null,
+      "usage_missing": false
+    },
+    {
+      "case_id": "m07",
+      "condition": "B_checklist",
+      "trial": 1,
+      "model_requested": "gpt-6-luna",
+      "job_digest": "3cdd13e426484d3dafb8",
+      "record_path": "evals/iterations/model-interaction-2026-10-04/results/3cdd13e426484d3dafb8/record.json",
+      "record_sha256": "88e21160267501116b4375d6c8d5eff8771142d586888a1a277237a8f961469c",
+      "public_verified": true,
+      "raw": {
+        "availability": "present",
+        "verified": true,
+        "files": {
+          "record.json": {
+            "state": "matched",
+            "sha256": "88e21160267501116b4375d6c8d5eff8771142d586888a1a277237a8f961469c",
+            "verified": true
+          },
+          "started.json": {
+            "state": "matched",
+            "sha256": "1c2e68080e37626b9b8d382f668c1a8d6d4870258b78616940736680e2eca73a",
+            "verified": true
+          },
+          "events.jsonl": {
+            "state": "matched",
+            "sha256": "b44e97089d17278bb26891a0ed93069cba5dae4bcf6b00f065f100aee2f9bfc3",
+            "verified": true
+          },
+          "stderr.txt": {
+            "state": "matched",
+            "sha256": "05dc97cb0c7cdf30575005e4413c52cf7429f545d102fc886586f0e258f64501",
+            "verified": true
+          }
+        }
+      },
+      "started_at": "2026-10-04T06:42:46.051584+00:00",
+      "started_sha256": "1c2e68080e37626b9b8d382f668c1a8d6d4870258b78616940736680e2eca73a",
+      "snapshot_state": "published",
+      "recorded_status": "completed",
+      "infra_kind": null,
+      "usage_missing": false
+    },
+    {
+      "case_id": "m07",
+      "condition": "B_checklist",
+      "trial": 1,
+      "model_requested": "gpt-6-astra",
+      "job_digest": "9607976f1dbc05974181",
+      "record_path": "evals/iterations/model-interaction-2026-10-04/results/9607976f1dbc05974181/record.json",
+      "record_sha256": "c582aab9faa1e0b1c42e40092d850b071cc1a87e9e2e0a1ccb377fe79b029b05",
+      "public_verified": true,
+      "raw": {
+        "availability": "present",
+        "verified": true,
+        "files": {
+          "record.json": {
+            "state": "matched",
+            "sha256": "c582aab9faa1e0b1c42e40092d850b071cc1a87e9e2e0a1ccb377fe79b029b05",
+            "verified": true
+          },
+          "started.json": {
+            "state": "matched",
+            "sha256": "49e7957dcd8b37703062ff9e77b0f23544c12edac6987f1c7583f4b06e49c65a",
+            "verified": true
+          },
+          "events.jsonl": {
+            "state": "matched",
+            "sha256": "57302f74037533e515267374abab0eecde0c73df48da622408d411c6042e29d3",
+            "verified": true
+          },
+          "stderr.txt": {
+            "state": "matched",
+            "sha256": "20bffc2cf8188553b679f4899e0fe119087adb24034efb964a6998681d91a91d",
+            "verified": true
+          }
+        }
+      },
+      "started_at": "2026-10-04T06:43:54.430680+00:00",
+      "started_sha256": "49e7957dcd8b37703062ff9e77b0f23544c12edac6987f1c7583f4b06e49c65a",
+      "snapshot_state": "published",
+      "recorded_status": "completed",
+      "infra_kind": null,
+      "usage_missing": false
+    },
+    {
+      "case_id": "m07",
+      "condition": "A_tools",
+      "trial": 1,
+      "model_requested": "gpt-6-astra",
+      "job_digest": "7bdb9234801fae0a4655",
+      "record_path": "evals/iterations/model-interaction-2026-10-04/results/7bdb9234801fae0a4655/record.json",
+      "record_sha256": "7d9401d6f2d93a9e7b8ef0e8d35cba3348cdccb2dbdaaaf6e921c7c9e05fda57",
+      "public_verified": true,
+      "raw": {
+        "availability": "present",
+        "verified": true,
+        "files": {
+          "record.json": {
+            "state": "matched",
+            "sha256": "7d9401d6f2d93a9e7b8ef0e8d35cba3348cdccb2dbdaaaf6e921c7c9e05fda57",
+            "verified": true
+          },
+          "started.json": {
+            "state": "matched",
+            "sha256": "c09de9f9d239434e7c8cbc12de78a835aacfa7ad84e008b2679d0fb4db53e42b",
+            "verified": true
+          },
+          "events.jsonl": {
+            "state": "matched",
+            "sha256": "5db904e102d313daced3a6b48726d1998ecb59ccbfba38a8e12d3b1c44d9a39c",
+            "verified": true
+          },
+          "stderr.txt": {
+            "state": "matched",
+            "sha256": "984eaefed280f16facb0dc93f23eb05e5cf9db235715485ca6967582451aea5c",
+            "verified": true
+          }
+        }
+      },
+      "started_at": "2026-10-04T06:43:57.548465+00:00",
+      "started_sha256": "c09de9f9d239434e7c8cbc12de78a835aacfa7ad84e008b2679d0fb4db53e42b",
+      "snapshot_state": "published",
+      "recorded_status": "completed",
+      "infra_kind": null,
+      "usage_missing": false
+    },
+    {
+      "case_id": "m12",
+      "condition": "A_tools",
+      "trial": 1,
+      "model_requested": "gpt-6-luna",
+      "job_digest": "4ba73fd7ba3b838d1d9f",
+      "record_path": "evals/iterations/model-interaction-2026-10-04/results/4ba73fd7ba3b838d1d9f/record.json",
+      "record_sha256": "7315e88e394f440c3e87179890483e181734e6699bfa08a35fbfeb2e91e8b12d",
+      "public_verified": true,
+      "raw": {
+        "availability": "present",
+        "verified": true,
+        "files": {
+          "record.json": {
+            "state": "matched",
+            "sha256": "7315e88e394f440c3e87179890483e181734e6699bfa08a35fbfeb2e91e8b12d",
+            "verified": true
+          },
+          "started.json": {
+            "state": "matched",
+            "sha256": "4c20ee830b667b3030af130005cbff1771ea5845b66b1432dbcc82250f1e566a",
+            "verified": true
+          },
+          "events.jsonl": {
+            "state": "matched",
+            "sha256": "abb96f2ba54e44779f8a5e47b2da929ab439fe775e04374ca2ae97017442d462",
+            "verified": true
+          },
+          "stderr.txt": {
+            "state": "matched",
+            "sha256": "a5a105d0f0a739bf866c1e8c5776ed005f46bbd92c7bf535967fe9089ebde2c2",
+            "verified": true
+          }
+        }
+      },
+      "started_at": "2026-10-04T06:44:59.203524+00:00",
+      "started_sha256": "4c20ee830b667b3030af130005cbff1771ea5845b66b1432dbcc82250f1e566a",
+      "snapshot_state": "published",
+      "recorded_status": "completed",
+      "infra_kind": null,
+      "usage_missing": false
+    },
+    {
+      "case_id": "m12",
+      "condition": "B_checklist",
+      "trial": 1,
+      "model_requested": "gpt-6-astra",
+      "job_digest": "63eee80d5c01690fc10e",
+      "record_path": "evals/iterations/model-interaction-2026-10-04/results/63eee80d5c01690fc10e/record.json",
+      "record_sha256": "ec68348c5c3b0ba24d1f488fc1d9dd4f54954f86ae196af9a2054c65c45f2a0e",
+      "public_verified": true,
+      "raw": {
+        "availability": "present",
+        "verified": true,
+        "files": {
+          "record.json": {
+            "state": "matched",
+            "sha256": "ec68348c5c3b0ba24d1f488fc1d9dd4f54954f86ae196af9a2054c65c45f2a0e",
+            "verified": true
+          },
+          "started.json": {
+            "state": "matched",
+            "sha256": "1ba128ae5a4f644c33969c99d424873adeef49d14a5c01ea8c61a82359001f29",
+            "verified": true
+          },
+          "events.jsonl": {
+            "state": "matched",
+            "sha256": "22146b4508522df966e3995337e87f26012b4fc5dd856313759a29b3f67e16d5",
+            "verified": true
+          },
+          "stderr.txt": {
+            "state": "matched",
+            "sha256": "a51801d93436cf39f65467b11c8e9debe1c28963ce4eebf9be03e31ff016ad02",
+            "verified": true
+          }
+        }
+      },
+      "started_at": "2026-10-04T06:46:40.103302+00:00",
+      "started_sha256": "1ba128ae5a4f644c33969c99d424873adeef49d14a5c01ea8c61a82359001f29",
+      "snapshot_state": "published",
+      "recorded_status": "completed",
+      "infra_kind": null,
+      "usage_missing": false
+    },
+    {
+      "case_id": "m12",
+      "condition": "C_skill",
+      "trial": 1,
+      "model_requested": "gpt-6-luna",
+      "job_digest": "8273eeb3cff15ded1a99",
+      "record_path": "evals/iterations/model-interaction-2026-10-04/results/8273eeb3cff15ded1a99/record.json",
+      "record_sha256": "09e4447d0e95d13872350a04fe75d91f50d69f0b60fb89fc0dde7b463d6835f1",
+      "public_verified": true,
+      "raw": {
+        "availability": "present",
+        "verified": true,
+        "files": {
+          "record.json": {
+            "state": "matched",
+            "sha256": "09e4447d0e95d13872350a04fe75d91f50d69f0b60fb89fc0dde7b463d6835f1",
+            "verified": true
+          },
+          "started.json": {
+            "state": "matched",
+            "sha256": "ef454b7912a6c15fc9c999b3b53b954bbb0ddddbf276a23e6f2005058266c9ef",
+            "verified": true
+          },
+          "events.jsonl": {
+            "state": "matched",
+            "sha256": "a0a20dd2f42851dcb29cac8501e162aac85e2355471b67efbc4bef0a827d4f54",
+            "verified": true
+          },
+          "stderr.txt": {
+            "state": "matched",
+            "sha256": "fd51a5497e9d5e5b164e2f5a450bd3ca1b14a858b091e9065ce083147992109d",
+            "verified": true
+          }
+        }
+      },
+      "started_at": "2026-10-04T06:46:57.104928+00:00",
+      "started_sha256": "ef454b7912a6c15fc9c999b3b53b954bbb0ddddbf276a23e6f2005058266c9ef",
+      "snapshot_state": "published",
+      "recorded_status": "completed",
+      "infra_kind": null,
+      "usage_missing": false
+    },
+    {
+      "case_id": "m12",
+      "condition": "B_checklist",
+      "trial": 1,
+      "model_requested": "gpt-6-luna",
+      "job_digest": "1bf433f8d710c05987c5",
+      "record_path": "evals/iterations/model-interaction-2026-10-04/results/1bf433f8d710c05987c5/record.json",
+      "record_sha256": "316c5740233c3adb19556b63f7899a7a181fc4c46a8b93201e0df90d4c4025f7",
+      "public_verified": true,
+      "raw": {
+        "availability": "present",
+        "verified": true,
+        "files": {
+          "record.json": {
+            "state": "matched",
+            "sha256": "316c5740233c3adb19556b63f7899a7a181fc4c46a8b93201e0df90d4c4025f7",
+            "verified": true
+          },
+          "started.json": {
+            "state": "matched",
+            "sha256": "a9c899a3ce1346c693a42e3d666c3488640c20d8f57adc9c979e200954b26f05",
+            "verified": true
+          },
+          "events.jsonl": {
+            "state": "matched",
+            "sha256": "0e10b99ce19e3e7cc6c5df1e1a804b4d326022025168130326508fd15638271c",
+            "verified": true
+          },
+          "stderr.txt": {
+            "state": "matched",
+            "sha256": "6c258df48b6b93bd046347402a6a6cc4445ab5bcbe879a58dc1fc5ffbced2bbb",
+            "verified": true
+          }
+        }
+      },
+      "started_at": "2026-10-04T06:47:05.933573+00:00",
+      "started_sha256": "a9c899a3ce1346c693a42e3d666c3488640c20d8f57adc9c979e200954b26f05",
+      "snapshot_state": "published",
+      "recorded_status": "completed",
+      "infra_kind": null,
+      "usage_missing": false
+    },
+    {
+      "case_id": "m12",
+      "condition": "C_skill",
+      "trial": 1,
+      "model_requested": "gpt-6-astra",
+      "job_digest": "4bf0ac8a3d6816518073",
+      "record_path": "evals/iterations/model-interaction-2026-10-04/results/4bf0ac8a3d6816518073/record.json",
+      "record_sha256": "e59bbd23f63699d7bc8fe1e090e8e02c653cb795e304f91f5077268361b88960",
+      "public_verified": true,
+      "raw": {
+        "availability": "present",
+        "verified": true,
+        "files": {
+          "record.json": {
+            "state": "matched",
+            "sha256": "e59bbd23f63699d7bc8fe1e090e8e02c653cb795e304f91f5077268361b88960",
+            "verified": true
+          },
+          "started.json": {
+            "state": "matched",
+            "sha256": "78d8ee028c133d81b43207c3e46fb251f2e3aead7f068f7cc2c90c15ce9c9ea6",
+            "verified": true
+          },
+          "events.jsonl": {
+            "state": "matched",
+            "sha256": "e9286bdd42a32b88435662ee368a96de638941639e0e7f43711d8c967ea80e3e",
+            "verified": true
+          },
+          "stderr.txt": {
+            "state": "matched",
+            "sha256": "46ee14852dfe77c98e854771b1c105795c7669bf832ddb32fa2dcf15324aaf73",
+            "verified": true
+          }
+        }
+      },
+      "started_at": "2026-10-04T06:48:18.364871+00:00",
+      "started_sha256": "78d8ee028c133d81b43207c3e46fb251f2e3aead7f068f7cc2c90c15ce9c9ea6",
+      "snapshot_state": "published",
+      "recorded_status": "completed",
+      "infra_kind": null,
+      "usage_missing": false
+    },
+    {
+      "case_id": "m12",
+      "condition": "A_tools",
+      "trial": 1,
+      "model_requested": "gpt-6-astra",
+      "job_digest": "bbad6d392ea6d401dda6",
+      "record_path": "evals/iterations/model-interaction-2026-10-04/results/bbad6d392ea6d401dda6/record.json",
+      "record_sha256": "aad8b895aa51de261327a374f05cb7e40da935f65fecad42e8d41d280bd22327",
+      "public_verified": true,
+      "raw": {
+        "availability": "present",
+        "verified": true,
+        "files": {
+          "record.json": {
+            "state": "matched",
+            "sha256": "aad8b895aa51de261327a374f05cb7e40da935f65fecad42e8d41d280bd22327",
+            "verified": true
+          },
+          "started.json": {
+            "state": "matched",
+            "sha256": "ed0018726f55d27cf82661abeb7a77a3e39f140c5fa7e25de48e766cf87d9195",
+            "verified": true
+          },
+          "events.jsonl": {
+            "state": "matched",
+            "sha256": "b3a1a6271183fdb7675dc5f8f608ed8879489dd22ad2f1980d9d75ca8782de97",
+            "verified": true
+          },
+          "stderr.txt": {
+            "state": "matched",
+            "sha256": "da4b699330c5ab0bf43ef0d7b55439ba934247aa72fbab43b4b285c438d637f5",
+            "verified": true
+          }
+        }
+      },
+      "started_at": "2026-10-04T06:49:23.239051+00:00",
+      "started_sha256": "ed0018726f55d27cf82661abeb7a77a3e39f140c5fa7e25de48e766cf87d9195",
+      "snapshot_state": "published",
+      "recorded_status": "completed",
+      "infra_kind": null,
+      "usage_missing": false
+    },
+    {
+      "case_id": "m05",
+      "condition": "A_tools",
+      "trial": 1,
+      "model_requested": "gpt-6-luna",
+      "job_digest": "451e84b1835bda8113e1",
+      "record_path": "evals/iterations/model-interaction-2026-10-04/results/451e84b1835bda8113e1/record.json",
+      "record_sha256": "c1c2a5beb7f9bf99515d1ad9d992634c313cf5a726b57815bc7488753ff8af92",
+      "public_verified": true,
+      "raw": {
+        "availability": "present",
+        "verified": true,
+        "files": {
+          "record.json": {
+            "state": "matched",
+            "sha256": "c1c2a5beb7f9bf99515d1ad9d992634c313cf5a726b57815bc7488753ff8af92",
+            "verified": true
+          },
+          "started.json": {
+            "state": "matched",
+            "sha256": "855c7c4be1ea690a8e4aee7a0b7293f6766e74cb2135111fa1e4729159906aa7",
+            "verified": true
+          },
+          "events.jsonl": {
+            "state": "matched",
+            "sha256": "8f2694d34c93f0c499cf4e4330c21269eb0cbf35147b53d0952667a34ed44855",
+            "verified": true
+          },
+          "stderr.txt": {
+            "state": "matched",
+            "sha256": "06917e4745eb8b502c806d999b5cb3c0b7c496a58d26aeed8aec133951bb8c26",
+            "verified": true
+          }
+        }
+      },
+      "started_at": "2026-10-04T06:49:25.890040+00:00",
+      "started_sha256": "855c7c4be1ea690a8e4aee7a0b7293f6766e74cb2135111fa1e4729159906aa7",
+      "snapshot_state": "published",
+      "recorded_status": "completed",
+      "infra_kind": null,
+      "usage_missing": false
+    },
+    {
+      "case_id": "m05",
+      "condition": "B_checklist",
+      "trial": 1,
+      "model_requested": "gpt-6-luna",
+      "job_digest": "99b448f01c5e43137b6f",
+      "record_path": "evals/iterations/model-interaction-2026-10-04/results/99b448f01c5e43137b6f/record.json",
+      "record_sha256": "e5e6d2f4c5d9415e6d07e541e25848232338dcc9783e400f19d41e545c16f9bb",
+      "public_verified": true,
+      "raw": {
+        "availability": "present",
+        "verified": true,
+        "files": {
+          "record.json": {
+            "state": "matched",
+            "sha256": "e5e6d2f4c5d9415e6d07e541e25848232338dcc9783e400f19d41e545c16f9bb",
+            "verified": true
+          },
+          "started.json": {
+            "state": "matched",
+            "sha256": "43bd483cc11ba5d5c0161a98b5679ae4a26e74207d5caeb9591355af211cbe10",
+            "verified": true
+          },
+          "events.jsonl": {
+            "state": "matched",
+            "sha256": "bbe65b7bdbd02c8b33e3ee3781cfcca3c47c82cdc240afb68f61b5f4436269dc",
+            "verified": true
+          },
+          "stderr.txt": {
+            "state": "matched",
+            "sha256": "b0980b2a856b41feda7a3c908c8b761ae32056a1625970f38717df0e7321d536",
+            "verified": true
+          }
+        }
+      },
+      "started_at": "2026-10-04T06:50:43.035654+00:00",
+      "started_sha256": "43bd483cc11ba5d5c0161a98b5679ae4a26e74207d5caeb9591355af211cbe10",
+      "snapshot_state": "published",
+      "recorded_status": "completed",
+      "infra_kind": null,
+      "usage_missing": false
+    },
+    {
+      "case_id": "m05",
+      "condition": "A_tools",
+      "trial": 1,
+      "model_requested": "gpt-6-astra",
+      "job_digest": "ef796ccbebb1ae348ee0",
+      "record_path": "evals/iterations/model-interaction-2026-10-04/results/ef796ccbebb1ae348ee0/record.json",
+      "record_sha256": "b1ca59cd2b2f6f7abcb85a61d9c0f0c07e293962fe5de1972356cc76c7c600e7",
+      "public_verified": true,
+      "raw": {
+        "availability": "present",
+        "verified": true,
+        "files": {
+          "record.json": {
+            "state": "matched",
+            "sha256": "b1ca59cd2b2f6f7abcb85a61d9c0f0c07e293962fe5de1972356cc76c7c600e7",
+            "verified": true
+          },
+          "started.json": {
+            "state": "matched",
+            "sha256": "073d0fe5b312311cfce94ceeaa1dad6fe39ba36856a3feeb45c7c5d6ed776c57",
+            "verified": true
+          },
+          "events.jsonl": {
+            "state": "matched",
+            "sha256": "8eca0761d6c75500c7656ca89658a4bbbfff5b234a2b1022788fcb0be96a9aed",
+            "verified": true
+          },
+          "stderr.txt": {
+            "state": "matched",
+            "sha256": "68edae199b39148658b117cf74532694c4425a6224e19fef432b0dd336ee8405",
+            "verified": true
+          }
+        }
+      },
+      "started_at": "2026-10-04T06:51:20.675079+00:00",
+      "started_sha256": "073d0fe5b312311cfce94ceeaa1dad6fe39ba36856a3feeb45c7c5d6ed776c57",
+      "snapshot_state": "published",
+      "recorded_status": "completed",
+      "infra_kind": null,
+      "usage_missing": false
+    },
+    {
+      "case_id": "m05",
+      "condition": "C_skill",
+      "trial": 1,
+      "model_requested": "gpt-6-luna",
+      "job_digest": "76a9eaffb9224d0eb077",
+      "record_path": "evals/iterations/model-interaction-2026-10-04/results/76a9eaffb9224d0eb077/record.json",
+      "record_sha256": "d5d2014ca3458540eb472010703bab52bea7e812df1860480f244732a84873d1",
+      "public_verified": true,
+      "raw": {
+        "availability": "present",
+        "verified": true,
+        "files": {
+          "record.json": {
+            "state": "matched",
+            "sha256": "d5d2014ca3458540eb472010703bab52bea7e812df1860480f244732a84873d1",
+            "verified": true
+          },
+          "started.json": {
+            "state": "matched",
+            "sha256": "3c0376b8d20fce68591ffba396c38244eddc6ff785e0a2940de5338b988cba61",
+            "verified": true
+          },
+          "events.jsonl": {
+            "state": "matched",
+            "sha256": "d2cbe9b78b381a298ed1b9de4c0bcfa874ca174c9cfc5b5d94c9c87c3516b179",
+            "verified": true
+          },
+          "stderr.txt": {
+            "state": "matched",
+            "sha256": "96c8c223e7985a29a9759c0bf38486d6e9ce38f0d15b7ffbce81858ef5bb7719",
+            "verified": true
+          }
+        }
+      },
+      "started_at": "2026-10-04T06:52:14.924195+00:00",
+      "started_sha256": "3c0376b8d20fce68591ffba396c38244eddc6ff785e0a2940de5338b988cba61",
+      "snapshot_state": "published",
+      "recorded_status": "completed",
+      "infra_kind": null,
+      "usage_missing": false
+    },
+    {
+      "case_id": "m05",
+      "condition": "B_checklist",
+      "trial": 1,
+      "model_requested": "gpt-6-astra",
+      "job_digest": "48d3332900d60bee2a50",
+      "record_path": "evals/iterations/model-interaction-2026-10-04/results/48d3332900d60bee2a50/record.json",
+      "record_sha256": "44e87e355f3d4b91140bd2a89b6652248efce81c1769e13299e259e8709393f8",
+      "public_verified": true,
+      "raw": {
+        "availability": "present",
+        "verified": true,
+        "files": {
+          "record.json": {
+            "state": "matched",
+            "sha256": "44e87e355f3d4b91140bd2a89b6652248efce81c1769e13299e259e8709393f8",
+            "verified": true
+          },
+          "started.json": {
+            "state": "matched",
+            "sha256": "3a47e8445e3b93b182c74be0144cedc1ab260978550329abc1c3977828aa96f1",
+            "verified": true
+          },
+          "events.jsonl": {
+            "state": "matched",
+            "sha256": "7ede409e539c5a0c9beaac383f6ee3f1c60646231adca2796023b072ee419e93",
+            "verified": true
+          },
+          "stderr.txt": {
+            "state": "matched",
+            "sha256": "3ddd83786a4a7d51cdccc15eb893180cd06008c91ebe4560db4b02eaa677b10e",
+            "verified": true
+          }
+        }
+      },
+      "started_at": "2026-10-04T06:52:45.909684+00:00",
+      "started_sha256": "3a47e8445e3b93b182c74be0144cedc1ab260978550329abc1c3977828aa96f1",
+      "snapshot_state": "published",
+      "recorded_status": "completed",
+      "infra_kind": null,
+      "usage_missing": false
+    },
+    {
+      "case_id": "m05",
+      "condition": "C_skill",
+      "trial": 1,
+      "model_requested": "gpt-6-astra",
+      "job_digest": "7ece3558faa9fb6f0c05",
+      "record_path": "evals/iterations/model-interaction-2026-10-04/results/7ece3558faa9fb6f0c05/record.json",
+      "record_sha256": "d05baaa098f9f55e2ee2731158cfc46cc7fe66122a787215b06d8bd7586de16a",
+      "public_verified": true,
+      "raw": {
+        "availability": "present",
+        "verified": true,
+        "files": {
+          "record.json": {
+            "state": "matched",
+            "sha256": "d05baaa098f9f55e2ee2731158cfc46cc7fe66122a787215b06d8bd7586de16a",
+            "verified": true
+          },
+          "started.json": {
+            "state": "matched",
+            "sha256": "e383cd48c560fd660937ab9e0fe7edb8ff1b19fa98f457ea2a0951053b0969de",
+            "verified": true
+          },
+          "events.jsonl": {
+            "state": "matched",
+            "sha256": "17baf98d01fd915463f70c7f1342756303b4d9af4a3dfccb5eef9267c30711c3",
+            "verified": true
+          },
+          "stderr.txt": {
+            "state": "matched",
+            "sha256": "09372142a0cfbc9c0db9bf5b14f5773c4f390435cddbc627e5d15419403a6de9",
+            "verified": true
+          }
+        }
+      },
+      "started_at": "2026-10-04T06:53:49.920276+00:00",
+      "started_sha256": "e383cd48c560fd660937ab9e0fe7edb8ff1b19fa98f457ea2a0951053b0969de",
+      "snapshot_state": "published",
+      "recorded_status": "completed",
+      "infra_kind": null,
+      "usage_missing": false
+    },
+    {
+      "case_id": "m01",
+      "condition": "A_tools",
+      "trial": 1,
+      "model_requested": "gpt-6-astra",
+      "job_digest": "f4e02ac31dd8396bcc69",
+      "record_path": "evals/iterations/model-interaction-2026-10-04/results/f4e02ac31dd8396bcc69/record.json",
+      "record_sha256": "6ec46b8ba64f3bba30bc22e60ceef07195208272d870276d0c1822a0d3e6484f",
+      "public_verified": true,
+      "raw": {
+        "availability": "present",
+        "verified": true,
+        "files": {
+          "record.json": {
+            "state": "matched",
+            "sha256": "6ec46b8ba64f3bba30bc22e60ceef07195208272d870276d0c1822a0d3e6484f",
+            "verified": true
+          },
+          "started.json": {
+            "state": "matched",
+            "sha256": "89433840073a2e688fdbf93d582f23d59a0335fbaa5a9caf868b78f1349708f4",
+            "verified": true
+          },
+          "events.jsonl": {
+            "state": "matched",
+            "sha256": "b71ae0fbf1107411062f24761a096a1dbcfc570f41ddbd128f77bb5cbc329e9c",
+            "verified": true
+          },
+          "stderr.txt": {
+            "state": "matched",
+            "sha256": "fdbc13de5c5d6a88abb48dc7559cfb756f53619b4f25f014d7838e1c7148451e",
+            "verified": true
+          }
+        }
+      },
+      "started_at": "2026-10-04T06:54:43.752633+00:00",
+      "started_sha256": "89433840073a2e688fdbf93d582f23d59a0335fbaa5a9caf868b78f1349708f4",
+      "snapshot_state": "published",
+      "recorded_status": "infrastructure_failure",
+      "infra_kind": "auth",
+      "usage_missing": false
+    },
+    {
+      "case_id": "m01",
+      "condition": "B_checklist",
+      "trial": 1,
+      "model_requested": "gpt-6-astra",
+      "job_digest": "0c6a05d2459ab05ff01a",
+      "record_path": "evals/iterations/model-interaction-2026-10-04/results/0c6a05d2459ab05ff01a/record.json",
+      "record_sha256": "20f73369d340a8fb6937418199ddb265e39eff674685a1de22113efb44acde7a",
+      "public_verified": true,
+      "raw": {
+        "availability": "present",
+        "verified": true,
+        "files": {
+          "record.json": {
+            "state": "matched",
+            "sha256": "20f73369d340a8fb6937418199ddb265e39eff674685a1de22113efb44acde7a",
+            "verified": true
+          },
+          "started.json": {
+            "state": "matched",
+            "sha256": "c0b972d74d3254890a891359fc7885e6b039a011208cf2a3a2061001139b468c",
+            "verified": true
+          },
+          "events.jsonl": {
+            "state": "matched",
+            "sha256": "fa5f362b63aaa1d8dccf5c75867389a67b3b8ae97aff6f910c1789754c859428",
+            "verified": true
+          },
+          "stderr.txt": {
+            "state": "matched",
+            "sha256": "2b832a5e1086a5c532382ed40070c2f98d14dda3700c4c74dedafc46d857cea9",
+            "verified": true
+          }
+        }
+      },
+      "started_at": "2026-10-04T06:55:49.995188+00:00",
+      "started_sha256": "c0b972d74d3254890a891359fc7885e6b039a011208cf2a3a2061001139b468c",
+      "snapshot_state": "published",
+      "recorded_status": "completed",
+      "infra_kind": null,
+      "usage_missing": false
+    },
+    {
+      "case_id": "m01",
+      "condition": "A_tools",
+      "trial": 1,
+      "model_requested": "gpt-6-luna",
+      "job_digest": "4e845bde96c42b0731a5",
+      "record_path": "evals/iterations/model-interaction-2026-10-04/results/4e845bde96c42b0731a5/record.json",
+      "record_sha256": "2706d1202647d90c2095c3bc859b92a0ebc53cd5245ee762716ffa3c0bb0ccb9",
+      "public_verified": true,
+      "raw": {
+        "availability": "present",
+        "verified": true,
+        "files": {
+          "record.json": {
+            "state": "matched",
+            "sha256": "2706d1202647d90c2095c3bc859b92a0ebc53cd5245ee762716ffa3c0bb0ccb9",
+            "verified": true
+          },
+          "started.json": {
+            "state": "matched",
+            "sha256": "498ba207665c212042db06c6e84d0a6bbc4b11ee19e6bcb583dc8a403c4d0496",
+            "verified": true
+          },
+          "events.jsonl": {
+            "state": "matched",
+            "sha256": "4e4956034a4daac2ec379ff072b4e56ae49346590ee198739e22cdce57d66275",
+            "verified": true
+          },
+          "stderr.txt": {
+            "state": "matched",
+            "sha256": "8ba7d4b80f678c68f41a621e944eadb0d182c8619bd81f42f31af7bcd9502227",
+            "verified": true
+          }
+        }
+      },
+      "started_at": "2026-10-04T06:57:12.647181+00:00",
+      "started_sha256": "498ba207665c212042db06c6e84d0a6bbc4b11ee19e6bcb583dc8a403c4d0496",
+      "snapshot_state": "published",
+      "recorded_status": "completed",
+      "infra_kind": null,
+      "usage_missing": false
+    },
+    {
+      "case_id": "m01",
+      "condition": "C_skill",
+      "trial": 1,
+      "model_requested": "gpt-6-astra",
+      "job_digest": "71f64b55dc44a4222afd",
+      "record_path": "evals/iterations/model-interaction-2026-10-04/results/71f64b55dc44a4222afd/record.json",
+      "record_sha256": "b097fb8ef5efd4c326c3758a0a96fc1bca2bf6f65733a9075a0d51014d2ebbfd",
+      "public_verified": true,
+      "raw": {
+        "availability": "present",
+        "verified": true,
+        "files": {
+          "record.json": {
+            "state": "matched",
+            "sha256": "b097fb8ef5efd4c326c3758a0a96fc1bca2bf6f65733a9075a0d51014d2ebbfd",
+            "verified": true
+          },
+          "started.json": {
+            "state": "matched",
+            "sha256": "59f9dd8e798a0320ace32a92138df35e9c88e960e7bc673310840351bc1d71d4",
+            "verified": true
+          },
+          "events.jsonl": {
+            "state": "matched",
+            "sha256": "c29e49fb6cdbf194dc0f3d3484c7790d7f802f54d1e7c6c22d7f226f74a4b67a",
+            "verified": true
+          },
+          "stderr.txt": {
+            "state": "matched",
+            "sha256": "c6788e759bd3edd4f5429a9b82c6a017a175db2fc2f771d126da0392b808b217",
+            "verified": true
+          }
+        }
+      },
+      "started_at": "2026-10-04T07:00:07.290886+00:00",
+      "started_sha256": "59f9dd8e798a0320ace32a92138df35e9c88e960e7bc673310840351bc1d71d4",
+      "snapshot_state": "published",
+      "recorded_status": "completed",
+      "infra_kind": null,
+      "usage_missing": false
+    },
+    {
+      "case_id": "m01",
+      "condition": "C_skill",
+      "trial": 1,
+      "model_requested": "gpt-6-luna",
+      "job_digest": "cfae7e89225d446b1ab7",
+      "record_path": "evals/iterations/model-interaction-2026-10-04/results/cfae7e89225d446b1ab7/record.json",
+      "record_sha256": null,
+      "public_verified": false,
+      "raw": {
+        "availability": "absent",
+        "verified": false
+      },
+      "snapshot_state": "pending"
+    },
+    {
+      "case_id": "m01",
+      "condition": "B_checklist",
+      "trial": 1,
+      "model_requested": "gpt-6-luna",
+      "job_digest": "0e5147c79fa6a3072a0b",
+      "record_path": "evals/iterations/model-interaction-2026-10-04/results/0e5147c79fa6a3072a0b/record.json",
+      "record_sha256": null,
+      "public_verified": false,
+      "raw": {
+        "availability": "absent",
+        "verified": false
+      },
+      "snapshot_state": "pending"
+    },
+    {
+      "case_id": "m06",
+      "condition": "C_skill",
+      "trial": 1,
+      "model_requested": "gpt-6-luna",
+      "job_digest": "365ddcd3e79e860391cf",
+      "record_path": "evals/iterations/model-interaction-2026-10-04/results/365ddcd3e79e860391cf/record.json",
+      "record_sha256": null,
+      "public_verified": false,
+      "raw": {
+        "availability": "absent",
+        "verified": false
+      },
+      "snapshot_state": "pending"
+    },
+    {
+      "case_id": "m06",
+      "condition": "C_skill",
+      "trial": 1,
+      "model_requested": "gpt-6-astra",
+      "job_digest": "4e851a2959799e2a5495",
+      "record_path": "evals/iterations/model-interaction-2026-10-04/results/4e851a2959799e2a5495/record.json",
+      "record_sha256": null,
+      "public_verified": false,
+      "raw": {
+        "availability": "absent",
+        "verified": false
+      },
+      "snapshot_state": "pending"
+    },
+    {
+      "case_id": "m06",
+      "condition": "A_tools",
+      "trial": 1,
+      "model_requested": "gpt-6-astra",
+      "job_digest": "68ab8ef3ef501a635cf7",
+      "record_path": "evals/iterations/model-interaction-2026-10-04/results/68ab8ef3ef501a635cf7/record.json",
+      "record_sha256": null,
+      "public_verified": false,
+      "raw": {
+        "availability": "absent",
+        "verified": false
+      },
+      "snapshot_state": "pending"
+    },
+    {
+      "case_id": "m06",
+      "condition": "A_tools",
+      "trial": 1,
+      "model_requested": "gpt-6-luna",
+      "job_digest": "2bc90af66585a7d40f3a",
+      "record_path": "evals/iterations/model-interaction-2026-10-04/results/2bc90af66585a7d40f3a/record.json",
+      "record_sha256": null,
+      "public_verified": false,
+      "raw": {
+        "availability": "absent",
+        "verified": false
+      },
+      "snapshot_state": "pending"
+    },
+    {
+      "case_id": "m06",
+      "condition": "B_checklist",
+      "trial": 1,
+      "model_requested": "gpt-6-luna",
+      "job_digest": "05c4a7c13110b435dd29",
+      "record_path": "evals/iterations/model-interaction-2026-10-04/results/05c4a7c13110b435dd29/record.json",
+      "record_sha256": null,
+      "public_verified": false,
+      "raw": {
+        "availability": "absent",
+        "verified": false
+      },
+      "snapshot_state": "pending"
+    },
+    {
+      "case_id": "m06",
+      "condition": "B_checklist",
+      "trial": 1,
+      "model_requested": "gpt-6-astra",
+      "job_digest": "8370619ff3361ab89df4",
+      "record_path": "evals/iterations/model-interaction-2026-10-04/results/8370619ff3361ab89df4/record.json",
+      "record_sha256": null,
+      "public_verified": false,
+      "raw": {
+        "availability": "absent",
+        "verified": false
+      },
+      "snapshot_state": "pending"
+    },
+    {
+      "case_id": "m04",
+      "condition": "B_checklist",
+      "trial": 2,
+      "model_requested": "gpt-6-astra",
+      "job_digest": "e9f073af4b5e46eaabf7",
+      "record_path": "evals/iterations/model-interaction-2026-10-04/results/e9f073af4b5e46eaabf7/record.json",
+      "record_sha256": null,
+      "public_verified": false,
+      "raw": {
+        "availability": "absent",
+        "verified": false
+      },
+      "snapshot_state": "pending"
+    },
+    {
+      "case_id": "m04",
+      "condition": "A_tools",
+      "trial": 2,
+      "model_requested": "gpt-6-luna",
+      "job_digest": "fa192a9e6ba182e6e344",
+      "record_path": "evals/iterations/model-interaction-2026-10-04/results/fa192a9e6ba182e6e344/record.json",
+      "record_sha256": null,
+      "public_verified": false,
+      "raw": {
+        "availability": "absent",
+        "verified": false
+      },
+      "snapshot_state": "pending"
+    },
+    {
+      "case_id": "m04",
+      "condition": "A_tools",
+      "trial": 2,
+      "model_requested": "gpt-6-astra",
+      "job_digest": "51c18360f53c3bb2cc7a",
+      "record_path": "evals/iterations/model-interaction-2026-10-04/results/51c18360f53c3bb2cc7a/record.json",
+      "record_sha256": null,
+      "public_verified": false,
+      "raw": {
+        "availability": "absent",
+        "verified": false
+      },
+      "snapshot_state": "pending"
+    },
+    {
+      "case_id": "m04",
+      "condition": "B_checklist",
+      "trial": 2,
+      "model_requested": "gpt-6-luna",
+      "job_digest": "46bfd77d2185660b144e",
+      "record_path": "evals/iterations/model-interaction-2026-10-04/results/46bfd77d2185660b144e/record.json",
+      "record_sha256": null,
+      "public_verified": false,
+      "raw": {
+        "availability": "absent",
+        "verified": false
+      },
+      "snapshot_state": "pending"
+    },
+    {
+      "case_id": "m04",
+      "condition": "C_skill",
+      "trial": 2,
+      "model_requested": "gpt-6-astra",
+      "job_digest": "fdb0ff931744432c3199",
+      "record_path": "evals/iterations/model-interaction-2026-10-04/results/fdb0ff931744432c3199/record.json",
+      "record_sha256": null,
+      "public_verified": false,
+      "raw": {
+        "availability": "absent",
+        "verified": false
+      },
+      "snapshot_state": "pending"
+    },
+    {
+      "case_id": "m04",
+      "condition": "C_skill",
+      "trial": 2,
+      "model_requested": "gpt-6-luna",
+      "job_digest": "34fbb9c18fa871ee1295",
+      "record_path": "evals/iterations/model-interaction-2026-10-04/results/34fbb9c18fa871ee1295/record.json",
+      "record_sha256": null,
+      "public_verified": false,
+      "raw": {
+        "availability": "absent",
+        "verified": false
+      },
+      "snapshot_state": "pending"
+    },
+    {
+      "case_id": "m01",
+      "condition": "C_skill",
+      "trial": 2,
+      "model_requested": "gpt-6-astra",
+      "job_digest": "c57e07b0842c6e428045",
+      "record_path": "evals/iterations/model-interaction-2026-10-04/results/c57e07b0842c6e428045/record.json",
+      "record_sha256": null,
+      "public_verified": false,
+      "raw": {
+        "availability": "absent",
+        "verified": false
+      },
+      "snapshot_state": "pending"
+    },
+    {
+      "case_id": "m01",
+      "condition": "B_checklist",
+      "trial": 2,
+      "model_requested": "gpt-6-astra",
+      "job_digest": "aedc07e7fa064525077b",
+      "record_path": "evals/iterations/model-interaction-2026-10-04/results/aedc07e7fa064525077b/record.json",
+      "record_sha256": null,
+      "public_verified": false,
+      "raw": {
+        "availability": "absent",
+        "verified": false
+      },
+      "snapshot_state": "pending"
+    },
+    {
+      "case_id": "m01",
+      "condition": "A_tools",
+      "trial": 2,
+      "model_requested": "gpt-6-astra",
+      "job_digest": "b02d4df6130da60f8945",
+      "record_path": "evals/iterations/model-interaction-2026-10-04/results/b02d4df6130da60f8945/record.json",
+      "record_sha256": null,
+      "public_verified": false,
+      "raw": {
+        "availability": "absent",
+        "verified": false
+      },
+      "snapshot_state": "pending"
+    },
+    {
+      "case_id": "m01",
+      "condition": "C_skill",
+      "trial": 2,
+      "model_requested": "gpt-6-luna",
+      "job_digest": "766a8289c6f40734329d",
+      "record_path": "evals/iterations/model-interaction-2026-10-04/results/766a8289c6f40734329d/record.json",
+      "record_sha256": null,
+      "public_verified": false,
+      "raw": {
+        "availability": "absent",
+        "verified": false
+      },
+      "snapshot_state": "pending"
+    },
+    {
+      "case_id": "m01",
+      "condition": "A_tools",
+      "trial": 2,
+      "model_requested": "gpt-6-luna",
+      "job_digest": "4ac4dbebaa9c2a2ab074",
+      "record_path": "evals/iterations/model-interaction-2026-10-04/results/4ac4dbebaa9c2a2ab074/record.json",
+      "record_sha256": null,
+      "public_verified": false,
+      "raw": {
+        "availability": "absent",
+        "verified": false
+      },
+      "snapshot_state": "pending"
+    },
+    {
+      "case_id": "m01",
+      "condition": "B_checklist",
+      "trial": 2,
+      "model_requested": "gpt-6-luna",
+      "job_digest": "9236552afce80503cff7",
+      "record_path": "evals/iterations/model-interaction-2026-10-04/results/9236552afce80503cff7/record.json",
+      "record_sha256": null,
+      "public_verified": false,
+      "raw": {
+        "availability": "absent",
+        "verified": false
+      },
+      "snapshot_state": "pending"
+    },
+    {
+      "case_id": "m07",
+      "condition": "A_tools",
+      "trial": 2,
+      "model_requested": "gpt-6-astra",
+      "job_digest": "b6c9563dd648a9ce91b1",
+      "record_path": "evals/iterations/model-interaction-2026-10-04/results/b6c9563dd648a9ce91b1/record.json",
+      "record_sha256": null,
+      "public_verified": false,
+      "raw": {
+        "availability": "absent",
+        "verified": false
+      },
+      "snapshot_state": "pending"
+    },
+    {
+      "case_id": "m07",
+      "condition": "B_checklist",
+      "trial": 2,
+      "model_requested": "gpt-6-luna",
+      "job_digest": "d8d2364d55d04362792e",
+      "record_path": "evals/iterations/model-interaction-2026-10-04/results/d8d2364d55d04362792e/record.json",
+      "record_sha256": null,
+      "public_verified": false,
+      "raw": {
+        "availability": "absent",
+        "verified": false
+      },
+      "snapshot_state": "pending"
+    },
+    {
+      "case_id": "m07",
+      "condition": "B_checklist",
+      "trial": 2,
+      "model_requested": "gpt-6-astra",
+      "job_digest": "7f9cb971d671cefc63f3",
+      "record_path": "evals/iterations/model-interaction-2026-10-04/results/7f9cb971d671cefc63f3/record.json",
+      "record_sha256": null,
+      "public_verified": false,
+      "raw": {
+        "availability": "absent",
+        "verified": false
+      },
+      "snapshot_state": "pending"
+    },
+    {
+      "case_id": "m07",
+      "condition": "A_tools",
+      "trial": 2,
+      "model_requested": "gpt-6-luna",
+      "job_digest": "77fb9baf2dcc85300d20",
+      "record_path": "evals/iterations/model-interaction-2026-10-04/results/77fb9baf2dcc85300d20/record.json",
+      "record_sha256": null,
+      "public_verified": false,
+      "raw": {
+        "availability": "absent",
+        "verified": false
+      },
+      "snapshot_state": "pending"
+    },
+    {
+      "case_id": "m07",
+      "condition": "C_skill",
+      "trial": 2,
+      "model_requested": "gpt-6-luna",
+      "job_digest": "4caf30dff23e01ca15ff",
+      "record_path": "evals/iterations/model-interaction-2026-10-04/results/4caf30dff23e01ca15ff/record.json",
+      "record_sha256": null,
+      "public_verified": false,
+      "raw": {
+        "availability": "absent",
+        "verified": false
+      },
+      "snapshot_state": "pending"
+    },
+    {
+      "case_id": "m07",
+      "condition": "C_skill",
+      "trial": 2,
+      "model_requested": "gpt-6-astra",
+      "job_digest": "dd8bb864e79e7e005e75",
+      "record_path": "evals/iterations/model-interaction-2026-10-04/results/dd8bb864e79e7e005e75/record.json",
+      "record_sha256": null,
+      "public_verified": false,
+      "raw": {
+        "availability": "absent",
+        "verified": false
+      },
+      "snapshot_state": "pending"
+    },
+    {
+      "case_id": "m03",
+      "condition": "C_skill",
+      "trial": 2,
+      "model_requested": "gpt-6-luna",
+      "job_digest": "17cdd364a4ddb60b0389",
+      "record_path": "evals/iterations/model-interaction-2026-10-04/results/17cdd364a4ddb60b0389/record.json",
+      "record_sha256": null,
+      "public_verified": false,
+      "raw": {
+        "availability": "absent",
+        "verified": false
+      },
+      "snapshot_state": "pending"
+    },
+    {
+      "case_id": "m03",
+      "condition": "B_checklist",
+      "trial": 2,
+      "model_requested": "gpt-6-luna",
+      "job_digest": "a4e8ea49a6a285885cd1",
+      "record_path": "evals/iterations/model-interaction-2026-10-04/results/a4e8ea49a6a285885cd1/record.json",
+      "record_sha256": null,
+      "public_verified": false,
+      "raw": {
+        "availability": "absent",
+        "verified": false
+      },
+      "snapshot_state": "pending"
+    },
+    {
+      "case_id": "m03",
+      "condition": "C_skill",
+      "trial": 2,
+      "model_requested": "gpt-6-astra",
+      "job_digest": "4641b995bef95254aec1",
+      "record_path": "evals/iterations/model-interaction-2026-10-04/results/4641b995bef95254aec1/record.json",
+      "record_sha256": null,
+      "public_verified": false,
+      "raw": {
+        "availability": "absent",
+        "verified": false
+      },
+      "snapshot_state": "pending"
+    },
+    {
+      "case_id": "m03",
+      "condition": "A_tools",
+      "trial": 2,
+      "model_requested": "gpt-6-astra",
+      "job_digest": "4021988bc3f7560558d6",
+      "record_path": "evals/iterations/model-interaction-2026-10-04/results/4021988bc3f7560558d6/record.json",
+      "record_sha256": null,
+      "public_verified": false,
+      "raw": {
+        "availability": "absent",
+        "verified": false
+      },
+      "snapshot_state": "pending"
+    },
+    {
+      "case_id": "m03",
+      "condition": "B_checklist",
+      "trial": 2,
+      "model_requested": "gpt-6-astra",
+      "job_digest": "ec851265776cfde85b26",
+      "record_path": "evals/iterations/model-interaction-2026-10-04/results/ec851265776cfde85b26/record.json",
+      "record_sha256": null,
+      "public_verified": false,
+      "raw": {
+        "availability": "absent",
+        "verified": false
+      },
+      "snapshot_state": "pending"
+    },
+    {
+      "case_id": "m03",
+      "condition": "A_tools",
+      "trial": 2,
+      "model_requested": "gpt-6-luna",
+      "job_digest": "ae638378a6f129fb2455",
+      "record_path": "evals/iterations/model-interaction-2026-10-04/results/ae638378a6f129fb2455/record.json",
+      "record_sha256": null,
+      "public_verified": false,
+      "raw": {
+        "availability": "absent",
+        "verified": false
+      },
+      "snapshot_state": "pending"
+    },
+    {
+      "case_id": "m02",
+      "condition": "C_skill",
+      "trial": 2,
+      "model_requested": "gpt-6-astra",
+      "job_digest": "3043b452849b16b41a8f",
+      "record_path": "evals/iterations/model-interaction-2026-10-04/results/3043b452849b16b41a8f/record.json",
+      "record_sha256": null,
+      "public_verified": false,
+      "raw": {
+        "availability": "absent",
+        "verified": false
+      },
+      "snapshot_state": "pending"
+    },
+    {
+      "case_id": "m02",
+      "condition": "B_checklist",
+      "trial": 2,
+      "model_requested": "gpt-6-astra",
+      "job_digest": "493423c19fad2004d32f",
+      "record_path": "evals/iterations/model-interaction-2026-10-04/results/493423c19fad2004d32f/record.json",
+      "record_sha256": null,
+      "public_verified": false,
+      "raw": {
+        "availability": "absent",
+        "verified": false
+      },
+      "snapshot_state": "pending"
+    },
+    {
+      "case_id": "m02",
+      "condition": "C_skill",
+      "trial": 2,
+      "model_requested": "gpt-6-luna",
+      "job_digest": "c1d6c257fbc912c1e644",
+      "record_path": "evals/iterations/model-interaction-2026-10-04/results/c1d6c257fbc912c1e644/record.json",
+      "record_sha256": null,
+      "public_verified": false,
+      "raw": {
+        "availability": "absent",
+        "verified": false
+      },
+      "snapshot_state": "pending"
+    },
+    {
+      "case_id": "m02",
+      "condition": "B_checklist",
+      "trial": 2,
+      "model_requested": "gpt-6-luna",
+      "job_digest": "b8e48edd484b82cdd26c",
+      "record_path": "evals/iterations/model-interaction-2026-10-04/results/b8e48edd484b82cdd26c/record.json",
+      "record_sha256": null,
+      "public_verified": false,
+      "raw": {
+        "availability": "absent",
+        "verified": false
+      },
+      "snapshot_state": "pending"
+    },
+    {
+      "case_id": "m02",
+      "condition": "A_tools",
+      "trial": 2,
+      "model_requested": "gpt-6-astra",
+      "job_digest": "35a17a78c5df770811f1",
+      "record_path": "evals/iterations/model-interaction-2026-10-04/results/35a17a78c5df770811f1/record.json",
+      "record_sha256": null,
+      "public_verified": false,
+      "raw": {
+        "availability": "absent",
+        "verified": false
+      },
+      "snapshot_state": "pending"
+    },
+    {
+      "case_id": "m02",
+      "condition": "A_tools",
+      "trial": 2,
+      "model_requested": "gpt-6-luna",
+      "job_digest": "df320beaae39d32b1bf1",
+      "record_path": "evals/iterations/model-interaction-2026-10-04/results/df320beaae39d32b1bf1/record.json",
+      "record_sha256": null,
+      "public_verified": false,
+      "raw": {
+        "availability": "absent",
+        "verified": false
+      },
+      "snapshot_state": "pending"
+    },
+    {
+      "case_id": "m08",
+      "condition": "B_checklist",
+      "trial": 2,
+      "model_requested": "gpt-6-luna",
+      "job_digest": "f76a478ca72fa7e33bd7",
+      "record_path": "evals/iterations/model-interaction-2026-10-04/results/f76a478ca72fa7e33bd7/record.json",
+      "record_sha256": null,
+      "public_verified": false,
+      "raw": {
+        "availability": "absent",
+        "verified": false
+      },
+      "snapshot_state": "pending"
+    },
+    {
+      "case_id": "m08",
+      "condition": "A_tools",
+      "trial": 2,
+      "model_requested": "gpt-6-luna",
+      "job_digest": "fe584a7645335bc3685d",
+      "record_path": "evals/iterations/model-interaction-2026-10-04/results/fe584a7645335bc3685d/record.json",
+      "record_sha256": null,
+      "public_verified": false,
+      "raw": {
+        "availability": "absent",
+        "verified": false
+      },
+      "snapshot_state": "pending"
+    },
+    {
+      "case_id": "m08",
+      "condition": "C_skill",
+      "trial": 2,
+      "model_requested": "gpt-6-astra",
+      "job_digest": "e91f2644ceed6bf7d5cf",
+      "record_path": "evals/iterations/model-interaction-2026-10-04/results/e91f2644ceed6bf7d5cf/record.json",
+      "record_sha256": null,
+      "public_verified": false,
+      "raw": {
+        "availability": "absent",
+        "verified": false
+      },
+      "snapshot_state": "pending"
+    },
+    {
+      "case_id": "m08",
+      "condition": "C_skill",
+      "trial": 2,
+      "model_requested": "gpt-6-luna",
+      "job_digest": "bfa6b621768add0dd8e8",
+      "record_path": "evals/iterations/model-interaction-2026-10-04/results/bfa6b621768add0dd8e8/record.json",
+      "record_sha256": null,
+      "public_verified": false,
+      "raw": {
+        "availability": "absent",
+        "verified": false
+      },
+      "snapshot_state": "pending"
+    },
+    {
+      "case_id": "m08",
+      "condition": "B_checklist",
+      "trial": 2,
+      "model_requested": "gpt-6-astra",
+      "job_digest": "27050dd3f3a56bf2f690",
+      "record_path": "evals/iterations/model-interaction-2026-10-04/results/27050dd3f3a56bf2f690/record.json",
+      "record_sha256": null,
+      "public_verified": false,
+      "raw": {
+        "availability": "absent",
+        "verified": false
+      },
+      "snapshot_state": "pending"
+    },
+    {
+      "case_id": "m08",
+      "condition": "A_tools",
+      "trial": 2,
+      "model_requested": "gpt-6-astra",
+      "job_digest": "c4adb2f05ec9b75fab1e",
+      "record_path": "evals/iterations/model-interaction-2026-10-04/results/c4adb2f05ec9b75fab1e/record.json",
+      "record_sha256": null,
+      "public_verified": false,
+      "raw": {
+        "availability": "absent",
+        "verified": false
+      },
+      "snapshot_state": "pending"
+    },
+    {
+      "case_id": "m10",
+      "condition": "A_tools",
+      "trial": 2,
+      "model_requested": "gpt-6-astra",
+      "job_digest": "c2e30ffe3982c8124b9d",
+      "record_path": "evals/iterations/model-interaction-2026-10-04/results/c2e30ffe3982c8124b9d/record.json",
+      "record_sha256": null,
+      "public_verified": false,
+      "raw": {
+        "availability": "absent",
+        "verified": false
+      },
+      "snapshot_state": "pending"
+    },
+    {
+      "case_id": "m10",
+      "condition": "B_checklist",
+      "trial": 2,
+      "model_requested": "gpt-6-astra",
+      "job_digest": "1d7b3370c40734ff4afe",
+      "record_path": "evals/iterations/model-interaction-2026-10-04/results/1d7b3370c40734ff4afe/record.json",
+      "record_sha256": null,
+      "public_verified": false,
+      "raw": {
+        "availability": "absent",
+        "verified": false
+      },
+      "snapshot_state": "pending"
+    },
+    {
+      "case_id": "m10",
+      "condition": "A_tools",
+      "trial": 2,
+      "model_requested": "gpt-6-luna",
+      "job_digest": "0f5a9851cabfec43edca",
+      "record_path": "evals/iterations/model-interaction-2026-10-04/results/0f5a9851cabfec43edca/record.json",
+      "record_sha256": null,
+      "public_verified": false,
+      "raw": {
+        "availability": "absent",
+        "verified": false
+      },
+      "snapshot_state": "pending"
+    },
+    {
+      "case_id": "m10",
+      "condition": "B_checklist",
+      "trial": 2,
+      "model_requested": "gpt-6-luna",
+      "job_digest": "14951c8304035253bd6c",
+      "record_path": "evals/iterations/model-interaction-2026-10-04/results/14951c8304035253bd6c/record.json",
+      "record_sha256": null,
+      "public_verified": false,
+      "raw": {
+        "availability": "absent",
+        "verified": false
+      },
+      "snapshot_state": "pending"
+    },
+    {
+      "case_id": "m10",
+      "condition": "C_skill",
+      "trial": 2,
+      "model_requested": "gpt-6-luna",
+      "job_digest": "55487b8423249174df48",
+      "record_path": "evals/iterations/model-interaction-2026-10-04/results/55487b8423249174df48/record.json",
+      "record_sha256": null,
+      "public_verified": false,
+      "raw": {
+        "availability": "absent",
+        "verified": false
+      },
+      "snapshot_state": "pending"
+    },
+    {
+      "case_id": "m10",
+      "condition": "C_skill",
+      "trial": 2,
+      "model_requested": "gpt-6-astra",
+      "job_digest": "e9b715b42ac45b99894e",
+      "record_path": "evals/iterations/model-interaction-2026-10-04/results/e9b715b42ac45b99894e/record.json",
+      "record_sha256": null,
+      "public_verified": false,
+      "raw": {
+        "availability": "absent",
+        "verified": false
+      },
+      "snapshot_state": "pending"
+    },
+    {
+      "case_id": "m06",
+      "condition": "B_checklist",
+      "trial": 2,
+      "model_requested": "gpt-6-luna",
+      "job_digest": "0cb2687a89196ac2a3ba",
+      "record_path": "evals/iterations/model-interaction-2026-10-04/results/0cb2687a89196ac2a3ba/record.json",
+      "record_sha256": null,
+      "public_verified": false,
+      "raw": {
+        "availability": "absent",
+        "verified": false
+      },
+      "snapshot_state": "pending"
+    },
+    {
+      "case_id": "m06",
+      "condition": "A_tools",
+      "trial": 2,
+      "model_requested": "gpt-6-luna",
+      "job_digest": "c56af9f3d4bea9cecf2a",
+      "record_path": "evals/iterations/model-interaction-2026-10-04/results/c56af9f3d4bea9cecf2a/record.json",
+      "record_sha256": null,
+      "public_verified": false,
+      "raw": {
+        "availability": "absent",
+        "verified": false
+      },
+      "snapshot_state": "pending"
+    },
+    {
+      "case_id": "m06",
+      "condition": "C_skill",
+      "trial": 2,
+      "model_requested": "gpt-6-astra",
+      "job_digest": "ef8f9776056352cf4f47",
+      "record_path": "evals/iterations/model-interaction-2026-10-04/results/ef8f9776056352cf4f47/record.json",
+      "record_sha256": null,
+      "public_verified": false,
+      "raw": {
+        "availability": "absent",
+        "verified": false
+      },
+      "snapshot_state": "pending"
+    },
+    {
+      "case_id": "m06",
+      "condition": "B_checklist",
+      "trial": 2,
+      "model_requested": "gpt-6-astra",
+      "job_digest": "6a748acd5be72b3ced6a",
+      "record_path": "evals/iterations/model-interaction-2026-10-04/results/6a748acd5be72b3ced6a/record.json",
+      "record_sha256": null,
+      "public_verified": false,
+      "raw": {
+        "availability": "absent",
+        "verified": false
+      },
+      "snapshot_state": "pending"
+    },
+    {
+      "case_id": "m06",
+      "condition": "C_skill",
+      "trial": 2,
+      "model_requested": "gpt-6-luna",
+      "job_digest": "003d7ac99e5ddba4f088",
+      "record_path": "evals/iterations/model-interaction-2026-10-04/results/003d7ac99e5ddba4f088/record.json",
+      "record_sha256": null,
+      "public_verified": false,
+      "raw": {
+        "availability": "absent",
+        "verified": false
+      },
+      "snapshot_state": "pending"
+    },
+    {
+      "case_id": "m06",
+      "condition": "A_tools",
+      "trial": 2,
+      "model_requested": "gpt-6-astra",
+      "job_digest": "aa20a1b04efc784205f6",
+      "record_path": "evals/iterations/model-interaction-2026-10-04/results/aa20a1b04efc784205f6/record.json",
+      "record_sha256": null,
+      "public_verified": false,
+      "raw": {
+        "availability": "absent",
+        "verified": false
+      },
+      "snapshot_state": "pending"
+    },
+    {
+      "case_id": "m05",
+      "condition": "C_skill",
+      "trial": 2,
+      "model_requested": "gpt-6-luna",
+      "job_digest": "535acffcc029dec1cd62",
+      "record_path": "evals/iterations/model-interaction-2026-10-04/results/535acffcc029dec1cd62/record.json",
+      "record_sha256": null,
+      "public_verified": false,
+      "raw": {
+        "availability": "absent",
+        "verified": false
+      },
+      "snapshot_state": "pending"
+    },
+    {
+      "case_id": "m05",
+      "condition": "B_checklist",
+      "trial": 2,
+      "model_requested": "gpt-6-luna",
+      "job_digest": "a0a3da91e7ed36b9b91c",
+      "record_path": "evals/iterations/model-interaction-2026-10-04/results/a0a3da91e7ed36b9b91c/record.json",
+      "record_sha256": null,
+      "public_verified": false,
+      "raw": {
+        "availability": "absent",
+        "verified": false
+      },
+      "snapshot_state": "pending"
+    },
+    {
+      "case_id": "m05",
+      "condition": "A_tools",
+      "trial": 2,
+      "model_requested": "gpt-6-luna",
+      "job_digest": "fdd58e0e4a5facb2104d",
+      "record_path": "evals/iterations/model-interaction-2026-10-04/results/fdd58e0e4a5facb2104d/record.json",
+      "record_sha256": null,
+      "public_verified": false,
+      "raw": {
+        "availability": "absent",
+        "verified": false
+      },
+      "snapshot_state": "pending"
+    },
+    {
+      "case_id": "m05",
+      "condition": "B_checklist",
+      "trial": 2,
+      "model_requested": "gpt-6-astra",
+      "job_digest": "43858a446d4d06797b3f",
+      "record_path": "evals/iterations/model-interaction-2026-10-04/results/43858a446d4d06797b3f/record.json",
+      "record_sha256": null,
+      "public_verified": false,
+      "raw": {
+        "availability": "absent",
+        "verified": false
+      },
+      "snapshot_state": "pending"
+    },
+    {
+      "case_id": "m05",
+      "condition": "C_skill",
+      "trial": 2,
+      "model_requested": "gpt-6-astra",
+      "job_digest": "5c670c825f6900fcf12c",
+      "record_path": "evals/iterations/model-interaction-2026-10-04/results/5c670c825f6900fcf12c/record.json",
+      "record_sha256": null,
+      "public_verified": false,
+      "raw": {
+        "availability": "absent",
+        "verified": false
+      },
+      "snapshot_state": "pending"
+    },
+    {
+      "case_id": "m05",
+      "condition": "A_tools",
+      "trial": 2,
+      "model_requested": "gpt-6-astra",
+      "job_digest": "4e657d0c39a8298a6682",
+      "record_path": "evals/iterations/model-interaction-2026-10-04/results/4e657d0c39a8298a6682/record.json",
+      "record_sha256": null,
+      "public_verified": false,
+      "raw": {
+        "availability": "absent",
+        "verified": false
+      },
+      "snapshot_state": "pending"
+    },
+    {
+      "case_id": "m09",
+      "condition": "A_tools",
+      "trial": 2,
+      "model_requested": "gpt-6-astra",
+      "job_digest": "8b42e8c5b19e1e749c99",
+      "record_path": "evals/iterations/model-interaction-2026-10-04/results/8b42e8c5b19e1e749c99/record.json",
+      "record_sha256": null,
+      "public_verified": false,
+      "raw": {
+        "availability": "absent",
+        "verified": false
+      },
+      "snapshot_state": "pending"
+    },
+    {
+      "case_id": "m09",
+      "condition": "B_checklist",
+      "trial": 2,
+      "model_requested": "gpt-6-luna",
+      "job_digest": "5578d4a92f96a7fbfae0",
+      "record_path": "evals/iterations/model-interaction-2026-10-04/results/5578d4a92f96a7fbfae0/record.json",
+      "record_sha256": null,
+      "public_verified": false,
+      "raw": {
+        "availability": "absent",
+        "verified": false
+      },
+      "snapshot_state": "pending"
+    },
+    {
+      "case_id": "m09",
+      "condition": "B_checklist",
+      "trial": 2,
+      "model_requested": "gpt-6-astra",
+      "job_digest": "39ce25a09345fafd2ae4",
+      "record_path": "evals/iterations/model-interaction-2026-10-04/results/39ce25a09345fafd2ae4/record.json",
+      "record_sha256": null,
+      "public_verified": false,
+      "raw": {
+        "availability": "absent",
+        "verified": false
+      },
+      "snapshot_state": "pending"
+    },
+    {
+      "case_id": "m09",
+      "condition": "A_tools",
+      "trial": 2,
+      "model_requested": "gpt-6-luna",
+      "job_digest": "6f01614c0e4dd87b781c",
+      "record_path": "evals/iterations/model-interaction-2026-10-04/results/6f01614c0e4dd87b781c/record.json",
+      "record_sha256": null,
+      "public_verified": false,
+      "raw": {
+        "availability": "absent",
+        "verified": false
+      },
+      "snapshot_state": "pending"
+    },
+    {
+      "case_id": "m09",
+      "condition": "C_skill",
+      "trial": 2,
+      "model_requested": "gpt-6-astra",
+      "job_digest": "de7b316060e29b36dd42",
+      "record_path": "evals/iterations/model-interaction-2026-10-04/results/de7b316060e29b36dd42/record.json",
+      "record_sha256": null,
+      "public_verified": false,
+      "raw": {
+        "availability": "absent",
+        "verified": false
+      },
+      "snapshot_state": "pending"
+    },
+    {
+      "case_id": "m09",
+      "condition": "C_skill",
+      "trial": 2,
+      "model_requested": "gpt-6-luna",
+      "job_digest": "f7c5c769e8baee966434",
+      "record_path": "evals/iterations/model-interaction-2026-10-04/results/f7c5c769e8baee966434/record.json",
+      "record_sha256": null,
+      "public_verified": false,
+      "raw": {
+        "availability": "absent",
+        "verified": false
+      },
+      "snapshot_state": "pending"
+    },
+    {
+      "case_id": "m11",
+      "condition": "A_tools",
+      "trial": 2,
+      "model_requested": "gpt-6-luna",
+      "job_digest": "1a35a5a6cf0a447de296",
+      "record_path": "evals/iterations/model-interaction-2026-10-04/results/1a35a5a6cf0a447de296/record.json",
+      "record_sha256": null,
+      "public_verified": false,
+      "raw": {
+        "availability": "absent",
+        "verified": false
+      },
+      "snapshot_state": "pending"
+    },
+    {
+      "case_id": "m11",
+      "condition": "B_checklist",
+      "trial": 2,
+      "model_requested": "gpt-6-astra",
+      "job_digest": "f8f7f8cce70a00d48a40",
+      "record_path": "evals/iterations/model-interaction-2026-10-04/results/f8f7f8cce70a00d48a40/record.json",
+      "record_sha256": null,
+      "public_verified": false,
+      "raw": {
+        "availability": "absent",
+        "verified": false
+      },
+      "snapshot_state": "pending"
+    },
+    {
+      "case_id": "m11",
+      "condition": "C_skill",
+      "trial": 2,
+      "model_requested": "gpt-6-astra",
+      "job_digest": "1d36d7d591505d79fd6c",
+      "record_path": "evals/iterations/model-interaction-2026-10-04/results/1d36d7d591505d79fd6c/record.json",
+      "record_sha256": null,
+      "public_verified": false,
+      "raw": {
+        "availability": "absent",
+        "verified": false
+      },
+      "snapshot_state": "pending"
+    },
+    {
+      "case_id": "m11",
+      "condition": "A_tools",
+      "trial": 2,
+      "model_requested": "gpt-6-astra",
+      "job_digest": "27c235e313a346c97b2e",
+      "record_path": "evals/iterations/model-interaction-2026-10-04/results/27c235e313a346c97b2e/record.json",
+      "record_sha256": null,
+      "public_verified": false,
+      "raw": {
+        "availability": "absent",
+        "verified": false
+      },
+      "snapshot_state": "pending"
+    },
+    {
+      "case_id": "m11",
+      "condition": "C_skill",
+      "trial": 2,
+      "model_requested": "gpt-6-luna",
+      "job_digest": "38cd22fbacc56279321f",
+      "record_path": "evals/iterations/model-interaction-2026-10-04/results/38cd22fbacc56279321f/record.json",
+      "record_sha256": null,
+      "public_verified": false,
+      "raw": {
+        "availability": "absent",
+        "verified": false
+      },
+      "snapshot_state": "pending"
+    },
+    {
+      "case_id": "m11",
+      "condition": "B_checklist",
+      "trial": 2,
+      "model_requested": "gpt-6-luna",
+      "job_digest": "c415eac12465c114ee8a",
+      "record_path": "evals/iterations/model-interaction-2026-10-04/results/c415eac12465c114ee8a/record.json",
+      "record_sha256": null,
+      "public_verified": false,
+      "raw": {
+        "availability": "absent",
+        "verified": false
+      },
+      "snapshot_state": "pending"
+    },
+    {
+      "case_id": "m12",
+      "condition": "B_checklist",
+      "trial": 2,
+      "model_requested": "gpt-6-luna",
+      "job_digest": "b58680b727f9e4bde59f",
+      "record_path": "evals/iterations/model-interaction-2026-10-04/results/b58680b727f9e4bde59f/record.json",
+      "record_sha256": null,
+      "public_verified": false,
+      "raw": {
+        "availability": "absent",
+        "verified": false
+      },
+      "snapshot_state": "pending"
+    },
+    {
+      "case_id": "m12",
+      "condition": "C_skill",
+      "trial": 2,
+      "model_requested": "gpt-6-luna",
+      "job_digest": "daf42dc8db2c15fb7b53",
+      "record_path": "evals/iterations/model-interaction-2026-10-04/results/daf42dc8db2c15fb7b53/record.json",
+      "record_sha256": null,
+      "public_verified": false,
+      "raw": {
+        "availability": "absent",
+        "verified": false
+      },
+      "snapshot_state": "pending"
+    },
+    {
+      "case_id": "m12",
+      "condition": "B_checklist",
+      "trial": 2,
+      "model_requested": "gpt-6-astra",
+      "job_digest": "f6123ec7522fd8960d82",
+      "record_path": "evals/iterations/model-interaction-2026-10-04/results/f6123ec7522fd8960d82/record.json",
+      "record_sha256": null,
+      "public_verified": false,
+      "raw": {
+        "availability": "absent",
+        "verified": false
+      },
+      "snapshot_state": "pending"
+    },
+    {
+      "case_id": "m12",
+      "condition": "A_tools",
+      "trial": 2,
+      "model_requested": "gpt-6-astra",
+      "job_digest": "27493d2c8811ed31697c",
+      "record_path": "evals/iterations/model-interaction-2026-10-04/results/27493d2c8811ed31697c/record.json",
+      "record_sha256": null,
+      "public_verified": false,
+      "raw": {
+        "availability": "absent",
+        "verified": false
+      },
+      "snapshot_state": "pending"
+    },
+    {
+      "case_id": "m12",
+      "condition": "C_skill",
+      "trial": 2,
+      "model_requested": "gpt-6-astra",
+      "job_digest": "294409b828e6cd809b7f",
+      "record_path": "evals/iterations/model-interaction-2026-10-04/results/294409b828e6cd809b7f/record.json",
+      "record_sha256": null,
+      "public_verified": false,
+      "raw": {
+        "availability": "absent",
+        "verified": false
+      },
+      "snapshot_state": "pending"
+    },
+    {
+      "case_id": "m12",
+      "condition": "A_tools",
+      "trial": 2,
+      "model_requested": "gpt-6-luna",
+      "job_digest": "2bb49e9bcaa1437e40e8",
+      "record_path": "evals/iterations/model-interaction-2026-10-04/results/2bb49e9bcaa1437e40e8/record.json",
+      "record_sha256": null,
+      "public_verified": false,
+      "raw": {
+        "availability": "absent",
+        "verified": false
+      },
+      "snapshot_state": "pending"
+    }
+  ]
+}

@@ -1,0 +1,54 @@
+--- original.py
++++ app.py
+@@ -3,6 +3,15 @@
+ import math
+ import sqlite3
+ from contextlib import closing
++
++
++def _sqlite_string(value):
++    """Preserve strings containing lone surrogates, which SQLite TEXT rejects."""
++    try:
++        value.encode("utf-8")
++    except UnicodeEncodeError:
++        return value.encode("utf-8", errors="surrogatepass")
++    return value
+ 
+ 
+ class Queue:
+@@ -19,12 +28,14 @@
+         encoded = json.dumps(payload, allow_nan=False)
+         with closing(sqlite3.connect(self.path)) as db, db:
+             try:
+-                db.execute("INSERT INTO jobs(job_id, payload) VALUES (?, ?)", (job_id, encoded))
++                db.execute("INSERT INTO jobs(job_id, payload) VALUES (?, ?)",
++                           (_sqlite_string(job_id), encoded))
+             except sqlite3.IntegrityError as exc:
+                 raise ValueError("job_id already exists") from exc
+ 
+     def claim(self, worker, now, lease_seconds):
+-        if not math.isfinite(lease_seconds) or lease_seconds <= 0:
++        if (isinstance(lease_seconds, bool) or
++                not math.isfinite(lease_seconds) or lease_seconds <= 0):
+             raise ValueError("lease_seconds must be finite and positive")
+         with closing(sqlite3.connect(self.path)) as db, db:
+             db.execute("BEGIN IMMEDIATE")
+@@ -38,14 +49,15 @@
+             expires_at = now + lease_seconds
+             db.execute("""UPDATE jobs SET state = 'leased', worker = ?,
+                 generation = ?, expires_at = ? WHERE job_id = ?""",
+-                (worker, generation, expires_at, job_id))
++                (_sqlite_string(worker), generation, expires_at, job_id))
+             return {"payload": json.loads(payload), "expires_at": expires_at,
+                     "receipt": {"job_id": job_id, "worker": worker, "generation": generation}}
+ 
+     def ack(self, receipt, now):
+         with closing(sqlite3.connect(self.path)) as db, db:
+             changed = db.execute("""UPDATE jobs SET state = 'done'
+-                WHERE job_id = ? AND worker = ?
++                WHERE job_id = ? AND worker = ? AND generation = ?
+                 AND state = 'leased' AND expires_at > ?""",
+-                (receipt["job_id"], receipt["worker"], now)).rowcount
++                (receipt["job_id"], _sqlite_string(receipt["worker"]),
++                 receipt["generation"], now)).rowcount
+             return changed == 1

@@ -1,0 +1,196 @@
+{
+  "case_id": "m05",
+  "condition": "C_skill",
+  "trial": 1,
+  "model_requested": "gpt-6-luna",
+  "exit_code": 0,
+  "timed_out": false,
+  "elapsed_seconds": 94.81448520795675,
+  "usage": {
+    "input_tokens": 76303,
+    "cached_input_tokens": 62208,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 2896,
+    "reasoning_output_tokens": 1405
+  },
+  "completed": true,
+  "status": "completed",
+  "infra_kind": null,
+  "prediction": {
+    "initial_verdict": "satisfied",
+    "summary": "审查后保留 app.py：排序、请求身份、TTL 到期、异常传播与重试、零上限处理及嵌套数据复制均符合 task.md 要求；无需修复。新增 acceptance.py 作为本地验证记录。",
+    "tests_executed": [
+      "./run_python smoke.py",
+      "./run_python acceptance.py"
+    ],
+    "limitations": [
+      "本地验证覆盖了主要契约场景，但不是穷尽性验收。"
+    ]
+  },
+  "acceptance": {
+    "passed": true,
+    "tests_run": 12,
+    "checks": [
+      {
+        "test": "rank_order_and_limit",
+        "passed": true
+      },
+      {
+        "test": "full_result_cache",
+        "passed": true
+      },
+      {
+        "test": "tenant_revision_isolation",
+        "passed": true
+      },
+      {
+        "test": "query_identity",
+        "passed": true
+      },
+      {
+        "test": "expiry_without_sliding",
+        "passed": true
+      },
+      {
+        "test": "caller_query_isolation",
+        "passed": true
+      },
+      {
+        "test": "source_result_isolation",
+        "passed": true
+      },
+      {
+        "test": "returned_result_isolation",
+        "passed": true
+      },
+      {
+        "test": "failure_not_cached",
+        "passed": true
+      },
+      {
+        "test": "expired_failure_retry",
+        "passed": true
+      },
+      {
+        "test": "empty_results_and_zero_limit",
+        "passed": true
+      },
+      {
+        "test": "independent_instances",
+        "passed": true
+      }
+    ],
+    "exit_code": 0,
+    "timed_out": false,
+    "sandbox": "macos_no_network_writes_only_grade_directory",
+    "stderr": ""
+  },
+  "acceptance_signature": {
+    "passed": true,
+    "tests_run": 12,
+    "checks": [
+      {
+        "test": "rank_order_and_limit",
+        "passed": true
+      },
+      {
+        "test": "full_result_cache",
+        "passed": true
+      },
+      {
+        "test": "tenant_revision_isolation",
+        "passed": true
+      },
+      {
+        "test": "query_identity",
+        "passed": true
+      },
+      {
+        "test": "expiry_without_sliding",
+        "passed": true
+      },
+      {
+        "test": "caller_query_isolation",
+        "passed": true
+      },
+      {
+        "test": "source_result_isolation",
+        "passed": true
+      },
+      {
+        "test": "returned_result_isolation",
+        "passed": true
+      },
+      {
+        "test": "failure_not_cached",
+        "passed": true
+      },
+      {
+        "test": "expired_failure_retry",
+        "passed": true
+      },
+      {
+        "test": "empty_results_and_zero_limit",
+        "passed": true
+      },
+      {
+        "test": "independent_instances",
+        "passed": true
+      }
+    ],
+    "exit_code": 0,
+    "timed_out": false,
+    "invalid_output": false,
+    "isolation_failure": false
+  },
+  "source_changed": false,
+  "artifacts": {
+    "acceptance.py": "9f04a5ebc4d4dfefc71d8585e8e3cd5238ee3fc1c363eb8e7ef63396a1f6dd12",
+    "app.py": "140d0dbcf5eb93e5e42c3d420531957c3e7e8e8c57d8b902c90a40cacaf228dd"
+  },
+  "protected_changes": [],
+  "outside_changes": [],
+  "artifact_errors": [],
+  "tool_audit": [
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc \"pwd && rg --files -g 'task.md' -g 'app.py' -g 'original.py' -g 'smoke.py' -g 'TOOLS.md' -g 'SKILL.md' -g 'references/**' -g 'scripts/**' -g 'CHECKLIST.md'\"",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc 'cat task.md && cat app.py && cat original.py && cat smoke.py && cat TOOLS.md'",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc 'cat SKILL.md && cat references/executable-contracts.md && cat references/contracts.md && cat references/effects.md'",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc 'cat run_python && ./run_python smoke.py'",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc \"cat > acceptance.py <<'PY'\nfrom app import RetrievalCache, rank_documents\n\n# Ranking, tie order, zero limit, and nested copy isolation.\ndocs = [\n    {'id': 'b', 'score': 5, 'payload': {'items': [{'v': 1}]}},\n    {'id': 'a', 'score': 5, 'payload': {'items': [{'v': 2}]}},\n    {'id': 'low', 'score': -10, 'payload': {}},\n]\nranked = rank_documents(docs, 2)\nassert [d['id'] for d in ranked] == ['a', 'b']\nassert rank_documents(docs, 0) == []\nranked[0]['payload']['items'][0]['v'] = 99\nassert docs[1]['payload']['items'][0]['v'] == 2\nassert [d['id'] for d in rank_documents(docs, 3)] == ['a', 'b', 'low']\n\n# Identity includes every request field; filter insertion order is irrelevant.\ncalls = []\nsource_owned = [{'id': 'one', 'score': 1, 'payload': {'nested': [1]}}]\ndef source(tenant, query, revision):\n    calls.append((tenant, query, revision))\n    query['text'] = 'source changed its private copy'\n    query['filters']['mutated'] = 'yes'\n    return source_owned\ncache = RetrievalCache(source, ttl=3)\nq = {'text': 'q', 'filters': {'x': '1', 'y': '2'}}\nassert cache.search('t', q, 'r', 0, 1) == source_owned\nassert q == {'text': 'q', 'filters': {'x': '1', 'y': '2'}}\nsource_owned[0]['payload']['nested'][0] = 8\nhit = cache.search('t', {'filters': {'y': '2', 'x': '1'}, 'text': 'q'}, 'r', 1, 4)\nassert hit[0]['payload']['nested'] == [1]\nhit[0]['payload']['nested'][0] = 7\nassert cache.search('t', q, 'r', 2, 4)[0]['payload']['nested'] == [1]\nassert len(calls) == 1\ncache.search('other', q, 'r', 2)\ncache.search('t', q, 'other-revision', 2)\ncache.search('t', {'text': 'other', 'filters': {'x': '1', 'y': '2'}}, 'r', 2)\ncache.search('t', {'text': 'q', 'filters': {'x': 'different', 'y': '2'}}, 'r', 2)\nassert len(calls) == 5\n\n# Strict expiration boundary and zero-limit no-op.\ncache.search('t', q, 'r', 3, 0)\nassert len(calls) == 5\ncache.search('t', q, 'r', 3, 1)\nassert len(calls) == 6\n\n# Empty results are cacheable; exceptions propagate and are not cached or destructive.\nattempts = 0\ndef flaky(tenant, query, revision):\n    global attempts\n    attempts += 1\n    if attempts == 1:\n        raise RuntimeError('source failure')\n    return []\nretry_cache = RetrievalCache(flaky, ttl=2)\ntry:\n    retry_cache.search('t', {'text': 'x', 'filters': {}}, 'r', 0)\nexcept RuntimeError as exc:\n    assert str(exc) == 'source failure'\nelse:\n    raise AssertionError('source exception did not propagate')\nassert retry_cache.search('t', {'text': 'x', 'filters': {}}, 'r', 1) == []\nassert retry_cache.search('t', {'text': 'x', 'filters': {}}, 'r', 2) == []\nassert attempts == 2\nprint('acceptance checks passed')\nPY\n./run_python acceptance.py\"",
+      "review_flags": []
+    }
+  ],
+  "case_sha256": "0ae04442754dcf025e1229210ac94d9e31d2eb3131c65c5f6408b129fe6b3c4b",
+  "prompt_sha256": "890e8e7238a3d11b98065646547e36c2563ff652e966a0baa5a66ed0cca78937",
+  "event_sha256": "d2cbe9b78b381a298ed1b9de4c0bcfa874ca174c9cfc5b5d94c9c87c3516b179",
+  "stderr_sha256": "96c8c223e7985a29a9759c0bf38486d6e9ce38f0d15b7ffbce81858ef5bb7719",
+  "reasoning_effort": "high",
+  "cli_version": "codex-cli 0.160.0",
+  "canary": false,
+  "python_version": "3.12.14",
+  "execution_platform": "Darwin",
+  "terminal_errors": []
+}

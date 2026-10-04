@@ -51,8 +51,10 @@ jobs:
           python -S evals/model_interaction/tasks/retrieval_cache/mutation_audit.py
           python -S evals/model_interaction/tasks/stream_events/mutation_audit.py
           python -S evals/model_interaction/tasks/tool_results/mutation_audit.py
-      - name: Preserve cross-model post-freeze JSON counterexample
-        run: python -B -S -m unittest evals.model_interaction_followup.test_stream_json -v
+      - name: Preserve cross-model post-freeze JSON and string counterexamples
+        run: python -B -S -m unittest evals.model_interaction_followup.test_stream_json evals.model_interaction_followup.test_lease_strings evals.model_interaction_followup.test_infrastructure_classifier -v
+      - name: Verify separately registered classifier recovery (no model calls)
+        run: python scripts/resume_model_interaction.py verify --offline
       - name: Verify published scores and redraw benchmark figures (no model calls)
         run: python scripts/plot_external_eval.py
       - name: Verify development ablation scores and figures (no model calls)
@@ -74,6 +76,7 @@ jobs:
         run: |
           python scripts/analyze_model_interaction.py
           python scripts/render_model_interaction_report.py
+          python scripts/audit_model_interaction_results.py > /tmp/model-interaction-integrity.json
       - name: Package runtime skill
         run: python scripts/build_skill.py
       - name: Package unpromoted modular candidate separately

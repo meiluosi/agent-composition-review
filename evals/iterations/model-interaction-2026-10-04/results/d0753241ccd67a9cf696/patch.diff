@@ -1,0 +1,18 @@
+--- original.py
++++ app.py
+@@ -17,11 +17,13 @@
+     def search(self, tenant, query, revision, now, limit=10):
+         if limit == 0:
+             return []
+-        key = json.dumps(query, sort_keys=True, ensure_ascii=False)
++        key = (tenant, revision, json.dumps(query, sort_keys=True, ensure_ascii=False))
+         entry = self._entries.get(key)
+         if entry is not None and now < entry[0]:
+             documents = entry[1]
+         else:
+-            documents = self._source(tenant, query, revision)
++            # Neither the caller's query nor source-owned results may become
++            # shared mutable state across the cache boundary.
++            documents = deepcopy(self._source(tenant, deepcopy(query), revision))
+             self._entries[key] = (now + self._ttl, documents)
+         return rank_documents(documents, limit)

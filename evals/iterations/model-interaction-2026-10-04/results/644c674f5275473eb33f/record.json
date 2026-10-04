@@ -1,0 +1,201 @@
+{
+  "case_id": "m11",
+  "condition": "C_skill",
+  "trial": 1,
+  "model_requested": "gpt-6-luna",
+  "exit_code": 0,
+  "timed_out": false,
+  "elapsed_seconds": 80.15228312497493,
+  "usage": {
+    "input_tokens": 68931,
+    "cached_input_tokens": 56064,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 2634,
+    "reasoning_output_tokens": 1271
+  },
+  "completed": true,
+  "status": "completed",
+  "infra_kind": null,
+  "prediction": {
+    "initial_verdict": "satisfied",
+    "summary": "审查后保留 app.py 原实现：其行为符合 task.md 的版本合并、输入校验、批次原子性、快照隔离及最终封存要求，无需修改。",
+    "tests_executed": [
+      "./run_python smoke.py",
+      "./run_python - <<'PY' …（边界验证：过期更新校验、冲突与原子回滚、输入输出隔离、封存和空批次）"
+    ],
+    "limitations": [
+      "验证包含公开烟测和针对性边界用例，不代表覆盖所有可能输入。"
+    ]
+  },
+  "acceptance": {
+    "passed": true,
+    "tests_run": 12,
+    "checks": [
+      {
+        "test": "order_and_pending",
+        "passed": true
+      },
+      {
+        "test": "scores",
+        "passed": true
+      },
+      {
+        "test": "stale_and_retry",
+        "passed": true
+      },
+      {
+        "test": "duplicate_and_conflict",
+        "passed": true
+      },
+      {
+        "test": "atomic_conflicts",
+        "passed": true
+      },
+      {
+        "test": "atomic_validation",
+        "passed": true
+      },
+      {
+        "test": "failure_then_recovery",
+        "passed": true
+      },
+      {
+        "test": "finalized_lifecycle",
+        "passed": true
+      },
+      {
+        "test": "caller_input_isolation",
+        "passed": true
+      },
+      {
+        "test": "output_isolation",
+        "passed": true
+      },
+      {
+        "test": "specifications_and_empty",
+        "passed": true
+      },
+      {
+        "test": "independent_batches",
+        "passed": true
+      }
+    ],
+    "exit_code": 0,
+    "timed_out": false,
+    "sandbox": "macos_no_network_writes_only_grade_directory",
+    "stderr": ""
+  },
+  "acceptance_signature": {
+    "passed": true,
+    "tests_run": 12,
+    "checks": [
+      {
+        "test": "order_and_pending",
+        "passed": true
+      },
+      {
+        "test": "scores",
+        "passed": true
+      },
+      {
+        "test": "stale_and_retry",
+        "passed": true
+      },
+      {
+        "test": "duplicate_and_conflict",
+        "passed": true
+      },
+      {
+        "test": "atomic_conflicts",
+        "passed": true
+      },
+      {
+        "test": "atomic_validation",
+        "passed": true
+      },
+      {
+        "test": "failure_then_recovery",
+        "passed": true
+      },
+      {
+        "test": "finalized_lifecycle",
+        "passed": true
+      },
+      {
+        "test": "caller_input_isolation",
+        "passed": true
+      },
+      {
+        "test": "output_isolation",
+        "passed": true
+      },
+      {
+        "test": "specifications_and_empty",
+        "passed": true
+      },
+      {
+        "test": "independent_batches",
+        "passed": true
+      }
+    ],
+    "exit_code": 0,
+    "timed_out": false,
+    "invalid_output": false,
+    "isolation_failure": false
+  },
+  "source_changed": false,
+  "artifacts": {
+    "app.py": "d856fbce39bd2b4fedbf9279cd0be4cef5d1a3560120f46a2623dd1c73dcdb89"
+  },
+  "protected_changes": [],
+  "outside_changes": [],
+  "artifact_errors": [],
+  "tool_audit": [
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc \"pwd && rg --files -g 'task.md' -g 'app.py' -g 'original.py' -g 'smoke.py' -g 'TOOLS.md' -g 'AGENTS.md' -g 'CHECKLIST.md' -g 'references/**' -g 'scripts/**' -g 'SKILL.md'\"",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc 'cat task.md && cat app.py && cat smoke.py && cat TOOLS.md'",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc 'cat references/executable-contracts.md'",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc 'cat original.py'",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc './run_python smoke.py'",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc \"cat run_python && ./run_python - <<'PY'\nimport app\n\ndef raises(exc, fn):\n    try:\n        fn()\n    except exc:\n        return\n    raise AssertionError(f\\\"expected {exc.__name__}\\\")\n\nspecs = [{\\\"call_id\\\":\\\"b\\\", \\\"weight\\\":-2}, {\\\"call_id\\\":\\\"a\\\", \\\"weight\\\":3}]\nb = app.ToolBatch(specs)\nspecs[0][\\\"weight\\\"] = 99\nassert b.snapshot() == [\n    {\\\"call_id\\\":\\\"b\\\",\\\"version\\\":None,\\\"status\\\":\\\"pending\\\",\\\"value\\\":None,\\\"error\\\":None},\n    {\\\"call_id\\\":\\\"a\\\",\\\"version\\\":None,\\\"status\\\":\\\"pending\\\",\\\"value\\\":None,\\\"error\\\":None},\n]\nu1 = {\\\"call_id\\\":\\\"b\\\", \\\"version\\\":5, \\\"status\\\":\\\"success\\\", \\\"values\\\":[4,-1]}\nb.ingest([u1])\nu1[\\\"values\\\"].append(100)\nassert b.snapshot()[0][\\\"value\\\"] == -6\nraises(ValueError, lambda: b.ingest([\n    {\\\"call_id\\\":\\\"a\\\", \\\"version\\\":1, \\\"status\\\":\\\"error\\\", \\\"message\\\":\\\"\\\"},\n    {\\\"call_id\\\":\\\"b\\\", \\\"version\\\":4, \\\"status\\\":\\\"wat\\\", \\\"message\\\":\\\"bad\\\"},\n]))\nassert b.snapshot()[1][\\\"status\\\"] == \\\"pending\\\"\n# Stale results are validated before being ignored.\nraises(ValueError, lambda: b.ingest([\n    {\\\"call_id\\\":\\\"b\\\", \\\"version\\\":4, \\\"status\\\":\\\"success\\\", \\\"values\\\":[True]},\n]))\n# Repeated same-version payloads are idempotent; changed payloads reject atomically.\nb.ingest([{\\\"call_id\\\":\\\"b\\\", \\\"version\\\":5, \\\"status\\\":\\\"success\\\", \\\"values\\\":[4,-1]}])\nraises(ValueError, lambda: b.ingest([\n    {\\\"call_id\\\":\\\"a\\\", \\\"version\\\":1, \\\"status\\\":\\\"error\\\", \\\"message\\\":\\\"ok\\\"},\n    {\\\"call_id\\\":\\\"b\\\", \\\"version\\\":5, \\\"status\\\":\\\"success\\\", \\\"values\\\":[3]},\n]))\nassert b.snapshot()[1][\\\"status\\\"] == \\\"pending\\\"\n# Newer errors replace success; caller mutations cannot affect retained data.\nerr = {\\\"call_id\\\":\\\"b\\\", \\\"version\\\":9, \\\"status\\\":\\\"error\\\", \\\"message\\\":\\\"oops\\\"}\nb.ingest([err]); err[\\\"message\\\"] = \\\"changed\\\"\nraises(ValueError, b.finalize)\nassert b.snapshot()[0][\\\"error\\\"] == \\\"oops\\\"\nb.ingest([{\\\"call_id\\\":\\\"a\\\", \\\"version\\\":3, \\\"status\\\":\\\"success\\\", \\\"values\\\":[]}])\nresult = b.finalize()\nassert result[1][\\\"value\\\"] == 0\nresult[0][\\\"error\\\"] = \\\"changed\\\"\nassert b.snapshot()[0][\\\"error\\\"] == \\\"oops\\\"\nassert b.finalize() == b.snapshot()\nraises(RuntimeError, lambda: b.ingest([]))\nempty = app.ToolBatch([])\nassert empty.finalize() == []\nraises(RuntimeError, lambda: empty.ingest([]))\nassert app.score([], -100) == 0\nassert app.score([-3, 8], -2) == -10\nprint(\\\"edge checks passed\\\")\nPY\"",
+      "review_flags": []
+    }
+  ],
+  "case_sha256": "af9521c6d7c04d09aa3db4c8591ebd1a1a8f8015432b0b4281e51e24d6de5a54",
+  "prompt_sha256": "890e8e7238a3d11b98065646547e36c2563ff652e966a0baa5a66ed0cca78937",
+  "event_sha256": "c3ecad04048ee4b7e1565797da53a71aaa292bc7745e0c84e281ca787d35404e",
+  "stderr_sha256": "a9c45377d54759498f0888a40a4d7b02ce9740caa5f4b975bf4e417392582e81",
+  "reasoning_effort": "high",
+  "cli_version": "codex-cli 0.160.0",
+  "canary": false,
+  "python_version": "3.12.14",
+  "execution_platform": "Darwin",
+  "terminal_errors": []
+}

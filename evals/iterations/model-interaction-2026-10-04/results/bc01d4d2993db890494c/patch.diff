@@ -1,0 +1,30 @@
+--- original.py
++++ app.py
+@@ -7,7 +7,17 @@
+ 
+ 
+ def text_metrics(text):
+-    return {"characters": len(text), "words": len(text.split(" "))}
++    return {"characters": len(text), "words": len(text.split())}
++
++
++def _unique_object(pairs):
++    """Build a JSON object while rejecting ambiguous duplicate field names."""
++    result = {}
++    for key, value in pairs:
++        if key in result:
++            raise ValueError("duplicate JSON object field")
++        result[key] = value
++    return result
+ 
+ 
+ class EventStream:
+@@ -28,7 +38,7 @@
+ 
+     def _record(self, raw):
+         try:
+-            record = json.loads(raw.decode("utf-8"))
++            record = json.loads(raw.decode("utf-8"), object_pairs_hook=_unique_object)
+         except (UnicodeDecodeError, ValueError, RecursionError):
+             self._fail("invalid UTF-8 JSON frame")
+         if not isinstance(record, dict):

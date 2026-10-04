@@ -1,0 +1,20 @@
+--- original.py
++++ app.py
+@@ -45,12 +45,16 @@
+             raise RuntimeError("batch is finalized")
+         if not isinstance(updates, list):
+             raise ValueError("updates must be a list")
+-        staged = self._latest
++        # Stage changes separately so a later invalid/conflicting item cannot
++        # leave earlier updates from this ingest call behind.
++        staged = self._latest.copy()
+         for item in updates:
+             self._validate(item)
+             key = item["call_id"]
+             previous = staged.get(key)
+             if previous is not None:
++                if item["version"] < previous["version"]:
++                    continue
+                 if item["version"] == previous["version"]:
+                     if item != previous:
+                         raise ValueError("conflicting result at same version")

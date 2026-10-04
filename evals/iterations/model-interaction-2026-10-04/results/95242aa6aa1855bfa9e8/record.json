@@ -1,0 +1,208 @@
+{
+  "case_id": "m08",
+  "condition": "B_checklist",
+  "trial": 1,
+  "model_requested": "gpt-6-astra",
+  "exit_code": 0,
+  "timed_out": false,
+  "elapsed_seconds": 162.21546325000236,
+  "usage": {
+    "input_tokens": 65164,
+    "cached_input_tokens": 48128,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 3192,
+    "reasoning_output_tokens": 316
+  },
+  "completed": true,
+  "status": "completed",
+  "infra_kind": null,
+  "prediction": {
+    "initial_verdict": "satisfied",
+    "summary": "审查未发现违反业务要求的行为，保留 app.py 原实现及公开接口。新增 test_contract.py，8 项测试全部通过，覆盖分块、UTF-8、帧限额、事件格式、终止及失败状态。",
+    "tests_executed": [
+      "./run_python smoke.py",
+      "./run_python -（内联边界验证脚本）",
+      "./run_python -m unittest -v test_contract",
+      "cmp app.py original.py"
+    ],
+    "limitations": [
+      "验证覆盖有限输入，未执行外部隐藏验收测试。"
+    ]
+  },
+  "acceptance": {
+    "passed": true,
+    "tests_run": 12,
+    "checks": [
+      {
+        "test": "basic",
+        "passed": true
+      },
+      {
+        "test": "byte_boundaries",
+        "passed": true
+      },
+      {
+        "test": "metrics",
+        "passed": true
+      },
+      {
+        "test": "unfinished_buffer",
+        "passed": true
+      },
+      {
+        "test": "size_limits",
+        "passed": true
+      },
+      {
+        "test": "error_terminal",
+        "passed": true
+      },
+      {
+        "test": "terminal_once",
+        "passed": true
+      },
+      {
+        "test": "malformed_frames",
+        "passed": true
+      },
+      {
+        "test": "premature_eof",
+        "passed": true
+      },
+      {
+        "test": "poison_state",
+        "passed": true
+      },
+      {
+        "test": "failed_call_has_no_partial_output",
+        "passed": true
+      },
+      {
+        "test": "independent_streams",
+        "passed": true
+      }
+    ],
+    "exit_code": 0,
+    "timed_out": false,
+    "sandbox": "macos_no_network_writes_only_grade_directory",
+    "stderr": ""
+  },
+  "acceptance_signature": {
+    "passed": true,
+    "tests_run": 12,
+    "checks": [
+      {
+        "test": "basic",
+        "passed": true
+      },
+      {
+        "test": "byte_boundaries",
+        "passed": true
+      },
+      {
+        "test": "metrics",
+        "passed": true
+      },
+      {
+        "test": "unfinished_buffer",
+        "passed": true
+      },
+      {
+        "test": "size_limits",
+        "passed": true
+      },
+      {
+        "test": "error_terminal",
+        "passed": true
+      },
+      {
+        "test": "terminal_once",
+        "passed": true
+      },
+      {
+        "test": "malformed_frames",
+        "passed": true
+      },
+      {
+        "test": "premature_eof",
+        "passed": true
+      },
+      {
+        "test": "poison_state",
+        "passed": true
+      },
+      {
+        "test": "failed_call_has_no_partial_output",
+        "passed": true
+      },
+      {
+        "test": "independent_streams",
+        "passed": true
+      }
+    ],
+    "exit_code": 0,
+    "timed_out": false,
+    "invalid_output": false,
+    "isolation_failure": false
+  },
+  "source_changed": false,
+  "artifacts": {
+    "test_contract.py": "811be620619838e3c98382493442a831dd5421e22444e11c3dd339061ad4e652",
+    "app.py": "a850a6792093cab1242039f4854ef9d6846a9dc3ecaa4a3055ac369d6e680ec2"
+  },
+  "protected_changes": [],
+  "outside_changes": [],
+  "artifact_errors": [],
+  "tool_audit": [
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc \"pwd; rg --files -g '\"'!__pycache__'\"' -g '\"'!assets/**'\"' -g '\"'!references/**'\"' -g '\"'!scripts/**'\"' -g '\"'!agents/**'\"'\"",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc 'cat task.md app.py'",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 1,
+      "command": "/bin/zsh -lc \"cat smoke.py TOOLS.md run_python; rg --files --hidden -g 'AGENTS.md' -g '\"'! .git/**'\"'\"",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc \"./run_python smoke.py; ./run_python - <<'PY'\nimport app\nframe = '{\\\"event\\\":\\\"token\\\",\\\"text\\\":\\\"你\\\\u2003好\\\"}\\\\n'.encode()\np = app.EventStream(len(frame) - 1)\nout = []\nfor byte in frame:\n    out.extend(p.feed(bytes([byte])))\nout.extend(p.feed(b'{\\\"event\\\":\\\"done\\\"}\\\\n'))\nassert out[-1] == {'event': 'done', 'text': '你\\\\u2003好', 'characters': 3, 'words': 2}\nassert p.buffered_bytes == 0\np = app.EventStream(16)\ntry:\n    p.feed(b'{\\\"event\\\":\\\"done\\\"}\\\\nx')\nexcept app.StreamError:\n    assert p.state == 'FAILED' and p.buffered_bytes == 0\nelse:\n    raise AssertionError('trailing bytes accepted')\np = app.EventStream(len(frame) - 1)\nassert len(p.feed(frame * 100)) == 100\nprint('boundary probes passed')\nPY\"",
+      "review_flags": []
+    },
+    {
+      "type": "file_change",
+      "exit_code": null,
+      "changes": [
+        {
+          "path": "<workspace>/test_contract.py",
+          "kind": "add"
+        }
+      ]
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc './run_python -m unittest -v test_contract; cmp app.py original.py'",
+      "review_flags": []
+    }
+  ],
+  "case_sha256": "aa283be38484e98df1892798214a2ebeaf2956488751322bee24043d262061d5",
+  "prompt_sha256": "6fd62ac6100d8b6cfbd0a2b2d2c570f6e2df884143fea61f287365cec2b7280f",
+  "event_sha256": "3dbe8d2943bf35d6c3bd497d292e46a31afdeb2f0ced36a9a8ad22cd3778dc11",
+  "stderr_sha256": "03d9cfb2175fe13f0d4322ca17eee7f2bef5dd51721cd884ca45e48f162eb5db",
+  "reasoning_effort": "high",
+  "cli_version": "codex-cli 0.160.0",
+  "canary": false,
+  "python_version": "3.12.14",
+  "execution_platform": "Darwin",
+  "terminal_errors": []
+}

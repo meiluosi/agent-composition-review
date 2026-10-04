@@ -1,0 +1,214 @@
+{
+  "case_id": "m05",
+  "condition": "B_checklist",
+  "trial": 1,
+  "model_requested": "gpt-6-luna",
+  "exit_code": 0,
+  "timed_out": false,
+  "elapsed_seconds": 91.66486254200572,
+  "usage": {
+    "input_tokens": 74455,
+    "cached_input_tokens": 64000,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 2992,
+    "reasoning_output_tokens": 983
+  },
+  "completed": true,
+  "status": "completed",
+  "infra_kind": null,
+  "prediction": {
+    "initial_verdict": "satisfied",
+    "summary": "对照 task.md 审查后保留了 app.py：排序与 ID 并列规则正确，缓存按租户、完整查询和 revision 区分身份，保留完整 source 结果，按 TTL 边界过期，并隔离调用方、source 与缓存之间的嵌套修改。",
+    "tests_executed": [
+      "`./run_python smoke.py`：通过。",
+      "`./run_python -c '<contract probes>'`：排名、深层复制、过滤器顺序无关、完整结果复用、TTL 相等时过期及零 limit 不访问 source 的断言通过；首次运行因探针自身的异常计数条件错误，在异常断言处失败。",
+      "`./run_python -c '<exception and retry probes>'`：通过，确认 source 异常原样传播且后续调用可重试。"
+    ],
+    "limitations": [
+      "未执行完整验收套件；task.md 未提供完整套件。"
+    ]
+  },
+  "acceptance": {
+    "passed": true,
+    "tests_run": 12,
+    "checks": [
+      {
+        "test": "rank_order_and_limit",
+        "passed": true
+      },
+      {
+        "test": "full_result_cache",
+        "passed": true
+      },
+      {
+        "test": "tenant_revision_isolation",
+        "passed": true
+      },
+      {
+        "test": "query_identity",
+        "passed": true
+      },
+      {
+        "test": "expiry_without_sliding",
+        "passed": true
+      },
+      {
+        "test": "caller_query_isolation",
+        "passed": true
+      },
+      {
+        "test": "source_result_isolation",
+        "passed": true
+      },
+      {
+        "test": "returned_result_isolation",
+        "passed": true
+      },
+      {
+        "test": "failure_not_cached",
+        "passed": true
+      },
+      {
+        "test": "expired_failure_retry",
+        "passed": true
+      },
+      {
+        "test": "empty_results_and_zero_limit",
+        "passed": true
+      },
+      {
+        "test": "independent_instances",
+        "passed": true
+      }
+    ],
+    "exit_code": 0,
+    "timed_out": false,
+    "sandbox": "macos_no_network_writes_only_grade_directory",
+    "stderr": ""
+  },
+  "acceptance_signature": {
+    "passed": true,
+    "tests_run": 12,
+    "checks": [
+      {
+        "test": "rank_order_and_limit",
+        "passed": true
+      },
+      {
+        "test": "full_result_cache",
+        "passed": true
+      },
+      {
+        "test": "tenant_revision_isolation",
+        "passed": true
+      },
+      {
+        "test": "query_identity",
+        "passed": true
+      },
+      {
+        "test": "expiry_without_sliding",
+        "passed": true
+      },
+      {
+        "test": "caller_query_isolation",
+        "passed": true
+      },
+      {
+        "test": "source_result_isolation",
+        "passed": true
+      },
+      {
+        "test": "returned_result_isolation",
+        "passed": true
+      },
+      {
+        "test": "failure_not_cached",
+        "passed": true
+      },
+      {
+        "test": "expired_failure_retry",
+        "passed": true
+      },
+      {
+        "test": "empty_results_and_zero_limit",
+        "passed": true
+      },
+      {
+        "test": "independent_instances",
+        "passed": true
+      }
+    ],
+    "exit_code": 0,
+    "timed_out": false,
+    "invalid_output": false,
+    "isolation_failure": false
+  },
+  "source_changed": false,
+  "artifacts": {
+    "app.py": "140d0dbcf5eb93e5e42c3d420531957c3e7e8e8c57d8b902c90a40cacaf228dd"
+  },
+  "protected_changes": [],
+  "outside_changes": [],
+  "artifact_errors": [],
+  "tool_audit": [
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc \"pwd && rg --files -g 'task.md' -g 'app.py' -g 'original.py' -g 'smoke.py' -g 'TOOLS.md' -g '\"'!scripts/**'\"' -g '\"'!references/**'\"' -g '\"'!assets/**'\"' -g '\"'!agents/**'\"'\"",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc 'cat app.py'",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc 'cat task.md'",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc 'cat TOOLS.md'",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc 'cat original.py && cat smoke.py'",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc './run_python smoke.py'",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 1,
+      "command": "/bin/zsh -lc \"./run_python -c 'from app import rank_documents, RetrievalCache\nfrom copy import deepcopy\n\n# Ranking order, tie break, and deep independence.\ndocs = [\n    {\\\"id\\\": \\\"z\\\", \\\"score\\\": 2, \\\"payload\\\": {\\\"x\\\": [{\\\"n\\\": 1}]}},\n    {\\\"id\\\": \\\"a\\\", \\\"score\\\": 2, \\\"payload\\\": {\\\"x\\\": [{\\\"n\\\": 2}]}},\n    {\\\"id\\\": \\\"b\\\", \\\"score\\\": -10, \\\"payload\\\": {}},\n]\nbefore = deepcopy(docs)\nr = rank_documents(docs, 2)\nassert [d[\\\"id\\\"] for d in r] == [\\\"a\\\", \\\"z\\\"] and docs == before\nr[0][\\\"payload\\\"][\\\"x\\\"][0][\\\"n\\\"] = 99\nassert docs == before and rank_documents(docs, 2)[0][\\\"payload\\\"][\\\"x\\\"][0][\\\"n\\\"] == 2\n\n# Identity canonicalization, full-result retention, TTL edge, and no-hit extension.\ncalls = []\nsource_docs = deepcopy(docs)\ndef source(t, q, rev):\n    calls.append((t, deepcopy(q), rev))\n    return source_docs\ncache = RetrievalCache(source, ttl=3)\nq1 = {\\\"text\\\": \\\"Q\\\", \\\"filters\\\": {\\\"b\\\": \\\"2\\\", \\\"a\\\": \\\"1\\\"}}\nq2 = {\\\"filters\\\": {\\\"a\\\": \\\"1\\\", \\\"b\\\": \\\"2\\\"}, \\\"text\\\": \\\"Q\\\"}\nassert cache.search(\\\"T\\\", q1, \\\"R\\\", 5, limit=1)[0][\\\"id\\\"] == \\\"a\\\"\nassert cache.search(\\\"T\\\", q2, \\\"R\\\", 7, limit=3) == rank_documents(docs, 3)\nassert len(calls) == 1\ncache.search(\\\"T\\\", q2, \\\"R\\\", 8, limit=0)\nassert len(calls) == 1\nassert cache.search(\\\"T\\\", q2, \\\"R\\\", 8, limit=1)[0][\\\"id\\\"] == \\\"a\\\"\nassert len(calls) == 2  # expires at acquisition time 5 + ttl 3\n\n# Source query and returned-doc ownership; callers cannot alter cache.\nretained = []\ndef mutating_source(t, q, rev):\n    retained.append(q)\n    got = [{\\\"id\\\": \\\"x\\\", \\\"score\\\": 1, \\\"payload\\\": {\\\"a\\\": [1]}}]\n    retained.append(got)\n    return got\nc = RetrievalCache(mutating_source)\ncaller_q = {\\\"text\\\": \\\"t\\\", \\\"filters\\\": {}}\nout = c.search(\\\"t\\\", caller_q, \\\"r\\\", 0)\nretained[0][\\\"text\\\"] = \\\"changed\\\"\nretained[1][0][\\\"payload\\\"][\\\"a\\\"][0] = 8\nout[0][\\\"payload\\\"][\\\"a\\\"][0] = 9\nassert caller_q[\\\"text\\\"] == \\\"t\\\"\nassert c.search(\\\"t\\\", caller_q, \\\"r\\\", 1)[0][\\\"payload\\\"][\\\"a\\\"] == [1]\n\n# Errors are retried and do not poison another identity.\nattempts = 0\ndef flaky(t, q, rev):\n    global attempts\n    attempts += 1\n    if q[\\\"text\\\"] == \\\"bad\\\" and attempts == 1:\n        raise LookupError(\\\"same exception\\\")\n    return [{\\\"id\\\": q[\\\"text\\\"], \\\"score\\\": 0, \\\"payload\\\": {}}]\nf = RetrievalCache(flaky)\nassert f.search(\\\"t\\\", {\\\"text\\\": \\\"good\\\", \\\"filters\\\": {}}, \\\"r\\\", 0)[0][\\\"id\\\"] == \\\"good\\\"\ntry:\n    f.search(\\\"t\\\", {\\\"text\\\": \\\"bad\\\", \\\"filters\\\": {}}, \\\"r\\\", 0)\nexcept LookupError as e:\n    assert str(e) == \\\"same exception\\\"\nelse:\n    raise AssertionError(\\\"source error did not propagate\\\")\nassert f.search(\\\"t\\\", {\\\"text\\\": \\\"bad\\\", \\\"filters\\\": {}}, \\\"r\\\", 0)[0][\\\"id\\\"] == \\\"bad\\\"\nprint(\\\"contract probes passed\\\")'\"",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc \"./run_python -c 'from app import RetrievalCache\ncalls = []\ndef flaky(t, q, rev):\n    calls.append(q[\\\"text\\\"])\n    if q[\\\"text\\\"] == \\\"bad\\\" and calls.count(\\\"bad\\\") == 1:\n        raise LookupError(\\\"same exception\\\")\n    return [{\\\"id\\\": q[\\\"text\\\"], \\\"score\\\": 0, \\\"payload\\\": {}}]\nf = RetrievalCache(flaky)\nassert f.search(\\\"t\\\", {\\\"text\\\": \\\"good\\\", \\\"filters\\\": {}}, \\\"r\\\", 0)[0][\\\"id\\\"] == \\\"good\\\"\ntry:\n    f.search(\\\"t\\\", {\\\"text\\\": \\\"bad\\\", \\\"filters\\\": {}}, \\\"r\\\", 0)\nexcept LookupError as e:\n    assert str(e) == \\\"same exception\\\"\nelse:\n    raise AssertionError(\\\"source error did not propagate\\\")\nassert f.search(\\\"t\\\", {\\\"text\\\": \\\"bad\\\", \\\"filters\\\": {}}, \\\"r\\\", 0)[0][\\\"id\\\"] == \\\"bad\\\"\nassert calls == [\\\"good\\\", \\\"bad\\\", \\\"bad\\\"]\nprint(\\\"exception and retry probes passed\\\")'\"",
+      "review_flags": []
+    }
+  ],
+  "case_sha256": "0ae04442754dcf025e1229210ac94d9e31d2eb3131c65c5f6408b129fe6b3c4b",
+  "prompt_sha256": "6fd62ac6100d8b6cfbd0a2b2d2c570f6e2df884143fea61f287365cec2b7280f",
+  "event_sha256": "bbe65b7bdbd02c8b33e3ee3781cfcca3c47c82cdc240afb68f61b5f4436269dc",
+  "stderr_sha256": "b0980b2a856b41feda7a3c908c8b761ae32056a1625970f38717df0e7321d536",
+  "reasoning_effort": "high",
+  "cli_version": "codex-cli 0.160.0",
+  "canary": false,
+  "python_version": "3.12.14",
+  "execution_platform": "Darwin",
+  "terminal_errors": []
+}

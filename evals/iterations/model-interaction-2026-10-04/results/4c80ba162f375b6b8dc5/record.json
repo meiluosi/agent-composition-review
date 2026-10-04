@@ -1,0 +1,250 @@
+{
+  "case_id": "m02",
+  "condition": "C_skill",
+  "trial": 1,
+  "model_requested": "gpt-6-astra",
+  "exit_code": -9,
+  "timed_out": true,
+  "elapsed_seconds": 360.05965629202547,
+  "usage": null,
+  "completed": false,
+  "status": "task_timeout",
+  "infra_kind": null,
+  "prediction": null,
+  "acceptance": {
+    "passed": true,
+    "tests_run": 9,
+    "checks": [
+      {
+        "test": "test_empty_and_persistence",
+        "passed": true
+      },
+      {
+        "test": "test_fifo_and_active_exclusion",
+        "passed": true
+      },
+      {
+        "test": "test_same_worker_stale_receipt",
+        "passed": true
+      },
+      {
+        "test": "test_other_worker_stale_receipt",
+        "passed": true
+      },
+      {
+        "test": "test_expiry_and_fractional_duration",
+        "passed": true
+      },
+      {
+        "test": "test_payload_isolation",
+        "passed": true
+      },
+      {
+        "test": "test_failed_put_and_duplicate_reuse",
+        "passed": true
+      },
+      {
+        "test": "test_invalid_duration_preserves_jobs",
+        "passed": true
+      },
+      {
+        "test": "test_atomic_claim_across_connections",
+        "passed": true
+      }
+    ],
+    "exit_code": 0,
+    "timed_out": false,
+    "sandbox": "macos_no_network_writes_only_grade_directory",
+    "stderr": ""
+  },
+  "acceptance_signature": {
+    "passed": true,
+    "tests_run": 9,
+    "checks": [
+      {
+        "test": "test_empty_and_persistence",
+        "passed": true
+      },
+      {
+        "test": "test_fifo_and_active_exclusion",
+        "passed": true
+      },
+      {
+        "test": "test_same_worker_stale_receipt",
+        "passed": true
+      },
+      {
+        "test": "test_other_worker_stale_receipt",
+        "passed": true
+      },
+      {
+        "test": "test_expiry_and_fractional_duration",
+        "passed": true
+      },
+      {
+        "test": "test_payload_isolation",
+        "passed": true
+      },
+      {
+        "test": "test_failed_put_and_duplicate_reuse",
+        "passed": true
+      },
+      {
+        "test": "test_invalid_duration_preserves_jobs",
+        "passed": true
+      },
+      {
+        "test": "test_atomic_claim_across_connections",
+        "passed": true
+      }
+    ],
+    "exit_code": 0,
+    "timed_out": false,
+    "invalid_output": false,
+    "isolation_failure": false
+  },
+  "source_changed": true,
+  "artifacts": {
+    "test_queue.py": "d47d0ac12dbf58f0f5c1c52f3dbaf2d0dc35a5d80463f98b40dda4890768758e",
+    "app.py": "adb2eef4c59a5613d4efca7a93c4f848a40aed88718d2e8d54c80a243c26ee7e"
+  },
+  "protected_changes": [],
+  "outside_changes": [],
+  "artifact_errors": [],
+  "tool_audit": [
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc \"pwd; rg --files -g '\"'!__pycache__/**'\"' -g '\"'!.*'\"'\"",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc 'cat task.md app.py smoke.py'",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc 'cat SKILL.md references/executable-contracts.md TOOLS.md'",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc 'cat original.py run_python references/effects.md'",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc './run_python smoke.py'",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc \"./run_python - <<'PY'\nimport original, tempfile, pathlib, json\nwith tempfile.TemporaryDirectory(dir='.') as directory:\n    q = original.Queue(pathlib.Path(directory) / 'queue.db')\n    q.put('one', {})\n    for duration in (True,):\n        try:\n            print('duration', repr(duration), 'returned', q.claim('worker', 0, duration))\n        except Exception as exc:\n            print(type(exc).__name__)\n    try:\n        q.put('\\\\ud800', 'payload')\n    except Exception as exc:\n        print('surrogate ID:', type(exc).__name__)\n    try:\n        print(q.claim('\\\\ud800', 1, 1))\n    except Exception as exc:\n        print('surrogate worker:', type(exc).__name__)\n    for depth in range(970, 1005):\n        p = None\n        for _ in range(depth):\n            p = [p]\n        try:\n            q.put(str(depth), p)\n        except (TypeError, ValueError, RecursionError):\n            continue\n        try:\n            result = q.claim('worker', depth, 1)\n            q.ack(result['receipt'], depth)\n        except RecursionError:\n            print('accepted payload cannot be delivered at depth:', depth)\n            break\nPY\"",
+      "review_flags": []
+    },
+    {
+      "type": "file_change",
+      "exit_code": null,
+      "changes": [
+        {
+          "path": "<workspace>/app.py",
+          "kind": "update"
+        }
+      ]
+    },
+    {
+      "type": "file_change",
+      "exit_code": null,
+      "changes": [
+        {
+          "path": "<workspace>/test_queue.py",
+          "kind": "add"
+        }
+      ]
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc './run_python smoke.py app.py'",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 1,
+      "command": "/bin/zsh -lc './run_python test_queue.py original.py'",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 1,
+      "command": "/bin/zsh -lc './run_python test_queue.py app.py'",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc \"./run_python - <<'PY'\nimport sys, json\nprint(sys.version)\npayload = None\nfor depth in range(1, 10001):\n    payload = [payload]\n    if depth % 100 == 0:\n        try:\n            json.dumps(payload, allow_nan=False)\n        except RecursionError:\n            print('standard JSON encoder rejects depth', depth)\n            break\nPY\"",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc \"./run_python - <<'PY'\nimport original, json, tempfile, pathlib\nwith tempfile.TemporaryDirectory(dir='.') as directory:\n    for depth in (1100, 2000, 4000, 8000, 9500, 9900):\n        p = None\n        for _ in range(depth):\n            p = [p]\n        q = original.Queue(pathlib.Path(directory) / f'{depth}.db')\n        try:\n            q.put('one', p)\n        except Exception as exc:\n            print(depth, 'put', type(exc).__name__)\n            continue\n        try:\n            q.claim('worker', 0, 1)\n            print(depth, 'claim passed')\n        except Exception as exc:\n            print(depth, 'claim', type(exc).__name__)\nPY\"",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc \"./run_python - <<'PY'\nimport original, tempfile, pathlib, json\npayload = {'\\\\ud800\\\\udfff': '\\\\ud800\\\\udfff', '\\\\U000103ff': '\\\\U000103ff'}\nwith tempfile.TemporaryDirectory(dir='.') as directory:\n    q = original.Queue(pathlib.Path(directory) / 'q.db')\n    q.put('one', payload)\n    returned = q.claim('w', 0, 1)['payload']\n    print('payload preserved:', payload == returned)\n    print('input keys:', len(payload), 'returned keys:', len(returned))\n    encoded = json.dumps(payload, ensure_ascii=False, allow_nan=False).encode('utf-8', 'surrogatepass')\n    print('literal JSON BLOB round-trip:', json.loads(encoded) == payload)\nPY\"",
+      "review_flags": []
+    },
+    {
+      "type": "file_change",
+      "exit_code": null,
+      "changes": [
+        {
+          "path": "<workspace>/app.py",
+          "kind": "update"
+        },
+        {
+          "path": "<workspace>/test_queue.py",
+          "kind": "update"
+        }
+      ]
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc './run_python smoke.py app.py'",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 1,
+      "command": "/bin/zsh -lc './run_python test_queue.py original.py'",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc './run_python test_queue.py app.py'",
+      "review_flags": []
+    }
+  ],
+  "case_sha256": "b430bd19eda97f4a2ca4703e5fd5622b1bf4d3ac4a4b930d92e446c63b753165",
+  "prompt_sha256": "890e8e7238a3d11b98065646547e36c2563ff652e966a0baa5a66ed0cca78937",
+  "event_sha256": "21ee052925c35c6914b0d227b508171882b99a3512be817176dc7e3c857f4677",
+  "stderr_sha256": "96af16cad6977e4d3024a5a69ab5483172a1530e81b332b8a0333404a52971bc",
+  "reasoning_effort": "high",
+  "cli_version": "codex-cli 0.160.0",
+  "canary": false,
+  "python_version": "3.12.14",
+  "execution_platform": "Darwin",
+  "terminal_errors": []
+}

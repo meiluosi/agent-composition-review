@@ -1,0 +1,269 @@
+{
+  "case_id": "m07",
+  "condition": "A_tools",
+  "trial": 1,
+  "model_requested": "gpt-6-luna",
+  "exit_code": 0,
+  "timed_out": false,
+  "elapsed_seconds": 145.7839919999824,
+  "usage": {
+    "input_tokens": 167305,
+    "cached_input_tokens": 149760,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 5307,
+    "reasoning_output_tokens": 2145
+  },
+  "completed": true,
+  "status": "completed",
+  "infra_kind": null,
+  "prediction": {
+    "initial_verdict": "violation",
+    "summary": "已修复 app.py：允许 UTF-8 字符跨 feed 分块；拒绝终止事件后的同块数据；拒绝 JSON 对象中的重复字段。保留 text_metrics、事件格式和其他符合要求的行为。",
+    "tests_executed": [
+      "./run_python smoke.py — 通过。",
+      "./run_python - <<'PY' … targeted protocol checks … PY — 通过，覆盖跨块 UTF-8、多帧、帧大小边界、终止后数据、无效帧、提前 EOF、错误终止和 Unicode 空白统计。",
+      "./run_python - <<'PY' … duplicate-field checks … PY — 通过。",
+      "初次 targeted checks 因测试脚本把 max_buffer 设得小于测试帧长度而失败；修正脚本参数后通过。"
+    ],
+    "limitations": [
+      "工作目录没有 Git 元数据，无法使用 git diff/status 核对改动。"
+    ]
+  },
+  "acceptance": {
+    "passed": true,
+    "tests_run": 12,
+    "checks": [
+      {
+        "test": "basic",
+        "passed": true
+      },
+      {
+        "test": "byte_boundaries",
+        "passed": true
+      },
+      {
+        "test": "metrics",
+        "passed": true
+      },
+      {
+        "test": "unfinished_buffer",
+        "passed": true
+      },
+      {
+        "test": "size_limits",
+        "passed": true
+      },
+      {
+        "test": "error_terminal",
+        "passed": true
+      },
+      {
+        "test": "terminal_once",
+        "passed": true
+      },
+      {
+        "test": "malformed_frames",
+        "passed": true
+      },
+      {
+        "test": "premature_eof",
+        "passed": true
+      },
+      {
+        "test": "poison_state",
+        "passed": true
+      },
+      {
+        "test": "failed_call_has_no_partial_output",
+        "passed": true
+      },
+      {
+        "test": "independent_streams",
+        "passed": true
+      }
+    ],
+    "exit_code": 0,
+    "timed_out": false,
+    "sandbox": "macos_no_network_writes_only_grade_directory",
+    "stderr": ""
+  },
+  "acceptance_signature": {
+    "passed": true,
+    "tests_run": 12,
+    "checks": [
+      {
+        "test": "basic",
+        "passed": true
+      },
+      {
+        "test": "byte_boundaries",
+        "passed": true
+      },
+      {
+        "test": "metrics",
+        "passed": true
+      },
+      {
+        "test": "unfinished_buffer",
+        "passed": true
+      },
+      {
+        "test": "size_limits",
+        "passed": true
+      },
+      {
+        "test": "error_terminal",
+        "passed": true
+      },
+      {
+        "test": "terminal_once",
+        "passed": true
+      },
+      {
+        "test": "malformed_frames",
+        "passed": true
+      },
+      {
+        "test": "premature_eof",
+        "passed": true
+      },
+      {
+        "test": "poison_state",
+        "passed": true
+      },
+      {
+        "test": "failed_call_has_no_partial_output",
+        "passed": true
+      },
+      {
+        "test": "independent_streams",
+        "passed": true
+      }
+    ],
+    "exit_code": 0,
+    "timed_out": false,
+    "invalid_output": false,
+    "isolation_failure": false
+  },
+  "source_changed": true,
+  "artifacts": {
+    "app.py": "7fa530843643914b450e5ebfd720642068394f935c13163cb3cee83fc1d926d6"
+  },
+  "protected_changes": [],
+  "outside_changes": [],
+  "artifact_errors": [],
+  "tool_audit": [
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc \"pwd && rg --files -g 'app.py' -g 'original.py' -g 'task.md' -g 'smoke.py' -g 'TOOLS.md' -g 'AGENTS.md' -g 'CHECKLIST.md' -g 'SKILL.md' -g 'scripts/**' -g 'references/**' -g 'assets/**' -g 'agents/**'\"",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc 'cat app.py'",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc 'cat task.md'",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc 'cat original.py'",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc 'cat smoke.py && cat TOOLS.md'",
+      "review_flags": []
+    },
+    {
+      "type": "file_change",
+      "exit_code": null,
+      "changes": [
+        {
+          "path": "<workspace>/app.py",
+          "kind": "update"
+        }
+      ]
+    },
+    {
+      "type": "file_change",
+      "exit_code": null,
+      "changes": [
+        {
+          "path": "<workspace>/app.py",
+          "kind": "update"
+        }
+      ]
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc './run_python smoke.py'",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 1,
+      "command": "/bin/zsh -lc \"./run_python - <<'PY'\nimport app\n\n# UTF-8 codepoint split across transport chunks, and whole frame split arbitrarily.\np = app.EventStream()\nwire = '{\\\"event\\\":\\\"token\\\",\\\"text\\\":\\\"雪🙂\\\"}\\\\n{\\\"event\\\":\\\"done\\\"}\\\\n'.encode()\nevents = []\nfor byte in wire:\n    events.extend(p.feed(bytes([byte])))\nassert events == [\n    {\\\"event\\\": \\\"token\\\", \\\"text\\\": \\\"雪🙂\\\"},\n    {\\\"event\\\": \\\"done\\\", \\\"text\\\": \\\"雪🙂\\\", \\\"characters\\\": 2, \\\"words\\\": 1},\n]\nassert p.buffered_bytes == 0 and p.finish() == [] and p.finish() == []\n\n# Many frames in a chunk may exceed the per-frame limit in total.\np = app.EventStream(max_buffer=16)\ndata = b'{\\\"event\\\":\\\"token\\\",\\\"text\\\":\\\"\\\"}\\\\n' * 20 + b'{\\\"event\\\":\\\"done\\\"}\\\\n'\nassert len(p.feed(data)) == 21\n\n# Exact byte limit is accepted; one byte over fails and clears state.\nframe = b'{\\\"event\\\":\\\"done\\\"}'\np = app.EventStream(max_buffer=len(frame))\nassert p.feed(frame + b'\\\\n')[0][\\\"event\\\"] == \\\"done\\\"\np = app.EventStream(max_buffer=len(frame) - 1)\ntry:\n    p.feed(frame + b'\\\\n')\nexcept app.StreamError:\n    assert p.state == \\\"FAILED\\\" and p.buffered_bytes == 0\nelse:\n    raise AssertionError(\\\"oversized frame accepted\\\")\n\n# Trailing bytes after a terminal event in the same call fail the whole feed.\nfor suffix in (b'x', b'\\\\n', b'{\\\"event\\\":\\\"done\\\"}\\\\n'):\n    p = app.EventStream()\n    try:\n        p.feed(b'{\\\"event\\\":\\\"done\\\"}\\\\n' + suffix)\n    except app.StreamError:\n        assert p.state == \\\"FAILED\\\" and p.buffered_bytes == 0\n    else:\n        raise AssertionError(\\\"trailing post-terminal data accepted\\\")\n\n# Malformed frame, empty frame, premature EOF, and post-failure calls.\nfor data in (b'\\\\n', b'{}\\\\n', b'\\\\xff\\\\n'):\n    p = app.EventStream()\n    try:\n        p.feed(data)\n    except app.StreamError:\n        assert p.state == \\\"FAILED\\\" and p.buffered_bytes == 0\n    else:\n        raise AssertionError(\\\"invalid frame accepted\\\")\n    for call in (lambda: p.feed(b''), p.finish):\n        try:\n            call()\n        except app.StreamError:\n            pass\n        else:\n            raise AssertionError(\\\"failed stream reused\\\")\np = app.EventStream()\nassert p.feed(b'{\\\"event\\\":') == [] and p.buffered_bytes == 9\ntry:\n    p.finish()\nexcept app.StreamError:\n    assert p.state == \\\"FAILED\\\" and p.buffered_bytes == 0\nelse:\n    raise AssertionError(\\\"premature EOF accepted\\\")\n\n# Error termination and Unicode whitespace metrics.\np = app.EventStream()\nassert p.feed(b'{\\\"event\\\":\\\"token\\\",\\\"text\\\":\\\"a\\\\\\\\u2003b\\\"}\\\\n{\\\"event\\\":\\\"error\\\",\\\"message\\\":\\\"stop\\\"}\\\\n') == [\n    {\\\"event\\\": \\\"token\\\", \\\"text\\\": \\\"a\\\\u2003b\\\"},\n    {\\\"event\\\": \\\"error\\\", \\\"message\\\": \\\"stop\\\"},\n]\nassert app.text_metrics(\\\"a\\\\u2003b\\\") == {\\\"characters\\\": 3, \\\"words\\\": 2}\nassert p.finish() == []\nprint(\\\"targeted checks passed\\\")\nPY\"",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc \"./run_python - <<'PY'\nimport app\n\np = app.EventStream()\nwire = '{\\\"event\\\":\\\"token\\\",\\\"text\\\":\\\"雪🙂\\\"}\\\\n{\\\"event\\\":\\\"done\\\"}\\\\n'.encode()\nevents = []\nfor byte in wire:\n    events.extend(p.feed(bytes([byte])))\nassert events == [\n    {\\\"event\\\": \\\"token\\\", \\\"text\\\": \\\"雪🙂\\\"},\n    {\\\"event\\\": \\\"done\\\", \\\"text\\\": \\\"雪🙂\\\", \\\"characters\\\": 2, \\\"words\\\": 1},\n]\nassert p.buffered_bytes == 0 and p.finish() == [] and p.finish() == []\n\nsmall = b'{\\\"event\\\":\\\"token\\\",\\\"text\\\":\\\"\\\"}'\np = app.EventStream(max_buffer=len(small))\ndata = (small + b'\\\\n') * 20 + b'{\\\"event\\\":\\\"done\\\"}\\\\n'\nassert len(p.feed(data)) == 21\n\nframe = b'{\\\"event\\\":\\\"done\\\"}'\np = app.EventStream(max_buffer=len(frame))\nassert p.feed(frame + b'\\\\n')[0][\\\"event\\\"] == \\\"done\\\"\np = app.EventStream(max_buffer=len(frame) - 1)\ntry:\n    p.feed(frame + b'\\\\n')\nexcept app.StreamError:\n    assert p.state == \\\"FAILED\\\" and p.buffered_bytes == 0\nelse:\n    raise AssertionError(\\\"oversized frame accepted\\\")\n\nfor suffix in (b'x', b'\\\\n', b'{\\\"event\\\":\\\"done\\\"}\\\\n'):\n    p = app.EventStream()\n    try:\n        p.feed(b'{\\\"event\\\":\\\"done\\\"}\\\\n' + suffix)\n    except app.StreamError:\n        assert p.state == \\\"FAILED\\\" and p.buffered_bytes == 0\n    else:\n        raise AssertionError(\\\"trailing post-terminal data accepted\\\")\n\nfor data in (b'\\\\n', b'{}\\\\n', b'\\\\xff\\\\n'):\n    p = app.EventStream()\n    try:\n        p.feed(data)\n    except app.StreamError:\n        assert p.state == \\\"FAILED\\\" and p.buffered_bytes == 0\n    else:\n        raise AssertionError(\\\"invalid frame accepted\\\")\n    for call in (lambda: p.feed(b''), p.finish):\n        try:\n            call()\n        except app.StreamError:\n            pass\n        else:\n            raise AssertionError(\\\"failed stream reused\\\")\np = app.EventStream()\nassert p.feed(b'{\\\"event\\\":') == [] and p.buffered_bytes == 9\ntry:\n    p.finish()\nexcept app.StreamError:\n    assert p.state == \\\"FAILED\\\" and p.buffered_bytes == 0\nelse:\n    raise AssertionError(\\\"premature EOF accepted\\\")\n\np = app.EventStream()\nassert p.feed(b'{\\\"event\\\":\\\"token\\\",\\\"text\\\":\\\"a\\\\\\\\u2003b\\\"}\\\\n{\\\"event\\\":\\\"error\\\",\\\"message\\\":\\\"stop\\\"}\\\\n') == [\n    {\\\"event\\\": \\\"token\\\", \\\"text\\\": \\\"a\\\\u2003b\\\"},\n    {\\\"event\\\": \\\"error\\\", \\\"message\\\": \\\"stop\\\"},\n]\nassert app.text_metrics(\\\"a\\\\u2003b\\\") == {\\\"characters\\\": 3, \\\"words\\\": 2}\nassert p.finish() == []\nprint(\\\"targeted checks passed\\\")\nPY\"",
+      "review_flags": []
+    },
+    {
+      "type": "file_change",
+      "exit_code": null,
+      "changes": [
+        {
+          "path": "<workspace>/app.py",
+          "kind": "update"
+        }
+      ]
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 129,
+      "command": "/bin/zsh -lc 'git diff -- app.py && git status --short'",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc './run_python smoke.py'",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc \"./run_python - <<'PY'\nimport app\nfor frame in (b'{\\\"event\\\":\\\"done\\\",\\\"event\\\":\\\"done\\\"}\\\\n', b'{\\\"event\\\":\\\"token\\\",\\\"text\\\":\\\"x\\\",\\\"text\\\":\\\"y\\\"}\\\\n'):\n    stream = app.EventStream()\n    try:\n        stream.feed(frame)\n    except app.StreamError:\n        assert stream.state == \\\"FAILED\\\" and stream.buffered_bytes == 0\n    else:\n        raise AssertionError(\\\"duplicate field accepted\\\")\nprint(\\\"duplicate-field checks passed\\\")\nPY\"",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc 'cat app.py'",
+      "review_flags": []
+    }
+  ],
+  "case_sha256": "5998ad7dc181d36961a09a4c59f63d97469ebbe1d9b390423793f8515a276515",
+  "prompt_sha256": "754741dedf8f45f17a6cba0d28c804d1273d67e30452f4503e8797defde6c5c4",
+  "event_sha256": "c952b59e6c33dcfcb7916db7bd61ad975200e49ca21c9356e1f9b55ecbab4571",
+  "stderr_sha256": "e4879b86f027c147396758c435a2ca3758f2c80c81e8a0a0182ae6e322d421b4",
+  "reasoning_effort": "high",
+  "cli_version": "codex-cli 0.160.0",
+  "canary": false,
+  "python_version": "3.12.14",
+  "execution_platform": "Darwin",
+  "terminal_errors": []
+}

@@ -1,0 +1,27 @@
+--- original.py
++++ app.py
+@@ -27,8 +27,23 @@
+         raise StreamError(message)
+ 
+     def _record(self, raw):
++        def object_pairs(pairs):
++            record = {}
++            for key, value in pairs:
++                if key in record:
++                    raise ValueError("duplicate object field")
++                record[key] = value
++            return record
++
++        def reject_constant(value):
++            raise ValueError("invalid JSON constant: " + value)
++
+         try:
+-            record = json.loads(raw.decode("utf-8"))
++            record = json.loads(
++                raw.decode("utf-8"),
++                object_pairs_hook=object_pairs,
++                parse_constant=reject_constant,
++            )
+         except (UnicodeDecodeError, ValueError, RecursionError):
+             self._fail("invalid UTF-8 JSON frame")
+         if not isinstance(record, dict):

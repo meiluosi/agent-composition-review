@@ -1,0 +1,8 @@
+{
+  "case_id": "m05",
+  "condition": "B_checklist",
+  "trial": 1,
+  "model_requested": "gpt-6-luna",
+  "time": "2026-10-04T06:50:43.035654+00:00",
+  "canary": false
+}

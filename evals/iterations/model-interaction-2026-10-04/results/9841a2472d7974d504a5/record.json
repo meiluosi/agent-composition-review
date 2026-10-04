@@ -1,0 +1,223 @@
+{
+  "case_id": "m10",
+  "condition": "B_checklist",
+  "trial": 1,
+  "model_requested": "gpt-6-luna",
+  "exit_code": 0,
+  "timed_out": false,
+  "elapsed_seconds": 72.4078582500224,
+  "usage": {
+    "input_tokens": 75057,
+    "cached_input_tokens": 64000,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 1951,
+    "reasoning_output_tokens": 504
+  },
+  "completed": true,
+  "status": "completed",
+  "infra_kind": null,
+  "prediction": {
+    "initial_verdict": "violation",
+    "summary": "修复了 `ingest` 的两处问题：旧版本结果不再覆盖新版本；批次中任一更新无效或冲突时，整次调用回滚。保留其余符合要求的行为及公开接口。",
+    "tests_executed": [
+      "`./run_python smoke.py`（通过）",
+      "`./run_python - <<'PY' ...`（定向检查版本顺序、陈旧更新校验、冲突回滚、重试幂等、输入与输出隔离及 finalize 行为；通过）"
+    ],
+    "limitations": [
+      "未运行完整验收测试。"
+    ]
+  },
+  "acceptance": {
+    "passed": true,
+    "tests_run": 12,
+    "checks": [
+      {
+        "test": "order_and_pending",
+        "passed": true
+      },
+      {
+        "test": "scores",
+        "passed": true
+      },
+      {
+        "test": "stale_and_retry",
+        "passed": true
+      },
+      {
+        "test": "duplicate_and_conflict",
+        "passed": true
+      },
+      {
+        "test": "atomic_conflicts",
+        "passed": true
+      },
+      {
+        "test": "atomic_validation",
+        "passed": true
+      },
+      {
+        "test": "failure_then_recovery",
+        "passed": true
+      },
+      {
+        "test": "finalized_lifecycle",
+        "passed": true
+      },
+      {
+        "test": "caller_input_isolation",
+        "passed": true
+      },
+      {
+        "test": "output_isolation",
+        "passed": true
+      },
+      {
+        "test": "specifications_and_empty",
+        "passed": true
+      },
+      {
+        "test": "independent_batches",
+        "passed": true
+      }
+    ],
+    "exit_code": 0,
+    "timed_out": false,
+    "sandbox": "macos_no_network_writes_only_grade_directory",
+    "stderr": ""
+  },
+  "acceptance_signature": {
+    "passed": true,
+    "tests_run": 12,
+    "checks": [
+      {
+        "test": "order_and_pending",
+        "passed": true
+      },
+      {
+        "test": "scores",
+        "passed": true
+      },
+      {
+        "test": "stale_and_retry",
+        "passed": true
+      },
+      {
+        "test": "duplicate_and_conflict",
+        "passed": true
+      },
+      {
+        "test": "atomic_conflicts",
+        "passed": true
+      },
+      {
+        "test": "atomic_validation",
+        "passed": true
+      },
+      {
+        "test": "failure_then_recovery",
+        "passed": true
+      },
+      {
+        "test": "finalized_lifecycle",
+        "passed": true
+      },
+      {
+        "test": "caller_input_isolation",
+        "passed": true
+      },
+      {
+        "test": "output_isolation",
+        "passed": true
+      },
+      {
+        "test": "specifications_and_empty",
+        "passed": true
+      },
+      {
+        "test": "independent_batches",
+        "passed": true
+      }
+    ],
+    "exit_code": 0,
+    "timed_out": false,
+    "invalid_output": false,
+    "isolation_failure": false
+  },
+  "source_changed": true,
+  "artifacts": {
+    "app.py": "437db5ccef4f7ae6505d602e3e1c9755953467317286efe314c4b12af9d6136a"
+  },
+  "protected_changes": [],
+  "outside_changes": [],
+  "artifact_errors": [],
+  "tool_audit": [
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc 'pwd && rg --files'",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc 'cat task.md'",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc 'cat app.py'",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc 'cat smoke.py && cat TOOLS.md'",
+      "review_flags": []
+    },
+    {
+      "type": "file_change",
+      "exit_code": null,
+      "changes": [
+        {
+          "path": "<workspace>/app.py",
+          "kind": "update"
+        }
+      ]
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc 'cat run_python'",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 129,
+      "command": "/bin/zsh -lc 'git diff -- app.py'",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc './run_python smoke.py'",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc \"./run_python - <<'PY'\nimport app\n\nspecs = [{\\\"call_id\\\": \\\"a\\\", \\\"weight\\\": -2}, {\\\"call_id\\\": \\\"b\\\", \\\"weight\\\": 0}]\nb = app.ToolBatch(specs)\nspecs[0][\\\"weight\\\"] = 100\nu = {\\\"call_id\\\": \\\"a\\\", \\\"version\\\": 5, \\\"status\\\": \\\"success\\\", \\\"values\\\": [3, -1]}\nb.ingest([u])\nu[\\\"values\\\"].append(100)\nb.ingest([{\\\"call_id\\\": \\\"a\\\", \\\"version\\\": 2, \\\"status\\\": \\\"error\\\", \\\"message\\\": \\\"stale\\\"}])\nassert b.snapshot()[0] == {\\\"call_id\\\": \\\"a\\\", \\\"version\\\": 5, \\\"status\\\": \\\"success\\\", \\\"value\\\": -4, \\\"error\\\": None}\n\n# A stale update is validated before it can be ignored.\ntry:\n    b.ingest([{\\\"call_id\\\": \\\"a\\\", \\\"version\\\": 1, \\\"status\\\": \\\"success\\\", \\\"values\\\": [True]}])\nexcept ValueError:\n    pass\nelse:\n    raise AssertionError(\\\"invalid stale update accepted\\\")\n\n# Earlier staged items must roll back if a later item conflicts.\ntry:\n    b.ingest([\n        {\\\"call_id\\\": \\\"b\\\", \\\"version\\\": 1, \\\"status\\\": \\\"error\\\", \\\"message\\\": \\\"temporary\\\"},\n        {\\\"call_id\\\": \\\"a\\\", \\\"version\\\": 5, \\\"status\\\": \\\"success\\\", \\\"values\\\": [999]},\n    ])\nexcept ValueError:\n    pass\nelse:\n    raise AssertionError(\\\"same-version conflict accepted\\\")\nassert b.snapshot()[1][\\\"status\\\"] == \\\"pending\\\"\n\n# Identical retries are idempotent; replacing versions updates correctly.\nb.ingest([{\\\"call_id\\\": \\\"a\\\", \\\"version\\\": 5, \\\"status\\\": \\\"success\\\", \\\"values\\\": [3, -1]}])\nb.ingest([{\\\"call_id\\\": \\\"a\\\", \\\"version\\\": 8, \\\"status\\\": \\\"error\\\", \\\"message\\\": \\\"failed\\\"}])\nb.ingest([{\\\"call_id\\\": \\\"a\\\", \\\"version\\\": 9, \\\"status\\\": \\\"success\\\", \\\"values\\\": []},\n          {\\\"call_id\\\": \\\"b\\\", \\\"version\\\": 1, \\\"status\\\": \\\"success\\\", \\\"values\\\": [7]}])\nout = b.finalize()\nout[0][\\\"value\\\"] = 123\nassert b.snapshot()[0][\\\"value\\\"] == 0\ntry:\n    b.ingest([])\nexcept RuntimeError:\n    pass\nelse:\n    raise AssertionError(\\\"ingest after finalize accepted\\\")\n\nempty = app.ToolBatch([])\nassert empty.finalize() == []\nprint(\\\"targeted checks passed\\\")\nPY\"",
+      "review_flags": []
+    }
+  ],
+  "case_sha256": "b590d6d3f0701c4ae2ba83ff78b7e7eea5c12e1bde5c7a0c5e4ed2a17189f533",
+  "prompt_sha256": "6fd62ac6100d8b6cfbd0a2b2d2c570f6e2df884143fea61f287365cec2b7280f",
+  "event_sha256": "2ab1128b0b6ca15f8249711af8dfd94da53d2d3142bf3a74f2427a3fec470063",
+  "stderr_sha256": "ca46b41db230017bd2bf412d18a6ff2eac59a5768b6f39c0d5b2c296bd4b9dbf",
+  "reasoning_effort": "high",
+  "cli_version": "codex-cli 0.160.0",
+  "canary": false,
+  "python_version": "3.12.14",
+  "execution_platform": "Darwin",
+  "terminal_errors": []
+}

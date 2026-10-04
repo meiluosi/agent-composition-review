@@ -1,0 +1,189 @@
+{
+  "case_id": "m11",
+  "condition": "A_tools",
+  "trial": 1,
+  "model_requested": "gpt-6-luna",
+  "exit_code": 0,
+  "timed_out": false,
+  "elapsed_seconds": 63.34144095797092,
+  "usage": {
+    "input_tokens": 61850,
+    "cached_input_tokens": 51968,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 1998,
+    "reasoning_output_tokens": 1085
+  },
+  "completed": true,
+  "status": "completed",
+  "infra_kind": null,
+  "prediction": {
+    "initial_verdict": "satisfied",
+    "summary": "原实现符合 task.md 的业务契约，保留 app.py 未作修改。",
+    "tests_executed": [
+      "./run_python smoke.py",
+      "./run_python -c '<针对性契约检查>'"
+    ],
+    "limitations": [
+      "针对性检查覆盖关键边界行为，但并非完整验收。"
+    ]
+  },
+  "acceptance": {
+    "passed": true,
+    "tests_run": 12,
+    "checks": [
+      {
+        "test": "order_and_pending",
+        "passed": true
+      },
+      {
+        "test": "scores",
+        "passed": true
+      },
+      {
+        "test": "stale_and_retry",
+        "passed": true
+      },
+      {
+        "test": "duplicate_and_conflict",
+        "passed": true
+      },
+      {
+        "test": "atomic_conflicts",
+        "passed": true
+      },
+      {
+        "test": "atomic_validation",
+        "passed": true
+      },
+      {
+        "test": "failure_then_recovery",
+        "passed": true
+      },
+      {
+        "test": "finalized_lifecycle",
+        "passed": true
+      },
+      {
+        "test": "caller_input_isolation",
+        "passed": true
+      },
+      {
+        "test": "output_isolation",
+        "passed": true
+      },
+      {
+        "test": "specifications_and_empty",
+        "passed": true
+      },
+      {
+        "test": "independent_batches",
+        "passed": true
+      }
+    ],
+    "exit_code": 0,
+    "timed_out": false,
+    "sandbox": "macos_no_network_writes_only_grade_directory",
+    "stderr": ""
+  },
+  "acceptance_signature": {
+    "passed": true,
+    "tests_run": 12,
+    "checks": [
+      {
+        "test": "order_and_pending",
+        "passed": true
+      },
+      {
+        "test": "scores",
+        "passed": true
+      },
+      {
+        "test": "stale_and_retry",
+        "passed": true
+      },
+      {
+        "test": "duplicate_and_conflict",
+        "passed": true
+      },
+      {
+        "test": "atomic_conflicts",
+        "passed": true
+      },
+      {
+        "test": "atomic_validation",
+        "passed": true
+      },
+      {
+        "test": "failure_then_recovery",
+        "passed": true
+      },
+      {
+        "test": "finalized_lifecycle",
+        "passed": true
+      },
+      {
+        "test": "caller_input_isolation",
+        "passed": true
+      },
+      {
+        "test": "output_isolation",
+        "passed": true
+      },
+      {
+        "test": "specifications_and_empty",
+        "passed": true
+      },
+      {
+        "test": "independent_batches",
+        "passed": true
+      }
+    ],
+    "exit_code": 0,
+    "timed_out": false,
+    "invalid_output": false,
+    "isolation_failure": false
+  },
+  "source_changed": false,
+  "artifacts": {
+    "app.py": "d856fbce39bd2b4fedbf9279cd0be4cef5d1a3560120f46a2623dd1c73dcdb89"
+  },
+  "protected_changes": [],
+  "outside_changes": [],
+  "artifact_errors": [],
+  "tool_audit": [
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc \"pwd && rg --files -g 'task.md' -g 'app.py' -g 'original.py' -g 'smoke.py' -g 'TOOLS.md' -g 'AGENTS.md' -g 'CHECKLIST.md' -g 'SKILL.md'\"",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc 'cat task.md && cat app.py && cat original.py && cat smoke.py && cat TOOLS.md'",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc './run_python smoke.py'",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc \"./run_python -c 'import app\nspecs=[{\\\"call_id\\\":\\\"a\\\",\\\"weight\\\":-2},{\\\"call_id\\\":\\\"b\\\",\\\"weight\\\":0}]\nb=app.ToolBatch(specs)\nassert b.snapshot()==[{\\\"call_id\\\":\\\"a\\\",\\\"version\\\":None,\\\"status\\\":\\\"pending\\\",\\\"value\\\":None,\\\"error\\\":None},{\\\"call_id\\\":\\\"b\\\",\\\"version\\\":None,\\\"status\\\":\\\"pending\\\",\\\"value\\\":None,\\\"error\\\":None}]\nsource={\\\"call_id\\\":\\\"a\\\",\\\"version\\\":1,\\\"status\\\":\\\"success\\\",\\\"values\\\":[2,-5]}\nb.ingest([source]); source[\\\"values\\\"].append(90); specs[0][\\\"weight\\\"]=10\nassert b.snapshot()[0][\\\"value\\\"]==6\nbefore=b.snapshot()\ntry: b.ingest([{\\\"call_id\\\":\\\"b\\\",\\\"version\\\":1,\\\"status\\\":\\\"error\\\",\\\"message\\\":\\\"\\\"},{\\\"call_id\\\":\\\"a\\\",\\\"version\\\":2,\\\"status\\\":\\\"error\\\",\\\"message\\\":\\\"x\\\",\\\"extra\\\":1}])\nexcept ValueError: pass\nelse: raise AssertionError(\\\"invalid batch accepted\\\")\nassert b.snapshot()==before\nb.ingest([{\\\"call_id\\\":\\\"a\\\",\\\"version\\\":1,\\\"status\\\":\\\"success\\\",\\\"values\\\":[2,-5]},{\\\"call_id\\\":\\\"a\\\",\\\"version\\\":3,\\\"status\\\":\\\"error\\\",\\\"message\\\":\\\"\\\"}])\nassert b.snapshot()[0][\\\"status\\\"]==\\\"error\\\" and b.snapshot()[0][\\\"version\\\"]==3\nb.ingest([{\\\"call_id\\\":\\\"a\\\",\\\"version\\\":1,\\\"status\\\":\\\"success\\\",\\\"values\\\":[999]}])\nb.ingest([{\\\"call_id\\\":\\\"b\\\",\\\"version\\\":99,\\\"status\\\":\\\"success\\\",\\\"values\\\":[]}])\nout=b.finalize(); out[0][\\\"error\\\"]=\\\"mutated\\\"\nassert b.finalize()[0][\\\"error\\\"]==\\\"\\\"\nfor updates in ([],):\n try: b.ingest(updates)\n except RuntimeError: pass\n else: raise AssertionError(\\\"sealed batch accepted ingest\\\")\ne=app.ToolBatch([]); assert e.finalize()==[] and e.snapshot()==[]\nassert app.score([], -10)==0\nprint(\\\"targeted contract checks passed\\\")'\"",
+      "review_flags": []
+    }
+  ],
+  "case_sha256": "af9521c6d7c04d09aa3db4c8591ebd1a1a8f8015432b0b4281e51e24d6de5a54",
+  "prompt_sha256": "754741dedf8f45f17a6cba0d28c804d1273d67e30452f4503e8797defde6c5c4",
+  "event_sha256": "8e4a2ab8376e7251497b677d6832e71e9917113df8121b71265bc2735f3ef09d",
+  "stderr_sha256": "4d1e28b50d78b4a49084ff9b82ea9112e11d7f0aec983326b305cb3d7353c2e8",
+  "reasoning_effort": "high",
+  "cli_version": "codex-cli 0.160.0",
+  "canary": false,
+  "python_version": "3.12.14",
+  "execution_platform": "Darwin",
+  "terminal_errors": []
+}

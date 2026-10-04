@@ -1,0 +1,13 @@
+--- original.py
++++ app.py
+@@ -45,7 +45,9 @@
+             raise RuntimeError("batch is finalized")
+         if not isinstance(updates, list):
+             raise ValueError("updates must be a list")
+-        staged = self._latest
++        # Build the candidate state separately so a rejected batch cannot
++        # partially update the live accumulator.
++        staged = deepcopy(self._latest)
+         for item in updates:
+             self._validate(item)
+             key = item["call_id"]

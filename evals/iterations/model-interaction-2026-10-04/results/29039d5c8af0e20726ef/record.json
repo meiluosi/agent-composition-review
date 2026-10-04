@@ -1,0 +1,230 @@
+{
+  "case_id": "m10",
+  "condition": "A_tools",
+  "trial": 1,
+  "model_requested": "gpt-6-luna",
+  "exit_code": 0,
+  "timed_out": false,
+  "elapsed_seconds": 102.62243945797672,
+  "usage": {
+    "input_tokens": 108288,
+    "cached_input_tokens": 94208,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 3544,
+    "reasoning_output_tokens": 1024
+  },
+  "completed": true,
+  "status": "completed",
+  "infra_kind": null,
+  "prediction": {
+    "initial_verdict": "violation",
+    "summary": "修复了 ingest 的非原子更新：现在整批更新先在副本上处理，全部有效后才提交；公开接口及原有正确行为保持不变。",
+    "tests_executed": [
+      "./run_python smoke.py — 通过。",
+      "./run_python - <<'PY' ... — 首轮补充用例因把低版本误判为同版本冲突而失败；修正用例后再次运行，通过，覆盖原子回滚、过期更新验证、输入和输出隔离、版本替换、finalize 与空批次。"
+    ],
+    "limitations": [
+      "smoke.py 仅验证基本行为，未覆盖完整验收要求。"
+    ]
+  },
+  "acceptance": {
+    "passed": false,
+    "tests_run": 12,
+    "checks": [
+      {
+        "test": "order_and_pending",
+        "passed": true
+      },
+      {
+        "test": "scores",
+        "passed": true
+      },
+      {
+        "test": "stale_and_retry",
+        "passed": false,
+        "error": "AssertionError: "
+      },
+      {
+        "test": "duplicate_and_conflict",
+        "passed": true
+      },
+      {
+        "test": "atomic_conflicts",
+        "passed": true
+      },
+      {
+        "test": "atomic_validation",
+        "passed": true
+      },
+      {
+        "test": "failure_then_recovery",
+        "passed": true
+      },
+      {
+        "test": "finalized_lifecycle",
+        "passed": true
+      },
+      {
+        "test": "caller_input_isolation",
+        "passed": true
+      },
+      {
+        "test": "output_isolation",
+        "passed": true
+      },
+      {
+        "test": "specifications_and_empty",
+        "passed": true
+      },
+      {
+        "test": "independent_batches",
+        "passed": true
+      }
+    ],
+    "exit_code": 0,
+    "timed_out": false,
+    "sandbox": "macos_no_network_writes_only_grade_directory",
+    "stderr": ""
+  },
+  "acceptance_signature": {
+    "passed": false,
+    "tests_run": 12,
+    "checks": [
+      {
+        "test": "order_and_pending",
+        "passed": true
+      },
+      {
+        "test": "scores",
+        "passed": true
+      },
+      {
+        "test": "stale_and_retry",
+        "passed": false
+      },
+      {
+        "test": "duplicate_and_conflict",
+        "passed": true
+      },
+      {
+        "test": "atomic_conflicts",
+        "passed": true
+      },
+      {
+        "test": "atomic_validation",
+        "passed": true
+      },
+      {
+        "test": "failure_then_recovery",
+        "passed": true
+      },
+      {
+        "test": "finalized_lifecycle",
+        "passed": true
+      },
+      {
+        "test": "caller_input_isolation",
+        "passed": true
+      },
+      {
+        "test": "output_isolation",
+        "passed": true
+      },
+      {
+        "test": "specifications_and_empty",
+        "passed": true
+      },
+      {
+        "test": "independent_batches",
+        "passed": true
+      }
+    ],
+    "exit_code": 0,
+    "timed_out": false,
+    "invalid_output": false,
+    "isolation_failure": false
+  },
+  "source_changed": true,
+  "artifacts": {
+    "app.py": "1be0d4e0feb7e6247444a677394df4d8c345b2af5e6a13502325ec6362071a09"
+  },
+  "protected_changes": [],
+  "outside_changes": [],
+  "artifact_errors": [],
+  "tool_audit": [
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc \"pwd && rg --files -g 'task.md' -g 'app.py' -g 'original.py' -g 'smoke.py' -g 'TOOLS.md' -g 'AGENTS.md' -g 'CHECKLIST.md' -g 'SKILL.md' -g 'references/**' -g 'scripts/**' -g 'assets/**'\"",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc 'cat task.md'",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc 'cat app.py'",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc 'cat smoke.py && cat TOOLS.md'",
+      "review_flags": []
+    },
+    {
+      "type": "file_change",
+      "exit_code": null,
+      "changes": [
+        {
+          "path": "<workspace>/app.py",
+          "kind": "update"
+        }
+      ]
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc 'cat run_python'",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc './run_python smoke.py'",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 1,
+      "command": "/bin/zsh -lc \"./run_python - <<'PY'\nimport app\n\nspecs = [{\\\"call_id\\\": \\\"a\\\", \\\"weight\\\": -2}, {\\\"call_id\\\": \\\"b\\\", \\\"weight\\\": 4}]\nbatch = app.ToolBatch(specs)\nspecs[0][\\\"weight\\\"] = 99\nfirst = {\\\"call_id\\\": \\\"a\\\", \\\"version\\\": 2, \\\"status\\\": \\\"success\\\", \\\"values\\\": [-3, 1]}\nbatch.ingest([first])\nfirst[\\\"values\\\"].append(500)\nassert batch.snapshot()[0][\\\"value\\\"] == 4\n\nbefore = batch.snapshot()\ntry:\n    batch.ingest([\n        {\\\"call_id\\\": \\\"b\\\", \\\"version\\\": 1, \\\"status\\\": \\\"error\\\", \\\"message\\\": \\\"\\\"},\n        {\\\"call_id\\\": \\\"a\\\", \\\"version\\\": 1, \\\"status\\\": \\\"success\\\", \\\"values\\\": []},\n    ])\nexcept ValueError:\n    pass\nelse:\n    raise AssertionError(\\\"same-version conflict accepted\\\")\nassert batch.snapshot() == before\n\n# Full validation is performed even for stale results; rejection is atomic.\ntry:\n    batch.ingest([\n        {\\\"call_id\\\": \\\"b\\\", \\\"version\\\": 1, \\\"status\\\": \\\"error\\\", \\\"message\\\": \\\"\\\"},\n        {\\\"call_id\\\": \\\"a\\\", \\\"version\\\": 1, \\\"status\\\": \\\"success\\\", \\\"values\\\": [True]},\n    ])\nexcept ValueError:\n    pass\nelse:\n    raise AssertionError(\\\"invalid stale update accepted\\\")\nassert batch.snapshot() == before\n\nbatch.ingest([\n    {\\\"call_id\\\": \\\"a\\\", \\\"version\\\": 3, \\\"status\\\": \\\"error\\\", \\\"message\\\": \\\"\\\"},\n    {\\\"call_id\\\": \\\"b\\\", \\\"version\\\": 9, \\\"status\\\": \\\"success\\\", \\\"values\\\": []},\n])\nresult = batch.finalize()\nassert result == [\n    {\\\"call_id\\\": \\\"a\\\", \\\"version\\\": 3, \\\"status\\\": \\\"error\\\", \\\"value\\\": None, \\\"error\\\": \\\"\\\"},\n    {\\\"call_id\\\": \\\"b\\\", \\\"version\\\": 9, \\\"status\\\": \\\"success\\\", \\\"value\\\": 0, \\\"error\\\": None},\n]\nresult[0][\\\"error\\\"] = \\\"changed\\\"\nassert batch.snapshot()[0][\\\"error\\\"] == \\\"\\\"\nassert batch.finalize()[0][\\\"error\\\"] == \\\"\\\"\ntry:\n    batch.ingest([])\nexcept RuntimeError:\n    pass\nelse:\n    raise AssertionError(\\\"ingest after finalize accepted\\\")\n\nempty = app.ToolBatch([])\nassert empty.finalize() == []\nassert empty.snapshot() == []\nassert app.score([-4, 7], -3) == -9\nprint(\\\"targeted contract checks passed\\\")\nPY\"",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc \"./run_python - <<'PY'\nimport app\n\nspecs = [{\\\"call_id\\\": \\\"a\\\", \\\"weight\\\": -2}, {\\\"call_id\\\": \\\"b\\\", \\\"weight\\\": 4}]\nbatch = app.ToolBatch(specs)\nspecs[0][\\\"weight\\\"] = 99\nfirst = {\\\"call_id\\\": \\\"a\\\", \\\"version\\\": 2, \\\"status\\\": \\\"success\\\", \\\"values\\\": [-3, 1]}\nbatch.ingest([first])\nfirst[\\\"values\\\"].append(500)\nassert batch.snapshot()[0][\\\"value\\\"] == 4\n\nbefore = batch.snapshot()\ntry:\n    batch.ingest([\n        {\\\"call_id\\\": \\\"b\\\", \\\"version\\\": 1, \\\"status\\\": \\\"error\\\", \\\"message\\\": \\\"\\\"},\n        {\\\"call_id\\\": \\\"a\\\", \\\"version\\\": 2, \\\"status\\\": \\\"success\\\", \\\"values\\\": [9]},\n    ])\nexcept ValueError:\n    pass\nelse:\n    raise AssertionError(\\\"same-version conflict accepted\\\")\nassert batch.snapshot() == before\n\n# Full validation is performed even for stale results; rejection is atomic.\ntry:\n    batch.ingest([\n        {\\\"call_id\\\": \\\"b\\\", \\\"version\\\": 1, \\\"status\\\": \\\"error\\\", \\\"message\\\": \\\"\\\"},\n        {\\\"call_id\\\": \\\"a\\\", \\\"version\\\": 1, \\\"status\\\": \\\"success\\\", \\\"values\\\": [True]},\n    ])\nexcept ValueError:\n    pass\nelse:\n    raise AssertionError(\\\"invalid stale update accepted\\\")\nassert batch.snapshot() == before\n\nbatch.ingest([\n    {\\\"call_id\\\": \\\"a\\\", \\\"version\\\": 3, \\\"status\\\": \\\"error\\\", \\\"message\\\": \\\"\\\"},\n    {\\\"call_id\\\": \\\"b\\\", \\\"version\\\": 9, \\\"status\\\": \\\"success\\\", \\\"values\\\": []},\n])\nresult = batch.finalize()\nassert result == [\n    {\\\"call_id\\\": \\\"a\\\", \\\"version\\\": 3, \\\"status\\\": \\\"error\\\", \\\"value\\\": None, \\\"error\\\": \\\"\\\"},\n    {\\\"call_id\\\": \\\"b\\\", \\\"version\\\": 9, \\\"status\\\": \\\"success\\\", \\\"value\\\": 0, \\\"error\\\": None},\n]\nresult[0][\\\"error\\\"] = \\\"changed\\\"\nassert batch.snapshot()[0][\\\"error\\\"] == \\\"\\\"\nassert batch.finalize()[0][\\\"error\\\"] == \\\"\\\"\ntry:\n    batch.ingest([])\nexcept RuntimeError:\n    pass\nelse:\n    raise AssertionError(\\\"ingest after finalize accepted\\\")\n\nempty = app.ToolBatch([])\nassert empty.finalize() == []\nassert empty.snapshot() == []\nassert app.score([-4, 7], -3) == -9\nprint(\\\"targeted contract checks passed\\\")\nPY\"",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 129,
+      "command": "/bin/zsh -lc 'git diff -- app.py && git status --short'",
+      "review_flags": []
+    }
+  ],
+  "case_sha256": "b590d6d3f0701c4ae2ba83ff78b7e7eea5c12e1bde5c7a0c5e4ed2a17189f533",
+  "prompt_sha256": "754741dedf8f45f17a6cba0d28c804d1273d67e30452f4503e8797defde6c5c4",
+  "event_sha256": "5c53dcaf1b9d99ffdf88a8cc4a6e2e1372d8af374d9b0e01cf97cd30662eb227",
+  "stderr_sha256": "5a4b5a7ca06d0004e0eb5b2ff526da7f0ce23c48bd2c8c3aba7ab3419301fd24",
+  "reasoning_effort": "high",
+  "cli_version": "codex-cli 0.160.0",
+  "canary": false,
+  "python_version": "3.12.14",
+  "execution_platform": "Darwin",
+  "terminal_errors": []
+}

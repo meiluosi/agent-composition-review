@@ -1,0 +1,674 @@
+[
+  {
+    "case_id": "m01",
+    "family": "lease_queue",
+    "variant": "incident",
+    "source_file": "evals/model_interaction/tasks/lease_queue/incident.py",
+    "source": "\"\"\"A small persistent work queue with time-bounded delivery receipts.\"\"\"\nimport json\nimport math\nimport sqlite3\nfrom contextlib import closing\n\n\nclass Queue:\n    def __init__(self, path):\n        self.path = str(path)\n        with closing(sqlite3.connect(self.path)) as db, db:\n            db.execute(\"\"\"CREATE TABLE IF NOT EXISTS jobs (\n                seq INTEGER PRIMARY KEY AUTOINCREMENT, job_id TEXT UNIQUE NOT NULL,\n                payload TEXT NOT NULL, state TEXT NOT NULL DEFAULT 'ready',\n                worker TEXT, generation INTEGER NOT NULL DEFAULT 0, expires_at REAL\n            )\"\"\")\n\n    def put(self, job_id, payload):\n        encoded = json.dumps(payload, allow_nan=False)\n        with closing(sqlite3.connect(self.path)) as db, db:\n            try:\n                db.execute(\"INSERT INTO jobs(job_id, payload) VALUES (?, ?)\", (job_id, encoded))\n            except sqlite3.IntegrityError as exc:\n                raise ValueError(\"job_id already exists\") from exc\n\n    def claim(self, worker, now, lease_seconds):\n        if not math.isfinite(lease_seconds) or lease_seconds <= 0:\n            raise ValueError(\"lease_seconds must be finite and positive\")\n        with closing(sqlite3.connect(self.path)) as db, db:\n            db.execute(\"BEGIN IMMEDIATE\")\n            row = db.execute(\"\"\"SELECT job_id, payload, generation FROM jobs\n                WHERE state = 'ready' OR (state = 'leased' AND expires_at <= ?)\n                ORDER BY seq LIMIT 1\"\"\", (now,)).fetchone()\n            if row is None:\n                return None\n            job_id, payload, previous_generation = row\n            generation = previous_generation + 1\n            expires_at = now + lease_seconds\n            db.execute(\"\"\"UPDATE jobs SET state = 'leased', worker = ?,\n                generation = ?, expires_at = ? WHERE job_id = ?\"\"\",\n                (worker, generation, expires_at, job_id))\n            return {\"payload\": json.loads(payload), \"expires_at\": expires_at,\n                    \"receipt\": {\"job_id\": job_id, \"worker\": worker, \"generation\": generation}}\n\n    def ack(self, receipt, now):\n        with closing(sqlite3.connect(self.path)) as db, db:\n            changed = db.execute(\"\"\"UPDATE jobs SET state = 'done'\n                WHERE job_id = ? AND worker = ?\n                AND state = 'leased' AND expires_at > ?\"\"\",\n                (receipt[\"job_id\"], receipt[\"worker\"], now)).rowcount\n            return changed == 1\n",
+    "request": "Maintain the persistent worker queue in `app.py`. Correct any behavior that violates the contract below, preserve behavior that already satisfies it, and leave the module usable by other Python code. You may run and add tests. Only Python 3.12's standard library is available.\n\nPublic API:\n\n- `Queue(path)` opens a queue in a local SQLite file. Multiple instances at the same path represent the same queue; separately connected callers may operate on it. Existing data survives reopening.\n- `put(job_id, payload)` enqueues a unique ID. The caller supplies a nonempty string ID. Supported payloads are the JSON data model: `None`, booleans, strings, finite integer/float numbers, lists of supported values, and dictionaries with string keys and supported values. Empty and nested containers are supported. The queue saves their value at enqueue time. Other Python types are outside the supported payload domain; inputs that the standard JSON encoder rejects must raise an exception as described below. A duplicate ID raises `ValueError`, including after that ID has been completed. Payloads that cannot be represented by the standard JSON encoder (with nonfinite numbers disallowed) raise `TypeError`, `ValueError`, or `RecursionError` without creating a job or altering existing jobs. This includes inputs beyond the encoder’s supported nesting depth.\n- `claim(worker, now, lease_seconds)` returns the oldest enqueued eligible job, or `None`. It returns a dictionary with exactly `payload`, `expires_at`, and `receipt`. The receipt is an opaque dictionary that a caller stores and passes unchanged to `ack`. A job is eligible if it has never been claimed, or if its current lease has expired. A lease expires at `now + lease_seconds`, and is expired at that exact time. Time and duration may be fractional. Completed jobs are never eligible. An unexpired lease prevents another claim, including by the same worker.\n- `ack(receipt, now)` returns `True` exactly once when acknowledging the currently active, unexpired claim. It returns `False` for an expired, replaced, or already acknowledged claim, leaving any current claim intact. Workers can reclaim work after expiry using the same worker name. Receipts issued by one queue instance work through another instance at the same path.\n\nThe caller supplies `worker` as a nonempty string and `now` as a finite `int` or `float`; calls in a scenario use nondecreasing time. Finite values of `now` and `lease_seconds` have absolute value at most `10**12`; larger finite values are outside this task. Expiry arithmetic follows ordinary Python numeric arithmetic. `lease_seconds` is also supplied as an `int` or `float`, excluding booleans, and must be finite and strictly positive; numeric values violating that requirement make `claim` raise `ValueError` without affecting the queue. Handling of other types for these parameters, invalid IDs, and fabricated or edited receipts is outside this contract. Claiming is atomic across separately connected callers: one eligible job cannot acquire two simultaneously active claims.\n\nPayloads and receipts returned to callers must not alias persisted state or caller-owned input. Mutating a returned payload, or attempting an unsuccessful operation, must not corrupt future deliveries. No real clock, background worker, external service, or network is needed.\n",
+    "smoke": "import importlib.util\nimport pathlib\nimport sys\nimport tempfile\n\nspec = importlib.util.spec_from_file_location(\"app\", pathlib.Path(sys.argv[1] if len(sys.argv) > 1 else \"app.py\"))\napp = importlib.util.module_from_spec(spec)\nsys.modules[spec.name] = app\nspec.loader.exec_module(app)\nwith tempfile.TemporaryDirectory() as directory:\n    queue = app.Queue(pathlib.Path(directory) / \"queue.db\")\n    queue.put(\"one\", {\"text\": \"hello\"})\n    claim = queue.claim(\"worker\", now=0, lease_seconds=5)\n    assert claim[\"payload\"] == {\"text\": \"hello\"}\n    assert queue.ack(claim[\"receipt\"], now=1) is True\n    assert queue.claim(\"worker\", now=2, lease_seconds=5) is None\nprint(\"smoke passed\")\n",
+    "expected_checks": 9,
+    "test_names": [
+      "test_empty_and_persistence",
+      "test_fifo_and_active_exclusion",
+      "test_same_worker_stale_receipt",
+      "test_other_worker_stale_receipt",
+      "test_expiry_and_fractional_duration",
+      "test_payload_isolation",
+      "test_failed_put_and_duplicate_reuse",
+      "test_invalid_duration_preserves_jobs",
+      "test_atomic_claim_across_connections"
+    ],
+    "provenance": {
+      "family": "lease_queue",
+      "title": "Persistent work claims, expiry and delayed acknowledgement",
+      "expected_checks": 9,
+      "test_names": [
+        "test_empty_and_persistence",
+        "test_fifo_and_active_exclusion",
+        "test_same_worker_stale_receipt",
+        "test_other_worker_stale_receipt",
+        "test_expiry_and_fractional_duration",
+        "test_payload_isolation",
+        "test_failed_put_and_duplicate_reuse",
+        "test_invalid_duration_preserves_jobs",
+        "test_atomic_claim_across_connections"
+      ],
+      "source_note": "Authored development fixture using Python standard-library SQLite transactions and explicit logical time; not an external benchmark or held-out production incident.",
+      "defect_notes": {
+        "incident": "Acknowledgement omits claim generation, so an older receipt can complete a newer claim when the worker name is reused.",
+        "normal": "Reference implementation checks receipt generation and lease expiry using an atomic SQLite update; claim selection/update is within BEGIN IMMEDIATE.",
+        "local": "Lease expiry truncates the requested duration to an integer, violating fractional timing. This is a scalar calculation defect rather than a handoff ownership defect."
+      },
+      "acceptance_limits": [
+        "The concurrent check uses two independent connections and a synchronized start; this finite schedule does not prove every possible SQLite interleaving.",
+        "No wall-clock timing, untrusted fabricated receipts, crash durability, process termination, database lock timeouts, or payload types outside the stated domain are claimed.",
+        "Returned receipt dictionaries are treated as opaque: tests pass issued receipts unchanged."
+      ]
+    }
+  },
+  {
+    "case_id": "m02",
+    "family": "lease_queue",
+    "variant": "normal",
+    "source_file": "evals/model_interaction/tasks/lease_queue/normal.py",
+    "source": "\"\"\"A small persistent work queue with time-bounded delivery receipts.\"\"\"\nimport json\nimport math\nimport sqlite3\nfrom contextlib import closing\n\n\nclass Queue:\n    def __init__(self, path):\n        self.path = str(path)\n        with closing(sqlite3.connect(self.path)) as db, db:\n            db.execute(\"\"\"CREATE TABLE IF NOT EXISTS jobs (\n                seq INTEGER PRIMARY KEY AUTOINCREMENT, job_id TEXT UNIQUE NOT NULL,\n                payload TEXT NOT NULL, state TEXT NOT NULL DEFAULT 'ready',\n                worker TEXT, generation INTEGER NOT NULL DEFAULT 0, expires_at REAL\n            )\"\"\")\n\n    def put(self, job_id, payload):\n        encoded = json.dumps(payload, allow_nan=False)\n        with closing(sqlite3.connect(self.path)) as db, db:\n            try:\n                db.execute(\"INSERT INTO jobs(job_id, payload) VALUES (?, ?)\", (job_id, encoded))\n            except sqlite3.IntegrityError as exc:\n                raise ValueError(\"job_id already exists\") from exc\n\n    def claim(self, worker, now, lease_seconds):\n        if not math.isfinite(lease_seconds) or lease_seconds <= 0:\n            raise ValueError(\"lease_seconds must be finite and positive\")\n        with closing(sqlite3.connect(self.path)) as db, db:\n            db.execute(\"BEGIN IMMEDIATE\")\n            row = db.execute(\"\"\"SELECT job_id, payload, generation FROM jobs\n                WHERE state = 'ready' OR (state = 'leased' AND expires_at <= ?)\n                ORDER BY seq LIMIT 1\"\"\", (now,)).fetchone()\n            if row is None:\n                return None\n            job_id, payload, previous_generation = row\n            generation = previous_generation + 1\n            expires_at = now + lease_seconds\n            db.execute(\"\"\"UPDATE jobs SET state = 'leased', worker = ?,\n                generation = ?, expires_at = ? WHERE job_id = ?\"\"\",\n                (worker, generation, expires_at, job_id))\n            return {\"payload\": json.loads(payload), \"expires_at\": expires_at,\n                    \"receipt\": {\"job_id\": job_id, \"worker\": worker, \"generation\": generation}}\n\n    def ack(self, receipt, now):\n        with closing(sqlite3.connect(self.path)) as db, db:\n            changed = db.execute(\"\"\"UPDATE jobs SET state = 'done'\n                WHERE job_id = ? AND worker = ? AND generation = ?\n                AND state = 'leased' AND expires_at > ?\"\"\",\n                (receipt[\"job_id\"], receipt[\"worker\"], receipt[\"generation\"], now)).rowcount\n            return changed == 1\n",
+    "request": "Maintain the persistent worker queue in `app.py`. Correct any behavior that violates the contract below, preserve behavior that already satisfies it, and leave the module usable by other Python code. You may run and add tests. Only Python 3.12's standard library is available.\n\nPublic API:\n\n- `Queue(path)` opens a queue in a local SQLite file. Multiple instances at the same path represent the same queue; separately connected callers may operate on it. Existing data survives reopening.\n- `put(job_id, payload)` enqueues a unique ID. The caller supplies a nonempty string ID. Supported payloads are the JSON data model: `None`, booleans, strings, finite integer/float numbers, lists of supported values, and dictionaries with string keys and supported values. Empty and nested containers are supported. The queue saves their value at enqueue time. Other Python types are outside the supported payload domain; inputs that the standard JSON encoder rejects must raise an exception as described below. A duplicate ID raises `ValueError`, including after that ID has been completed. Payloads that cannot be represented by the standard JSON encoder (with nonfinite numbers disallowed) raise `TypeError`, `ValueError`, or `RecursionError` without creating a job or altering existing jobs. This includes inputs beyond the encoder’s supported nesting depth.\n- `claim(worker, now, lease_seconds)` returns the oldest enqueued eligible job, or `None`. It returns a dictionary with exactly `payload`, `expires_at`, and `receipt`. The receipt is an opaque dictionary that a caller stores and passes unchanged to `ack`. A job is eligible if it has never been claimed, or if its current lease has expired. A lease expires at `now + lease_seconds`, and is expired at that exact time. Time and duration may be fractional. Completed jobs are never eligible. An unexpired lease prevents another claim, including by the same worker.\n- `ack(receipt, now)` returns `True` exactly once when acknowledging the currently active, unexpired claim. It returns `False` for an expired, replaced, or already acknowledged claim, leaving any current claim intact. Workers can reclaim work after expiry using the same worker name. Receipts issued by one queue instance work through another instance at the same path.\n\nThe caller supplies `worker` as a nonempty string and `now` as a finite `int` or `float`; calls in a scenario use nondecreasing time. Finite values of `now` and `lease_seconds` have absolute value at most `10**12`; larger finite values are outside this task. Expiry arithmetic follows ordinary Python numeric arithmetic. `lease_seconds` is also supplied as an `int` or `float`, excluding booleans, and must be finite and strictly positive; numeric values violating that requirement make `claim` raise `ValueError` without affecting the queue. Handling of other types for these parameters, invalid IDs, and fabricated or edited receipts is outside this contract. Claiming is atomic across separately connected callers: one eligible job cannot acquire two simultaneously active claims.\n\nPayloads and receipts returned to callers must not alias persisted state or caller-owned input. Mutating a returned payload, or attempting an unsuccessful operation, must not corrupt future deliveries. No real clock, background worker, external service, or network is needed.\n",
+    "smoke": "import importlib.util\nimport pathlib\nimport sys\nimport tempfile\n\nspec = importlib.util.spec_from_file_location(\"app\", pathlib.Path(sys.argv[1] if len(sys.argv) > 1 else \"app.py\"))\napp = importlib.util.module_from_spec(spec)\nsys.modules[spec.name] = app\nspec.loader.exec_module(app)\nwith tempfile.TemporaryDirectory() as directory:\n    queue = app.Queue(pathlib.Path(directory) / \"queue.db\")\n    queue.put(\"one\", {\"text\": \"hello\"})\n    claim = queue.claim(\"worker\", now=0, lease_seconds=5)\n    assert claim[\"payload\"] == {\"text\": \"hello\"}\n    assert queue.ack(claim[\"receipt\"], now=1) is True\n    assert queue.claim(\"worker\", now=2, lease_seconds=5) is None\nprint(\"smoke passed\")\n",
+    "expected_checks": 9,
+    "test_names": [
+      "test_empty_and_persistence",
+      "test_fifo_and_active_exclusion",
+      "test_same_worker_stale_receipt",
+      "test_other_worker_stale_receipt",
+      "test_expiry_and_fractional_duration",
+      "test_payload_isolation",
+      "test_failed_put_and_duplicate_reuse",
+      "test_invalid_duration_preserves_jobs",
+      "test_atomic_claim_across_connections"
+    ],
+    "provenance": {
+      "family": "lease_queue",
+      "title": "Persistent work claims, expiry and delayed acknowledgement",
+      "expected_checks": 9,
+      "test_names": [
+        "test_empty_and_persistence",
+        "test_fifo_and_active_exclusion",
+        "test_same_worker_stale_receipt",
+        "test_other_worker_stale_receipt",
+        "test_expiry_and_fractional_duration",
+        "test_payload_isolation",
+        "test_failed_put_and_duplicate_reuse",
+        "test_invalid_duration_preserves_jobs",
+        "test_atomic_claim_across_connections"
+      ],
+      "source_note": "Authored development fixture using Python standard-library SQLite transactions and explicit logical time; not an external benchmark or held-out production incident.",
+      "defect_notes": {
+        "incident": "Acknowledgement omits claim generation, so an older receipt can complete a newer claim when the worker name is reused.",
+        "normal": "Reference implementation checks receipt generation and lease expiry using an atomic SQLite update; claim selection/update is within BEGIN IMMEDIATE.",
+        "local": "Lease expiry truncates the requested duration to an integer, violating fractional timing. This is a scalar calculation defect rather than a handoff ownership defect."
+      },
+      "acceptance_limits": [
+        "The concurrent check uses two independent connections and a synchronized start; this finite schedule does not prove every possible SQLite interleaving.",
+        "No wall-clock timing, untrusted fabricated receipts, crash durability, process termination, database lock timeouts, or payload types outside the stated domain are claimed.",
+        "Returned receipt dictionaries are treated as opaque: tests pass issued receipts unchanged."
+      ]
+    }
+  },
+  {
+    "case_id": "m03",
+    "family": "lease_queue",
+    "variant": "local",
+    "source_file": "evals/model_interaction/tasks/lease_queue/local.py",
+    "source": "\"\"\"A small persistent work queue with time-bounded delivery receipts.\"\"\"\nimport json\nimport math\nimport sqlite3\nfrom contextlib import closing\n\n\nclass Queue:\n    def __init__(self, path):\n        self.path = str(path)\n        with closing(sqlite3.connect(self.path)) as db, db:\n            db.execute(\"\"\"CREATE TABLE IF NOT EXISTS jobs (\n                seq INTEGER PRIMARY KEY AUTOINCREMENT, job_id TEXT UNIQUE NOT NULL,\n                payload TEXT NOT NULL, state TEXT NOT NULL DEFAULT 'ready',\n                worker TEXT, generation INTEGER NOT NULL DEFAULT 0, expires_at REAL\n            )\"\"\")\n\n    def put(self, job_id, payload):\n        encoded = json.dumps(payload, allow_nan=False)\n        with closing(sqlite3.connect(self.path)) as db, db:\n            try:\n                db.execute(\"INSERT INTO jobs(job_id, payload) VALUES (?, ?)\", (job_id, encoded))\n            except sqlite3.IntegrityError as exc:\n                raise ValueError(\"job_id already exists\") from exc\n\n    def claim(self, worker, now, lease_seconds):\n        if not math.isfinite(lease_seconds) or lease_seconds <= 0:\n            raise ValueError(\"lease_seconds must be finite and positive\")\n        with closing(sqlite3.connect(self.path)) as db, db:\n            db.execute(\"BEGIN IMMEDIATE\")\n            row = db.execute(\"\"\"SELECT job_id, payload, generation FROM jobs\n                WHERE state = 'ready' OR (state = 'leased' AND expires_at <= ?)\n                ORDER BY seq LIMIT 1\"\"\", (now,)).fetchone()\n            if row is None:\n                return None\n            job_id, payload, previous_generation = row\n            generation = previous_generation + 1\n            expires_at = now + int(lease_seconds)\n            db.execute(\"\"\"UPDATE jobs SET state = 'leased', worker = ?,\n                generation = ?, expires_at = ? WHERE job_id = ?\"\"\",\n                (worker, generation, expires_at, job_id))\n            return {\"payload\": json.loads(payload), \"expires_at\": expires_at,\n                    \"receipt\": {\"job_id\": job_id, \"worker\": worker, \"generation\": generation}}\n\n    def ack(self, receipt, now):\n        with closing(sqlite3.connect(self.path)) as db, db:\n            changed = db.execute(\"\"\"UPDATE jobs SET state = 'done'\n                WHERE job_id = ? AND worker = ? AND generation = ?\n                AND state = 'leased' AND expires_at > ?\"\"\",\n                (receipt[\"job_id\"], receipt[\"worker\"], receipt[\"generation\"], now)).rowcount\n            return changed == 1\n",
+    "request": "Maintain the persistent worker queue in `app.py`. Correct any behavior that violates the contract below, preserve behavior that already satisfies it, and leave the module usable by other Python code. You may run and add tests. Only Python 3.12's standard library is available.\n\nPublic API:\n\n- `Queue(path)` opens a queue in a local SQLite file. Multiple instances at the same path represent the same queue; separately connected callers may operate on it. Existing data survives reopening.\n- `put(job_id, payload)` enqueues a unique ID. The caller supplies a nonempty string ID. Supported payloads are the JSON data model: `None`, booleans, strings, finite integer/float numbers, lists of supported values, and dictionaries with string keys and supported values. Empty and nested containers are supported. The queue saves their value at enqueue time. Other Python types are outside the supported payload domain; inputs that the standard JSON encoder rejects must raise an exception as described below. A duplicate ID raises `ValueError`, including after that ID has been completed. Payloads that cannot be represented by the standard JSON encoder (with nonfinite numbers disallowed) raise `TypeError`, `ValueError`, or `RecursionError` without creating a job or altering existing jobs. This includes inputs beyond the encoder’s supported nesting depth.\n- `claim(worker, now, lease_seconds)` returns the oldest enqueued eligible job, or `None`. It returns a dictionary with exactly `payload`, `expires_at`, and `receipt`. The receipt is an opaque dictionary that a caller stores and passes unchanged to `ack`. A job is eligible if it has never been claimed, or if its current lease has expired. A lease expires at `now + lease_seconds`, and is expired at that exact time. Time and duration may be fractional. Completed jobs are never eligible. An unexpired lease prevents another claim, including by the same worker.\n- `ack(receipt, now)` returns `True` exactly once when acknowledging the currently active, unexpired claim. It returns `False` for an expired, replaced, or already acknowledged claim, leaving any current claim intact. Workers can reclaim work after expiry using the same worker name. Receipts issued by one queue instance work through another instance at the same path.\n\nThe caller supplies `worker` as a nonempty string and `now` as a finite `int` or `float`; calls in a scenario use nondecreasing time. Finite values of `now` and `lease_seconds` have absolute value at most `10**12`; larger finite values are outside this task. Expiry arithmetic follows ordinary Python numeric arithmetic. `lease_seconds` is also supplied as an `int` or `float`, excluding booleans, and must be finite and strictly positive; numeric values violating that requirement make `claim` raise `ValueError` without affecting the queue. Handling of other types for these parameters, invalid IDs, and fabricated or edited receipts is outside this contract. Claiming is atomic across separately connected callers: one eligible job cannot acquire two simultaneously active claims.\n\nPayloads and receipts returned to callers must not alias persisted state or caller-owned input. Mutating a returned payload, or attempting an unsuccessful operation, must not corrupt future deliveries. No real clock, background worker, external service, or network is needed.\n",
+    "smoke": "import importlib.util\nimport pathlib\nimport sys\nimport tempfile\n\nspec = importlib.util.spec_from_file_location(\"app\", pathlib.Path(sys.argv[1] if len(sys.argv) > 1 else \"app.py\"))\napp = importlib.util.module_from_spec(spec)\nsys.modules[spec.name] = app\nspec.loader.exec_module(app)\nwith tempfile.TemporaryDirectory() as directory:\n    queue = app.Queue(pathlib.Path(directory) / \"queue.db\")\n    queue.put(\"one\", {\"text\": \"hello\"})\n    claim = queue.claim(\"worker\", now=0, lease_seconds=5)\n    assert claim[\"payload\"] == {\"text\": \"hello\"}\n    assert queue.ack(claim[\"receipt\"], now=1) is True\n    assert queue.claim(\"worker\", now=2, lease_seconds=5) is None\nprint(\"smoke passed\")\n",
+    "expected_checks": 9,
+    "test_names": [
+      "test_empty_and_persistence",
+      "test_fifo_and_active_exclusion",
+      "test_same_worker_stale_receipt",
+      "test_other_worker_stale_receipt",
+      "test_expiry_and_fractional_duration",
+      "test_payload_isolation",
+      "test_failed_put_and_duplicate_reuse",
+      "test_invalid_duration_preserves_jobs",
+      "test_atomic_claim_across_connections"
+    ],
+    "provenance": {
+      "family": "lease_queue",
+      "title": "Persistent work claims, expiry and delayed acknowledgement",
+      "expected_checks": 9,
+      "test_names": [
+        "test_empty_and_persistence",
+        "test_fifo_and_active_exclusion",
+        "test_same_worker_stale_receipt",
+        "test_other_worker_stale_receipt",
+        "test_expiry_and_fractional_duration",
+        "test_payload_isolation",
+        "test_failed_put_and_duplicate_reuse",
+        "test_invalid_duration_preserves_jobs",
+        "test_atomic_claim_across_connections"
+      ],
+      "source_note": "Authored development fixture using Python standard-library SQLite transactions and explicit logical time; not an external benchmark or held-out production incident.",
+      "defect_notes": {
+        "incident": "Acknowledgement omits claim generation, so an older receipt can complete a newer claim when the worker name is reused.",
+        "normal": "Reference implementation checks receipt generation and lease expiry using an atomic SQLite update; claim selection/update is within BEGIN IMMEDIATE.",
+        "local": "Lease expiry truncates the requested duration to an integer, violating fractional timing. This is a scalar calculation defect rather than a handoff ownership defect."
+      },
+      "acceptance_limits": [
+        "The concurrent check uses two independent connections and a synchronized start; this finite schedule does not prove every possible SQLite interleaving.",
+        "No wall-clock timing, untrusted fabricated receipts, crash durability, process termination, database lock timeouts, or payload types outside the stated domain are claimed.",
+        "Returned receipt dictionaries are treated as opaque: tests pass issued receipts unchanged."
+      ]
+    }
+  },
+  {
+    "case_id": "m04",
+    "family": "retrieval_cache",
+    "variant": "incident",
+    "source_file": "evals/model_interaction/tasks/retrieval_cache/incident.py",
+    "source": "\"\"\"Cache ranked retrieval results for caller requests.\"\"\"\nfrom copy import deepcopy\nimport json\n\n\ndef rank_documents(documents, limit):\n    ordered = sorted(documents, key=lambda document: (-document['score'], document['id']))\n    return deepcopy(ordered[:limit])\n\n\nclass RetrievalCache:\n    def __init__(self, source, ttl=10):\n        self._source = source\n        self._ttl = ttl\n        self._entries = {}\n\n    def search(self, tenant, query, revision, now, limit=10):\n        if limit == 0:\n            return []\n        key = json.dumps(query, sort_keys=True, ensure_ascii=False)\n        entry = self._entries.get(key)\n        if entry is not None and now < entry[0]:\n            documents = entry[1]\n        else:\n            documents = self._source(tenant, query, revision)\n            self._entries[key] = (now + self._ttl, documents)\n        return rank_documents(documents, limit)\n",
+    "request": "# Repair the retrieval-result cache\n\n`app.py` exposes `rank_documents(documents, limit)` and `RetrievalCache(source, ttl=10)`. Correct contract violations while preserving these APIs. A conforming implementation may be left unchanged. Use only Python 3.12's standard library.\n\nA document is an object with exactly `id` (a nonempty string), `score` (an integer, excluding booleans), and `payload` (a finite JSON object with at most 20 nested object/array containers on any path, counting the payload object itself). Document IDs are unique within a source result. Scores may be zero, negative or large. `rank_documents` returns up to `limit` documents in descending score order, breaking ties by ascending Python string order of `id`. It must not change the input and returns independent copies, including nested payloads. `limit` is a nonnegative integer; zero returns an empty list.\n\n`source(tenant, query, revision)` returns a list of these documents, possibly empty, or raises an exception. `tenant` and `revision` are nonempty strings. `query` has exactly `text` (a string) and `filters` (a dictionary from strings to strings). Filter insertion order does not change query identity. Query text, every filter key/value, tenant and revision all affect which result is requested.\n\n`cache.search(tenant, query, revision, now, limit=10)` returns ranked documents under the following rules:\n\n- The cache's contents are private to that instance. A successful source result can be reused only for the same tenant, query and revision. Ranking limits do not affect result identity; caching a small first response must not lose other documents on a later, larger-limit request.\n- `ttl` is a positive integer. `now` is a nonnegative integer that never decreases across calls to the same instance. A successful source result acquired at time `t` is reusable while `now < t + ttl`; at equality it has expired. A hit does not extend its lifetime. Expired results must not be returned.\n- A cache miss or expiration invokes the source once and retains the full successful result. Source exceptions propagate unchanged, are not cached, and must not erase still-valid results for other identities. The instance stays usable; a later call may retry. An empty successful result is still cacheable.\n- A zero-limit search returns `[]` without invoking the source or populating/refreshing an entry.\n- The cache does not mutate caller queries or document lists. The source may mutate or retain its query argument, and may retain and later mutate its returned documents. These changes must not affect the caller's query or cached results. Mutating results returned by either API must not affect future results or source-owned documents. Nested dictionaries and lists are included in these guarantees.\n\nCalls are sequential. Caller arguments and successful source results have the documented types and shapes; argument-validation policy for other values is out of scope. No capacity eviction, background refresh, threads or external storage is required. Keep the implementation self-contained and expose no new required arguments or methods.\n",
+    "smoke": "\"\"\"A basic public example, not exhaustive acceptance.\"\"\"\nfrom app import RetrievalCache, rank_documents\n\ncalls = []\ndocuments = [{'id': 'only', 'score': 4, 'payload': {'text': 'result', 'tags': ['demo']}}]\ndef source(tenant, query, revision):\n    calls.append((tenant, query, revision))\n    return documents\n\ncache = RetrievalCache(source, ttl=10)\nquery = {'text': 'example', 'filters': {}}\nassert cache.search('team', query, 'v1', now=0, limit=5) == documents\nassert cache.search('team', query, 'v1', now=1, limit=5) == documents\nassert len(calls) == 1\nassert rank_documents(documents, 5) == documents\nprint('basic cache example passed')\n",
+    "expected_checks": 12,
+    "test_names": [
+      "rank_order_and_limit",
+      "full_result_cache",
+      "tenant_revision_isolation",
+      "query_identity",
+      "expiry_without_sliding",
+      "caller_query_isolation",
+      "source_result_isolation",
+      "returned_result_isolation",
+      "failure_not_cached",
+      "expired_failure_retry",
+      "empty_results_and_zero_limit",
+      "independent_instances"
+    ],
+    "provenance": {
+      "family": "retrieval_cache",
+      "expected_checks": 12,
+      "test_names": [
+        "rank_order_and_limit",
+        "full_result_cache",
+        "tenant_revision_isolation",
+        "query_identity",
+        "expiry_without_sliding",
+        "caller_query_isolation",
+        "source_result_isolation",
+        "returned_result_isolation",
+        "failure_not_cached",
+        "expired_failure_retry",
+        "empty_results_and_zero_limit",
+        "independent_instances"
+      ],
+      "kind": "authored_standard_library_development_fixture",
+      "runtime": "Python 3.12 standard library",
+      "purpose": "Tenant/query/revision cache identity, ownership of mutable data, expiry and source-error handling.",
+      "variants": {
+        "incident": "Cache identity omits tenant/revision and retains caller/source aliases.",
+        "normal": "Conforming reference under the declared finite sequential input contract.",
+        "local": "Ranking retains one document beyond the requested limit."
+      },
+      "source_urls": [
+        "https://docs.python.org/3.12/library/copy.html",
+        "https://docs.python.org/3.12/library/json.html"
+      ],
+      "limitations": [
+        "Authored development case, not production evidence or an external holdout.",
+        "Sequential calls with documented valid inputs; no eviction, concurrency or clock rollback.",
+        "Acceptance and mutation checks cover selected obligations, not all possible implementations.",
+        "Valid document payload nesting is at most 20 containers, counting the payload object; arbitrarily deep recursion and resource exhaustion are out of scope."
+      ],
+      "title": "Retrieval cache identity, expiry and mutable-data boundaries",
+      "source_note": "New maintainer-authored standard-library development fixture; informed by documented Python copying and JSON behavior, not a production incident or external benchmark.",
+      "defect_notes": {
+        "incident": "Cache identity omits tenant/revision and retains caller/source aliases.",
+        "normal": "Conforming reference under the declared finite sequential input contract.",
+        "local": "Ranking retains one document beyond the requested limit."
+      }
+    }
+  },
+  {
+    "case_id": "m05",
+    "family": "retrieval_cache",
+    "variant": "normal",
+    "source_file": "evals/model_interaction/tasks/retrieval_cache/normal.py",
+    "source": "\"\"\"Cache ranked retrieval results for caller requests.\"\"\"\nfrom copy import deepcopy\nimport json\n\n\ndef rank_documents(documents, limit):\n    ordered = sorted(documents, key=lambda document: (-document['score'], document['id']))\n    return deepcopy(ordered[:limit])\n\n\nclass RetrievalCache:\n    def __init__(self, source, ttl=10):\n        self._source = source\n        self._ttl = ttl\n        self._entries = {}\n\n    def search(self, tenant, query, revision, now, limit=10):\n        if limit == 0:\n            return []\n        key = (tenant, json.dumps(query, sort_keys=True, ensure_ascii=False), revision)\n        entry = self._entries.get(key)\n        if entry is not None and now < entry[0]:\n            documents = entry[1]\n        else:\n            documents = deepcopy(self._source(tenant, deepcopy(query), revision))\n            self._entries[key] = (now + self._ttl, documents)\n        return rank_documents(documents, limit)\n",
+    "request": "# Repair the retrieval-result cache\n\n`app.py` exposes `rank_documents(documents, limit)` and `RetrievalCache(source, ttl=10)`. Correct contract violations while preserving these APIs. A conforming implementation may be left unchanged. Use only Python 3.12's standard library.\n\nA document is an object with exactly `id` (a nonempty string), `score` (an integer, excluding booleans), and `payload` (a finite JSON object with at most 20 nested object/array containers on any path, counting the payload object itself). Document IDs are unique within a source result. Scores may be zero, negative or large. `rank_documents` returns up to `limit` documents in descending score order, breaking ties by ascending Python string order of `id`. It must not change the input and returns independent copies, including nested payloads. `limit` is a nonnegative integer; zero returns an empty list.\n\n`source(tenant, query, revision)` returns a list of these documents, possibly empty, or raises an exception. `tenant` and `revision` are nonempty strings. `query` has exactly `text` (a string) and `filters` (a dictionary from strings to strings). Filter insertion order does not change query identity. Query text, every filter key/value, tenant and revision all affect which result is requested.\n\n`cache.search(tenant, query, revision, now, limit=10)` returns ranked documents under the following rules:\n\n- The cache's contents are private to that instance. A successful source result can be reused only for the same tenant, query and revision. Ranking limits do not affect result identity; caching a small first response must not lose other documents on a later, larger-limit request.\n- `ttl` is a positive integer. `now` is a nonnegative integer that never decreases across calls to the same instance. A successful source result acquired at time `t` is reusable while `now < t + ttl`; at equality it has expired. A hit does not extend its lifetime. Expired results must not be returned.\n- A cache miss or expiration invokes the source once and retains the full successful result. Source exceptions propagate unchanged, are not cached, and must not erase still-valid results for other identities. The instance stays usable; a later call may retry. An empty successful result is still cacheable.\n- A zero-limit search returns `[]` without invoking the source or populating/refreshing an entry.\n- The cache does not mutate caller queries or document lists. The source may mutate or retain its query argument, and may retain and later mutate its returned documents. These changes must not affect the caller's query or cached results. Mutating results returned by either API must not affect future results or source-owned documents. Nested dictionaries and lists are included in these guarantees.\n\nCalls are sequential. Caller arguments and successful source results have the documented types and shapes; argument-validation policy for other values is out of scope. No capacity eviction, background refresh, threads or external storage is required. Keep the implementation self-contained and expose no new required arguments or methods.\n",
+    "smoke": "\"\"\"A basic public example, not exhaustive acceptance.\"\"\"\nfrom app import RetrievalCache, rank_documents\n\ncalls = []\ndocuments = [{'id': 'only', 'score': 4, 'payload': {'text': 'result', 'tags': ['demo']}}]\ndef source(tenant, query, revision):\n    calls.append((tenant, query, revision))\n    return documents\n\ncache = RetrievalCache(source, ttl=10)\nquery = {'text': 'example', 'filters': {}}\nassert cache.search('team', query, 'v1', now=0, limit=5) == documents\nassert cache.search('team', query, 'v1', now=1, limit=5) == documents\nassert len(calls) == 1\nassert rank_documents(documents, 5) == documents\nprint('basic cache example passed')\n",
+    "expected_checks": 12,
+    "test_names": [
+      "rank_order_and_limit",
+      "full_result_cache",
+      "tenant_revision_isolation",
+      "query_identity",
+      "expiry_without_sliding",
+      "caller_query_isolation",
+      "source_result_isolation",
+      "returned_result_isolation",
+      "failure_not_cached",
+      "expired_failure_retry",
+      "empty_results_and_zero_limit",
+      "independent_instances"
+    ],
+    "provenance": {
+      "family": "retrieval_cache",
+      "expected_checks": 12,
+      "test_names": [
+        "rank_order_and_limit",
+        "full_result_cache",
+        "tenant_revision_isolation",
+        "query_identity",
+        "expiry_without_sliding",
+        "caller_query_isolation",
+        "source_result_isolation",
+        "returned_result_isolation",
+        "failure_not_cached",
+        "expired_failure_retry",
+        "empty_results_and_zero_limit",
+        "independent_instances"
+      ],
+      "kind": "authored_standard_library_development_fixture",
+      "runtime": "Python 3.12 standard library",
+      "purpose": "Tenant/query/revision cache identity, ownership of mutable data, expiry and source-error handling.",
+      "variants": {
+        "incident": "Cache identity omits tenant/revision and retains caller/source aliases.",
+        "normal": "Conforming reference under the declared finite sequential input contract.",
+        "local": "Ranking retains one document beyond the requested limit."
+      },
+      "source_urls": [
+        "https://docs.python.org/3.12/library/copy.html",
+        "https://docs.python.org/3.12/library/json.html"
+      ],
+      "limitations": [
+        "Authored development case, not production evidence or an external holdout.",
+        "Sequential calls with documented valid inputs; no eviction, concurrency or clock rollback.",
+        "Acceptance and mutation checks cover selected obligations, not all possible implementations.",
+        "Valid document payload nesting is at most 20 containers, counting the payload object; arbitrarily deep recursion and resource exhaustion are out of scope."
+      ],
+      "title": "Retrieval cache identity, expiry and mutable-data boundaries",
+      "source_note": "New maintainer-authored standard-library development fixture; informed by documented Python copying and JSON behavior, not a production incident or external benchmark.",
+      "defect_notes": {
+        "incident": "Cache identity omits tenant/revision and retains caller/source aliases.",
+        "normal": "Conforming reference under the declared finite sequential input contract.",
+        "local": "Ranking retains one document beyond the requested limit."
+      }
+    }
+  },
+  {
+    "case_id": "m06",
+    "family": "retrieval_cache",
+    "variant": "local",
+    "source_file": "evals/model_interaction/tasks/retrieval_cache/local.py",
+    "source": "\"\"\"Cache ranked retrieval results for caller requests.\"\"\"\nfrom copy import deepcopy\nimport json\n\n\ndef rank_documents(documents, limit):\n    ordered = sorted(documents, key=lambda document: (-document['score'], document['id']))\n    return deepcopy(ordered[:limit + 1])\n\n\nclass RetrievalCache:\n    def __init__(self, source, ttl=10):\n        self._source = source\n        self._ttl = ttl\n        self._entries = {}\n\n    def search(self, tenant, query, revision, now, limit=10):\n        if limit == 0:\n            return []\n        key = (tenant, json.dumps(query, sort_keys=True, ensure_ascii=False), revision)\n        entry = self._entries.get(key)\n        if entry is not None and now < entry[0]:\n            documents = entry[1]\n        else:\n            documents = deepcopy(self._source(tenant, deepcopy(query), revision))\n            self._entries[key] = (now + self._ttl, documents)\n        return rank_documents(documents, limit)\n",
+    "request": "# Repair the retrieval-result cache\n\n`app.py` exposes `rank_documents(documents, limit)` and `RetrievalCache(source, ttl=10)`. Correct contract violations while preserving these APIs. A conforming implementation may be left unchanged. Use only Python 3.12's standard library.\n\nA document is an object with exactly `id` (a nonempty string), `score` (an integer, excluding booleans), and `payload` (a finite JSON object with at most 20 nested object/array containers on any path, counting the payload object itself). Document IDs are unique within a source result. Scores may be zero, negative or large. `rank_documents` returns up to `limit` documents in descending score order, breaking ties by ascending Python string order of `id`. It must not change the input and returns independent copies, including nested payloads. `limit` is a nonnegative integer; zero returns an empty list.\n\n`source(tenant, query, revision)` returns a list of these documents, possibly empty, or raises an exception. `tenant` and `revision` are nonempty strings. `query` has exactly `text` (a string) and `filters` (a dictionary from strings to strings). Filter insertion order does not change query identity. Query text, every filter key/value, tenant and revision all affect which result is requested.\n\n`cache.search(tenant, query, revision, now, limit=10)` returns ranked documents under the following rules:\n\n- The cache's contents are private to that instance. A successful source result can be reused only for the same tenant, query and revision. Ranking limits do not affect result identity; caching a small first response must not lose other documents on a later, larger-limit request.\n- `ttl` is a positive integer. `now` is a nonnegative integer that never decreases across calls to the same instance. A successful source result acquired at time `t` is reusable while `now < t + ttl`; at equality it has expired. A hit does not extend its lifetime. Expired results must not be returned.\n- A cache miss or expiration invokes the source once and retains the full successful result. Source exceptions propagate unchanged, are not cached, and must not erase still-valid results for other identities. The instance stays usable; a later call may retry. An empty successful result is still cacheable.\n- A zero-limit search returns `[]` without invoking the source or populating/refreshing an entry.\n- The cache does not mutate caller queries or document lists. The source may mutate or retain its query argument, and may retain and later mutate its returned documents. These changes must not affect the caller's query or cached results. Mutating results returned by either API must not affect future results or source-owned documents. Nested dictionaries and lists are included in these guarantees.\n\nCalls are sequential. Caller arguments and successful source results have the documented types and shapes; argument-validation policy for other values is out of scope. No capacity eviction, background refresh, threads or external storage is required. Keep the implementation self-contained and expose no new required arguments or methods.\n",
+    "smoke": "\"\"\"A basic public example, not exhaustive acceptance.\"\"\"\nfrom app import RetrievalCache, rank_documents\n\ncalls = []\ndocuments = [{'id': 'only', 'score': 4, 'payload': {'text': 'result', 'tags': ['demo']}}]\ndef source(tenant, query, revision):\n    calls.append((tenant, query, revision))\n    return documents\n\ncache = RetrievalCache(source, ttl=10)\nquery = {'text': 'example', 'filters': {}}\nassert cache.search('team', query, 'v1', now=0, limit=5) == documents\nassert cache.search('team', query, 'v1', now=1, limit=5) == documents\nassert len(calls) == 1\nassert rank_documents(documents, 5) == documents\nprint('basic cache example passed')\n",
+    "expected_checks": 12,
+    "test_names": [
+      "rank_order_and_limit",
+      "full_result_cache",
+      "tenant_revision_isolation",
+      "query_identity",
+      "expiry_without_sliding",
+      "caller_query_isolation",
+      "source_result_isolation",
+      "returned_result_isolation",
+      "failure_not_cached",
+      "expired_failure_retry",
+      "empty_results_and_zero_limit",
+      "independent_instances"
+    ],
+    "provenance": {
+      "family": "retrieval_cache",
+      "expected_checks": 12,
+      "test_names": [
+        "rank_order_and_limit",
+        "full_result_cache",
+        "tenant_revision_isolation",
+        "query_identity",
+        "expiry_without_sliding",
+        "caller_query_isolation",
+        "source_result_isolation",
+        "returned_result_isolation",
+        "failure_not_cached",
+        "expired_failure_retry",
+        "empty_results_and_zero_limit",
+        "independent_instances"
+      ],
+      "kind": "authored_standard_library_development_fixture",
+      "runtime": "Python 3.12 standard library",
+      "purpose": "Tenant/query/revision cache identity, ownership of mutable data, expiry and source-error handling.",
+      "variants": {
+        "incident": "Cache identity omits tenant/revision and retains caller/source aliases.",
+        "normal": "Conforming reference under the declared finite sequential input contract.",
+        "local": "Ranking retains one document beyond the requested limit."
+      },
+      "source_urls": [
+        "https://docs.python.org/3.12/library/copy.html",
+        "https://docs.python.org/3.12/library/json.html"
+      ],
+      "limitations": [
+        "Authored development case, not production evidence or an external holdout.",
+        "Sequential calls with documented valid inputs; no eviction, concurrency or clock rollback.",
+        "Acceptance and mutation checks cover selected obligations, not all possible implementations.",
+        "Valid document payload nesting is at most 20 containers, counting the payload object; arbitrarily deep recursion and resource exhaustion are out of scope."
+      ],
+      "title": "Retrieval cache identity, expiry and mutable-data boundaries",
+      "source_note": "New maintainer-authored standard-library development fixture; informed by documented Python copying and JSON behavior, not a production incident or external benchmark.",
+      "defect_notes": {
+        "incident": "Cache identity omits tenant/revision and retains caller/source aliases.",
+        "normal": "Conforming reference under the declared finite sequential input contract.",
+        "local": "Ranking retains one document beyond the requested limit."
+      }
+    }
+  },
+  {
+    "case_id": "m07",
+    "family": "stream_events",
+    "variant": "incident",
+    "source_file": "evals/model_interaction/tasks/stream_events/incident.py",
+    "source": "\"\"\"Incremental parser for the project's small event protocol.\"\"\"\nimport json\n\n\nclass StreamError(ValueError):\n    pass\n\n\ndef text_metrics(text):\n    return {\"characters\": len(text), \"words\": len(text.split())}\n\n\nclass EventStream:\n    def __init__(self, max_buffer=4096):\n        self.max_buffer = max_buffer\n        self._buffer = bytearray()\n        self._text = []\n        self.state = \"OPEN\"\n\n    @property\n    def buffered_bytes(self):\n        return len(self._buffer)\n\n    def _fail(self, message):\n        self.state = \"FAILED\"\n        self._buffer.clear()\n        raise StreamError(message)\n\n    def _record(self, raw):\n        try:\n            record = json.loads(raw.decode(\"utf-8\"))\n        except (UnicodeDecodeError, ValueError, RecursionError):\n            self._fail(\"invalid UTF-8 JSON frame\")\n        if not isinstance(record, dict):\n            self._fail(\"frame must be an object\")\n        event = record.get(\"event\")\n        if event == \"token\" and set(record) == {\"event\", \"text\"} and isinstance(record[\"text\"], str):\n            self._text.append(record[\"text\"])\n            return {\"event\": \"token\", \"text\": record[\"text\"]}\n        if event == \"done\" and set(record) == {\"event\"}:\n            self.state = \"DONE\"\n            text = \"\".join(self._text)\n            return {\"event\": \"done\", \"text\": text, **text_metrics(text)}\n        if event == \"error\" and set(record) == {\"event\", \"message\"} and isinstance(record[\"message\"], str):\n            self.state = \"ERROR\"\n            return {\"event\": \"error\", \"message\": record[\"message\"]}\n        self._fail(\"invalid event schema\")\n\n    def feed(self, data):\n        if self.state == \"FAILED\":\n            raise StreamError(\"stream has failed\")\n        if not data:\n            return []\n        if self.state != \"OPEN\":\n            self._fail(\"data after terminal event\")\n        try:\n            data = data.decode(\"utf-8\").encode(\"utf-8\")\n        except UnicodeDecodeError:\n            self._fail(\"invalid UTF-8 input chunk\")\n        output = []\n        start = 0\n        while start < len(data):\n            newline = data.find(b\"\\n\", start)\n            end = len(data) if newline < 0 else newline\n            part = data[start:end]\n            if len(self._buffer) + len(part) > self.max_buffer:\n                self._fail(\"frame exceeds max_buffer\")\n            self._buffer.extend(part)\n            if newline < 0:\n                break\n            raw = bytes(self._buffer)\n            self._buffer.clear()\n            output.append(self._record(raw))\n            start = newline + 1\n        return output\n\n    def finish(self):\n        if self.state == \"FAILED\":\n            raise StreamError(\"stream has failed\")\n        if self.state in {\"DONE\", \"ERROR\"}:\n            return []\n        self._fail(\"EOF before a complete terminal event\")\n",
+    "request": "# Repair the streamed tool-output adapter\n\n`app.py` exposes `StreamError(ValueError)`, `text_metrics(text)`, and `EventStream(max_buffer=4096)`. Correct any behavior that violates the contract below. Preserve the public API. A conforming implementation may be left unchanged. Use only Python 3.12's standard library.\n\nThis is a deliberately small **LF-delimited JSON protocol**, not the full SSE protocol. Input to `feed` is `bytes`; its boundaries may fall anywhere, including inside a UTF-8 character or between any two bytes of a frame. Every frame is exactly one UTF-8 JSON object followed by LF (`b\"\\n\"`). Literal newlines inside JSON strings must be escaped. Empty lines are invalid. Fields must match one of these exact shapes:\n\n- `{\"event\":\"token\",\"text\":<string>}` emits the same two fields. Text fragments are concatenated in arrival order; empty fragments are legal.\n- `{\"event\":\"done\"}` emits `{\"event\":\"done\",\"text\":<concatenated text>,\"characters\":<character count>,\"words\":<word count>}`. Character count is Python `len(text)`; word count is `len(text.split())`, so runs of any Unicode whitespace separate words. `text_metrics(text)` exposes those same two counts independently.\n- `{\"event\":\"error\",\"message\":<string>}` emits those two fields and ends the stream without a done event.\n\n`feed(data)` returns a list of all completed events from that call, in order. An incomplete frame is retained for later calls. `state` is initially `\"OPEN\"`, becomes `\"DONE\"` or `\"ERROR\"` at the corresponding terminal event, and becomes `\"FAILED\"` on a protocol failure. Each successful stream has exactly one terminal event. Any bytes after a terminal event, including in the same call, are a failure. Empty feeds after a terminal event return `[]`. `finish()` marks transport EOF: it returns `[]` after DONE/ERROR, including on repeat calls, and fails if the stream is still OPEN (whether it has pending bytes or is simply missing a terminal event).\n\nA malformed UTF-8/JSON frame, invalid event schema, oversized frame, premature EOF, or data after termination raises `StreamError`, sets state to FAILED, and clears the frame buffer. A failing feed returns no partial event list. Previously returned events remain valid. Once FAILED, every subsequent `feed` (even empty) and `finish` raises `StreamError`; the parser cannot be reused.\n\n`max_buffer` is a positive integer supplied by the caller. It bounds the number of **wire bytes in each frame excluding LF**, including both complete and unfinished frames. A frame exactly at the limit is allowed. A chunk containing many small frames can be much larger than this limit and must still work. `buffered_bytes` reports the current incomplete frame's byte count and is zero after terminal/failure. This bound concerns the frame buffer, not the accumulated output text or the caller-owned incoming chunk. Caller-provided arguments have the documented types; do not add a new interface or change the wire format.\n",
+    "smoke": "import app\np = app.EventStream()\nassert p.feed(b'{\"event\":\"token\",\"text\":\"hello\"}\\n{\"event\":\"done\"}\\n') == [\n    {\"event\": \"token\", \"text\": \"hello\"},\n    {\"event\": \"done\", \"text\": \"hello\", \"characters\": 5, \"words\": 1},\n]\nassert p.finish() == []\nprint(\"smoke passed\")\n",
+    "expected_checks": 12,
+    "test_names": [
+      "basic",
+      "byte_boundaries",
+      "metrics",
+      "unfinished_buffer",
+      "size_limits",
+      "error_terminal",
+      "terminal_once",
+      "malformed_frames",
+      "premature_eof",
+      "poison_state",
+      "failed_call_has_no_partial_output",
+      "independent_streams"
+    ],
+    "provenance": {
+      "family": "stream_events",
+      "title": "Incremental tool event stream",
+      "expected_checks": 12,
+      "test_names": [
+        "basic",
+        "byte_boundaries",
+        "metrics",
+        "unfinished_buffer",
+        "size_limits",
+        "error_terminal",
+        "terminal_once",
+        "malformed_frames",
+        "premature_eof",
+        "poison_state",
+        "failed_call_has_no_partial_output",
+        "independent_streams"
+      ],
+      "source_note": "Authored development fixture with an explicitly bounded protocol; not an external benchmark or production incident. Python standard-library semantics only.",
+      "defect_notes": {
+        "incident": "Decodes each transport chunk independently, rejecting valid split UTF-8; accepts trailing same-call data after terminal events.",
+        "normal": "Reference implementation satisfying the documented lifecycle, data, failure and isolation contract.",
+        "local": "Counts words by ASCII-space splitting, including empty pieces; all stream composition mechanisms are unchanged."
+      },
+      "validation_scope": [
+        "Custom LF/JSON protocol, not an implementation or conformance test of full SSE.",
+        "Single-threaded parser lifecycle; no transport, clock, network or scheduling test.",
+        "Every two-way byte split and single-byte delivery are tested for one representative Unicode stream; this is finite coverage.",
+        "Frame bound is checked by observed acceptance and buffered_bytes; peak process memory is not measured."
+      ]
+    }
+  },
+  {
+    "case_id": "m08",
+    "family": "stream_events",
+    "variant": "normal",
+    "source_file": "evals/model_interaction/tasks/stream_events/normal.py",
+    "source": "\"\"\"Incremental parser for the project's small event protocol.\"\"\"\nimport json\n\n\nclass StreamError(ValueError):\n    pass\n\n\ndef text_metrics(text):\n    return {\"characters\": len(text), \"words\": len(text.split())}\n\n\nclass EventStream:\n    def __init__(self, max_buffer=4096):\n        self.max_buffer = max_buffer\n        self._buffer = bytearray()\n        self._text = []\n        self.state = \"OPEN\"\n\n    @property\n    def buffered_bytes(self):\n        return len(self._buffer)\n\n    def _fail(self, message):\n        self.state = \"FAILED\"\n        self._buffer.clear()\n        raise StreamError(message)\n\n    def _record(self, raw):\n        try:\n            record = json.loads(raw.decode(\"utf-8\"))\n        except (UnicodeDecodeError, ValueError, RecursionError):\n            self._fail(\"invalid UTF-8 JSON frame\")\n        if not isinstance(record, dict):\n            self._fail(\"frame must be an object\")\n        event = record.get(\"event\")\n        if event == \"token\" and set(record) == {\"event\", \"text\"} and isinstance(record[\"text\"], str):\n            self._text.append(record[\"text\"])\n            return {\"event\": \"token\", \"text\": record[\"text\"]}\n        if event == \"done\" and set(record) == {\"event\"}:\n            self.state = \"DONE\"\n            text = \"\".join(self._text)\n            return {\"event\": \"done\", \"text\": text, **text_metrics(text)}\n        if event == \"error\" and set(record) == {\"event\", \"message\"} and isinstance(record[\"message\"], str):\n            self.state = \"ERROR\"\n            return {\"event\": \"error\", \"message\": record[\"message\"]}\n        self._fail(\"invalid event schema\")\n\n    def feed(self, data):\n        if self.state == \"FAILED\":\n            raise StreamError(\"stream has failed\")\n        if not data:\n            return []\n        if self.state != \"OPEN\":\n            self._fail(\"data after terminal event\")\n        output = []\n        start = 0\n        while start < len(data):\n            newline = data.find(b\"\\n\", start)\n            end = len(data) if newline < 0 else newline\n            part = data[start:end]\n            if len(self._buffer) + len(part) > self.max_buffer:\n                self._fail(\"frame exceeds max_buffer\")\n            self._buffer.extend(part)\n            if newline < 0:\n                break\n            raw = bytes(self._buffer)\n            self._buffer.clear()\n            output.append(self._record(raw))\n            start = newline + 1\n            if self.state != \"OPEN\" and start < len(data):\n                self._fail(\"data after terminal event\")\n        return output\n\n    def finish(self):\n        if self.state == \"FAILED\":\n            raise StreamError(\"stream has failed\")\n        if self.state in {\"DONE\", \"ERROR\"}:\n            return []\n        self._fail(\"EOF before a complete terminal event\")\n",
+    "request": "# Repair the streamed tool-output adapter\n\n`app.py` exposes `StreamError(ValueError)`, `text_metrics(text)`, and `EventStream(max_buffer=4096)`. Correct any behavior that violates the contract below. Preserve the public API. A conforming implementation may be left unchanged. Use only Python 3.12's standard library.\n\nThis is a deliberately small **LF-delimited JSON protocol**, not the full SSE protocol. Input to `feed` is `bytes`; its boundaries may fall anywhere, including inside a UTF-8 character or between any two bytes of a frame. Every frame is exactly one UTF-8 JSON object followed by LF (`b\"\\n\"`). Literal newlines inside JSON strings must be escaped. Empty lines are invalid. Fields must match one of these exact shapes:\n\n- `{\"event\":\"token\",\"text\":<string>}` emits the same two fields. Text fragments are concatenated in arrival order; empty fragments are legal.\n- `{\"event\":\"done\"}` emits `{\"event\":\"done\",\"text\":<concatenated text>,\"characters\":<character count>,\"words\":<word count>}`. Character count is Python `len(text)`; word count is `len(text.split())`, so runs of any Unicode whitespace separate words. `text_metrics(text)` exposes those same two counts independently.\n- `{\"event\":\"error\",\"message\":<string>}` emits those two fields and ends the stream without a done event.\n\n`feed(data)` returns a list of all completed events from that call, in order. An incomplete frame is retained for later calls. `state` is initially `\"OPEN\"`, becomes `\"DONE\"` or `\"ERROR\"` at the corresponding terminal event, and becomes `\"FAILED\"` on a protocol failure. Each successful stream has exactly one terminal event. Any bytes after a terminal event, including in the same call, are a failure. Empty feeds after a terminal event return `[]`. `finish()` marks transport EOF: it returns `[]` after DONE/ERROR, including on repeat calls, and fails if the stream is still OPEN (whether it has pending bytes or is simply missing a terminal event).\n\nA malformed UTF-8/JSON frame, invalid event schema, oversized frame, premature EOF, or data after termination raises `StreamError`, sets state to FAILED, and clears the frame buffer. A failing feed returns no partial event list. Previously returned events remain valid. Once FAILED, every subsequent `feed` (even empty) and `finish` raises `StreamError`; the parser cannot be reused.\n\n`max_buffer` is a positive integer supplied by the caller. It bounds the number of **wire bytes in each frame excluding LF**, including both complete and unfinished frames. A frame exactly at the limit is allowed. A chunk containing many small frames can be much larger than this limit and must still work. `buffered_bytes` reports the current incomplete frame's byte count and is zero after terminal/failure. This bound concerns the frame buffer, not the accumulated output text or the caller-owned incoming chunk. Caller-provided arguments have the documented types; do not add a new interface or change the wire format.\n",
+    "smoke": "import app\np = app.EventStream()\nassert p.feed(b'{\"event\":\"token\",\"text\":\"hello\"}\\n{\"event\":\"done\"}\\n') == [\n    {\"event\": \"token\", \"text\": \"hello\"},\n    {\"event\": \"done\", \"text\": \"hello\", \"characters\": 5, \"words\": 1},\n]\nassert p.finish() == []\nprint(\"smoke passed\")\n",
+    "expected_checks": 12,
+    "test_names": [
+      "basic",
+      "byte_boundaries",
+      "metrics",
+      "unfinished_buffer",
+      "size_limits",
+      "error_terminal",
+      "terminal_once",
+      "malformed_frames",
+      "premature_eof",
+      "poison_state",
+      "failed_call_has_no_partial_output",
+      "independent_streams"
+    ],
+    "provenance": {
+      "family": "stream_events",
+      "title": "Incremental tool event stream",
+      "expected_checks": 12,
+      "test_names": [
+        "basic",
+        "byte_boundaries",
+        "metrics",
+        "unfinished_buffer",
+        "size_limits",
+        "error_terminal",
+        "terminal_once",
+        "malformed_frames",
+        "premature_eof",
+        "poison_state",
+        "failed_call_has_no_partial_output",
+        "independent_streams"
+      ],
+      "source_note": "Authored development fixture with an explicitly bounded protocol; not an external benchmark or production incident. Python standard-library semantics only.",
+      "defect_notes": {
+        "incident": "Decodes each transport chunk independently, rejecting valid split UTF-8; accepts trailing same-call data after terminal events.",
+        "normal": "Reference implementation satisfying the documented lifecycle, data, failure and isolation contract.",
+        "local": "Counts words by ASCII-space splitting, including empty pieces; all stream composition mechanisms are unchanged."
+      },
+      "validation_scope": [
+        "Custom LF/JSON protocol, not an implementation or conformance test of full SSE.",
+        "Single-threaded parser lifecycle; no transport, clock, network or scheduling test.",
+        "Every two-way byte split and single-byte delivery are tested for one representative Unicode stream; this is finite coverage.",
+        "Frame bound is checked by observed acceptance and buffered_bytes; peak process memory is not measured."
+      ]
+    }
+  },
+  {
+    "case_id": "m09",
+    "family": "stream_events",
+    "variant": "local",
+    "source_file": "evals/model_interaction/tasks/stream_events/local.py",
+    "source": "\"\"\"Incremental parser for the project's small event protocol.\"\"\"\nimport json\n\n\nclass StreamError(ValueError):\n    pass\n\n\ndef text_metrics(text):\n    return {\"characters\": len(text), \"words\": len(text.split(\" \"))}\n\n\nclass EventStream:\n    def __init__(self, max_buffer=4096):\n        self.max_buffer = max_buffer\n        self._buffer = bytearray()\n        self._text = []\n        self.state = \"OPEN\"\n\n    @property\n    def buffered_bytes(self):\n        return len(self._buffer)\n\n    def _fail(self, message):\n        self.state = \"FAILED\"\n        self._buffer.clear()\n        raise StreamError(message)\n\n    def _record(self, raw):\n        try:\n            record = json.loads(raw.decode(\"utf-8\"))\n        except (UnicodeDecodeError, ValueError, RecursionError):\n            self._fail(\"invalid UTF-8 JSON frame\")\n        if not isinstance(record, dict):\n            self._fail(\"frame must be an object\")\n        event = record.get(\"event\")\n        if event == \"token\" and set(record) == {\"event\", \"text\"} and isinstance(record[\"text\"], str):\n            self._text.append(record[\"text\"])\n            return {\"event\": \"token\", \"text\": record[\"text\"]}\n        if event == \"done\" and set(record) == {\"event\"}:\n            self.state = \"DONE\"\n            text = \"\".join(self._text)\n            return {\"event\": \"done\", \"text\": text, **text_metrics(text)}\n        if event == \"error\" and set(record) == {\"event\", \"message\"} and isinstance(record[\"message\"], str):\n            self.state = \"ERROR\"\n            return {\"event\": \"error\", \"message\": record[\"message\"]}\n        self._fail(\"invalid event schema\")\n\n    def feed(self, data):\n        if self.state == \"FAILED\":\n            raise StreamError(\"stream has failed\")\n        if not data:\n            return []\n        if self.state != \"OPEN\":\n            self._fail(\"data after terminal event\")\n        output = []\n        start = 0\n        while start < len(data):\n            newline = data.find(b\"\\n\", start)\n            end = len(data) if newline < 0 else newline\n            part = data[start:end]\n            if len(self._buffer) + len(part) > self.max_buffer:\n                self._fail(\"frame exceeds max_buffer\")\n            self._buffer.extend(part)\n            if newline < 0:\n                break\n            raw = bytes(self._buffer)\n            self._buffer.clear()\n            output.append(self._record(raw))\n            start = newline + 1\n            if self.state != \"OPEN\" and start < len(data):\n                self._fail(\"data after terminal event\")\n        return output\n\n    def finish(self):\n        if self.state == \"FAILED\":\n            raise StreamError(\"stream has failed\")\n        if self.state in {\"DONE\", \"ERROR\"}:\n            return []\n        self._fail(\"EOF before a complete terminal event\")\n",
+    "request": "# Repair the streamed tool-output adapter\n\n`app.py` exposes `StreamError(ValueError)`, `text_metrics(text)`, and `EventStream(max_buffer=4096)`. Correct any behavior that violates the contract below. Preserve the public API. A conforming implementation may be left unchanged. Use only Python 3.12's standard library.\n\nThis is a deliberately small **LF-delimited JSON protocol**, not the full SSE protocol. Input to `feed` is `bytes`; its boundaries may fall anywhere, including inside a UTF-8 character or between any two bytes of a frame. Every frame is exactly one UTF-8 JSON object followed by LF (`b\"\\n\"`). Literal newlines inside JSON strings must be escaped. Empty lines are invalid. Fields must match one of these exact shapes:\n\n- `{\"event\":\"token\",\"text\":<string>}` emits the same two fields. Text fragments are concatenated in arrival order; empty fragments are legal.\n- `{\"event\":\"done\"}` emits `{\"event\":\"done\",\"text\":<concatenated text>,\"characters\":<character count>,\"words\":<word count>}`. Character count is Python `len(text)`; word count is `len(text.split())`, so runs of any Unicode whitespace separate words. `text_metrics(text)` exposes those same two counts independently.\n- `{\"event\":\"error\",\"message\":<string>}` emits those two fields and ends the stream without a done event.\n\n`feed(data)` returns a list of all completed events from that call, in order. An incomplete frame is retained for later calls. `state` is initially `\"OPEN\"`, becomes `\"DONE\"` or `\"ERROR\"` at the corresponding terminal event, and becomes `\"FAILED\"` on a protocol failure. Each successful stream has exactly one terminal event. Any bytes after a terminal event, including in the same call, are a failure. Empty feeds after a terminal event return `[]`. `finish()` marks transport EOF: it returns `[]` after DONE/ERROR, including on repeat calls, and fails if the stream is still OPEN (whether it has pending bytes or is simply missing a terminal event).\n\nA malformed UTF-8/JSON frame, invalid event schema, oversized frame, premature EOF, or data after termination raises `StreamError`, sets state to FAILED, and clears the frame buffer. A failing feed returns no partial event list. Previously returned events remain valid. Once FAILED, every subsequent `feed` (even empty) and `finish` raises `StreamError`; the parser cannot be reused.\n\n`max_buffer` is a positive integer supplied by the caller. It bounds the number of **wire bytes in each frame excluding LF**, including both complete and unfinished frames. A frame exactly at the limit is allowed. A chunk containing many small frames can be much larger than this limit and must still work. `buffered_bytes` reports the current incomplete frame's byte count and is zero after terminal/failure. This bound concerns the frame buffer, not the accumulated output text or the caller-owned incoming chunk. Caller-provided arguments have the documented types; do not add a new interface or change the wire format.\n",
+    "smoke": "import app\np = app.EventStream()\nassert p.feed(b'{\"event\":\"token\",\"text\":\"hello\"}\\n{\"event\":\"done\"}\\n') == [\n    {\"event\": \"token\", \"text\": \"hello\"},\n    {\"event\": \"done\", \"text\": \"hello\", \"characters\": 5, \"words\": 1},\n]\nassert p.finish() == []\nprint(\"smoke passed\")\n",
+    "expected_checks": 12,
+    "test_names": [
+      "basic",
+      "byte_boundaries",
+      "metrics",
+      "unfinished_buffer",
+      "size_limits",
+      "error_terminal",
+      "terminal_once",
+      "malformed_frames",
+      "premature_eof",
+      "poison_state",
+      "failed_call_has_no_partial_output",
+      "independent_streams"
+    ],
+    "provenance": {
+      "family": "stream_events",
+      "title": "Incremental tool event stream",
+      "expected_checks": 12,
+      "test_names": [
+        "basic",
+        "byte_boundaries",
+        "metrics",
+        "unfinished_buffer",
+        "size_limits",
+        "error_terminal",
+        "terminal_once",
+        "malformed_frames",
+        "premature_eof",
+        "poison_state",
+        "failed_call_has_no_partial_output",
+        "independent_streams"
+      ],
+      "source_note": "Authored development fixture with an explicitly bounded protocol; not an external benchmark or production incident. Python standard-library semantics only.",
+      "defect_notes": {
+        "incident": "Decodes each transport chunk independently, rejecting valid split UTF-8; accepts trailing same-call data after terminal events.",
+        "normal": "Reference implementation satisfying the documented lifecycle, data, failure and isolation contract.",
+        "local": "Counts words by ASCII-space splitting, including empty pieces; all stream composition mechanisms are unchanged."
+      },
+      "validation_scope": [
+        "Custom LF/JSON protocol, not an implementation or conformance test of full SSE.",
+        "Single-threaded parser lifecycle; no transport, clock, network or scheduling test.",
+        "Every two-way byte split and single-byte delivery are tested for one representative Unicode stream; this is finite coverage.",
+        "Frame bound is checked by observed acceptance and buffered_bytes; peak process memory is not measured."
+      ]
+    }
+  },
+  {
+    "case_id": "m10",
+    "family": "tool_results",
+    "variant": "incident",
+    "source_file": "evals/model_interaction/tasks/tool_results/incident.py",
+    "source": "\"\"\"Combine versioned results from independently completing tools.\"\"\"\nfrom copy import deepcopy\n\n\ndef score(values, weight):\n    return sum(values) * weight\n\n\nclass ToolBatch:\n    def __init__(self, call_specs):\n        if not isinstance(call_specs, list):\n            raise ValueError(\"call_specs must be a list\")\n        seen = set()\n        for item in call_specs:\n            if (not isinstance(item, dict) or set(item) != {\"call_id\", \"weight\"}\n                    or not isinstance(item[\"call_id\"], str) or not item[\"call_id\"]\n                    or type(item[\"weight\"]) is not int or item[\"call_id\"] in seen):\n                raise ValueError(\"invalid call specification\")\n            seen.add(item[\"call_id\"])\n        self._specs = deepcopy(call_specs)\n        self._known = seen\n        self._latest = {}\n        self._sealed = False\n\n    def _validate(self, item):\n        if (not isinstance(item, dict) or not isinstance(item.get(\"call_id\"), str)\n                or item[\"call_id\"] not in self._known):\n            raise ValueError(\"unknown call\")\n        if type(item.get(\"version\")) is not int or item[\"version\"] < 1:\n            raise ValueError(\"invalid version\")\n        if item.get(\"status\") == \"success\":\n            if (set(item) != {\"call_id\", \"version\", \"status\", \"values\"}\n                    or not isinstance(item[\"values\"], list)\n                    or any(type(v) is not int for v in item[\"values\"])):\n                raise ValueError(\"invalid success\")\n        elif item.get(\"status\") == \"error\":\n            if (set(item) != {\"call_id\", \"version\", \"status\", \"message\"}\n                    or not isinstance(item[\"message\"], str)):\n                raise ValueError(\"invalid error\")\n        else:\n            raise ValueError(\"invalid status\")\n\n    def ingest(self, updates):\n        if self._sealed:\n            raise RuntimeError(\"batch is finalized\")\n        if not isinstance(updates, list):\n            raise ValueError(\"updates must be a list\")\n        staged = self._latest\n        for item in updates:\n            self._validate(item)\n            key = item[\"call_id\"]\n            previous = staged.get(key)\n            if previous is not None:\n                if item[\"version\"] == previous[\"version\"]:\n                    if item != previous:\n                        raise ValueError(\"conflicting result at same version\")\n                    continue\n            staged[key] = deepcopy(item)\n        self._latest = staged\n\n    def snapshot(self):\n        output = []\n        for spec in self._specs:\n            item = self._latest.get(spec[\"call_id\"])\n            row = {\"call_id\": spec[\"call_id\"], \"version\": None,\n                   \"status\": \"pending\", \"value\": None, \"error\": None}\n            if item is not None:\n                row.update(version=item[\"version\"], status=item[\"status\"])\n                if item[\"status\"] == \"success\":\n                    row[\"value\"] = score(item[\"values\"], spec[\"weight\"])\n                else:\n                    row[\"error\"] = item[\"message\"]\n            output.append(row)\n        return output\n\n    def finalize(self):\n        if len(self._latest) != len(self._specs):\n            raise ValueError(\"results are incomplete\")\n        self._sealed = True\n        return self.snapshot()\n",
+    "request": "# Repair the parallel tool-result accumulator\n\n`app.py` exposes `score(values, weight)` and `ToolBatch(call_specs)`. Correct contract violations while preserving these APIs. A conforming implementation may be left unchanged. Use only Python 3.12's standard library.\n\nTools finish in arbitrary order and can send retried results in later batches. `call_specs` is a list of exact objects `{\"call_id\": <nonempty string>, \"weight\": <integer>}` with unique IDs. An empty list is legal. Integers exclude booleans and may be zero, negative, or large. Invalid specifications raise `ValueError`.\n\n`ingest(updates)` takes a list of result objects with one of these exact shapes:\n\n- `{\"call_id\": <known ID>, \"version\": <positive integer>, \"status\":\"success\", \"values\": <list of integers>}`\n- `{\"call_id\": <known ID>, \"version\": <positive integer>, \"status\":\"error\", \"message\": <string>}`\n\nIntegers exclude booleans. Empty values/messages are legal. Unknown IDs, missing/extra fields, incorrect types, or other statuses raise `ValueError`. Validation must also apply to stale updates before they can be ignored. Apply valid updates in list order: the largest version seen for each call wins; a lower version is ignored; an identical repeat of the current version is idempotent; different payloads for the same **current** version raise `ValueError`. Once a higher version exists, old-version payload conflicts need not be remembered. Version gaps are legal. Newer success may replace error, and newer error may replace success.\n\nAn ingest call is atomic. If any update is invalid or conflicts, no update from that call is retained, including any valid earlier items. The instance remains usable after rejection. Empty ingest lists are no-ops until finalization.\n\n`snapshot()` returns a new list in the original `call_specs` order. Every row has exactly `call_id`, `version`, `status`, `value`, and `error`. An unseen call has `version=None`, `status=\"pending\"`, `value=None`, `error=None`. Success has its version, `status=\"success\"`, `value=score(values, weight)`, `error=None`; error has its version, `status=\"error\"`, `value=None`, and the message as `error`. `score(values, weight)` is exactly the integer sum of all values multiplied by the weight, including negative values; an empty list scores zero.\n\n`finalize()` requires every expected call to have a result; errors count as results. An incomplete finalize raises `ValueError` and leaves the batch open for further ingestion. A successful finalize seals the instance and returns the same shape as snapshot. Repeated finalize and snapshot calls remain valid and return fresh copies; **any ingest after successful finalization, including an empty list, raises `RuntimeError`**. Empty expected-call batches may finalize immediately.\n\nThe accumulator never mutates caller inputs. Later caller mutation of specifications or updates must not change retained state. Mutating a returned snapshot/finalized result must not affect later reads. Inputs and outputs have no shared mutable state with the accumulator. Expose no new required methods or arguments.\n",
+    "smoke": "import app\nbatch = app.ToolBatch([{\"call_id\": \"a\", \"weight\": 2}])\nbatch.ingest([{\"call_id\": \"a\", \"version\": 1, \"status\": \"success\", \"values\": [3]}])\nassert batch.finalize() == [{\"call_id\": \"a\", \"version\": 1, \"status\": \"success\", \"value\": 6, \"error\": None}]\nprint(\"smoke passed\")\n",
+    "expected_checks": 12,
+    "test_names": [
+      "order_and_pending",
+      "scores",
+      "stale_and_retry",
+      "duplicate_and_conflict",
+      "atomic_conflicts",
+      "atomic_validation",
+      "failure_then_recovery",
+      "finalized_lifecycle",
+      "caller_input_isolation",
+      "output_isolation",
+      "specifications_and_empty",
+      "independent_batches"
+    ],
+    "provenance": {
+      "family": "tool_results",
+      "title": "Versioned parallel tool result aggregation",
+      "expected_checks": 12,
+      "test_names": [
+        "order_and_pending",
+        "scores",
+        "stale_and_retry",
+        "duplicate_and_conflict",
+        "atomic_conflicts",
+        "atomic_validation",
+        "failure_then_recovery",
+        "finalized_lifecycle",
+        "caller_input_isolation",
+        "output_isolation",
+        "specifications_and_empty",
+        "independent_batches"
+      ],
+      "source_note": "Authored development fixture with an explicitly bounded protocol; not an external benchmark or production incident. Python standard-library semantics only.",
+      "defect_notes": {
+        "incident": "Allows older retries to replace newer results; mutates live state during an ingest that can later fail, leaking partial updates.",
+        "normal": "Reference implementation satisfying the documented lifecycle, data, failure and isolation contract.",
+        "local": "Uses absolute sample values in the score calculation; merge/version/atomicity/isolation mechanisms are unchanged."
+      },
+      "validation_scope": [
+        "Single-threaded in-memory aggregator; no process crash persistence or concurrent-thread guarantee is claimed.",
+        "Version, isolation and atomicity checks use finite representative sequences; all possible operation histories are not enumerated.",
+        "Schema examples include booleans, floats and unhashable IDs but are not exhaustive fuzzing."
+      ]
+    }
+  },
+  {
+    "case_id": "m11",
+    "family": "tool_results",
+    "variant": "normal",
+    "source_file": "evals/model_interaction/tasks/tool_results/normal.py",
+    "source": "\"\"\"Combine versioned results from independently completing tools.\"\"\"\nfrom copy import deepcopy\n\n\ndef score(values, weight):\n    return sum(values) * weight\n\n\nclass ToolBatch:\n    def __init__(self, call_specs):\n        if not isinstance(call_specs, list):\n            raise ValueError(\"call_specs must be a list\")\n        seen = set()\n        for item in call_specs:\n            if (not isinstance(item, dict) or set(item) != {\"call_id\", \"weight\"}\n                    or not isinstance(item[\"call_id\"], str) or not item[\"call_id\"]\n                    or type(item[\"weight\"]) is not int or item[\"call_id\"] in seen):\n                raise ValueError(\"invalid call specification\")\n            seen.add(item[\"call_id\"])\n        self._specs = deepcopy(call_specs)\n        self._known = seen\n        self._latest = {}\n        self._sealed = False\n\n    def _validate(self, item):\n        if (not isinstance(item, dict) or not isinstance(item.get(\"call_id\"), str)\n                or item[\"call_id\"] not in self._known):\n            raise ValueError(\"unknown call\")\n        if type(item.get(\"version\")) is not int or item[\"version\"] < 1:\n            raise ValueError(\"invalid version\")\n        if item.get(\"status\") == \"success\":\n            if (set(item) != {\"call_id\", \"version\", \"status\", \"values\"}\n                    or not isinstance(item[\"values\"], list)\n                    or any(type(v) is not int for v in item[\"values\"])):\n                raise ValueError(\"invalid success\")\n        elif item.get(\"status\") == \"error\":\n            if (set(item) != {\"call_id\", \"version\", \"status\", \"message\"}\n                    or not isinstance(item[\"message\"], str)):\n                raise ValueError(\"invalid error\")\n        else:\n            raise ValueError(\"invalid status\")\n\n    def ingest(self, updates):\n        if self._sealed:\n            raise RuntimeError(\"batch is finalized\")\n        if not isinstance(updates, list):\n            raise ValueError(\"updates must be a list\")\n        staged = deepcopy(self._latest)\n        for item in updates:\n            self._validate(item)\n            key = item[\"call_id\"]\n            previous = staged.get(key)\n            if previous is not None:\n                if item[\"version\"] < previous[\"version\"]:\n                    continue\n                if item[\"version\"] == previous[\"version\"]:\n                    if item != previous:\n                        raise ValueError(\"conflicting result at same version\")\n                    continue\n            staged[key] = deepcopy(item)\n        self._latest = staged\n\n    def snapshot(self):\n        output = []\n        for spec in self._specs:\n            item = self._latest.get(spec[\"call_id\"])\n            row = {\"call_id\": spec[\"call_id\"], \"version\": None,\n                   \"status\": \"pending\", \"value\": None, \"error\": None}\n            if item is not None:\n                row.update(version=item[\"version\"], status=item[\"status\"])\n                if item[\"status\"] == \"success\":\n                    row[\"value\"] = score(item[\"values\"], spec[\"weight\"])\n                else:\n                    row[\"error\"] = item[\"message\"]\n            output.append(row)\n        return output\n\n    def finalize(self):\n        if len(self._latest) != len(self._specs):\n            raise ValueError(\"results are incomplete\")\n        self._sealed = True\n        return self.snapshot()\n",
+    "request": "# Repair the parallel tool-result accumulator\n\n`app.py` exposes `score(values, weight)` and `ToolBatch(call_specs)`. Correct contract violations while preserving these APIs. A conforming implementation may be left unchanged. Use only Python 3.12's standard library.\n\nTools finish in arbitrary order and can send retried results in later batches. `call_specs` is a list of exact objects `{\"call_id\": <nonempty string>, \"weight\": <integer>}` with unique IDs. An empty list is legal. Integers exclude booleans and may be zero, negative, or large. Invalid specifications raise `ValueError`.\n\n`ingest(updates)` takes a list of result objects with one of these exact shapes:\n\n- `{\"call_id\": <known ID>, \"version\": <positive integer>, \"status\":\"success\", \"values\": <list of integers>}`\n- `{\"call_id\": <known ID>, \"version\": <positive integer>, \"status\":\"error\", \"message\": <string>}`\n\nIntegers exclude booleans. Empty values/messages are legal. Unknown IDs, missing/extra fields, incorrect types, or other statuses raise `ValueError`. Validation must also apply to stale updates before they can be ignored. Apply valid updates in list order: the largest version seen for each call wins; a lower version is ignored; an identical repeat of the current version is idempotent; different payloads for the same **current** version raise `ValueError`. Once a higher version exists, old-version payload conflicts need not be remembered. Version gaps are legal. Newer success may replace error, and newer error may replace success.\n\nAn ingest call is atomic. If any update is invalid or conflicts, no update from that call is retained, including any valid earlier items. The instance remains usable after rejection. Empty ingest lists are no-ops until finalization.\n\n`snapshot()` returns a new list in the original `call_specs` order. Every row has exactly `call_id`, `version`, `status`, `value`, and `error`. An unseen call has `version=None`, `status=\"pending\"`, `value=None`, `error=None`. Success has its version, `status=\"success\"`, `value=score(values, weight)`, `error=None`; error has its version, `status=\"error\"`, `value=None`, and the message as `error`. `score(values, weight)` is exactly the integer sum of all values multiplied by the weight, including negative values; an empty list scores zero.\n\n`finalize()` requires every expected call to have a result; errors count as results. An incomplete finalize raises `ValueError` and leaves the batch open for further ingestion. A successful finalize seals the instance and returns the same shape as snapshot. Repeated finalize and snapshot calls remain valid and return fresh copies; **any ingest after successful finalization, including an empty list, raises `RuntimeError`**. Empty expected-call batches may finalize immediately.\n\nThe accumulator never mutates caller inputs. Later caller mutation of specifications or updates must not change retained state. Mutating a returned snapshot/finalized result must not affect later reads. Inputs and outputs have no shared mutable state with the accumulator. Expose no new required methods or arguments.\n",
+    "smoke": "import app\nbatch = app.ToolBatch([{\"call_id\": \"a\", \"weight\": 2}])\nbatch.ingest([{\"call_id\": \"a\", \"version\": 1, \"status\": \"success\", \"values\": [3]}])\nassert batch.finalize() == [{\"call_id\": \"a\", \"version\": 1, \"status\": \"success\", \"value\": 6, \"error\": None}]\nprint(\"smoke passed\")\n",
+    "expected_checks": 12,
+    "test_names": [
+      "order_and_pending",
+      "scores",
+      "stale_and_retry",
+      "duplicate_and_conflict",
+      "atomic_conflicts",
+      "atomic_validation",
+      "failure_then_recovery",
+      "finalized_lifecycle",
+      "caller_input_isolation",
+      "output_isolation",
+      "specifications_and_empty",
+      "independent_batches"
+    ],
+    "provenance": {
+      "family": "tool_results",
+      "title": "Versioned parallel tool result aggregation",
+      "expected_checks": 12,
+      "test_names": [
+        "order_and_pending",
+        "scores",
+        "stale_and_retry",
+        "duplicate_and_conflict",
+        "atomic_conflicts",
+        "atomic_validation",
+        "failure_then_recovery",
+        "finalized_lifecycle",
+        "caller_input_isolation",
+        "output_isolation",
+        "specifications_and_empty",
+        "independent_batches"
+      ],
+      "source_note": "Authored development fixture with an explicitly bounded protocol; not an external benchmark or production incident. Python standard-library semantics only.",
+      "defect_notes": {
+        "incident": "Allows older retries to replace newer results; mutates live state during an ingest that can later fail, leaking partial updates.",
+        "normal": "Reference implementation satisfying the documented lifecycle, data, failure and isolation contract.",
+        "local": "Uses absolute sample values in the score calculation; merge/version/atomicity/isolation mechanisms are unchanged."
+      },
+      "validation_scope": [
+        "Single-threaded in-memory aggregator; no process crash persistence or concurrent-thread guarantee is claimed.",
+        "Version, isolation and atomicity checks use finite representative sequences; all possible operation histories are not enumerated.",
+        "Schema examples include booleans, floats and unhashable IDs but are not exhaustive fuzzing."
+      ]
+    }
+  },
+  {
+    "case_id": "m12",
+    "family": "tool_results",
+    "variant": "local",
+    "source_file": "evals/model_interaction/tasks/tool_results/local.py",
+    "source": "\"\"\"Combine versioned results from independently completing tools.\"\"\"\nfrom copy import deepcopy\n\n\ndef score(values, weight):\n    return sum(abs(value) for value in values) * weight\n\n\nclass ToolBatch:\n    def __init__(self, call_specs):\n        if not isinstance(call_specs, list):\n            raise ValueError(\"call_specs must be a list\")\n        seen = set()\n        for item in call_specs:\n            if (not isinstance(item, dict) or set(item) != {\"call_id\", \"weight\"}\n                    or not isinstance(item[\"call_id\"], str) or not item[\"call_id\"]\n                    or type(item[\"weight\"]) is not int or item[\"call_id\"] in seen):\n                raise ValueError(\"invalid call specification\")\n            seen.add(item[\"call_id\"])\n        self._specs = deepcopy(call_specs)\n        self._known = seen\n        self._latest = {}\n        self._sealed = False\n\n    def _validate(self, item):\n        if (not isinstance(item, dict) or not isinstance(item.get(\"call_id\"), str)\n                or item[\"call_id\"] not in self._known):\n            raise ValueError(\"unknown call\")\n        if type(item.get(\"version\")) is not int or item[\"version\"] < 1:\n            raise ValueError(\"invalid version\")\n        if item.get(\"status\") == \"success\":\n            if (set(item) != {\"call_id\", \"version\", \"status\", \"values\"}\n                    or not isinstance(item[\"values\"], list)\n                    or any(type(v) is not int for v in item[\"values\"])):\n                raise ValueError(\"invalid success\")\n        elif item.get(\"status\") == \"error\":\n            if (set(item) != {\"call_id\", \"version\", \"status\", \"message\"}\n                    or not isinstance(item[\"message\"], str)):\n                raise ValueError(\"invalid error\")\n        else:\n            raise ValueError(\"invalid status\")\n\n    def ingest(self, updates):\n        if self._sealed:\n            raise RuntimeError(\"batch is finalized\")\n        if not isinstance(updates, list):\n            raise ValueError(\"updates must be a list\")\n        staged = deepcopy(self._latest)\n        for item in updates:\n            self._validate(item)\n            key = item[\"call_id\"]\n            previous = staged.get(key)\n            if previous is not None:\n                if item[\"version\"] < previous[\"version\"]:\n                    continue\n                if item[\"version\"] == previous[\"version\"]:\n                    if item != previous:\n                        raise ValueError(\"conflicting result at same version\")\n                    continue\n            staged[key] = deepcopy(item)\n        self._latest = staged\n\n    def snapshot(self):\n        output = []\n        for spec in self._specs:\n            item = self._latest.get(spec[\"call_id\"])\n            row = {\"call_id\": spec[\"call_id\"], \"version\": None,\n                   \"status\": \"pending\", \"value\": None, \"error\": None}\n            if item is not None:\n                row.update(version=item[\"version\"], status=item[\"status\"])\n                if item[\"status\"] == \"success\":\n                    row[\"value\"] = score(item[\"values\"], spec[\"weight\"])\n                else:\n                    row[\"error\"] = item[\"message\"]\n            output.append(row)\n        return output\n\n    def finalize(self):\n        if len(self._latest) != len(self._specs):\n            raise ValueError(\"results are incomplete\")\n        self._sealed = True\n        return self.snapshot()\n",
+    "request": "# Repair the parallel tool-result accumulator\n\n`app.py` exposes `score(values, weight)` and `ToolBatch(call_specs)`. Correct contract violations while preserving these APIs. A conforming implementation may be left unchanged. Use only Python 3.12's standard library.\n\nTools finish in arbitrary order and can send retried results in later batches. `call_specs` is a list of exact objects `{\"call_id\": <nonempty string>, \"weight\": <integer>}` with unique IDs. An empty list is legal. Integers exclude booleans and may be zero, negative, or large. Invalid specifications raise `ValueError`.\n\n`ingest(updates)` takes a list of result objects with one of these exact shapes:\n\n- `{\"call_id\": <known ID>, \"version\": <positive integer>, \"status\":\"success\", \"values\": <list of integers>}`\n- `{\"call_id\": <known ID>, \"version\": <positive integer>, \"status\":\"error\", \"message\": <string>}`\n\nIntegers exclude booleans. Empty values/messages are legal. Unknown IDs, missing/extra fields, incorrect types, or other statuses raise `ValueError`. Validation must also apply to stale updates before they can be ignored. Apply valid updates in list order: the largest version seen for each call wins; a lower version is ignored; an identical repeat of the current version is idempotent; different payloads for the same **current** version raise `ValueError`. Once a higher version exists, old-version payload conflicts need not be remembered. Version gaps are legal. Newer success may replace error, and newer error may replace success.\n\nAn ingest call is atomic. If any update is invalid or conflicts, no update from that call is retained, including any valid earlier items. The instance remains usable after rejection. Empty ingest lists are no-ops until finalization.\n\n`snapshot()` returns a new list in the original `call_specs` order. Every row has exactly `call_id`, `version`, `status`, `value`, and `error`. An unseen call has `version=None`, `status=\"pending\"`, `value=None`, `error=None`. Success has its version, `status=\"success\"`, `value=score(values, weight)`, `error=None`; error has its version, `status=\"error\"`, `value=None`, and the message as `error`. `score(values, weight)` is exactly the integer sum of all values multiplied by the weight, including negative values; an empty list scores zero.\n\n`finalize()` requires every expected call to have a result; errors count as results. An incomplete finalize raises `ValueError` and leaves the batch open for further ingestion. A successful finalize seals the instance and returns the same shape as snapshot. Repeated finalize and snapshot calls remain valid and return fresh copies; **any ingest after successful finalization, including an empty list, raises `RuntimeError`**. Empty expected-call batches may finalize immediately.\n\nThe accumulator never mutates caller inputs. Later caller mutation of specifications or updates must not change retained state. Mutating a returned snapshot/finalized result must not affect later reads. Inputs and outputs have no shared mutable state with the accumulator. Expose no new required methods or arguments.\n",
+    "smoke": "import app\nbatch = app.ToolBatch([{\"call_id\": \"a\", \"weight\": 2}])\nbatch.ingest([{\"call_id\": \"a\", \"version\": 1, \"status\": \"success\", \"values\": [3]}])\nassert batch.finalize() == [{\"call_id\": \"a\", \"version\": 1, \"status\": \"success\", \"value\": 6, \"error\": None}]\nprint(\"smoke passed\")\n",
+    "expected_checks": 12,
+    "test_names": [
+      "order_and_pending",
+      "scores",
+      "stale_and_retry",
+      "duplicate_and_conflict",
+      "atomic_conflicts",
+      "atomic_validation",
+      "failure_then_recovery",
+      "finalized_lifecycle",
+      "caller_input_isolation",
+      "output_isolation",
+      "specifications_and_empty",
+      "independent_batches"
+    ],
+    "provenance": {
+      "family": "tool_results",
+      "title": "Versioned parallel tool result aggregation",
+      "expected_checks": 12,
+      "test_names": [
+        "order_and_pending",
+        "scores",
+        "stale_and_retry",
+        "duplicate_and_conflict",
+        "atomic_conflicts",
+        "atomic_validation",
+        "failure_then_recovery",
+        "finalized_lifecycle",
+        "caller_input_isolation",
+        "output_isolation",
+        "specifications_and_empty",
+        "independent_batches"
+      ],
+      "source_note": "Authored development fixture with an explicitly bounded protocol; not an external benchmark or production incident. Python standard-library semantics only.",
+      "defect_notes": {
+        "incident": "Allows older retries to replace newer results; mutates live state during an ingest that can later fail, leaking partial updates.",
+        "normal": "Reference implementation satisfying the documented lifecycle, data, failure and isolation contract.",
+        "local": "Uses absolute sample values in the score calculation; merge/version/atomicity/isolation mechanisms are unchanged."
+      },
+      "validation_scope": [
+        "Single-threaded in-memory aggregator; no process crash persistence or concurrent-thread guarantee is claimed.",
+        "Version, isolation and atomicity checks use finite representative sequences; all possible operation histories are not enumerated.",
+        "Schema examples include booleans, floats and unhashable IDs but are not exhaustive fuzzing."
+      ]
+    }
+  }
+]

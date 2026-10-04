@@ -1,0 +1,43 @@
+{
+  "family": "retrieval_cache",
+  "expected_checks": 12,
+  "test_names": [
+    "rank_order_and_limit",
+    "full_result_cache",
+    "tenant_revision_isolation",
+    "query_identity",
+    "expiry_without_sliding",
+    "caller_query_isolation",
+    "source_result_isolation",
+    "returned_result_isolation",
+    "failure_not_cached",
+    "expired_failure_retry",
+    "empty_results_and_zero_limit",
+    "independent_instances"
+  ],
+  "kind": "authored_standard_library_development_fixture",
+  "runtime": "Python 3.12 standard library",
+  "purpose": "Tenant/query/revision cache identity, ownership of mutable data, expiry and source-error handling.",
+  "variants": {
+    "incident": "Cache identity omits tenant/revision and retains caller/source aliases.",
+    "normal": "Conforming reference under the declared finite sequential input contract.",
+    "local": "Ranking retains one document beyond the requested limit."
+  },
+  "source_urls": [
+    "https://docs.python.org/3.12/library/copy.html",
+    "https://docs.python.org/3.12/library/json.html"
+  ],
+  "limitations": [
+    "Authored development case, not production evidence or an external holdout.",
+    "Sequential calls with documented valid inputs; no eviction, concurrency or clock rollback.",
+    "Acceptance and mutation checks cover selected obligations, not all possible implementations.",
+    "Valid document payload nesting is at most 20 containers, counting the payload object; arbitrarily deep recursion and resource exhaustion are out of scope."
+  ],
+  "title": "Retrieval cache identity, expiry and mutable-data boundaries",
+  "source_note": "New maintainer-authored standard-library development fixture; informed by documented Python copying and JSON behavior, not a production incident or external benchmark.",
+  "defect_notes": {
+    "incident": "Cache identity omits tenant/revision and retains caller/source aliases.",
+    "normal": "Conforming reference under the declared finite sequential input contract.",
+    "local": "Ranking retains one document beyond the requested limit."
+  }
+}

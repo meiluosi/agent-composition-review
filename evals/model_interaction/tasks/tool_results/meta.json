@@ -1,0 +1,30 @@
+{
+  "family": "tool_results",
+  "title": "Versioned parallel tool result aggregation",
+  "expected_checks": 12,
+  "test_names": [
+    "order_and_pending",
+    "scores",
+    "stale_and_retry",
+    "duplicate_and_conflict",
+    "atomic_conflicts",
+    "atomic_validation",
+    "failure_then_recovery",
+    "finalized_lifecycle",
+    "caller_input_isolation",
+    "output_isolation",
+    "specifications_and_empty",
+    "independent_batches"
+  ],
+  "source_note": "Authored development fixture with an explicitly bounded protocol; not an external benchmark or production incident. Python standard-library semantics only.",
+  "defect_notes": {
+    "incident": "Allows older retries to replace newer results; mutates live state during an ingest that can later fail, leaking partial updates.",
+    "normal": "Reference implementation satisfying the documented lifecycle, data, failure and isolation contract.",
+    "local": "Uses absolute sample values in the score calculation; merge/version/atomicity/isolation mechanisms are unchanged."
+  },
+  "validation_scope": [
+    "Single-threaded in-memory aggregator; no process crash persistence or concurrent-thread guarantee is claimed.",
+    "Version, isolation and atomicity checks use finite representative sequences; all possible operation histories are not enumerated.",
+    "Schema examples include booleans, floats and unhashable IDs but are not exhaustive fuzzing."
+  ]
+}

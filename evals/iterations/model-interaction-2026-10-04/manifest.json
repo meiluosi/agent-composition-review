@@ -1,0 +1,973 @@
+{
+  "kind": "model_by_guidance_authored_development_screen",
+  "frozen_at": "2026-10-04T06:01:26.548139+00:00",
+  "models_requested": [
+    "gpt-6-astra",
+    "gpt-6-luna"
+  ],
+  "reasoning_effort": "high",
+  "model_snapshot": null,
+  "cli_version": "codex-cli 0.160.0",
+  "python_version": "3.12.14",
+  "execution_platform": "Darwin",
+  "concurrency": 3,
+  "timeout_seconds": 360,
+  "grading_timeout_seconds": 30,
+  "trials": 2,
+  "seed": 202610041,
+  "schedule": [
+    {
+      "case_id": "m03",
+      "condition": "A_tools",
+      "trial": 1,
+      "model_requested": "gpt-6-astra"
+    },
+    {
+      "case_id": "m03",
+      "condition": "B_checklist",
+      "trial": 1,
+      "model_requested": "gpt-6-luna"
+    },
+    {
+      "case_id": "m03",
+      "condition": "B_checklist",
+      "trial": 1,
+      "model_requested": "gpt-6-astra"
+    },
+    {
+      "case_id": "m03",
+      "condition": "C_skill",
+      "trial": 1,
+      "model_requested": "gpt-6-astra"
+    },
+    {
+      "case_id": "m03",
+      "condition": "C_skill",
+      "trial": 1,
+      "model_requested": "gpt-6-luna"
+    },
+    {
+      "case_id": "m03",
+      "condition": "A_tools",
+      "trial": 1,
+      "model_requested": "gpt-6-luna"
+    },
+    {
+      "case_id": "m08",
+      "condition": "A_tools",
+      "trial": 1,
+      "model_requested": "gpt-6-astra"
+    },
+    {
+      "case_id": "m08",
+      "condition": "C_skill",
+      "trial": 1,
+      "model_requested": "gpt-6-luna"
+    },
+    {
+      "case_id": "m08",
+      "condition": "B_checklist",
+      "trial": 1,
+      "model_requested": "gpt-6-luna"
+    },
+    {
+      "case_id": "m08",
+      "condition": "B_checklist",
+      "trial": 1,
+      "model_requested": "gpt-6-astra"
+    },
+    {
+      "case_id": "m08",
+      "condition": "A_tools",
+      "trial": 1,
+      "model_requested": "gpt-6-luna"
+    },
+    {
+      "case_id": "m08",
+      "condition": "C_skill",
+      "trial": 1,
+      "model_requested": "gpt-6-astra"
+    },
+    {
+      "case_id": "m09",
+      "condition": "A_tools",
+      "trial": 1,
+      "model_requested": "gpt-6-luna"
+    },
+    {
+      "case_id": "m09",
+      "condition": "B_checklist",
+      "trial": 1,
+      "model_requested": "gpt-6-astra"
+    },
+    {
+      "case_id": "m09",
+      "condition": "C_skill",
+      "trial": 1,
+      "model_requested": "gpt-6-luna"
+    },
+    {
+      "case_id": "m09",
+      "condition": "A_tools",
+      "trial": 1,
+      "model_requested": "gpt-6-astra"
+    },
+    {
+      "case_id": "m09",
+      "condition": "B_checklist",
+      "trial": 1,
+      "model_requested": "gpt-6-luna"
+    },
+    {
+      "case_id": "m09",
+      "condition": "C_skill",
+      "trial": 1,
+      "model_requested": "gpt-6-astra"
+    },
+    {
+      "case_id": "m02",
+      "condition": "A_tools",
+      "trial": 1,
+      "model_requested": "gpt-6-luna"
+    },
+    {
+      "case_id": "m02",
+      "condition": "B_checklist",
+      "trial": 1,
+      "model_requested": "gpt-6-astra"
+    },
+    {
+      "case_id": "m02",
+      "condition": "B_checklist",
+      "trial": 1,
+      "model_requested": "gpt-6-luna"
+    },
+    {
+      "case_id": "m02",
+      "condition": "C_skill",
+      "trial": 1,
+      "model_requested": "gpt-6-luna"
+    },
+    {
+      "case_id": "m02",
+      "condition": "A_tools",
+      "trial": 1,
+      "model_requested": "gpt-6-astra"
+    },
+    {
+      "case_id": "m02",
+      "condition": "C_skill",
+      "trial": 1,
+      "model_requested": "gpt-6-astra"
+    },
+    {
+      "case_id": "m04",
+      "condition": "B_checklist",
+      "trial": 1,
+      "model_requested": "gpt-6-astra"
+    },
+    {
+      "case_id": "m04",
+      "condition": "A_tools",
+      "trial": 1,
+      "model_requested": "gpt-6-luna"
+    },
+    {
+      "case_id": "m04",
+      "condition": "C_skill",
+      "trial": 1,
+      "model_requested": "gpt-6-luna"
+    },
+    {
+      "case_id": "m04",
+      "condition": "C_skill",
+      "trial": 1,
+      "model_requested": "gpt-6-astra"
+    },
+    {
+      "case_id": "m04",
+      "condition": "B_checklist",
+      "trial": 1,
+      "model_requested": "gpt-6-luna"
+    },
+    {
+      "case_id": "m04",
+      "condition": "A_tools",
+      "trial": 1,
+      "model_requested": "gpt-6-astra"
+    },
+    {
+      "case_id": "m11",
+      "condition": "C_skill",
+      "trial": 1,
+      "model_requested": "gpt-6-luna"
+    },
+    {
+      "case_id": "m11",
+      "condition": "B_checklist",
+      "trial": 1,
+      "model_requested": "gpt-6-luna"
+    },
+    {
+      "case_id": "m11",
+      "condition": "B_checklist",
+      "trial": 1,
+      "model_requested": "gpt-6-astra"
+    },
+    {
+      "case_id": "m11",
+      "condition": "C_skill",
+      "trial": 1,
+      "model_requested": "gpt-6-astra"
+    },
+    {
+      "case_id": "m11",
+      "condition": "A_tools",
+      "trial": 1,
+      "model_requested": "gpt-6-astra"
+    },
+    {
+      "case_id": "m11",
+      "condition": "A_tools",
+      "trial": 1,
+      "model_requested": "gpt-6-luna"
+    },
+    {
+      "case_id": "m10",
+      "condition": "B_checklist",
+      "trial": 1,
+      "model_requested": "gpt-6-astra"
+    },
+    {
+      "case_id": "m10",
+      "condition": "C_skill",
+      "trial": 1,
+      "model_requested": "gpt-6-astra"
+    },
+    {
+      "case_id": "m10",
+      "condition": "A_tools",
+      "trial": 1,
+      "model_requested": "gpt-6-astra"
+    },
+    {
+      "case_id": "m10",
+      "condition": "B_checklist",
+      "trial": 1,
+      "model_requested": "gpt-6-luna"
+    },
+    {
+      "case_id": "m10",
+      "condition": "A_tools",
+      "trial": 1,
+      "model_requested": "gpt-6-luna"
+    },
+    {
+      "case_id": "m10",
+      "condition": "C_skill",
+      "trial": 1,
+      "model_requested": "gpt-6-luna"
+    },
+    {
+      "case_id": "m07",
+      "condition": "C_skill",
+      "trial": 1,
+      "model_requested": "gpt-6-luna"
+    },
+    {
+      "case_id": "m07",
+      "condition": "C_skill",
+      "trial": 1,
+      "model_requested": "gpt-6-astra"
+    },
+    {
+      "case_id": "m07",
+      "condition": "A_tools",
+      "trial": 1,
+      "model_requested": "gpt-6-luna"
+    },
+    {
+      "case_id": "m07",
+      "condition": "B_checklist",
+      "trial": 1,
+      "model_requested": "gpt-6-luna"
+    },
+    {
+      "case_id": "m07",
+      "condition": "B_checklist",
+      "trial": 1,
+      "model_requested": "gpt-6-astra"
+    },
+    {
+      "case_id": "m07",
+      "condition": "A_tools",
+      "trial": 1,
+      "model_requested": "gpt-6-astra"
+    },
+    {
+      "case_id": "m12",
+      "condition": "A_tools",
+      "trial": 1,
+      "model_requested": "gpt-6-luna"
+    },
+    {
+      "case_id": "m12",
+      "condition": "B_checklist",
+      "trial": 1,
+      "model_requested": "gpt-6-astra"
+    },
+    {
+      "case_id": "m12",
+      "condition": "C_skill",
+      "trial": 1,
+      "model_requested": "gpt-6-luna"
+    },
+    {
+      "case_id": "m12",
+      "condition": "B_checklist",
+      "trial": 1,
+      "model_requested": "gpt-6-luna"
+    },
+    {
+      "case_id": "m12",
+      "condition": "C_skill",
+      "trial": 1,
+      "model_requested": "gpt-6-astra"
+    },
+    {
+      "case_id": "m12",
+      "condition": "A_tools",
+      "trial": 1,
+      "model_requested": "gpt-6-astra"
+    },
+    {
+      "case_id": "m05",
+      "condition": "A_tools",
+      "trial": 1,
+      "model_requested": "gpt-6-luna"
+    },
+    {
+      "case_id": "m05",
+      "condition": "B_checklist",
+      "trial": 1,
+      "model_requested": "gpt-6-luna"
+    },
+    {
+      "case_id": "m05",
+      "condition": "A_tools",
+      "trial": 1,
+      "model_requested": "gpt-6-astra"
+    },
+    {
+      "case_id": "m05",
+      "condition": "C_skill",
+      "trial": 1,
+      "model_requested": "gpt-6-luna"
+    },
+    {
+      "case_id": "m05",
+      "condition": "B_checklist",
+      "trial": 1,
+      "model_requested": "gpt-6-astra"
+    },
+    {
+      "case_id": "m05",
+      "condition": "C_skill",
+      "trial": 1,
+      "model_requested": "gpt-6-astra"
+    },
+    {
+      "case_id": "m01",
+      "condition": "A_tools",
+      "trial": 1,
+      "model_requested": "gpt-6-astra"
+    },
+    {
+      "case_id": "m01",
+      "condition": "B_checklist",
+      "trial": 1,
+      "model_requested": "gpt-6-astra"
+    },
+    {
+      "case_id": "m01",
+      "condition": "A_tools",
+      "trial": 1,
+      "model_requested": "gpt-6-luna"
+    },
+    {
+      "case_id": "m01",
+      "condition": "C_skill",
+      "trial": 1,
+      "model_requested": "gpt-6-astra"
+    },
+    {
+      "case_id": "m01",
+      "condition": "C_skill",
+      "trial": 1,
+      "model_requested": "gpt-6-luna"
+    },
+    {
+      "case_id": "m01",
+      "condition": "B_checklist",
+      "trial": 1,
+      "model_requested": "gpt-6-luna"
+    },
+    {
+      "case_id": "m06",
+      "condition": "C_skill",
+      "trial": 1,
+      "model_requested": "gpt-6-luna"
+    },
+    {
+      "case_id": "m06",
+      "condition": "C_skill",
+      "trial": 1,
+      "model_requested": "gpt-6-astra"
+    },
+    {
+      "case_id": "m06",
+      "condition": "A_tools",
+      "trial": 1,
+      "model_requested": "gpt-6-astra"
+    },
+    {
+      "case_id": "m06",
+      "condition": "A_tools",
+      "trial": 1,
+      "model_requested": "gpt-6-luna"
+    },
+    {
+      "case_id": "m06",
+      "condition": "B_checklist",
+      "trial": 1,
+      "model_requested": "gpt-6-luna"
+    },
+    {
+      "case_id": "m06",
+      "condition": "B_checklist",
+      "trial": 1,
+      "model_requested": "gpt-6-astra"
+    },
+    {
+      "case_id": "m04",
+      "condition": "B_checklist",
+      "trial": 2,
+      "model_requested": "gpt-6-astra"
+    },
+    {
+      "case_id": "m04",
+      "condition": "A_tools",
+      "trial": 2,
+      "model_requested": "gpt-6-luna"
+    },
+    {
+      "case_id": "m04",
+      "condition": "A_tools",
+      "trial": 2,
+      "model_requested": "gpt-6-astra"
+    },
+    {
+      "case_id": "m04",
+      "condition": "B_checklist",
+      "trial": 2,
+      "model_requested": "gpt-6-luna"
+    },
+    {
+      "case_id": "m04",
+      "condition": "C_skill",
+      "trial": 2,
+      "model_requested": "gpt-6-astra"
+    },
+    {
+      "case_id": "m04",
+      "condition": "C_skill",
+      "trial": 2,
+      "model_requested": "gpt-6-luna"
+    },
+    {
+      "case_id": "m01",
+      "condition": "C_skill",
+      "trial": 2,
+      "model_requested": "gpt-6-astra"
+    },
+    {
+      "case_id": "m01",
+      "condition": "B_checklist",
+      "trial": 2,
+      "model_requested": "gpt-6-astra"
+    },
+    {
+      "case_id": "m01",
+      "condition": "A_tools",
+      "trial": 2,
+      "model_requested": "gpt-6-astra"
+    },
+    {
+      "case_id": "m01",
+      "condition": "C_skill",
+      "trial": 2,
+      "model_requested": "gpt-6-luna"
+    },
+    {
+      "case_id": "m01",
+      "condition": "A_tools",
+      "trial": 2,
+      "model_requested": "gpt-6-luna"
+    },
+    {
+      "case_id": "m01",
+      "condition": "B_checklist",
+      "trial": 2,
+      "model_requested": "gpt-6-luna"
+    },
+    {
+      "case_id": "m07",
+      "condition": "A_tools",
+      "trial": 2,
+      "model_requested": "gpt-6-astra"
+    },
+    {
+      "case_id": "m07",
+      "condition": "B_checklist",
+      "trial": 2,
+      "model_requested": "gpt-6-luna"
+    },
+    {
+      "case_id": "m07",
+      "condition": "B_checklist",
+      "trial": 2,
+      "model_requested": "gpt-6-astra"
+    },
+    {
+      "case_id": "m07",
+      "condition": "A_tools",
+      "trial": 2,
+      "model_requested": "gpt-6-luna"
+    },
+    {
+      "case_id": "m07",
+      "condition": "C_skill",
+      "trial": 2,
+      "model_requested": "gpt-6-luna"
+    },
+    {
+      "case_id": "m07",
+      "condition": "C_skill",
+      "trial": 2,
+      "model_requested": "gpt-6-astra"
+    },
+    {
+      "case_id": "m03",
+      "condition": "C_skill",
+      "trial": 2,
+      "model_requested": "gpt-6-luna"
+    },
+    {
+      "case_id": "m03",
+      "condition": "B_checklist",
+      "trial": 2,
+      "model_requested": "gpt-6-luna"
+    },
+    {
+      "case_id": "m03",
+      "condition": "C_skill",
+      "trial": 2,
+      "model_requested": "gpt-6-astra"
+    },
+    {
+      "case_id": "m03",
+      "condition": "A_tools",
+      "trial": 2,
+      "model_requested": "gpt-6-astra"
+    },
+    {
+      "case_id": "m03",
+      "condition": "B_checklist",
+      "trial": 2,
+      "model_requested": "gpt-6-astra"
+    },
+    {
+      "case_id": "m03",
+      "condition": "A_tools",
+      "trial": 2,
+      "model_requested": "gpt-6-luna"
+    },
+    {
+      "case_id": "m02",
+      "condition": "C_skill",
+      "trial": 2,
+      "model_requested": "gpt-6-astra"
+    },
+    {
+      "case_id": "m02",
+      "condition": "B_checklist",
+      "trial": 2,
+      "model_requested": "gpt-6-astra"
+    },
+    {
+      "case_id": "m02",
+      "condition": "C_skill",
+      "trial": 2,
+      "model_requested": "gpt-6-luna"
+    },
+    {
+      "case_id": "m02",
+      "condition": "B_checklist",
+      "trial": 2,
+      "model_requested": "gpt-6-luna"
+    },
+    {
+      "case_id": "m02",
+      "condition": "A_tools",
+      "trial": 2,
+      "model_requested": "gpt-6-astra"
+    },
+    {
+      "case_id": "m02",
+      "condition": "A_tools",
+      "trial": 2,
+      "model_requested": "gpt-6-luna"
+    },
+    {
+      "case_id": "m08",
+      "condition": "B_checklist",
+      "trial": 2,
+      "model_requested": "gpt-6-luna"
+    },
+    {
+      "case_id": "m08",
+      "condition": "A_tools",
+      "trial": 2,
+      "model_requested": "gpt-6-luna"
+    },
+    {
+      "case_id": "m08",
+      "condition": "C_skill",
+      "trial": 2,
+      "model_requested": "gpt-6-astra"
+    },
+    {
+      "case_id": "m08",
+      "condition": "C_skill",
+      "trial": 2,
+      "model_requested": "gpt-6-luna"
+    },
+    {
+      "case_id": "m08",
+      "condition": "B_checklist",
+      "trial": 2,
+      "model_requested": "gpt-6-astra"
+    },
+    {
+      "case_id": "m08",
+      "condition": "A_tools",
+      "trial": 2,
+      "model_requested": "gpt-6-astra"
+    },
+    {
+      "case_id": "m10",
+      "condition": "A_tools",
+      "trial": 2,
+      "model_requested": "gpt-6-astra"
+    },
+    {
+      "case_id": "m10",
+      "condition": "B_checklist",
+      "trial": 2,
+      "model_requested": "gpt-6-astra"
+    },
+    {
+      "case_id": "m10",
+      "condition": "A_tools",
+      "trial": 2,
+      "model_requested": "gpt-6-luna"
+    },
+    {
+      "case_id": "m10",
+      "condition": "B_checklist",
+      "trial": 2,
+      "model_requested": "gpt-6-luna"
+    },
+    {
+      "case_id": "m10",
+      "condition": "C_skill",
+      "trial": 2,
+      "model_requested": "gpt-6-luna"
+    },
+    {
+      "case_id": "m10",
+      "condition": "C_skill",
+      "trial": 2,
+      "model_requested": "gpt-6-astra"
+    },
+    {
+      "case_id": "m06",
+      "condition": "B_checklist",
+      "trial": 2,
+      "model_requested": "gpt-6-luna"
+    },
+    {
+      "case_id": "m06",
+      "condition": "A_tools",
+      "trial": 2,
+      "model_requested": "gpt-6-luna"
+    },
+    {
+      "case_id": "m06",
+      "condition": "C_skill",
+      "trial": 2,
+      "model_requested": "gpt-6-astra"
+    },
+    {
+      "case_id": "m06",
+      "condition": "B_checklist",
+      "trial": 2,
+      "model_requested": "gpt-6-astra"
+    },
+    {
+      "case_id": "m06",
+      "condition": "C_skill",
+      "trial": 2,
+      "model_requested": "gpt-6-luna"
+    },
+    {
+      "case_id": "m06",
+      "condition": "A_tools",
+      "trial": 2,
+      "model_requested": "gpt-6-astra"
+    },
+    {
+      "case_id": "m05",
+      "condition": "C_skill",
+      "trial": 2,
+      "model_requested": "gpt-6-luna"
+    },
+    {
+      "case_id": "m05",
+      "condition": "B_checklist",
+      "trial": 2,
+      "model_requested": "gpt-6-luna"
+    },
+    {
+      "case_id": "m05",
+      "condition": "A_tools",
+      "trial": 2,
+      "model_requested": "gpt-6-luna"
+    },
+    {
+      "case_id": "m05",
+      "condition": "B_checklist",
+      "trial": 2,
+      "model_requested": "gpt-6-astra"
+    },
+    {
+      "case_id": "m05",
+      "condition": "C_skill",
+      "trial": 2,
+      "model_requested": "gpt-6-astra"
+    },
+    {
+      "case_id": "m05",
+      "condition": "A_tools",
+      "trial": 2,
+      "model_requested": "gpt-6-astra"
+    },
+    {
+      "case_id": "m09",
+      "condition": "A_tools",
+      "trial": 2,
+      "model_requested": "gpt-6-astra"
+    },
+    {
+      "case_id": "m09",
+      "condition": "B_checklist",
+      "trial": 2,
+      "model_requested": "gpt-6-luna"
+    },
+    {
+      "case_id": "m09",
+      "condition": "B_checklist",
+      "trial": 2,
+      "model_requested": "gpt-6-astra"
+    },
+    {
+      "case_id": "m09",
+      "condition": "A_tools",
+      "trial": 2,
+      "model_requested": "gpt-6-luna"
+    },
+    {
+      "case_id": "m09",
+      "condition": "C_skill",
+      "trial": 2,
+      "model_requested": "gpt-6-astra"
+    },
+    {
+      "case_id": "m09",
+      "condition": "C_skill",
+      "trial": 2,
+      "model_requested": "gpt-6-luna"
+    },
+    {
+      "case_id": "m11",
+      "condition": "A_tools",
+      "trial": 2,
+      "model_requested": "gpt-6-luna"
+    },
+    {
+      "case_id": "m11",
+      "condition": "B_checklist",
+      "trial": 2,
+      "model_requested": "gpt-6-astra"
+    },
+    {
+      "case_id": "m11",
+      "condition": "C_skill",
+      "trial": 2,
+      "model_requested": "gpt-6-astra"
+    },
+    {
+      "case_id": "m11",
+      "condition": "A_tools",
+      "trial": 2,
+      "model_requested": "gpt-6-astra"
+    },
+    {
+      "case_id": "m11",
+      "condition": "C_skill",
+      "trial": 2,
+      "model_requested": "gpt-6-luna"
+    },
+    {
+      "case_id": "m11",
+      "condition": "B_checklist",
+      "trial": 2,
+      "model_requested": "gpt-6-luna"
+    },
+    {
+      "case_id": "m12",
+      "condition": "B_checklist",
+      "trial": 2,
+      "model_requested": "gpt-6-luna"
+    },
+    {
+      "case_id": "m12",
+      "condition": "C_skill",
+      "trial": 2,
+      "model_requested": "gpt-6-luna"
+    },
+    {
+      "case_id": "m12",
+      "condition": "B_checklist",
+      "trial": 2,
+      "model_requested": "gpt-6-astra"
+    },
+    {
+      "case_id": "m12",
+      "condition": "A_tools",
+      "trial": 2,
+      "model_requested": "gpt-6-astra"
+    },
+    {
+      "case_id": "m12",
+      "condition": "C_skill",
+      "trial": 2,
+      "model_requested": "gpt-6-astra"
+    },
+    {
+      "case_id": "m12",
+      "condition": "A_tools",
+      "trial": 2,
+      "model_requested": "gpt-6-luna"
+    }
+  ],
+  "files_sha256": {
+    "evals/iterations/model-interaction-2026-10-04/snapshots/A_tools/TOOLS.md": "e9f409b4513a76315dd346e1a567da3d3e38da01904af409318d439615720425",
+    "evals/iterations/model-interaction-2026-10-04/snapshots/A_tools/scripts/check_evidence.py": "98c60fe8ea0d36dd40b2da48d9768f6c81e31803b6036af826c611ad26d07592",
+    "evals/iterations/model-interaction-2026-10-04/snapshots/A_tools/scripts/composition.py": "1eb7a2a566b776789344246981386c2259e877b5dc299588a2d925a34588bd9e",
+    "evals/iterations/model-interaction-2026-10-04/snapshots/B_checklist/CHECKLIST.md": "053ef9920735b17bfd6173b5ca8f77146f2fa8fcefcfd0747d4dc24749728bc7",
+    "evals/iterations/model-interaction-2026-10-04/snapshots/B_checklist/TOOLS.md": "e9f409b4513a76315dd346e1a567da3d3e38da01904af409318d439615720425",
+    "evals/iterations/model-interaction-2026-10-04/snapshots/B_checklist/scripts/check_evidence.py": "98c60fe8ea0d36dd40b2da48d9768f6c81e31803b6036af826c611ad26d07592",
+    "evals/iterations/model-interaction-2026-10-04/snapshots/B_checklist/scripts/composition.py": "1eb7a2a566b776789344246981386c2259e877b5dc299588a2d925a34588bd9e",
+    "evals/iterations/model-interaction-2026-10-04/snapshots/C_skill/SKILL.md": "8b50547f9d4c923239b325084bac1691e55e882710bc33e22f23b743e918af55",
+    "evals/iterations/model-interaction-2026-10-04/snapshots/C_skill/TOOLS.md": "e9f409b4513a76315dd346e1a567da3d3e38da01904af409318d439615720425",
+    "evals/iterations/model-interaction-2026-10-04/snapshots/C_skill/agents/openai.yaml": "990ce681f0311731177c553baeef4349852ce30d64a55bfc2f2e9fcc59377b7d",
+    "evals/iterations/model-interaction-2026-10-04/snapshots/C_skill/assets/retrieval.model.json": "9830965fcba8f02bfc6fa044c9ff1b0b9087c7e1fd34078f7b2d457348a5cef3",
+    "evals/iterations/model-interaction-2026-10-04/snapshots/C_skill/references/contracts.md": "5ce30419213bc0af48f891de5ea32b9d8ef5398400396ee2f13616ee464bc48e",
+    "evals/iterations/model-interaction-2026-10-04/snapshots/C_skill/references/effects.md": "384eff61c966aee8bff4cd5ea074893cf0e00844d25bdfc5874d9d1b97d2a74b",
+    "evals/iterations/model-interaction-2026-10-04/snapshots/C_skill/references/evidence.md": "f0d168f13fd87fde50a3a0b8588b636941ec8cb3e997d3539c71cb8010f2e41f",
+    "evals/iterations/model-interaction-2026-10-04/snapshots/C_skill/references/executable-contracts.md": "7ef6ab3842dc3aab0388d529883dc82443a60751f0c599d21aae78a9c47c4291",
+    "evals/iterations/model-interaction-2026-10-04/snapshots/C_skill/references/gluing.md": "fda165771c046c14e4730885b275d156142a1d123a2e371634c245e966583260",
+    "evals/iterations/model-interaction-2026-10-04/snapshots/C_skill/references/probability-causality.md": "b7eda116e32377a58406d7655ab3b15c508802657910b3ccb3e4a19616bd37b7",
+    "evals/iterations/model-interaction-2026-10-04/snapshots/C_skill/references/quantitative.md": "f0a266b554a51259a3bfda0618755a91ec3c37841768fe939e47da2d53212e38",
+    "evals/iterations/model-interaction-2026-10-04/snapshots/C_skill/scripts/check_evidence.py": "98c60fe8ea0d36dd40b2da48d9768f6c81e31803b6036af826c611ad26d07592",
+    "evals/iterations/model-interaction-2026-10-04/snapshots/C_skill/scripts/composition.py": "1eb7a2a566b776789344246981386c2259e877b5dc299588a2d925a34588bd9e",
+    "evals/iterations/model-interaction-2026-10-04/preflight/72a9e675be94b500134a/artifacts/app.py": "ba1a531f581d2e6094e978ed6f7aca7a8d92eeb62c6e7ad73ee692f7f18bc772",
+    "evals/iterations/model-interaction-2026-10-04/preflight/72a9e675be94b500134a/patch.diff": "a0a1df2357edd4c4da490b5c4e8cf27cf316b7c0bbad21b51346504a0dc9b3dc",
+    "evals/iterations/model-interaction-2026-10-04/preflight/72a9e675be94b500134a/record.json": "31f7691f3dd64e33c1dd46bc7cdfbddfb702e2dd32c2e3ace85ea2c53700abad",
+    "evals/iterations/model-interaction-2026-10-04/preflight/72a9e675be94b500134a/started.json": "7fe8f70272c8418975cf84eb06b5eb5199a0b231d3d8fd12344c51dfaeb7a0b1",
+    "evals/iterations/model-interaction-2026-10-04/preflight/f55cb3747bdab1db2ff9/artifacts/app.py": "ba1a531f581d2e6094e978ed6f7aca7a8d92eeb62c6e7ad73ee692f7f18bc772",
+    "evals/iterations/model-interaction-2026-10-04/preflight/f55cb3747bdab1db2ff9/patch.diff": "a0a1df2357edd4c4da490b5c4e8cf27cf316b7c0bbad21b51346504a0dc9b3dc",
+    "evals/iterations/model-interaction-2026-10-04/preflight/f55cb3747bdab1db2ff9/record.json": "0e413c86f04d8d98c7ae7d7f58684c1d14909df0b009b423f134d80af46656e7",
+    "evals/iterations/model-interaction-2026-10-04/preflight/f55cb3747bdab1db2ff9/started.json": "e2c326d5521da69dd2e9e9a13798533b787226a60b1ea586acb7189bd8e134fb",
+    "evals/iterations/model-interaction-2026-10-04/preflight/prediction.schema.json": "f8865b7be067adbe6aee514af7cc12430e2578ae45d4d2edb146da80a162d0dd",
+    "evals/model_interaction/CHECKLIST.md": "053ef9920735b17bfd6173b5ca8f77146f2fa8fcefcfd0747d4dc24749728bc7",
+    "evals/model_interaction/TOOLS.md": "e9f409b4513a76315dd346e1a567da3d3e38da01904af409318d439615720425",
+    "evals/model_interaction/__init__.py": "39bc2352d493472b89d6688beb09dbf334388428c33c38aaea9d51ac775295ba",
+    "evals/model_interaction/analysis.py": "0d924ca05ebf6ebec63fbf5b333181c379ff164612b4ac3e0869d6ff64069b89",
+    "evals/model_interaction/catalog.py": "493490d5fa7f09bb38d18294c25c9cb19566db7d26a064e7ae604dafdcd217a7",
+    "evals/model_interaction/grading.py": "b9c3a6ac42ec54e816f478e43a7374e6da8f2912f825313daa049a3b08d2c982",
+    "evals/model_interaction/protocol.py": "3380aef432eae93a900bc4746b21c8d0f30458f49e5fe41cdc9f1630080342af",
+    "evals/model_interaction/review_lease_queue.py": "38998171a9b728e513d8c6ec51aabc8a0ee167fb93dd4f999b595835de6d0552",
+    "evals/model_interaction/tasks/lease_queue/acceptance.py": "1cd7e7e2850940359e2ab741a2ff35fb2d047e11d0e80e609b86805e2cb81fa4",
+    "evals/model_interaction/tasks/lease_queue/incident.py": "e1b4bb82016568dd358931b42d854acb713bc07a81df4de5b9b858989fd3cc1f",
+    "evals/model_interaction/tasks/lease_queue/local.py": "ead3eee66828f8e5ef581e0d2de896be1a1a84c43db1fcad4a3c430c5fa3028e",
+    "evals/model_interaction/tasks/lease_queue/meta.json": "8ff1dcea64c5d92b0f8a359c9a7a568a6e04531c9a326ed7cd80ffd625d643e2",
+    "evals/model_interaction/tasks/lease_queue/mutation-results.json": "ab292e197fac888840a3d40389ec3b18f59c0fb596f7c46935e133fc4c7a3d10",
+    "evals/model_interaction/tasks/lease_queue/mutation_audit.py": "0d700b26608fa49888c9177fbed1c979ff3526d85b32d9b0b7ae8e6ebea86dd5",
+    "evals/model_interaction/tasks/lease_queue/normal.py": "3f200a07b30548ae6845c24e5b9c22ded8f9c05b83aef7f41fe65e6a36f4262e",
+    "evals/model_interaction/tasks/lease_queue/request.md": "6755a4f4c2c5d75988f410008ab36b41a1914dd6822ed044057aba0d56d0f356",
+    "evals/model_interaction/tasks/lease_queue/smoke.py": "42d46862b11da9d4dc0e9d1e189af79cde1e6721c3898841b6796ee629efdd5b",
+    "evals/model_interaction/tasks/retrieval_cache/acceptance.py": "16550428d9b4870871bfd8701b41b47a2263eea8cf57f73e3cf04c6acf647078",
+    "evals/model_interaction/tasks/retrieval_cache/incident.py": "a672ec9dbaf471656a5ec354e3eec3efe4dbaeef22357ea5533c000505e36b9c",
+    "evals/model_interaction/tasks/retrieval_cache/local.py": "222d91411beaae7accbb1f7e0bb0bfc3f7c6cc7bc57f155993fb162f49bdf38b",
+    "evals/model_interaction/tasks/retrieval_cache/meta.json": "4ba1a15a1f72e3b491040ec7c3ffc0e23da7f7e336872ca1a859219b0f3fa505",
+    "evals/model_interaction/tasks/retrieval_cache/mutation_audit.json": "d1315cfc5b85c66b8d7917a3f80ccbbe6f0d2840677e02a26b77c44516bc4190",
+    "evals/model_interaction/tasks/retrieval_cache/mutation_audit.py": "fcd5b571e533bee81d03b59abcc88061cf77f5646016b887298c1fc9435980e5",
+    "evals/model_interaction/tasks/retrieval_cache/normal.py": "140d0dbcf5eb93e5e42c3d420531957c3e7e8e8c57d8b902c90a40cacaf228dd",
+    "evals/model_interaction/tasks/retrieval_cache/request.md": "5eb31a8597ec280b9dfd4cdb63e023b0503829aef1633cb619bca94eed6f0e90",
+    "evals/model_interaction/tasks/retrieval_cache/smoke.py": "f68b1e78f470760b5fe29fb1eee74bbbc5747773c3d590a179a8ab0b81228232",
+    "evals/model_interaction/tasks/stream_events/acceptance.py": "60bed052123a408d7381ec8aeb67cd8b8cd50a19cc767ae6bc6b8003e54fab99",
+    "evals/model_interaction/tasks/stream_events/incident.py": "3949564b9419e7e9b727725314b07d23577266d0ed8a16519565a3850868b365",
+    "evals/model_interaction/tasks/stream_events/local.py": "a7766ec2363507934f6895708ea4ce64ea08ff48476684dd03e8129f47763b5c",
+    "evals/model_interaction/tasks/stream_events/meta.json": "664cad78328b57ffdcd0d922800d7f1eb5b1ec2a45acdd5f413248e29393baec",
+    "evals/model_interaction/tasks/stream_events/mutation_audit.json": "49e1b5b6d53b3abfa0f93f2e2ccf7da38a10488c14da367b56abe37be4f3202a",
+    "evals/model_interaction/tasks/stream_events/mutation_audit.py": "0788a1a5b7419370f5f7f035957a91b3e77cc46ab158eea29031a1b16b63ddbf",
+    "evals/model_interaction/tasks/stream_events/normal.py": "a850a6792093cab1242039f4854ef9d6846a9dc3ecaa4a3055ac369d6e680ec2",
+    "evals/model_interaction/tasks/stream_events/request.md": "c6bf2f25ffd05130218624eb4a69735b28af730517e1ade9a0d749eb854209cb",
+    "evals/model_interaction/tasks/stream_events/smoke.py": "9a3e5d3c3f8086cd29f940914fb378eab60fa2e53c62e43cde354173c1222a7e",
+    "evals/model_interaction/tasks/tool_results/acceptance.py": "209355cb4e24ccdbc24696d4aea61203dfbf4711ffab9a2bf82b6d43ad68b70a",
+    "evals/model_interaction/tasks/tool_results/incident.py": "4ba719df877d2747cdbffde6118a128a027448102d9db5e02fbb58dc3d7a4b1a",
+    "evals/model_interaction/tasks/tool_results/local.py": "90dc797a262497b790895485b233f4e7e4ff86360b879e4ef8074d9e913ce876",
+    "evals/model_interaction/tasks/tool_results/meta.json": "273f378d344a471fd954414c425d28c418c14daf02cce76a7f1ac69d4106f25b",
+    "evals/model_interaction/tasks/tool_results/mutation_audit.json": "b301b19d237f1ca3a0a1989fbbe7351e14839c4a5de18da324b7739ddc76e132",
+    "evals/model_interaction/tasks/tool_results/mutation_audit.py": "38a7b6b651d4c3b3df066cfbd7a38c9a9b03d079d866612632fc4f0bab886d40",
+    "evals/model_interaction/tasks/tool_results/normal.py": "d856fbce39bd2b4fedbf9279cd0be4cef5d1a3560120f46a2623dd1c73dcdb89",
+    "evals/model_interaction/tasks/tool_results/request.md": "08fdff592f86bb53a26ddfd9f93cfb85a5cb0d46d1ea55c4b24ccb5c9ee1fb85",
+    "evals/model_interaction/tasks/tool_results/smoke.py": "76de5380ac06a2ecbb1a8b7f4651b45eda83691b7d5c8c23ef2c26a34aa45abb",
+    "evals/model_interaction/test_analysis.py": "60a0cd760fdb6eaacd3c32b2fd21e7ff1df9b784724ba6eacafcdb0264b21a93",
+    "evals/model_interaction/test_fixtures.py": "625f8a830dfeff1f446dd1d3fd9d5d6c9973763535f01f599234bbedd1a076dd",
+    "evals/model_interaction/test_protocol.py": "007c3eef382770be9201a6e3685956cbb0170b59a6255fea62becb3cf411c454",
+    "evals/iterations/model-interaction-2026-10-04/ANALYSIS_PLAN.md": "20fec2df2de893865eec37ec64b9456c23b2057381ef53316f05364b79abd7ef",
+    "evals/iterations/model-interaction-2026-10-04/PRECHECK_REVIEW.md": "d21cef84d646cdf955555652f72800c807c5b180946ed36f8958fb392bec6ba2",
+    "scripts/analyze_model_interaction.py": "51f975dcc3fdea21371c7f535b4356ed4bea8acd1199e51ec6848a6307233fa3",
+    "scripts/run_model_interaction.py": "5ae9d46685ca463c4b4c2d73c3a4ed6471bbe67905ae53e1e9056e7f2e65f742",
+    "evals/iterations/model-interaction-2026-10-04/cases.json": "dc3b1849c6c11bfbd5ffbc9ea34fc14977217cb0dded2dfd0aaff2ae32ec51a0",
+    "evals/iterations/model-interaction-2026-10-04/prediction.schema.json": "f8865b7be067adbe6aee514af7cc12430e2578ae45d4d2edb146da80a162d0dd"
+  },
+  "prompt_sha256": {
+    "A_tools": "754741dedf8f45f17a6cba0d28c804d1273d67e30452f4503e8797defde6c5c4",
+    "B_checklist": "6fd62ac6100d8b6cfbd0a2b2d2c570f6e2df884143fea61f287365cec2b7280f",
+    "C_skill": "890e8e7238a3d11b98065646547e36c2563ff652e966a0baa5a66ed0cca78937"
+  }
+}

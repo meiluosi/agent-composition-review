@@ -1,0 +1,81 @@
+{
+  "family": "tool_results",
+  "all_detected": true,
+  "mutants": [
+    {
+      "mutant": "older_version_overwrites",
+      "detected": true,
+      "failed_checks": [
+        "stale_and_retry"
+      ]
+    },
+    {
+      "mutant": "non_atomic_ingest",
+      "detected": true,
+      "failed_checks": [
+        "atomic_conflicts",
+        "atomic_validation"
+      ]
+    },
+    {
+      "mutant": "retained_spec_alias",
+      "detected": true,
+      "failed_checks": [
+        "caller_input_isolation"
+      ]
+    },
+    {
+      "mutant": "retained_update_alias",
+      "detected": true,
+      "failed_checks": [
+        "caller_input_isolation"
+      ]
+    },
+    {
+      "mutant": "sorted_instead_of_declared_order",
+      "detected": true,
+      "failed_checks": [
+        "order_and_pending",
+        "caller_input_isolation"
+      ]
+    },
+    {
+      "mutant": "allow_boolean_samples",
+      "detected": true,
+      "failed_checks": [
+        "atomic_validation"
+      ]
+    },
+    {
+      "mutant": "accept_empty_ingest_after_finalization",
+      "detected": true,
+      "failed_checks": [
+        "finalized_lifecycle",
+        "specifications_and_empty"
+      ]
+    },
+    {
+      "mutant": "ignore_current_version_conflicts",
+      "detected": true,
+      "failed_checks": [
+        "duplicate_and_conflict",
+        "atomic_conflicts"
+      ]
+    },
+    {
+      "mutant": "finalize_incomplete_batches",
+      "detected": true,
+      "failed_checks": [
+        "failure_then_recovery"
+      ]
+    },
+    {
+      "mutant": "absolute_value_score",
+      "detected": true,
+      "failed_checks": [
+        "scores"
+      ]
+    }
+  ],
+  "scope": "Authored negative controls; detecting these mutations does not establish complete correctness."
+}

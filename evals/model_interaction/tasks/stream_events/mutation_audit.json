@@ -1,0 +1,76 @@
+{
+  "family": "stream_events",
+  "all_detected": true,
+  "mutants": [
+    {
+      "mutant": "unhandled_deep_json",
+      "detected": true,
+      "failed_checks": [
+        "malformed_frames"
+      ]
+    },
+    {
+      "mutant": "chunk_utf8_validation",
+      "detected": true,
+      "failed_checks": [
+        "byte_boundaries",
+        "malformed_frames",
+        "premature_eof"
+      ]
+    },
+    {
+      "mutant": "allow_same_call_terminal_trailing_bytes",
+      "detected": true,
+      "failed_checks": [
+        "terminal_once"
+      ]
+    },
+    {
+      "mutant": "remove_frame_bound",
+      "detected": true,
+      "failed_checks": [
+        "size_limits",
+        "poison_state"
+      ]
+    },
+    {
+      "mutant": "limit_incoming_chunk_instead",
+      "detected": true,
+      "failed_checks": [
+        "size_limits"
+      ]
+    },
+    {
+      "mutant": "reject_equal_frame_bound",
+      "detected": true,
+      "failed_checks": [
+        "size_limits"
+      ]
+    },
+    {
+      "mutant": "accept_eof_without_terminal",
+      "detected": true,
+      "failed_checks": [
+        "premature_eof",
+        "poison_state"
+      ]
+    },
+    {
+      "mutant": "error_does_not_terminate",
+      "detected": true,
+      "failed_checks": [
+        "error_terminal",
+        "terminal_once"
+      ]
+    },
+    {
+      "mutant": "ascii_space_word_count",
+      "detected": true,
+      "failed_checks": [
+        "byte_boundaries",
+        "metrics"
+      ]
+    }
+  ],
+  "scope": "Authored negative controls; detecting these mutations does not establish complete correctness."
+}

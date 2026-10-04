@@ -1,0 +1,651 @@
+{
+  "schema_version": 1,
+  "system": "retrieval-demo",
+  "types": {
+    "Query": {
+      "query": {
+        "type": "string"
+      },
+      "tenant": {
+        "type": "string"
+      },
+      "sample_count": {
+        "type": "number"
+      },
+      "response_status": {
+        "type": "string",
+        "enum": [
+          "found",
+          "empty",
+          "failed"
+        ]
+      },
+      "unit": {
+        "type": "string",
+        "enum": [
+          "USD",
+          "cents"
+        ]
+      },
+      "amount": {
+        "type": "number"
+      },
+      "warm_cache": {
+        "type": "boolean"
+      },
+      "retry": {
+        "type": "boolean"
+      },
+      "allowed_tenants": {
+        "type": "array"
+      }
+    },
+    "Result": {
+      "query": {
+        "type": "string"
+      },
+      "tenant": {
+        "type": "string"
+      },
+      "sample_count": {
+        "type": "number"
+      },
+      "response_status": {
+        "type": "string",
+        "enum": [
+          "found",
+          "empty",
+          "failed"
+        ]
+      },
+      "unit": {
+        "type": "string",
+        "enum": [
+          "USD",
+          "cents"
+        ]
+      },
+      "amount": {
+        "type": "number"
+      },
+      "warm_cache": {
+        "type": "boolean"
+      },
+      "retry": {
+        "type": "boolean"
+      },
+      "status": {
+        "type": "string",
+        "enum": [
+          "found",
+          "empty",
+          "failed"
+        ]
+      },
+      "docs": {
+        "type": "array"
+      },
+      "allowed_tenants": {
+        "type": "array"
+      }
+    },
+    "Evidence": {
+      "query": {
+        "type": "string"
+      },
+      "tenant": {
+        "type": "string"
+      },
+      "sample_count": {
+        "type": "number"
+      },
+      "response_status": {
+        "type": "string",
+        "enum": [
+          "found",
+          "empty",
+          "failed"
+        ]
+      },
+      "unit": {
+        "type": "string",
+        "enum": [
+          "USD",
+          "cents"
+        ]
+      },
+      "amount": {
+        "type": "number"
+      },
+      "warm_cache": {
+        "type": "boolean"
+      },
+      "retry": {
+        "type": "boolean"
+      },
+      "status": {
+        "type": "string",
+        "enum": [
+          "found",
+          "empty",
+          "failed"
+        ]
+      },
+      "docs": {
+        "type": "array"
+      },
+      "source_ids": {
+        "type": "array"
+      },
+      "samples": {
+        "type": "array"
+      },
+      "allowed_tenants": {
+        "type": "array"
+      }
+    },
+    "Decision": {
+      "query": {
+        "type": "string"
+      },
+      "tenant": {
+        "type": "string"
+      },
+      "sample_count": {
+        "type": "number"
+      },
+      "response_status": {
+        "type": "string",
+        "enum": [
+          "found",
+          "empty",
+          "failed"
+        ]
+      },
+      "unit": {
+        "type": "string",
+        "enum": [
+          "USD",
+          "cents"
+        ]
+      },
+      "amount": {
+        "type": "number"
+      },
+      "warm_cache": {
+        "type": "boolean"
+      },
+      "retry": {
+        "type": "boolean"
+      },
+      "status": {
+        "type": "string",
+        "enum": [
+          "found",
+          "empty",
+          "failed"
+        ]
+      },
+      "docs": {
+        "type": "array"
+      },
+      "source_ids": {
+        "type": "array"
+      },
+      "samples": {
+        "type": "array"
+      },
+      "decision": {
+        "type": "string",
+        "enum": [
+          "answer",
+          "no_records",
+          "unknown"
+        ]
+      },
+      "allowed_tenants": {
+        "type": "array"
+      }
+    }
+  },
+  "actions": [
+    {
+      "id": "retrieve",
+      "input_type": "Query",
+      "output_type": "Result",
+      "reads": [
+        "calls",
+        "charged",
+        "cache"
+      ],
+      "writes": [
+        "cache",
+        "calls",
+        "charged"
+      ],
+      "pre": [],
+      "post": [
+        {
+          "id": "status",
+          "requirement": "Backend failure must stay distinguishable from successful empty retrieval.",
+          "must": {
+            "op": "eq",
+            "args": [
+              {
+                "path": "output.status"
+              },
+              {
+                "path": "input.response_status"
+              }
+            ]
+          }
+        },
+        {
+          "id": "tenant",
+          "requirement": "Retrieved documents must belong to the requesting tenant.",
+          "must": {
+            "op": "subset",
+            "args": [
+              {
+                "pluck": {
+                  "value": {
+                    "path": "output.docs"
+                  },
+                  "field": "tenant"
+                }
+              },
+              {
+                "path": "input.allowed_tenants"
+              }
+            ]
+          }
+        },
+        {
+          "id": "accounting",
+          "requirement": "Charge every actual backend attempt including failed attempts.",
+          "must": {
+            "op": "eq",
+            "args": [
+              {
+                "path": "after.calls"
+              },
+              {
+                "path": "after.charged"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "normalize",
+      "input_type": "Result",
+      "output_type": "Result",
+      "reads": [
+        "calls",
+        "charged",
+        "cache"
+      ],
+      "writes": [],
+      "pre": [],
+      "post": [
+        {
+          "id": "cents",
+          "requirement": "Normalize cents into USD before aggregation.",
+          "must": {
+            "op": "eq",
+            "args": [
+              {
+                "pluck": {
+                  "value": {
+                    "path": "output.docs"
+                  },
+                  "field": "amount_usd"
+                }
+              },
+              {
+                "scale": {
+                  "value": {
+                    "pluck": {
+                      "value": {
+                        "path": "input.docs"
+                      },
+                      "field": "amount"
+                    }
+                  },
+                  "factor": 0.01
+                }
+              }
+            ]
+          },
+          "when": {
+            "op": "eq",
+            "args": [
+              {
+                "path": "input.unit"
+              },
+              {
+                "literal": "cents"
+              }
+            ]
+          }
+        },
+        {
+          "id": "usd",
+          "requirement": "USD inputs retain their values.",
+          "must": {
+            "op": "eq",
+            "args": [
+              {
+                "pluck": {
+                  "value": {
+                    "path": "output.docs"
+                  },
+                  "field": "amount_usd"
+                }
+              },
+              {
+                "pluck": {
+                  "value": {
+                    "path": "input.docs"
+                  },
+                  "field": "amount"
+                }
+              }
+            ]
+          },
+          "when": {
+            "op": "eq",
+            "args": [
+              {
+                "path": "input.unit"
+              },
+              {
+                "literal": "USD"
+              }
+            ]
+          }
+        },
+        {
+          "id": "source",
+          "requirement": "Normalization retains source IDs.",
+          "must": {
+            "op": "eq",
+            "args": [
+              {
+                "pluck": {
+                  "value": {
+                    "path": "output.docs"
+                  },
+                  "field": "id"
+                }
+              },
+              {
+                "pluck": {
+                  "value": {
+                    "path": "input.docs"
+                  },
+                  "field": "id"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "aggregate",
+      "input_type": "Result",
+      "output_type": "Evidence",
+      "reads": [
+        "calls",
+        "charged",
+        "cache"
+      ],
+      "writes": [
+        "calls",
+        "charged"
+      ],
+      "pre": [],
+      "post": [
+        {
+          "id": "count",
+          "requirement": "Return the requested number of samples.",
+          "must": {
+            "op": "eq",
+            "args": [
+              {
+                "count": {
+                  "path": "output.samples"
+                }
+              },
+              {
+                "path": "input.sample_count"
+              }
+            ]
+          }
+        },
+        {
+          "id": "independence",
+          "requirement": "Fresh-sampling mode requires distinct invocation IDs; this alone does not prove statistical independence.",
+          "must": {
+            "op": "unique",
+            "args": [
+              {
+                "pluck": {
+                  "value": {
+                    "path": "output.samples"
+                  },
+                  "field": "call_id"
+                }
+              }
+            ]
+          },
+          "when": {
+            "op": "eq",
+            "args": [
+              {
+                "path": "input.sampling_requirement"
+              },
+              {
+                "literal": "fresh"
+              }
+            ]
+          }
+        },
+        {
+          "id": "lineage",
+          "requirement": "Aggregation retains source IDs required by the delivery contract.",
+          "must": {
+            "op": "eq",
+            "args": [
+              {
+                "path": "output.source_ids"
+              },
+              {
+                "pluck": {
+                  "value": {
+                    "path": "input.docs"
+                  },
+                  "field": "id"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "conclude",
+      "input_type": "Evidence",
+      "output_type": "Decision",
+      "reads": [
+        "calls",
+        "charged",
+        "cache"
+      ],
+      "writes": [],
+      "pre": [],
+      "post": [
+        {
+          "id": "uncertainty",
+          "requirement": "Failed retrieval cannot assert that records are absent.",
+          "must": {
+            "op": "eq",
+            "args": [
+              {
+                "path": "output.decision"
+              },
+              {
+                "literal": "unknown"
+              }
+            ]
+          },
+          "when": {
+            "op": "eq",
+            "args": [
+              {
+                "path": "input.response_status"
+              },
+              {
+                "literal": "failed"
+              }
+            ]
+          }
+        },
+        {
+          "id": "lineage",
+          "requirement": "Conclusion retains source IDs.",
+          "must": {
+            "op": "eq",
+            "args": [
+              {
+                "path": "output.source_ids"
+              },
+              {
+                "path": "input.source_ids"
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "edges": [
+    {
+      "from": "retrieve",
+      "to": "normalize",
+      "bindings": [
+        {
+          "output": "query",
+          "input": "query"
+        },
+        {
+          "output": "tenant",
+          "input": "tenant"
+        },
+        {
+          "output": "status",
+          "input": "status"
+        },
+        {
+          "output": "docs",
+          "input": "docs"
+        }
+      ]
+    },
+    {
+      "from": "normalize",
+      "to": "aggregate",
+      "bindings": [
+        {
+          "output": "query",
+          "input": "query"
+        },
+        {
+          "output": "tenant",
+          "input": "tenant"
+        },
+        {
+          "output": "status",
+          "input": "status"
+        },
+        {
+          "output": "docs",
+          "input": "docs"
+        }
+      ]
+    },
+    {
+      "from": "aggregate",
+      "to": "conclude",
+      "bindings": [
+        {
+          "output": "query",
+          "input": "query"
+        },
+        {
+          "output": "tenant",
+          "input": "tenant"
+        },
+        {
+          "output": "status",
+          "input": "status"
+        },
+        {
+          "output": "docs",
+          "input": "docs"
+        },
+        {
+          "output": "samples",
+          "input": "samples"
+        },
+        {
+          "output": "source_ids",
+          "input": "source_ids"
+        }
+      ]
+    }
+  ],
+  "required_actions": [
+    "retrieve",
+    "normalize",
+    "aggregate",
+    "conclude"
+  ],
+  "probes": {
+    "base": {
+      "tenant": "acme",
+      "amount": 125,
+      "sample_count": 3,
+      "unit": "cents",
+      "warm_cache": false,
+      "retry": false,
+      "response_status": "found",
+      "sampling_requirement": "fresh"
+    },
+    "axes": {
+      "response_status": [
+        "found",
+        "empty",
+        "failed"
+      ],
+      "unit": [
+        "USD",
+        "cents"
+      ],
+      "warm_cache": [
+        false,
+        true
+      ],
+      "retry": [
+        false,
+        true
+      ],
+      "sample_count": [
+        1,
+        3
+      ]
+    }
+  }
+}

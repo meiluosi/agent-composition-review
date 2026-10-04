@@ -1,0 +1,8 @@
+{
+  "model_requested": "gpt-6-luna",
+  "case_id": "canary",
+  "condition": "preflight",
+  "trial": 1,
+  "time": "2026-10-03T19:26:48.823421+00:00",
+  "canary": true
+}

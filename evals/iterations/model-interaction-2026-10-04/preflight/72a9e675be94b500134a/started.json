@@ -1,0 +1,8 @@
+{
+  "model_requested": "gpt-6-astra",
+  "case_id": "canary",
+  "condition": "preflight",
+  "trial": 1,
+  "time": "2026-10-03T19:27:58.118866+00:00",
+  "canary": true
+}

@@ -43,6 +43,14 @@ jobs:
         run: python -m unittest evals.code_repair.test_fixtures evals.code_repair.test_protocol -v
       - name: Preserve the post-freeze normal-control counterexamples
         run: python -m unittest evals.code_repair_followup.test_cleanup evals.code_repair_followup.test_transaction -v
+      - name: Check cross-model fixtures, isolation and development decisions
+        run: |
+          python -m unittest evals.model_interaction.test_fixtures evals.model_interaction.test_protocol evals.model_interaction.test_analysis -v
+          python -S evals/model_interaction/review_lease_queue.py
+          python -S evals/model_interaction/tasks/lease_queue/mutation_audit.py
+          python -S evals/model_interaction/tasks/retrieval_cache/mutation_audit.py
+          python -S evals/model_interaction/tasks/stream_events/mutation_audit.py
+          python -S evals/model_interaction/tasks/tool_results/mutation_audit.py
       - name: Verify published scores and redraw benchmark figures (no model calls)
         run: python scripts/plot_external_eval.py
       - name: Verify development ablation scores and figures (no model calls)
@@ -60,6 +68,8 @@ jobs:
           python scripts/analyze_recovered_code_reviews.py
           python scripts/audit_code_repair_boundaries.py
           python scripts/render_code_repair_report.py
+      - name: Replay frozen cross-model outcomes (no model calls)
+        run: python scripts/analyze_model_interaction.py
       - name: Package runtime skill
         run: python scripts/build_skill.py
       - name: Package unpromoted modular candidate separately

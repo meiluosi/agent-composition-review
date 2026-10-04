@@ -1,0 +1,27 @@
+{
+  "family": "lease_queue",
+  "title": "Persistent work claims, expiry and delayed acknowledgement",
+  "expected_checks": 9,
+  "test_names": [
+    "test_empty_and_persistence",
+    "test_fifo_and_active_exclusion",
+    "test_same_worker_stale_receipt",
+    "test_other_worker_stale_receipt",
+    "test_expiry_and_fractional_duration",
+    "test_payload_isolation",
+    "test_failed_put_and_duplicate_reuse",
+    "test_invalid_duration_preserves_jobs",
+    "test_atomic_claim_across_connections"
+  ],
+  "source_note": "Authored development fixture using Python standard-library SQLite transactions and explicit logical time; not an external benchmark or held-out production incident.",
+  "defect_notes": {
+    "incident": "Acknowledgement omits claim generation, so an older receipt can complete a newer claim when the worker name is reused.",
+    "normal": "Reference implementation checks receipt generation and lease expiry using an atomic SQLite update; claim selection/update is within BEGIN IMMEDIATE.",
+    "local": "Lease expiry truncates the requested duration to an integer, violating fractional timing. This is a scalar calculation defect rather than a handoff ownership defect."
+  },
+  "acceptance_limits": [
+    "The concurrent check uses two independent connections and a synchronized start; this finite schedule does not prove every possible SQLite interleaving.",
+    "No wall-clock timing, untrusted fabricated receipts, crash durability, process termination, database lock timeouts, or payload types outside the stated domain are claimed.",
+    "Returned receipt dictionaries are treated as opaque: tests pass issued receipts unchanged."
+  ]
+}

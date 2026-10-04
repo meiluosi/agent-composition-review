@@ -1,0 +1,31 @@
+{
+  "family": "stream_events",
+  "title": "Incremental tool event stream",
+  "expected_checks": 12,
+  "test_names": [
+    "basic",
+    "byte_boundaries",
+    "metrics",
+    "unfinished_buffer",
+    "size_limits",
+    "error_terminal",
+    "terminal_once",
+    "malformed_frames",
+    "premature_eof",
+    "poison_state",
+    "failed_call_has_no_partial_output",
+    "independent_streams"
+  ],
+  "source_note": "Authored development fixture with an explicitly bounded protocol; not an external benchmark or production incident. Python standard-library semantics only.",
+  "defect_notes": {
+    "incident": "Decodes each transport chunk independently, rejecting valid split UTF-8; accepts trailing same-call data after terminal events.",
+    "normal": "Reference implementation satisfying the documented lifecycle, data, failure and isolation contract.",
+    "local": "Counts words by ASCII-space splitting, including empty pieces; all stream composition mechanisms are unchanged."
+  },
+  "validation_scope": [
+    "Custom LF/JSON protocol, not an implementation or conformance test of full SSE.",
+    "Single-threaded parser lifecycle; no transport, clock, network or scheduling test.",
+    "Every two-way byte split and single-byte delivery are tested for one representative Unicode stream; this is finite coverage.",
+    "Frame bound is checked by observed acceptance and buffered_bytes; peak process memory is not measured."
+  ]
+}

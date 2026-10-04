@@ -1,0 +1,78 @@
+{
+  "family": "lease_queue",
+  "all_detected": true,
+  "mutants": [
+    {
+      "mutant": "truncate_fractional_lease",
+      "detected": true,
+      "failed_checks": [
+        "test_expiry_and_fractional_duration"
+      ]
+    },
+    {
+      "mutant": "drop_receipt_generation",
+      "detected": true,
+      "failed_checks": [
+        "test_same_worker_stale_receipt"
+      ]
+    },
+    {
+      "mutant": "ack_expired_at_boundary",
+      "detected": true,
+      "failed_checks": [
+        "test_expiry_and_fractional_duration"
+      ]
+    },
+    {
+      "mutant": "reclaim_after_boundary_only",
+      "detected": true,
+      "failed_checks": [
+        "test_fifo_and_active_exclusion",
+        "test_same_worker_stale_receipt",
+        "test_other_worker_stale_receipt",
+        "test_expiry_and_fractional_duration",
+        "test_payload_isolation"
+      ]
+    },
+    {
+      "mutant": "reverse_queue_order",
+      "detected": true,
+      "failed_checks": [
+        "test_fifo_and_active_exclusion",
+        "test_failed_put_and_duplicate_reuse"
+      ]
+    },
+    {
+      "mutant": "accept_duplicate_and_overwrite",
+      "detected": true,
+      "failed_checks": [
+        "test_failed_put_and_duplicate_reuse"
+      ]
+    },
+    {
+      "mutant": "completed_job_redelivered",
+      "detected": true,
+      "failed_checks": [
+        "test_empty_and_persistence",
+        "test_same_worker_stale_receipt"
+      ]
+    },
+    {
+      "mutant": "accept_nonpositive_duration",
+      "detected": true,
+      "failed_checks": [
+        "test_invalid_duration_preserves_jobs"
+      ]
+    },
+    {
+      "mutant": "renewed_delivery_changes_payload",
+      "detected": true,
+      "failed_checks": [
+        "test_fifo_and_active_exclusion",
+        "test_expiry_and_fractional_duration",
+        "test_payload_isolation"
+      ]
+    }
+  ],
+  "scope": "Authored negative controls; no exhaustive concurrency or crash-recovery claim."
+}

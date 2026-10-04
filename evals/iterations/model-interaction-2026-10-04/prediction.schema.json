@@ -1,0 +1,35 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "initial_verdict": {
+      "type": "string",
+      "enum": [
+        "violation",
+        "satisfied",
+        "insufficient"
+      ]
+    },
+    "summary": {
+      "type": "string"
+    },
+    "tests_executed": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "limitations": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  },
+  "required": [
+    "initial_verdict",
+    "summary",
+    "tests_executed",
+    "limitations"
+  ]
+}

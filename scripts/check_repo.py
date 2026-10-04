@@ -36,7 +36,13 @@ def check(root=ROOT):
         assert (root / case["fixture"]).is_file()
         assert case["family"] and case["tested_versions"] and case["evidence_level"]
     for path in root.rglob("*.md"):
-        if any(part in [".git", ".venv", "dist"] for part in path.relative_to(root).parts):
+        parts = path.relative_to(root).parts
+        if any(part in [".git", ".venv", "dist"] for part in parts):
+            continue
+        # Captured model outputs are immutable evidence from temporary workspaces,
+        # not maintained documentation. Their files/inputs are hash-verified by
+        # the evaluation analyzer; original relative links may name staged inputs.
+        if "iterations" in parts and ("raw-runs" in parts or "artifacts" in parts):
             continue
         for target in re.findall(r"\]\(([^)]+)\)", path.read_text()):
             if target.startswith(("https://", "http://", "#", "mailto:")):

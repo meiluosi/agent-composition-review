@@ -1,0 +1,82 @@
+{
+  "family": "retrieval_cache",
+  "all_detected": true,
+  "mutants": [
+    {
+      "mutant": "omit_tenant",
+      "detected": true,
+      "failed_checks": [
+        "tenant_revision_isolation",
+        "failure_not_cached"
+      ]
+    },
+    {
+      "mutant": "omit_revision",
+      "detected": true,
+      "failed_checks": [
+        "tenant_revision_isolation"
+      ]
+    },
+    {
+      "mutant": "filter_insertion_order_identity",
+      "detected": true,
+      "failed_checks": [
+        "query_identity"
+      ]
+    },
+    {
+      "mutant": "expiration_inclusive",
+      "detected": true,
+      "failed_checks": [
+        "expiry_without_sliding",
+        "expired_failure_retry",
+        "empty_results_and_zero_limit"
+      ]
+    },
+    {
+      "mutant": "slide_lifetime_on_hit",
+      "detected": true,
+      "failed_checks": [
+        "expiry_without_sliding",
+        "empty_results_and_zero_limit"
+      ]
+    },
+    {
+      "mutant": "cache_only_first_limit",
+      "detected": true,
+      "failed_checks": [
+        "full_result_cache"
+      ]
+    },
+    {
+      "mutant": "source_query_alias",
+      "detected": true,
+      "failed_checks": [
+        "caller_query_isolation"
+      ]
+    },
+    {
+      "mutant": "source_result_alias",
+      "detected": true,
+      "failed_checks": [
+        "source_result_isolation"
+      ]
+    },
+    {
+      "mutant": "returned_document_alias",
+      "detected": true,
+      "failed_checks": [
+        "returned_result_isolation"
+      ]
+    },
+    {
+      "mutant": "limit_off_by_one",
+      "detected": true,
+      "failed_checks": [
+        "rank_order_and_limit",
+        "full_result_cache"
+      ]
+    }
+  ],
+  "scope": "Authored negative controls; detecting these mutations does not establish complete correctness."
+}

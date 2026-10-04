@@ -1,0 +1,272 @@
+{
+  "case_id": "m03",
+  "condition": "A_tools",
+  "trial": 2,
+  "model_requested": "gpt-6-astra",
+  "exit_code": 0,
+  "timed_out": false,
+  "elapsed_seconds": 340.8797449169797,
+  "usage": {
+    "input_tokens": 192849,
+    "cached_input_tokens": 173568,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 6725,
+    "reasoning_output_tokens": 1667
+  },
+  "completed": true,
+  "status": "completed",
+  "infra_kind": null,
+  "prediction": {
+    "initial_verdict": "violation",
+    "summary": "已修复 app.py 的小数租期截断、布尔租期校验和 Unicode 字符串保真问题。保留公开接口、持久化格式及已有正确行为；仅依赖标准库，自包含。新增 13 项补充测试全部通过。",
+    "tests_executed": [
+      "./run_python smoke.py original.py：通过",
+      "./run_python test_queue.py original.py：复现原实现缺陷",
+      "./run_python smoke.py app.py：通过",
+      "./run_python test_queue.py app.py：13 项通过，覆盖并发、到期边界、失败原子性、载荷隔离、旧数据兼容及 300 步随机对照"
+    ],
+    "limitations": [
+      "并发验证使用独立 SQLite 连接和线程，未执行多进程压力测试。"
+    ]
+  },
+  "acceptance": {
+    "passed": true,
+    "tests_run": 9,
+    "checks": [
+      {
+        "test": "test_empty_and_persistence",
+        "passed": true
+      },
+      {
+        "test": "test_fifo_and_active_exclusion",
+        "passed": true
+      },
+      {
+        "test": "test_same_worker_stale_receipt",
+        "passed": true
+      },
+      {
+        "test": "test_other_worker_stale_receipt",
+        "passed": true
+      },
+      {
+        "test": "test_expiry_and_fractional_duration",
+        "passed": true
+      },
+      {
+        "test": "test_payload_isolation",
+        "passed": true
+      },
+      {
+        "test": "test_failed_put_and_duplicate_reuse",
+        "passed": true
+      },
+      {
+        "test": "test_invalid_duration_preserves_jobs",
+        "passed": true
+      },
+      {
+        "test": "test_atomic_claim_across_connections",
+        "passed": true
+      }
+    ],
+    "exit_code": 0,
+    "timed_out": false,
+    "sandbox": "macos_no_network_writes_only_grade_directory",
+    "stderr": ""
+  },
+  "acceptance_signature": {
+    "passed": true,
+    "tests_run": 9,
+    "checks": [
+      {
+        "test": "test_empty_and_persistence",
+        "passed": true
+      },
+      {
+        "test": "test_fifo_and_active_exclusion",
+        "passed": true
+      },
+      {
+        "test": "test_same_worker_stale_receipt",
+        "passed": true
+      },
+      {
+        "test": "test_other_worker_stale_receipt",
+        "passed": true
+      },
+      {
+        "test": "test_expiry_and_fractional_duration",
+        "passed": true
+      },
+      {
+        "test": "test_payload_isolation",
+        "passed": true
+      },
+      {
+        "test": "test_failed_put_and_duplicate_reuse",
+        "passed": true
+      },
+      {
+        "test": "test_invalid_duration_preserves_jobs",
+        "passed": true
+      },
+      {
+        "test": "test_atomic_claim_across_connections",
+        "passed": true
+      }
+    ],
+    "exit_code": 0,
+    "timed_out": false,
+    "invalid_output": false,
+    "isolation_failure": false
+  },
+  "source_changed": true,
+  "artifacts": {
+    "test_queue.py": "0a27e920c8f9caa9d07041b653412a6fe7c6eef4d961d76debb123c55549cb8b",
+    "app.py": "046293e3019ec83e58157aeb2591fb4984af5a0d7e11282923c1bec5e660740d"
+  },
+  "protected_changes": [],
+  "outside_changes": [],
+  "artifact_errors": [],
+  "tool_audit": [
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc \"pwd; rg --files -g '\"'!__pycache__'\"' -g '\"'!'\"\\\\.git'\"",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc 'cat task.md app.py smoke.py TOOLS.md'",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc 'ls -la; cat run_python; diff -u original.py app.py'",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc \"./run_python - <<'PY'\nimport tempfile\nfrom pathlib import Path\nfrom app import Queue\nwith tempfile.TemporaryDirectory(dir='.') as directory:\n    q = Queue(Path(directory) / 'queue.db')\n    q.put('one', {})\n    result = q.claim('worker', 0, 0.5)\n    print('fractional expiry:', result['expires_at'], '(expected 0.5)')\n    try:\n        q.claim('worker', 0, True)\n    except ValueError:\n        print('boolean rejected')\n    else:\n        print('boolean accepted (expected ValueError)')\n    try:\n        q.put('\\\\ud800', None)\n    except Exception as exc:\n        print('surrogate ID:', type(exc).__name__)\nPY\"",
+      "review_flags": []
+    },
+    {
+      "type": "file_change",
+      "exit_code": null,
+      "changes": [
+        {
+          "path": "<workspace>/test_queue.py",
+          "kind": "add"
+        }
+      ]
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 1,
+      "command": "/bin/zsh -lc './run_python test_queue.py original.py'",
+      "review_flags": []
+    },
+    {
+      "type": "file_change",
+      "exit_code": null,
+      "changes": [
+        {
+          "path": "<workspace>/app.py",
+          "kind": "update"
+        },
+        {
+          "path": "<workspace>/test_queue.py",
+          "kind": "update"
+        }
+      ]
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc './run_python test_queue.py app.py'",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc \"./run_python - <<'PY'\nimport json\nvalue = '\\\\ud800\\\\udc00'\nencoded = json.dumps(value, allow_nan=False)\nprint('ASCII JSON preserves surrogate pair:', json.loads(encoded) == value)\nencoded = json.dumps(value, allow_nan=False, ensure_ascii=False).encode('utf-8', errors='surrogatepass')\nprint('Literal JSON preserves surrogate pair:', json.loads(encoded) == value)\nPY\"",
+      "review_flags": []
+    },
+    {
+      "type": "file_change",
+      "exit_code": null,
+      "changes": [
+        {
+          "path": "<workspace>/app.py",
+          "kind": "update"
+        },
+        {
+          "path": "<workspace>/test_queue.py",
+          "kind": "update"
+        }
+      ]
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc './run_python smoke.py app.py'",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 1,
+      "command": "/bin/zsh -lc './run_python test_queue.py original.py'",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc './run_python test_queue.py app.py'",
+      "review_flags": []
+    },
+    {
+      "type": "file_change",
+      "exit_code": null,
+      "changes": [
+        {
+          "path": "<workspace>/test_queue.py",
+          "kind": "update"
+        }
+      ]
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 1,
+      "command": "/bin/zsh -lc 'diff -u original.py app.py'",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc './run_python smoke.py original.py'",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc './run_python test_queue.py app.py'",
+      "review_flags": []
+    }
+  ],
+  "case_sha256": "05cc4514e6c427e8a33e6db39321fdf657e1ed8ad3d8d2db68ba85e1c13f8fcd",
+  "prompt_sha256": "754741dedf8f45f17a6cba0d28c804d1273d67e30452f4503e8797defde6c5c4",
+  "event_sha256": "d6a3d43e9659b04b72507306b0e0747175e2a56b4c2dfda6a45209974b9b8bcf",
+  "stderr_sha256": "9afeee8b1e4683ba81a7858dd31540ab87d3a546e47bfe74863712397bd991d2",
+  "reasoning_effort": "high",
+  "cli_version": "codex-cli 0.160.0",
+  "canary": false,
+  "python_version": "3.12.14",
+  "execution_platform": "Darwin",
+  "terminal_errors": [],
+  "execution_phase": "classifier_recovery",
+  "recovery_manifest_sha256": "6826d034f0c76fbe1d24f761c801c391c878482718ec612bce68fd59ebf3c149"
+}

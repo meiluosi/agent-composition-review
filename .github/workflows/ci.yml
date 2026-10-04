@@ -77,6 +77,19 @@ jobs:
           python scripts/analyze_model_interaction.py
           python scripts/render_model_interaction_report.py
           python scripts/audit_model_interaction_results.py > /tmp/model-interaction-integrity.json
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          expected = json.loads(Path('evals/iterations/model-interaction-2026-10-04/integrity-audit.json').read_text())
+          actual = json.loads(Path('/tmp/model-interaction-integrity.json').read_text())
+          assert (actual['planned'], actual['public_records_verified'], actual['pending_not_started'], actual['unpublished_started_or_publication_incomplete']) == (144, 100, 44, 0)
+          for key in ('planned', 'public_records_verified', 'pending_not_started', 'unpublished_started_or_publication_incomplete', 'recorded_status_counts'):
+              assert actual[key] == expected[key], key
+          fields = ('job_digest', 'record_sha256', 'started_sha256', 'snapshot_state', 'recorded_status', 'infra_kind')
+          snapshot = lambda report: [{key: row.get(key) for key in fields} for row in report['jobs']]
+          assert snapshot(actual) == snapshot(expected), 'Published evidence differs from the final stopped-study snapshot'
+          print('Verified preserved 100-attempt / 44-pending study closure; local raw logs are not required.')
+          PY
       - name: Package runtime skill
         run: python scripts/build_skill.py
       - name: Package unpromoted modular candidate separately

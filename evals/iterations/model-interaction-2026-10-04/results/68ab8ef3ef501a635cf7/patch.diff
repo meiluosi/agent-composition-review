@@ -1,0 +1,11 @@
+--- original.py
++++ app.py
+@@ -5,7 +5,7 @@
+ 
+ def rank_documents(documents, limit):
+     ordered = sorted(documents, key=lambda document: (-document['score'], document['id']))
+-    return deepcopy(ordered[:limit + 1])
++    return deepcopy(ordered[:limit])
+ 
+ 
+ class RetrievalCache:

@@ -1,0 +1,1228 @@
+EEEEEEEEEEEEEEEEEEEEEEEEEEE...EEEEEEEEEEEEEEEEEEEEEEEE....E.FFFFFFFFFF.E
+======================================================================
+ERROR: test_all_two_chunk_splits (__main__.ContractTests.test_all_two_chunk_splits) (terminal='done', split=26)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/model-interaction-task-97rtbh7b/original.py", line 57, in feed
+    data = data.decode("utf-8").encode("utf-8")
+           ^^^^^^^^^^^^^^^^^^^^
+UnicodeDecodeError: 'utf-8' codec can't decode byte 0xe4 in position 25: unexpected end of data
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/model-interaction-task-97rtbh7b/test_contract.py", line 49, in test_all_two_chunk_splits
+    events = parser.feed(wire[:split]) + parser.feed(wire[split:])
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/model-interaction-task-97rtbh7b/original.py", line 59, in feed
+    self._fail("invalid UTF-8 input chunk")
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/model-interaction-task-97rtbh7b/original.py", line 27, in _fail
+    raise StreamError(message)
+original.StreamError: invalid UTF-8 input chunk
+
+======================================================================
+ERROR: test_all_two_chunk_splits (__main__.ContractTests.test_all_two_chunk_splits) (terminal='done', split=27)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/model-interaction-task-97rtbh7b/original.py", line 57, in feed
+    data = data.decode("utf-8").encode("utf-8")
+           ^^^^^^^^^^^^^^^^^^^^
+UnicodeDecodeError: 'utf-8' codec can't decode bytes in position 25-26: unexpected end of data
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/model-interaction-task-97rtbh7b/test_contract.py", line 49, in test_all_two_chunk_splits
+    events = parser.feed(wire[:split]) + parser.feed(wire[split:])
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/model-interaction-task-97rtbh7b/original.py", line 59, in feed
+    self._fail("invalid UTF-8 input chunk")
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/model-interaction-task-97rtbh7b/original.py", line 27, in _fail
+    raise StreamError(message)
+original.StreamError: invalid UTF-8 input chunk
+
+======================================================================
+ERROR: test_all_two_chunk_splits (__main__.ContractTests.test_all_two_chunk_splits) (terminal='done', split=29)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/model-interaction-task-97rtbh7b/original.py", line 57, in feed
+    data = data.decode("utf-8").encode("utf-8")
+           ^^^^^^^^^^^^^^^^^^^^
+UnicodeDecodeError: 'utf-8' codec can't decode byte 0xf0 in position 28: unexpected end of data
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/model-interaction-task-97rtbh7b/test_contract.py", line 49, in test_all_two_chunk_splits
+    events = parser.feed(wire[:split]) + parser.feed(wire[split:])
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/model-interaction-task-97rtbh7b/original.py", line 59, in feed
+    self._fail("invalid UTF-8 input chunk")
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/model-interaction-task-97rtbh7b/original.py", line 27, in _fail
+    raise StreamError(message)
+original.StreamError: invalid UTF-8 input chunk
+
+======================================================================
+ERROR: test_all_two_chunk_splits (__main__.ContractTests.test_all_two_chunk_splits) (terminal='done', split=30)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/model-interaction-task-97rtbh7b/original.py", line 57, in feed
+    data = data.decode("utf-8").encode("utf-8")
+           ^^^^^^^^^^^^^^^^^^^^
+UnicodeDecodeError: 'utf-8' codec can't decode bytes in position 28-29: unexpected end of data
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/model-interaction-task-97rtbh7b/test_contract.py", line 49, in test_all_two_chunk_splits
+    events = parser.feed(wire[:split]) + parser.feed(wire[split:])
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/model-interaction-task-97rtbh7b/original.py", line 59, in feed
+    self._fail("invalid UTF-8 input chunk")
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/model-interaction-task-97rtbh7b/original.py", line 27, in _fail
+    raise StreamError(message)
+original.StreamError: invalid UTF-8 input chunk
+
+======================================================================
+ERROR: test_all_two_chunk_splits (__main__.ContractTests.test_all_two_chunk_splits) (terminal='done', split=31)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/model-interaction-task-97rtbh7b/original.py", line 57, in feed
+    data = data.decode("utf-8").encode("utf-8")
+           ^^^^^^^^^^^^^^^^^^^^
+UnicodeDecodeError: 'utf-8' codec can't decode bytes in position 28-30: unexpected end of data
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/model-interaction-task-97rtbh7b/test_contract.py", line 49, in test_all_two_chunk_splits
+    events = parser.feed(wire[:split]) + parser.feed(wire[split:])
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/model-interaction-task-97rtbh7b/original.py", line 59, in feed
+    self._fail("invalid UTF-8 input chunk")
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/model-interaction-task-97rtbh7b/original.py", line 27, in _fail
+    raise StreamError(message)
+original.StreamError: invalid UTF-8 input chunk
+
+======================================================================
+ERROR: test_all_two_chunk_splits (__main__.ContractTests.test_all_two_chunk_splits) (terminal='done', split=89)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/model-interaction-task-97rtbh7b/original.py", line 57, in feed
+    data = data.decode("utf-8").encode("utf-8")
+           ^^^^^^^^^^^^^^^^^^^^
+UnicodeDecodeError: 'utf-8' codec can't decode byte 0xe5 in position 88: unexpected end of data
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/model-interaction-task-97rtbh7b/test_contract.py", line 49, in test_all_two_chunk_splits
+    events = parser.feed(wire[:split]) + parser.feed(wire[split:])
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/model-interaction-task-97rtbh7b/original.py", line 59, in feed
+    self._fail("invalid UTF-8 input chunk")
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/model-interaction-task-97rtbh7b/original.py", line 27, in _fail
+    raise StreamError(message)
+original.StreamError: invalid UTF-8 input chunk
+
+======================================================================
+ERROR: test_all_two_chunk_splits (__main__.ContractTests.test_all_two_chunk_splits) (terminal='done', split=90)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/model-interaction-task-97rtbh7b/original.py", line 57, in feed
+    data = data.decode("utf-8").encode("utf-8")
+           ^^^^^^^^^^^^^^^^^^^^
+UnicodeDecodeError: 'utf-8' codec can't decode bytes in position 88-89: unexpected end of data
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/model-interaction-task-97rtbh7b/test_contract.py", line 49, in test_all_two_chunk_splits
+    events = parser.feed(wire[:split]) + parser.feed(wire[split:])
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/model-interaction-task-97rtbh7b/original.py", line 59, in feed
+    self._fail("invalid UTF-8 input chunk")
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/model-interaction-task-97rtbh7b/original.py", line 27, in _fail
+    raise StreamError(message)
+original.StreamError: invalid UTF-8 input chunk
+
+======================================================================
+ERROR: test_all_two_chunk_splits (__main__.ContractTests.test_all_two_chunk_splits) (terminal='done', split=127)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/model-interaction-task-97rtbh7b/original.py", line 57, in feed
+    data = data.decode("utf-8").encode("utf-8")
+           ^^^^^^^^^^^^^^^^^^^^
+UnicodeDecodeError: 'utf-8' codec can't decode byte 0xe2 in position 126: unexpected end of data
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/model-interaction-task-97rtbh7b/test_contract.py", line 49, in test_all_two_chunk_splits
+    events = parser.feed(wire[:split]) + parser.feed(wire[split:])
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/model-interaction-task-97rtbh7b/original.py", line 59, in feed
+    self._fail("invalid UTF-8 input chunk")
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/model-interaction-task-97rtbh7b/original.py", line 27, in _fail
+    raise StreamError(message)
+original.StreamError: invalid UTF-8 input chunk
+
+======================================================================
+ERROR: test_all_two_chunk_splits (__main__.ContractTests.test_all_two_chunk_splits) (terminal='done', split=128)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/model-interaction-task-97rtbh7b/original.py", line 57, in feed
+    data = data.decode("utf-8").encode("utf-8")
+           ^^^^^^^^^^^^^^^^^^^^
+UnicodeDecodeError: 'utf-8' codec can't decode bytes in position 126-127: unexpected end of data
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/model-interaction-task-97rtbh7b/test_contract.py", line 49, in test_all_two_chunk_splits
+    events = parser.feed(wire[:split]) + parser.feed(wire[split:])
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/model-interaction-task-97rtbh7b/original.py", line 59, in feed
+    self._fail("invalid UTF-8 input chunk")
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/model-interaction-task-97rtbh7b/original.py", line 27, in _fail
+    raise StreamError(message)
+original.StreamError: invalid UTF-8 input chunk
+
+======================================================================
+ERROR: test_all_two_chunk_splits (__main__.ContractTests.test_all_two_chunk_splits) (terminal='done', split=162)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/model-interaction-task-97rtbh7b/original.py", line 57, in feed
+    data = data.decode("utf-8").encode("utf-8")
+           ^^^^^^^^^^^^^^^^^^^^
+UnicodeDecodeError: 'utf-8' codec can't decode byte 0xcc in position 161: unexpected end of data
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/model-interaction-task-97rtbh7b/test_contract.py", line 49, in test_all_two_chunk_splits
+    events = parser.feed(wire[:split]) + parser.feed(wire[split:])
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/model-interaction-task-97rtbh7b/original.py", line 59, in feed
+    self._fail("invalid UTF-8 input chunk")
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/model-interaction-task-97rtbh7b/original.py", line 27, in _fail
+    raise StreamError(message)
+original.StreamError: invalid UTF-8 input chunk
+
+======================================================================
+ERROR: test_all_two_chunk_splits (__main__.ContractTests.test_all_two_chunk_splits) (terminal='error', split=26)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/model-interaction-task-97rtbh7b/original.py", line 57, in feed
+    data = data.decode("utf-8").encode("utf-8")
+           ^^^^^^^^^^^^^^^^^^^^
+UnicodeDecodeError: 'utf-8' codec can't decode byte 0xe4 in position 25: unexpected end of data
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/model-interaction-task-97rtbh7b/test_contract.py", line 49, in test_all_two_chunk_splits
+    events = parser.feed(wire[:split]) + parser.feed(wire[split:])
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/model-interaction-task-97rtbh7b/original.py", line 59, in feed
+    self._fail("invalid UTF-8 input chunk")
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/model-interaction-task-97rtbh7b/original.py", line 27, in _fail
+    raise StreamError(message)
+original.StreamError: invalid UTF-8 input chunk
+
+======================================================================
+ERROR: test_all_two_chunk_splits (__main__.ContractTests.test_all_two_chunk_splits) (terminal='error', split=27)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/model-interaction-task-97rtbh7b/original.py", line 57, in feed
+    data = data.decode("utf-8").encode("utf-8")
+           ^^^^^^^^^^^^^^^^^^^^
+UnicodeDecodeError: 'utf-8' codec can't decode bytes in position 25-26: unexpected end of data
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/model-interaction-task-97rtbh7b/test_contract.py", line 49, in test_all_two_chunk_splits
+    events = parser.feed(wire[:split]) + parser.feed(wire[split:])
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/model-interaction-task-97rtbh7b/original.py", line 59, in feed
+    self._fail("invalid UTF-8 input chunk")
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/model-interaction-task-97rtbh7b/original.py", line 27, in _fail
+    raise StreamError(message)
+original.StreamError: invalid UTF-8 input chunk
+
+======================================================================
+ERROR: test_all_two_chunk_splits (__main__.ContractTests.test_all_two_chunk_splits) (terminal='error', split=29)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/model-interaction-task-97rtbh7b/original.py", line 57, in feed
+    data = data.decode("utf-8").encode("utf-8")
+           ^^^^^^^^^^^^^^^^^^^^
+UnicodeDecodeError: 'utf-8' codec can't decode byte 0xf0 in position 28: unexpected end of data
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/model-interaction-task-97rtbh7b/test_contract.py", line 49, in test_all_two_chunk_splits
+    events = parser.feed(wire[:split]) + parser.feed(wire[split:])
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/model-interaction-task-97rtbh7b/original.py", line 59, in feed
+    self._fail("invalid UTF-8 input chunk")
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/model-interaction-task-97rtbh7b/original.py", line 27, in _fail
+    raise StreamError(message)
+original.StreamError: invalid UTF-8 input chunk
+
+======================================================================
+ERROR: test_all_two_chunk_splits (__main__.ContractTests.test_all_two_chunk_splits) (terminal='error', split=30)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/model-interaction-task-97rtbh7b/original.py", line 57, in feed
+    data = data.decode("utf-8").encode("utf-8")
+           ^^^^^^^^^^^^^^^^^^^^
+UnicodeDecodeError: 'utf-8' codec can't decode bytes in position 28-29: unexpected end of data
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/model-interaction-task-97rtbh7b/test_contract.py", line 49, in test_all_two_chunk_splits
+    events = parser.feed(wire[:split]) + parser.feed(wire[split:])
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/model-interaction-task-97rtbh7b/original.py", line 59, in feed
+    self._fail("invalid UTF-8 input chunk")
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/model-interaction-task-97rtbh7b/original.py", line 27, in _fail
+    raise StreamError(message)
+original.StreamError: invalid UTF-8 input chunk
+
+======================================================================
+ERROR: test_all_two_chunk_splits (__main__.ContractTests.test_all_two_chunk_splits) (terminal='error', split=31)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/model-interaction-task-97rtbh7b/original.py", line 57, in feed
+    data = data.decode("utf-8").encode("utf-8")
+           ^^^^^^^^^^^^^^^^^^^^
+UnicodeDecodeError: 'utf-8' codec can't decode bytes in position 28-30: unexpected end of data
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/model-interaction-task-97rtbh7b/test_contract.py", line 49, in test_all_two_chunk_splits
+    events = parser.feed(wire[:split]) + parser.feed(wire[split:])
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/model-interaction-task-97rtbh7b/original.py", line 59, in feed
+    self._fail("invalid UTF-8 input chunk")
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/model-interaction-task-97rtbh7b/original.py", line 27, in _fail
+    raise StreamError(message)
+original.StreamError: invalid UTF-8 input chunk
+
+======================================================================
+ERROR: test_all_two_chunk_splits (__main__.ContractTests.test_all_two_chunk_splits) (terminal='error', split=89)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/model-interaction-task-97rtbh7b/original.py", line 57, in feed
+    data = data.decode("utf-8").encode("utf-8")
+           ^^^^^^^^^^^^^^^^^^^^
+UnicodeDecodeError: 'utf-8' codec can't decode byte 0xe5 in position 88: unexpected end of data
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/model-interaction-task-97rtbh7b/test_contract.py", line 49, in test_all_two_chunk_splits
+    events = parser.feed(wire[:split]) + parser.feed(wire[split:])
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/model-interaction-task-97rtbh7b/original.py", line 59, in feed
+    self._fail("invalid UTF-8 input chunk")
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/model-interaction-task-97rtbh7b/original.py", line 27, in _fail
+    raise StreamError(message)
+original.StreamError: invalid UTF-8 input chunk
+
+======================================================================
+ERROR: test_all_two_chunk_splits (__main__.ContractTests.test_all_two_chunk_splits) (terminal='error', split=90)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/model-interaction-task-97rtbh7b/original.py", line 57, in feed
+    data = data.decode("utf-8").encode("utf-8")
+           ^^^^^^^^^^^^^^^^^^^^
+UnicodeDecodeError: 'utf-8' codec can't decode bytes in position 88-89: unexpected end of data
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/model-interaction-task-97rtbh7b/test_contract.py", line 49, in test_all_two_chunk_splits
+    events = parser.feed(wire[:split]) + parser.feed(wire[split:])
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/model-interaction-task-97rtbh7b/original.py", line 59, in feed
+    self._fail("invalid UTF-8 input chunk")
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/model-interaction-task-97rtbh7b/original.py", line 27, in _fail
+    raise StreamError(message)
+original.StreamError: invalid UTF-8 input chunk
+
+======================================================================
+ERROR: test_all_two_chunk_splits (__main__.ContractTests.test_all_two_chunk_splits) (terminal='error', split=127)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/model-interaction-task-97rtbh7b/original.py", line 57, in feed
+    data = data.decode("utf-8").encode("utf-8")
+           ^^^^^^^^^^^^^^^^^^^^
+UnicodeDecodeError: 'utf-8' codec can't decode byte 0xe2 in position 126: unexpected end of data
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/model-interaction-task-97rtbh7b/test_contract.py", line 49, in test_all_two_chunk_splits
+    events = parser.feed(wire[:split]) + parser.feed(wire[split:])
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/model-interaction-task-97rtbh7b/original.py", line 59, in feed
+    self._fail("invalid UTF-8 input chunk")
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/model-interaction-task-97rtbh7b/original.py", line 27, in _fail
+    raise StreamError(message)
+original.StreamError: invalid UTF-8 input chunk
+
+======================================================================
+ERROR: test_all_two_chunk_splits (__main__.ContractTests.test_all_two_chunk_splits) (terminal='error', split=128)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/model-interaction-task-97rtbh7b/original.py", line 57, in feed
+    data = data.decode("utf-8").encode("utf-8")
+           ^^^^^^^^^^^^^^^^^^^^
+UnicodeDecodeError: 'utf-8' codec can't decode bytes in position 126-127: unexpected end of data
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/model-interaction-task-97rtbh7b/test_contract.py", line 49, in test_all_two_chunk_splits
+    events = parser.feed(wire[:split]) + parser.feed(wire[split:])
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/model-interaction-task-97rtbh7b/original.py", line 59, in feed
+    self._fail("invalid UTF-8 input chunk")
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/model-interaction-task-97rtbh7b/original.py", line 27, in _fail
+    raise StreamError(message)
+original.StreamError: invalid UTF-8 input chunk
+
+======================================================================
+ERROR: test_all_two_chunk_splits (__main__.ContractTests.test_all_two_chunk_splits) (terminal='error', split=162)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/model-interaction-task-97rtbh7b/original.py", line 57, in feed
+    data = data.decode("utf-8").encode("utf-8")
+           ^^^^^^^^^^^^^^^^^^^^
+UnicodeDecodeError: 'utf-8' codec can't decode byte 0xcc in position 161: unexpected end of data
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/model-interaction-task-97rtbh7b/test_contract.py", line 49, in test_all_two_chunk_splits
+    events = parser.feed(wire[:split]) + parser.feed(wire[split:])
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/model-interaction-task-97rtbh7b/original.py", line 59, in feed
+    self._fail("invalid UTF-8 input chunk")
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/model-interaction-task-97rtbh7b/original.py", line 27, in _fail
+    raise StreamError(message)
+original.StreamError: invalid UTF-8 input chunk
+
+======================================================================
+ERROR: test_all_two_chunk_splits (__main__.ContractTests.test_all_two_chunk_splits) (terminal='error', split=195)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/model-interaction-task-97rtbh7b/original.py", line 57, in feed
+    data = data.decode("utf-8").encode("utf-8")
+           ^^^^^^^^^^^^^^^^^^^^
+UnicodeDecodeError: 'utf-8' codec can't decode byte 0xe9 in position 194: unexpected end of data
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/model-interaction-task-97rtbh7b/test_contract.py", line 49, in test_all_two_chunk_splits
+    events = parser.feed(wire[:split]) + parser.feed(wire[split:])
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/model-interaction-task-97rtbh7b/original.py", line 59, in feed
+    self._fail("invalid UTF-8 input chunk")
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/model-interaction-task-97rtbh7b/original.py", line 27, in _fail
+    raise StreamError(message)
+original.StreamError: invalid UTF-8 input chunk
+
+======================================================================
+ERROR: test_all_two_chunk_splits (__main__.ContractTests.test_all_two_chunk_splits) (terminal='error', split=196)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/model-interaction-task-97rtbh7b/original.py", line 57, in feed
+    data = data.decode("utf-8").encode("utf-8")
+           ^^^^^^^^^^^^^^^^^^^^
+UnicodeDecodeError: 'utf-8' codec can't decode bytes in position 194-195: unexpected end of data
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/model-interaction-task-97rtbh7b/test_contract.py", line 49, in test_all_two_chunk_splits
+    events = parser.feed(wire[:split]) + parser.feed(wire[split:])
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/model-interaction-task-97rtbh7b/original.py", line 59, in feed
+    self._fail("invalid UTF-8 input chunk")
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/model-interaction-task-97rtbh7b/original.py", line 27, in _fail
+    raise StreamError(message)
+original.StreamError: invalid UTF-8 input chunk
+
+======================================================================
+ERROR: test_all_two_chunk_splits (__main__.ContractTests.test_all_two_chunk_splits) (terminal='error', split=198)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/model-interaction-task-97rtbh7b/original.py", line 57, in feed
+    data = data.decode("utf-8").encode("utf-8")
+           ^^^^^^^^^^^^^^^^^^^^
+UnicodeDecodeError: 'utf-8' codec can't decode byte 0xe8 in position 197: unexpected end of data
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/model-interaction-task-97rtbh7b/test_contract.py", line 49, in test_all_two_chunk_splits
+    events = parser.feed(wire[:split]) + parser.feed(wire[split:])
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/model-interaction-task-97rtbh7b/original.py", line 59, in feed
+    self._fail("invalid UTF-8 input chunk")
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/model-interaction-task-97rtbh7b/original.py", line 27, in _fail
+    raise StreamError(message)
+original.StreamError: invalid UTF-8 input chunk
+
+======================================================================
+ERROR: test_all_two_chunk_splits (__main__.ContractTests.test_all_two_chunk_splits) (terminal='error', split=199)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/model-interaction-task-97rtbh7b/original.py", line 57, in feed
+    data = data.decode("utf-8").encode("utf-8")
+           ^^^^^^^^^^^^^^^^^^^^
+UnicodeDecodeError: 'utf-8' codec can't decode bytes in position 197-198: unexpected end of data
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/model-interaction-task-97rtbh7b/test_contract.py", line 49, in test_all_two_chunk_splits
+    events = parser.feed(wire[:split]) + parser.feed(wire[split:])
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/model-interaction-task-97rtbh7b/original.py", line 59, in feed
+    self._fail("invalid UTF-8 input chunk")
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/model-interaction-task-97rtbh7b/original.py", line 27, in _fail
+    raise StreamError(message)
+original.StreamError: invalid UTF-8 input chunk
+
+======================================================================
+ERROR: test_all_two_chunk_splits (__main__.ContractTests.test_all_two_chunk_splits) (terminal='error', split=201)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/model-interaction-task-97rtbh7b/original.py", line 57, in feed
+    data = data.decode("utf-8").encode("utf-8")
+           ^^^^^^^^^^^^^^^^^^^^
+UnicodeDecodeError: 'utf-8' codec can't decode byte 0xf0 in position 200: unexpected end of data
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/model-interaction-task-97rtbh7b/test_contract.py", line 49, in test_all_two_chunk_splits
+    events = parser.feed(wire[:split]) + parser.feed(wire[split:])
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/model-interaction-task-97rtbh7b/original.py", line 59, in feed
+    self._fail("invalid UTF-8 input chunk")
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/model-interaction-task-97rtbh7b/original.py", line 27, in _fail
+    raise StreamError(message)
+original.StreamError: invalid UTF-8 input chunk
+
+======================================================================
+ERROR: test_all_two_chunk_splits (__main__.ContractTests.test_all_two_chunk_splits) (terminal='error', split=202)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/model-interaction-task-97rtbh7b/original.py", line 57, in feed
+    data = data.decode("utf-8").encode("utf-8")
+           ^^^^^^^^^^^^^^^^^^^^
+UnicodeDecodeError: 'utf-8' codec can't decode bytes in position 200-201: unexpected end of data
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/model-interaction-task-97rtbh7b/test_contract.py", line 49, in test_all_two_chunk_splits
+    events = parser.feed(wire[:split]) + parser.feed(wire[split:])
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/model-interaction-task-97rtbh7b/original.py", line 59, in feed
+    self._fail("invalid UTF-8 input chunk")
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/model-interaction-task-97rtbh7b/original.py", line 27, in _fail
+    raise StreamError(message)
+original.StreamError: invalid UTF-8 input chunk
+
+======================================================================
+ERROR: test_all_two_chunk_splits (__main__.ContractTests.test_all_two_chunk_splits) (terminal='error', split=203)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/model-interaction-task-97rtbh7b/original.py", line 57, in feed
+    data = data.decode("utf-8").encode("utf-8")
+           ^^^^^^^^^^^^^^^^^^^^
+UnicodeDecodeError: 'utf-8' codec can't decode bytes in position 200-202: unexpected end of data
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/model-interaction-task-97rtbh7b/test_contract.py", line 49, in test_all_two_chunk_splits
+    events = parser.feed(wire[:split]) + parser.feed(wire[split:])
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/model-interaction-task-97rtbh7b/original.py", line 59, in feed
+    self._fail("invalid UTF-8 input chunk")
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/model-interaction-task-97rtbh7b/original.py", line 27, in _fail
+    raise StreamError(message)
+original.StreamError: invalid UTF-8 input chunk
+
+======================================================================
+ERROR: test_frame_limit_complete_and_incomplete (__main__.ContractTests.test_frame_limit_complete_and_incomplete) (split=26)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/model-interaction-task-97rtbh7b/original.py", line 57, in feed
+    data = data.decode("utf-8").encode("utf-8")
+           ^^^^^^^^^^^^^^^^^^^^
+UnicodeDecodeError: 'utf-8' codec can't decode byte 0xf0 in position 25: unexpected end of data
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/model-interaction-task-97rtbh7b/test_contract.py", line 137, in test_frame_limit_complete_and_incomplete
+    events = parser.feed(wire[:split]) + parser.feed(wire[split:])
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/model-interaction-task-97rtbh7b/original.py", line 59, in feed
+    self._fail("invalid UTF-8 input chunk")
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/model-interaction-task-97rtbh7b/original.py", line 27, in _fail
+    raise StreamError(message)
+original.StreamError: invalid UTF-8 input chunk
+
+======================================================================
+ERROR: test_frame_limit_complete_and_incomplete (__main__.ContractTests.test_frame_limit_complete_and_incomplete) (split=27)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/model-interaction-task-97rtbh7b/original.py", line 57, in feed
+    data = data.decode("utf-8").encode("utf-8")
+           ^^^^^^^^^^^^^^^^^^^^
+UnicodeDecodeError: 'utf-8' codec can't decode bytes in position 25-26: unexpected end of data
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/model-interaction-task-97rtbh7b/test_contract.py", line 137, in test_frame_limit_complete_and_incomplete
+    events = parser.feed(wire[:split]) + parser.feed(wire[split:])
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/model-interaction-task-97rtbh7b/original.py", line 59, in feed
+    self._fail("invalid UTF-8 input chunk")
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/model-interaction-task-97rtbh7b/original.py", line 27, in _fail
+    raise StreamError(message)
+original.StreamError: invalid UTF-8 input chunk
+
+======================================================================
+ERROR: test_frame_limit_complete_and_incomplete (__main__.ContractTests.test_frame_limit_complete_and_incomplete) (split=28)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/model-interaction-task-97rtbh7b/original.py", line 57, in feed
+    data = data.decode("utf-8").encode("utf-8")
+           ^^^^^^^^^^^^^^^^^^^^
+UnicodeDecodeError: 'utf-8' codec can't decode bytes in position 25-27: unexpected end of data
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/model-interaction-task-97rtbh7b/test_contract.py", line 137, in test_frame_limit_complete_and_incomplete
+    events = parser.feed(wire[:split]) + parser.feed(wire[split:])
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/model-interaction-task-97rtbh7b/original.py", line 59, in feed
+    self._fail("invalid UTF-8 input chunk")
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/model-interaction-task-97rtbh7b/original.py", line 27, in _fail
+    raise StreamError(message)
+original.StreamError: invalid UTF-8 input chunk
+
+======================================================================
+ERROR: test_frame_limit_complete_and_incomplete (__main__.ContractTests.test_frame_limit_complete_and_incomplete) (split=30)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/model-interaction-task-97rtbh7b/original.py", line 57, in feed
+    data = data.decode("utf-8").encode("utf-8")
+           ^^^^^^^^^^^^^^^^^^^^
+UnicodeDecodeError: 'utf-8' codec can't decode byte 0xf0 in position 29: unexpected end of data
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/model-interaction-task-97rtbh7b/test_contract.py", line 137, in test_frame_limit_complete_and_incomplete
+    events = parser.feed(wire[:split]) + parser.feed(wire[split:])
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/model-interaction-task-97rtbh7b/original.py", line 59, in feed
+    self._fail("invalid UTF-8 input chunk")
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/model-interaction-task-97rtbh7b/original.py", line 27, in _fail
+    raise StreamError(message)
+original.StreamError: invalid UTF-8 input chunk
+
+======================================================================
+ERROR: test_frame_limit_complete_and_incomplete (__main__.ContractTests.test_frame_limit_complete_and_incomplete) (split=31)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/model-interaction-task-97rtbh7b/original.py", line 57, in feed
+    data = data.decode("utf-8").encode("utf-8")
+           ^^^^^^^^^^^^^^^^^^^^
+UnicodeDecodeError: 'utf-8' codec can't decode bytes in position 29-30: unexpected end of data
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/model-interaction-task-97rtbh7b/test_contract.py", line 137, in test_frame_limit_complete_and_incomplete
+    events = parser.feed(wire[:split]) + parser.feed(wire[split:])
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/model-interaction-task-97rtbh7b/original.py", line 59, in feed
+    self._fail("invalid UTF-8 input chunk")
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/model-interaction-task-97rtbh7b/original.py", line 27, in _fail
+    raise StreamError(message)
+original.StreamError: invalid UTF-8 input chunk
+
+======================================================================
+ERROR: test_frame_limit_complete_and_incomplete (__main__.ContractTests.test_frame_limit_complete_and_incomplete) (split=32)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/model-interaction-task-97rtbh7b/original.py", line 57, in feed
+    data = data.decode("utf-8").encode("utf-8")
+           ^^^^^^^^^^^^^^^^^^^^
+UnicodeDecodeError: 'utf-8' codec can't decode bytes in position 29-31: unexpected end of data
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/model-interaction-task-97rtbh7b/test_contract.py", line 137, in test_frame_limit_complete_and_incomplete
+    events = parser.feed(wire[:split]) + parser.feed(wire[split:])
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/model-interaction-task-97rtbh7b/original.py", line 59, in feed
+    self._fail("invalid UTF-8 input chunk")
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/model-interaction-task-97rtbh7b/original.py", line 27, in _fail
+    raise StreamError(message)
+original.StreamError: invalid UTF-8 input chunk
+
+======================================================================
+ERROR: test_frame_limit_complete_and_incomplete (__main__.ContractTests.test_frame_limit_complete_and_incomplete) (split=34)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/model-interaction-task-97rtbh7b/original.py", line 57, in feed
+    data = data.decode("utf-8").encode("utf-8")
+           ^^^^^^^^^^^^^^^^^^^^
+UnicodeDecodeError: 'utf-8' codec can't decode byte 0xf0 in position 33: unexpected end of data
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/model-interaction-task-97rtbh7b/test_contract.py", line 137, in test_frame_limit_complete_and_incomplete
+    events = parser.feed(wire[:split]) + parser.feed(wire[split:])
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/model-interaction-task-97rtbh7b/original.py", line 59, in feed
+    self._fail("invalid UTF-8 input chunk")
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/model-interaction-task-97rtbh7b/original.py", line 27, in _fail
+    raise StreamError(message)
+original.StreamError: invalid UTF-8 input chunk
+
+======================================================================
+ERROR: test_frame_limit_complete_and_incomplete (__main__.ContractTests.test_frame_limit_complete_and_incomplete) (split=35)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/model-interaction-task-97rtbh7b/original.py", line 57, in feed
+    data = data.decode("utf-8").encode("utf-8")
+           ^^^^^^^^^^^^^^^^^^^^
+UnicodeDecodeError: 'utf-8' codec can't decode bytes in position 33-34: unexpected end of data
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/model-interaction-task-97rtbh7b/test_contract.py", line 137, in test_frame_limit_complete_and_incomplete
+    events = parser.feed(wire[:split]) + parser.feed(wire[split:])
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/model-interaction-task-97rtbh7b/original.py", line 59, in feed
+    self._fail("invalid UTF-8 input chunk")
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/model-interaction-task-97rtbh7b/original.py", line 27, in _fail
+    raise StreamError(message)
+original.StreamError: invalid UTF-8 input chunk
+
+======================================================================
+ERROR: test_frame_limit_complete_and_incomplete (__main__.ContractTests.test_frame_limit_complete_and_incomplete) (split=36)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/model-interaction-task-97rtbh7b/original.py", line 57, in feed
+    data = data.decode("utf-8").encode("utf-8")
+           ^^^^^^^^^^^^^^^^^^^^
+UnicodeDecodeError: 'utf-8' codec can't decode bytes in position 33-35: unexpected end of data
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/model-interaction-task-97rtbh7b/test_contract.py", line 137, in test_frame_limit_complete_and_incomplete
+    events = parser.feed(wire[:split]) + parser.feed(wire[split:])
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/model-interaction-task-97rtbh7b/original.py", line 59, in feed
+    self._fail("invalid UTF-8 input chunk")
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/model-interaction-task-97rtbh7b/original.py", line 27, in _fail
+    raise StreamError(message)
+original.StreamError: invalid UTF-8 input chunk
+
+======================================================================
+ERROR: test_frame_limit_complete_and_incomplete (__main__.ContractTests.test_frame_limit_complete_and_incomplete) (split=38)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/model-interaction-task-97rtbh7b/original.py", line 57, in feed
+    data = data.decode("utf-8").encode("utf-8")
+           ^^^^^^^^^^^^^^^^^^^^
+UnicodeDecodeError: 'utf-8' codec can't decode byte 0xf0 in position 37: unexpected end of data
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/model-interaction-task-97rtbh7b/test_contract.py", line 137, in test_frame_limit_complete_and_incomplete
+    events = parser.feed(wire[:split]) + parser.feed(wire[split:])
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/model-interaction-task-97rtbh7b/original.py", line 59, in feed
+    self._fail("invalid UTF-8 input chunk")
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/model-interaction-task-97rtbh7b/original.py", line 27, in _fail
+    raise StreamError(message)
+original.StreamError: invalid UTF-8 input chunk
+
+======================================================================
+ERROR: test_frame_limit_complete_and_incomplete (__main__.ContractTests.test_frame_limit_complete_and_incomplete) (split=39)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/model-interaction-task-97rtbh7b/original.py", line 57, in feed
+    data = data.decode("utf-8").encode("utf-8")
+           ^^^^^^^^^^^^^^^^^^^^
+UnicodeDecodeError: 'utf-8' codec can't decode bytes in position 37-38: unexpected end of data
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/model-interaction-task-97rtbh7b/test_contract.py", line 137, in test_frame_limit_complete_and_incomplete
+    events = parser.feed(wire[:split]) + parser.feed(wire[split:])
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/model-interaction-task-97rtbh7b/original.py", line 59, in feed
+    self._fail("invalid UTF-8 input chunk")
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/model-interaction-task-97rtbh7b/original.py", line 27, in _fail
+    raise StreamError(message)
+original.StreamError: invalid UTF-8 input chunk
+
+======================================================================
+ERROR: test_frame_limit_complete_and_incomplete (__main__.ContractTests.test_frame_limit_complete_and_incomplete) (split=40)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/model-interaction-task-97rtbh7b/original.py", line 57, in feed
+    data = data.decode("utf-8").encode("utf-8")
+           ^^^^^^^^^^^^^^^^^^^^
+UnicodeDecodeError: 'utf-8' codec can't decode bytes in position 37-39: unexpected end of data
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/model-interaction-task-97rtbh7b/test_contract.py", line 137, in test_frame_limit_complete_and_incomplete
+    events = parser.feed(wire[:split]) + parser.feed(wire[split:])
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/model-interaction-task-97rtbh7b/original.py", line 59, in feed
+    self._fail("invalid UTF-8 input chunk")
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/model-interaction-task-97rtbh7b/original.py", line 27, in _fail
+    raise StreamError(message)
+original.StreamError: invalid UTF-8 input chunk
+
+======================================================================
+ERROR: test_frame_limit_complete_and_incomplete (__main__.ContractTests.test_frame_limit_complete_and_incomplete) (split=42)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/model-interaction-task-97rtbh7b/original.py", line 57, in feed
+    data = data.decode("utf-8").encode("utf-8")
+           ^^^^^^^^^^^^^^^^^^^^
+UnicodeDecodeError: 'utf-8' codec can't decode byte 0xf0 in position 41: unexpected end of data
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/model-interaction-task-97rtbh7b/test_contract.py", line 137, in test_frame_limit_complete_and_incomplete
+    events = parser.feed(wire[:split]) + parser.feed(wire[split:])
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/model-interaction-task-97rtbh7b/original.py", line 59, in feed
+    self._fail("invalid UTF-8 input chunk")
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/model-interaction-task-97rtbh7b/original.py", line 27, in _fail
+    raise StreamError(message)
+original.StreamError: invalid UTF-8 input chunk
+
+======================================================================
+ERROR: test_frame_limit_complete_and_incomplete (__main__.ContractTests.test_frame_limit_complete_and_incomplete) (split=43)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/model-interaction-task-97rtbh7b/original.py", line 57, in feed
+    data = data.decode("utf-8").encode("utf-8")
+           ^^^^^^^^^^^^^^^^^^^^
+UnicodeDecodeError: 'utf-8' codec can't decode bytes in position 41-42: unexpected end of data
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/model-interaction-task-97rtbh7b/test_contract.py", line 137, in test_frame_limit_complete_and_incomplete
+    events = parser.feed(wire[:split]) + parser.feed(wire[split:])
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/model-interaction-task-97rtbh7b/original.py", line 59, in feed
+    self._fail("invalid UTF-8 input chunk")
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/model-interaction-task-97rtbh7b/original.py", line 27, in _fail
+    raise StreamError(message)
+original.StreamError: invalid UTF-8 input chunk
+
+======================================================================
+ERROR: test_frame_limit_complete_and_incomplete (__main__.ContractTests.test_frame_limit_complete_and_incomplete) (split=44)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/model-interaction-task-97rtbh7b/original.py", line 57, in feed
+    data = data.decode("utf-8").encode("utf-8")
+           ^^^^^^^^^^^^^^^^^^^^
+UnicodeDecodeError: 'utf-8' codec can't decode bytes in position 41-43: unexpected end of data
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/model-interaction-task-97rtbh7b/test_contract.py", line 137, in test_frame_limit_complete_and_incomplete
+    events = parser.feed(wire[:split]) + parser.feed(wire[split:])
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/model-interaction-task-97rtbh7b/original.py", line 59, in feed
+    self._fail("invalid UTF-8 input chunk")
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/model-interaction-task-97rtbh7b/original.py", line 27, in _fail
+    raise StreamError(message)
+original.StreamError: invalid UTF-8 input chunk
+
+======================================================================
+ERROR: test_frame_limit_complete_and_incomplete (__main__.ContractTests.test_frame_limit_complete_and_incomplete) (split=46)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/model-interaction-task-97rtbh7b/original.py", line 57, in feed
+    data = data.decode("utf-8").encode("utf-8")
+           ^^^^^^^^^^^^^^^^^^^^
+UnicodeDecodeError: 'utf-8' codec can't decode byte 0xf0 in position 45: unexpected end of data
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/model-interaction-task-97rtbh7b/test_contract.py", line 137, in test_frame_limit_complete_and_incomplete
+    events = parser.feed(wire[:split]) + parser.feed(wire[split:])
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/model-interaction-task-97rtbh7b/original.py", line 59, in feed
+    self._fail("invalid UTF-8 input chunk")
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/model-interaction-task-97rtbh7b/original.py", line 27, in _fail
+    raise StreamError(message)
+original.StreamError: invalid UTF-8 input chunk
+
+======================================================================
+ERROR: test_frame_limit_complete_and_incomplete (__main__.ContractTests.test_frame_limit_complete_and_incomplete) (split=47)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/model-interaction-task-97rtbh7b/original.py", line 57, in feed
+    data = data.decode("utf-8").encode("utf-8")
+           ^^^^^^^^^^^^^^^^^^^^
+UnicodeDecodeError: 'utf-8' codec can't decode bytes in position 45-46: unexpected end of data
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/model-interaction-task-97rtbh7b/test_contract.py", line 137, in test_frame_limit_complete_and_incomplete
+    events = parser.feed(wire[:split]) + parser.feed(wire[split:])
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/model-interaction-task-97rtbh7b/original.py", line 59, in feed
+    self._fail("invalid UTF-8 input chunk")
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/model-interaction-task-97rtbh7b/original.py", line 27, in _fail
+    raise StreamError(message)
+original.StreamError: invalid UTF-8 input chunk
+
+======================================================================
+ERROR: test_frame_limit_complete_and_incomplete (__main__.ContractTests.test_frame_limit_complete_and_incomplete) (split=48)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/model-interaction-task-97rtbh7b/original.py", line 57, in feed
+    data = data.decode("utf-8").encode("utf-8")
+           ^^^^^^^^^^^^^^^^^^^^
+UnicodeDecodeError: 'utf-8' codec can't decode bytes in position 45-47: unexpected end of data
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/model-interaction-task-97rtbh7b/test_contract.py", line 137, in test_frame_limit_complete_and_incomplete
+    events = parser.feed(wire[:split]) + parser.feed(wire[split:])
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/model-interaction-task-97rtbh7b/original.py", line 59, in feed
+    self._fail("invalid UTF-8 input chunk")
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/model-interaction-task-97rtbh7b/original.py", line 27, in _fail
+    raise StreamError(message)
+original.StreamError: invalid UTF-8 input chunk
+
+======================================================================
+ERROR: test_frame_limit_complete_and_incomplete (__main__.ContractTests.test_frame_limit_complete_and_incomplete) (split=50)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/model-interaction-task-97rtbh7b/original.py", line 57, in feed
+    data = data.decode("utf-8").encode("utf-8")
+           ^^^^^^^^^^^^^^^^^^^^
+UnicodeDecodeError: 'utf-8' codec can't decode byte 0xf0 in position 49: unexpected end of data
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/model-interaction-task-97rtbh7b/test_contract.py", line 137, in test_frame_limit_complete_and_incomplete
+    events = parser.feed(wire[:split]) + parser.feed(wire[split:])
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/model-interaction-task-97rtbh7b/original.py", line 59, in feed
+    self._fail("invalid UTF-8 input chunk")
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/model-interaction-task-97rtbh7b/original.py", line 27, in _fail
+    raise StreamError(message)
+original.StreamError: invalid UTF-8 input chunk
+
+======================================================================
+ERROR: test_frame_limit_complete_and_incomplete (__main__.ContractTests.test_frame_limit_complete_and_incomplete) (split=51)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/model-interaction-task-97rtbh7b/original.py", line 57, in feed
+    data = data.decode("utf-8").encode("utf-8")
+           ^^^^^^^^^^^^^^^^^^^^
+UnicodeDecodeError: 'utf-8' codec can't decode bytes in position 49-50: unexpected end of data
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/model-interaction-task-97rtbh7b/test_contract.py", line 137, in test_frame_limit_complete_and_incomplete
+    events = parser.feed(wire[:split]) + parser.feed(wire[split:])
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/model-interaction-task-97rtbh7b/original.py", line 59, in feed
+    self._fail("invalid UTF-8 input chunk")
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/model-interaction-task-97rtbh7b/original.py", line 27, in _fail
+    raise StreamError(message)
+original.StreamError: invalid UTF-8 input chunk
+
+======================================================================
+ERROR: test_frame_limit_complete_and_incomplete (__main__.ContractTests.test_frame_limit_complete_and_incomplete) (split=52)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/model-interaction-task-97rtbh7b/original.py", line 57, in feed
+    data = data.decode("utf-8").encode("utf-8")
+           ^^^^^^^^^^^^^^^^^^^^
+UnicodeDecodeError: 'utf-8' codec can't decode bytes in position 49-51: unexpected end of data
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/model-interaction-task-97rtbh7b/test_contract.py", line 137, in test_frame_limit_complete_and_incomplete
+    events = parser.feed(wire[:split]) + parser.feed(wire[split:])
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/model-interaction-task-97rtbh7b/original.py", line 59, in feed
+    self._fail("invalid UTF-8 input chunk")
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/model-interaction-task-97rtbh7b/original.py", line 27, in _fail
+    raise StreamError(message)
+original.StreamError: invalid UTF-8 input chunk
+
+======================================================================
+ERROR: test_frame_limit_complete_and_incomplete (__main__.ContractTests.test_frame_limit_complete_and_incomplete) (split=54)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/model-interaction-task-97rtbh7b/original.py", line 57, in feed
+    data = data.decode("utf-8").encode("utf-8")
+           ^^^^^^^^^^^^^^^^^^^^
+UnicodeDecodeError: 'utf-8' codec can't decode byte 0xf0 in position 53: unexpected end of data
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/model-interaction-task-97rtbh7b/test_contract.py", line 137, in test_frame_limit_complete_and_incomplete
+    events = parser.feed(wire[:split]) + parser.feed(wire[split:])
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/model-interaction-task-97rtbh7b/original.py", line 59, in feed
+    self._fail("invalid UTF-8 input chunk")
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/model-interaction-task-97rtbh7b/original.py", line 27, in _fail
+    raise StreamError(message)
+original.StreamError: invalid UTF-8 input chunk
+
+======================================================================
+ERROR: test_frame_limit_complete_and_incomplete (__main__.ContractTests.test_frame_limit_complete_and_incomplete) (split=55)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/model-interaction-task-97rtbh7b/original.py", line 57, in feed
+    data = data.decode("utf-8").encode("utf-8")
+           ^^^^^^^^^^^^^^^^^^^^
+UnicodeDecodeError: 'utf-8' codec can't decode bytes in position 53-54: unexpected end of data
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/model-interaction-task-97rtbh7b/test_contract.py", line 137, in test_frame_limit_complete_and_incomplete
+    events = parser.feed(wire[:split]) + parser.feed(wire[split:])
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/model-interaction-task-97rtbh7b/original.py", line 59, in feed
+    self._fail("invalid UTF-8 input chunk")
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/model-interaction-task-97rtbh7b/original.py", line 27, in _fail
+    raise StreamError(message)
+original.StreamError: invalid UTF-8 input chunk
+
+======================================================================
+ERROR: test_frame_limit_complete_and_incomplete (__main__.ContractTests.test_frame_limit_complete_and_incomplete) (split=56)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/model-interaction-task-97rtbh7b/original.py", line 57, in feed
+    data = data.decode("utf-8").encode("utf-8")
+           ^^^^^^^^^^^^^^^^^^^^
+UnicodeDecodeError: 'utf-8' codec can't decode bytes in position 53-55: unexpected end of data
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/model-interaction-task-97rtbh7b/test_contract.py", line 137, in test_frame_limit_complete_and_incomplete
+    events = parser.feed(wire[:split]) + parser.feed(wire[split:])
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/model-interaction-task-97rtbh7b/original.py", line 59, in feed
+    self._fail("invalid UTF-8 input chunk")
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/model-interaction-task-97rtbh7b/original.py", line 27, in _fail
+    raise StreamError(message)
+original.StreamError: invalid UTF-8 input chunk
+
+======================================================================
+ERROR: test_random_and_bytewise_chunking (__main__.ContractTests.test_random_and_bytewise_chunking)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/model-interaction-task-97rtbh7b/original.py", line 57, in feed
+    data = data.decode("utf-8").encode("utf-8")
+           ^^^^^^^^^^^^^^^^^^^^
+UnicodeDecodeError: 'utf-8' codec can't decode byte 0xf0 in position 0: unexpected end of data
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/model-interaction-task-97rtbh7b/test_contract.py", line 69, in test_random_and_bytewise_chunking
+    events.extend(parser.feed(chunk))
+                  ^^^^^^^^^^^^^^^^^^
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/model-interaction-task-97rtbh7b/original.py", line 59, in feed
+    self._fail("invalid UTF-8 input chunk")
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/model-interaction-task-97rtbh7b/original.py", line 27, in _fail
+    raise StreamError(message)
+original.StreamError: invalid UTF-8 input chunk
+
+======================================================================
+ERROR: test_unfinished_utf8_retained (__main__.ContractTests.test_unfinished_utf8_retained)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/model-interaction-task-97rtbh7b/original.py", line 57, in feed
+    data = data.decode("utf-8").encode("utf-8")
+           ^^^^^^^^^^^^^^^^^^^^
+UnicodeDecodeError: 'utf-8' codec can't decode bytes in position 25-26: unexpected end of data
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/model-interaction-task-97rtbh7b/test_contract.py", line 119, in test_unfinished_utf8_retained
+    self.assertEqual(parser.feed(raw), [])
+                     ^^^^^^^^^^^^^^^^
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/model-interaction-task-97rtbh7b/original.py", line 59, in feed
+    self._fail("invalid UTF-8 input chunk")
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/model-interaction-task-97rtbh7b/original.py", line 27, in _fail
+    raise StreamError(message)
+original.StreamError: invalid UTF-8 input chunk
+
+======================================================================
+FAIL: test_terminal_trailing_bytes_same_call (__main__.ContractTests.test_terminal_trailing_bytes_same_call) (terminal=b'{"event":"done"}\n', suffix=b'x')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/model-interaction-task-97rtbh7b/test_contract.py", line 82, in test_terminal_trailing_bytes_same_call
+    self.assert_failed(parser, lambda: parser.feed(TOKEN + terminal + suffix))
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/model-interaction-task-97rtbh7b/test_contract.py", line 23, in assert_failed
+    with self.assertRaises(module.StreamError):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: StreamError not raised
+
+======================================================================
+FAIL: test_terminal_trailing_bytes_same_call (__main__.ContractTests.test_terminal_trailing_bytes_same_call) (terminal=b'{"event":"done"}\n', suffix=b' ')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/model-interaction-task-97rtbh7b/test_contract.py", line 82, in test_terminal_trailing_bytes_same_call
+    self.assert_failed(parser, lambda: parser.feed(TOKEN + terminal + suffix))
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/model-interaction-task-97rtbh7b/test_contract.py", line 23, in assert_failed
+    with self.assertRaises(module.StreamError):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: StreamError not raised
+
+======================================================================
+FAIL: test_terminal_trailing_bytes_same_call (__main__.ContractTests.test_terminal_trailing_bytes_same_call) (terminal=b'{"event":"done"}\n', suffix=b'{"event":"token","text":"hello"}\n')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/model-interaction-task-97rtbh7b/test_contract.py", line 82, in test_terminal_trailing_bytes_same_call
+    self.assert_failed(parser, lambda: parser.feed(TOKEN + terminal + suffix))
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/model-interaction-task-97rtbh7b/test_contract.py", line 23, in assert_failed
+    with self.assertRaises(module.StreamError):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: StreamError not raised
+
+======================================================================
+FAIL: test_terminal_trailing_bytes_same_call (__main__.ContractTests.test_terminal_trailing_bytes_same_call) (terminal=b'{"event":"done"}\n', suffix=b'{"event":"done"}\n')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/model-interaction-task-97rtbh7b/test_contract.py", line 82, in test_terminal_trailing_bytes_same_call
+    self.assert_failed(parser, lambda: parser.feed(TOKEN + terminal + suffix))
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/model-interaction-task-97rtbh7b/test_contract.py", line 23, in assert_failed
+    with self.assertRaises(module.StreamError):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: StreamError not raised
+
+======================================================================
+FAIL: test_terminal_trailing_bytes_same_call (__main__.ContractTests.test_terminal_trailing_bytes_same_call) (terminal=b'{"event":"done"}\n', suffix=b'{"event":"error","message":"failure"}\n')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/model-interaction-task-97rtbh7b/test_contract.py", line 82, in test_terminal_trailing_bytes_same_call
+    self.assert_failed(parser, lambda: parser.feed(TOKEN + terminal + suffix))
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/model-interaction-task-97rtbh7b/test_contract.py", line 23, in assert_failed
+    with self.assertRaises(module.StreamError):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: StreamError not raised
+
+======================================================================
+FAIL: test_terminal_trailing_bytes_same_call (__main__.ContractTests.test_terminal_trailing_bytes_same_call) (terminal=b'{"event":"error","message":"failure"}\n', suffix=b'x')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/model-interaction-task-97rtbh7b/test_contract.py", line 82, in test_terminal_trailing_bytes_same_call
+    self.assert_failed(parser, lambda: parser.feed(TOKEN + terminal + suffix))
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/model-interaction-task-97rtbh7b/test_contract.py", line 23, in assert_failed
+    with self.assertRaises(module.StreamError):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: StreamError not raised
+
+======================================================================
+FAIL: test_terminal_trailing_bytes_same_call (__main__.ContractTests.test_terminal_trailing_bytes_same_call) (terminal=b'{"event":"error","message":"failure"}\n', suffix=b' ')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/model-interaction-task-97rtbh7b/test_contract.py", line 82, in test_terminal_trailing_bytes_same_call
+    self.assert_failed(parser, lambda: parser.feed(TOKEN + terminal + suffix))
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/model-interaction-task-97rtbh7b/test_contract.py", line 23, in assert_failed
+    with self.assertRaises(module.StreamError):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: StreamError not raised
+
+======================================================================
+FAIL: test_terminal_trailing_bytes_same_call (__main__.ContractTests.test_terminal_trailing_bytes_same_call) (terminal=b'{"event":"error","message":"failure"}\n', suffix=b'{"event":"token","text":"hello"}\n')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/model-interaction-task-97rtbh7b/test_contract.py", line 82, in test_terminal_trailing_bytes_same_call
+    self.assert_failed(parser, lambda: parser.feed(TOKEN + terminal + suffix))
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/model-interaction-task-97rtbh7b/test_contract.py", line 23, in assert_failed
+    with self.assertRaises(module.StreamError):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: StreamError not raised
+
+======================================================================
+FAIL: test_terminal_trailing_bytes_same_call (__main__.ContractTests.test_terminal_trailing_bytes_same_call) (terminal=b'{"event":"error","message":"failure"}\n', suffix=b'{"event":"done"}\n')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/model-interaction-task-97rtbh7b/test_contract.py", line 82, in test_terminal_trailing_bytes_same_call
+    self.assert_failed(parser, lambda: parser.feed(TOKEN + terminal + suffix))
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/model-interaction-task-97rtbh7b/test_contract.py", line 23, in assert_failed
+    with self.assertRaises(module.StreamError):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: StreamError not raised
+
+======================================================================
+FAIL: test_terminal_trailing_bytes_same_call (__main__.ContractTests.test_terminal_trailing_bytes_same_call) (terminal=b'{"event":"error","message":"failure"}\n', suffix=b'{"event":"error","message":"failure"}\n')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/model-interaction-task-97rtbh7b/test_contract.py", line 82, in test_terminal_trailing_bytes_same_call
+    self.assert_failed(parser, lambda: parser.feed(TOKEN + terminal + suffix))
+  File "/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/model-interaction-task-97rtbh7b/test_contract.py", line 23, in assert_failed
+    with self.assertRaises(module.StreamError):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: StreamError not raised
+
+----------------------------------------------------------------------
+Ran 14 tests in 0.015s
+
+FAILED (failures=10, errors=53)

@@ -1,0 +1,23 @@
+--- original.py
++++ app.py
+@@ -24,7 +24,10 @@
+                 raise ValueError("job_id already exists") from exc
+ 
+     def claim(self, worker, now, lease_seconds):
+-        if not math.isfinite(lease_seconds) or lease_seconds <= 0:
++        if (isinstance(lease_seconds, bool)
++                or not isinstance(lease_seconds, (int, float))
++                or not math.isfinite(lease_seconds)
++                or lease_seconds <= 0):
+             raise ValueError("lease_seconds must be finite and positive")
+         with closing(sqlite3.connect(self.path)) as db, db:
+             db.execute("BEGIN IMMEDIATE")
+@@ -46,6 +49,6 @@
+         with closing(sqlite3.connect(self.path)) as db, db:
+             changed = db.execute("""UPDATE jobs SET state = 'done'
+                 WHERE job_id = ? AND worker = ?
+-                AND state = 'leased' AND expires_at > ?""",
+-                (receipt["job_id"], receipt["worker"], now)).rowcount
++                AND generation = ? AND state = 'leased' AND expires_at > ?""",
++                (receipt["job_id"], receipt["worker"], receipt["generation"], now)).rowcount
+             return changed == 1

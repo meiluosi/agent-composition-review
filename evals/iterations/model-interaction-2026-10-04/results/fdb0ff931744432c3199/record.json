@@ -1,0 +1,243 @@
+{
+  "case_id": "m04",
+  "condition": "C_skill",
+  "trial": 2,
+  "model_requested": "gpt-6-astra",
+  "exit_code": 0,
+  "timed_out": false,
+  "elapsed_seconds": 189.73964658298064,
+  "usage": {
+    "input_tokens": 103179,
+    "cached_input_tokens": 79488,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 3650,
+    "reasoning_output_tokens": 173
+  },
+  "completed": true,
+  "status": "completed",
+  "infra_kind": null,
+  "prediction": {
+    "initial_verdict": "violation",
+    "summary": "已修复 app.py：缓存键加入 tenant 和 revision，深拷贝传给 source 的查询及其返回文档，隔离外部修改。保留公开接口、排序、TTL、完整结果缓存和零限制行为。实现自包含，仅依赖标准库。",
+    "tests_executed": [
+      "./run_python test_contract.py original：12 项测试，记录 6 处断言失败，复现原实现违规",
+      "./run_python test_contract.py app：12 项测试全部通过",
+      "./run_python smoke.py：修复前后均通过"
+    ],
+    "limitations": [
+      "验证覆盖题面契约的针对性场景，不构成穷尽证明；未测试契约范围外的非法输入或并发调用。"
+    ]
+  },
+  "acceptance": {
+    "passed": true,
+    "tests_run": 12,
+    "checks": [
+      {
+        "test": "rank_order_and_limit",
+        "passed": true
+      },
+      {
+        "test": "full_result_cache",
+        "passed": true
+      },
+      {
+        "test": "tenant_revision_isolation",
+        "passed": true
+      },
+      {
+        "test": "query_identity",
+        "passed": true
+      },
+      {
+        "test": "expiry_without_sliding",
+        "passed": true
+      },
+      {
+        "test": "caller_query_isolation",
+        "passed": true
+      },
+      {
+        "test": "source_result_isolation",
+        "passed": true
+      },
+      {
+        "test": "returned_result_isolation",
+        "passed": true
+      },
+      {
+        "test": "failure_not_cached",
+        "passed": true
+      },
+      {
+        "test": "expired_failure_retry",
+        "passed": true
+      },
+      {
+        "test": "empty_results_and_zero_limit",
+        "passed": true
+      },
+      {
+        "test": "independent_instances",
+        "passed": true
+      }
+    ],
+    "exit_code": 0,
+    "timed_out": false,
+    "sandbox": "macos_no_network_writes_only_grade_directory",
+    "stderr": ""
+  },
+  "acceptance_signature": {
+    "passed": true,
+    "tests_run": 12,
+    "checks": [
+      {
+        "test": "rank_order_and_limit",
+        "passed": true
+      },
+      {
+        "test": "full_result_cache",
+        "passed": true
+      },
+      {
+        "test": "tenant_revision_isolation",
+        "passed": true
+      },
+      {
+        "test": "query_identity",
+        "passed": true
+      },
+      {
+        "test": "expiry_without_sliding",
+        "passed": true
+      },
+      {
+        "test": "caller_query_isolation",
+        "passed": true
+      },
+      {
+        "test": "source_result_isolation",
+        "passed": true
+      },
+      {
+        "test": "returned_result_isolation",
+        "passed": true
+      },
+      {
+        "test": "failure_not_cached",
+        "passed": true
+      },
+      {
+        "test": "expired_failure_retry",
+        "passed": true
+      },
+      {
+        "test": "empty_results_and_zero_limit",
+        "passed": true
+      },
+      {
+        "test": "independent_instances",
+        "passed": true
+      }
+    ],
+    "exit_code": 0,
+    "timed_out": false,
+    "invalid_output": false,
+    "isolation_failure": false
+  },
+  "source_changed": true,
+  "artifacts": {
+    "test_contract.py": "1a6c96efe31e0310cf035cf9ef02f1be739f05c82219a0ddcdb51b5713485ab6",
+    "app.py": "96b6d12fa3f31fd94e3889498766bf092f27fe75cf806cd7b3c0eb6c32c10d60"
+  },
+  "protected_changes": [],
+  "outside_changes": [],
+  "artifact_errors": [],
+  "tool_audit": [
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc \"pwd; rg --files -g '\"'!__pycache__'\"' -g '\"'!*.pyc'\"'\"",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc 'cat task.md app.py smoke.py'",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc 'cat SKILL.md references/executable-contracts.md references/contracts.md TOOLS.md'",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc 'cat original.py run_python references/effects.md references/probability-causality.md'",
+      "review_flags": []
+    },
+    {
+      "type": "file_change",
+      "exit_code": null,
+      "changes": [
+        {
+          "path": "<workspace>/test_contract.py",
+          "kind": "add"
+        }
+      ]
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 1,
+      "command": "/bin/zsh -lc './run_python test_contract.py original'",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc './run_python smoke.py'",
+      "review_flags": []
+    },
+    {
+      "type": "file_change",
+      "exit_code": null,
+      "changes": [
+        {
+          "path": "<workspace>/app.py",
+          "kind": "update"
+        }
+      ]
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 1,
+      "command": "/bin/zsh -lc 'diff -u original.py app.py'",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc './run_python smoke.py'",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc './run_python test_contract.py app'",
+      "review_flags": []
+    }
+  ],
+  "case_sha256": "69a4bde6f201370e64aee8eb0b47a4c727fdea08f99b2d96bddd9557fc833aa4",
+  "prompt_sha256": "890e8e7238a3d11b98065646547e36c2563ff652e966a0baa5a66ed0cca78937",
+  "event_sha256": "5c62309404910a7bced4463e197535b9c5e1031d6eff97b387640b4ebc612e8b",
+  "stderr_sha256": "e30685da6306bb8e0c47b25b820d45433ce4dbb8a0a7e0f4bc9bf9634ce6b272",
+  "reasoning_effort": "high",
+  "cli_version": "codex-cli 0.160.0",
+  "canary": false,
+  "python_version": "3.12.14",
+  "execution_platform": "Darwin",
+  "terminal_errors": [],
+  "execution_phase": "classifier_recovery",
+  "recovery_manifest_sha256": "6826d034f0c76fbe1d24f761c801c391c878482718ec612bce68fd59ebf3c149"
+}

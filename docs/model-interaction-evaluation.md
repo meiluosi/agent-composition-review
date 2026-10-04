@@ -2,7 +2,7 @@
 
 本轮检验当前 v4 指导对两个模型配置的增量，以及它是否超过普通工程清单。正式调用前的预注册提交为 [`e79931e4a0a3d9854b9cae92f556284ecdd853e9`](https://github.com/meiluosi/agent-composition-review/commit/e79931e4a0a3d9854b9cae92f556284ecdd853e9)。题目、验收、指导、执行器、分析代码、调度和预检查记录均已冻结；本说明不修改这些材料，也不预填正式成绩。
 
-维护者应先读[分析方案](../evals/iterations/model-interaction-2026-10-04/ANALYSIS_PLAN.md)、[冻结前复核](../evals/iterations/model-interaction-2026-10-04/PRECHECK_REVIEW.md)和[清单](../evals/iterations/model-interaction-2026-10-04/manifest.json)。完成后的逐题结果、差值与决策以[生成报告](../evals/iterations/model-interaction-2026-10-04/REPORT.md)为准。
+维护者应先读[分析方案](../evals/iterations/model-interaction-2026-10-04/ANALYSIS_PLAN.md)、[冻结前复核](../evals/iterations/model-interaction-2026-10-04/PRECHECK_REVIEW.md)和[清单](../evals/iterations/model-interaction-2026-10-04/manifest.json)。本轮最终按停止规则结束在 100 次尝试，44 项从未开始；97 次有效完成、96 次成功交付。逐题结果、差值与决策以[生成报告](../evals/iterations/model-interaction-2026-10-04/REPORT.md)及其有效性披露为准，不是完整 144 次研究。
 
 ## 比较对象
 
@@ -32,6 +32,8 @@
 
 原执行器累计记录 64 次后，因把 shell snapshot 文件名中的 `401` 误识别为鉴权状态而停止。该次仍是未有效交付的超时尝试，原记录和原分析器不改。审计确认没有真实鉴权错误后，另行冻结[恢复登记](../evals/iterations/model-interaction-2026-10-04/RECOVERY_PLAN.md)及 `classifier-recovery-manifest.json`，只允许执行原调度中 80 个从未开始的条目。新执行器仅修正基础设施错误分类，保持原输入、验收、模型设置和总计 144 次上限；任何新真实基础设施失败仍停止调度。恢复代码、规则和 64 份旧记录先提交推送，再进行恢复调用。它属于有披露的软件修订，不能描述为未中断的单阶段实验。
 
+恢复预注册提交为 [`48ff68b0aba6989ea18b4af6949f7f403f99dd0a`](https://github.com/meiluosi/agent-composition-review/commit/48ff68b0aba6989ea18b4af6949f7f403f99dd0a)。恢复新增 36 次后，一次执行超时伴随模型目录刷新及遥测请求错误，按停止规则结束。机器 transport 分类保留；辅助服务错误不证明推理通道故障或超时原因。没有第三次恢复，剩余 44 项不再在本轮执行；完整性审计核验全部 100 份公开记录及本机原始日志。具体证据见[执行审计](../evals/iterations/model-interaction-2026-10-04/EXECUTION_REVIEW.md)。
+
 ## 独立验收和记录
 
 后置验收只把提交的 `app.py` 与维护者 `acceptance.py` 放到独立目录，在新的 Python `-S` 进程运行。模型自行新增的测试不会替代隐藏验收，也不会把隐藏失败反馈给同一次执行者。判定要求所有预定检查名称恰好出现一次、数量相符、全部通过、没有跳过、进程正常退出且没有超时。加载异常、遗漏检查和伪造一个总通过字段不能满足这些要求。
@@ -52,14 +54,14 @@ macOS 后置验收使用禁止网络、仅允许临时验收目录写入的 sand
 
 公开记录关联原始事件与 stderr 的 SHA-256；持有本机 raw 日志的维护者可以核验对应关系。只有哈希不能让其他读者检查未公开日志的内容，也不是服务端签名证明。产物文件的哈希用于发现修改；命令标记需要回读，不能仅凭没有标记就宣称完全没有越界。公开文本产物限制类型及单文件大小，符号链接和受保护文件变更会使交付失效。
 
-独立完整性审计器只读取记录与哈希，不执行产物、不重评分、不调用模型。最终结果可运行以下命令；进行中的快照应去掉 `--require-complete`。它区分未开始、已开始未发布、发布未完成与有效公共记录；开始文件本身不证明进程仍在运行。没有本机 raw 的读者仍可验证公共产物，但输出会明确显示原始日志未核验。不要把这份完整性报告理解为 Skill 效果或正确性证明。
+独立完整性审计器只读取记录与哈希，不执行产物、不重评分、不调用模型。当前停止结果使用以下命令；`--require-complete` 要求 144 项齐全，在本轮应当失败，不用于伪装完成。审计器区分未开始、已开始未发布、发布未完成与有效公共记录；开始文件本身不证明进程仍在运行。没有本机 raw 的读者仍可验证公共产物，但输出会明确显示原始日志未核验。不要把这份完整性报告理解为 Skill 效果或正确性证明。
 
 ```sh
-.venv/bin/python scripts/audit_model_interaction_results.py --require-complete
+.venv/bin/python scripts/audit_model_interaction_results.py
 .venv/bin/python scripts/resume_model_interaction.py verify --offline
 ```
 
-原运行机器的审计保存为迭代目录中的 `integrity-audit.json`，包含每份公共记录的哈希和本机日志核验情况。该文件与冻结评分分开；后续机器复核不会默认覆盖它。
+原运行机器的审计保存为迭代目录中的 `integrity-audit.json`，包含每份公共记录的哈希和本机日志核验情况。该文件与冻结评分分开；后续机器复核不会默认覆盖它。CI 将新的公共审计与保存的最终快照比较，核验 100 份记录的身份、开始标记及哈希和 44 项未开始状态；不要求其他机器持有本机 raw 日志，也不把不同机器的缺失 raw 误记成已经核验。
 
 ## 不调用模型的复现
 
@@ -97,7 +99,7 @@ PY
 
 分析器先校验每份产物的身份、提示、源码哈希及有效完成条件，再执行保存的源码，并与原记录的行为签名比较。签名包含检查名称、通过状态、数量、退出和超时等字段，不比较平台相关的完整异常文字。若重验不一致，应调查和披露环境或判据问题，不能直接改原分数使其通过。该命令会更新生成的汇总、报告和图片；`--no-regrade` 只适合预览，不替代最终复验。
 
-第二条命令只补充冻结后发现的 m02/m08 正常标签缺陷与域歧义说明，不改变原始分数或分析代码。这些反例使正常误报率和版本升级门槛不能按字面解释；具体证据见[执行审计](../evals/iterations/model-interaction-2026-10-04/EXECUTION_REVIEW.md)。不得为了去掉披露而仅发布第一条命令生成的报告。
+第二条命令补充冻结后发现的 m02/m08 正常标签缺陷、域歧义、分类器修订和最终停止说明，不改变原始分数或分析代码。这些反例使正常误报率和版本升级门槛不能按字面解释；具体证据见[执行审计](../evals/iterations/model-interaction-2026-10-04/EXECUTION_REVIEW.md)。不得为了去掉披露而仅发布第一条命令生成的报告。
 
 在原始执行环境中，`run_model_interaction.py verify` 还检查冻结的 CLI、Python 和平台版本。原执行器的 `canary`、`freeze`、`run` 和恢复执行器的 `freeze`、`run` 是模型执行的管理入口，不属于上述离线复现；不要为重新生成图表调用它们，更不能删除记录后重建实验。恢复执行器的 `verify --offline` 只核验公开冻结字节；`freeze`、`run --limit 3`、`run` 还必须核验原机器 raw 日志和版本，不能在别处绕过证据要求继续调用。
 

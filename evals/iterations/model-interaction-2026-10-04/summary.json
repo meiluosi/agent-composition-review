@@ -1,20 +1,20 @@
 {
   "development_only": true,
   "planned": 144,
-  "attempted": 64,
-  "pending": 80,
-  "fully_paired_blocks": 10,
+  "attempted": 100,
+  "pending": 44,
+  "fully_paired_blocks": 16,
   "block_unit": "case and repeat; six model-condition cells",
   "conditions": {
     "gpt-6-astra": {
       "A_tools": {
         "planned": 24,
-        "attempted": 11,
-        "pending": 13,
-        "completed": 10,
-        "passed": 10,
-        "pass_rate_attempted": 0.9090909090909091,
-        "source_behavior_passed": 11,
+        "attempted": 16,
+        "pending": 8,
+        "completed": 15,
+        "passed": 15,
+        "pass_rate_attempted": 0.9375,
+        "source_behavior_passed": 16,
         "normal_attempted": 4,
         "normal_behavior_regressions": 0,
         "normal_behavior_unavailable": 0,
@@ -23,43 +23,43 @@
         "normal_missing_verdict": 0,
         "normal_source_changes": 2,
         "normal_source_missing": 0,
-        "initial_verdict_correct": 8,
+        "initial_verdict_correct": 13,
         "by_variant": {
           "incident": {
-            "attempted": 4,
-            "passed": 3
+            "attempted": 7,
+            "passed": 6
           },
           "normal": {
             "attempted": 4,
             "passed": 4
           },
           "local": {
-            "attempted": 3,
-            "passed": 3
+            "attempted": 5,
+            "passed": 5
           }
         },
         "status_counts": {
-          "completed": 10,
+          "completed": 15,
           "infrastructure_failure": 1
         },
         "usage_missing": 0,
         "tokens": {
-          "input_tokens": 1260995,
-          "cached_input_tokens": 1016320,
-          "output_tokens": 49893
+          "input_tokens": 1823980,
+          "cached_input_tokens": 1467520,
+          "output_tokens": 73146
         },
-        "median_seconds_all_attempts": 202.49264974996913,
-        "median_seconds_completed": 195.35432789596962
+        "median_seconds_all_attempts": 202.9927524784871,
+        "median_seconds_completed": 202.90903254097793
       },
       "B_checklist": {
         "planned": 24,
-        "attempted": 11,
-        "pending": 13,
-        "completed": 11,
-        "passed": 11,
+        "attempted": 17,
+        "pending": 7,
+        "completed": 17,
+        "passed": 17,
         "pass_rate_attempted": 1,
-        "source_behavior_passed": 11,
-        "normal_attempted": 4,
+        "source_behavior_passed": 17,
+        "normal_attempted": 5,
         "normal_behavior_regressions": 0,
         "normal_behavior_unavailable": 0,
         "normal_false_positives": 1,
@@ -67,87 +67,88 @@
         "normal_missing_verdict": 0,
         "normal_source_changes": 1,
         "normal_source_missing": 0,
-        "initial_verdict_correct": 10,
+        "initial_verdict_correct": 16,
         "by_variant": {
           "incident": {
-            "attempted": 4,
-            "passed": 4
+            "attempted": 7,
+            "passed": 7
           },
           "normal": {
-            "attempted": 4,
-            "passed": 4
+            "attempted": 5,
+            "passed": 5
           },
           "local": {
-            "attempted": 3,
-            "passed": 3
+            "attempted": 5,
+            "passed": 5
           }
         },
         "status_counts": {
-          "completed": 11
+          "completed": 17
         },
         "usage_missing": 0,
         "tokens": {
-          "input_tokens": 1241330,
-          "cached_input_tokens": 1023616,
-          "output_tokens": 48878
+          "input_tokens": 1837734,
+          "cached_input_tokens": 1529856,
+          "output_tokens": 74291
         },
-        "median_seconds_all_attempts": 183.9455110830022,
-        "median_seconds_completed": 183.9455110830022
+        "median_seconds_all_attempts": 195.28421929199249,
+        "median_seconds_completed": 195.28421929199249
       },
       "C_skill": {
         "planned": 24,
-        "attempted": 11,
-        "pending": 13,
-        "completed": 10,
-        "passed": 10,
-        "pass_rate_attempted": 0.9090909090909091,
-        "source_behavior_passed": 11,
-        "normal_attempted": 4,
+        "attempted": 17,
+        "pending": 7,
+        "completed": 15,
+        "passed": 15,
+        "pass_rate_attempted": 0.8823529411764706,
+        "source_behavior_passed": 17,
+        "normal_attempted": 5,
         "normal_behavior_regressions": 0,
-        "normal_behavior_unavailable": 0,
+        "normal_behavior_unavailable": 1,
         "normal_false_positives": 0,
         "normal_insufficient": 0,
-        "normal_missing_verdict": 1,
-        "normal_source_changes": 1,
+        "normal_missing_verdict": 2,
+        "normal_source_changes": 2,
         "normal_source_missing": 0,
-        "initial_verdict_correct": 10,
+        "initial_verdict_correct": 15,
         "by_variant": {
           "incident": {
-            "attempted": 4,
-            "passed": 4
+            "attempted": 7,
+            "passed": 7
           },
           "normal": {
-            "attempted": 4,
+            "attempted": 5,
             "passed": 3
           },
           "local": {
-            "attempted": 3,
-            "passed": 3
+            "attempted": 5,
+            "passed": 5
           }
         },
         "status_counts": {
-          "completed": 10,
-          "task_timeout": 1
+          "completed": 15,
+          "task_timeout": 1,
+          "infrastructure_failure": 1
         },
-        "usage_missing": 1,
+        "usage_missing": 2,
         "tokens": {
-          "input_tokens": 1214061,
-          "cached_input_tokens": 958464,
-          "output_tokens": 41317
+          "input_tokens": 1922019,
+          "cached_input_tokens": 1527808,
+          "output_tokens": 62322
         },
         "median_seconds_all_attempts": 202.59758279199013,
-        "median_seconds_completed": 197.00644337499398
+        "median_seconds_completed": 196.49563575000502
       }
     },
     "gpt-6-luna": {
       "A_tools": {
         "planned": 24,
-        "attempted": 11,
-        "pending": 13,
-        "completed": 11,
-        "passed": 10,
-        "pass_rate_attempted": 0.9090909090909091,
-        "source_behavior_passed": 10,
+        "attempted": 16,
+        "pending": 8,
+        "completed": 16,
+        "passed": 15,
+        "pass_rate_attempted": 0.9375,
+        "source_behavior_passed": 15,
         "normal_attempted": 4,
         "normal_behavior_regressions": 0,
         "normal_behavior_unavailable": 0,
@@ -156,127 +157,127 @@
         "normal_missing_verdict": 0,
         "normal_source_changes": 2,
         "normal_source_missing": 0,
-        "initial_verdict_correct": 9,
+        "initial_verdict_correct": 14,
         "by_variant": {
           "incident": {
-            "attempted": 4,
-            "passed": 3
+            "attempted": 7,
+            "passed": 6
           },
           "normal": {
             "attempted": 4,
             "passed": 4
           },
           "local": {
-            "attempted": 3,
-            "passed": 3
+            "attempted": 5,
+            "passed": 5
           }
         },
         "status_counts": {
-          "completed": 11
+          "completed": 16
         },
         "usage_missing": 0,
         "tokens": {
-          "input_tokens": 1314621,
-          "cached_input_tokens": 1111296,
-          "output_tokens": 42217
+          "input_tokens": 1961343,
+          "cached_input_tokens": 1658368,
+          "output_tokens": 64620
         },
-        "median_seconds_all_attempts": 126.17656487500062,
-        "median_seconds_completed": 126.17656487500062
+        "median_seconds_all_attempts": 126.52059627100243,
+        "median_seconds_completed": 126.52059627100243
       },
       "B_checklist": {
         "planned": 24,
-        "attempted": 10,
-        "pending": 14,
-        "completed": 10,
-        "passed": 10,
+        "attempted": 17,
+        "pending": 7,
+        "completed": 17,
+        "passed": 17,
         "pass_rate_attempted": 1,
-        "source_behavior_passed": 10,
-        "normal_attempted": 4,
+        "source_behavior_passed": 17,
+        "normal_attempted": 5,
         "normal_behavior_regressions": 0,
         "normal_behavior_unavailable": 0,
-        "normal_false_positives": 2,
+        "normal_false_positives": 3,
         "normal_insufficient": 0,
         "normal_missing_verdict": 0,
-        "normal_source_changes": 2,
+        "normal_source_changes": 3,
         "normal_source_missing": 0,
-        "initial_verdict_correct": 8,
+        "initial_verdict_correct": 14,
         "by_variant": {
           "incident": {
-            "attempted": 3,
-            "passed": 3
+            "attempted": 7,
+            "passed": 7
           },
           "normal": {
-            "attempted": 4,
-            "passed": 4
+            "attempted": 5,
+            "passed": 5
           },
           "local": {
-            "attempted": 3,
-            "passed": 3
+            "attempted": 5,
+            "passed": 5
           }
         },
         "status_counts": {
-          "completed": 10
+          "completed": 17
         },
         "usage_missing": 0,
         "tokens": {
-          "input_tokens": 1104949,
-          "cached_input_tokens": 915456,
-          "output_tokens": 34036
+          "input_tokens": 2046542,
+          "cached_input_tokens": 1737728,
+          "output_tokens": 60693
         },
-        "median_seconds_all_attempts": 92.23314552099328,
-        "median_seconds_completed": 92.23314552099328
+        "median_seconds_all_attempts": 120.6985827080207,
+        "median_seconds_completed": 120.6985827080207
       },
       "C_skill": {
         "planned": 24,
-        "attempted": 10,
-        "pending": 14,
-        "completed": 10,
-        "passed": 10,
+        "attempted": 17,
+        "pending": 7,
+        "completed": 17,
+        "passed": 17,
         "pass_rate_attempted": 1,
-        "source_behavior_passed": 10,
-        "normal_attempted": 4,
+        "source_behavior_passed": 17,
+        "normal_attempted": 5,
         "normal_behavior_regressions": 0,
         "normal_behavior_unavailable": 0,
-        "normal_false_positives": 2,
+        "normal_false_positives": 3,
         "normal_insufficient": 0,
         "normal_missing_verdict": 0,
-        "normal_source_changes": 2,
+        "normal_source_changes": 3,
         "normal_source_missing": 0,
-        "initial_verdict_correct": 8,
+        "initial_verdict_correct": 14,
         "by_variant": {
           "incident": {
-            "attempted": 3,
-            "passed": 3
+            "attempted": 7,
+            "passed": 7
           },
           "normal": {
-            "attempted": 4,
-            "passed": 4
+            "attempted": 5,
+            "passed": 5
           },
           "local": {
-            "attempted": 3,
-            "passed": 3
+            "attempted": 5,
+            "passed": 5
           }
         },
         "status_counts": {
-          "completed": 10
+          "completed": 17
         },
         "usage_missing": 0,
         "tokens": {
-          "input_tokens": 1503265,
-          "cached_input_tokens": 1261312,
-          "output_tokens": 46727
+          "input_tokens": 2555103,
+          "cached_input_tokens": 2122752,
+          "output_tokens": 79803
         },
-        "median_seconds_all_attempts": 137.44149954148452,
-        "median_seconds_completed": 137.44149954148452
+        "median_seconds_all_attempts": 133.41217287501786,
+        "median_seconds_completed": 133.41217287501786
       }
     }
   },
   "paired_family_pass_rates": {
     "lease_queue": {
       "gpt-6-astra": {
-        "A_tools": 1,
+        "A_tools": 0.8333333333333334,
         "B_checklist": 1,
-        "C_skill": 0.5
+        "C_skill": 0.6666666666666666
       },
       "gpt-6-luna": {
         "A_tools": 1,
@@ -331,15 +332,15 @@
           "tool_results"
         ],
         "family_differences": [
-          -0.5,
+          -0.16666666666666674,
           0,
           0,
           0
         ],
-        "mean": -0.125,
+        "mean": -0.041666666666666685,
         "positive_families": 0,
         "resampling_percentile_95_descriptive": [
-          -0.375,
+          -0.12500000000000006,
           0.0
         ],
         "resample_count": 256,
@@ -353,15 +354,15 @@
           "tool_results"
         ],
         "family_differences": [
-          -0.5,
+          -0.33333333333333337,
           0,
           0,
           0
         ],
-        "mean": -0.125,
+        "mean": -0.08333333333333334,
         "positive_families": 0,
         "resampling_percentile_95_descriptive": [
-          -0.375,
+          -0.25,
           0.0
         ],
         "resample_count": 256,
@@ -375,16 +376,16 @@
           "tool_results"
         ],
         "family_differences": [
-          0,
+          0.16666666666666663,
           0,
           0,
           0
         ],
-        "mean": 0,
-        "positive_families": 0,
+        "mean": 0.04166666666666666,
+        "positive_families": 1,
         "resampling_percentile_95_descriptive": [
           0.0,
-          0.0
+          0.12499999999999997
         ],
         "resample_count": 256,
         "note": "Four authored development families; empirical sensitivity only, not a reliable population confidence interval."
@@ -461,14 +462,14 @@
   },
   "attempted_rate_differences_unpaired": {
     "gpt-6-astra": {
-      "C_skill_minus_A_tools": 0.0,
-      "C_skill_minus_B_checklist": -0.09090909090909094,
-      "B_checklist_minus_A_tools": 0.09090909090909094
+      "C_skill_minus_A_tools": -0.05514705882352944,
+      "C_skill_minus_B_checklist": -0.11764705882352944,
+      "B_checklist_minus_A_tools": 0.0625
     },
     "gpt-6-luna": {
-      "C_skill_minus_A_tools": 0.09090909090909094,
+      "C_skill_minus_A_tools": 0.0625,
       "C_skill_minus_B_checklist": 0,
-      "B_checklist_minus_A_tools": 0.09090909090909094
+      "B_checklist_minus_A_tools": 0.0625
     }
   },
   "luna_minus_astra_skill_increment": {
@@ -479,22 +480,22 @@
       "tool_results"
     ],
     "family_differences": [
-      0.5,
+      0.16666666666666674,
       0,
       0,
       0.33333333333333337
     ],
-    "mean": 0.20833333333333334,
+    "mean": 0.12500000000000003,
     "positive_families": 2,
     "resampling_percentile_95_descriptive": [
       0.0,
-      0.4166666666666667
+      0.25000000000000006
     ],
     "resample_count": 256,
     "note": "Four authored development families; empirical sensitivity only, not a reliable population confidence interval."
   },
   "gate_eligible": false,
-  "infrastructure_or_isolation_blockers": 1,
+  "infrastructure_or_isolation_blockers": 2,
   "development_gates": {
     "gpt-6-astra": {
       "skill_confirmatory_candidate": false,

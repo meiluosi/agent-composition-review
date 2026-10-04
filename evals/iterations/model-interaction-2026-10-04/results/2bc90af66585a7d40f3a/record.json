@@ -1,0 +1,219 @@
+{
+  "case_id": "m06",
+  "condition": "A_tools",
+  "trial": 1,
+  "model_requested": "gpt-6-luna",
+  "exit_code": 0,
+  "timed_out": false,
+  "elapsed_seconds": 114.36423316702712,
+  "usage": {
+    "input_tokens": 59674,
+    "cached_input_tokens": 49920,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 2714,
+    "reasoning_output_tokens": 1131
+  },
+  "completed": true,
+  "status": "completed",
+  "infra_kind": null,
+  "prediction": {
+    "initial_verdict": "violation",
+    "summary": "修复了 rank_documents 多返回一项的问题：现在最多返回 limit 个文档。其余缓存与复制行为经检查符合任务要求，予以保留。",
+    "tests_executed": [
+      "./run_python smoke.py",
+      "./run_python - <<'PY' … PY（定向检查排序、结果数量、缓存身份与 TTL、深拷贝隔离、零上限及异常传播）"
+    ],
+    "limitations": [
+      "未执行隐藏验收；本地定向检查不覆盖所有输入组合。"
+    ]
+  },
+  "acceptance": {
+    "passed": true,
+    "tests_run": 12,
+    "checks": [
+      {
+        "test": "rank_order_and_limit",
+        "passed": true
+      },
+      {
+        "test": "full_result_cache",
+        "passed": true
+      },
+      {
+        "test": "tenant_revision_isolation",
+        "passed": true
+      },
+      {
+        "test": "query_identity",
+        "passed": true
+      },
+      {
+        "test": "expiry_without_sliding",
+        "passed": true
+      },
+      {
+        "test": "caller_query_isolation",
+        "passed": true
+      },
+      {
+        "test": "source_result_isolation",
+        "passed": true
+      },
+      {
+        "test": "returned_result_isolation",
+        "passed": true
+      },
+      {
+        "test": "failure_not_cached",
+        "passed": true
+      },
+      {
+        "test": "expired_failure_retry",
+        "passed": true
+      },
+      {
+        "test": "empty_results_and_zero_limit",
+        "passed": true
+      },
+      {
+        "test": "independent_instances",
+        "passed": true
+      }
+    ],
+    "exit_code": 0,
+    "timed_out": false,
+    "sandbox": "macos_no_network_writes_only_grade_directory",
+    "stderr": ""
+  },
+  "acceptance_signature": {
+    "passed": true,
+    "tests_run": 12,
+    "checks": [
+      {
+        "test": "rank_order_and_limit",
+        "passed": true
+      },
+      {
+        "test": "full_result_cache",
+        "passed": true
+      },
+      {
+        "test": "tenant_revision_isolation",
+        "passed": true
+      },
+      {
+        "test": "query_identity",
+        "passed": true
+      },
+      {
+        "test": "expiry_without_sliding",
+        "passed": true
+      },
+      {
+        "test": "caller_query_isolation",
+        "passed": true
+      },
+      {
+        "test": "source_result_isolation",
+        "passed": true
+      },
+      {
+        "test": "returned_result_isolation",
+        "passed": true
+      },
+      {
+        "test": "failure_not_cached",
+        "passed": true
+      },
+      {
+        "test": "expired_failure_retry",
+        "passed": true
+      },
+      {
+        "test": "empty_results_and_zero_limit",
+        "passed": true
+      },
+      {
+        "test": "independent_instances",
+        "passed": true
+      }
+    ],
+    "exit_code": 0,
+    "timed_out": false,
+    "invalid_output": false,
+    "isolation_failure": false
+  },
+  "source_changed": true,
+  "artifacts": {
+    "app.py": "140d0dbcf5eb93e5e42c3d420531957c3e7e8e8c57d8b902c90a40cacaf228dd"
+  },
+  "protected_changes": [],
+  "outside_changes": [],
+  "artifact_errors": [],
+  "tool_audit": [
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc \"pwd && rg --files -g 'task.md' -g 'app.py' -g 'original.py' -g 'smoke.py' -g 'TOOLS.md' -g 'AGENTS.md'\"",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc 'cat original.py'",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc 'cat task.md'",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc 'cat smoke.py && cat TOOLS.md'",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc 'cat app.py'",
+      "review_flags": []
+    },
+    {
+      "type": "file_change",
+      "exit_code": null,
+      "changes": [
+        {
+          "path": "<workspace>/app.py",
+          "kind": "update"
+        }
+      ]
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc './run_python smoke.py'",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc \"./run_python - <<'PY'\nfrom app import RetrievalCache, rank_documents\n\nrows = [\n    {'id': 'b', 'score': 5, 'payload': {'nested': [{'x': 1}]}},\n    {'id': 'a', 'score': 5, 'payload': {'nested': [{'x': 2}]}},\n    {'id': 'c', 'score': -1, 'payload': {}},\n]\nassert [d['id'] for d in rank_documents(rows, 2)] == ['a', 'b']\nassert [d['id'] for d in rank_documents(rows, 20)] == ['a', 'b', 'c']\nassert rank_documents(rows, 0) == []\nranked = rank_documents(rows, 1)\nranked[0]['payload']['nested'][0]['x'] = 9\nassert rows[1]['payload']['nested'][0]['x'] == 2\n\ncalls = []\nowned = list(rows)\ndef source(tenant, query, revision):\n    calls.append((tenant, query, revision))\n    # Mutating its query copy must not reach the caller.\n    query['filters']['source_mutation'] = 'yes'\n    return owned\ncache = RetrievalCache(source, ttl=3)\nquery = {'text': 'q', 'filters': {'x': '1', 'y': '2'}}\nassert [d['id'] for d in cache.search('t', query, 'r', 0, 1)] == ['a']\nassert 'source_mutation' not in query['filters']\nquery_reordered = {'filters': {'y': '2', 'x': '1'}, 'text': 'q'}\nassert len(cache.search('t', query_reordered, 'r', 2, 5)) == 3\nassert len(calls) == 1\ncached = cache.search('t', query, 'r', 2, 5)\ncached[0]['payload']['nested'][0]['x'] = 99\nowned[1]['payload']['nested'][0]['x'] = 88\nassert cache.search('t', query_reordered, 'r', 2, 5)[0]['payload']['nested'][0]['x'] == 2\nassert len(calls) == 1\n# zero limit avoids source, including for a fresh identity\nassert cache.search('other', query, 'r', 2, 0) == []\nassert len(calls) == 1\n# equality to expiry reloads once\ncache.search('t', query, 'r', 3, 5)\nassert len(calls) == 2\n\n# identity includes tenant, revision, text and each filter key/value\nfor args in [\n    ('other', query, 'r'), ('t', query, 'other-r'),\n    ('t', {'text': 'different', 'filters': {'x': '1', 'y': '2'}}, 'r'),\n    ('t', {'text': 'q', 'filters': {'x': 'changed', 'y': '2'}}, 'r'),\n]:\n    cache.search(*args, now=3, limit=1)\nassert len(calls) == 6\n\n# Source errors propagate and are retried; other successful entries remain usable.\nclass Expected(Exception): pass\nfailing = False\ndef sometimes_fails(tenant, query, revision):\n    if tenant == 'bad':\n        raise Expected('same exception')\n    return rows\nc2 = RetrievalCache(sometimes_fails, ttl=5)\nc2.search('good', {'text': 'q', 'filters': {}}, 'r', 0)\ntry:\n    c2.search('bad', {'text': 'q', 'filters': {}}, 'r', 0)\nexcept Expected as exc:\n    assert str(exc) == 'same exception'\nelse:\n    raise AssertionError('source exception did not propagate')\nassert len(c2.search('good', {'text': 'q', 'filters': {}}, 'r', 1)) == 3\nprint('targeted contract checks passed')\nPY\"",
+      "review_flags": []
+    }
+  ],
+  "case_sha256": "ff3568cae57fab206354f3b223cd078895b719d6aaeb94897e3e59850b9caafb",
+  "prompt_sha256": "754741dedf8f45f17a6cba0d28c804d1273d67e30452f4503e8797defde6c5c4",
+  "event_sha256": "46800f2e126e7a462a8eba890e08edc79958cf1a843062fe2189c8f14386c3cd",
+  "stderr_sha256": "dcddb24c6623d02c22a5df5e26886363b98aaa27164ac9df5095a61239dc6598",
+  "reasoning_effort": "high",
+  "cli_version": "codex-cli 0.160.0",
+  "canary": false,
+  "python_version": "3.12.14",
+  "execution_platform": "Darwin",
+  "terminal_errors": [],
+  "execution_phase": "classifier_recovery",
+  "recovery_manifest_sha256": "6826d034f0c76fbe1d24f761c801c391c878482718ec612bce68fd59ebf3c149"
+}

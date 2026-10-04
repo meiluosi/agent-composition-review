@@ -1,0 +1,220 @@
+{
+  "case_id": "m04",
+  "condition": "C_skill",
+  "trial": 2,
+  "model_requested": "gpt-6-luna",
+  "exit_code": 0,
+  "timed_out": false,
+  "elapsed_seconds": 133.41217287501786,
+  "usage": {
+    "input_tokens": 117055,
+    "cached_input_tokens": 99584,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 4445,
+    "reasoning_output_tokens": 2049
+  },
+  "completed": true,
+  "status": "completed",
+  "infra_kind": null,
+  "prediction": {
+    "initial_verdict": "violation",
+    "summary": "修复了缓存键遗漏 tenant 和 revision、source 可通过修改 query 或返回文档影响调用方及缓存的问题。保留排序规则，并让返回的各文档及其嵌套数据彼此独立。只修改了 app.py。",
+    "tests_executed": [
+      "./run_python smoke.py",
+      "./run_python - <<'PY' … PY（内联契约检查：排序、复制隔离、缓存键、过期与零 limit、source 异常重试及空结果缓存）",
+      "diff -u original.py app.py（核对 app.py 改动）"
+    ],
+    "limitations": [
+      "未运行隐藏验收；参数不符合文档约定时的验证策略不在任务范围内。"
+    ]
+  },
+  "acceptance": {
+    "passed": true,
+    "tests_run": 12,
+    "checks": [
+      {
+        "test": "rank_order_and_limit",
+        "passed": true
+      },
+      {
+        "test": "full_result_cache",
+        "passed": true
+      },
+      {
+        "test": "tenant_revision_isolation",
+        "passed": true
+      },
+      {
+        "test": "query_identity",
+        "passed": true
+      },
+      {
+        "test": "expiry_without_sliding",
+        "passed": true
+      },
+      {
+        "test": "caller_query_isolation",
+        "passed": true
+      },
+      {
+        "test": "source_result_isolation",
+        "passed": true
+      },
+      {
+        "test": "returned_result_isolation",
+        "passed": true
+      },
+      {
+        "test": "failure_not_cached",
+        "passed": true
+      },
+      {
+        "test": "expired_failure_retry",
+        "passed": true
+      },
+      {
+        "test": "empty_results_and_zero_limit",
+        "passed": true
+      },
+      {
+        "test": "independent_instances",
+        "passed": true
+      }
+    ],
+    "exit_code": 0,
+    "timed_out": false,
+    "sandbox": "macos_no_network_writes_only_grade_directory",
+    "stderr": ""
+  },
+  "acceptance_signature": {
+    "passed": true,
+    "tests_run": 12,
+    "checks": [
+      {
+        "test": "rank_order_and_limit",
+        "passed": true
+      },
+      {
+        "test": "full_result_cache",
+        "passed": true
+      },
+      {
+        "test": "tenant_revision_isolation",
+        "passed": true
+      },
+      {
+        "test": "query_identity",
+        "passed": true
+      },
+      {
+        "test": "expiry_without_sliding",
+        "passed": true
+      },
+      {
+        "test": "caller_query_isolation",
+        "passed": true
+      },
+      {
+        "test": "source_result_isolation",
+        "passed": true
+      },
+      {
+        "test": "returned_result_isolation",
+        "passed": true
+      },
+      {
+        "test": "failure_not_cached",
+        "passed": true
+      },
+      {
+        "test": "expired_failure_retry",
+        "passed": true
+      },
+      {
+        "test": "empty_results_and_zero_limit",
+        "passed": true
+      },
+      {
+        "test": "independent_instances",
+        "passed": true
+      }
+    ],
+    "exit_code": 0,
+    "timed_out": false,
+    "invalid_output": false,
+    "isolation_failure": false
+  },
+  "source_changed": true,
+  "artifacts": {
+    "app.py": "948d4f9a67b213af986eb48cd2b89458b9139572a154af74c07912852283553f"
+  },
+  "protected_changes": [],
+  "outside_changes": [],
+  "artifact_errors": [],
+  "tool_audit": [
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc \"pwd && rg --files -g 'task.md' -g 'app.py' -g 'original.py' -g 'smoke.py' -g 'TOOLS.md' -g 'SKILL.md' -g 'references/**' -g 'scripts/**'\"",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc 'cat SKILL.md && cat references/executable-contracts.md && cat references/contracts.md'",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc 'cat task.md && cat app.py && cat original.py && cat smoke.py && cat TOOLS.md'",
+      "review_flags": []
+    },
+    {
+      "type": "file_change",
+      "exit_code": null,
+      "changes": [
+        {
+          "path": "<workspace>/app.py",
+          "kind": "update"
+        }
+      ]
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc './run_python smoke.py'",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc \"./run_python - <<'PY'\nfrom app import RetrievalCache, rank_documents\n\n# Ranking, tie ordering, zero limit, and copy isolation.\nshared = {'nested': [{'v': 1}]}\ndocs = [\n    {'id': 'z', 'score': 5, 'payload': shared},\n    {'id': 'a', 'score': 5, 'payload': shared},\n    {'id': 'low', 'score': -10**100, 'payload': {}},\n]\nranked = rank_documents(docs, 3)\nassert [d['id'] for d in ranked] == ['a', 'z', 'low']\nassert ranked[0]['payload'] is not ranked[1]['payload']\nranked[0]['payload']['nested'][0]['v'] = 9\nassert docs[0]['payload']['nested'][0]['v'] == 1\nassert rank_documents(docs, 0) == []\n\ncalls = []\nsource_owned = [{'id': 'b', 'score': 1, 'payload': {'a': [1]}}, {'id': 'a', 'score': 2, 'payload': {}}]\ndef source(tenant, query, revision):\n    calls.append((tenant, query, revision))\n    query['filters']['source-change'] = 'yes'\n    return source_owned\ncache = RetrievalCache(source, ttl=3)\nq = {'text': 'q', 'filters': {'x': '1', 'y': '2'}}\nassert [x['id'] for x in cache.search('t1', q, 'r1', 0, 1)] == ['a']\nassert q == {'text': 'q', 'filters': {'x': '1', 'y': '2'}}\nassert cache.search('t1', {'filters': {'y': '2', 'x': '1'}, 'text': 'q'}, 'r1', 1, 9)[0]['id'] == 'a'\nassert len(calls) == 1\n# Tenant and revision isolate results.\ncache.search('t2', {'text': 'q', 'filters': {'x': '1', 'y': '2'}}, 'r1', 1)\ncache.search('t1', {'text': 'q', 'filters': {'x': '1', 'y': '2'}}, 'r2', 1)\nassert len(calls) == 3\n# Returned result and source-owned mutations cannot affect cached snapshot.\nr = cache.search('t1', {'text': 'q', 'filters': {'x': '1', 'y': '2'}}, 'r1', 2, 9)\nr[0]['payload']['mutated'] = True\nsource_owned[0]['payload']['a'].append(2)\nr2 = cache.search('t1', {'text': 'q', 'filters': {'x': '1', 'y': '2'}}, 'r1', 2, 9)\nassert 'mutated' not in r2[0]['payload'] and r2[1]['payload']['a'] == [1]\n# Exact expiry reloads once; zero limit neither fetches nor refreshes.\nassert cache.search('t1', {'text': 'q', 'filters': {'x': '1', 'y': '2'}}, 'r1', 3, 0) == []\nassert len(calls) == 3\ncache.search('t1', {'text': 'q', 'filters': {'x': '1', 'y': '2'}}, 'r1', 3)\nassert len(calls) == 4\n\n# Failed refresh propagates and leaves other identities usable; retry succeeds.\ncount = {'n': 0}\ndef flaky(tenant, query, revision):\n    count['n'] += 1\n    if query['text'] == 'bad' and count['n'] == 2:\n        raise RuntimeError('source failure')\n    return [{'id': 'ok', 'score': 0, 'payload': {}}]\nc = RetrievalCache(flaky, ttl=2)\nc.search('t', {'text': 'good', 'filters': {}}, 'r', 0)\ntry:\n    c.search('t', {'text': 'bad', 'filters': {}}, 'r', 0)\nexcept RuntimeError as e:\n    assert str(e) == 'source failure'\nelse:\n    raise AssertionError('exception not propagated')\nassert c.search('t', {'text': 'good', 'filters': {}}, 'r', 1)[0]['id'] == 'ok'\nassert c.search('t', {'text': 'bad', 'filters': {}}, 'r', 1)[0]['id'] == 'ok'\n\n# Empty successful results are cached.\nempty_calls = []\ne = RetrievalCache(lambda *args: (empty_calls.append(args) or []), ttl=2)\nassert e.search('t', {'text': '', 'filters': {}}, 'r', 0) == []\nassert e.search('t', {'text': '', 'filters': {}}, 'r', 1) == []\nassert len(empty_calls) == 1\nprint('contract checks passed')\nPY\"",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 129,
+      "command": "/bin/zsh -lc 'git diff -- app.py && git status --short'",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 1,
+      "command": "/bin/zsh -lc 'diff -u original.py app.py'",
+      "review_flags": []
+    }
+  ],
+  "case_sha256": "69a4bde6f201370e64aee8eb0b47a4c727fdea08f99b2d96bddd9557fc833aa4",
+  "prompt_sha256": "890e8e7238a3d11b98065646547e36c2563ff652e966a0baa5a66ed0cca78937",
+  "event_sha256": "f1d72ffba4a14c36a050c77d4d0a6f0b72b644508d6acbb6dcdfd599b3c4523a",
+  "stderr_sha256": "fd10e2717bbeb51050fa7951ce0d4131fa1b99e84492026ef1b0ef3d060f3048",
+  "reasoning_effort": "high",
+  "cli_version": "codex-cli 0.160.0",
+  "canary": false,
+  "python_version": "3.12.14",
+  "execution_platform": "Darwin",
+  "terminal_errors": [],
+  "execution_phase": "classifier_recovery",
+  "recovery_manifest_sha256": "6826d034f0c76fbe1d24f761c801c391c878482718ec612bce68fd59ebf3c149"
+}

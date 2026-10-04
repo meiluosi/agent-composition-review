@@ -1,0 +1,241 @@
+{
+  "case_id": "m07",
+  "condition": "A_tools",
+  "trial": 2,
+  "model_requested": "gpt-6-luna",
+  "exit_code": 0,
+  "timed_out": false,
+  "elapsed_seconds": 176.12984162499197,
+  "usage": {
+    "input_tokens": 159406,
+    "cached_input_tokens": 139776,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 6190,
+    "reasoning_output_tokens": 2868
+  },
+  "completed": true,
+  "status": "completed",
+  "infra_kind": null,
+  "prediction": {
+    "initial_verdict": "violation",
+    "summary": "修复了跨 feed 拆分 UTF-8 字符时被错误拒绝的问题，以及同一数据块在终止事件后仍被解析的问题。JSON 解码现在也拒绝重复字段名和非标准常量。保留公开接口及原有正确行为；修改仅在 app.py。",
+    "tests_executed": [
+      "./run_python smoke.py（通过）",
+      "./run_python - <<'PY' ...（通过：UTF-8 分块、字符与词数、帧大小上限、大块多帧、终止后尾随数据、无效帧及 EOF 状态）"
+    ],
+    "limitations": [
+      "补充测试最初两次尝试分别有命令语法错误和测试用例自身的 schema 错误；修正后完整测试通过。"
+    ]
+  },
+  "acceptance": {
+    "passed": true,
+    "tests_run": 12,
+    "checks": [
+      {
+        "test": "basic",
+        "passed": true
+      },
+      {
+        "test": "byte_boundaries",
+        "passed": true
+      },
+      {
+        "test": "metrics",
+        "passed": true
+      },
+      {
+        "test": "unfinished_buffer",
+        "passed": true
+      },
+      {
+        "test": "size_limits",
+        "passed": true
+      },
+      {
+        "test": "error_terminal",
+        "passed": true
+      },
+      {
+        "test": "terminal_once",
+        "passed": true
+      },
+      {
+        "test": "malformed_frames",
+        "passed": true
+      },
+      {
+        "test": "premature_eof",
+        "passed": true
+      },
+      {
+        "test": "poison_state",
+        "passed": true
+      },
+      {
+        "test": "failed_call_has_no_partial_output",
+        "passed": true
+      },
+      {
+        "test": "independent_streams",
+        "passed": true
+      }
+    ],
+    "exit_code": 0,
+    "timed_out": false,
+    "sandbox": "macos_no_network_writes_only_grade_directory",
+    "stderr": ""
+  },
+  "acceptance_signature": {
+    "passed": true,
+    "tests_run": 12,
+    "checks": [
+      {
+        "test": "basic",
+        "passed": true
+      },
+      {
+        "test": "byte_boundaries",
+        "passed": true
+      },
+      {
+        "test": "metrics",
+        "passed": true
+      },
+      {
+        "test": "unfinished_buffer",
+        "passed": true
+      },
+      {
+        "test": "size_limits",
+        "passed": true
+      },
+      {
+        "test": "error_terminal",
+        "passed": true
+      },
+      {
+        "test": "terminal_once",
+        "passed": true
+      },
+      {
+        "test": "malformed_frames",
+        "passed": true
+      },
+      {
+        "test": "premature_eof",
+        "passed": true
+      },
+      {
+        "test": "poison_state",
+        "passed": true
+      },
+      {
+        "test": "failed_call_has_no_partial_output",
+        "passed": true
+      },
+      {
+        "test": "independent_streams",
+        "passed": true
+      }
+    ],
+    "exit_code": 0,
+    "timed_out": false,
+    "invalid_output": false,
+    "isolation_failure": false
+  },
+  "source_changed": true,
+  "artifacts": {
+    "app.py": "a297dbc7897dacd87faf9f98cbb04c72f22c8b7837863dc48f8985a5e6f26b9d"
+  },
+  "protected_changes": [],
+  "outside_changes": [],
+  "artifact_errors": [],
+  "tool_audit": [
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc 'ls -la && cat task.md && cat app.py && cat smoke.py && cat TOOLS.md'",
+      "review_flags": []
+    },
+    {
+      "type": "file_change",
+      "exit_code": null,
+      "changes": [
+        {
+          "path": "<workspace>/app.py",
+          "kind": "update"
+        }
+      ]
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 1,
+      "command": "/bin/zsh -lc \"./run_python -c 'import app; p=app.EventStream(); raw=\\\"{\\\\\\\"event\\\\\\\":\\\\\\\"token\\\\\\\",\\\\\\\"text\\\\\\\":\\\\\\\"é\\\\\\\"}\\\\n{\\\\\\\"event\\\\\\\":\\\\\\\"done\\\\\\\"}\\\\n\\\".encode(); split=raw.index(b\\\"\\\\\\\\xc3\\\")+1; assert p.feed(raw[:split]) == []; assert p.feed(raw[split:]) == [{\\\"event\\\":\\\"token\\\",\\\"text\\\":\\\"é\\\"},{\\\"event\\\":\\\"done\\\",\\\"text\\\":\\\"é\\\",\\\"characters\\\":1,\\\"words\\\":1}]; assert p.finish()==[]; p=app.EventStream();\\\\ntry: p.feed(b\\\"{\\\\\\\\\\\\\\\"event\\\\\\\\\\\\\\\":\\\\\\\\\\\\\\\"done\\\\\\\\\\\\\\\"}\\\\\\\\n{}\\\\\\\\n\\\")\\\\nexcept app.StreamError: pass\\\\nelse: raise AssertionError(\\\"trailing bytes accepted\\\"); assert p.state==\\\"FAILED\\\" and p.buffered_bytes==0;\\\\ntry: p.feed(b\\\"\\\")\\\\nexcept app.StreamError: pass\\\\nelse: raise AssertionError(\\\"failed parser reused\\\"); p=app.EventStream(max_buffer=1); assert p.feed(b\\\"{}\\\\\\\\n\\\") == []' \"",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc './run_python smoke.py'",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 1,
+      "command": "/bin/zsh -lc \"./run_python - <<'PY'\nimport app\n\np = app.EventStream()\nraw = '{\\\"event\\\":\\\"token\\\",\\\"text\\\":\\\"é\\\"}\\\\n{\\\"event\\\":\\\"done\\\"}\\\\n'.encode()\nsplit = raw.index(b'\\\\xc3') + 1\nassert p.feed(raw[:split]) == []\nassert p.feed(raw[split:]) == [\n    {\\\"event\\\": \\\"token\\\", \\\"text\\\": \\\"é\\\"},\n    {\\\"event\\\": \\\"done\\\", \\\"text\\\": \\\"é\\\", \\\"characters\\\": 1, \\\"words\\\": 1},\n]\nassert p.finish() == []\n\np = app.EventStream()\ntry:\n    p.feed(b'{\\\"event\\\":\\\"done\\\"}\\\\n{}\\\\n')\nexcept app.StreamError:\n    pass\nelse:\n    raise AssertionError(\\\"trailing bytes accepted\\\")\nassert p.state == \\\"FAILED\\\" and p.buffered_bytes == 0\ntry:\n    p.feed(b\\\"\\\")\nexcept app.StreamError:\n    pass\nelse:\n    raise AssertionError(\\\"failed parser reused\\\")\n\np = app.EventStream(max_buffer=1)\nassert p.feed(b\\\"{}\\\\n\\\") == []\nPY\"",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 129,
+      "command": "/bin/zsh -lc 'git diff -- app.py && git status --short'",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 1,
+      "command": "/bin/zsh -lc \"./run_python - <<'PY'\nimport app\n\np = app.EventStream()\nraw = '{\\\"event\\\":\\\"token\\\",\\\"text\\\":\\\"é\\\"}\\\\n{\\\"event\\\":\\\"done\\\"}\\\\n'.encode()\nsplit = raw.index(b'\\\\xc3') + 1\nassert p.feed(raw[:split]) == []\nassert p.feed(raw[split:]) == [\n    {\\\"event\\\": \\\"token\\\", \\\"text\\\": \\\"é\\\"},\n    {\\\"event\\\": \\\"done\\\", \\\"text\\\": \\\"é\\\", \\\"characters\\\": 1, \\\"words\\\": 1},\n]\nassert p.finish() == []\n\np = app.EventStream()\ntry:\n    p.feed(b'{\\\"event\\\":\\\"done\\\"}\\\\n{}\\\\n')\nexcept app.StreamError:\n    pass\nelse:\n    raise AssertionError(\\\"trailing bytes accepted\\\")\nassert p.state == \\\"FAILED\\\" and p.buffered_bytes == 0\ntry:\n    p.feed(b\\\"\\\")\nexcept app.StreamError:\n    pass\nelse:\n    raise AssertionError(\\\"failed parser reused\\\")\n\np = app.EventStream(max_buffer=2)\nassert p.feed(b\\\"{}\\\\n{}\\\\n\\\") == []\nPY\"",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 1,
+      "command": "/bin/zsh -lc \"./run_python - <<'PY'\nimport app\n\np = app.EventStream()\nraw = '{\\\"event\\\":\\\"token\\\",\\\"text\\\":\\\"é\\\"}\\\\n{\\\"event\\\":\\\"done\\\"}\\\\n'.encode()\nsplit = raw.index(b'\\\\xc3') + 1\nassert p.feed(raw[:split]) == []\nassert p.feed(raw[split:]) == [\n    {\\\"event\\\": \\\"token\\\", \\\"text\\\": \\\"é\\\"},\n    {\\\"event\\\": \\\"done\\\", \\\"text\\\": \\\"é\\\", \\\"characters\\\": 1, \\\"words\\\": 1},\n]\nassert p.finish() == []\n\np = app.EventStream()\ntry:\n    p.feed(b'{\\\"event\\\":\\\"done\\\"}\\\\n{}\\\\n')\nexcept app.StreamError:\n    pass\nelse:\n    raise AssertionError(\\\"trailing bytes accepted\\\")\nassert p.state == \\\"FAILED\\\" and p.buffered_bytes == 0\ntry:\n    p.feed(b\\\"\\\")\nexcept app.StreamError:\n    pass\nelse:\n    raise AssertionError(\\\"failed parser reused\\\")\n\nframe = b'{\\\"event\\\":\\\"token\\\",\\\"text\\\":\\\"\\\"}'\np = app.EventStream(max_buffer=len(frame))\nassert p.feed(frame + b\\\"\\\\n\\\" + frame + b\\\"\\\\n\\\") == [\n    {\\\"event\\\": \\\"token\\\", \\\"text\\\": \\\"\\\"},\n    {\\\"event\\\": \\\"token\\\", \\\"text\\\": \\\"\\\"},\n]\nPY\ndiff -u original.py app.py\"",
+      "review_flags": []
+    },
+    {
+      "type": "file_change",
+      "exit_code": null,
+      "changes": [
+        {
+          "path": "<workspace>/app.py",
+          "kind": "update"
+        }
+      ]
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc \"./run_python smoke.py && ./run_python - <<'PY'\nimport app\n\n# UTF-8 may split at any byte boundary.\nwire = '{\\\"event\\\":\\\"token\\\",\\\"text\\\":\\\"Aé🙂\\\\\\\\tB\\\"}\\\\n{\\\"event\\\":\\\"done\\\"}\\\\n'.encode()\nfor split in range(len(wire) + 1):\n    parser = app.EventStream()\n    events = parser.feed(wire[:split]) + parser.feed(wire[split:])\n    assert events == [\n        {\\\"event\\\": \\\"token\\\", \\\"text\\\": \\\"Aé🙂\\\\tB\\\"},\n        {\\\"event\\\": \\\"done\\\", \\\"text\\\": \\\"Aé🙂\\\\tB\\\", \\\"characters\\\": 5, \\\"words\\\": 2},\n    ]\n    assert parser.state == \\\"DONE\\\" and parser.finish() == []\nassert app.text_metrics(\\\"a\\\\u2003b\\\\n\\\") == {\\\"characters\\\": 4, \\\"words\\\": 2}\n\n# Large chunks can contain many frames; each individual frame is exactly at the bound.\nframe = b'{\\\"event\\\":\\\"token\\\",\\\"text\\\":\\\"\\\"}'\nparser = app.EventStream(max_buffer=len(frame))\nassert len(parser.feed((frame + b\\\"\\\\n\\\") * 50)) == 50\nassert parser.buffered_bytes == 0\n\n# A terminal event followed by any bytes in that same chunk fails the stream.\nfor terminal in (b'{\\\"event\\\":\\\"done\\\"}\\\\n', b'{\\\"event\\\":\\\"error\\\",\\\"message\\\":\\\"x\\\"}\\\\n'):\n    parser = app.EventStream()\n    try:\n        parser.feed(terminal + b\\\"x\\\")\n    except app.StreamError:\n        pass\n    else:\n        raise AssertionError(\\\"accepted bytes after terminal event\\\")\n    assert parser.state == \\\"FAILED\\\" and parser.buffered_bytes == 0\n\n# Invalid UTF-8/JSON/schema, empty frames, and overlong frames fail and clear state.\nfor wire, limit in (\n    (b'\\\\xff\\\\n', 8),\n    (b'{\\\\n', 8),\n    (b'{\\\"event\\\":\\\"done\\\",\\\"event\\\":\\\"done\\\"}\\\\n', 64),\n    (b'{\\\"event\\\":\\\"wat\\\"}\\\\n', 64),\n    (b'\\\\n', 8),\n    (b'1234', 3),\n):\n    parser = app.EventStream(max_buffer=limit)\n    try:\n        parser.feed(wire)\n    except app.StreamError:\n        pass\n    else:\n        raise AssertionError(\\\"invalid stream accepted: \\\" + repr(wire))\n    assert parser.state == \\\"FAILED\\\" and parser.buffered_bytes == 0\n    try:\n        parser.finish()\n    except app.StreamError:\n        pass\n    else:\n        raise AssertionError(\\\"failed parser accepted finish\\\")\n\n# EOF while open is failure, even with no pending bytes.\nfor pending in (b\\\"\\\", b'{\\\"event\\\":'):\n    parser = app.EventStream()\n    if pending:\n        parser.feed(pending)\n    try:\n        parser.finish()\n    except app.StreamError:\n        pass\n    else:\n        raise AssertionError(\\\"premature EOF accepted\\\")\n    assert parser.state == \\\"FAILED\\\" and parser.buffered_bytes == 0\nprint(\\\"edge checks passed\\\")\nPY\"",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 1,
+      "command": "/bin/zsh -lc 'cat app.py && diff -u original.py app.py'",
+      "review_flags": []
+    }
+  ],
+  "case_sha256": "5998ad7dc181d36961a09a4c59f63d97469ebbe1d9b390423793f8515a276515",
+  "prompt_sha256": "754741dedf8f45f17a6cba0d28c804d1273d67e30452f4503e8797defde6c5c4",
+  "event_sha256": "8e36dd346f5a24004c4b289892b88ee03b0a8d1e51a2dcf87237d145c803ae2d",
+  "stderr_sha256": "fab3ef4a5388291d992db31f3fcd9ec8658c9cce1957a68905cf8df0aa2a1e00",
+  "reasoning_effort": "high",
+  "cli_version": "codex-cli 0.160.0",
+  "canary": false,
+  "python_version": "3.12.14",
+  "execution_platform": "Darwin",
+  "terminal_errors": [],
+  "execution_phase": "classifier_recovery",
+  "recovery_manifest_sha256": "6826d034f0c76fbe1d24f761c801c391c878482718ec612bce68fd59ebf3c149"
+}

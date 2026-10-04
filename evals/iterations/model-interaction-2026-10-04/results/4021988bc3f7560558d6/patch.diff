@@ -1,0 +1,51 @@
+--- original.py
++++ app.py
+@@ -3,6 +3,15 @@
+ import math
+ import sqlite3
+ from contextlib import closing
++
++
++def _sqlite_string(value):
++    """Keep ordinary TEXT compatible; store lone surrogates losslessly as BLOB."""
++    try:
++        value.encode("utf-8")
++    except UnicodeEncodeError:
++        return value.encode("utf-8", errors="surrogatepass")
++    return value
+ 
+ 
+ class Queue:
+@@ -16,16 +25,20 @@
+             )""")
+ 
+     def put(self, job_id, payload):
+-        encoded = json.dumps(payload, allow_nan=False)
++        # Literal surrogates must not be merged into one character on decoding.
++        encoded = _sqlite_string(json.dumps(payload, allow_nan=False, ensure_ascii=False))
+         with closing(sqlite3.connect(self.path)) as db, db:
+             try:
+-                db.execute("INSERT INTO jobs(job_id, payload) VALUES (?, ?)", (job_id, encoded))
++                db.execute("INSERT INTO jobs(job_id, payload) VALUES (?, ?)",
++                           (_sqlite_string(job_id), encoded))
+             except sqlite3.IntegrityError as exc:
+                 raise ValueError("job_id already exists") from exc
+ 
+     def claim(self, worker, now, lease_seconds):
+-        if not math.isfinite(lease_seconds) or lease_seconds <= 0:
++        if (isinstance(lease_seconds, bool) or not math.isfinite(lease_seconds)
++                or lease_seconds <= 0):
+             raise ValueError("lease_seconds must be finite and positive")
++        worker = _sqlite_string(worker)
+         with closing(sqlite3.connect(self.path)) as db, db:
+             db.execute("BEGIN IMMEDIATE")
+             row = db.execute("""SELECT job_id, payload, generation FROM jobs
+@@ -35,7 +48,7 @@
+                 return None
+             job_id, payload, previous_generation = row
+             generation = previous_generation + 1
+-            expires_at = now + int(lease_seconds)
++            expires_at = now + lease_seconds
+             db.execute("""UPDATE jobs SET state = 'leased', worker = ?,
+                 generation = ?, expires_at = ? WHERE job_id = ?""",
+                 (worker, generation, expires_at, job_id))

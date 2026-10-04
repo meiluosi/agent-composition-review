@@ -1,0 +1,262 @@
+{
+  "case_id": "m01",
+  "condition": "C_skill",
+  "trial": 1,
+  "model_requested": "gpt-6-luna",
+  "exit_code": 0,
+  "timed_out": false,
+  "elapsed_seconds": 248.96581620897632,
+  "usage": {
+    "input_tokens": 235360,
+    "cached_input_tokens": 204032,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 6163,
+    "reasoning_output_tokens": 2798
+  },
+  "completed": true,
+  "status": "completed",
+  "infra_kind": null,
+  "prediction": {
+    "initial_verdict": "violation",
+    "summary": "原实现未在 ack 中校验收据代次：同一 worker 重新领取任务后，旧收据可能确认新租约。claim 也会接受布尔值 True 作为租期。已在 app.py 修复这两点，并保留其余队列行为。",
+    "tests_executed": [
+      "./run_python smoke.py — 通过。",
+      "./run_python - <<'PY' … PY — 跨实例、租约到期边界、旧收据、重复确认、无效租期及并发领取检查通过。",
+      "./run_python - <<'PY' … PY — 循环、过深嵌套、set 和非有限数字 payload 的失败与队列状态检查通过。"
+    ],
+    "limitations": [
+      "一次早期深度探测选用的嵌套深度仍可被当前 JSON 编码器接受；另一次检查把租约过期后的重领误判为空队列。这两处测试假设已修正，修正后的相关检查通过。"
+    ]
+  },
+  "acceptance": {
+    "passed": true,
+    "tests_run": 9,
+    "checks": [
+      {
+        "test": "test_empty_and_persistence",
+        "passed": true
+      },
+      {
+        "test": "test_fifo_and_active_exclusion",
+        "passed": true
+      },
+      {
+        "test": "test_same_worker_stale_receipt",
+        "passed": true
+      },
+      {
+        "test": "test_other_worker_stale_receipt",
+        "passed": true
+      },
+      {
+        "test": "test_expiry_and_fractional_duration",
+        "passed": true
+      },
+      {
+        "test": "test_payload_isolation",
+        "passed": true
+      },
+      {
+        "test": "test_failed_put_and_duplicate_reuse",
+        "passed": true
+      },
+      {
+        "test": "test_invalid_duration_preserves_jobs",
+        "passed": true
+      },
+      {
+        "test": "test_atomic_claim_across_connections",
+        "passed": true
+      }
+    ],
+    "exit_code": 0,
+    "timed_out": false,
+    "sandbox": "macos_no_network_writes_only_grade_directory",
+    "stderr": ""
+  },
+  "acceptance_signature": {
+    "passed": true,
+    "tests_run": 9,
+    "checks": [
+      {
+        "test": "test_empty_and_persistence",
+        "passed": true
+      },
+      {
+        "test": "test_fifo_and_active_exclusion",
+        "passed": true
+      },
+      {
+        "test": "test_same_worker_stale_receipt",
+        "passed": true
+      },
+      {
+        "test": "test_other_worker_stale_receipt",
+        "passed": true
+      },
+      {
+        "test": "test_expiry_and_fractional_duration",
+        "passed": true
+      },
+      {
+        "test": "test_payload_isolation",
+        "passed": true
+      },
+      {
+        "test": "test_failed_put_and_duplicate_reuse",
+        "passed": true
+      },
+      {
+        "test": "test_invalid_duration_preserves_jobs",
+        "passed": true
+      },
+      {
+        "test": "test_atomic_claim_across_connections",
+        "passed": true
+      }
+    ],
+    "exit_code": 0,
+    "timed_out": false,
+    "invalid_output": false,
+    "isolation_failure": false
+  },
+  "source_changed": true,
+  "artifacts": {
+    "app.py": "284596a105e4a2d8c55aa1facc8f96592fd59b29aac3e19187355cb95148810a"
+  },
+  "protected_changes": [],
+  "outside_changes": [],
+  "artifact_errors": [],
+  "tool_audit": [
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc \"pwd && rg --files -g 'task.md' -g 'app.py' -g 'original.py' -g 'smoke.py' -g 'TOOLS.md' -g 'SKILL.md' -g 'references/**' -g 'scripts/**' -g 'CHECKLIST.md'\"",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc 'cat app.py'",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc 'cat original.py'",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc 'cat task.md'",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc 'cat SKILL.md'",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc 'cat TOOLS.md'",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc 'cat smoke.py'",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc 'cat references/contracts.md'",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc 'cat references/executable-contracts.md'",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc \"cat run_python && rg -n \\\"generation|lease_seconds|ack\\\\(\\\" app.py task.md\"",
+      "review_flags": []
+    },
+    {
+      "type": "file_change",
+      "exit_code": null,
+      "changes": [
+        {
+          "path": "<workspace>/app.py",
+          "kind": "update"
+        }
+      ]
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc './run_python smoke.py'",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc \"./run_python - <<'PY'\nimport math, pathlib, tempfile, threading\nfrom app import Queue\n\nwith tempfile.TemporaryDirectory() as d:\n    path = pathlib.Path(d) / 'q.db'\n    q1, q2 = Queue(path), Queue(path)\n    source = {'nested': [None, True, 3, 4.5, {'x': 'y'}]}\n    q1.put('job', source)\n    source['nested'][4]['x'] = 'changed'\n    try:\n        q2.put('job', {})\n    except ValueError:\n        pass\n    else:\n        raise AssertionError('duplicate ID accepted')\n    first = q1.claim('worker', 0.25, 1.5)\n    assert first == {'payload': {'nested': [None, True, 3, 4.5, {'x': 'y'}]}, 'expires_at': 1.75, 'receipt': first['receipt']}\n    first['payload']['nested'].clear()\n    assert q2.claim('worker', 1.749, 1) is None\n    second = q2.claim('worker', 1.75, 2)\n    assert second['payload']['nested'][4]['x'] == 'y'\n    assert q1.ack(first['receipt'], 1.75) is False\n    assert q1.ack(second['receipt'], 2) is True\n    assert q1.ack(second['receipt'], 2) is False\n    assert q1.claim('worker', 2, 1) is None\n\n    q1.put('invalid-duration-survivor', {'ok': True})\n    for bad in (True, False, 0, -1, float('nan'), float('inf'), -float('inf')):\n        try:\n            q1.claim('worker', 3, bad)\n        except ValueError:\n            pass\n        else:\n            raise AssertionError(f'accepted lease_seconds={bad\"'!r}'\"')\n    claim = q2.claim('worker', 3, 2)\n    assert claim['payload'] == {'ok': True}\n    assert q1.ack(claim['receipt'], 5) is False\n    assert q1.claim('worker', 5, 1)['payload'] == {'ok': True}\n\nwith tempfile.TemporaryDirectory() as d:\n    path = pathlib.Path(d) / 'q.db'\n    qs = [Queue(path), Queue(path)]\n    qs[0].put('only', 1)\n    gate = threading.Barrier(3)\n    results = []\n    def take(i):\n        gate.wait()\n        results.append(qs[i].claim(f'w{i}', 0, 10))\n    threads = [threading.Thread(target=take, args=(i,)) for i in range(2)]\n    for t in threads: t.start()\n    gate.wait()\n    for t in threads: t.join()\n    assert sum(result is not None for result in results) == 1\nprint('contract checks passed')\nPY\"",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 129,
+      "command": "/bin/zsh -lc \"./run_python - <<'PY'\nimport pathlib, tempfile\nfrom app import Queue\n\nwith tempfile.TemporaryDirectory() as d:\n    q = Queue(pathlib.Path(d) / 'q.db')\n    q.put('kept', {'v': 1})\n    cycle = []\n    cycle.append(cycle)\n    deep = value = []\n    for _ in range(1100):\n        child = []\n        value.append(child)\n        value = child\n    for job_id, bad in [('cycle', cycle), ('deep', deep), ('set', {1, 2}), ('nan', float('nan'))]:\n        try:\n            q.put(job_id, bad)\n        except (TypeError, ValueError, RecursionError):\n            pass\n        else:\n            raise AssertionError(f'unsupported payload accepted: {job_id}')\n    assert q.claim('w', 0, 1)['payload'] == {'v': 1}\n    assert q.claim('w', 1, 1) is None\nprint('serialization failure checks passed')\nPY\ngit diff -- app.py\"",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc \"./run_python - <<'PY'\nimport json\nfor n in (900, 1000, 1050, 1100, 1200, 1500, 2000, 3000):\n    x = []\n    for _ in range(n): x = [x]\n    try:\n        s = json.dumps(x, allow_nan=False)\n        enc = 'ok'\n    except Exception as e:\n        enc = type(e).__name__\n    try:\n        json.loads(s)\n        dec = 'ok'\n    except Exception as e:\n        dec = type(e).__name__\n    print(n, enc, dec)\nPY\"",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc \"./run_python - <<'PY'\nimport json\nfor n in (10000, 20000, 50000):\n    x = []\n    for _ in range(n): x = [x]\n    try:\n        s = json.dumps(x, allow_nan=False)\n        print(n, 'encode ok', end='; ')\n        json.loads(s)\n        print('decode ok')\n    except Exception as e:\n        print(type(e).__name__)\nPY\"",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc \"sed -n '20,60p' app.py\"",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 1,
+      "command": "/bin/zsh -lc \"./run_python - <<'PY'\nimport pathlib, tempfile\nfrom app import Queue\n\nwith tempfile.TemporaryDirectory() as d:\n    q = Queue(pathlib.Path(d) / 'q.db')\n    q.put('kept', {'v': 1})\n    cycle = []\n    cycle.append(cycle)\n    deep = value = []\n    for _ in range(10000):\n        child = []\n        value.append(child)\n        value = child\n    for job_id, bad in [('cycle', cycle), ('deep', deep), ('set', {1, 2}), ('nan', float('nan'))]:\n        try:\n            q.put(job_id, bad)\n        except (TypeError, ValueError, RecursionError):\n            pass\n        else:\n            raise AssertionError(f'unsupported payload accepted: {job_id}')\n    assert q.claim('w', 0, 1)['payload'] == {'v': 1}\n    assert q.claim('w', 1, 1) is None\nprint('serialization failure checks passed')\nPY\"",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc \"./run_python - <<'PY'\nimport pathlib, tempfile\nfrom app import Queue\n\nwith tempfile.TemporaryDirectory() as d:\n    q = Queue(pathlib.Path(d) / 'q.db')\n    q.put('kept', {'v': 1})\n    cycle = []\n    cycle.append(cycle)\n    deep = value = []\n    for _ in range(10000):\n        child = []\n        value.append(child)\n        value = child\n    for job_id, bad in [('cycle', cycle), ('deep', deep), ('set', {1, 2}), ('nan', float('nan'))]:\n        try:\n            q.put(job_id, bad)\n        except (TypeError, ValueError, RecursionError):\n            pass\n        else:\n            raise AssertionError(f'unsupported payload accepted: {job_id}')\n    claim = q.claim('w', 0, 1)\n    assert claim['payload'] == {'v': 1}\n    assert q.claim('w', 0.5, 1) is None\nprint('serialization failure checks passed')\nPY\"",
+      "review_flags": []
+    }
+  ],
+  "case_sha256": "73ed6a9b5cadf130e63f8b694219699c9066891c161550bfda592c524551ba82",
+  "prompt_sha256": "890e8e7238a3d11b98065646547e36c2563ff652e966a0baa5a66ed0cca78937",
+  "event_sha256": "d5e1ce8e9b99d791cc688ac51854e865a4d16e1461effc8a4a08aab5a75f0731",
+  "stderr_sha256": "a328c02ae2f439fa665332671c5402e9448c2f3f3f1a223f87243922d0046a17",
+  "reasoning_effort": "high",
+  "cli_version": "codex-cli 0.160.0",
+  "canary": false,
+  "python_version": "3.12.14",
+  "execution_platform": "Darwin",
+  "terminal_errors": [],
+  "execution_phase": "classifier_recovery",
+  "recovery_manifest_sha256": "6826d034f0c76fbe1d24f761c801c391c878482718ec612bce68fd59ebf3c149"
+}

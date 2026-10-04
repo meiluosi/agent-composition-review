@@ -1,0 +1,216 @@
+{
+  "case_id": "m03",
+  "condition": "B_checklist",
+  "trial": 2,
+  "model_requested": "gpt-6-luna",
+  "exit_code": 0,
+  "timed_out": false,
+  "elapsed_seconds": 139.67996887501795,
+  "usage": {
+    "input_tokens": 146009,
+    "cached_input_tokens": 130560,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 3650,
+    "reasoning_output_tokens": 1637
+  },
+  "completed": true,
+  "status": "completed",
+  "infra_kind": null,
+  "prediction": {
+    "initial_verdict": "violation",
+    "summary": "修复 `app.py` 的租期处理：保留小数秒，并拒绝布尔租期。验证确认 0.5 秒租期到期时间正确，租期边界、过期收据、跨实例确认、完成后 ID 唯一性、无效租期和深层 JSON 输入失败时队列状态符合要求。",
+    "tests_executed": [
+      "`./run_python smoke.py`（通过）",
+      "小数租期与布尔租期复现命令（确认原实现缺陷）",
+      "租期、收据、跨实例、载荷隔离及无效时长检查（通过）",
+      "10000 层嵌套载荷的 JSON 失败原子性检查（通过）",
+      "`diff -u original.py app.py`（检查仅有目标修复）"
+    ],
+    "limitations": [
+      "未进行并发压力测试；该修复未改变现有 SQLite 原子领取机制。"
+    ]
+  },
+  "acceptance": {
+    "passed": true,
+    "tests_run": 9,
+    "checks": [
+      {
+        "test": "test_empty_and_persistence",
+        "passed": true
+      },
+      {
+        "test": "test_fifo_and_active_exclusion",
+        "passed": true
+      },
+      {
+        "test": "test_same_worker_stale_receipt",
+        "passed": true
+      },
+      {
+        "test": "test_other_worker_stale_receipt",
+        "passed": true
+      },
+      {
+        "test": "test_expiry_and_fractional_duration",
+        "passed": true
+      },
+      {
+        "test": "test_payload_isolation",
+        "passed": true
+      },
+      {
+        "test": "test_failed_put_and_duplicate_reuse",
+        "passed": true
+      },
+      {
+        "test": "test_invalid_duration_preserves_jobs",
+        "passed": true
+      },
+      {
+        "test": "test_atomic_claim_across_connections",
+        "passed": true
+      }
+    ],
+    "exit_code": 0,
+    "timed_out": false,
+    "sandbox": "macos_no_network_writes_only_grade_directory",
+    "stderr": ""
+  },
+  "acceptance_signature": {
+    "passed": true,
+    "tests_run": 9,
+    "checks": [
+      {
+        "test": "test_empty_and_persistence",
+        "passed": true
+      },
+      {
+        "test": "test_fifo_and_active_exclusion",
+        "passed": true
+      },
+      {
+        "test": "test_same_worker_stale_receipt",
+        "passed": true
+      },
+      {
+        "test": "test_other_worker_stale_receipt",
+        "passed": true
+      },
+      {
+        "test": "test_expiry_and_fractional_duration",
+        "passed": true
+      },
+      {
+        "test": "test_payload_isolation",
+        "passed": true
+      },
+      {
+        "test": "test_failed_put_and_duplicate_reuse",
+        "passed": true
+      },
+      {
+        "test": "test_invalid_duration_preserves_jobs",
+        "passed": true
+      },
+      {
+        "test": "test_atomic_claim_across_connections",
+        "passed": true
+      }
+    ],
+    "exit_code": 0,
+    "timed_out": false,
+    "invalid_output": false,
+    "isolation_failure": false
+  },
+  "source_changed": true,
+  "artifacts": {
+    "app.py": "72469e4ee1e3e630e3f07aedab1e2aa806abf5ded6de15baec5c51af872a79a7"
+  },
+  "protected_changes": [],
+  "outside_changes": [],
+  "artifact_errors": [],
+  "tool_audit": [
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc \"pwd && rg --files -g 'task.md' -g 'app.py' -g 'original.py' -g 'smoke.py' -g 'TOOLS.md' -g 'AGENTS.md' -g 'CHECKLIST.md' -g 'SKILL.md'\"",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc 'cat app.py && cat original.py'",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc 'cat task.md'",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc 'cat smoke.py && cat TOOLS.md'",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc './run_python smoke.py'",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc \"./run_python -c 'import tempfile; from app import Queue\nwith tempfile.TemporaryDirectory() as d:\n q=Queue(d+\\\"/q.db\\\"); q.put(\\\"x\\\",1); c=q.claim(\\\"w\\\",0,0.5); print(c); print(\\\"ack at .25:\\\", q.ack(c[\\\"receipt\\\"], .25)); print(\\\"claim at .5:\\\", q.claim(\\\"w2\\\",.5,1))\nwith tempfile.TemporaryDirectory() as d:\n q=Queue(d+\\\"/q.db\\\"); q.put(\\\"x\\\",1)\n try: print(\\\"bool duration:\\\", q.claim(\\\"w\\\",0,True))\n except Exception as e: print(\\\"bool duration error:\\\",type(e).__name__)'\"",
+      "review_flags": []
+    },
+    {
+      "type": "file_change",
+      "exit_code": null,
+      "changes": [
+        {
+          "path": "<workspace>/app.py",
+          "kind": "update"
+        }
+      ]
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc \"./run_python -c 'import math, tempfile\nfrom app import Queue\nwith tempfile.TemporaryDirectory() as d:\n p=d+\\\"/q.db\\\"; q=Queue(p); q2=Queue(p)\n original={\\\"items\\\":[1,{\\\"x\\\":True}]}; q.put(\\\"fraction\\\",original); original[\\\"items\\\"].clear()\n c=q.claim(\\\"worker\\\",10,0.5)\n assert c[\\\"expires_at\\\"] == 10.5\n assert c[\\\"payload\\\"] == {\\\"items\\\":[1,{\\\"x\\\":True}]}\n c[\\\"payload\\\"][\\\"items\\\"].clear()\n assert q2.claim(\\\"worker\\\",10.5,1) is not None\n stale=c[\\\"receipt\\\"]\n assert q.ack(stale,10.5) is False\n c2=q.claim(\\\"worker\\\",11.5,0.25)\n assert c2[\\\"expires_at\\\"] == 11.75\n assert q2.ack(c2[\\\"receipt\\\"],11.5) is True\n assert q.claim(\\\"other\\\",12,1) is None\n try: q.put(\\\"fraction\\\", None)\n except ValueError: pass\n else: raise AssertionError(\\\"completed ID was reusable\\\")\n for i, value in enumerate((0, -1, float(\\\"nan\\\"), float(\\\"inf\\\"), True)):\n  job=\\\"invalid-\\\"+str(i); q.put(job, i)\n  try: q.claim(\\\"worker\\\",12,value)\n  except ValueError: pass\n  else: raise AssertionError(\\\"invalid duration accepted: %r\\\" % (value,))\n  assert q.claim(\\\"worker\\\",12,1)[\\\"payload\\\"] == i\n  # Leave this validation job leased; it should stay unavailable before expiry.\n  assert q.claim(\\\"worker\\\",12.5,1) is None\n print(\\\"contract checks passed\\\")' && ./run_python smoke.py\"",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 129,
+      "command": "/bin/zsh -lc \"git diff -- app.py && ./run_python -c 'import tempfile\nfrom app import Queue\nwith tempfile.TemporaryDirectory() as d:\n q=Queue(d+\\\"/q.db\\\"); q.put(\\\"kept\\\", {\\\"ok\\\":True})\n deep=[]; cursor=deep\n for _ in range(1100):\n  child=[]; cursor.append(child); cursor=child\n try: q.put(\\\"too-deep\\\", deep)\n except (TypeError, ValueError, RecursionError): pass\n else: raise AssertionError(\\\"deep payload accepted\\\")\n assert q.claim(\\\"w\\\",0,1)[\\\"payload\\\"] == {\\\"ok\\\":True}\n assert q.claim(\\\"w\\\",0,1) is None\n print(\\\"JSON failure atomicity passed\\\")'\"",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 1,
+      "command": "/bin/zsh -lc \"./run_python -c 'import tempfile\nfrom app import Queue\nwith tempfile.TemporaryDirectory() as d:\n q=Queue(d+\\\"/q.db\\\"); q.put(\\\"kept\\\", {\\\"ok\\\":True})\n deep=[]; cursor=deep\n for _ in range(1100):\n  child=[]; cursor.append(child); cursor=child\n try: q.put(\\\"too-deep\\\", deep)\n except (TypeError, ValueError, RecursionError): pass\n else: raise AssertionError(\\\"deep payload accepted\\\")\n assert q.claim(\\\"w\\\",0,1)[\\\"payload\\\"] == {\\\"ok\\\":True}\n assert q.claim(\\\"w\\\",0,1) is None\n print(\\\"JSON failure atomicity passed\\\")'\"",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 1,
+      "command": "/bin/zsh -lc \"./run_python -c 'import tempfile\nfrom app import Queue\nwith tempfile.TemporaryDirectory() as d:\n q=Queue(d+\\\"/q.db\\\"); q.put(\\\"kept\\\", {\\\"ok\\\":True})\n deep=[]; cursor=deep\n for _ in range(10000):\n  child=[]; cursor.append(child); cursor=child\n try: q.put(\\\"too-deep\\\", deep)\n except (TypeError, ValueError, RecursionError): pass\n else: raise AssertionError(\\\"deep payload accepted\\\")\n assert q.claim(\\\"w\\\",0,1)[\\\"payload\\\"] == {\\\"ok\\\":True}\n assert q.claim(\\\"w\\\",0,1) is None\n print(\\\"JSON failure atomicity passed\\\")' && diff -u original.py app.py\"",
+      "review_flags": []
+    }
+  ],
+  "case_sha256": "05cc4514e6c427e8a33e6db39321fdf657e1ed8ad3d8d2db68ba85e1c13f8fcd",
+  "prompt_sha256": "6fd62ac6100d8b6cfbd0a2b2d2c570f6e2df884143fea61f287365cec2b7280f",
+  "event_sha256": "1c1b0d9e2cfd0acc8f32eaedceb578b444b05ef415238e2fa86e423ff2282622",
+  "stderr_sha256": "3e35ae8b92ab32d9857a6976f9765fd11faeccf0be76553e766c4396e17549bc",
+  "reasoning_effort": "high",
+  "cli_version": "codex-cli 0.160.0",
+  "canary": false,
+  "python_version": "3.12.14",
+  "execution_platform": "Darwin",
+  "terminal_errors": [],
+  "execution_phase": "classifier_recovery",
+  "recovery_manifest_sha256": "6826d034f0c76fbe1d24f761c801c391c878482718ec612bce68fd59ebf3c149"
+}

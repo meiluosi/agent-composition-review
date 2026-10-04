@@ -1,0 +1,184 @@
+{
+  "case_id": "m01",
+  "condition": "A_tools",
+  "trial": 2,
+  "model_requested": "gpt-6-luna",
+  "exit_code": 0,
+  "timed_out": false,
+  "elapsed_seconds": 182.11641695798608,
+  "usage": {
+    "input_tokens": 97556,
+    "cached_input_tokens": 84224,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 3501,
+    "reasoning_output_tokens": 1594
+  },
+  "completed": true,
+  "status": "completed",
+  "infra_kind": null,
+  "prediction": {
+    "initial_verdict": "violation",
+    "summary": "修复了同一 worker 重领任务后，旧回执仍可确认新租约的问题：ack 现在也核对 generation。保留了原有的持久化、过期重领和 payload 快照行为。",
+    "tests_executed": [
+      "./run_python smoke.py（通过）",
+      "./run_python - <<'PY' ...（自定义契约检查通过：跨实例领取与确认、旧回执失效、到期边界、payload 快照、重复 ID、非有限 payload 和无效租期）",
+      "./run_python -m py_compile app.py（通过）"
+    ],
+    "limitations": [
+      "未执行多进程并发压力测试。"
+    ]
+  },
+  "acceptance": {
+    "passed": true,
+    "tests_run": 9,
+    "checks": [
+      {
+        "test": "test_empty_and_persistence",
+        "passed": true
+      },
+      {
+        "test": "test_fifo_and_active_exclusion",
+        "passed": true
+      },
+      {
+        "test": "test_same_worker_stale_receipt",
+        "passed": true
+      },
+      {
+        "test": "test_other_worker_stale_receipt",
+        "passed": true
+      },
+      {
+        "test": "test_expiry_and_fractional_duration",
+        "passed": true
+      },
+      {
+        "test": "test_payload_isolation",
+        "passed": true
+      },
+      {
+        "test": "test_failed_put_and_duplicate_reuse",
+        "passed": true
+      },
+      {
+        "test": "test_invalid_duration_preserves_jobs",
+        "passed": true
+      },
+      {
+        "test": "test_atomic_claim_across_connections",
+        "passed": true
+      }
+    ],
+    "exit_code": 0,
+    "timed_out": false,
+    "sandbox": "macos_no_network_writes_only_grade_directory",
+    "stderr": ""
+  },
+  "acceptance_signature": {
+    "passed": true,
+    "tests_run": 9,
+    "checks": [
+      {
+        "test": "test_empty_and_persistence",
+        "passed": true
+      },
+      {
+        "test": "test_fifo_and_active_exclusion",
+        "passed": true
+      },
+      {
+        "test": "test_same_worker_stale_receipt",
+        "passed": true
+      },
+      {
+        "test": "test_other_worker_stale_receipt",
+        "passed": true
+      },
+      {
+        "test": "test_expiry_and_fractional_duration",
+        "passed": true
+      },
+      {
+        "test": "test_payload_isolation",
+        "passed": true
+      },
+      {
+        "test": "test_failed_put_and_duplicate_reuse",
+        "passed": true
+      },
+      {
+        "test": "test_invalid_duration_preserves_jobs",
+        "passed": true
+      },
+      {
+        "test": "test_atomic_claim_across_connections",
+        "passed": true
+      }
+    ],
+    "exit_code": 0,
+    "timed_out": false,
+    "invalid_output": false,
+    "isolation_failure": false
+  },
+  "source_changed": true,
+  "artifacts": {
+    "app.py": "54d774cdebbf700b68b2ac2f12d57514d4c2d610f46c8283ea349a275b07c43e"
+  },
+  "protected_changes": [],
+  "outside_changes": [],
+  "artifact_errors": [],
+  "tool_audit": [
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc \"ls -la && cat task.md && printf '\\\\n--- app.py ---\\\\n' && cat app.py && printf '\\\\n--- smoke.py ---\\\\n' && cat smoke.py && printf '\\\\n--- TOOLS.md ---\\\\n' && cat TOOLS.md\"",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc 'cat run_python && cat original.py'",
+      "review_flags": []
+    },
+    {
+      "type": "file_change",
+      "exit_code": null,
+      "changes": [
+        {
+          "path": "<workspace>/app.py",
+          "kind": "update"
+        }
+      ]
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 1,
+      "command": "/bin/zsh -lc \"./run_python smoke.py && ./run_python - <<'PY'\nimport math\nimport tempfile\nfrom pathlib import Path\nfrom app import Queue\n\nwith tempfile.TemporaryDirectory() as d:\n    path = Path(d) / 'q.db'\n    q1, q2 = Queue(path), Queue(path)\n    source = {'a': [1, None], 'empty': {}}\n    q1.put('first', source)\n    source['a'].append(2)\n    q1.put('second', 'later')\n    c1 = q1.claim('worker', 1.25, 0.5)\n    assert c1['payload'] == {'a': [1, None], 'empty': {}}\n    c1['payload']['a'].clear()\n    assert q2.claim('worker', 1.74, 1) is None\n    c2 = q2.claim('worker', 1.75, 1)\n    assert c2['payload'] == {'a': [1, None], 'empty': {}}\n    assert q1.ack(c1['receipt'], 1.8) is False\n    assert q1.ack(c2['receipt'], 2.0) is True\n    assert q2.ack(c2['receipt'], 2.0) is False\n    assert q1.claim('other', 2, 1)['payload'] == 'later'\n    try:\n        q2.put('first', 'duplicate')\n    except ValueError:\n        pass\n    else:\n        raise AssertionError('duplicate ID accepted')\n    before = q1.claim('x', 3, 1)\n    assert before is None\n    for payload in (float('nan'), float('inf')):\n        try:\n            q1.put('bad-' + str(payload), payload)\n        except (TypeError, ValueError, RecursionError):\n            pass\n        else:\n            raise AssertionError('non-finite payload accepted')\n    assert q2.claim('x', 3, 0) is None if False else True\n    for duration in (0, -1, float('nan'), float('inf')):\n        try:\n            q1.claim('x', 3, duration)\n        except ValueError:\n            pass\n        else:\n            raise AssertionError('invalid lease accepted')\n    assert math.isfinite(q1.claim('x', 3, 1)['expires_at'])\nprint('contract checks passed')\nPY\"",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc \"./run_python - <<'PY'\nimport tempfile\nfrom pathlib import Path\nfrom app import Queue\n\nwith tempfile.TemporaryDirectory() as d:\n    path = Path(d) / 'q.db'\n    q1, q2 = Queue(path), Queue(path)\n    source = {'a': [1, None], 'empty': {}}\n    q1.put('first', source)\n    source['a'].append(2)\n    q1.put('second', 'later')\n    c1 = q1.claim('worker', 1.25, 0.5)\n    assert c1['payload'] == {'a': [1, None], 'empty': {}}\n    c1['payload']['a'].clear()\n    second = q2.claim('other', 1.5, 1)\n    assert second['payload'] == 'later'\n    assert q2.claim('worker', 1.74, 1) is None\n    renewed = q2.claim('worker', 1.75, 1)\n    assert renewed['payload'] == {'a': [1, None], 'empty': {}}\n    assert q1.ack(c1['receipt'], 1.8) is False\n    assert q1.ack(renewed['receipt'], 2.0) is True\n    assert q2.ack(renewed['receipt'], 2.0) is False\n    assert q1.ack(second['receipt'], 2.0) is True\n    try:\n        q2.put('first', 'duplicate')\n    except ValueError:\n        pass\n    else:\n        raise AssertionError('duplicate ID accepted')\n    for i, payload in enumerate((float('nan'), float('inf'))):\n        try:\n            q1.put('bad-' + str(i), payload)\n        except (TypeError, ValueError, RecursionError):\n            pass\n        else:\n            raise AssertionError('non-finite payload accepted')\n    for duration in (0, -1, float('nan'), float('inf')):\n        try:\n            q1.claim('worker', 3, duration)\n        except ValueError:\n            pass\n        else:\n            raise AssertionError('invalid lease accepted')\n    q1.put('last', [])\n    exact = q1.claim('worker', 10, 0.25)\n    assert exact['expires_at'] == 10.25\n    assert q2.ack(exact['receipt'], 10.25) is False\n    assert q2.claim('worker', 10.25, 1)['payload'] == []\nprint('contract checks passed')\nPY\n./run_python -m py_compile app.py\"",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 129,
+      "command": "/bin/zsh -lc 'git diff -- app.py && nl -ba app.py'",
+      "review_flags": []
+    }
+  ],
+  "case_sha256": "73ed6a9b5cadf130e63f8b694219699c9066891c161550bfda592c524551ba82",
+  "prompt_sha256": "754741dedf8f45f17a6cba0d28c804d1273d67e30452f4503e8797defde6c5c4",
+  "event_sha256": "a2ff2c0ed774dc8198405bd143cf10e8f6d96c520b7ce4940ea48877e591ae6a",
+  "stderr_sha256": "cecbe1179f89729be795abb27ddd142ae1bcfd3b73bf01e345a881638b1f2389",
+  "reasoning_effort": "high",
+  "cli_version": "codex-cli 0.160.0",
+  "canary": false,
+  "python_version": "3.12.14",
+  "execution_platform": "Darwin",
+  "terminal_errors": [],
+  "execution_phase": "classifier_recovery",
+  "recovery_manifest_sha256": "6826d034f0c76fbe1d24f761c801c391c878482718ec612bce68fd59ebf3c149"
+}

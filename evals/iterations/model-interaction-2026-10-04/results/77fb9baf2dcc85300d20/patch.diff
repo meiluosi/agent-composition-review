@@ -1,0 +1,55 @@
+--- original.py
++++ app.py
+@@ -4,6 +4,19 @@
+ 
+ class StreamError(ValueError):
+     pass
++
++
++def _unique_object(pairs):
++    result = {}
++    for key, value in pairs:
++        if key in result:
++            raise ValueError("duplicate JSON field")
++        result[key] = value
++    return result
++
++
++def _reject_json_constant(value):
++    raise ValueError("invalid JSON constant: " + value)
+ 
+ 
+ def text_metrics(text):
+@@ -28,7 +41,11 @@
+ 
+     def _record(self, raw):
+         try:
+-            record = json.loads(raw.decode("utf-8"))
++            record = json.loads(
++                raw.decode("utf-8"),
++                object_pairs_hook=_unique_object,
++                parse_constant=_reject_json_constant,
++            )
+         except (UnicodeDecodeError, ValueError, RecursionError):
+             self._fail("invalid UTF-8 JSON frame")
+         if not isinstance(record, dict):
+@@ -53,10 +70,6 @@
+             return []
+         if self.state != "OPEN":
+             self._fail("data after terminal event")
+-        try:
+-            data = data.decode("utf-8").encode("utf-8")
+-        except UnicodeDecodeError:
+-            self._fail("invalid UTF-8 input chunk")
+         output = []
+         start = 0
+         while start < len(data):
+@@ -72,6 +85,8 @@
+             self._buffer.clear()
+             output.append(self._record(raw))
+             start = newline + 1
++            if self.state in {"DONE", "ERROR"} and start < len(data):
++                self._fail("data after terminal event")
+         return output
+ 
+     def finish(self):

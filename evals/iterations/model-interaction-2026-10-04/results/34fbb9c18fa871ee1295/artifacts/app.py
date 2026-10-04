@@ -1,0 +1,36 @@
+"""Cache ranked retrieval results for caller requests."""
+from copy import deepcopy
+import json
+
+
+def rank_documents(documents, limit):
+    ordered = sorted(documents, key=lambda document: (-document['score'], document['id']))
+    # Copy each document separately so even shared nested objects in the input
+    # do not become shared between independently returned documents.
+    return [deepcopy(document) for document in ordered[:limit]]
+
+
+class RetrievalCache:
+    def __init__(self, source, ttl=10):
+        self._source = source
+        self._ttl = ttl
+        self._entries = {}
+
+    def search(self, tenant, query, revision, now, limit=10):
+        if limit == 0:
+            return []
+        # Filter insertion order is not part of query identity; the other
+        # request dimensions are.
+        key = (tenant, revision, json.dumps(query, sort_keys=True, ensure_ascii=False))
+        entry = self._entries.get(key)
+        if entry is not None and now < entry[0]:
+            documents = entry[1]
+        else:
+            # The source owns its argument and result. Isolate both directions
+            # so source-side mutation cannot alter the caller's query or the
+            # cache's snapshot.
+            source_query = deepcopy(query)
+            source_documents = self._source(tenant, source_query, revision)
+            documents = deepcopy(source_documents)
+            self._entries[key] = (now + self._ttl, documents)
+        return rank_documents(documents, limit)

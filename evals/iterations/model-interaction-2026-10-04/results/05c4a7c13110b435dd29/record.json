@@ -1,0 +1,207 @@
+{
+  "case_id": "m06",
+  "condition": "B_checklist",
+  "trial": 1,
+  "model_requested": "gpt-6-luna",
+  "exit_code": 0,
+  "timed_out": false,
+  "elapsed_seconds": 80.33956275001401,
+  "usage": {
+    "input_tokens": 87302,
+    "cached_input_tokens": 75008,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 2184,
+    "reasoning_output_tokens": 1011
+  },
+  "completed": true,
+  "status": "completed",
+  "infra_kind": null,
+  "prediction": {
+    "initial_verdict": "violation",
+    "summary": "修复了 `rank_documents` 的切片上限：原实现会多返回一条，且 `limit=0` 时仍返回一条。其余检查到的缓存行为保留。",
+    "tests_executed": [
+      "`./run_python smoke.py`",
+      "`./run_python -c '...'`（验证排名数量、零上限、输入与嵌套数据隔离、过滤器顺序无关、缓存完整结果及 TTL 到期）"
+    ],
+    "limitations": [
+      "验证覆盖 smoke 示例和所列重点行为，不代表完整验收。"
+    ]
+  },
+  "acceptance": {
+    "passed": true,
+    "tests_run": 12,
+    "checks": [
+      {
+        "test": "rank_order_and_limit",
+        "passed": true
+      },
+      {
+        "test": "full_result_cache",
+        "passed": true
+      },
+      {
+        "test": "tenant_revision_isolation",
+        "passed": true
+      },
+      {
+        "test": "query_identity",
+        "passed": true
+      },
+      {
+        "test": "expiry_without_sliding",
+        "passed": true
+      },
+      {
+        "test": "caller_query_isolation",
+        "passed": true
+      },
+      {
+        "test": "source_result_isolation",
+        "passed": true
+      },
+      {
+        "test": "returned_result_isolation",
+        "passed": true
+      },
+      {
+        "test": "failure_not_cached",
+        "passed": true
+      },
+      {
+        "test": "expired_failure_retry",
+        "passed": true
+      },
+      {
+        "test": "empty_results_and_zero_limit",
+        "passed": true
+      },
+      {
+        "test": "independent_instances",
+        "passed": true
+      }
+    ],
+    "exit_code": 0,
+    "timed_out": false,
+    "sandbox": "macos_no_network_writes_only_grade_directory",
+    "stderr": ""
+  },
+  "acceptance_signature": {
+    "passed": true,
+    "tests_run": 12,
+    "checks": [
+      {
+        "test": "rank_order_and_limit",
+        "passed": true
+      },
+      {
+        "test": "full_result_cache",
+        "passed": true
+      },
+      {
+        "test": "tenant_revision_isolation",
+        "passed": true
+      },
+      {
+        "test": "query_identity",
+        "passed": true
+      },
+      {
+        "test": "expiry_without_sliding",
+        "passed": true
+      },
+      {
+        "test": "caller_query_isolation",
+        "passed": true
+      },
+      {
+        "test": "source_result_isolation",
+        "passed": true
+      },
+      {
+        "test": "returned_result_isolation",
+        "passed": true
+      },
+      {
+        "test": "failure_not_cached",
+        "passed": true
+      },
+      {
+        "test": "expired_failure_retry",
+        "passed": true
+      },
+      {
+        "test": "empty_results_and_zero_limit",
+        "passed": true
+      },
+      {
+        "test": "independent_instances",
+        "passed": true
+      }
+    ],
+    "exit_code": 0,
+    "timed_out": false,
+    "invalid_output": false,
+    "isolation_failure": false
+  },
+  "source_changed": true,
+  "artifacts": {
+    "app.py": "140d0dbcf5eb93e5e42c3d420531957c3e7e8e8c57d8b902c90a40cacaf228dd"
+  },
+  "protected_changes": [],
+  "outside_changes": [],
+  "artifact_errors": [],
+  "tool_audit": [
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc \"pwd && rg --files -g 'task.md' -g 'app.py' -g 'original.py' -g 'smoke.py' -g 'TOOLS.md' -g 'AGENTS.md' -g 'CHECKLIST.md'\"",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc 'cat task.md && cat app.py && cat smoke.py && cat TOOLS.md'",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc \"./run_python smoke.py && ./run_python -c \\\"from app import rank_documents; docs=[{'id': str(i), 'score': 5-i, 'payload': {}} for i in range(3)]; print([d['id'] for d in rank_documents(docs, 2)])\\\"\"",
+      "review_flags": []
+    },
+    {
+      "type": "file_change",
+      "exit_code": null,
+      "changes": [
+        {
+          "path": "<workspace>/app.py",
+          "kind": "update"
+        }
+      ]
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc \"./run_python smoke.py && ./run_python -c 'from app import rank_documents, RetrievalCache\n\ndocs = [{\\\"id\\\": \\\"b\\\", \\\"score\\\": 2, \\\"payload\\\": {\\\"nested\\\": [1]}}, {\\\"id\\\": \\\"a\\\", \\\"score\\\": 2, \\\"payload\\\": {\\\"nested\\\": [2]}}, {\\\"id\\\": \\\"c\\\", \\\"score\\\": -1, \\\"payload\\\": {\\\"nested\\\": [3]}}]\noriginal = __import__(\\\"copy\\\").deepcopy(docs)\nassert [d[\\\"id\\\"] for d in rank_documents(docs, 2)] == [\\\"a\\\", \\\"b\\\"]\nassert rank_documents(docs, 0) == []\nr = rank_documents(docs, 2); r[0][\\\"payload\\\"][\\\"nested\\\"].append(9)\nassert docs == original\ncalls = []\ndef source(tenant, query, revision):\n    calls.append((tenant, query, revision))\n    query[\\\"filters\\\"].clear()\n    return docs\ncache = RetrievalCache(source, ttl=3)\nq = {\\\"text\\\": \\\"q\\\", \\\"filters\\\": {\\\"x\\\": \\\"1\\\", \\\"y\\\": \\\"2\\\"}}\nassert cache.search(\\\"t\\\", q, \\\"r\\\", 0, 1)[0][\\\"id\\\"] == \\\"a\\\"\nassert q[\\\"filters\\\"] == {\\\"x\\\": \\\"1\\\", \\\"y\\\": \\\"2\\\"}\nassert len(cache.search(\\\"t\\\", {\\\"text\\\": \\\"q\\\", \\\"filters\\\": {\\\"y\\\": \\\"2\\\", \\\"x\\\": \\\"1\\\"}}, \\\"r\\\", 2, 3)) == 3\nassert len(calls) == 1\nout = cache.search(\\\"t\\\", q, \\\"r\\\", 3, 3)\nassert len(calls) == 2\nout[0][\\\"payload\\\"][\\\"nested\\\"].append(8)\nassert docs == original\nassert cache.search(\\\"t\\\", q, \\\"r\\\", 4, 3)[0][\\\"payload\\\"][\\\"nested\\\"] == [2]\nassert cache.search(\\\"t\\\", q, \\\"r\\\", 5, 0) == []\nassert len(calls) == 2\nprint(\\\"ranking and cache contract checks passed\\\")'\"",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 129,
+      "command": "/bin/zsh -lc 'git diff -- app.py && git status --short'",
+      "review_flags": []
+    }
+  ],
+  "case_sha256": "ff3568cae57fab206354f3b223cd078895b719d6aaeb94897e3e59850b9caafb",
+  "prompt_sha256": "6fd62ac6100d8b6cfbd0a2b2d2c570f6e2df884143fea61f287365cec2b7280f",
+  "event_sha256": "24e969d8baeb8a1f66bd4ebe167a7c1b35b8c4546ce9d9f2e15b1aacc6438209",
+  "stderr_sha256": "284f135a54bf59ec8a036f5381557eb4fa6bd83fe326641e50c33bd678bca656",
+  "reasoning_effort": "high",
+  "cli_version": "codex-cli 0.160.0",
+  "canary": false,
+  "python_version": "3.12.14",
+  "execution_platform": "Darwin",
+  "terminal_errors": [],
+  "execution_phase": "classifier_recovery",
+  "recovery_manifest_sha256": "6826d034f0c76fbe1d24f761c801c391c878482718ec612bce68fd59ebf3c149"
+}

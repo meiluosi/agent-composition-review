@@ -2,7 +2,7 @@
 
 一个以组合思想为指导的 Agent 架构诊断 Skill。沿数据流检查类型、语义契约、状态与不变量，把异常转化为有证据的根因判断、最小修复和可执行验证。
 
-**当前状态：`0.1.0-dev`，可运行的发布草案。** 项目独立维护于 [meiluosi/agent-composition-review](https://github.com/meiluosi/agent-composition-review)，当前为私有仓库。最新模型与指导交互实验已记录 64/144 次，正在单独登记恢复剩余 80 项；结果尚未完整，v4 继续作为候选。[查看本轮复核](docs/model-interaction-findings.md)。自动检查状态见 [GitHub Actions](https://github.com/meiluosi/agent-composition-review/actions)。许可证尚未选择，不宣称已经完成开源发布。
+**当前状态：`0.1.0-dev`，可运行的发布草案。** 项目独立维护于 [meiluosi/agent-composition-review](https://github.com/meiluosi/agent-composition-review)，当前为私有仓库。最新模型与指导交互实验记录 100/144 次后按停止规则结束，44 项未开始。没有获得 v4 超过普通清单的证据，继续保留候选，不升级默认 Skill。[查看本轮复核](docs/model-interaction-findings.md)。自动检查状态见 [GitHub Actions](https://github.com/meiluosi/agent-composition-review/actions)。许可证尚未选择，不宣称已经完成开源发布。
 
 ## 它适合什么
 
@@ -95,11 +95,27 @@ python3.12 -m venv .venv
 
 固定共同工具，比较无附加指导、普通工程清单和 v4 Skill；使用 Astra/high、Luna/high，12 道自建开发任务各重复两次，共计划 144 次。共同提示不强制契约建模。正式调用前已冻结题目、输入、评分和决策门槛，不能把 Luna 预先当作在这些题上更弱的模型。
 
-当前已有 64 份记录。原执行器把日志文件名中的 `401` 误判成鉴权错误而停止；该次实际超时、仍算失败，原记录不改。[独立恢复登记](evals/iterations/model-interaction-2026-10-04/RECOVERY_PLAN.md)只允许继续 80 个从未开始的任务，没有重跑或增加总调用数。
+累计记录 **100/144 次：97 次有效完成，96 次成功交付，44 项未开始**。首指标要求有效完成且通过全部隐藏验收，超时留下的代码即使通过也不升级成完成。
 
-**尚不能判断弱模型是否更受益。** 两个“正常”样例又暴露了原验收遗漏：非法 JSON 接受，以及 Python 字符串存储/往返边界。正常误报计数因此不能按字面解释，原分数全部保留。部分结果只作为执行快照，不授权升级默认 Skill。
+| 条件 | Astra 成功 / 已尝试 | Luna 成功 / 已尝试 |
+| --- | ---: | ---: |
+| A · 共同工具 | 15/16 | 15/16 |
+| B · 加普通工程清单 | 17/17 | 17/17 |
+| C · 加 v4 Skill | 15/17 | 17/17 |
 
-[当前完整记录与图表](evals/iterations/model-interaction-2026-10-04/REPORT.md) · [复现方法](docs/model-interaction-evaluation.md) · [执行审计](evals/iterations/model-interaction-2026-10-04/EXECUTION_REVIEW.md) · [框架复盘](docs/model-interaction-findings.md)
+每个单元计划 24 次，未完成导致实际分母不同。16 个完整配对块按家族等权后，Luna 的 C−A 为 +8.3 个百分点，但 C−B 为 0；差异来自一条基线修复遗漏，普通清单同样解决。Astra 的交付差异涉及超时，不能直接解释为代码能力退化。Luna B/C 覆盖相同 17 项且用量完整，C 已记录输入 token 比 B 多约 24.85%；输入含缓存，不等于实际费用，也不是总体效率结论。
+
+![模型与指导的业务结果及配对差值](assets/model-interaction-results.png)
+
+原阶段 64 次后，执行器把文件名中的 `401` 误判成鉴权错误；该次仍是未交付的超时，原记录不改。[独立恢复登记](evals/iterations/model-interaction-2026-10-04/RECOVERY_PLAN.md)后只继续未开始项，新增 36 次。其中一次执行超时伴随模型目录及遥测请求错误，按停止规则结束；证据不能确认推理通道故障或超时因果。没有重跑旧任务，两个 canary 另列。
+
+![固定任务顺序的累计成功交付比例](assets/model-interaction-cumulative.png)
+
+曲线不是训练曲线；未开始项不当作答错。**本轮不能确定弱模型是否更受益，也没有证据支持继续加长指导。** 两个“正常”样例暴露了原验收遗漏：非法 JSON 接受，以及 Python 字符串存储/往返边界。正常误报计数不能按字面解释；预注册升级和饱和门槛均不能在不完整计划上执行。
+
+保留范畴论用于明确输入域、保持关系和反例设计；当前 v4 不升级、不继续追加本轮调用。下一阶段应先校准验收，再在另行登记的新任务上决定是否比较简短清单与按需工具。本轮共有工具无法证明工具自身的收益。
+
+[全部已尝试记录与生成报告](evals/iterations/model-interaction-2026-10-04/REPORT.md) · [复现方法](docs/model-interaction-evaluation.md) · [执行审计](evals/iterations/model-interaction-2026-10-04/EXECUTION_REVIEW.md) · [框架复盘](docs/model-interaction-findings.md)
 
 ## 前轮：自主建模与跨运行机制代码修复
 

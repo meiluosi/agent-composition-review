@@ -1,0 +1,222 @@
+{
+  "case_id": "m03",
+  "condition": "A_tools",
+  "trial": 2,
+  "model_requested": "gpt-6-luna",
+  "exit_code": 0,
+  "timed_out": false,
+  "elapsed_seconds": 244.51535358297406,
+  "usage": {
+    "input_tokens": 229263,
+    "cached_input_tokens": 190208,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 7207,
+    "reasoning_output_tokens": 2076
+  },
+  "completed": true,
+  "status": "completed",
+  "infra_kind": null,
+  "prediction": {
+    "initial_verdict": "violation",
+    "summary": "修复了整数截断租期、SQLite REAL 精度损失和到期边界比较问题；保留原有公开接口与持久化数据，并确保不同 Queue 实例共享队列。",
+    "tests_executed": [
+      "`./run_python smoke.py`：通过。",
+      "`./run_python -c '…'`：验证小数租期、到期边界、旧 receipt 失效及接近 `10**12` 的过期时间，通过。",
+      "`./run_python -c '…'`：验证多连接并发 claim 原子性、payload 入队时快照与返回值隔离、完成后 ID 不可复用，以及非法租期拒绝，通过。"
+    ],
+    "limitations": [
+      "未进行穷举测试；`smoke.py` 仅覆盖基本流程。"
+    ]
+  },
+  "acceptance": {
+    "passed": true,
+    "tests_run": 9,
+    "checks": [
+      {
+        "test": "test_empty_and_persistence",
+        "passed": true
+      },
+      {
+        "test": "test_fifo_and_active_exclusion",
+        "passed": true
+      },
+      {
+        "test": "test_same_worker_stale_receipt",
+        "passed": true
+      },
+      {
+        "test": "test_other_worker_stale_receipt",
+        "passed": true
+      },
+      {
+        "test": "test_expiry_and_fractional_duration",
+        "passed": true
+      },
+      {
+        "test": "test_payload_isolation",
+        "passed": true
+      },
+      {
+        "test": "test_failed_put_and_duplicate_reuse",
+        "passed": true
+      },
+      {
+        "test": "test_invalid_duration_preserves_jobs",
+        "passed": true
+      },
+      {
+        "test": "test_atomic_claim_across_connections",
+        "passed": true
+      }
+    ],
+    "exit_code": 0,
+    "timed_out": false,
+    "sandbox": "macos_no_network_writes_only_grade_directory",
+    "stderr": ""
+  },
+  "acceptance_signature": {
+    "passed": true,
+    "tests_run": 9,
+    "checks": [
+      {
+        "test": "test_empty_and_persistence",
+        "passed": true
+      },
+      {
+        "test": "test_fifo_and_active_exclusion",
+        "passed": true
+      },
+      {
+        "test": "test_same_worker_stale_receipt",
+        "passed": true
+      },
+      {
+        "test": "test_other_worker_stale_receipt",
+        "passed": true
+      },
+      {
+        "test": "test_expiry_and_fractional_duration",
+        "passed": true
+      },
+      {
+        "test": "test_payload_isolation",
+        "passed": true
+      },
+      {
+        "test": "test_failed_put_and_duplicate_reuse",
+        "passed": true
+      },
+      {
+        "test": "test_invalid_duration_preserves_jobs",
+        "passed": true
+      },
+      {
+        "test": "test_atomic_claim_across_connections",
+        "passed": true
+      }
+    ],
+    "exit_code": 0,
+    "timed_out": false,
+    "invalid_output": false,
+    "isolation_failure": false
+  },
+  "source_changed": true,
+  "artifacts": {
+    "app.py": "42ecf476982dc339e5e8ae329882804831906f19c3c95129990c9b6407d92fcd"
+  },
+  "protected_changes": [],
+  "outside_changes": [],
+  "artifact_errors": [],
+  "tool_audit": [
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc \"pwd && rg --files -g 'task.md' -g 'app.py' -g 'original.py' -g 'smoke.py' -g 'TOOLS.md' -g 'run_python' -g 'AGENTS.md' -g 'SKILL.md' -g 'CHECKLIST.md'\"",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc 'cat task.md && cat app.py && cat smoke.py && cat TOOLS.md'",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc 'nl -ba app.py'",
+      "review_flags": []
+    },
+    {
+      "type": "file_change",
+      "exit_code": null,
+      "changes": [
+        {
+          "path": "<workspace>/app.py",
+          "kind": "delete"
+        }
+      ]
+    },
+    {
+      "type": "file_change",
+      "exit_code": null,
+      "changes": [
+        {
+          "path": "<workspace>/app.py",
+          "kind": "add"
+        }
+      ]
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 1,
+      "command": "/bin/zsh -lc 'cat app.py && ./run_python smoke.py'",
+      "review_flags": []
+    },
+    {
+      "type": "file_change",
+      "exit_code": null,
+      "changes": [
+        {
+          "path": "<workspace>/app.py",
+          "kind": "update"
+        }
+      ]
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc \"./run_python smoke.py && ./run_python -c 'import tempfile, pathlib, app, math; p=pathlib.Path(tempfile.mkdtemp())/\\\"q.db\\\"; q=app.Queue(p); q.put(\\\"a\\\", {\\\"v\\\":[1]}); c=q.claim(\\\"w\\\", 0.25, 0.5); assert c[\\\"expires_at\\\"] == 0.75; assert q.claim(\\\"w2\\\", .749, 1) is None; assert q.ack(c[\\\"receipt\\\"], .75) is False; d=q.claim(\\\"w2\\\", .75, 0.125); assert d[\\\"expires_at\\\"] == .875; assert q.ack(c[\\\"receipt\\\"], .8) is False; assert q.ack(d[\\\"receipt\\\"], .8) is True; assert q.ack(d[\\\"receipt\\\"], .8) is False; q.put(\\\"b\\\", None); z=q.claim(\\\"w\\\", 10**12, 0.25); assert z[\\\"expires_at\\\"] == 10**12 + 0.25; assert q.claim(\\\"x\\\", z[\\\"expires_at\\\"]-0.0001, 1) is None; assert q.claim(\\\"x\\\", z[\\\"expires_at\\\"], 1) is not None; q.put(\\\"c\\\", []); print(\\\"edge checks passed\\\")'\"",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc \"./run_python -c 'import tempfile, pathlib, threading, app; p=pathlib.Path(tempfile.mkdtemp())/\\\"q.db\\\"; a=app.Queue(p); b=app.Queue(p); a.put(\\\"unique\\\", {\\\"items\\\":[1]}); out=[]; gate=threading.Barrier(2); defn=None\n'\"",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 1,
+      "command": "/bin/zsh -lc \"./run_python -c 'import tempfile, pathlib, threading, app; from concurrent.futures import ThreadPoolExecutor; p=pathlib.Path(tempfile.mkdtemp())/\\\"q.db\\\"; a=app.Queue(p); b=app.Queue(p); a.put(\\\"unique\\\", {\\\"items\\\":[1]}); gate=threading.Barrier(2); claim=lambda q,w:(gate.wait(),q.claim(w,0,5))[1]; pool=ThreadPoolExecutor(2); results=list(pool.map(lambda x:claim(*x),[(a,\\\"a\\\"),(b,\\\"b\\\")])); assert sum(x is not None for x in results)==1; payload={\\\"nested\\\":[1]}; a.put(\\\"second\\\",payload); payload[\\\"nested\\\"].append(2); item=b.claim(\\\"c\\\",5,0.25); assert item[\\\"payload\\\"]=={\\\"nested\\\":[1]}; item[\\\"payload\\\"][\\\"nested\\\"].append(9); assert a.ack(item[\\\"receipt\\\"],5.1); \ntry: a.put(\\\"unique\\\", None)\nexcept ValueError: pass\nelse: raise AssertionError(\\\"completed ID reused\\\")\nfor bad in (float(\\\"nan\\\"), float(\\\"inf\\\"), 0, -1, True):\n try: a.claim(\\\"w\\\",20,bad)\n except ValueError: pass\n else: raise AssertionError(bad)\nprint(\\\"concurrency and payload checks passed\\\")'\"",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc \"./run_python -c 'import tempfile, pathlib, threading, app; from concurrent.futures import ThreadPoolExecutor; p=pathlib.Path(tempfile.mkdtemp())/\\\"q.db\\\"; a=app.Queue(p); b=app.Queue(p); a.put(\\\"unique\\\", {\\\"items\\\":[1]}); gate=threading.Barrier(2); claim=lambda q,w:(gate.wait(),q.claim(w,0,5))[1]; pool=ThreadPoolExecutor(2); results=list(pool.map(lambda x:claim(*x),[(a,\\\"a\\\"),(b,\\\"b\\\")])); assert sum(x is not None for x in results)==1; first=next(x for x in results if x is not None); winner=a if first[\\\"receipt\\\"][\\\"worker\\\"]==\\\"a\\\" else b; assert winner.ack(first[\\\"receipt\\\"],1); payload={\\\"nested\\\":[1]}; a.put(\\\"second\\\",payload); payload[\\\"nested\\\"].append(2); item=b.claim(\\\"c\\\",5,0.25); assert item[\\\"payload\\\"]=={\\\"nested\\\":[1]}; item[\\\"payload\\\"][\\\"nested\\\"].append(9); assert a.ack(item[\\\"receipt\\\"],5.1)\ntry: a.put(\\\"unique\\\", None)\nexcept ValueError: pass\nelse: raise AssertionError(\\\"completed ID reused\\\")\nfor bad in (float(\\\"nan\\\"), float(\\\"inf\\\"), 0, -1, True):\n try: a.claim(\\\"w\\\",20,bad)\n except ValueError: pass\n else: raise AssertionError(bad)\nprint(\\\"concurrency and payload checks passed\\\")'\"",
+      "review_flags": []
+    }
+  ],
+  "case_sha256": "05cc4514e6c427e8a33e6db39321fdf657e1ed8ad3d8d2db68ba85e1c13f8fcd",
+  "prompt_sha256": "754741dedf8f45f17a6cba0d28c804d1273d67e30452f4503e8797defde6c5c4",
+  "event_sha256": "5bada3fde6837ab92543b4bdedc3120c129bf758e937d90f5aff4328501ad075",
+  "stderr_sha256": "69012eedfc63764aac97c9cd7909c2d7906867f788034f046e6b96021a102548",
+  "reasoning_effort": "high",
+  "cli_version": "codex-cli 0.160.0",
+  "canary": false,
+  "python_version": "3.12.14",
+  "execution_platform": "Darwin",
+  "terminal_errors": [],
+  "execution_phase": "classifier_recovery",
+  "recovery_manifest_sha256": "6826d034f0c76fbe1d24f761c801c391c878482718ec612bce68fd59ebf3c149"
+}

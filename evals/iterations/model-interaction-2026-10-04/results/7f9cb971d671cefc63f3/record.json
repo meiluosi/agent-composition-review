@@ -1,0 +1,231 @@
+{
+  "case_id": "m07",
+  "condition": "B_checklist",
+  "trial": 2,
+  "model_requested": "gpt-6-astra",
+  "exit_code": 0,
+  "timed_out": false,
+  "elapsed_seconds": 215.42843104101485,
+  "usage": {
+    "input_tokens": 101033,
+    "cached_input_tokens": 88192,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 4439,
+    "reasoning_output_tokens": 552
+  },
+  "completed": true,
+  "status": "completed",
+  "infra_kind": null,
+  "prediction": {
+    "initial_verdict": "violation",
+    "summary": "已修复 app.py：支持 UTF-8 字符跨块输入，拒绝同次 feed 中终止事件后的任何字节，并拒绝非法 JSON 常量。保持公开接口及原有正确行为；交付文件自包含，仅依赖标准库。新增 test_stream.py 回归测试。",
+    "tests_executed": [
+      "./run_python smoke.py：修复前后均通过。",
+      "./run_python -m unittest -v test_stream：12 项测试全部通过。",
+      "TEST_MODULE=original ./run_python -m unittest test_stream.StreamTests.test_split_utf8 test_stream.StreamTests.test_same_call_trailing_bytes test_stream.StreamTests.test_non_json_constants：确认原实现存在三类缺陷。"
+    ],
+    "limitations": [
+      "验证环境为 Python 3.12.14；本地测试未穷举所有可能输入。"
+    ]
+  },
+  "acceptance": {
+    "passed": true,
+    "tests_run": 12,
+    "checks": [
+      {
+        "test": "basic",
+        "passed": true
+      },
+      {
+        "test": "byte_boundaries",
+        "passed": true
+      },
+      {
+        "test": "metrics",
+        "passed": true
+      },
+      {
+        "test": "unfinished_buffer",
+        "passed": true
+      },
+      {
+        "test": "size_limits",
+        "passed": true
+      },
+      {
+        "test": "error_terminal",
+        "passed": true
+      },
+      {
+        "test": "terminal_once",
+        "passed": true
+      },
+      {
+        "test": "malformed_frames",
+        "passed": true
+      },
+      {
+        "test": "premature_eof",
+        "passed": true
+      },
+      {
+        "test": "poison_state",
+        "passed": true
+      },
+      {
+        "test": "failed_call_has_no_partial_output",
+        "passed": true
+      },
+      {
+        "test": "independent_streams",
+        "passed": true
+      }
+    ],
+    "exit_code": 0,
+    "timed_out": false,
+    "sandbox": "macos_no_network_writes_only_grade_directory",
+    "stderr": ""
+  },
+  "acceptance_signature": {
+    "passed": true,
+    "tests_run": 12,
+    "checks": [
+      {
+        "test": "basic",
+        "passed": true
+      },
+      {
+        "test": "byte_boundaries",
+        "passed": true
+      },
+      {
+        "test": "metrics",
+        "passed": true
+      },
+      {
+        "test": "unfinished_buffer",
+        "passed": true
+      },
+      {
+        "test": "size_limits",
+        "passed": true
+      },
+      {
+        "test": "error_terminal",
+        "passed": true
+      },
+      {
+        "test": "terminal_once",
+        "passed": true
+      },
+      {
+        "test": "malformed_frames",
+        "passed": true
+      },
+      {
+        "test": "premature_eof",
+        "passed": true
+      },
+      {
+        "test": "poison_state",
+        "passed": true
+      },
+      {
+        "test": "failed_call_has_no_partial_output",
+        "passed": true
+      },
+      {
+        "test": "independent_streams",
+        "passed": true
+      }
+    ],
+    "exit_code": 0,
+    "timed_out": false,
+    "invalid_output": false,
+    "isolation_failure": false
+  },
+  "source_changed": true,
+  "artifacts": {
+    "app.py": "eb92de5c24546bdfd0aee0d3e29742f437f1e9c247154753287687508f2ffa6e",
+    "test_stream.py": "008e1db2d14c0f87d6c69a326026847ef233e38f13dc3b49782147a4942a4e15"
+  },
+  "protected_changes": [],
+  "outside_changes": [],
+  "artifact_errors": [],
+  "tool_audit": [
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc \"pwd; rg --files -g '\"'!__pycache__/**'\"' -g '\"'!assets/**'\"' -g '\"'!references/**'\"' -g '\"'!scripts/**'\"' -g '\"'!agents/**'\"'\"",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc 'cat task.md app.py smoke.py TOOLS.md run_python'",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc \"rg --files --hidden -g AGENTS.md -g '\"'!'\"\\\\.git/**'; cmp app.py original.py; ./run_python smoke.py; ./run_python - <<'PY'\nimport app\n\nwire = '{\\\"event\\\":\\\"token\\\",\\\"text\\\":\\\"你\\\"}\\\\n'.encode()\ncut = wire.index('你'.encode()) + 1\np = app.EventStream()\ntry:\n    print('split UTF-8:', p.feed(wire[:cut]), p.feed(wire[cut:]))\nexcept app.StreamError as exc:\n    print('split UTF-8:', type(exc).__name__, str(exc), 'state=', p.state)\n\nfor tail in (b'{\\\"event\\\":\\\"token\\\",\\\"text\\\":\\\"late\\\"}\\\\n', b'x', b'{\\\"event\\\":\\\"done\\\"}\\\\n'):\n    p = app.EventStream()\n    try:\n        print('terminal +', repr(tail), ':', p.feed(b'{\\\"event\\\":\\\"done\\\"}\\\\n' + tail), 'state=', p.state, 'buffered=', p.buffered_bytes)\n    except app.StreamError as exc:\n        print(type(exc).__name__, str(exc), 'state=', p.state)\nPY\"",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc \"./run_python - <<'PY'\nimport app\np = app.EventStream()\nprint(p.feed(b'{\\\"event\\\":NaN,\\\"event\\\":\\\"done\\\"}\\\\n'), p.state)\nPY\"",
+      "review_flags": []
+    },
+    {
+      "type": "file_change",
+      "exit_code": null,
+      "changes": [
+        {
+          "path": "/private<workspace>/app.py",
+          "kind": "update"
+        }
+      ]
+    },
+    {
+      "type": "file_change",
+      "exit_code": null,
+      "changes": [
+        {
+          "path": "/private<workspace>/test_stream.py",
+          "kind": "add"
+        }
+      ]
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc './run_python -m unittest -v test_stream'",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 1,
+      "command": "/bin/zsh -lc './run_python smoke.py; ./run_python --version; diff -u original.py app.py'",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 1,
+      "command": "/bin/zsh -lc 'TEST_MODULE=original ./run_python -m unittest test_stream.StreamTests.test_split_utf8 test_stream.StreamTests.test_same_call_trailing_bytes test_stream.StreamTests.test_non_json_constants'",
+      "review_flags": []
+    }
+  ],
+  "case_sha256": "5998ad7dc181d36961a09a4c59f63d97469ebbe1d9b390423793f8515a276515",
+  "prompt_sha256": "6fd62ac6100d8b6cfbd0a2b2d2c570f6e2df884143fea61f287365cec2b7280f",
+  "event_sha256": "5553bbaa5acaf59dca50c39cb3aa4a3360a73324070e5c67dc1c07a2dc0adc18",
+  "stderr_sha256": "abb6113f4f08530eb7bec014dc0c0b5e0c52fa03731c2c737f388776b36b85d2",
+  "reasoning_effort": "high",
+  "cli_version": "codex-cli 0.160.0",
+  "canary": false,
+  "python_version": "3.12.14",
+  "execution_platform": "Darwin",
+  "terminal_errors": [],
+  "execution_phase": "classifier_recovery",
+  "recovery_manifest_sha256": "6826d034f0c76fbe1d24f761c801c391c878482718ec612bce68fd59ebf3c149"
+}

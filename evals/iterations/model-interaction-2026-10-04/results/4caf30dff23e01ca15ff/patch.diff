@@ -1,0 +1,44 @@
+--- original.py
++++ app.py
+@@ -28,7 +28,7 @@
+ 
+     def _record(self, raw):
+         try:
+-            record = json.loads(raw.decode("utf-8"))
++            record = json.loads(raw.decode("utf-8"), object_pairs_hook=self._unique_object)
+         except (UnicodeDecodeError, ValueError, RecursionError):
+             self._fail("invalid UTF-8 JSON frame")
+         if not isinstance(record, dict):
+@@ -46,6 +46,16 @@
+             return {"event": "error", "message": record["message"]}
+         self._fail("invalid event schema")
+ 
++    @staticmethod
++    def _unique_object(pairs):
++        """Decode JSON objects without silently accepting duplicate fields."""
++        result = {}
++        for key, value in pairs:
++            if key in result:
++                raise ValueError("duplicate object field")
++            result[key] = value
++        return result
++
+     def feed(self, data):
+         if self.state == "FAILED":
+             raise StreamError("stream has failed")
+@@ -53,13 +63,11 @@
+             return []
+         if self.state != "OPEN":
+             self._fail("data after terminal event")
+-        try:
+-            data = data.decode("utf-8").encode("utf-8")
+-        except UnicodeDecodeError:
+-            self._fail("invalid UTF-8 input chunk")
+         output = []
+         start = 0
+         while start < len(data):
++            if self.state != "OPEN":
++                self._fail("data after terminal event")
+             newline = data.find(b"\n", start)
+             end = len(data) if newline < 0 else newline
+             part = data[start:end]

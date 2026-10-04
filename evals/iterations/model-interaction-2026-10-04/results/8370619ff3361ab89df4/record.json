@@ -1,0 +1,226 @@
+{
+  "case_id": "m06",
+  "condition": "B_checklist",
+  "trial": 1,
+  "model_requested": "gpt-6-astra",
+  "exit_code": 0,
+  "timed_out": false,
+  "elapsed_seconds": 183.6737819580012,
+  "usage": {
+    "input_tokens": 69611,
+    "cached_input_tokens": 60288,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 3393,
+    "reasoning_output_tokens": 204
+  },
+  "completed": true,
+  "status": "completed",
+  "infra_kind": null,
+  "prediction": {
+    "initial_verdict": "violation",
+    "summary": "已修复 app.py 中 limit + 1 导致的返回数量越界，包括零上限错误。仅修改一行，保留公开接口及正确缓存行为；实现自包含且仅依赖标准库。新增 test_local.py 提供回归验证。",
+    "tests_executed": [
+      "./run_python -：修复前复现零上限和正上限越界，断言如预期失败。",
+      "./run_python smoke.py：通过。",
+      "./run_python -m unittest -v test_local：9 项测试全部通过，覆盖排序、数量限制、缓存身份、过期、异常重试及嵌套数据隔离。",
+      "diff -u original.py app.py：确认实现仅修改切片上界。"
+    ],
+    "limitations": [
+      "验证限于公开基本验证及新增本地测试；未执行隐藏验收。非法参数的验证策略按题意不在审查范围内。"
+    ]
+  },
+  "acceptance": {
+    "passed": true,
+    "tests_run": 12,
+    "checks": [
+      {
+        "test": "rank_order_and_limit",
+        "passed": true
+      },
+      {
+        "test": "full_result_cache",
+        "passed": true
+      },
+      {
+        "test": "tenant_revision_isolation",
+        "passed": true
+      },
+      {
+        "test": "query_identity",
+        "passed": true
+      },
+      {
+        "test": "expiry_without_sliding",
+        "passed": true
+      },
+      {
+        "test": "caller_query_isolation",
+        "passed": true
+      },
+      {
+        "test": "source_result_isolation",
+        "passed": true
+      },
+      {
+        "test": "returned_result_isolation",
+        "passed": true
+      },
+      {
+        "test": "failure_not_cached",
+        "passed": true
+      },
+      {
+        "test": "expired_failure_retry",
+        "passed": true
+      },
+      {
+        "test": "empty_results_and_zero_limit",
+        "passed": true
+      },
+      {
+        "test": "independent_instances",
+        "passed": true
+      }
+    ],
+    "exit_code": 0,
+    "timed_out": false,
+    "sandbox": "macos_no_network_writes_only_grade_directory",
+    "stderr": ""
+  },
+  "acceptance_signature": {
+    "passed": true,
+    "tests_run": 12,
+    "checks": [
+      {
+        "test": "rank_order_and_limit",
+        "passed": true
+      },
+      {
+        "test": "full_result_cache",
+        "passed": true
+      },
+      {
+        "test": "tenant_revision_isolation",
+        "passed": true
+      },
+      {
+        "test": "query_identity",
+        "passed": true
+      },
+      {
+        "test": "expiry_without_sliding",
+        "passed": true
+      },
+      {
+        "test": "caller_query_isolation",
+        "passed": true
+      },
+      {
+        "test": "source_result_isolation",
+        "passed": true
+      },
+      {
+        "test": "returned_result_isolation",
+        "passed": true
+      },
+      {
+        "test": "failure_not_cached",
+        "passed": true
+      },
+      {
+        "test": "expired_failure_retry",
+        "passed": true
+      },
+      {
+        "test": "empty_results_and_zero_limit",
+        "passed": true
+      },
+      {
+        "test": "independent_instances",
+        "passed": true
+      }
+    ],
+    "exit_code": 0,
+    "timed_out": false,
+    "invalid_output": false,
+    "isolation_failure": false
+  },
+  "source_changed": true,
+  "artifacts": {
+    "app.py": "140d0dbcf5eb93e5e42c3d420531957c3e7e8e8c57d8b902c90a40cacaf228dd",
+    "test_local.py": "e127ce315e9496bd4cc21c8997c9780a8a6968ea72f9bf3f9d1d3168086e4bf6"
+  },
+  "protected_changes": [],
+  "outside_changes": [],
+  "artifact_errors": [],
+  "tool_audit": [
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc \"pwd; rg --files -g '\"'!__pycache__'\"' -g '\"'! .git'\"'\"",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc 'cat task.md app.py smoke.py TOOLS.md'",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 1,
+      "command": "/bin/zsh -lc \"cat original.py run_python; ./run_python - <<'PY'\nfrom app import rank_documents, RetrievalCache\ndocs = [\n    {'id': 'low', 'score': -3, 'payload': {}},\n    {'id': 'high', 'score': 7, 'payload': {}},\n]\nfor limit in (0, 1):\n    result = rank_documents(docs, limit)\n    print(f'rank_documents limit={limit}: count={len(result)}, ids={[d[\\\"id\\\"] for d in result]}')\ncache = RetrievalCache(lambda *args: docs)\nresult = cache.search('tenant', {'text': '', 'filters': {}}, 'revision', 0, limit=1)\nprint(f'cache.search limit=1: count={len(result)}')\nassert len(rank_documents(docs, 1)) == 1, 'rank_documents exceeds limit'\nPY\"",
+      "review_flags": []
+    },
+    {
+      "type": "file_change",
+      "exit_code": null,
+      "changes": [
+        {
+          "path": "<workspace>/app.py",
+          "kind": "update"
+        }
+      ]
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc \"cat > test_local.py <<'PY'\n\\\"\\\"\\\"Contract regression tests; the delivered app does not depend on this file.\\\"\\\"\\\"\nimport unittest\nfrom copy import deepcopy\nfrom itertools import permutations\nfrom app import RetrievalCache, rank_documents\n\n\ndef doc(identifier, score=0):\n    return {'id': identifier, 'score': score,\n            'payload': {'items': [{'value': ['original', None, True, 1.25]}]}}\n\n\ndef query():\n    return {'text': 'question', 'filters': {'a': '1', 'b': '2'}}\n\n\nclass ContractTests(unittest.TestCase):\n    def test_ranking_limits_order_and_input_preservation(self):\n        docs = [doc('z', -2), doc('a', 0), doc('β', 10**100),\n                doc('A', 0), doc('a\\\\x00', 0)]\n        expected = ['β', 'A', 'a', 'a\\\\x00', 'z']\n        for arrangement in permutations(docs):\n            source = list(arrangement)\n            before = deepcopy(source)\n            for limit in (0, 1, 2, 5, 9):\n                result = rank_documents(source, limit)\n                self.assertEqual([d['id'] for d in result], expected[:limit])\n                self.assertEqual(source, before)\n        self.assertEqual(rank_documents([], 5), [])\n\n    def test_rank_copies_nested_payload_at_max_depth(self):\n        payload = {'leaf': 'original'}\n        for i in range(19):\n            payload = [payload] if i % 2 == 0 else {'child': payload}\n        docs = [{'id': 'x', 'score': 0, 'payload': payload}]\n        before = deepcopy(docs)\n        result = rank_documents(docs, 1)\n        node = result[0]['payload']\n        for i in reversed(range(19)):\n            node = node[0] if i % 2 == 0 else node['child']\n        node['leaf'] = 'changed'\n        result[0]['id'] = 'changed'\n        self.assertEqual(docs, before)\n        self.assertEqual(rank_documents(docs, 1), before)\n\n    def test_full_results_and_instance_isolation(self):\n        calls = []\n        def source(*args):\n            calls.append(args)\n            return [doc('low', -1), doc('high', 10), doc('mid', 0)]\n        first = RetrievalCache(source)\n        second = RetrievalCache(source)\n        self.assertEqual(len(first.search('t', query(), 'r', 0, 1)), 1)\n        self.assertEqual([d['id'] for d in first.search('t', query(), 'r', 1, 10)],\n                         ['high', 'mid', 'low'])\n        self.assertEqual(len(calls), 1)\n        second.search('t', query(), 'r', 1)\n        self.assertEqual(len(calls), 2)\n\n    def test_all_identity_fields_and_filter_order(self):\n        calls = []\n        def source(*args):\n            calls.append(deepcopy(args))\n            return [doc(str(len(calls)))]\n        cache = RetrievalCache(source)\n        base = ('tenant', query(), 'revision')\n        self.assertEqual(cache.search(*base, 0)[0]['id'], '1')\n        reordered = {'filters': {'b': '2', 'a': '1'}, 'text': 'question'}\n        self.assertEqual(cache.search('tenant', reordered, 'revision', 0)[0]['id'], '1')\n        variants = [\n            ('other', query(), 'revision'),\n            ('tenant', query(), 'other'),\n            ('tenant', {'text': 'Question', 'filters': query()['filters']}, 'revision'),\n            ('tenant', {'text': 'question', 'filters': {'A': '1', 'b': '2'}}, 'revision'),\n            ('tenant', {'text': 'question', 'filters': {'a': '2', 'b': '2'}}, 'revision'),\n            ('tenant', {'text': 'question', 'filters': {'a': '1'}}, 'revision'),\n            ('tenant', {'text': 'question\\\\x00\\\"\\\\\\\\😀', 'filters': {}}, 'revision'),\n        ]\n        for number, identity in enumerate(variants, 2):\n            self.assertEqual(cache.search(*identity, 0)[0]['id'], str(number))\n        self.assertEqual(cache.search(*base, 0)[0]['id'], '1')\n        self.assertEqual(len(calls), 8)\n\n    def test_expiry_equality_and_hits_do_not_extend_ttl(self):\n        calls = []\n        def source(*args):\n            calls.append(args)\n            return [doc(str(len(calls)))]\n        cache = RetrievalCache(source, ttl=10)\n        for now, expected in ((3, '1'), (3, '1'), (12, '1'), (13, '2'),\n                              (22, '2'), (23, '3'), (100, '4')):\n            self.assertEqual(cache.search('t', query(), 'r', now)[0]['id'], expected)\n        self.assertEqual(len(calls), 4)\n\n    def test_zero_limit_does_not_populate_or_refresh(self):\n        calls = []\n        def source(*args):\n            calls.append(args)\n            return [doc(str(len(calls)))]\n        cache = RetrievalCache(source, ttl=2)\n        self.assertEqual(cache.search('t', query(), 'r', 0, 0), [])\n        self.assertEqual(calls, [])\n        self.assertEqual(cache.search('t', query(), 'r', 1)[0]['id'], '1')\n        self.assertEqual(cache.search('t', query(), 'r', 2, 0), [])\n        self.assertEqual(cache.search('t', query(), 'r', 3, 0), [])\n        self.assertEqual(len(calls), 1)\n        self.assertEqual(cache.search('t', query(), 'r', 3)[0]['id'], '2')\n\n    def test_empty_success_is_cached(self):\n        calls = []\n        def source(*args):\n            calls.append(args)\n            return []\n        cache = RetrievalCache(source, ttl=1)\n        for now in (0, 0):\n            self.assertEqual(cache.search('t', query(), 'r', now), [])\n        self.assertEqual(len(calls), 1)\n        self.assertEqual(cache.search('t', query(), 'r', 1), [])\n        self.assertEqual(len(calls), 2)\n\n    def test_exception_identity_retry_and_other_valid_entries(self):\n        calls = []\n        error = RuntimeError('source failed')\n        failing = set()\n        def source(tenant, request, revision):\n            calls.append(tenant)\n            if tenant in failing:\n                raise error\n            return [doc(str(len(calls)))]\n        cache = RetrievalCache(source, ttl=10)\n        cache.search('old', query(), 'r', 0)\n        valid = cache.search('valid', query(), 'r', 5)\n        failing.update(('old', 'new'))\n        for tenant, now in (('old', 10), ('old', 11), ('new', 11), ('new', 12)):\n            with self.assertRaises(RuntimeError) as caught:\n                cache.search(tenant, query(), 'r', now)\n            self.assertIs(caught.exception, error)\n            self.assertEqual(cache.search('valid', query(), 'r', now), valid)\n        self.assertEqual(calls, ['old', 'valid', 'old', 'old', 'new', 'new'])\n        failing.clear()\n        self.assertEqual(cache.search('old', query(), 'r', 12)[0]['id'], '7')\n        self.assertEqual(cache.search('new', query(), 'r', 12)[0]['id'], '8')\n\n    def test_source_and_caller_mutation_isolation(self):\n        owned = [doc('one', 2), doc('two', 1)]\n        snapshot = deepcopy(owned)\n        requests = []\n        def source(tenant, request, revision):\n            requests.append(request)\n            request['filters']['a'] = 'mutated in source'\n            request['text'] = 'mutated in source'\n            return owned\n        cache = RetrievalCache(source)\n        request = query()\n        result = cache.search('t', request, 'r', 0)\n        self.assertEqual(request, query())\n        result[0]['payload']['items'][0]['value'].append('caller change')\n        result[0]['score'] = 999\n        result.pop()\n        self.assertEqual(owned, snapshot)\n        requests[0]['filters'].clear()\n        owned[0]['payload']['items'][0]['value'].clear()\n        owned[0]['id'] = 'source change'\n        owned.clear()\n        self.assertEqual(cache.search('t', request, 'r', 1), snapshot)\n        self.assertEqual(request, query())\n        self.assertEqual(len(requests), 1)\n\n\nif __name__ == '__main__':\n    unittest.main()\nPY\n./run_python -m unittest -v test_local\"",
+      "review_flags": []
+    },
+    {
+      "type": "file_change",
+      "exit_code": null,
+      "changes": [
+        {
+          "path": "<workspace>/test_local.py",
+          "kind": "update"
+        }
+      ]
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 1,
+      "command": "/bin/zsh -lc 'diff -u original.py app.py'",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc './run_python smoke.py; ./run_python -m unittest -v test_local'",
+      "review_flags": []
+    }
+  ],
+  "case_sha256": "ff3568cae57fab206354f3b223cd078895b719d6aaeb94897e3e59850b9caafb",
+  "prompt_sha256": "6fd62ac6100d8b6cfbd0a2b2d2c570f6e2df884143fea61f287365cec2b7280f",
+  "event_sha256": "1ca81aed8021610615782878fb433d99b9b913908297e3ef76d8171455f5d3c6",
+  "stderr_sha256": "c18de38a5168e06bddc6b8847407f6b445e2865e607d3fb929d1206dea3eb54c",
+  "reasoning_effort": "high",
+  "cli_version": "codex-cli 0.160.0",
+  "canary": false,
+  "python_version": "3.12.14",
+  "execution_platform": "Darwin",
+  "terminal_errors": [],
+  "execution_phase": "classifier_recovery",
+  "recovery_manifest_sha256": "6826d034f0c76fbe1d24f761c801c391c878482718ec612bce68fd59ebf3c149"
+}

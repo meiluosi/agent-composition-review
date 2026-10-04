@@ -1,0 +1,12 @@
+--- original.py
++++ app.py
+@@ -45,7 +45,7 @@
+     def ack(self, receipt, now):
+         with closing(sqlite3.connect(self.path)) as db, db:
+             changed = db.execute("""UPDATE jobs SET state = 'done'
+-                WHERE job_id = ? AND worker = ?
++                WHERE job_id = ? AND worker = ? AND generation = ?
+                 AND state = 'leased' AND expires_at > ?""",
+-                (receipt["job_id"], receipt["worker"], now)).rowcount
++                (receipt["job_id"], receipt["worker"], receipt["generation"], now)).rowcount
+             return changed == 1

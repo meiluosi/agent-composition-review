@@ -1,0 +1,237 @@
+{
+  "case_id": "m07",
+  "condition": "C_skill",
+  "trial": 2,
+  "model_requested": "gpt-6-luna",
+  "exit_code": 0,
+  "timed_out": false,
+  "elapsed_seconds": 186.53715812502196,
+  "usage": {
+    "input_tokens": 145099,
+    "cached_input_tokens": 124928,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 5475,
+    "reasoning_output_tokens": 2486
+  },
+  "completed": true,
+  "status": "completed",
+  "infra_kind": null,
+  "prediction": {
+    "initial_verdict": "violation",
+    "summary": "修复了分块 UTF-8 字符无法解析、同次 feed 中终止事件后的数据未被拒绝的问题。按完整帧解码，并拒绝 JSON 对象中的重复字段；保留公开接口和原有事件行为。",
+    "tests_executed": [
+      "./run_python smoke.py（通过）",
+      "./run_python -c '<本地契约检查：跨块 UTF-8、帧大小、多帧输入、终止状态、重复字段及 EOF>'（通过；初版检查代码有设置错误，修正后通过）"
+    ],
+    "limitations": [
+      "本地检查不等同于完整验收；未运行隐藏测试。"
+    ]
+  },
+  "acceptance": {
+    "passed": true,
+    "tests_run": 12,
+    "checks": [
+      {
+        "test": "basic",
+        "passed": true
+      },
+      {
+        "test": "byte_boundaries",
+        "passed": true
+      },
+      {
+        "test": "metrics",
+        "passed": true
+      },
+      {
+        "test": "unfinished_buffer",
+        "passed": true
+      },
+      {
+        "test": "size_limits",
+        "passed": true
+      },
+      {
+        "test": "error_terminal",
+        "passed": true
+      },
+      {
+        "test": "terminal_once",
+        "passed": true
+      },
+      {
+        "test": "malformed_frames",
+        "passed": true
+      },
+      {
+        "test": "premature_eof",
+        "passed": true
+      },
+      {
+        "test": "poison_state",
+        "passed": true
+      },
+      {
+        "test": "failed_call_has_no_partial_output",
+        "passed": true
+      },
+      {
+        "test": "independent_streams",
+        "passed": true
+      }
+    ],
+    "exit_code": 0,
+    "timed_out": false,
+    "sandbox": "macos_no_network_writes_only_grade_directory",
+    "stderr": ""
+  },
+  "acceptance_signature": {
+    "passed": true,
+    "tests_run": 12,
+    "checks": [
+      {
+        "test": "basic",
+        "passed": true
+      },
+      {
+        "test": "byte_boundaries",
+        "passed": true
+      },
+      {
+        "test": "metrics",
+        "passed": true
+      },
+      {
+        "test": "unfinished_buffer",
+        "passed": true
+      },
+      {
+        "test": "size_limits",
+        "passed": true
+      },
+      {
+        "test": "error_terminal",
+        "passed": true
+      },
+      {
+        "test": "terminal_once",
+        "passed": true
+      },
+      {
+        "test": "malformed_frames",
+        "passed": true
+      },
+      {
+        "test": "premature_eof",
+        "passed": true
+      },
+      {
+        "test": "poison_state",
+        "passed": true
+      },
+      {
+        "test": "failed_call_has_no_partial_output",
+        "passed": true
+      },
+      {
+        "test": "independent_streams",
+        "passed": true
+      }
+    ],
+    "exit_code": 0,
+    "timed_out": false,
+    "invalid_output": false,
+    "isolation_failure": false
+  },
+  "source_changed": true,
+  "artifacts": {
+    "app.py": "baefd078163b6b26a475cb0b35d0545e24c37117f158cf17f02e57b774f5b293"
+  },
+  "protected_changes": [],
+  "outside_changes": [],
+  "artifact_errors": [],
+  "tool_audit": [
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc \"pwd && rg --files -g 'task.md' -g 'app.py' -g 'original.py' -g 'smoke.py' -g 'TOOLS.md' -g 'references/executable-contracts.md' -g 'SKILL.md' -g 'AGENTS.md'\"",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc 'cat task.md && cat app.py'",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc 'cat smoke.py && cat TOOLS.md && cat original.py'",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc 'cat SKILL.md && cat references/executable-contracts.md'",
+      "review_flags": []
+    },
+    {
+      "type": "file_change",
+      "exit_code": null,
+      "changes": [
+        {
+          "path": "<workspace>/app.py",
+          "kind": "update"
+        }
+      ]
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 129,
+      "command": "/bin/zsh -lc 'git diff -- app.py'",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc \"./run_python -c 'import sys; print(sys.version)'\"",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc './run_python smoke.py'",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 1,
+      "command": "/bin/zsh -lc \"./run_python -c 'import app\n\ndef fails(parser, action):\n    try:\n        action()\n    except app.StreamError:\n        assert parser.state == \\\"FAILED\\\"\n        assert parser.buffered_bytes == 0\n    else:\n        raise AssertionError(\\\"expected StreamError\\\")\n\n# UTF-8 character split at every byte boundary, plus incomplete-frame accounting.\np = app.EventStream()\nwire = \\\"{\\\\\\\"event\\\\\\\":\\\\\\\"token\\\\\\\",\\\\\\\"text\\\\\\\":\\\\\\\"你🧪\\\\\\\"}\\\\n{\\\\\\\"event\\\\\\\":\\\\\\\"done\\\\\\\"}\\\\n\\\".encode()\nout = []\nfor byte in wire:\n    out.extend(p.feed(bytes([byte])))\nassert out == [{\\\"event\\\": \\\"token\\\", \\\"text\\\": \\\"你🧪\\\"}, {\\\"event\\\": \\\"done\\\", \\\"text\\\": \\\"你🧪\\\", \\\"characters\\\": 2, \\\"words\\\": 1}]\nassert p.state == \\\"DONE\\\" and p.buffered_bytes == 0 and p.finish() == p.finish() == []\n\n# Small per-frame cap allows large chunks containing many small complete frames.\nframe = b\\\"{\\\\\\\"event\\\\\\\":\\\\\\\"token\\\\\\\",\\\\\\\"text\\\\\\\":\\\\\\\"\\\\\\\"}\\\\n\\\"\np = app.EventStream(max_buffer=len(frame) - 1)\nassert len(p.feed(frame * 50 + b\\\"{\\\\\\\"event\\\\\\\":\\\\\\\"done\\\\\\\"}\\\\n\\\")) == 51\n\n# Exact limit accepted; one byte over rejected, including on completed frame.\np = app.EventStream(max_buffer=4)\nassert p.feed(b\\\"{}\\\\n\\\") == []\nfails(p, lambda: p.feed(b\\\"12345\\\"))\np = app.EventStream(max_buffer=2)\nfails(p, lambda: p.feed(b\\\"{}x\\\\n\\\"))\n\n# Any byte after a terminal frame in the same or a later feed fails.\nfor suffix in (b\\\"x\\\", b\\\"\\\\n\\\"):\n    p = app.EventStream()\n    fails(p, lambda: p.feed(b\\\"{\\\\\\\"event\\\\\\\":\\\\\\\"done\\\\\\\"}\\\\n\\\" + suffix))\np = app.EventStream()\np.feed(b\\\"{\\\\\\\"event\\\\\\\":\\\\\\\"error\\\\\\\",\\\\\\\"message\\\\\\\":\\\\\\\"no\\\\\\\"}\\\\n\\\")\nassert p.state == \\\"ERROR\\\" and p.finish() == []\nfails(p, lambda: p.feed(b\\\"z\\\"))\n\n# Malformed frame and duplicate keys fail terminally; premature EOF clears bytes.\np = app.EventStream()\nfails(p, lambda: p.feed(b\\\"{\\\\\\\"event\\\\\\\":\\\\\\\"token\\\\\\\",\\\\\\\"text\\\\\\\":\\\\\\\"x\\\\\\\",\\\\\\\"text\\\\\\\":\\\\\\\"y\\\\\\\"}\\\\n\\\"))\np = app.EventStream()\np.feed(b\\\"{\\\\\\\"event\\\\\\\":\\\")\nassert p.buffered_bytes == len(b\\\"{\\\\\\\"event\\\\\\\":\\\")\nfails(p, p.finish)\nfails(p, lambda: p.feed(b\\\"\\\"))\nprint(\\\"contract checks passed\\\")'\"",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 1,
+      "command": "/bin/zsh -lc \"./run_python -c 'import app\n\ndef fails(parser, action):\n    try:\n        action()\n    except app.StreamError:\n        assert parser.state == \\\"FAILED\\\"\n        assert parser.buffered_bytes == 0\n    else:\n        raise AssertionError(\\\"expected StreamError\\\")\n\np = app.EventStream()\nwire = \\\"{\\\\\\\"event\\\\\\\":\\\\\\\"token\\\\\\\",\\\\\\\"text\\\\\\\":\\\\\\\"你🧪\\\\\\\"}\\\\n{\\\\\\\"event\\\\\\\":\\\\\\\"done\\\\\\\"}\\\\n\\\".encode()\nout = []\nfor byte in wire:\n    out.extend(p.feed(bytes([byte])))\nassert out == [{\\\"event\\\": \\\"token\\\", \\\"text\\\": \\\"你🧪\\\"}, {\\\"event\\\": \\\"done\\\", \\\"text\\\": \\\"你🧪\\\", \\\"characters\\\": 2, \\\"words\\\": 1}]\nassert p.state == \\\"DONE\\\" and p.buffered_bytes == 0 and p.finish() == p.finish() == []\n\nframe = b\\\"{\\\\\\\"event\\\\\\\":\\\\\\\"token\\\\\\\",\\\\\\\"text\\\\\\\":\\\\\\\"\\\\\\\"}\\\\n\\\"\nlimit = len(frame) - 1\np = app.EventStream(max_buffer=limit)\nsmall_frame = b\\\"{}\\\"  # invalid JSON object schema, used below only to count batch size\n# Use valid token frames with a cap equal to their wire length.\nlimit = len(frame) - 1\np = app.EventStream(max_buffer=limit)\n# Every token frame must itself fit; choose empty token frames with a suitable explicit cap.\np = app.EventStream(max_buffer=len(frame) - 1)\n# Standard frame without final LF has a wire length of len(frame)-1.\nassert len(p.feed(frame * 50 + b\\\"{\\\\\\\"event\\\\\\\":\\\\\\\"done\\\\\\\"}\\\\n\\\")) == 51\n\np = app.EventStream(max_buffer=4)\nassert p.feed(b\\\"{}\\\\n\\\") == []  # JSON object is schema-invalid, so this line must not be reached\n'\"",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc \"./run_python -c 'import app\n\ndef fails(parser, action):\n    try:\n        action()\n    except app.StreamError:\n        assert parser.state == \\\"FAILED\\\"\n        assert parser.buffered_bytes == 0\n    else:\n        raise AssertionError(\\\"expected StreamError\\\")\n\np = app.EventStream()\nwire = \\\"{\\\\\\\"event\\\\\\\":\\\\\\\"token\\\\\\\",\\\\\\\"text\\\\\\\":\\\\\\\"你🧪\\\\\\\"}\\\\n{\\\\\\\"event\\\\\\\":\\\\\\\"done\\\\\\\"}\\\\n\\\".encode()\nout = []\nfor byte in wire:\n    out.extend(p.feed(bytes([byte])))\nassert out == [{\\\"event\\\": \\\"token\\\", \\\"text\\\": \\\"你🧪\\\"}, {\\\"event\\\": \\\"done\\\", \\\"text\\\": \\\"你🧪\\\", \\\"characters\\\": 2, \\\"words\\\": 1}]\nassert p.state == \\\"DONE\\\" and p.buffered_bytes == 0 and p.finish() == p.finish() == []\n\nframe = b\\\"{\\\\\\\"event\\\\\\\":\\\\\\\"token\\\\\\\",\\\\\\\"text\\\\\\\":\\\\\\\"\\\\\\\"}\\\"\ndone = b\\\"{\\\\\\\"event\\\\\\\":\\\\\\\"done\\\\\\\"}\\\"\np = app.EventStream(max_buffer=len(frame))\nassert len(p.feed(frame + b\\\"\\\\n\\\" + (frame + b\\\"\\\\n\\\") * 49 + done + b\\\"\\\\n\\\")) == 51\n\np = app.EventStream(max_buffer=4)\nassert p.feed(b\\\"{}\\\") == []\np = app.EventStream(max_buffer=2)\nfails(p, lambda: p.feed(b\\\"123\\\\n\\\"))\np = app.EventStream(max_buffer=2)\nfails(p, lambda: p.feed(b\\\"123\\\"))\n\nfor suffix in (b\\\"x\\\", b\\\"\\\\n\\\"):\n    p = app.EventStream()\n    fails(p, lambda: p.feed(b\\\"{\\\\\\\"event\\\\\\\":\\\\\\\"done\\\\\\\"}\\\\n\\\" + suffix))\np = app.EventStream()\nassert p.feed(b\\\"{\\\\\\\"event\\\\\\\":\\\\\\\"error\\\\\\\",\\\\\\\"message\\\\\\\":\\\\\\\"no\\\\\\\"}\\\\n\\\") == [{\\\"event\\\": \\\"error\\\", \\\"message\\\": \\\"no\\\"}]\nassert p.state == \\\"ERROR\\\" and p.finish() == []\nfails(p, lambda: p.feed(b\\\"z\\\"))\n\np = app.EventStream()\nfails(p, lambda: p.feed(b\\\"{\\\\\\\"event\\\\\\\":\\\\\\\"token\\\\\\\",\\\\\\\"text\\\\\\\":\\\\\\\"x\\\\\\\",\\\\\\\"text\\\\\\\":\\\\\\\"y\\\\\\\"}\\\\n\\\"))\np = app.EventStream()\np.feed(b\\\"{\\\\\\\"event\\\\\\\":\\\")\nassert p.buffered_bytes == len(b\\\"{\\\\\\\"event\\\\\\\":\\\")\nfails(p, p.finish)\nfails(p, lambda: p.feed(b\\\"\\\"))\nprint(\\\"contract checks passed\\\")'\"",
+      "review_flags": []
+    }
+  ],
+  "case_sha256": "5998ad7dc181d36961a09a4c59f63d97469ebbe1d9b390423793f8515a276515",
+  "prompt_sha256": "890e8e7238a3d11b98065646547e36c2563ff652e966a0baa5a66ed0cca78937",
+  "event_sha256": "27654ec3ad55e0e9779b534da3ec6adad0b88204f1855494b69956274a6395c9",
+  "stderr_sha256": "1de1e82f9ed2269c7df2a51b52837d5f619632589a743bac8dc47084cde676a7",
+  "reasoning_effort": "high",
+  "cli_version": "codex-cli 0.160.0",
+  "canary": false,
+  "python_version": "3.12.14",
+  "execution_platform": "Darwin",
+  "terminal_errors": [],
+  "execution_phase": "classifier_recovery",
+  "recovery_manifest_sha256": "6826d034f0c76fbe1d24f761c801c391c878482718ec612bce68fd59ebf3c149"
+}

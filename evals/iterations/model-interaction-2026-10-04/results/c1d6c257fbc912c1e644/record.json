@@ -1,0 +1,183 @@
+{
+  "case_id": "m02",
+  "condition": "C_skill",
+  "trial": 2,
+  "model_requested": "gpt-6-luna",
+  "exit_code": 0,
+  "timed_out": false,
+  "elapsed_seconds": 95.98547116701957,
+  "usage": {
+    "input_tokens": 114034,
+    "cached_input_tokens": 97536,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 3425,
+    "reasoning_output_tokens": 1888
+  },
+  "completed": true,
+  "status": "completed",
+  "infra_kind": null,
+  "prediction": {
+    "initial_verdict": "violation",
+    "summary": "原实现会接受 `lease_seconds=True`，违反 lease 必须排除布尔值的要求。已在 [app.py](/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/model-interaction-task-bvv726uv/app.py) 修正校验；其余已检查的队列行为予以保留。",
+    "tests_executed": [
+      "`./run_python smoke.py` — 通过。",
+      "`./run_python - <<'PY' ... PY` — 针对性检查通过，覆盖持久化、跨实例 ack、lease 到期与重领、去重、输入快照、无效 lease、非有限 JSON 数值及并发领取。"
+    ],
+    "limitations": [
+      "未提供完整验收套件；公开 smoke 不是完整验收。"
+    ]
+  },
+  "acceptance": {
+    "passed": true,
+    "tests_run": 9,
+    "checks": [
+      {
+        "test": "test_empty_and_persistence",
+        "passed": true
+      },
+      {
+        "test": "test_fifo_and_active_exclusion",
+        "passed": true
+      },
+      {
+        "test": "test_same_worker_stale_receipt",
+        "passed": true
+      },
+      {
+        "test": "test_other_worker_stale_receipt",
+        "passed": true
+      },
+      {
+        "test": "test_expiry_and_fractional_duration",
+        "passed": true
+      },
+      {
+        "test": "test_payload_isolation",
+        "passed": true
+      },
+      {
+        "test": "test_failed_put_and_duplicate_reuse",
+        "passed": true
+      },
+      {
+        "test": "test_invalid_duration_preserves_jobs",
+        "passed": true
+      },
+      {
+        "test": "test_atomic_claim_across_connections",
+        "passed": true
+      }
+    ],
+    "exit_code": 0,
+    "timed_out": false,
+    "sandbox": "macos_no_network_writes_only_grade_directory",
+    "stderr": ""
+  },
+  "acceptance_signature": {
+    "passed": true,
+    "tests_run": 9,
+    "checks": [
+      {
+        "test": "test_empty_and_persistence",
+        "passed": true
+      },
+      {
+        "test": "test_fifo_and_active_exclusion",
+        "passed": true
+      },
+      {
+        "test": "test_same_worker_stale_receipt",
+        "passed": true
+      },
+      {
+        "test": "test_other_worker_stale_receipt",
+        "passed": true
+      },
+      {
+        "test": "test_expiry_and_fractional_duration",
+        "passed": true
+      },
+      {
+        "test": "test_payload_isolation",
+        "passed": true
+      },
+      {
+        "test": "test_failed_put_and_duplicate_reuse",
+        "passed": true
+      },
+      {
+        "test": "test_invalid_duration_preserves_jobs",
+        "passed": true
+      },
+      {
+        "test": "test_atomic_claim_across_connections",
+        "passed": true
+      }
+    ],
+    "exit_code": 0,
+    "timed_out": false,
+    "invalid_output": false,
+    "isolation_failure": false
+  },
+  "source_changed": true,
+  "artifacts": {
+    "app.py": "72469e4ee1e3e630e3f07aedab1e2aa806abf5ded6de15baec5c51af872a79a7"
+  },
+  "protected_changes": [],
+  "outside_changes": [],
+  "artifact_errors": [],
+  "tool_audit": [
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc \"pwd && rg --files -g 'task.md' -g 'app.py' -g 'original.py' -g 'smoke.py' -g 'TOOLS.md' -g 'SKILL.md' -g 'references/**' -g 'scripts/**'\"",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc 'cat SKILL.md && cat task.md && cat app.py && cat smoke.py && cat references/contracts.md && cat references/executable-contracts.md && cat references/effects.md'",
+      "review_flags": []
+    },
+    {
+      "type": "file_change",
+      "exit_code": null,
+      "changes": [
+        {
+          "path": "<workspace>/app.py",
+          "kind": "update"
+        }
+      ]
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc 'cat run_python && ./run_python smoke.py'",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc \"./run_python - <<'PY'\nimport math\nimport tempfile\nimport threading\nfrom pathlib import Path\nfrom app import Queue\n\nwith tempfile.TemporaryDirectory() as directory:\n    path = Path(directory) / \\\"q.db\\\"\n    q1 = Queue(path)\n    q2 = Queue(path)\n    payload = {\\\"nested\\\": [1, None, {\\\"ok\\\": True}]}\n    q1.put(\\\"a\\\", payload)\n    payload[\\\"nested\\\"].append(\\\"mutated\\\")\n    first = q2.claim(\\\"w\\\", 0.25, 1.5)\n    assert first[\\\"payload\\\"] == {\\\"nested\\\": [1, None, {\\\"ok\\\": True}]}\n    first[\\\"payload\\\"][\\\"nested\\\"].clear()\n    assert q1.claim(\\\"w\\\", 1.74, 1) is None\n    assert q1.ack(first[\\\"receipt\\\"], 1.75) is False\n    second = q2.claim(\\\"w\\\", 1.75, 0.5)\n    assert second[\\\"payload\\\"] == {\\\"nested\\\": [1, None, {\\\"ok\\\": True}]}\n    assert q1.ack(first[\\\"receipt\\\"], 1.75) is False\n    assert q1.ack(second[\\\"receipt\\\"], 1.75) is True\n    assert q2.ack(second[\\\"receipt\\\"], 1.75) is False\n    try:\n        q1.put(\\\"a\\\", \\\"duplicate after completion\\\")\n    except ValueError:\n        pass\n    else:\n        raise AssertionError(\\\"completed ID was reused\\\")\n    for lease in (True, False, 0, -1, math.inf, math.nan):\n        try:\n            q1.claim(\\\"w\\\", 2, lease)\n        except ValueError:\n            pass\n        else:\n            raise AssertionError(f\\\"accepted invalid lease {lease\"'!r}\")\n    try:\n        q1.put(\"bad\", float(\"nan\"))\n    except ValueError:\n        pass\n    else:\n        raise AssertionError(\"accepted NaN payload\")\n    assert q1.claim(\"w\", 2, 1) is None\n\nwith tempfile.TemporaryDirectory() as directory:\n    path = Path(directory) / \"q.db\"\n    qs = [Queue(path), Queue(path)]\n    qs[0].put(\"only\", [1])\n    barrier = threading.Barrier(2)\n    results = []\n    def take(index):\n        barrier.wait()\n        results.append(qs[index].claim(f\"w{index}\", 0, 10))\n    threads = [threading.Thread(target=take, args=(i,)) for i in range(2)]\n    for thread in threads: thread.start()\n    for thread in threads: thread.join()\n    assert sum(result is not None for result in results) == 1, results\nprint(\"targeted queue checks passed\")\nPY'",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 129,
+      "command": "/bin/zsh -lc 'git diff -- app.py && git status --short'",
+      "review_flags": []
+    }
+  ],
+  "case_sha256": "b430bd19eda97f4a2ca4703e5fd5622b1bf4d3ac4a4b930d92e446c63b753165",
+  "prompt_sha256": "890e8e7238a3d11b98065646547e36c2563ff652e966a0baa5a66ed0cca78937",
+  "event_sha256": "8a9abf382af7eb6014ce7f1db9f9493f737ba453fbe80ea6db6f15b5f4e98492",
+  "stderr_sha256": "b8d88081147e4b59081b63cd21164950e171acfa19d9b1f818fc180e84f2cc6d",
+  "reasoning_effort": "high",
+  "cli_version": "codex-cli 0.160.0",
+  "canary": false,
+  "python_version": "3.12.14",
+  "execution_platform": "Darwin",
+  "terminal_errors": [],
+  "execution_phase": "classifier_recovery",
+  "recovery_manifest_sha256": "6826d034f0c76fbe1d24f761c801c391c878482718ec612bce68fd59ebf3c149"
+}

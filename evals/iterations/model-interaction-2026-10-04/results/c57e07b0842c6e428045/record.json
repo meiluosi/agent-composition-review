@@ -1,0 +1,249 @@
+{
+  "case_id": "m01",
+  "condition": "C_skill",
+  "trial": 2,
+  "model_requested": "gpt-6-astra",
+  "exit_code": 0,
+  "timed_out": false,
+  "elapsed_seconds": 265.0486893330235,
+  "usage": {
+    "input_tokens": 180383,
+    "cached_input_tokens": 153600,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 5302,
+    "reasoning_output_tokens": 809
+  },
+  "completed": true,
+  "status": "completed",
+  "infra_kind": null,
+  "prediction": {
+    "initial_verdict": "violation",
+    "summary": "已修复 app.py：ack 增加领取代次校验，防止同一 worker 重新领取后，旧回执错误确认新租约。保留公开接口及原有正确行为，仅依赖标准库。新增 12 项本地测试，修复后全部通过。",
+    "tests_executed": [
+      "./run_python test_queue.py original.py QueueContractTests.test_stale_receipt_after_same_worker_reclaim：复现缺陷",
+      "TMPDIR=\"$PWD\" ./run_python smoke.py original.py：通过",
+      "./run_python test_queue.py original.py -v：12 项中 3 项失败，均涉及旧回执",
+      "./run_python test_queue.py app.py -v：12 项全部通过，涵盖持久化、边界、失败原子性、独立连接并发和 600 步随机状态测试",
+      "TMPDIR=\"$PWD\" ./run_python smoke.py：通过"
+    ],
+    "limitations": [
+      "验证为有限本地测试；并发测试使用线程和独立 SQLite 连接，未执行多进程压力测试。"
+    ]
+  },
+  "acceptance": {
+    "passed": true,
+    "tests_run": 9,
+    "checks": [
+      {
+        "test": "test_empty_and_persistence",
+        "passed": true
+      },
+      {
+        "test": "test_fifo_and_active_exclusion",
+        "passed": true
+      },
+      {
+        "test": "test_same_worker_stale_receipt",
+        "passed": true
+      },
+      {
+        "test": "test_other_worker_stale_receipt",
+        "passed": true
+      },
+      {
+        "test": "test_expiry_and_fractional_duration",
+        "passed": true
+      },
+      {
+        "test": "test_payload_isolation",
+        "passed": true
+      },
+      {
+        "test": "test_failed_put_and_duplicate_reuse",
+        "passed": true
+      },
+      {
+        "test": "test_invalid_duration_preserves_jobs",
+        "passed": true
+      },
+      {
+        "test": "test_atomic_claim_across_connections",
+        "passed": true
+      }
+    ],
+    "exit_code": 0,
+    "timed_out": false,
+    "sandbox": "macos_no_network_writes_only_grade_directory",
+    "stderr": ""
+  },
+  "acceptance_signature": {
+    "passed": true,
+    "tests_run": 9,
+    "checks": [
+      {
+        "test": "test_empty_and_persistence",
+        "passed": true
+      },
+      {
+        "test": "test_fifo_and_active_exclusion",
+        "passed": true
+      },
+      {
+        "test": "test_same_worker_stale_receipt",
+        "passed": true
+      },
+      {
+        "test": "test_other_worker_stale_receipt",
+        "passed": true
+      },
+      {
+        "test": "test_expiry_and_fractional_duration",
+        "passed": true
+      },
+      {
+        "test": "test_payload_isolation",
+        "passed": true
+      },
+      {
+        "test": "test_failed_put_and_duplicate_reuse",
+        "passed": true
+      },
+      {
+        "test": "test_invalid_duration_preserves_jobs",
+        "passed": true
+      },
+      {
+        "test": "test_atomic_claim_across_connections",
+        "passed": true
+      }
+    ],
+    "exit_code": 0,
+    "timed_out": false,
+    "invalid_output": false,
+    "isolation_failure": false
+  },
+  "source_changed": true,
+  "artifacts": {
+    "test_queue.py": "57d98ce46673ef62400336a06e591072dff9143633554135e6236e127e099903",
+    "app.py": "3f200a07b30548ae6845c24e5b9c22ded8f9c05b83aef7f41fe65e6a36f4262e"
+  },
+  "protected_changes": [],
+  "outside_changes": [],
+  "artifact_errors": [],
+  "tool_audit": [
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc \"pwd; rg --files -g '\"'!__pycache__'\"' -g '\"'!'\"\\\\.git'\"",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc 'cat task.md app.py original.py smoke.py'",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc 'cat SKILL.md references/executable-contracts.md references/contracts.md references/effects.md TOOLS.md run_python'",
+      "review_flags": []
+    },
+    {
+      "type": "file_change",
+      "exit_code": null,
+      "changes": [
+        {
+          "path": "<workspace>/test_queue.py",
+          "kind": "add"
+        }
+      ]
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 1,
+      "command": "/bin/zsh -lc './run_python test_queue.py original.py QueueContractTests.test_stale_receipt_after_same_worker_reclaim'",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc 'TMPDIR=\"$PWD\" ./run_python smoke.py original.py'",
+      "review_flags": []
+    },
+    {
+      "type": "file_change",
+      "exit_code": null,
+      "changes": [
+        {
+          "path": "<workspace>/app.py",
+          "kind": "update"
+        }
+      ]
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc 'TMPDIR=\"$PWD\" ./run_python smoke.py'",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 1,
+      "command": "/bin/zsh -lc './run_python test_queue.py app.py -v'",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc \"./run_python - <<'PY'\nimport json\nimport sys\nprint(sys.version)\nprint('recursion limit:', sys.getrecursionlimit())\nfor depth in [900, 1020, 1490, 1500, 2000, 5000]:\n    value = []\n    for _ in range(depth):\n        value = [value]\n    try:\n        encoded = json.dumps(value, allow_nan=False)\n        print(depth, 'encoded', end='; ')\n    except (ValueError, TypeError, RecursionError) as exc:\n        print(depth, 'encoder rejected:', type(exc).__name__)\n        continue\n    try:\n        json.loads(encoded)\n        print('decoded')\n    except (ValueError, TypeError, RecursionError) as exc:\n        print('decoder rejected:', type(exc).__name__)\nPY\"",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc \"./run_python - <<'PY'\nimport json\nfor depth in [10000, 30000, 100000]:\n    value = []\n    for _ in range(depth):\n        value = [value]\n    try:\n        encoded = json.dumps(value, allow_nan=False)\n        print(depth, 'encoded', flush=True)\n    except (ValueError, TypeError, RecursionError) as exc:\n        print(depth, type(exc).__name__, flush=True)\nPY\"",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc \"./run_python - <<'PY'\nimport json\nfor depth in [5990, 5995, 5996, 5997, 5998, 5999, 6000, 6001, 7490, 7500, 9000]:\n    value = []\n    for _ in range(depth):\n        value = [value]\n    results = []\n    for operation in [lambda: json.dumps(value, allow_nan=False), lambda: json.loads('[' * (depth + 1) + ']' * (depth + 1))]:\n        try:\n            operation()\n            results.append('ok')\n        except RecursionError:\n            results.append('RecursionError')\n    print(depth, results)\nPY\"",
+      "review_flags": []
+    },
+    {
+      "type": "file_change",
+      "exit_code": null,
+      "changes": [
+        {
+          "path": "<workspace>/test_queue.py",
+          "kind": "update"
+        }
+      ]
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 1,
+      "command": "/bin/zsh -lc './run_python test_queue.py original.py -v'",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc './run_python test_queue.py app.py -v'",
+      "review_flags": []
+    }
+  ],
+  "case_sha256": "73ed6a9b5cadf130e63f8b694219699c9066891c161550bfda592c524551ba82",
+  "prompt_sha256": "890e8e7238a3d11b98065646547e36c2563ff652e966a0baa5a66ed0cca78937",
+  "event_sha256": "68820bff103bb1bdeece14fef77529baddde72ece96800261a83aef6a00f7359",
+  "stderr_sha256": "e9cfe601f473e784202dd677ca61e7e01fadba2d1c34b25ddfdea5b207e5df96",
+  "reasoning_effort": "high",
+  "cli_version": "codex-cli 0.160.0",
+  "canary": false,
+  "python_version": "3.12.14",
+  "execution_platform": "Darwin",
+  "terminal_errors": [],
+  "execution_phase": "classifier_recovery",
+  "recovery_manifest_sha256": "6826d034f0c76fbe1d24f761c801c391c878482718ec612bce68fd59ebf3c149"
+}

@@ -1,0 +1,28 @@
+--- original.py
++++ app.py
+@@ -1,6 +1,5 @@
+ """Cache ranked retrieval results for caller requests."""
+ from copy import deepcopy
+-import json
+ 
+ 
+ def rank_documents(documents, limit):
+@@ -17,11 +16,16 @@
+     def search(self, tenant, query, revision, now, limit=10):
+         if limit == 0:
+             return []
+-        key = json.dumps(query, sort_keys=True, ensure_ascii=False)
++        # Filters are a mapping, so their insertion order is not part of the
++        # query identity. The remaining request fields are all significant.
++        key = (tenant, revision, query['text'], tuple(sorted(query['filters'].items())))
+         entry = self._entries.get(key)
+         if entry is not None and now < entry[0]:
+             documents = entry[1]
+         else:
+-            documents = self._source(tenant, query, revision)
++            # Keep source code from changing caller-owned query data, and keep
++            # its retained references separate from the cached snapshot.
++            source_documents = self._source(tenant, deepcopy(query), revision)
++            documents = deepcopy(source_documents)
+             self._entries[key] = (now + self._ttl, documents)
+         return rank_documents(documents, limit)

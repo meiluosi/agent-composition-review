@@ -1,0 +1,11 @@
+--- original.py
++++ app.py
+@@ -46,6 +46,6 @@
+         with closing(sqlite3.connect(self.path)) as db, db:
+             changed = db.execute("""UPDATE jobs SET state = 'done'
+                 WHERE job_id = ? AND worker = ?
+-                AND state = 'leased' AND expires_at > ?""",
+-                (receipt["job_id"], receipt["worker"], now)).rowcount
++                AND generation = ? AND state = 'leased' AND expires_at > ?""",
++                (receipt["job_id"], receipt["worker"], receipt["generation"], now)).rowcount
+             return changed == 1

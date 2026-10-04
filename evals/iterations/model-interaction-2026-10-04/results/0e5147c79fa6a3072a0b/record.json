@@ -1,0 +1,212 @@
+{
+  "case_id": "m01",
+  "condition": "B_checklist",
+  "trial": 1,
+  "model_requested": "gpt-6-luna",
+  "exit_code": 0,
+  "timed_out": false,
+  "elapsed_seconds": 128.72929345903685,
+  "usage": {
+    "input_tokens": 130021,
+    "cached_input_tokens": 107520,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 3955,
+    "reasoning_output_tokens": 1381
+  },
+  "completed": true,
+  "status": "completed",
+  "infra_kind": null,
+  "prediction": {
+    "initial_verdict": "violation",
+    "summary": "在 [app.py](/private/var/folders/yb/hs3lm0mn6zd7wk55nmjbwcl80000gn/T/model-interaction-task-7zhg5h2y/app.py) 修复两处问题：ack 现在核对 claim generation，防止同一 worker 用过期 receipt 确认新 claim；claim 拒绝 bool 和非 int/float 的 lease_seconds。其余实现保留。",
+    "tests_executed": [
+      "`./run_python -c '…'`：复现旧 receipt 可确认替换后的 claim，以及 bool lease 被接受。",
+      "`./run_python -c '…'`：综合检查过期边界、跨实例 ack、重复确认、完成后重复 ID、payload 返回值隔离、无效 lease 及不支持 payload；通过。",
+      "`./run_python smoke.py`：通过。"
+    ],
+    "limitations": []
+  },
+  "acceptance": {
+    "passed": true,
+    "tests_run": 9,
+    "checks": [
+      {
+        "test": "test_empty_and_persistence",
+        "passed": true
+      },
+      {
+        "test": "test_fifo_and_active_exclusion",
+        "passed": true
+      },
+      {
+        "test": "test_same_worker_stale_receipt",
+        "passed": true
+      },
+      {
+        "test": "test_other_worker_stale_receipt",
+        "passed": true
+      },
+      {
+        "test": "test_expiry_and_fractional_duration",
+        "passed": true
+      },
+      {
+        "test": "test_payload_isolation",
+        "passed": true
+      },
+      {
+        "test": "test_failed_put_and_duplicate_reuse",
+        "passed": true
+      },
+      {
+        "test": "test_invalid_duration_preserves_jobs",
+        "passed": true
+      },
+      {
+        "test": "test_atomic_claim_across_connections",
+        "passed": true
+      }
+    ],
+    "exit_code": 0,
+    "timed_out": false,
+    "sandbox": "macos_no_network_writes_only_grade_directory",
+    "stderr": ""
+  },
+  "acceptance_signature": {
+    "passed": true,
+    "tests_run": 9,
+    "checks": [
+      {
+        "test": "test_empty_and_persistence",
+        "passed": true
+      },
+      {
+        "test": "test_fifo_and_active_exclusion",
+        "passed": true
+      },
+      {
+        "test": "test_same_worker_stale_receipt",
+        "passed": true
+      },
+      {
+        "test": "test_other_worker_stale_receipt",
+        "passed": true
+      },
+      {
+        "test": "test_expiry_and_fractional_duration",
+        "passed": true
+      },
+      {
+        "test": "test_payload_isolation",
+        "passed": true
+      },
+      {
+        "test": "test_failed_put_and_duplicate_reuse",
+        "passed": true
+      },
+      {
+        "test": "test_invalid_duration_preserves_jobs",
+        "passed": true
+      },
+      {
+        "test": "test_atomic_claim_across_connections",
+        "passed": true
+      }
+    ],
+    "exit_code": 0,
+    "timed_out": false,
+    "invalid_output": false,
+    "isolation_failure": false
+  },
+  "source_changed": true,
+  "artifacts": {
+    "app.py": "a66ce59abe69dc4d61a24adc7764d8a6b5c75b9cddfa9461050da3686e264c27"
+  },
+  "protected_changes": [],
+  "outside_changes": [],
+  "artifact_errors": [],
+  "tool_audit": [
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc \"pwd && rg --files -g 'task.md' -g 'app.py' -g 'original.py' -g 'smoke.py' -g 'TOOLS.md' -g 'AGENTS.md' -g 'CHECKLIST.md' -g 'SKILL.md'\"",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc 'cat task.md'",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc \"sed -n '1,260p' app.py\"",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc 'cat smoke.py && cat TOOLS.md'",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc \"sed -n '1,260p' original.py\"",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc \"./run_python -c 'import tempfile, pathlib, app\nwith tempfile.TemporaryDirectory() as d:\n q=app.Queue(pathlib.Path(d)/\\\"q.db\\\"); q.put(\\\"j\\\", 1)\n old=q.claim(\\\"w\\\", 0, 1)[\\\"receipt\\\"]; new=q.claim(\\\"w\\\", 1, 1)[\\\"receipt\\\"]\n print(\\\"old receipt acknowledges replacement:\\\", q.ack(old, 1))\n try: app.Queue(pathlib.Path(d)/\\\"b.db\\\").claim(\\\"w\\\", 0, True)\n except Exception as e: print(\\\"bool lease rejected:\\\", type(e).__name__)\n else: print(\\\"bool lease accepted\\\")' && ./run_python smoke.py\"",
+      "review_flags": []
+    },
+    {
+      "type": "file_change",
+      "exit_code": null,
+      "changes": [
+        {
+          "path": "<workspace>/app.py",
+          "kind": "update"
+        }
+      ]
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 1,
+      "command": "/bin/zsh -lc \"./run_python -c 'import math, pathlib, tempfile, app\nwith tempfile.TemporaryDirectory() as d:\n p=pathlib.Path(d)/\\\"q.db\\\"; q=app.Queue(p); q.put(\\\"job\\\", {\\\"a\\\": [1, {\\\"b\\\": True}]})\n first=q.claim(\\\"same\\\", 0, 0.5); assert first[\\\"expires_at\\\"] == 0.5\n second=q.claim(\\\"same\\\", 0.5, 1); assert second[\\\"receipt\\\"] \"'!= first[\"receipt\"]\n q2=app.Queue(p); assert q2.ack(first[\"receipt\"], 0.5) is False\n assert q2.ack(second[\"receipt\"], 0.5) is True\n assert q.ack(second[\"receipt\"], 0.5) is False\n try: q.put(\"job\", 9)\n except ValueError: pass\n else: raise AssertionError(\"completed ID was reused\")\n q.put(\"copy\", {\"v\": [1]}); got=q.claim(\"w\", 2, 1); got[\"payload\"][\"v\"].append(2)\n assert q.claim(\"w2\", 2, 1) is None\n again=q.claim(\"w2\", 3, 1); assert again[\"payload\"] == {\"v\": [1]}\n q.put(\"safe\", \"ok\")\n for value in (True, False, 0, -1, float(\"inf\"), float(\"nan\")):\n  try: q.claim(\"w\", 4, value)\n  except ValueError: pass\n  else: raise AssertionError(f\"invalid lease accepted: {value!r}\")\n assert q.claim(\"w\", 4, 1)[\"payload\"] == \"ok\"\n q.put(\"bad\", object())\n'\"'\"",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 1,
+      "command": "/bin/zsh -lc \"./run_python -c 'import pathlib, tempfile, app\nwith tempfile.TemporaryDirectory() as d:\n p=pathlib.Path(d)/\\\"q.db\\\"; q=app.Queue(p); q.put(\\\"job\\\", {\\\"a\\\": [1, {\\\"b\\\": True}]})\n first=q.claim(\\\"same\\\", 0, 0.5); assert first[\\\"expires_at\\\"] == 0.5\n second=q.claim(\\\"same\\\", 0.5, 1); assert second[\\\"receipt\\\"] \"'!= first[\"receipt\"]\n q2=app.Queue(p); assert q2.ack(first[\"receipt\"], 0.5) is False\n assert q2.ack(second[\"receipt\"], 0.5) is True\n assert q.ack(second[\"receipt\"], 0.5) is False\n try: q.put(\"job\", 9)\n except ValueError: pass\n else: raise AssertionError(\"completed ID was reused\")\n q.put(\"copy\", {\"v\": [1]}); got=q.claim(\"w\", 2, 1); got[\"payload\"][\"v\"].append(2)\n assert q.claim(\"w2\", 2, 1) is None\n again=q.claim(\"w2\", 3, 1); assert again[\"payload\"] == {\"v\": [1]}\n r=app.Queue(pathlib.Path(d)/\"other.db\"); r.put(\"safe\", \"ok\")\n for value in (True, False, 0, -1, float(\"inf\"), float(\"nan\")):\n  try: r.claim(\"w\", 4, value)\n  except ValueError: pass\n  else: raise AssertionError(f\"invalid lease accepted: {value!r}\")\n assert r.claim(\"w\", 4, 1)[\"payload\"] == \"ok\"\n try: r.put(\"bad\", object())\n except TypeError: pass\n else: raise AssertionError(\"unsupported payload accepted\")\n assert r.claim(\"w\", 5, 1) is None\nprint(\"queue contract checks passed\")'\"' && ./run_python smoke.py\"",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc \"./run_python -c 'import pathlib, tempfile, app\nwith tempfile.TemporaryDirectory() as d:\n p=pathlib.Path(d)/\\\"q.db\\\"; q=app.Queue(p); q.put(\\\"job\\\", {\\\"a\\\": [1, {\\\"b\\\": True}]})\n first=q.claim(\\\"same\\\", 0, 0.5); assert first[\\\"expires_at\\\"] == 0.5\n second=q.claim(\\\"same\\\", 0.5, 1); assert second[\\\"receipt\\\"] \"'!= first[\"receipt\"]\n q2=app.Queue(p); assert q2.ack(first[\"receipt\"], 0.5) is False\n assert q2.ack(second[\"receipt\"], 0.5) is True\n assert q.ack(second[\"receipt\"], 0.5) is False\n try: q.put(\"job\", 9)\n except ValueError: pass\n else: raise AssertionError(\"completed ID was reused\")\n q.put(\"copy\", {\"v\": [1]}); got=q.claim(\"w\", 2, 1); got[\"payload\"][\"v\"].append(2)\n assert q.claim(\"w2\", 2, 1) is None\n again=q.claim(\"w2\", 3, 1); assert again[\"payload\"] == {\"v\": [1]}\n r=app.Queue(pathlib.Path(d)/\"other.db\"); r.put(\"safe\", \"ok\")\n for value in (True, False, 0, -1, float(\"inf\"), float(\"nan\")):\n  try: r.claim(\"w\", 4, value)\n  except ValueError: pass\n  else: raise AssertionError(f\"invalid lease accepted: {value!r}\")\n assert r.claim(\"w\", 4, 1)[\"payload\"] == \"ok\"\n try: r.put(\"bad\", object())\n except TypeError: pass\n else: raise AssertionError(\"unsupported payload accepted\")\n assert r.claim(\"w\", 5, 1)[\"payload\"] == \"ok\"\nprint(\"queue contract checks passed\")'\"' && ./run_python smoke.py\"",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 129,
+      "command": "/bin/zsh -lc 'git diff -- app.py && git status --short'",
+      "review_flags": []
+    }
+  ],
+  "case_sha256": "73ed6a9b5cadf130e63f8b694219699c9066891c161550bfda592c524551ba82",
+  "prompt_sha256": "6fd62ac6100d8b6cfbd0a2b2d2c570f6e2df884143fea61f287365cec2b7280f",
+  "event_sha256": "bc3c8846d3a0456f38e64788c4ad655332a531a8558045ca2491a15e59bcba1b",
+  "stderr_sha256": "057306f600e03a6f317e5be280a425a385ded4311ad3170622ad51393b286e25",
+  "reasoning_effort": "high",
+  "cli_version": "codex-cli 0.160.0",
+  "canary": false,
+  "python_version": "3.12.14",
+  "execution_platform": "Darwin",
+  "terminal_errors": [],
+  "execution_phase": "classifier_recovery",
+  "recovery_manifest_sha256": "6826d034f0c76fbe1d24f761c801c391c878482718ec612bce68fd59ebf3c149"
+}

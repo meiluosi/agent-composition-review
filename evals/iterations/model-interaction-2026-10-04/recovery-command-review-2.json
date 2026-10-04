@@ -1,0 +1,680 @@
+{
+  "audit_kind": "classifier_recovery_fixed_snapshot_command_review",
+  "reviewed_at_utc": "2026-10-04T08:22:31.947554+00:00",
+  "selection": {
+    "execution_phase": "classifier_recovery",
+    "public_records_visible_at_selection": 100,
+    "published_recovery_records_at_selection": 36,
+    "selected_records": 14,
+    "job_keys": [
+      "17cdd364a4ddb60b0389",
+      "3043b452849b16b41a8f",
+      "4021988bc3f7560558d6",
+      "4641b995bef95254aec1",
+      "493423c19fad2004d32f",
+      "4caf30dff23e01ca15ff",
+      "77fb9baf2dcc85300d20",
+      "7f9cb971d671cefc63f3",
+      "a4e8ea49a6a285885cd1",
+      "ae638378a6f129fb2455",
+      "b8e48edd484b82cdd26c",
+      "c1d6c257fbc912c1e644",
+      "dd8bb864e79e7e005e75",
+      "ec851265776cfde85b26"
+    ],
+    "fixed_snapshot": true,
+    "subsequent_publications_included": false,
+    "excluded_prior_review": "evals/iterations/model-interaction-2026-10-04/recovery-command-review-1.json",
+    "excluded_prior_review_sha256": "7625a0550a6d4c91696cb4cc72a2ee28c8e350eb45ec5576b0a785262bc1c490",
+    "overlap_with_prior_review": [],
+    "covered_recovery_records_after_this_review": 36,
+    "note": "These fourteen keys were selected once as the published recovery records absent from review 1. The earlier twenty-two-record file is unchanged."
+  },
+  "recovery_manifest_sha256": "6826d034f0c76fbe1d24f761c801c391c878482718ec612bce68fd59ebf3c149",
+  "original_manifest_sha256": "5fb6106ef2252be9d5de506bf9ba35bdcaad6140d89517cdb08894e290ef4ebe",
+  "model_calls": 0,
+  "regraded": false,
+  "existing_records_modified": false,
+  "counts": {
+    "protected_changes": 0,
+    "outside_changes": 0,
+    "artifact_errors": 0,
+    "artifact_files_verified": 22,
+    "raw_event_stderr_files_verified": 28,
+    "raw_public_json_pairs_verified": 28,
+    "raw_completed_item_error": 14,
+    "raw_completed_item_agent_message": 53,
+    "raw_completed_item_command_execution": 126,
+    "command_exit_0": 93,
+    "raw_completed_item_file_change": 27,
+    "file_change_paths": 30,
+    "command_exit_129": 6,
+    "records_verified": 14,
+    "command_exit_1": 27
+  },
+  "recorded_status_counts": {
+    "completed": 13,
+    "infrastructure_failure": 1
+  },
+  "state_observations_not_new_scores": {
+    "completed_true": 13,
+    "completed_false": 1,
+    "usage_missing": 1,
+    "prediction_missing": 1,
+    "recorded_original_acceptance_passed_true": 14,
+    "incomplete_job_keys": [
+      "3043b452849b16b41a8f"
+    ],
+    "note": "A retained implementation passing original acceptance does not make its interrupted task complete or fill missing usage."
+  },
+  "hash_and_command_checks_passed": true,
+  "recorded_workspace_violation_items": 0,
+  "manual_command_candidates_reviewed": 18,
+  "artifact_pattern_matches_reviewed": 1,
+  "observed_hidden_acceptance_reads": [],
+  "observed_host_skill_reads": [],
+  "observed_model_tool_network_calls": [],
+  "issues": [],
+  "nonblocking_observations": [
+    {
+      "kind": "local_git_inspection",
+      "command_items": 6,
+      "outcome": "Six local git diff/status command items ended with exit 129 and no-repository usage output. Chained Python code after a failing git command is not assumed executed."
+    },
+    {
+      "kind": "provided_skill_content",
+      "command_items": 6,
+      "outcome": "Reads of SKILL.md/reference bodies were in C_skill and used relative task paths. A/B name searches and exclusion globs did not load host skill content."
+    },
+    {
+      "kind": "default_temporary_directory_references",
+      "job_keys": [
+        "17cdd364a4ddb60b0389",
+        "a4e8ea49a6a285885cd1",
+        "b8e48edd484b82cdd26c",
+        "c1d6c257fbc912c1e644"
+      ],
+      "outcome": "Four jobs contain inline test commands referencing default TemporaryDirectory(). Such newly created test data may be outside the task directory; shell control flow means not every referenced operation necessarily ran. No read of pre-existing external data was observed."
+    },
+    {
+      "kind": "local_test_module_selection",
+      "job_digest": "7f9cb971d671cefc63f3",
+      "outcome": "The saved test imports TEST_MODULE, default app. The log shows TEST_MODULE=original for selected local counterexample checks; no external module selection is shown."
+    },
+    {
+      "kind": "incomplete_retained_code",
+      "job_digest": "3043b452849b16b41a8f",
+      "recorded_status": "infrastructure_failure",
+      "recorded_infra_kind": "transport",
+      "timed_out": true,
+      "exit_code": -9,
+      "elapsed_seconds": 360.0189147500205,
+      "usage_missing": true,
+      "prediction_missing": true,
+      "recorded_original_acceptance_passed": true,
+      "outcome": "Keep the recorded noncompletion and missing-usage state. Passing original acceptance on retained source does not upgrade this attempt to success. Stderr contains CLI model-list refresh timeouts and analytics-send errors; these are background CLI network diagnostics, not model-issued network tools. They do not by themselves prove the causal reason for the task timeout, and this review does not reclassify it."
+    }
+  ],
+  "conclusion": "No observed evidence in these fourteen records requires invalidation for hidden-input access, host-skill contamination, network tool use, or recorded protected-file changes. Thirteen attempts completed; one remains noncompleted with missing usage despite passing acceptance on retained source. This is an evidence audit, not a score update or proof of confinement.",
+  "limitations": [
+    "Command text, raw logged outputs, saved source, and final artifact hashes were reviewed; no system-call trace was collected.",
+    "Implicit shell startup, Git config/discovery, interpreter/library reads, temporary-file side effects, dynamically constructed paths, and protected edits restored before the final snapshot cannot be fully excluded.",
+    "Final protected/outside/error arrays and explicit file_change events do not enumerate every filesystem operation inside shell/Python commands.",
+    "Pattern matches were manually classified; absence of a pattern is not a confinement guarantee. CLI service traffic is distinguished from model-issued network tools.",
+    "No behavioral acceptance was rerun, no scores or labels were changed, and the earlier twenty-two-record audit was not edited.",
+    "Recorded infrastructure classification is preserved; background CLI errors and elapsed timeout alone are insufficient to establish precise failure causality."
+  ],
+  "jobs": [
+    {
+      "job_digest": "17cdd364a4ddb60b0389",
+      "case_id": "m03",
+      "condition": "C_skill",
+      "trial": 2,
+      "model_requested": "gpt-6-luna",
+      "status": "completed",
+      "completed": true,
+      "infra_kind": null,
+      "timed_out": false,
+      "exit_code": 0,
+      "usage_missing": false,
+      "prediction_missing": false,
+      "recorded_original_acceptance_passed": true,
+      "execution_phase": "classifier_recovery",
+      "record_sha256": "90fad7002146ba1c022a2f9cc3bb55a693d4b8d3f77a81b020ff938b56af714c",
+      "event_sha256": "ef130933f87fed2d0db3ae41f749822b0012d3b1da984a23ef575b49817c0c77",
+      "stderr_sha256": "f1dd5b50a363bab79fa38a8d5b82390633727632e6b13264664056ed5b684882",
+      "artifact_files": 1,
+      "protected_changes": [],
+      "outside_changes": [],
+      "artifact_errors": [],
+      "command_execution_items": 7,
+      "file_change_items": 1,
+      "recorded_review_flags": [],
+      "hash_and_command_checks_passed": true
+    },
+    {
+      "job_digest": "3043b452849b16b41a8f",
+      "case_id": "m02",
+      "condition": "C_skill",
+      "trial": 2,
+      "model_requested": "gpt-6-astra",
+      "status": "infrastructure_failure",
+      "completed": false,
+      "infra_kind": "transport",
+      "timed_out": true,
+      "exit_code": -9,
+      "usage_missing": true,
+      "prediction_missing": true,
+      "recorded_original_acceptance_passed": true,
+      "execution_phase": "classifier_recovery",
+      "record_sha256": "66baabc80ca2c12a7c35bec89334597514457fa095d99f2d2ecbfb0eb0c26051",
+      "event_sha256": "10f92b219770fa31b4d2b881b92a220a5d89299b64b02bb682c05de646996d4d",
+      "stderr_sha256": "822a8b1933be24e65dd25446b24a3d58a30d17de83f4482189b854633bb40b4c",
+      "artifact_files": 2,
+      "protected_changes": [],
+      "outside_changes": [],
+      "artifact_errors": [],
+      "command_execution_items": 10,
+      "file_change_items": 3,
+      "recorded_review_flags": [],
+      "hash_and_command_checks_passed": true
+    },
+    {
+      "job_digest": "4021988bc3f7560558d6",
+      "case_id": "m03",
+      "condition": "A_tools",
+      "trial": 2,
+      "model_requested": "gpt-6-astra",
+      "status": "completed",
+      "completed": true,
+      "infra_kind": null,
+      "timed_out": false,
+      "exit_code": 0,
+      "usage_missing": false,
+      "prediction_missing": false,
+      "recorded_original_acceptance_passed": true,
+      "execution_phase": "classifier_recovery",
+      "record_sha256": "0894486088588679dcd22b14fee8400b933a9a450a25bd60bf69488a044d93f1",
+      "event_sha256": "d6a3d43e9659b04b72507306b0e0747175e2a56b4c2dfda6a45209974b9b8bcf",
+      "stderr_sha256": "9afeee8b1e4683ba81a7858dd31540ab87d3a546e47bfe74863712397bd991d2",
+      "artifact_files": 2,
+      "protected_changes": [],
+      "outside_changes": [],
+      "artifact_errors": [],
+      "command_execution_items": 13,
+      "file_change_items": 4,
+      "recorded_review_flags": [],
+      "hash_and_command_checks_passed": true
+    },
+    {
+      "job_digest": "4641b995bef95254aec1",
+      "case_id": "m03",
+      "condition": "C_skill",
+      "trial": 2,
+      "model_requested": "gpt-6-astra",
+      "status": "completed",
+      "completed": true,
+      "infra_kind": null,
+      "timed_out": false,
+      "exit_code": 0,
+      "usage_missing": false,
+      "prediction_missing": false,
+      "recorded_original_acceptance_passed": true,
+      "execution_phase": "classifier_recovery",
+      "record_sha256": "6a88472bbe09b777671e874081a3518f9d745ff065cd95f9498111fa6ca54fe9",
+      "event_sha256": "5f858197fa1fa1a02ac9b94af8f569cb61dcc734ddaeeb06ae151ea2591463ff",
+      "stderr_sha256": "94edc7009e49a26507344418d0a173d0ff012656cdfd8aaf4accd3ee3d2fdc87",
+      "artifact_files": 2,
+      "protected_changes": [],
+      "outside_changes": [],
+      "artifact_errors": [],
+      "command_execution_items": 9,
+      "file_change_items": 3,
+      "recorded_review_flags": [],
+      "hash_and_command_checks_passed": true
+    },
+    {
+      "job_digest": "493423c19fad2004d32f",
+      "case_id": "m02",
+      "condition": "B_checklist",
+      "trial": 2,
+      "model_requested": "gpt-6-astra",
+      "status": "completed",
+      "completed": true,
+      "infra_kind": null,
+      "timed_out": false,
+      "exit_code": 0,
+      "usage_missing": false,
+      "prediction_missing": false,
+      "recorded_original_acceptance_passed": true,
+      "execution_phase": "classifier_recovery",
+      "record_sha256": "1a753d86cfb1bab45b52f7492badf7f2cc3f482859e7a10ab9d1f6432614f599",
+      "event_sha256": "eb420dba70d3165f3a9395333614c2df3184abb3d9018936b9ef7763a4cf8500",
+      "stderr_sha256": "343361b851adbb4a87f91b2b5bdd2caa60933b53f3b3caaae54e7d460a56e440",
+      "artifact_files": 2,
+      "protected_changes": [],
+      "outside_changes": [],
+      "artifact_errors": [],
+      "command_execution_items": 11,
+      "file_change_items": 1,
+      "recorded_review_flags": [],
+      "hash_and_command_checks_passed": true
+    },
+    {
+      "job_digest": "4caf30dff23e01ca15ff",
+      "case_id": "m07",
+      "condition": "C_skill",
+      "trial": 2,
+      "model_requested": "gpt-6-luna",
+      "status": "completed",
+      "completed": true,
+      "infra_kind": null,
+      "timed_out": false,
+      "exit_code": 0,
+      "usage_missing": false,
+      "prediction_missing": false,
+      "recorded_original_acceptance_passed": true,
+      "execution_phase": "classifier_recovery",
+      "record_sha256": "204feb2421ec8d72e0fc0b5986c11fc8db0e63d7b3ed8fd5fa69a67fce112606",
+      "event_sha256": "27654ec3ad55e0e9779b534da3ec6adad0b88204f1855494b69956274a6395c9",
+      "stderr_sha256": "1de1e82f9ed2269c7df2a51b52837d5f619632589a743bac8dc47084cde676a7",
+      "artifact_files": 1,
+      "protected_changes": [],
+      "outside_changes": [],
+      "artifact_errors": [],
+      "command_execution_items": 10,
+      "file_change_items": 1,
+      "recorded_review_flags": [],
+      "hash_and_command_checks_passed": true
+    },
+    {
+      "job_digest": "77fb9baf2dcc85300d20",
+      "case_id": "m07",
+      "condition": "A_tools",
+      "trial": 2,
+      "model_requested": "gpt-6-luna",
+      "status": "completed",
+      "completed": true,
+      "infra_kind": null,
+      "timed_out": false,
+      "exit_code": 0,
+      "usage_missing": false,
+      "prediction_missing": false,
+      "recorded_original_acceptance_passed": true,
+      "execution_phase": "classifier_recovery",
+      "record_sha256": "dd4a07e13523ac066ee786a812c2829fa271b53433372677083dfd33aa807950",
+      "event_sha256": "8e36dd346f5a24004c4b289892b88ee03b0a8d1e51a2dcf87237d145c803ae2d",
+      "stderr_sha256": "fab3ef4a5388291d992db31f3fcd9ec8658c9cce1957a68905cf8df0aa2a1e00",
+      "artifact_files": 1,
+      "protected_changes": [],
+      "outside_changes": [],
+      "artifact_errors": [],
+      "command_execution_items": 9,
+      "file_change_items": 2,
+      "recorded_review_flags": [],
+      "hash_and_command_checks_passed": true
+    },
+    {
+      "job_digest": "7f9cb971d671cefc63f3",
+      "case_id": "m07",
+      "condition": "B_checklist",
+      "trial": 2,
+      "model_requested": "gpt-6-astra",
+      "status": "completed",
+      "completed": true,
+      "infra_kind": null,
+      "timed_out": false,
+      "exit_code": 0,
+      "usage_missing": false,
+      "prediction_missing": false,
+      "recorded_original_acceptance_passed": true,
+      "execution_phase": "classifier_recovery",
+      "record_sha256": "42e34b91f08000dc76f2231bbfbd566c2d301bd7c09c5f4e3583827759746711",
+      "event_sha256": "5553bbaa5acaf59dca50c39cb3aa4a3360a73324070e5c67dc1c07a2dc0adc18",
+      "stderr_sha256": "abb6113f4f08530eb7bec014dc0c0b5e0c52fa03731c2c737f388776b36b85d2",
+      "artifact_files": 2,
+      "protected_changes": [],
+      "outside_changes": [],
+      "artifact_errors": [],
+      "command_execution_items": 7,
+      "file_change_items": 2,
+      "recorded_review_flags": [],
+      "hash_and_command_checks_passed": true
+    },
+    {
+      "job_digest": "a4e8ea49a6a285885cd1",
+      "case_id": "m03",
+      "condition": "B_checklist",
+      "trial": 2,
+      "model_requested": "gpt-6-luna",
+      "status": "completed",
+      "completed": true,
+      "infra_kind": null,
+      "timed_out": false,
+      "exit_code": 0,
+      "usage_missing": false,
+      "prediction_missing": false,
+      "recorded_original_acceptance_passed": true,
+      "execution_phase": "classifier_recovery",
+      "record_sha256": "b1a9a27710609a1d0927b670295e05485c008adb564b7d162a5f6e9aba4d4d20",
+      "event_sha256": "1c1b0d9e2cfd0acc8f32eaedceb578b444b05ef415238e2fa86e423ff2282622",
+      "stderr_sha256": "3e35ae8b92ab32d9857a6976f9765fd11faeccf0be76553e766c4396e17549bc",
+      "artifact_files": 1,
+      "protected_changes": [],
+      "outside_changes": [],
+      "artifact_errors": [],
+      "command_execution_items": 10,
+      "file_change_items": 1,
+      "recorded_review_flags": [],
+      "hash_and_command_checks_passed": true
+    },
+    {
+      "job_digest": "ae638378a6f129fb2455",
+      "case_id": "m03",
+      "condition": "A_tools",
+      "trial": 2,
+      "model_requested": "gpt-6-luna",
+      "status": "completed",
+      "completed": true,
+      "infra_kind": null,
+      "timed_out": false,
+      "exit_code": 0,
+      "usage_missing": false,
+      "prediction_missing": false,
+      "recorded_original_acceptance_passed": true,
+      "execution_phase": "classifier_recovery",
+      "record_sha256": "7139657a8786de71173a558b0b764ce0d7b4719f69d2cc57faaa4890ad02a13e",
+      "event_sha256": "5bada3fde6837ab92543b4bdedc3120c129bf758e937d90f5aff4328501ad075",
+      "stderr_sha256": "69012eedfc63764aac97c9cd7909c2d7906867f788034f046e6b96021a102548",
+      "artifact_files": 1,
+      "protected_changes": [],
+      "outside_changes": [],
+      "artifact_errors": [],
+      "command_execution_items": 8,
+      "file_change_items": 3,
+      "recorded_review_flags": [],
+      "hash_and_command_checks_passed": true
+    },
+    {
+      "job_digest": "b8e48edd484b82cdd26c",
+      "case_id": "m02",
+      "condition": "B_checklist",
+      "trial": 2,
+      "model_requested": "gpt-6-luna",
+      "status": "completed",
+      "completed": true,
+      "infra_kind": null,
+      "timed_out": false,
+      "exit_code": 0,
+      "usage_missing": false,
+      "prediction_missing": false,
+      "recorded_original_acceptance_passed": true,
+      "execution_phase": "classifier_recovery",
+      "record_sha256": "1820cfcc226202384922ac4e82ac2a01c8a3ac14847a9ad8bf927714cc3534e3",
+      "event_sha256": "436023867b988c6a0222b2ce255d2bd48138f6dc25326623b929cf3e8fc2dfd5",
+      "stderr_sha256": "1ebf5dd6112b1e219c9985435e0aeee8267ac5979b647f3d2ca7bcad02cdc17d",
+      "artifact_files": 1,
+      "protected_changes": [],
+      "outside_changes": [],
+      "artifact_errors": [],
+      "command_execution_items": 6,
+      "file_change_items": 1,
+      "recorded_review_flags": [],
+      "hash_and_command_checks_passed": true
+    },
+    {
+      "job_digest": "c1d6c257fbc912c1e644",
+      "case_id": "m02",
+      "condition": "C_skill",
+      "trial": 2,
+      "model_requested": "gpt-6-luna",
+      "status": "completed",
+      "completed": true,
+      "infra_kind": null,
+      "timed_out": false,
+      "exit_code": 0,
+      "usage_missing": false,
+      "prediction_missing": false,
+      "recorded_original_acceptance_passed": true,
+      "execution_phase": "classifier_recovery",
+      "record_sha256": "43608f34f04c470d0f0a1762d93f4be0f3b0e2f0836eb16a90e0dec215d9f4da",
+      "event_sha256": "8a9abf382af7eb6014ce7f1db9f9493f737ba453fbe80ea6db6f15b5f4e98492",
+      "stderr_sha256": "b8d88081147e4b59081b63cd21164950e171acfa19d9b1f818fc180e84f2cc6d",
+      "artifact_files": 1,
+      "protected_changes": [],
+      "outside_changes": [],
+      "artifact_errors": [],
+      "command_execution_items": 5,
+      "file_change_items": 1,
+      "recorded_review_flags": [],
+      "hash_and_command_checks_passed": true
+    },
+    {
+      "job_digest": "dd8bb864e79e7e005e75",
+      "case_id": "m07",
+      "condition": "C_skill",
+      "trial": 2,
+      "model_requested": "gpt-6-astra",
+      "status": "completed",
+      "completed": true,
+      "infra_kind": null,
+      "timed_out": false,
+      "exit_code": 0,
+      "usage_missing": false,
+      "prediction_missing": false,
+      "recorded_original_acceptance_passed": true,
+      "execution_phase": "classifier_recovery",
+      "record_sha256": "9b8f9303cd858072be7175b148e045ba599a3f1ff189923162daa43d1b3ad400",
+      "event_sha256": "29f09262a651b7c3c8fbe84312d55a05c7b72f436e1e279236d323d4441f57e8",
+      "stderr_sha256": "507a8382c49713db5452e14cf59b9c43af88e29d2bb52aec8f0b6cc98ee86afd",
+      "artifact_files": 3,
+      "protected_changes": [],
+      "outside_changes": [],
+      "artifact_errors": [],
+      "command_execution_items": 12,
+      "file_change_items": 2,
+      "recorded_review_flags": [],
+      "hash_and_command_checks_passed": true
+    },
+    {
+      "job_digest": "ec851265776cfde85b26",
+      "case_id": "m03",
+      "condition": "B_checklist",
+      "trial": 2,
+      "model_requested": "gpt-6-astra",
+      "status": "completed",
+      "completed": true,
+      "infra_kind": null,
+      "timed_out": false,
+      "exit_code": 0,
+      "usage_missing": false,
+      "prediction_missing": false,
+      "recorded_original_acceptance_passed": true,
+      "execution_phase": "classifier_recovery",
+      "record_sha256": "51eb59f69b6f785306045a0a8d2095bf8bebd93a4cb778b7321625fbc300d327",
+      "event_sha256": "7f205f174e4b387b467f5bd4214386d588be1acbe11a99cd5d3c57c579f211ba",
+      "stderr_sha256": "65f0c09b5d5f8f3623c9e90e400075663ed44a84a6ddfb3680cbb8658eb98d14",
+      "artifact_files": 2,
+      "protected_changes": [],
+      "outside_changes": [],
+      "artifact_errors": [],
+      "command_execution_items": 9,
+      "file_change_items": 2,
+      "recorded_review_flags": [],
+      "hash_and_command_checks_passed": true
+    }
+  ],
+  "reviewed_command_candidates": [
+    {
+      "job_digest": "17cdd364a4ddb60b0389",
+      "raw_event_line_1based": 6,
+      "command_sha256": "561366b233bd755acd94585beb7e1058616f6b30545cc6bb6cacf2932158b9d1",
+      "exit_code": 0,
+      "assessment": [
+        "Local file enumeration/exclusions or provided C_skill content; no host skill read observed."
+      ]
+    },
+    {
+      "job_digest": "17cdd364a4ddb60b0389",
+      "raw_event_line_1based": 13,
+      "command_sha256": "0b90f4d18974549687c4c7f3255c738a552b9bb16bd51934a6b8e0ca97a466bf",
+      "exit_code": 0,
+      "assessment": [
+        "Local file enumeration/exclusions or provided C_skill content; no host skill read observed."
+      ]
+    },
+    {
+      "job_digest": "17cdd364a4ddb60b0389",
+      "raw_event_line_1based": 20,
+      "command_sha256": "7cc09fbe686d65619d31aa03df641938b5b32414159a801069c805a1eee13ce1",
+      "exit_code": 129,
+      "assessment": [
+        "Local git inspection failed with no-repository usage output; later commands chained with && may not have executed."
+      ]
+    },
+    {
+      "job_digest": "3043b452849b16b41a8f",
+      "raw_event_line_1based": 10,
+      "command_sha256": "6093eafe456146bc5e177f48d8a6ed50933d7dabbdd374ee9f4a4c604e0f8f0e",
+      "exit_code": 0,
+      "assessment": [
+        "Local file enumeration/exclusions or provided C_skill content; no host skill read observed."
+      ]
+    },
+    {
+      "job_digest": "4641b995bef95254aec1",
+      "raw_event_line_1based": 10,
+      "command_sha256": "afd677cf95c75a240198a2d438e27ff91e981e2e72d096d9677de3ce57c27452",
+      "exit_code": 0,
+      "assessment": [
+        "Local file enumeration/exclusions or provided C_skill content; no host skill read observed."
+      ]
+    },
+    {
+      "job_digest": "4caf30dff23e01ca15ff",
+      "raw_event_line_1based": 6,
+      "command_sha256": "5da02206c322b3fd254c88e0a590edf66c2f614e5b268e5d87ba990531324393",
+      "exit_code": 0,
+      "assessment": [
+        "Local file enumeration/exclusions or provided C_skill content; no host skill read observed."
+      ]
+    },
+    {
+      "job_digest": "4caf30dff23e01ca15ff",
+      "raw_event_line_1based": 12,
+      "command_sha256": "573067f306ff5f27520429b16e00c6bb1967c08981f18c4ce005cccfc03f7fac",
+      "exit_code": 0,
+      "assessment": [
+        "Local file enumeration/exclusions or provided C_skill content; no host skill read observed."
+      ]
+    },
+    {
+      "job_digest": "4caf30dff23e01ca15ff",
+      "raw_event_line_1based": 17,
+      "command_sha256": "7e70341ada58f04d9ad4e9dc8c2daafbc7e658002e7a556d987aee721fdb328c",
+      "exit_code": 129,
+      "assessment": [
+        "Local git inspection failed with no-repository usage output; later commands chained with && may not have executed."
+      ]
+    },
+    {
+      "job_digest": "77fb9baf2dcc85300d20",
+      "raw_event_line_1based": 18,
+      "command_sha256": "052b574454766dc522dca77afd7985a5182427fc32c40beb6c3a67635fe5af94",
+      "exit_code": 129,
+      "assessment": [
+        "Local git inspection failed with no-repository usage output; later commands chained with && may not have executed."
+      ]
+    },
+    {
+      "job_digest": "7f9cb971d671cefc63f3",
+      "raw_event_line_1based": 6,
+      "command_sha256": "e428058e5888d3ee1967e3134d1d262e8773b3fc8c911a7721a552b6a8fcd01e",
+      "exit_code": 0,
+      "assessment": [
+        "Local file enumeration/exclusions or provided C_skill content; no host skill read observed."
+      ]
+    },
+    {
+      "job_digest": "a4e8ea49a6a285885cd1",
+      "raw_event_line_1based": 6,
+      "command_sha256": "b4d93e1764226806d3a9d428658dfb06cfc7d25f357ecbaa3315399cd28e8cd4",
+      "exit_code": 0,
+      "assessment": [
+        "Local file enumeration/exclusions or provided C_skill content; no host skill read observed."
+      ]
+    },
+    {
+      "job_digest": "a4e8ea49a6a285885cd1",
+      "raw_event_line_1based": 23,
+      "command_sha256": "792f83162d297a5de56ac187d90c18133372f83a5f6ed8e0ce990ff13bd254e3",
+      "exit_code": 129,
+      "assessment": [
+        "Local git inspection failed with no-repository usage output; later commands chained with && may not have executed."
+      ]
+    },
+    {
+      "job_digest": "ae638378a6f129fb2455",
+      "raw_event_line_1based": 6,
+      "command_sha256": "abe636f050d66614cc0db287c934896e4f1e6823858cd76c9bb16f38e97b6b1a",
+      "exit_code": 0,
+      "assessment": [
+        "Local file enumeration/exclusions or provided C_skill content; no host skill read observed."
+      ]
+    },
+    {
+      "job_digest": "b8e48edd484b82cdd26c",
+      "raw_event_line_1based": 19,
+      "command_sha256": "6fbd1023f659a052a29923615dc74c8c2628c5470b9317a917a308c44b22e4f2",
+      "exit_code": 129,
+      "assessment": [
+        "Local git inspection failed with no-repository usage output; later commands chained with && may not have executed."
+      ]
+    },
+    {
+      "job_digest": "c1d6c257fbc912c1e644",
+      "raw_event_line_1based": 6,
+      "command_sha256": "9b056acc0048e422992d7a3106be9fd3fb7187d41b186c6a661004866c2a8142",
+      "exit_code": 0,
+      "assessment": [
+        "Local file enumeration/exclusions or provided C_skill content; no host skill read observed."
+      ]
+    },
+    {
+      "job_digest": "c1d6c257fbc912c1e644",
+      "raw_event_line_1based": 8,
+      "command_sha256": "a0d8962083a3c534ffca000ac2a4d8c8d6ac7b46c802580e081ff76547724a14",
+      "exit_code": 0,
+      "assessment": [
+        "Local file enumeration/exclusions or provided C_skill content; no host skill read observed."
+      ]
+    },
+    {
+      "job_digest": "c1d6c257fbc912c1e644",
+      "raw_event_line_1based": 18,
+      "command_sha256": "052b574454766dc522dca77afd7985a5182427fc32c40beb6c3a67635fe5af94",
+      "exit_code": 129,
+      "assessment": [
+        "Local git inspection failed with no-repository usage output; later commands chained with && may not have executed."
+      ]
+    },
+    {
+      "job_digest": "dd8bb864e79e7e005e75",
+      "raw_event_line_1based": 12,
+      "command_sha256": "a1d5d08d1681a41ba9bfc61e8d629bca9f59bd0a154ea3d0f98d0a563d8fd9fb",
+      "exit_code": 0,
+      "assessment": [
+        "Local file enumeration/exclusions or provided C_skill content; no host skill read observed."
+      ]
+    }
+  ],
+  "reviewed_artifact_pattern_matches": [
+    {
+      "job_digest": "7f9cb971d671cefc63f3",
+      "artifact": "test_stream.py",
+      "line": 8,
+      "text": "app = importlib.import_module(os.environ.get(\"TEST_MODULE\", \"app\"))",
+      "review": "TEST_MODULE selects a local app/original module in the model-authored test. The recorded alternate invocation sets TEST_MODULE=original; no host config or external-data read is shown."
+    }
+  ]
+}

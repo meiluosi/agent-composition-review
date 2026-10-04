@@ -1,0 +1,1010 @@
+{
+  "audit_kind": "classifier_recovery_fixed_snapshot_command_review",
+  "reviewed_at_utc": "2026-10-04T08:06:09.382286+00:00",
+  "selection": {
+    "execution_phase": "classifier_recovery",
+    "public_records_visible_at_selection": 86,
+    "selected_records": 22,
+    "job_keys": [
+      "05c4a7c13110b435dd29",
+      "0e5147c79fa6a3072a0b",
+      "2bc90af66585a7d40f3a",
+      "34fbb9c18fa871ee1295",
+      "365ddcd3e79e860391cf",
+      "46bfd77d2185660b144e",
+      "4ac4dbebaa9c2a2ab074",
+      "4e851a2959799e2a5495",
+      "51c18360f53c3bb2cc7a",
+      "68ab8ef3ef501a635cf7",
+      "766a8289c6f40734329d",
+      "8370619ff3361ab89df4",
+      "9236552afce80503cff7",
+      "aedc07e7fa064525077b",
+      "b02d4df6130da60f8945",
+      "b6c9563dd648a9ce91b1",
+      "c57e07b0842c6e428045",
+      "cfae7e89225d446b1ab7",
+      "d8d2364d55d04362792e",
+      "e9f073af4b5e46eaabf7",
+      "fa192a9e6ba182e6e344",
+      "fdb0ff931744432c3199"
+    ],
+    "fixed_snapshot": true,
+    "subsequent_publications_included": false,
+    "note": "Keys were captured once when 86 total records existed; later file reads were restricted to these keys. The original 64-record review is separate."
+  },
+  "recovery_manifest_sha256": "6826d034f0c76fbe1d24f761c801c391c878482718ec612bce68fd59ebf3c149",
+  "original_manifest_sha256": "5fb6106ef2252be9d5de506bf9ba35bdcaad6140d89517cdb08894e290ef4ebe",
+  "model_calls": 0,
+  "regraded": false,
+  "existing_records_modified": false,
+  "counts": {
+    "protected_changes": 0,
+    "outside_changes": 0,
+    "artifact_errors": 0,
+    "artifact_files_verified": 33,
+    "raw_event_stderr_files_verified": 44,
+    "raw_public_json_pairs_verified": 44,
+    "raw_completed_item_error": 22,
+    "raw_completed_item_agent_message": 79,
+    "raw_completed_item_command_execution": 193,
+    "command_exit_0": 146,
+    "raw_completed_item_file_change": 34,
+    "file_change_paths": 35,
+    "command_exit_129": 11,
+    "records_verified": 22,
+    "command_exit_1": 36
+  },
+  "recorded_status_counts": {
+    "completed": 22
+  },
+  "hash_and_command_checks_passed": true,
+  "recorded_workspace_violation_items": 0,
+  "manual_command_candidates_reviewed": 34,
+  "artifact_pattern_matches_reviewed": 21,
+  "observed_hidden_acceptance_reads": [],
+  "observed_host_skill_reads": [],
+  "observed_network_tool_calls": [],
+  "issues": [],
+  "nonblocking_observations": [
+    {
+      "kind": "local_git_inspection",
+      "command_items": 11,
+      "outcome": "All were local git diff/status attempts ending with exit 129 and no-repository usage output. Implicit filesystem discovery is not a syscall-level audit."
+    },
+    {
+      "kind": "provided_skill_content",
+      "command_items": 11,
+      "outcome": "Reads of SKILL.md/reference bodies were in C_skill and used relative task paths. A/B name searches and exclusion globs did not load host skill content."
+    },
+    {
+      "kind": "default_temporary_directory",
+      "job_keys": [
+        "0e5147c79fa6a3072a0b",
+        "4ac4dbebaa9c2a2ab074",
+        "766a8289c6f40734329d",
+        "9236552afce80503cff7",
+        "cfae7e89225d446b1ab7"
+      ],
+      "outcome": "Five jobs used standard-library TemporaryDirectory() for newly created inline test data. Its default directory may be outside the task directory; generated temporary writes are not comprehensively represented by file_change events. No read of pre-existing external data was observed. This limits any strict workspace-confinement claim and is not evidence of hidden-input contamination."
+    },
+    {
+      "kind": "local_pycache_cleanup",
+      "job_digest": "d8d2364d55d04362792e",
+      "outcome": "The model removed its generated __pycache__/app.cpython-312.pyc and empty local __pycache__ directory; no protected file was involved."
+    },
+    {
+      "kind": "stdin_device",
+      "job_digest": "365ddcd3e79e860391cf",
+      "outcome": "One heredoc was invoked through /dev/stdin; it failed with local app import error, and is not evidence of external input retrieval."
+    }
+  ],
+  "conclusion": "No observed evidence from this fixed subset requires invalidating a run for hidden-input access, host-skill contamination, network use, or recorded protected-file changes. This is not a proof of full read/write confinement and does not judge task effects or labels.",
+  "limitations": [
+    "Command text, raw logged outputs, saved source, and final artifact hashes were reviewed; no system-call trace was collected.",
+    "Implicit shell startup, Git config/discovery, interpreter/library reads, temporary-file side effects, dynamically constructed paths, and protected edits restored before the final snapshot cannot be fully excluded by this audit.",
+    "Final protected/outside/error arrays and explicit file_change events do not enumerate every filesystem operation performed inside shell/Python commands.",
+    "Pattern matches were manually classified rather than treated as violations; absence of a pattern is not a confinement guarantee.",
+    "No behavioral acceptance was rerun, no scores or initial labels were changed, and no later recovery records are covered by this snapshot."
+  ],
+  "jobs": [
+    {
+      "job_digest": "05c4a7c13110b435dd29",
+      "case_id": "m06",
+      "condition": "B_checklist",
+      "trial": 1,
+      "model_requested": "gpt-6-luna",
+      "status": "completed",
+      "execution_phase": "classifier_recovery",
+      "record_sha256": "5b9e4bc6d0b9bf2d6fa126892a6925a8c519b4eab2f87b1a8952eea3af9c3454",
+      "event_sha256": "24e969d8baeb8a1f66bd4ebe167a7c1b35b8c4546ce9d9f2e15b1aacc6438209",
+      "stderr_sha256": "284f135a54bf59ec8a036f5381557eb4fa6bd83fe326641e50c33bd678bca656",
+      "artifact_files": 1,
+      "protected_changes": [],
+      "outside_changes": [],
+      "artifact_errors": [],
+      "command_execution_items": 5,
+      "file_change_items": 1,
+      "recorded_review_flags": [],
+      "hash_and_command_checks_passed": true
+    },
+    {
+      "job_digest": "0e5147c79fa6a3072a0b",
+      "case_id": "m01",
+      "condition": "B_checklist",
+      "trial": 1,
+      "model_requested": "gpt-6-luna",
+      "status": "completed",
+      "execution_phase": "classifier_recovery",
+      "record_sha256": "caa4b25d63d50c5ea240affed0017dbf88544c7e9dbd1c5c567928d0470479c2",
+      "event_sha256": "bc3c8846d3a0456f38e64788c4ad655332a531a8558045ca2491a15e59bcba1b",
+      "stderr_sha256": "057306f600e03a6f317e5be280a425a385ded4311ad3170622ad51393b286e25",
+      "artifact_files": 1,
+      "protected_changes": [],
+      "outside_changes": [],
+      "artifact_errors": [],
+      "command_execution_items": 10,
+      "file_change_items": 1,
+      "recorded_review_flags": [],
+      "hash_and_command_checks_passed": true
+    },
+    {
+      "job_digest": "2bc90af66585a7d40f3a",
+      "case_id": "m06",
+      "condition": "A_tools",
+      "trial": 1,
+      "model_requested": "gpt-6-luna",
+      "status": "completed",
+      "execution_phase": "classifier_recovery",
+      "record_sha256": "2889bac35b84a474383e5c8ac62dff01e1d959748bd0ac47cbbc9887dae6b8a8",
+      "event_sha256": "46800f2e126e7a462a8eba890e08edc79958cf1a843062fe2189c8f14386c3cd",
+      "stderr_sha256": "dcddb24c6623d02c22a5df5e26886363b98aaa27164ac9df5095a61239dc6598",
+      "artifact_files": 1,
+      "protected_changes": [],
+      "outside_changes": [],
+      "artifact_errors": [],
+      "command_execution_items": 7,
+      "file_change_items": 1,
+      "recorded_review_flags": [],
+      "hash_and_command_checks_passed": true
+    },
+    {
+      "job_digest": "34fbb9c18fa871ee1295",
+      "case_id": "m04",
+      "condition": "C_skill",
+      "trial": 2,
+      "model_requested": "gpt-6-luna",
+      "status": "completed",
+      "execution_phase": "classifier_recovery",
+      "record_sha256": "0eaacf9a0c85e5c0bf02f1ff3bea9dd4c3ba943e70bc376daa5306513b08e0f9",
+      "event_sha256": "f1d72ffba4a14c36a050c77d4d0a6f0b72b644508d6acbb6dcdfd599b3c4523a",
+      "stderr_sha256": "fd10e2717bbeb51050fa7951ce0d4131fa1b99e84492026ef1b0ef3d060f3048",
+      "artifact_files": 1,
+      "protected_changes": [],
+      "outside_changes": [],
+      "artifact_errors": [],
+      "command_execution_items": 7,
+      "file_change_items": 1,
+      "recorded_review_flags": [],
+      "hash_and_command_checks_passed": true
+    },
+    {
+      "job_digest": "365ddcd3e79e860391cf",
+      "case_id": "m06",
+      "condition": "C_skill",
+      "trial": 1,
+      "model_requested": "gpt-6-luna",
+      "status": "completed",
+      "execution_phase": "classifier_recovery",
+      "record_sha256": "d7e455b6a585f63303cb932421d116887e4f7726ea81d0205caf7dfc7ee80795",
+      "event_sha256": "de64cb44182bfaec8af23a9bdb478b465fa1b3f51e43f76f710b4dacc54dbdad",
+      "stderr_sha256": "ec67cd3fbc4ab7224dd595747ffe3b8d598ae277a56712d5ebce959d98b18987",
+      "artifact_files": 1,
+      "protected_changes": [],
+      "outside_changes": [],
+      "artifact_errors": [],
+      "command_execution_items": 10,
+      "file_change_items": 1,
+      "recorded_review_flags": [],
+      "hash_and_command_checks_passed": true
+    },
+    {
+      "job_digest": "46bfd77d2185660b144e",
+      "case_id": "m04",
+      "condition": "B_checklist",
+      "trial": 2,
+      "model_requested": "gpt-6-luna",
+      "status": "completed",
+      "execution_phase": "classifier_recovery",
+      "record_sha256": "8eb760f22133312dff70f2f6eb637f4637adc88bd98a213e03d025f628f0385d",
+      "event_sha256": "69428f62f7b482ea60129321c186f7c04449530c74659b1eb3a659c320523143",
+      "stderr_sha256": "7ea3424173a470b5a0d5434a874eae034046093e885d696b8b17dd71a6100e21",
+      "artifact_files": 1,
+      "protected_changes": [],
+      "outside_changes": [],
+      "artifact_errors": [],
+      "command_execution_items": 6,
+      "file_change_items": 1,
+      "recorded_review_flags": [],
+      "hash_and_command_checks_passed": true
+    },
+    {
+      "job_digest": "4ac4dbebaa9c2a2ab074",
+      "case_id": "m01",
+      "condition": "A_tools",
+      "trial": 2,
+      "model_requested": "gpt-6-luna",
+      "status": "completed",
+      "execution_phase": "classifier_recovery",
+      "record_sha256": "064e9a496e74fa5f1d9e08fd948d798966e0fc431df06b4ff3d5fe79c61a9cd0",
+      "event_sha256": "a2ff2c0ed774dc8198405bd143cf10e8f6d96c520b7ce4940ea48877e591ae6a",
+      "stderr_sha256": "cecbe1179f89729be795abb27ddd142ae1bcfd3b73bf01e345a881638b1f2389",
+      "artifact_files": 1,
+      "protected_changes": [],
+      "outside_changes": [],
+      "artifact_errors": [],
+      "command_execution_items": 5,
+      "file_change_items": 1,
+      "recorded_review_flags": [],
+      "hash_and_command_checks_passed": true
+    },
+    {
+      "job_digest": "4e851a2959799e2a5495",
+      "case_id": "m06",
+      "condition": "C_skill",
+      "trial": 1,
+      "model_requested": "gpt-6-astra",
+      "status": "completed",
+      "execution_phase": "classifier_recovery",
+      "record_sha256": "70659523b5edc7ab8a0778b65bddb92d293e9f0fa2eadeb6394581a9acd32a5f",
+      "event_sha256": "2f27571cc3c32e2cce01a49d5cf7aa9396de420c8c9c798cf77b5ccf471f95d1",
+      "stderr_sha256": "2c603256cee9cc83b15566dd0a368b668e4feb90dff722a67ba412df93c49255",
+      "artifact_files": 2,
+      "protected_changes": [],
+      "outside_changes": [],
+      "artifact_errors": [],
+      "command_execution_items": 9,
+      "file_change_items": 2,
+      "recorded_review_flags": [],
+      "hash_and_command_checks_passed": true
+    },
+    {
+      "job_digest": "51c18360f53c3bb2cc7a",
+      "case_id": "m04",
+      "condition": "A_tools",
+      "trial": 2,
+      "model_requested": "gpt-6-astra",
+      "status": "completed",
+      "execution_phase": "classifier_recovery",
+      "record_sha256": "cfdc56752b223b270eec404a9c5ea3da7266611d5d2575df697d0b4d515c63e6",
+      "event_sha256": "8fd3f374601669bd0554cc9c1e3a364b959fc71bd1d7c1844ed3647b8d543c94",
+      "stderr_sha256": "d3fa3f14d4ae44eb03f6e9697fef4917d37cb37a1823248d25d4b5cdbc0cdc45",
+      "artifact_files": 2,
+      "protected_changes": [],
+      "outside_changes": [],
+      "artifact_errors": [],
+      "command_execution_items": 7,
+      "file_change_items": 2,
+      "recorded_review_flags": [],
+      "hash_and_command_checks_passed": true
+    },
+    {
+      "job_digest": "68ab8ef3ef501a635cf7",
+      "case_id": "m06",
+      "condition": "A_tools",
+      "trial": 1,
+      "model_requested": "gpt-6-astra",
+      "status": "completed",
+      "execution_phase": "classifier_recovery",
+      "record_sha256": "903b2ed9ebdc1d9e062c71921f569eb70fdcd45438cc2da629a99f71930eecb5",
+      "event_sha256": "7fbef005cda99b5621dc57a1d74407ac99c43ce82dcaf940758b5bcd5b0447f4",
+      "stderr_sha256": "e87f6c181fa6f277434f2c54b95b46661067f907ba0f167b0151de6ec16d82ac",
+      "artifact_files": 2,
+      "protected_changes": [],
+      "outside_changes": [],
+      "artifact_errors": [],
+      "command_execution_items": 8,
+      "file_change_items": 2,
+      "recorded_review_flags": [],
+      "hash_and_command_checks_passed": true
+    },
+    {
+      "job_digest": "766a8289c6f40734329d",
+      "case_id": "m01",
+      "condition": "C_skill",
+      "trial": 2,
+      "model_requested": "gpt-6-luna",
+      "status": "completed",
+      "execution_phase": "classifier_recovery",
+      "record_sha256": "7670d6c6091f7734b82bc9ab32a211a72382d046b7429c1ff203ace7fece492d",
+      "event_sha256": "7ed56edd7d21bd2052281a32a4aa77099b77f8b509fedcbcd420faf0494dc139",
+      "stderr_sha256": "7cf9b804ddd0deecda2c82dccecaf041a9921b2f55d62896219c904b8f14b6ea",
+      "artifact_files": 1,
+      "protected_changes": [],
+      "outside_changes": [],
+      "artifact_errors": [],
+      "command_execution_items": 8,
+      "file_change_items": 1,
+      "recorded_review_flags": [],
+      "hash_and_command_checks_passed": true
+    },
+    {
+      "job_digest": "8370619ff3361ab89df4",
+      "case_id": "m06",
+      "condition": "B_checklist",
+      "trial": 1,
+      "model_requested": "gpt-6-astra",
+      "status": "completed",
+      "execution_phase": "classifier_recovery",
+      "record_sha256": "77010733664096f8d4e819737dd9c634f7bb455b0119ecd80f5bb00a30344853",
+      "event_sha256": "1ca81aed8021610615782878fb433d99b9b913908297e3ef76d8171455f5d3c6",
+      "stderr_sha256": "c18de38a5168e06bddc6b8847407f6b445e2865e607d3fb929d1206dea3eb54c",
+      "artifact_files": 2,
+      "protected_changes": [],
+      "outside_changes": [],
+      "artifact_errors": [],
+      "command_execution_items": 6,
+      "file_change_items": 2,
+      "recorded_review_flags": [],
+      "hash_and_command_checks_passed": true
+    },
+    {
+      "job_digest": "9236552afce80503cff7",
+      "case_id": "m01",
+      "condition": "B_checklist",
+      "trial": 2,
+      "model_requested": "gpt-6-luna",
+      "status": "completed",
+      "execution_phase": "classifier_recovery",
+      "record_sha256": "0f911472014f3b7b68323a5a5cedeb93bc8d4b6bda06571fc5f87948645e63cb",
+      "event_sha256": "6d9f8c6bfaf4f61785aa7fc6f2627cd70c4672c51b10d2e478bffbd663d47e89",
+      "stderr_sha256": "ae97de4144fd1e2883357c74341edfa86c5bf5d09f09138b9884e337d7b300b8",
+      "artifact_files": 1,
+      "protected_changes": [],
+      "outside_changes": [],
+      "artifact_errors": [],
+      "command_execution_items": 9,
+      "file_change_items": 1,
+      "recorded_review_flags": [],
+      "hash_and_command_checks_passed": true
+    },
+    {
+      "job_digest": "aedc07e7fa064525077b",
+      "case_id": "m01",
+      "condition": "B_checklist",
+      "trial": 2,
+      "model_requested": "gpt-6-astra",
+      "status": "completed",
+      "execution_phase": "classifier_recovery",
+      "record_sha256": "dbc9ee4801bd3743adb39af3ebcd4a9ade6a976dbaed5f55046ebf36fc3c54ac",
+      "event_sha256": "208adff0439aac497796930325af682a3ac2f64017bfe2e6a4e9dad9cb1090c0",
+      "stderr_sha256": "17cc4f3f90e03367f87d573aa751ed2f364c86f29dab0eb164c2508e33335e98",
+      "artifact_files": 2,
+      "protected_changes": [],
+      "outside_changes": [],
+      "artifact_errors": [],
+      "command_execution_items": 10,
+      "file_change_items": 2,
+      "recorded_review_flags": [],
+      "hash_and_command_checks_passed": true
+    },
+    {
+      "job_digest": "b02d4df6130da60f8945",
+      "case_id": "m01",
+      "condition": "A_tools",
+      "trial": 2,
+      "model_requested": "gpt-6-astra",
+      "status": "completed",
+      "execution_phase": "classifier_recovery",
+      "record_sha256": "e7c1e19c6a48aa62d0dddaef2af0f46d067f29beb698f46b87be300b0bbea29b",
+      "event_sha256": "0c928792c83309c0da194c2d42ebb989bcc3dfd6228e2d4a6bacc5a10185b00f",
+      "stderr_sha256": "97c5c4c5e489125cdedb5cd299798ebbf11ad76f8bb2adeeb1a9687f5757d44a",
+      "artifact_files": 2,
+      "protected_changes": [],
+      "outside_changes": [],
+      "artifact_errors": [],
+      "command_execution_items": 10,
+      "file_change_items": 2,
+      "recorded_review_flags": [],
+      "hash_and_command_checks_passed": true
+    },
+    {
+      "job_digest": "b6c9563dd648a9ce91b1",
+      "case_id": "m07",
+      "condition": "A_tools",
+      "trial": 2,
+      "model_requested": "gpt-6-astra",
+      "status": "completed",
+      "execution_phase": "classifier_recovery",
+      "record_sha256": "4833327c14fea04a8e218be8ab1cb82f7f32cbd7b71fecbec90b405fcaca969e",
+      "event_sha256": "27f16e51ac6e1cb5efad3b61af24e9e3b85d616c2d2400259dacd7660e6438ff",
+      "stderr_sha256": "8c3e099fda71078585e6e70b50b96e60b15af55ad167fe74dba955708f761129",
+      "artifact_files": 3,
+      "protected_changes": [],
+      "outside_changes": [],
+      "artifact_errors": [],
+      "command_execution_items": 8,
+      "file_change_items": 2,
+      "recorded_review_flags": [],
+      "hash_and_command_checks_passed": true
+    },
+    {
+      "job_digest": "c57e07b0842c6e428045",
+      "case_id": "m01",
+      "condition": "C_skill",
+      "trial": 2,
+      "model_requested": "gpt-6-astra",
+      "status": "completed",
+      "execution_phase": "classifier_recovery",
+      "record_sha256": "3406f4e8a7389e98c42f5d6ee248a54706074dfb96b0549581c29e287e451fa7",
+      "event_sha256": "68820bff103bb1bdeece14fef77529baddde72ece96800261a83aef6a00f7359",
+      "stderr_sha256": "e9cfe601f473e784202dd677ca61e7e01fadba2d1c34b25ddfdea5b207e5df96",
+      "artifact_files": 2,
+      "protected_changes": [],
+      "outside_changes": [],
+      "artifact_errors": [],
+      "command_execution_items": 12,
+      "file_change_items": 3,
+      "recorded_review_flags": [],
+      "hash_and_command_checks_passed": true
+    },
+    {
+      "job_digest": "cfae7e89225d446b1ab7",
+      "case_id": "m01",
+      "condition": "C_skill",
+      "trial": 1,
+      "model_requested": "gpt-6-luna",
+      "status": "completed",
+      "execution_phase": "classifier_recovery",
+      "record_sha256": "ed45a84ec08db03065308313a8625bc8833aa083c968647647bf670fed8a2a0c",
+      "event_sha256": "d5e1ce8e9b99d791cc688ac51854e865a4d16e1461effc8a4a08aab5a75f0731",
+      "stderr_sha256": "a328c02ae2f439fa665332671c5402e9448c2f3f3f1a223f87243922d0046a17",
+      "artifact_files": 1,
+      "protected_changes": [],
+      "outside_changes": [],
+      "artifact_errors": [],
+      "command_execution_items": 18,
+      "file_change_items": 1,
+      "recorded_review_flags": [],
+      "hash_and_command_checks_passed": true
+    },
+    {
+      "job_digest": "d8d2364d55d04362792e",
+      "case_id": "m07",
+      "condition": "B_checklist",
+      "trial": 2,
+      "model_requested": "gpt-6-luna",
+      "status": "completed",
+      "execution_phase": "classifier_recovery",
+      "record_sha256": "ca9b3b1ca61e3cb63ec3e647283af41bfc8106f1924d102a76b8445360208d23",
+      "event_sha256": "edbdffd139e4d76c1dac24ab884cd23b9297632b3617fe36f6665a7b4c8ef9fa",
+      "stderr_sha256": "80eb073c6497ee417d38962e85e0b86120dba427fb3ef8617d0e1bd9cecbb0df",
+      "artifact_files": 1,
+      "protected_changes": [],
+      "outside_changes": [],
+      "artifact_errors": [],
+      "command_execution_items": 16,
+      "file_change_items": 2,
+      "recorded_review_flags": [],
+      "hash_and_command_checks_passed": true
+    },
+    {
+      "job_digest": "e9f073af4b5e46eaabf7",
+      "case_id": "m04",
+      "condition": "B_checklist",
+      "trial": 2,
+      "model_requested": "gpt-6-astra",
+      "status": "completed",
+      "execution_phase": "classifier_recovery",
+      "record_sha256": "2f381f848623a6a227966c90e69dbb638843a7c45f831331f3271050936aafbf",
+      "event_sha256": "9482e4dd93507ad42d2e27b0f02720f3d6e792f97c793300fc7a1d176212f5cf",
+      "stderr_sha256": "8d07c2ab7b17e52deefc429a064455465fd590b94ddbc24c0103c74c13bbbf43",
+      "artifact_files": 2,
+      "protected_changes": [],
+      "outside_changes": [],
+      "artifact_errors": [],
+      "command_execution_items": 7,
+      "file_change_items": 2,
+      "recorded_review_flags": [],
+      "hash_and_command_checks_passed": true
+    },
+    {
+      "job_digest": "fa192a9e6ba182e6e344",
+      "case_id": "m04",
+      "condition": "A_tools",
+      "trial": 2,
+      "model_requested": "gpt-6-luna",
+      "status": "completed",
+      "execution_phase": "classifier_recovery",
+      "record_sha256": "3842160dfb915c74643d87fd6e2a27a55f11703a54d93be1ac2a54a91d43d51d",
+      "event_sha256": "7dbbf8de52819c47705d99f047babb1a3249cc67e5d21ff92cdb5549e937fc44",
+      "stderr_sha256": "92404c5ae09311ea44d6c14c789cb11a425510a8f6e4fa277d4cc2c0412c7711",
+      "artifact_files": 1,
+      "protected_changes": [],
+      "outside_changes": [],
+      "artifact_errors": [],
+      "command_execution_items": 6,
+      "file_change_items": 1,
+      "recorded_review_flags": [],
+      "hash_and_command_checks_passed": true
+    },
+    {
+      "job_digest": "fdb0ff931744432c3199",
+      "case_id": "m04",
+      "condition": "C_skill",
+      "trial": 2,
+      "model_requested": "gpt-6-astra",
+      "status": "completed",
+      "execution_phase": "classifier_recovery",
+      "record_sha256": "26ca271856f0013720c4a51049050ddfad7b6c177d5db88d3d7e6f5acf6ce7f2",
+      "event_sha256": "5c62309404910a7bced4463e197535b9c5e1031d6eff97b387640b4ebc612e8b",
+      "stderr_sha256": "e30685da6306bb8e0c47b25b820d45433ce4dbb8a0a7e0f4bc9bf9634ce6b272",
+      "artifact_files": 2,
+      "protected_changes": [],
+      "outside_changes": [],
+      "artifact_errors": [],
+      "command_execution_items": 9,
+      "file_change_items": 2,
+      "recorded_review_flags": [],
+      "hash_and_command_checks_passed": true
+    }
+  ],
+  "reviewed_command_candidates": [
+    {
+      "job_digest": "05c4a7c13110b435dd29",
+      "raw_event_line_1based": 15,
+      "command_sha256": "853a80699c6457c3ba14b5cdf44275add5b92a08ac2ce91be880ac2811a6b019",
+      "exit_code": 0,
+      "assessment": [
+        "Dynamic import names copy, a permitted standard-library module."
+      ]
+    },
+    {
+      "job_digest": "05c4a7c13110b435dd29",
+      "raw_event_line_1based": 17,
+      "command_sha256": "052b574454766dc522dca77afd7985a5182427fc32c40beb6c3a67635fe5af94",
+      "exit_code": 129,
+      "assessment": [
+        "Local git inspection failed with no repository; no recovered repository data."
+      ]
+    },
+    {
+      "job_digest": "0e5147c79fa6a3072a0b",
+      "raw_event_line_1based": 6,
+      "command_sha256": "b4d93e1764226806d3a9d428658dfb06cfc7d25f357ecbaa3315399cd28e8cd4",
+      "exit_code": 0,
+      "assessment": [
+        "Local file enumeration/exclusions or provided C_skill content; no host skill read observed."
+      ]
+    },
+    {
+      "job_digest": "0e5147c79fa6a3072a0b",
+      "raw_event_line_1based": 28,
+      "command_sha256": "052b574454766dc522dca77afd7985a5182427fc32c40beb6c3a67635fe5af94",
+      "exit_code": 129,
+      "assessment": [
+        "Local git inspection failed with no repository; no recovered repository data."
+      ]
+    },
+    {
+      "job_digest": "34fbb9c18fa871ee1295",
+      "raw_event_line_1based": 6,
+      "command_sha256": "9b056acc0048e422992d7a3106be9fd3fb7187d41b186c6a661004866c2a8142",
+      "exit_code": 0,
+      "assessment": [
+        "Local file enumeration/exclusions or provided C_skill content; no host skill read observed."
+      ]
+    },
+    {
+      "job_digest": "34fbb9c18fa871ee1295",
+      "raw_event_line_1based": 8,
+      "command_sha256": "6e83a91a07939e031d8eeb6fcf00df27a16c93565d6432faa2e1a09ed407ff9e",
+      "exit_code": 0,
+      "assessment": [
+        "Local file enumeration/exclusions or provided C_skill content; no host skill read observed."
+      ]
+    },
+    {
+      "job_digest": "34fbb9c18fa871ee1295",
+      "raw_event_line_1based": 20,
+      "command_sha256": "052b574454766dc522dca77afd7985a5182427fc32c40beb6c3a67635fe5af94",
+      "exit_code": 129,
+      "assessment": [
+        "Local git inspection failed with no repository; no recovered repository data."
+      ]
+    },
+    {
+      "job_digest": "365ddcd3e79e860391cf",
+      "raw_event_line_1based": 6,
+      "command_sha256": "98dd5612037f667c057838e8c89316ef98e0f95d46108ee99069667bd4b1532c",
+      "exit_code": 0,
+      "assessment": [
+        "Local file enumeration/exclusions or provided C_skill content; no host skill read observed."
+      ]
+    },
+    {
+      "job_digest": "365ddcd3e79e860391cf",
+      "raw_event_line_1based": 12,
+      "command_sha256": "9b3281954a3ab6b703dbc57e3dec293373f838c0619e2b596a3ca13929021cdb",
+      "exit_code": 0,
+      "assessment": [
+        "Local file enumeration/exclusions or provided C_skill content; no host skill read observed."
+      ]
+    },
+    {
+      "job_digest": "365ddcd3e79e860391cf",
+      "raw_event_line_1based": 23,
+      "command_sha256": "e61c458ca5999146c05ab4dd329e4fc14097390dc31bfc6c98637c6eabddfae2",
+      "exit_code": 1,
+      "assessment": [
+        "Dynamic import names copy, a permitted standard-library module.",
+        "Reads the command-provided heredoc through stdin; failed to import local app, not an external-data read."
+      ]
+    },
+    {
+      "job_digest": "365ddcd3e79e860391cf",
+      "raw_event_line_1based": 28,
+      "command_sha256": "7e70341ada58f04d9ad4e9dc8c2daafbc7e658002e7a556d987aee721fdb328c",
+      "exit_code": 129,
+      "assessment": [
+        "Local git inspection failed with no repository; no recovered repository data."
+      ]
+    },
+    {
+      "job_digest": "46bfd77d2185660b144e",
+      "raw_event_line_1based": 19,
+      "command_sha256": "fec3e3267b0681080a4770bae299474f7e1b49403430ced42f52bb71a65d87af",
+      "exit_code": 129,
+      "assessment": [
+        "Local git inspection failed with no repository; no recovered repository data."
+      ]
+    },
+    {
+      "job_digest": "4ac4dbebaa9c2a2ab074",
+      "raw_event_line_1based": 17,
+      "command_sha256": "ea71f6190ff994e04a16217dbc7196af292aae2e05a819797491fe1a5620db6b",
+      "exit_code": 129,
+      "assessment": [
+        "Local git inspection failed with no repository; no recovered repository data."
+      ]
+    },
+    {
+      "job_digest": "4e851a2959799e2a5495",
+      "raw_event_line_1based": 10,
+      "command_sha256": "8d40d87ef85ca080520e02ee97f567eaf82063caeefb833e8341fcee4ccf9d2c",
+      "exit_code": 0,
+      "assessment": [
+        "Local file enumeration/exclusions or provided C_skill content; no host skill read observed."
+      ]
+    },
+    {
+      "job_digest": "4e851a2959799e2a5495",
+      "raw_event_line_1based": 12,
+      "command_sha256": "3f263f5f5f2cb883d989bd68037f0bd78783593bdb2cb00ae1d1c692763fefea",
+      "exit_code": 0,
+      "assessment": [
+        "Local file enumeration/exclusions or provided C_skill content; no host skill read observed."
+      ]
+    },
+    {
+      "job_digest": "766a8289c6f40734329d",
+      "raw_event_line_1based": 6,
+      "command_sha256": "9b056acc0048e422992d7a3106be9fd3fb7187d41b186c6a661004866c2a8142",
+      "exit_code": 0,
+      "assessment": [
+        "Local file enumeration/exclusions or provided C_skill content; no host skill read observed."
+      ]
+    },
+    {
+      "job_digest": "766a8289c6f40734329d",
+      "raw_event_line_1based": 8,
+      "command_sha256": "557c6647efaad66b78a7b81cd9c6f7809fd23cec5877a0623d8b03b2a0684bca",
+      "exit_code": 0,
+      "assessment": [
+        "Local file enumeration/exclusions or provided C_skill content; no host skill read observed."
+      ]
+    },
+    {
+      "job_digest": "766a8289c6f40734329d",
+      "raw_event_line_1based": 25,
+      "command_sha256": "137693cfcb25cbbc20dbd4a72a32bd3256a9f474a91eac6774563cb447873f2a",
+      "exit_code": 129,
+      "assessment": [
+        "Local git inspection failed with no repository; no recovered repository data."
+      ]
+    },
+    {
+      "job_digest": "8370619ff3361ab89df4",
+      "raw_event_line_1based": 15,
+      "command_sha256": "f29492dcc493804e6ea735fd2bd32b0802a2119b2163f1a1e817098f5716efe3",
+      "exit_code": 0,
+      "assessment": [
+        "requests is a local test-data variable, not an HTTP client import."
+      ]
+    },
+    {
+      "job_digest": "9236552afce80503cff7",
+      "raw_event_line_1based": 25,
+      "command_sha256": "21be27fc997ba0240234dc3238bc98bbc1c6e81963eca6fc3aec58cd693eb404",
+      "exit_code": 129,
+      "assessment": [
+        "Local git inspection failed with no repository; no recovered repository data."
+      ]
+    },
+    {
+      "job_digest": "b02d4df6130da60f8945",
+      "raw_event_line_1based": 6,
+      "command_sha256": "5d5140e94a4745f0e8b86ede196b4da0576abd5b48744e091b204cf41530557d",
+      "exit_code": 0,
+      "assessment": [
+        "Local file enumeration/exclusions or provided C_skill content; no host skill read observed."
+      ]
+    },
+    {
+      "job_digest": "c57e07b0842c6e428045",
+      "raw_event_line_1based": 10,
+      "command_sha256": "afd677cf95c75a240198a2d438e27ff91e981e2e72d096d9677de3ce57c27452",
+      "exit_code": 0,
+      "assessment": [
+        "Local file enumeration/exclusions or provided C_skill content; no host skill read observed."
+      ]
+    },
+    {
+      "job_digest": "cfae7e89225d446b1ab7",
+      "raw_event_line_1based": 6,
+      "command_sha256": "a075c652d3c738efb8c00fd1e8daf665ccce840cd32566435387d6685e8ada8f",
+      "exit_code": 0,
+      "assessment": [
+        "Local file enumeration/exclusions or provided C_skill content; no host skill read observed."
+      ]
+    },
+    {
+      "job_digest": "cfae7e89225d446b1ab7",
+      "raw_event_line_1based": 14,
+      "command_sha256": "4d8c685ca4ffd2fc1814a952f6175ebfed1461502b338513fb64d827ac16ba25",
+      "exit_code": 0,
+      "assessment": [
+        "Local file enumeration/exclusions or provided C_skill content; no host skill read observed."
+      ]
+    },
+    {
+      "job_digest": "cfae7e89225d446b1ab7",
+      "raw_event_line_1based": 20,
+      "command_sha256": "1720fbf6a482914d2370c5211d8bdd07b71a32dc7e26fd947aa491f3f042516d",
+      "exit_code": 0,
+      "assessment": [
+        "Local file enumeration/exclusions or provided C_skill content; no host skill read observed."
+      ]
+    },
+    {
+      "job_digest": "cfae7e89225d446b1ab7",
+      "raw_event_line_1based": 22,
+      "command_sha256": "f9e61bee47187fd4c01eb5769c8732c8e4d6bd7931e29745a76aba94ac6935a8",
+      "exit_code": 0,
+      "assessment": [
+        "Local file enumeration/exclusions or provided C_skill content; no host skill read observed."
+      ]
+    },
+    {
+      "job_digest": "cfae7e89225d446b1ab7",
+      "raw_event_line_1based": 34,
+      "command_sha256": "0043c40f93fb739899caceb033376adfa5f7eeabf4a9d69f5d1c35427cabacba",
+      "exit_code": 129,
+      "assessment": [
+        "Local git inspection failed with no repository; no recovered repository data."
+      ]
+    },
+    {
+      "job_digest": "d8d2364d55d04362792e",
+      "raw_event_line_1based": 21,
+      "command_sha256": "7e70341ada58f04d9ad4e9dc8c2daafbc7e658002e7a556d987aee721fdb328c",
+      "exit_code": 129,
+      "assessment": [
+        "Local git inspection failed with no repository; no recovered repository data."
+      ]
+    },
+    {
+      "job_digest": "d8d2364d55d04362792e",
+      "raw_event_line_1based": 41,
+      "command_sha256": "f7c7a53ef4702164aa0cd6a8ce3b32280dfac836a065c588688306cfb5bf9e4d",
+      "exit_code": 0,
+      "assessment": [
+        "Local file enumeration/exclusions or provided C_skill content; no host skill read observed."
+      ]
+    },
+    {
+      "job_digest": "d8d2364d55d04362792e",
+      "raw_event_line_1based": 43,
+      "command_sha256": "2c3fc9a3d6b8e436a3d0820d23892f74b6320f8fa6b501e030f8b2d5f6ddf329",
+      "exit_code": 0,
+      "assessment": [
+        "Local file enumeration/exclusions or provided C_skill content; no host skill read observed."
+      ]
+    },
+    {
+      "job_digest": "fa192a9e6ba182e6e344",
+      "raw_event_line_1based": 6,
+      "command_sha256": "b7285beaca030b53f6ed8a0d22c19cd5a8668686d786840672f89763411f14e4",
+      "exit_code": 0,
+      "assessment": [
+        "Local file enumeration/exclusions or provided C_skill content; no host skill read observed."
+      ]
+    },
+    {
+      "job_digest": "fa192a9e6ba182e6e344",
+      "raw_event_line_1based": 19,
+      "command_sha256": "052b574454766dc522dca77afd7985a5182427fc32c40beb6c3a67635fe5af94",
+      "exit_code": 129,
+      "assessment": [
+        "Local git inspection failed with no repository; no recovered repository data."
+      ]
+    },
+    {
+      "job_digest": "fdb0ff931744432c3199",
+      "raw_event_line_1based": 10,
+      "command_sha256": "f2b43e4cf61a4f232b49b4ffb50a671d908e266b72e53f462f313e6b0ec696ee",
+      "exit_code": 0,
+      "assessment": [
+        "Local file enumeration/exclusions or provided C_skill content; no host skill read observed."
+      ]
+    },
+    {
+      "job_digest": "fdb0ff931744432c3199",
+      "raw_event_line_1based": 12,
+      "command_sha256": "b3d178a9a1c5c87dd5bb94351b46b7a501b86a2ed03bd61d954fe2ef88d33b43",
+      "exit_code": 0,
+      "assessment": [
+        "Local file enumeration/exclusions or provided C_skill content; no host skill read observed."
+      ]
+    }
+  ],
+  "reviewed_artifact_pattern_matches": [
+    {
+      "job_digest": "05c4a7c13110b435dd29",
+      "artifact": "app.py",
+      "line": 1,
+      "text": "\"\"\"Cache ranked retrieval results for caller requests.\"\"\"",
+      "review": "Benign: descriptive prose or local requests variable; the one __file__.parent refers to the task test directory."
+    },
+    {
+      "job_digest": "2bc90af66585a7d40f3a",
+      "artifact": "app.py",
+      "line": 1,
+      "text": "\"\"\"Cache ranked retrieval results for caller requests.\"\"\"",
+      "review": "Benign: descriptive prose or local requests variable; the one __file__.parent refers to the task test directory."
+    },
+    {
+      "job_digest": "34fbb9c18fa871ee1295",
+      "artifact": "app.py",
+      "line": 1,
+      "text": "\"\"\"Cache ranked retrieval results for caller requests.\"\"\"",
+      "review": "Benign: descriptive prose or local requests variable; the one __file__.parent refers to the task test directory."
+    },
+    {
+      "job_digest": "365ddcd3e79e860391cf",
+      "artifact": "app.py",
+      "line": 1,
+      "text": "\"\"\"Cache ranked retrieval results for caller requests.\"\"\"",
+      "review": "Benign: descriptive prose or local requests variable; the one __file__.parent refers to the task test directory."
+    },
+    {
+      "job_digest": "46bfd77d2185660b144e",
+      "artifact": "app.py",
+      "line": 1,
+      "text": "\"\"\"Cache ranked retrieval results for caller requests.\"\"\"",
+      "review": "Benign: descriptive prose or local requests variable; the one __file__.parent refers to the task test directory."
+    },
+    {
+      "job_digest": "4e851a2959799e2a5495",
+      "artifact": "app.py",
+      "line": 1,
+      "text": "\"\"\"Cache ranked retrieval results for caller requests.\"\"\"",
+      "review": "Benign: descriptive prose or local requests variable; the one __file__.parent refers to the task test directory."
+    },
+    {
+      "job_digest": "51c18360f53c3bb2cc7a",
+      "artifact": "test_retrieval.py",
+      "line": 51,
+      "text": "        requests = [",
+      "review": "Benign: descriptive prose or local requests variable; the one __file__.parent refers to the task test directory."
+    },
+    {
+      "job_digest": "51c18360f53c3bb2cc7a",
+      "artifact": "test_retrieval.py",
+      "line": 67,
+      "text": "        for index, args in enumerate(requests, 1):",
+      "review": "Benign: descriptive prose or local requests variable; the one __file__.parent refers to the task test directory."
+    },
+    {
+      "job_digest": "51c18360f53c3bb2cc7a",
+      "artifact": "test_retrieval.py",
+      "line": 69,
+      "text": "        for index, args in enumerate(requests, 1):",
+      "review": "Benign: descriptive prose or local requests variable; the one __file__.parent refers to the task test directory."
+    },
+    {
+      "job_digest": "51c18360f53c3bb2cc7a",
+      "artifact": "test_retrieval.py",
+      "line": 71,
+      "text": "        self.assertEqual(len(calls), len(requests))",
+      "review": "Benign: descriptive prose or local requests variable; the one __file__.parent refers to the task test directory."
+    },
+    {
+      "job_digest": "51c18360f53c3bb2cc7a",
+      "artifact": "app.py",
+      "line": 1,
+      "text": "\"\"\"Cache ranked retrieval results for caller requests.\"\"\"",
+      "review": "Benign: descriptive prose or local requests variable; the one __file__.parent refers to the task test directory."
+    },
+    {
+      "job_digest": "68ab8ef3ef501a635cf7",
+      "artifact": "app.py",
+      "line": 1,
+      "text": "\"\"\"Cache ranked retrieval results for caller requests.\"\"\"",
+      "review": "Benign: descriptive prose or local requests variable; the one __file__.parent refers to the task test directory."
+    },
+    {
+      "job_digest": "8370619ff3361ab89df4",
+      "artifact": "app.py",
+      "line": 1,
+      "text": "\"\"\"Cache ranked retrieval results for caller requests.\"\"\"",
+      "review": "Benign: descriptive prose or local requests variable; the one __file__.parent refers to the task test directory."
+    },
+    {
+      "job_digest": "8370619ff3361ab89df4",
+      "artifact": "test_local.py",
+      "line": 147,
+      "text": "        requests = []",
+      "review": "Benign: descriptive prose or local requests variable; the one __file__.parent refers to the task test directory."
+    },
+    {
+      "job_digest": "8370619ff3361ab89df4",
+      "artifact": "test_local.py",
+      "line": 149,
+      "text": "            requests.append(request)",
+      "review": "Benign: descriptive prose or local requests variable; the one __file__.parent refers to the task test directory."
+    },
+    {
+      "job_digest": "8370619ff3361ab89df4",
+      "artifact": "test_local.py",
+      "line": 161,
+      "text": "        requests[0]['filters'].clear()",
+      "review": "Benign: descriptive prose or local requests variable; the one __file__.parent refers to the task test directory."
+    },
+    {
+      "job_digest": "8370619ff3361ab89df4",
+      "artifact": "test_local.py",
+      "line": 167,
+      "text": "        self.assertEqual(len(requests), 1)",
+      "review": "Benign: descriptive prose or local requests variable; the one __file__.parent refers to the task test directory."
+    },
+    {
+      "job_digest": "aedc07e7fa064525077b",
+      "artifact": "test_queue.py",
+      "line": 22,
+      "text": "        self.directory = tempfile.TemporaryDirectory(dir=pathlib.Path(__file__).parent)",
+      "review": "Benign: descriptive prose or local requests variable; the one __file__.parent refers to the task test directory."
+    },
+    {
+      "job_digest": "e9f073af4b5e46eaabf7",
+      "artifact": "app.py",
+      "line": 1,
+      "text": "\"\"\"Cache ranked retrieval results for caller requests.\"\"\"",
+      "review": "Benign: descriptive prose or local requests variable; the one __file__.parent refers to the task test directory."
+    },
+    {
+      "job_digest": "fa192a9e6ba182e6e344",
+      "artifact": "app.py",
+      "line": 1,
+      "text": "\"\"\"Cache ranked retrieval results for caller requests.\"\"\"",
+      "review": "Benign: descriptive prose or local requests variable; the one __file__.parent refers to the task test directory."
+    },
+    {
+      "job_digest": "fdb0ff931744432c3199",
+      "artifact": "app.py",
+      "line": 1,
+      "text": "\"\"\"Cache ranked retrieval results for caller requests.\"\"\"",
+      "review": "Benign: descriptive prose or local requests variable; the one __file__.parent refers to the task test directory."
+    }
+  ]
+}

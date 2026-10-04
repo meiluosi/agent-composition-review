@@ -1,0 +1,226 @@
+{
+  "case_id": "m01",
+  "condition": "B_checklist",
+  "trial": 2,
+  "model_requested": "gpt-6-astra",
+  "exit_code": 0,
+  "timed_out": false,
+  "elapsed_seconds": 243.61684466700535,
+  "usage": {
+    "input_tokens": 127879,
+    "cached_input_tokens": 106112,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 4926,
+    "reasoning_output_tokens": 458
+  },
+  "completed": true,
+  "status": "completed",
+  "infra_kind": null,
+  "prediction": {
+    "initial_verdict": "violation",
+    "summary": "已修复 app.py：ack 校验回执代次，防止旧回执确认新租约；claim 拒绝布尔租期。保留公开接口、存储结构及原有正确行为，仅依赖标准库。新增 11 项回归测试，全部通过。",
+    "tests_executed": [
+      "./run_python smoke.py original.py：通过",
+      "./run_python test_queue.py original.py：复现缺陷，6 个失败、1 个关联错误",
+      "./run_python test_queue.py app.py：11 项全部通过",
+      "./run_python smoke.py app.py：通过"
+    ],
+    "limitations": [
+      "并发验证使用多线程和独立 SQLite 连接，未执行多进程压力测试；测试未穷尽所有输入。"
+    ]
+  },
+  "acceptance": {
+    "passed": true,
+    "tests_run": 9,
+    "checks": [
+      {
+        "test": "test_empty_and_persistence",
+        "passed": true
+      },
+      {
+        "test": "test_fifo_and_active_exclusion",
+        "passed": true
+      },
+      {
+        "test": "test_same_worker_stale_receipt",
+        "passed": true
+      },
+      {
+        "test": "test_other_worker_stale_receipt",
+        "passed": true
+      },
+      {
+        "test": "test_expiry_and_fractional_duration",
+        "passed": true
+      },
+      {
+        "test": "test_payload_isolation",
+        "passed": true
+      },
+      {
+        "test": "test_failed_put_and_duplicate_reuse",
+        "passed": true
+      },
+      {
+        "test": "test_invalid_duration_preserves_jobs",
+        "passed": true
+      },
+      {
+        "test": "test_atomic_claim_across_connections",
+        "passed": true
+      }
+    ],
+    "exit_code": 0,
+    "timed_out": false,
+    "sandbox": "macos_no_network_writes_only_grade_directory",
+    "stderr": ""
+  },
+  "acceptance_signature": {
+    "passed": true,
+    "tests_run": 9,
+    "checks": [
+      {
+        "test": "test_empty_and_persistence",
+        "passed": true
+      },
+      {
+        "test": "test_fifo_and_active_exclusion",
+        "passed": true
+      },
+      {
+        "test": "test_same_worker_stale_receipt",
+        "passed": true
+      },
+      {
+        "test": "test_other_worker_stale_receipt",
+        "passed": true
+      },
+      {
+        "test": "test_expiry_and_fractional_duration",
+        "passed": true
+      },
+      {
+        "test": "test_payload_isolation",
+        "passed": true
+      },
+      {
+        "test": "test_failed_put_and_duplicate_reuse",
+        "passed": true
+      },
+      {
+        "test": "test_invalid_duration_preserves_jobs",
+        "passed": true
+      },
+      {
+        "test": "test_atomic_claim_across_connections",
+        "passed": true
+      }
+    ],
+    "exit_code": 0,
+    "timed_out": false,
+    "invalid_output": false,
+    "isolation_failure": false
+  },
+  "source_changed": true,
+  "artifacts": {
+    "test_queue.py": "2c580248ca9e187ef7809338f37583dd8bd45a7f1efbfb74e1929448deae60de",
+    "app.py": "ac5246c59aa206d722080be4dfdfc61771ad697d29e6d768ebc4b0c629b2ed92"
+  },
+  "protected_changes": [],
+  "outside_changes": [],
+  "artifact_errors": [],
+  "tool_audit": [
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc \"pwd; rg --files -g '\"'!__pycache__/**'\"' -g '\"'!.git/**'\"'\"",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc 'cat task.md app.py original.py smoke.py TOOLS.md'",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc 'cat run_python; ls -la'",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc \"./run_python smoke.py original.py\n./run_python - <<'PY'\nimport pathlib\nimport tempfile\nimport original\nwith tempfile.TemporaryDirectory(dir='.') as directory:\n    queue = original.Queue(pathlib.Path(directory) / 'q.db')\n    queue.put('one', {'nested': [1, {}]})\n    first = queue.claim('same', 0, 1)\n    second = queue.claim('same', 1, 2)\n    print('stale receipt ack:', queue.ack(first['receipt'], 1), '(expected False)')\n    print('current receipt ack:', queue.ack(second['receipt'], 1), '(expected True)')\nwith tempfile.TemporaryDirectory(dir='.') as directory:\n    queue = original.Queue(pathlib.Path(directory) / 'q.db')\n    queue.put('one', None)\n    try:\n        print('boolean lease accepted:', queue.claim('worker', 0, True))\n    except ValueError:\n        print('boolean lease rejected')\nPY\"",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc \"./run_python - <<'PY'\nimport json\nimport pathlib\nimport tempfile\nimport original\nwith tempfile.TemporaryDirectory(dir='.') as directory:\n    queue = original.Queue(pathlib.Path(directory) / 'q.db')\n    accepted = []\n    for depth in range(980, 1005):\n        value = None\n        for _ in range(depth):\n            value = [value]\n        try:\n            queue.put(str(depth), value)\n        except (TypeError, ValueError, RecursionError) as exc:\n            print('put rejected depth', depth, type(exc).__name__)\n        else:\n            accepted.append(depth)\n    for depth in accepted:\n        try:\n            delivery = queue.claim('worker', 0, 1)\n        except Exception as exc:\n            print('claim failed for depth', depth, type(exc).__name__)\n            break\n        else:\n            queue.ack(delivery['receipt'], 0)\n    print('accepted depths:', accepted)\nPY\"",
+      "review_flags": []
+    },
+    {
+      "type": "file_change",
+      "exit_code": null,
+      "changes": [
+        {
+          "path": "<workspace>/app.py",
+          "kind": "update"
+        }
+      ]
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc \"./run_python - <<'PY'\nimport sys\nprint(sys.version)\nprint('recursion limit:', sys.getrecursionlimit())\nPY\"",
+      "review_flags": []
+    },
+    {
+      "type": "file_change",
+      "exit_code": null,
+      "changes": [
+        {
+          "path": "<workspace>/test_queue.py",
+          "kind": "add"
+        }
+      ]
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc './run_python smoke.py app.py'",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 1,
+      "command": "/bin/zsh -lc './run_python test_queue.py original.py'",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 0,
+      "command": "/bin/zsh -lc './run_python test_queue.py app.py'",
+      "review_flags": []
+    },
+    {
+      "type": "command_execution",
+      "exit_code": 1,
+      "command": "/bin/zsh -lc 'diff -u original.py app.py'",
+      "review_flags": []
+    }
+  ],
+  "case_sha256": "73ed6a9b5cadf130e63f8b694219699c9066891c161550bfda592c524551ba82",
+  "prompt_sha256": "6fd62ac6100d8b6cfbd0a2b2d2c570f6e2df884143fea61f287365cec2b7280f",
+  "event_sha256": "208adff0439aac497796930325af682a3ac2f64017bfe2e6a4e9dad9cb1090c0",
+  "stderr_sha256": "17cc4f3f90e03367f87d573aa751ed2f364c86f29dab0eb164c2508e33335e98",
+  "reasoning_effort": "high",
+  "cli_version": "codex-cli 0.160.0",
+  "canary": false,
+  "python_version": "3.12.14",
+  "execution_platform": "Darwin",
+  "terminal_errors": [],
+  "execution_phase": "classifier_recovery",
+  "recovery_manifest_sha256": "6826d034f0c76fbe1d24f761c801c391c878482718ec612bce68fd59ebf3c149"
+}

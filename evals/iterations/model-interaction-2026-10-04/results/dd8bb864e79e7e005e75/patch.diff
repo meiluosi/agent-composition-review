@@ -1,0 +1,27 @@
+--- original.py
++++ app.py
+@@ -53,19 +53,17 @@
+             return []
+         if self.state != "OPEN":
+             self._fail("data after terminal event")
+-        try:
+-            data = data.decode("utf-8").encode("utf-8")
+-        except UnicodeDecodeError:
+-            self._fail("invalid UTF-8 input chunk")
+         output = []
+         start = 0
+         while start < len(data):
++            if self.state != "OPEN":
++                self._fail("data after terminal event")
+             newline = data.find(b"\n", start)
+             end = len(data) if newline < 0 else newline
+-            part = data[start:end]
+-            if len(self._buffer) + len(part) > self.max_buffer:
++            if len(self._buffer) + end - start > self.max_buffer:
+                 self._fail("frame exceeds max_buffer")
+-            self._buffer.extend(part)
++            # Decode only complete frames; a chunk may split a UTF-8 character.
++            self._buffer.extend(data[start:end])
+             if newline < 0:
+                 break
+             raw = bytes(self._buffer)

@@ -195,17 +195,17 @@ def publish():
 [逐任务成功次数图](docs/assets/development-ablation-cases.png) · [冻结清单](evals/iterations/ablation-2026-09-29/manifest.json) · [逐次预测](evals/iterations/ablation-2026-09-29/predictions.json) · [复现方法](docs/ablation-evaluation.md)
 <!-- development-ablation:end -->
 """
+    # The v0.1 product README intentionally contains no evaluation sections.
+    # Only refresh the embedded section when the historical markers are present;
+    # never insert evaluation prose into a product-first README.
     readme = ROOT / "README.md"; text = readme.read_text()
     start = "<!-- development-ablation:start -->"; end = "<!-- development-ablation:end -->"
     if start in text:
         before, tail = text.split(start, 1); _, after = tail.split(end, 1)
         text = before + section.rstrip() + after
-    else:
-        assert "## 仓库结构" in text
-        text = text.replace("## 仓库结构", section + "\n## 仓库结构", 1)
-    text = text.replace("已保存一个未启用的 v2 候选和消融方案；尚未追加模型运行，也未替换当前 Skill。首轮成绩保持原样。",
-                        "已保存未启用的 v2 候选，并完成下方四组开发消融。主 Skill 尚未替换，首轮成绩保持原样。")
-    readme.write_text(text)
+        text = text.replace("已保存一个未启用的 v2 候选和消融方案；尚未追加模型运行，也未替换当前 Skill。首轮成绩保持原样。",
+                            "已保存未启用的 v2 候选，并完成下方四组开发消融。主 Skill 尚未替换，首轮成绩保持原样。")
+        readme.write_text(text)
     print("Verified public scores; wrote two PNG/SVG figures and development report.")
 
 

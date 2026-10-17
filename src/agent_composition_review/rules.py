@@ -6,6 +6,8 @@ repository-relative link to ``docs/rules/<RULE>.md``.
 
 from __future__ import annotations
 
+from dataclasses import replace
+
 from .model import Finding, Rule
 
 SCAN_RULES: tuple[Rule, ...] = (
@@ -266,6 +268,21 @@ TRACE_RULES: tuple[Rule, ...] = (
     ),
 )
 
+# Rules with at least one real public/reproduced sample where the rule's
+# behavior was checked. Everything else stays experimental until a real sample
+# verifies it; this is deliberately conservative.
+GROUNDED_RULES: frozenset[str] = frozenset(
+    {"ACR001", "ACR002", "ACR003", "ACR007", "ACR106"}
+)
+SCAN_RULES = tuple(
+    replace(rule, status="grounded") if rule.id in GROUNDED_RULES else rule
+    for rule in SCAN_RULES
+)
+TRACE_RULES = tuple(
+    replace(rule, status="grounded") if rule.id in GROUNDED_RULES else rule
+    for rule in TRACE_RULES
+)
+
 RULES: dict[str, Rule] = {rule.id: rule for rule in (*SCAN_RULES, *TRACE_RULES)}
 
 SCAN_RULE_IDS: tuple[str, ...] = tuple(rule.id for rule in SCAN_RULES)
@@ -302,6 +319,7 @@ def build_finding(
         evidence=list(evidence or []),
         fix=rule.fix,
         docs=rule.docs,
+        status=rule.status,
     )
 
 
@@ -313,9 +331,11 @@ def format_rules_text() -> str:
     def _table(title: str, rules: tuple[Rule, ...]) -> None:
         lines.append(title)
         lines.append("")
-        lines.append(f"{'ID':<8}{'SEVERITY':<10}TITLE")
+        lines.append(f"{'ID':<8}{'SEVERITY':<10}{'STATUS':<13}TITLE")
         for rule in rules:
-            lines.append(f"{rule.id:<8}{rule.severity:<10}{rule.title}")
+            lines.append(
+                f"{rule.id:<8}{rule.severity:<10}{rule.status:<13}{rule.title}"
+            )
         lines.append("")
         for rule in rules:
             lines.append(f"{rule.id}: {rule.summary}")

@@ -1,0 +1,24 @@
+name: ACR example
+
+# Manual demo of the local composite action.
+# `uses: ./` has no action ref, so the action installs the package from `main`.
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - name: Run ACR scan from the local action
+        uses: ./
+        with:
+          path: .
+          fail-on: high

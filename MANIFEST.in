@@ -7,5 +7,9 @@ include RELEASE_NOTES_v0.1.1.md
 include RELEASE_NOTES_v0.2.0.md
 include RELEASE_NOTES_v0.3.0.md
 include RELEASE_NOTES_v0.3.1.md
+include RELEASE_NOTES_v0.4.0.md
+include action.yml
+include docs/github-action.md
 recursive-include tests *.py *.json *.jsonl
 recursive-include docs/rules *.md
+recursive-include docs/atlas *.md

@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "agent-composition-review"
-version = "0.3.1"
+version = "0.4.0"
 description = "Static and runtime diagnostics for LangGraph/LangChain composition failures"
 readme = "README.md"
 requires-python = ">=3.10"
@@ -37,6 +37,7 @@ dependencies = []
 dev = [
     "pytest>=8",
     "build>=1",
+    "PyYAML>=6",
 ]
 langgraph = [
     "langgraph>=1.0,<2",

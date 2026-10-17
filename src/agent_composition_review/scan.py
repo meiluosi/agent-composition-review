@@ -1351,8 +1351,10 @@ def render_findings_text(findings: list[Finding], indent: str = "  ") -> str:
         return f"{indent}No composition issues found."
     lines: list[str] = []
     for finding in findings:
+        status_tag = "" if finding.status == "grounded" else " [experimental]"
         lines.append(
-            f"{indent}{finding.severity.upper():<6} {finding.rule}  {finding.title}"
+            f"{indent}{finding.severity.upper():<6} {finding.rule}{status_tag}  "
+            f"{finding.title}"
         )
         lines.append(f"{indent}  {finding.file}:{finding.line}")
         lines.append(f"{indent}  {finding.message}")

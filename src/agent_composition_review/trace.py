@@ -258,6 +258,46 @@ def normalise_events(raw_events: list[Any]) -> list[TraceEvent]:
     return events
 
 
+def _insert_resume_markers(
+    events: list[TraceEvent], resume_at: list[int] | None
+) -> list[TraceEvent]:
+    """Insert synthetic resume markers after the given event seq values.
+
+    LangGraph's debug stream does not emit a resume/replay event. The user can
+    point at the last event before the resume boundary with ``--resume-at``;
+    this keeps ACR106 usable without inventing markers in the source log.
+    """
+
+    if not resume_at:
+        return events
+    markers: set[int] = set()
+    for value in resume_at:
+        if isinstance(value, bool) or not isinstance(value, int) or value < 0:
+            raise TraceParseError("--resume-at expects non-negative event seq values")
+        markers.add(value)
+    found: set[int] = set()
+    result: list[TraceEvent] = []
+    for event in events:
+        result.append(event)
+        if event.seq in markers:
+            found.add(event.seq)
+            if event.kind not in {"resume", "replay"}:
+                result.append(
+                    TraceEvent(
+                        id=f"resume@{event.seq}",
+                        seq=event.seq,
+                        kind="resume",
+                    )
+                )
+    missing = sorted(markers - found)
+    if missing:
+        raise TraceParseError(
+            "resume marker seq not found in trace: "
+            + ", ".join(str(value) for value in missing)
+        )
+    return result
+
+
 def _load_events(text: str) -> tuple[list[Any], dict[str, Any] | None, str]:
     if not text.strip():
         raise TraceParseError("trace file is empty")
@@ -747,8 +787,15 @@ class TraceAnalyzer:
 # ---------------------------------------------------------------------------
 
 
-def trace_path(path: str | Path) -> TraceResult:
-    """Analyse a trace file and return a :class:`TraceResult`."""
+def trace_path(
+    path: str | Path, resume_at: list[int] | None = None
+) -> TraceResult:
+    """Analyse a trace file and return a :class:`TraceResult`.
+
+    ``resume_at`` inserts synthetic resume markers after the given event
+    sequence numbers (used when the source log has no explicit resume event).
+    A unified JSON object can also carry ``resume_seq`` as an integer or list.
+    """
 
     target = Path(path)
     if not target.exists():
@@ -762,6 +809,16 @@ def trace_path(path: str | Path) -> TraceResult:
 
     raw_events, top_level, input_format = _load_events(text)
     events = normalise_events(raw_events)
+    if resume_at is None and top_level:
+        top_resume = top_level.get("resume_seq", top_level.get("resume_at"))
+        if isinstance(top_resume, int) and not isinstance(top_resume, bool):
+            resume_at = [top_resume]
+        elif isinstance(top_resume, list) and all(
+            isinstance(value, int) and not isinstance(value, bool)
+            for value in top_resume
+        ):
+            resume_at = list(top_resume)
+    events = _insert_resume_markers(events, resume_at)
     analyzer = TraceAnalyzer(events, top_level)
     findings = analyzer.run()
     display = display_path(target)
@@ -834,8 +891,10 @@ def render_trace_text(result: TraceResult) -> str:
     lines.append("")
     if result.findings:
         for finding in result.findings:
+            status_tag = "" if finding.status == "grounded" else " [experimental]"
             lines.append(
-                f"  {finding.severity.upper():<6} {finding.rule}  {finding.title}"
+                f"  {finding.severity.upper():<6} {finding.rule}{status_tag}  "
+                f"{finding.title}"
             )
             lines.append(f"    event seq {finding.line}")
             lines.append(f"    {finding.message}")

@@ -13,6 +13,27 @@
 - 把 command-send / resume-replay / parallel-interrupt 交给 `acr trace` 或版本感知提示，不硬加静态规则。
 - 在更多真实 LangGraph/LangChain 组合故障上校准误报率，并公开可复现的测试样例。
 
+## [0.4.0] - 2026-10-18
+
+### Added
+
+- `acr trace --resume-at SEQ`（可重复）和统一 JSON 顶层 `resume_seq`：在 LangGraph debug trace 中显式插入 resume 标记，使 ACR106 不再依赖手工改 trace。
+- 规则状态分层：`grounded`（ACR001/002/003/007/106）与 `experimental`（其余）；`acr rules` 显示 STATUS，finding JSON 增加 `status` 字段，文本 finding 对实验规则显示 `[experimental]`。
+- GitHub Action：`action.yml` 支持 `path` / `fail-on` / `args`，只跑 `acr scan`，安装与 action ref 对应的包版本。
+- 真实案例图谱 `docs/atlas/`：10 个公开案例，按“症状 → 规则 → 证据 → 修复 → 验证边界”索引。
+- 新增 resume marker 注入、规则状态、GitHub Action 元数据的回归测试。
+
+### Changed
+
+- finding JSON schema 增加 `status` 字段；这是向后兼容的新增字段。
+- `acr trace` 帮助和 ACR106 文档补充 `--resume-at` 的用法与限制。
+
+### Notes
+
+- `grounded` 只表示至少一个真实公开/本地复现样本检查过规则行为，不表示生产效果或上游已修复。
+- ACR008/009/010 仍是 experimental；本轮没有把它们提升为 grounded。
+- Action 使用 `uses: meiluosi/agent-composition-review@v0.4.0`；更早的 tag 不包含 action.yml，不能用。
+
 ## [0.3.1] - 2026-10-18
 
 ### Fixed
@@ -125,7 +146,8 @@
 - **v0.1 不宣称 benchmark 提升。** 本版本是工具与文档的重新定位，不是新的模型能力评测；历史实验结论保持原样，不应被解读为 v0.1 的收益证据。
 - `acr scan`/`acr trace` 的规则是可解释的启发式检查：不确定的情况只报 `review` 级别，可能仍有误报，请结合证据人工确认。
 
-[Unreleased]: https://github.com/meiluosi/agent-composition-review/compare/v0.3.1...HEAD
+[Unreleased]: https://github.com/meiluosi/agent-composition-review/compare/v0.4.0...HEAD
+[0.4.0]: https://github.com/meiluosi/agent-composition-review/releases/tag/v0.4.0
 [0.3.1]: https://github.com/meiluosi/agent-composition-review/releases/tag/v0.3.1
 [0.3.0]: https://github.com/meiluosi/agent-composition-review/releases/tag/v0.3.0
 [0.2.0]: https://github.com/meiluosi/agent-composition-review/releases/tag/v0.2.0

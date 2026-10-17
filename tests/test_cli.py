@@ -19,7 +19,7 @@ def test_version(capsys: pytest.CaptureFixture[str]) -> None:
     with pytest.raises(SystemExit) as excinfo:
         main(["--version"])
     assert excinfo.value.code == 0
-    assert capsys.readouterr().out.strip() == "acr 0.3.1"
+    assert capsys.readouterr().out.strip() == "acr 0.4.0"
 
 
 def test_scan_json_schema_and_exit_code(capsys: pytest.CaptureFixture[str]) -> None:
@@ -41,8 +41,10 @@ def test_scan_json_schema_and_exit_code(capsys: pytest.CaptureFixture[str]) -> N
         "evidence",
         "fix",
         "docs",
+        "status",
     }
     assert finding["docs"] == "docs/rules/ACR001.md"
+    assert finding["status"] == "grounded"
     assert finding["file"].endswith("acr001_positive.py")
     assert isinstance(finding["line"], int)
 
@@ -94,6 +96,21 @@ def test_trace_json_and_exit_code(capsys: pytest.CaptureFixture[str]) -> None:
     assert payload["summary"]["input_format"] == "unified"
     rules = {finding["rule"] for finding in payload["findings"]}
     assert {"ACR103", "ACR104", "ACR105"} <= rules
+
+
+def test_trace_resume_at(capsys: pytest.CaptureFixture[str]) -> None:
+    code = main(
+        [
+            "trace",
+            str(FIXTURES / "trace_resume_no_marker.jsonl"),
+            "--resume-at",
+            "4",
+            "--json",
+        ]
+    )
+    assert code == 0
+    payload = json.loads(capsys.readouterr().out)
+    assert "ACR106" in {finding["rule"] for finding in payload["findings"]}
 
 
 def test_trace_text_output(capsys: pytest.CaptureFixture[str]) -> None:

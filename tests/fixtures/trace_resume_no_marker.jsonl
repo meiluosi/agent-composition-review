@@ -1,0 +1,6 @@
+{"id": "e1", "kind": "node_start", "node": "agent", "seq": 1}
+{"id": "e2", "kind": "node_end", "node": "agent", "seq": 2, "writes": {"answer": "reply 1"}}
+{"id": "e3", "kind": "node_start", "node": "gate", "seq": 3}
+{"id": "e4", "kind": "node_end", "node": "gate", "seq": 4, "interrupts": [{"id": "i1", "value": "approve?"}]}
+{"id": "e5", "kind": "node_start", "node": "agent", "seq": 5}
+{"id": "e6", "kind": "node_end", "node": "agent", "seq": 6, "writes": {"answer": "reply 2"}}

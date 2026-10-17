@@ -116,6 +116,33 @@ def test_acr106_ignores_interrupted_node_end() -> None:
     assert findings_for(result, "ACR106") == []
 
 
+def test_acr106_resume_at_injects_marker() -> None:
+    path = FIXTURES / "trace_resume_no_marker.jsonl"
+    assert findings_for(trace_path(path), "ACR106") == []
+    result = trace_path(path, resume_at=[4])
+    findings = findings_for(result, "ACR106")
+    assert len(findings) == 1
+    assert "agent" in findings[0].message
+    assert findings[0].status == "grounded"
+
+
+def test_acr106_resume_seq_from_top_level(tmp_path: Path) -> None:
+    trace = {
+        "resume_seq": 4,
+        "events": [
+            {"id": "e1", "kind": "node_start", "node": "agent", "seq": 1},
+            {"id": "e2", "kind": "node_end", "node": "agent", "seq": 2},
+            {"id": "e3", "kind": "node_start", "node": "gate", "seq": 3},
+            {"id": "e4", "kind": "node_end", "node": "gate", "seq": 4, "interrupts": [{"id": "i1"}]},
+            {"id": "e5", "kind": "node_start", "node": "agent", "seq": 5},
+            {"id": "e6", "kind": "node_end", "node": "agent", "seq": 6},
+        ],
+    }
+    path = tmp_path / "resume_seq.json"
+    path.write_text(__import__("json").dumps(trace), encoding="utf-8")
+    assert len(findings_for(trace_path(path), "ACR106")) == 1
+
+
 def test_trace_json_shape() -> None:
     result = trace_path(FIXTURES / "trace_parallel_writes.json")
     payload = result.to_dict()

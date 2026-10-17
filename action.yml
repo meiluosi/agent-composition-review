@@ -1,0 +1,61 @@
+name: ACR scan
+description: Statically scan LangGraph/LangChain graph construction for composition hazards with the acr CLI.
+author: Agent Composition Review contributors
+
+branding:
+  icon: search
+  color: purple
+
+inputs:
+  path:
+    description: File or directory to scan, relative to the repository root.
+    required: false
+    default: "."
+  fail-on:
+    description: Exit non-zero at this severity or above. Must be high, review, or never.
+    required: false
+    default: high
+  args:
+    description: Extra arguments appended to `acr scan`, for example `--json`. Split like shell words; leave empty by default.
+    required: false
+    default: ""
+
+runs:
+  using: composite
+  steps:
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: "3.12"
+
+    - name: Install ACR
+      shell: bash
+      env:
+        ACR_ACTION_REF: ${{ github.action_ref }}
+      run: |
+        set -euo pipefail
+        # When this action is used from a tag/branch/SHA, install the matching
+        # package ref. Local actions (`uses: ./`) have no action ref, so fall
+        # back to the default branch.
+        ref="${ACR_ACTION_REF:-main}"
+        python -m pip install --disable-pip-version-check \
+          "agent-composition-review @ git+https://github.com/meiluosi/agent-composition-review.git@${ref}"
+
+    - name: Run acr scan
+      shell: bash
+      env:
+        ACR_INPUT_PATH: ${{ inputs.path }}
+        ACR_FAIL_ON: ${{ inputs['fail-on'] }}
+        ACR_EXTRA_ARGS: ${{ inputs.args }}
+      run: |
+        set -euo pipefail
+        case "${ACR_FAIL_ON}" in
+          high|review|never) ;;
+          *)
+            echo "::error::fail-on must be one of: high, review, never (got '${ACR_FAIL_ON}')"
+            exit 2
+            ;;
+        esac
+        # ACR_EXTRA_ARGS is intentionally unquoted so it splits into separate CLI flags.
+        # shellcheck disable=SC2086
+        acr scan "${ACR_INPUT_PATH}" --fail-on "${ACR_FAIL_ON}" ${ACR_EXTRA_ARGS}

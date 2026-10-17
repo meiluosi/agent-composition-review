@@ -72,6 +72,16 @@ def _build_parser() -> argparse.ArgumentParser:
         action="store_true",
         help="emit the stable JSON schema instead of text",
     )
+    trace.add_argument(
+        "--resume-at",
+        type=int,
+        action="append",
+        metavar="SEQ",
+        help=(
+            "insert a resume marker after event SEQ (repeatable); useful for "
+            "LangGraph debug traces that do not emit a resume event"
+        ),
+    )
 
     report = subparsers.add_parser(
         "report",
@@ -144,7 +154,7 @@ def main(argv: Sequence[str] | None = None) -> int:
 
     if args.command == "trace":
         try:
-            result = trace_path(args.path)
+            result = trace_path(args.path, resume_at=args.resume_at)
         except TraceParseError as exc:
             print(f"acr trace: {exc}", file=sys.stderr)
             return 2

@@ -32,18 +32,18 @@ v0.1 是早期版本：MIT 许可、本地运行、不需要 API key。**它不�
 ## 60 秒 demo
 
 ```sh
-pipx install "git+https://github.com/meiluosi/agent-composition-review.git@v0.3.1"
+pipx install "git+https://github.com/meiluosi/agent-composition-review.git@v0.4.0"
 pipx inject agent-composition-review "langgraph>=1.0,<2"   # acr demo 需要；scan/trace 可跳过
 acr demo
 ```
 
 `acr demo` 会在本地运行一个 LangGraph #6446 风格的 broken 示例，捕获 `InvalidUpdateError`，用 `acr scan` 找到 ACR001，演示一行 `output_schema` 修复，再跑回归确认通过。它需要可选依赖 `[langgraph]`；只跑 `scan` / `trace` / `report` 不需要安装 LangGraph。
 
-真实运行输出（`acr` 0.3.1，本地环境）：
+真实运行输出（`acr` 0.4.0，本地环境）：
 
 ```text
 $ acr demo
-acr demo - LangGraph subgraph state leak walkthrough (acr 0.3.1)
+acr demo - LangGraph subgraph state leak walkthrough (acr 0.4.0)
 
 1) run the broken graph from examples/langgraph-subgraph-leak/broken.py
    x InvalidUpdateError: At key 'b': Can receive only one value per step. Use an Annotated key to handle multiple values.
@@ -162,14 +162,14 @@ class ChildOutput(TypedDict):
 
 ```sh
 # 1) pipx（推荐，隔离环境）
-pipx install "git+https://github.com/meiluosi/agent-composition-review.git@v0.3.1"
+pipx install "git+https://github.com/meiluosi/agent-composition-review.git@v0.4.0"
 pipx inject agent-composition-review "langgraph>=1.0,<2"    # 可选，仅 acr demo 需要
 
 # 2) uv tool
-uv tool install "agent-composition-review[langgraph] @ git+https://github.com/meiluosi/agent-composition-review.git@v0.3.1"
+uv tool install "agent-composition-review[langgraph] @ git+https://github.com/meiluosi/agent-composition-review.git@v0.4.0"
 
 # 3) pip
-python3 -m pip install "agent-composition-review[langgraph] @ git+https://github.com/meiluosi/agent-composition-review.git@v0.3.1"
+python3 -m pip install "agent-composition-review[langgraph] @ git+https://github.com/meiluosi/agent-composition-review.git@v0.4.0"
 
 # 4) 源码
 git clone https://github.com/meiluosi/agent-composition-review.git
@@ -187,12 +187,26 @@ acr rules
 acr --help
 ```
 
+## GitHub Action
+
+把 `acr scan` 放进 CI：
+
+```yaml
+- uses: actions/checkout@v4
+- uses: meiluosi/agent-composition-review@v0.4.0
+  with:
+    path: .
+    fail-on: high
+```
+
+Action 只静态扫描，不执行被扫描代码、不需要 API key。完整输入/退出码/安全说明见 [GitHub Action 文档](docs/github-action.md)。
+
 ## 命令
 
 | 命令 | 作用 | 常用参数 |
 | --- | --- | --- |
 | `acr scan PATH` | 静态分析构图代码（Python AST），输出 finding | `--json`；`--fail-on high\|review\|never` |
-| `acr trace TRACE` | 分析失败轨迹，输出时间线与证据事件 ID | `--json`；支持 JSON 数组 / JSONL / 统一事件格式，并兼容 LangGraph debug stream |
+| `acr trace TRACE` | 分析失败轨迹，输出时间线与证据事件 ID | `--json`；`--resume-at SEQ`；支持 JSON 数组 / JSONL / 统一事件格式，并兼容 LangGraph debug stream |
 | `acr report` | 合并 scan 与 trace 结果为一页 Markdown | `--scan FILE --trace FILE -o report.md` |
 | `acr demo` | 本地跑通 #6446 类示例：broken → scan → 修复 → 通过 | 需要 `[langgraph]` |
 | `acr rules` | 列出全部规则 ID、标题、严重度与文档链接 | — |
@@ -229,7 +243,16 @@ acr --help
 | ACR105 | 最终状态缺少输入中存在的键 | medium | [ACR105](docs/rules/ACR105.md) |
 | ACR106 | 恢复/重放后重启了已完成的节点 | medium | [ACR106](docs/rules/ACR106.md) |
 
+`acr rules` 现在显示 STATUS 列：
+
+- `grounded`：至少有一个真实公开/本地复现样本检查过规则行为；目前是 ACR001、ACR002、ACR003、ACR007、ACR106。
+- `experimental`：已实现，但只有设计案例、邻近案例或合成 fixture；其余规则都属于这一层，不要当成已验证能力。
+
 级别含义：`high` 很可能是真实的组合故障；`medium` 需要人工确认为“故障”还是“设计如此”；`low` 是提示，通常不改变行为。**规则命中不等于根因**，先核对证据再改代码。
+
+## 案例图谱
+
+按症状查真实案例：[docs/atlas/](docs/atlas/README.md)。收录 10 个公开 issue（#6446/#1964/#8320/#2644/#2581/#3875/#9276/#8753/#9253/#2336），每个都写清“症状 → 规则 → 证据 → 最小修复 → 验证边界”，并区分 grounded / experimental。
 
 ## 工作原理
 

@@ -65,6 +65,9 @@ class Rule:
     scope: str
     summary: str
     fix: str
+    # grounded: at least one real public/reproduced sample verified the rule.
+    # experimental: implemented but only design/adjacent/synthetic evidence.
+    status: str = "experimental"
 
     @property
     def docs(self) -> str:
@@ -78,6 +81,7 @@ class Rule:
             "severity": self.severity,
             "title": self.title,
             "scope": self.scope,
+            "status": self.status,
             "summary": self.summary,
             "fix": self.fix,
             "docs": self.docs,
@@ -97,6 +101,7 @@ class Finding:
     evidence: list[str] = field(default_factory=list)
     fix: str = ""
     docs: str = ""
+    status: str = "experimental"
 
     @property
     def severity_rank(self) -> int:
@@ -113,6 +118,7 @@ class Finding:
             "evidence": list(self.evidence),
             "fix": self.fix,
             "docs": self.docs,
+            "status": self.status,
         }
 
 

@@ -264,7 +264,9 @@ def test_scan_reports_json_shape() -> None:
         "evidence",
         "fix",
         "docs",
+        "status",
     }
+    assert finding["status"] == "grounded"
     summary = payload["summary"]
     assert summary["findings"] == len(payload["findings"])
     assert summary["by_severity"]["high"] >= 1

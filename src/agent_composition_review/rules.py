@@ -155,6 +155,22 @@ SCAN_RULES: tuple[Rule, ...] = (
             "checkpoint/namespace identity."
         ),
     ),
+    Rule(
+        id="ACR010",
+        severity="medium",
+        scope="scan",
+        title="Conditional self-loop rewrites a non-reducer state key",
+        summary=(
+            "A node has a conditional edge back to itself and returns a state key "
+            "whose schema has no reducer. Retry/re-entry can overlap with a parallel "
+            "branch in the same superstep, producing multiple writes or lost updates."
+        ),
+        fix=(
+            "Give the key a reducer, or guard the self-loop so retries cannot overlap "
+            "with another writer; if the key is per-attempt, use a reducer that keeps "
+            "attempts distinct instead of a single LastValue channel."
+        ),
+    ),
 )
 
 TRACE_RULES: tuple[Rule, ...] = (
@@ -230,6 +246,22 @@ TRACE_RULES: tuple[Rule, ...] = (
         fix=(
             "Check the final node's output for dropped keys; return a full state "
             "update or preserve keys deliberately."
+        ),
+    ),
+    Rule(
+        id="ACR106",
+        severity="medium",
+        scope="trace",
+        title="Completed node restarted after a resume/replay marker",
+        summary=(
+            "A trace marks a resume or replay, then starts a node again that had "
+            "already emitted a completion event before the marker. Replaying a "
+            "completed task can repeat its side effects or overwrite newer state."
+        ),
+        fix=(
+            "Check the resume/replay checkpoint boundary: do not re-run nodes whose "
+            "writes were already durable. Prefer checkpoint-level resume over replay "
+            "of the whole superstep."
         ),
     ),
 )

@@ -9,10 +9,24 @@
 
 ### 计划中
 
-- 扩展 ACR002 到 retry 自环/并行分支重叠写同一无 reducer 键的 review 级检测。
-- 为 ACR008/ACR009 补独立正负样本后再谈验证结论。
+- 扩展 ACR002 到 retry 自环/并行分支重叠写同一无 reducer 键的 review 级检测（ACR010 先覆盖自环，ACR002 保持兄弟扇出语义）。
 - 把 command-send / resume-replay / parallel-interrupt 交给 `acr trace` 或版本感知提示，不硬加静态规则。
 - 在更多真实 LangGraph/LangChain 组合故障上校准误报率，并公开可复现的测试样例。
+
+## [0.3.0] - 2026-10-18
+
+### Added
+
+- 新增 ACR010：条件自环节点写无 reducer 键，retry/re-entry 可能与并行分支在同一 superstep 冲突。复扫 `lg2-2336` 命中；该案例已用于设计，属开发集。
+- 新增 ACR106（trace）：resume/replay 标记后已完成节点再次启动，用于捕捉重复副作用。目前只有合成 trace fixture，未在真实社区 trace 上验证。
+- ACR008/ACR009 各补第二个正例/负例 fixture，覆盖 lambda/class node 与无 retry 场景；仍为合成 fixture，不是真实案例验证。
+- 第二轮报告补充 `POSTFIX.md`，记录 ACR010/ACR106 与本批的关系，不修改原始 REPORT 数字。
+
+### Notes
+
+- ACR010 是在第二轮 `lg2-2336` 的 ACR002 miss 之后设计的；不能把同一案例当作 ACR010 的独立验证。
+- ACR106 需要 trace 中显式写 `resume`/`replay` 事件；没有标记就看不到。
+- ACR008/ACR009 仍无真实案例命中，发布说明不宣称已验证。
 
 ## [0.2.0] - 2026-10-18
 
@@ -91,7 +105,8 @@
 - **v0.1 不宣称 benchmark 提升。** 本版本是工具与文档的重新定位，不是新的模型能力评测；历史实验结论保持原样，不应被解读为 v0.1 的收益证据。
 - `acr scan`/`acr trace` 的规则是可解释的启发式检查：不确定的情况只报 `review` 级别，可能仍有误报，请结合证据人工确认。
 
-[Unreleased]: https://github.com/meiluosi/agent-composition-review/compare/v0.2.0...HEAD
+[Unreleased]: https://github.com/meiluosi/agent-composition-review/compare/v0.3.0...HEAD
+[0.3.0]: https://github.com/meiluosi/agent-composition-review/releases/tag/v0.3.0
 [0.2.0]: https://github.com/meiluosi/agent-composition-review/releases/tag/v0.2.0
 [0.1.1]: https://github.com/meiluosi/agent-composition-review/releases/tag/v0.1.1
 [0.1.0]: https://github.com/meiluosi/agent-composition-review/releases/tag/v0.1.0

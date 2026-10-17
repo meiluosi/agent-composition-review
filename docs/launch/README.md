@@ -1,13 +1,13 @@
 # v0.1 公开发布手册
 
-本文件是 `agent-composition-review` v0.2.0 公开发布的操作清单与渠道文案。它面向维护者，不是产品承诺；发布范围、日期和指标以实际执行为准。
+本文件是 `agent-composition-review` v0.3.0 公开发布的操作清单与渠道文案。它面向维护者，不是产品承诺；发布范围、日期和指标以实际执行为准。
 
 ## 0. 发布定位（所有文案共用）
 
 - **一句话**：Find the boundary where your LangGraph agent breaks.
 - **产品**：`acr` CLI，静态分析 LangGraph 构图代码、分析失败轨迹、生成一页报告。
 - **许可**：MIT。
-- **v0.1 能兑现的**：`acr scan` / `acr trace` / `acr report` / `acr demo` / `acr rules` 五条命令；ACR001–ACR009 静态规则、ACR101–ACR105 轨迹规则；可选 `[langgraph]` 依赖；Python 3.10+。
+- **v0.1 能兑现的**：`acr scan` / `acr trace` / `acr report` / `acr demo` / `acr rules` 五条命令；ACR001–ACR010 静态规则、ACR101–ACR106 轨迹规则；可选 `[langgraph]` 依赖；Python 3.10+。
 - **v0.1 不宣称的**：不宣称 benchmark 提升或检测准确率；不是运行时追踪器；不自动改代码；只覆盖 Python AST 与 LangGraph 1.x。旧评测历史见 [评测档案](../evaluation-history.md)，不得作为产品效果证据引用。
 
 ## 1. 发布前检查清单
@@ -22,28 +22,28 @@
 
 ### 版本与发布物
 
-- [ ] `VERSION` = `0.2.0`；`pyproject.toml` 版本与 tag 一致
+- [ ] `VERSION` = `0.3.0`；`pyproject.toml` 版本与 tag 一致
 - [ ] 构建 sdist/wheel 成功：`python -m build`
-- [ ] 打 tag `v0.2.0`，创建 GitHub Release，上传 wheel、sdist、skill zip、`checksums.txt`
+- [ ] 打 tag `v0.3.0`，创建 GitHub Release，上传 wheel、sdist、skill zip、`checksums.txt`
 - [ ] Release 说明按 [第 2 节 GitHub 文案](#github-release-说明) 撰写，包含已知限制
-- [ ] `CHANGELOG.md` 的 0.2.0 条目可读，且明确“不宣称 benchmark 提升”
+- [ ] `CHANGELOG.md` 的 0.3.0 条目可读，且明确“不宣称 benchmark 提升”
 
 ### 安装与 demo 验证
 
 在干净环境逐条跑通，记录实际输出（不要用预期输出代替）：
 
 ```sh
-pipx install "git+https://github.com/meiluosi/agent-composition-review.git@v0.2.0"
+pipx install "git+https://github.com/meiluosi/agent-composition-review.git@v0.3.0"
 pipx inject agent-composition-review "langgraph>=1.0,<2"   # acr demo 需要
 acr --version
 acr rules
 acr demo
 
 # 第二入口 uv
-uv tool install "agent-composition-review[langgraph] @ git+https://github.com/meiluosi/agent-composition-review.git@v0.2.0"
+uv tool install "agent-composition-review[langgraph] @ git+https://github.com/meiluosi/agent-composition-review.git@v0.3.0"
 
 # pip 与源码
-python3 -m pip install "agent-composition-review[langgraph] @ git+https://github.com/meiluosi/agent-composition-review.git@v0.2.0"
+python3 -m pip install "agent-composition-review[langgraph] @ git+https://github.com/meiluosi/agent-composition-review.git@v0.3.0"
 git clone https://github.com/meiluosi/agent-composition-review.git
 cd agent-composition-review && python3 -m pip install -e ".[langgraph]"
 ```
@@ -67,13 +67,13 @@ cd agent-composition-review && python3 -m pip install -e ".[langgraph]"
 ### GitHub Release 说明
 
 ```markdown
-## ACR v0.2.0 — Find the boundary where your LangGraph agent breaks
+## ACR v0.3.0 — Find the boundary where your LangGraph agent breaks
 
 `acr` 是一个面向 LangGraph/LangChain 开发者的组合故障诊断 CLI：静态分析构图代码，分析失败轨迹，给出一页报告。
 
 ### 包含
 
-- `acr scan`：ACR001–ACR009，覆盖子图输出越界、并行写同键、retry/缓存副作用、隐藏状态读写、节点返回未声明状态键、cache 身份、retry 多子图命名空间
+- `acr scan`：ACR001–ACR010，覆盖子图输出越界、并行写同键、retry/缓存副作用、隐藏状态读写、节点返回未声明状态键、cache 身份、retry 多子图命名空间、retry 自环重叠
 - `acr trace`：ACR101–ACR105，覆盖重复工具调用、节点重复写、同一步并行写同键、错误后部分写入、最终状态丢键
 - `acr demo`：内置 LangGraph #6446 类示例，broken → scan → 修复 → 通过
 - `acr report`：合并 scan/trace 结果为一页 Markdown
@@ -81,7 +81,7 @@ cd agent-composition-review && python3 -m pip install -e ".[langgraph]"
 
 ### 安装
 
-pipx install "git+https://github.com/meiluosi/agent-composition-review.git@v0.2.0"
+pipx install "git+https://github.com/meiluosi/agent-composition-review.git@v0.3.0"
 pipx inject agent-composition-review "langgraph>=1.0,<2"
 acr demo
 
@@ -105,7 +105,7 @@ MIT License.
 >
 > `acr scan` does static AST checks on graph code; `acr trace` analyzes a failed run (JSON/JSONL/debug stream) and points to evidence event IDs. `acr demo` reproduces a LangGraph #6446-style failure, scans it, applies the minimal `output_schema` fix, and verifies it.
 >
-> Install: `pipx install "git+https://github.com/meiluosi/agent-composition-review.git@v0.2.0"`, then `pipx inject agent-composition-review "langgraph>=1.0,<2"` (the demo needs LangGraph), then `acr demo`.
+> Install: `pipx install "git+https://github.com/meiluosi/agent-composition-review.git@v0.3.0"`, then `pipx inject agent-composition-review "langgraph>=1.0,<2"` (the demo needs LangGraph), then `acr demo`.
 >
 > Limitations: Python AST + LangGraph 1.x, not a runtime tracer, does not edit code. v0.1 is a diagnostic aid and does not claim benchmark improvements. Feedback and minimal reproductions are very welcome: https://github.com/meiluosi/agent-composition-review/issues
 
@@ -117,7 +117,7 @@ MIT License.
 >
 > `acr scan` statically checks graph construction (subgraph output boundaries, missing reducers, retry/cache around side effects). `acr trace` reads a failed run and reports duplicate tool calls, same-step parallel writes, partial writes after errors, and dropped keys, with event IDs. `acr demo` runs a LangGraph #6446-style broken example end to end.
 >
-> Install (the demo needs the optional LangGraph dependency): `pipx install "git+https://github.com/meiluosi/agent-composition-review.git@v0.2.0" && pipx inject agent-composition-review "langgraph>=1.0,<2"`, then `acr demo`.
+> Install (the demo needs the optional LangGraph dependency): `pipx install "git+https://github.com/meiluosi/agent-composition-review.git@v0.3.0" && pipx inject agent-composition-review "langgraph>=1.0,<2"`, then `acr demo`.
 >
 > MIT, Python 3.10+, LangGraph 1.x. It's v0.1: static analysis only, not a runtime tracer, and it does not auto-fix code. Not claiming any benchmark result. Honest feedback welcome, especially false positives.
 
@@ -125,7 +125,7 @@ MIT License.
 
 > **ACR v0.1 — LangGraph composition diagnostics (MIT)**
 > Sharing a small CLI for composition bugs: subgraph output clobbering parent state (`InvalidUpdateError`), parallel same-key writes, retried side effects, cache/sampling mismatches. `acr scan` = static AST checks; `acr trace` = failed-run timeline with event IDs; `acr demo` = #6446-style broken → scan → `output_schema` fix.
-> `pipx install "git+https://github.com/meiluosi/agent-composition-review.git@v0.2.0"` + `pipx inject agent-composition-review "langgraph>=1.0,<2"` (demo needs LangGraph) → `acr demo`.
+> `pipx install "git+https://github.com/meiluosi/agent-composition-review.git@v0.3.0"` + `pipx inject agent-composition-review "langgraph>=1.0,<2"` (demo needs LangGraph) → `acr demo`.
 > v0.1 limitations: Python AST + LangGraph 1.x, no auto-fix, no benchmark claims. Happy to look at minimal reproductions; false-positive reports are the most useful feedback right now.
 
 ### Hacker News — Show HN（English）
@@ -138,7 +138,7 @@ MIT License.
 >
 > It is deliberately narrow: Python, LangGraph 1.x, static + trace analysis, no runtime instrumentation, no auto-rewrite, no benchmark claims. I'd value bug reports with minimal reproductions and, especially, false positives.
 >
-> Install: `pipx install "git+https://github.com/meiluosi/agent-composition-review.git@v0.2.0"`, then `pipx inject agent-composition-review "langgraph>=1.0,<2"` (LangGraph is needed for the demo; scan/trace don't need it).
+> Install: `pipx install "git+https://github.com/meiluosi/agent-composition-review.git@v0.3.0"`, then `pipx inject agent-composition-review "langgraph>=1.0,<2"` (LangGraph is needed for the demo; scan/trace don't need it).
 >
 > https://github.com/meiluosi/agent-composition-review
 

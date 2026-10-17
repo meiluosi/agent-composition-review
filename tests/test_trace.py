@@ -98,6 +98,17 @@ def test_langgraph_debug_stream_jsonl() -> None:
     assert "'b'" in acr103[0].message
 
 
+def test_resume_restarts_completed_node() -> None:
+    result = trace_path(FIXTURES / "trace_resume_replay.json")
+    findings = findings_for(result, "ACR106")
+    assert len(findings) == 1
+    finding = findings[0]
+    assert finding.severity == "medium"
+    assert "gate" in finding.message
+    assert "resume" in finding.message
+    assert finding.docs == "docs/rules/ACR106.md"
+
+
 def test_trace_json_shape() -> None:
     result = trace_path(FIXTURES / "trace_parallel_writes.json")
     payload = result.to_dict()

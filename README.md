@@ -32,18 +32,18 @@ v0.1 是早期版本：MIT 许可、本地运行、不需要 API key。**它不�
 ## 60 秒 demo
 
 ```sh
-pipx install "git+https://github.com/meiluosi/agent-composition-review.git@v0.2.0"
+pipx install "git+https://github.com/meiluosi/agent-composition-review.git@v0.3.0"
 pipx inject agent-composition-review "langgraph>=1.0,<2"   # acr demo 需要；scan/trace 可跳过
 acr demo
 ```
 
 `acr demo` 会在本地运行一个 LangGraph #6446 风格的 broken 示例，捕获 `InvalidUpdateError`，用 `acr scan` 找到 ACR001，演示一行 `output_schema` 修复，再跑回归确认通过。它需要可选依赖 `[langgraph]`；只跑 `scan` / `trace` / `report` 不需要安装 LangGraph。
 
-真实运行输出（`acr` 0.2.0，本地环境）：
+真实运行输出（`acr` 0.3.0，本地环境）：
 
 ```text
 $ acr demo
-acr demo - LangGraph subgraph state leak walkthrough (acr 0.2.0)
+acr demo - LangGraph subgraph state leak walkthrough (acr 0.3.0)
 
 1) run the broken graph from examples/langgraph-subgraph-leak/broken.py
    x InvalidUpdateError: At key 'b': Can receive only one value per step. Use an Annotated key to handle multiple values.
@@ -162,14 +162,14 @@ class ChildOutput(TypedDict):
 
 ```sh
 # 1) pipx（推荐，隔离环境）
-pipx install "git+https://github.com/meiluosi/agent-composition-review.git@v0.2.0"
+pipx install "git+https://github.com/meiluosi/agent-composition-review.git@v0.3.0"
 pipx inject agent-composition-review "langgraph>=1.0,<2"    # 可选，仅 acr demo 需要
 
 # 2) uv tool
-uv tool install "agent-composition-review[langgraph] @ git+https://github.com/meiluosi/agent-composition-review.git@v0.2.0"
+uv tool install "agent-composition-review[langgraph] @ git+https://github.com/meiluosi/agent-composition-review.git@v0.3.0"
 
 # 3) pip
-python3 -m pip install "agent-composition-review[langgraph] @ git+https://github.com/meiluosi/agent-composition-review.git@v0.2.0"
+python3 -m pip install "agent-composition-review[langgraph] @ git+https://github.com/meiluosi/agent-composition-review.git@v0.3.0"
 
 # 4) 源码
 git clone https://github.com/meiluosi/agent-composition-review.git
@@ -201,7 +201,7 @@ acr --help
 
 ## 规则
 
-共 14 条。每条都有独立的说明页（症状、为什么发生、输出示例、最小修复、误报边界）；finding 的 `docs` 字段是 `docs/rules/<RULE>.md` 仓库相对路径，安装版可在 [GitHub 的 docs/rules/](https://github.com/meiluosi/agent-composition-review/tree/main/docs/rules) 查看同一个页面。
+共 16 条。每条都有独立的说明页（症状、为什么发生、输出示例、最小修复、误报边界）；finding 的 `docs` 字段是 `docs/rules/<RULE>.md` 仓库相对路径，安装版可在 [GitHub 的 docs/rules/](https://github.com/meiluosi/agent-composition-review/tree/main/docs/rules) 查看同一个页面。
 
 ### 静态检查（`acr scan`）
 
@@ -216,6 +216,7 @@ acr --help
 | ACR007 | 节点返回了状态 schema 未声明的键，写入被静默过滤 | medium | [ACR007](docs/rules/ACR007.md) |
 | ACR008 | 缓存节点用了没有稳定身份的 callable，cache key 可能退化 | medium | [ACR008](docs/rules/ACR008.md) |
 | ACR009 | retry_policy 节点内调用多个子图，恢复后可能复用错 checkpoint | medium | [ACR009](docs/rules/ACR009.md) |
+| ACR010 | 条件自环写非 reducer 键，重试可能与并行分支重叠 | medium | [ACR010](docs/rules/ACR010.md) |
 
 ### 轨迹检查（`acr trace`）
 
@@ -226,6 +227,7 @@ acr --help
 | ACR103 | 同一步的并行节点写同一状态键 | high | [ACR103](docs/rules/ACR103.md) |
 | ACR104 | 状态已部分写入后抛错 | high | [ACR104](docs/rules/ACR104.md) |
 | ACR105 | 最终状态缺少输入中存在的键 | medium | [ACR105](docs/rules/ACR105.md) |
+| ACR106 | 恢复/重放后重启了已完成的节点 | medium | [ACR106](docs/rules/ACR106.md) |
 
 级别含义：`high` 很可能是真实的组合故障；`medium` 需要人工确认为“故障”还是“设计如此”；`low` 是提示，通常不改变行为。**规则命中不等于根因**，先核对证据再改代码。
 
@@ -307,7 +309,7 @@ acr --help
 src/agent_composition_review/          acr CLI 实现（产品代码）
 tests/                                 CLI 与规则测试
 examples/langgraph-subgraph-leak/      #6446 类可运行示例（broken/fixed/run）
-docs/rules/                            14 条规则的独立说明页
+docs/rules/                            16 条规则的独立说明页
 docs/evaluation-history.md             旧评测档案（历史证据，非产品承诺）
 docs/launch/                           公开发布清单与渠道文案
 skills/agent-composition-review/       Agent Skill 入口与参考

@@ -304,6 +304,13 @@ class EdgeSpec:
 
 
 @dataclass
+class ConditionalEdgeSpec:
+    src: str
+    targets: list[str]
+    line: int
+
+
+@dataclass
 class CompiledInfo:
     graph_var: str
     line: int
@@ -318,6 +325,7 @@ class GraphSpec:
     output_schema: str | None
     nodes: dict[str, NodeSpec] = field(default_factory=dict)
     edges: list[EdgeSpec] = field(default_factory=list)
+    conditional_edges: list[ConditionalEdgeSpec] = field(default_factory=list)
     compile_line: int | None = None
     compile_cache: bool = False
     compile_cache_var: str | None = None
@@ -605,7 +613,7 @@ class FileScanner:
         elif method == "add_edge":
             self._add_edge(graph, call)
         elif method == "add_conditional_edges":
-            pass  # conditional fan-out is an explicit routing decision
+            self._add_conditional_edges(graph, call)
         elif method == "set_entry_point":
             if call.args:
                 dst = self._node_ref(call.args[0])
@@ -673,6 +681,28 @@ class FileScanner:
         dst = self._node_ref(call.args[1])
         if src and dst:
             graph.edges.append(EdgeSpec(src, dst, call.lineno))
+
+    def _add_conditional_edges(self, graph: GraphSpec, call: ast.Call) -> None:
+        if len(call.args) < 2:
+            return
+        src = self._node_ref(call.args[0])
+        if not src:
+            return
+        targets: list[str] = []
+        path_map = call.args[2] if len(call.args) >= 3 else None
+        if isinstance(path_map, ast.Dict):
+            for value in path_map.values:
+                target = self._node_ref(value)
+                if target:
+                    targets.append(target)
+        elif isinstance(path_map, (ast.List, ast.Tuple)):
+            for element in path_map.elts:
+                target = self._node_ref(element)
+                if target:
+                    targets.append(target)
+        graph.conditional_edges.append(
+            ConditionalEdgeSpec(src=src, targets=sorted(set(targets)), line=call.lineno)
+        )
 
     def _mark_compiled(self, graph: GraphSpec, call: ast.Call) -> None:
         graph.compile_line = call.lineno
@@ -845,6 +875,7 @@ class FileScanner:
         self._rule_acr007()
         self._rule_acr008()
         self._rule_acr009()
+        self._rule_acr010()
 
     def _rule_acr001(self) -> set[tuple[str, str]]:
         sites: set[tuple[str, str]] = set()
@@ -1116,6 +1147,11 @@ class FileScanner:
                     f"node returns undeclared key(s): {returned_label} "
                     f"(return line(s): {', '.join(str(line) for line in info.return_lines)})",
                 ]
+                if (node.func_name or "").endswith(".__call__"):
+                    evidence.append(
+                        "class-based node: if it uses a private input schema, prefer "
+                        "add_node(..., input=...) over adding the key to the global state"
+                    )
                 message = (
                     f"Node '{node.name}' returns key(s) {returned_label} that are not "
                     f"declared in state schema '{state.name}'. LangGraph filters "
@@ -1194,6 +1230,50 @@ class FileScanner:
                 self._emit(
                     "ACR009",
                     line=node.retry_policy_line,
+                    message=message,
+                    evidence=evidence,
+                )
+
+    def _rule_acr010(self) -> None:
+        """A conditional self-loop rewrites a non-reducer key."""
+
+        for graph in self.graphs.values():
+            state = self._typed_dict(graph.state_name)
+            if state is None:
+                continue
+            for conditional in graph.conditional_edges:
+                if conditional.src not in conditional.targets:
+                    continue
+                node = graph.nodes.get(conditional.src)
+                if node is None:
+                    continue
+                keys = self._node_write_keys(node)
+                if not keys:
+                    continue
+                risky = sorted(
+                    key
+                    for key in keys
+                    if key in state.keys and state.keys[key].reducer is None
+                )
+                if not risky:
+                    continue
+                risky_label = ", ".join(f"'{key}'" for key in risky)
+                evidence = [
+                    f"conditional edge from '{conditional.src}' back to itself at "
+                    f"line {conditional.line}",
+                    f"node '{node.name}' writes non-reducer key(s) {risky_label} "
+                    f"(add_node at line {node.line})",
+                    f"state schema '{state.name}' declares those keys without a reducer",
+                ]
+                message = (
+                    f"Node '{node.name}' has a conditional self-loop and writes "
+                    f"non-reducer key(s) {risky_label}. A retry/re-entry can overlap "
+                    "with another branch in the same superstep and produce multiple "
+                    "writes, raising InvalidUpdateError or silently losing updates."
+                )
+                self._emit(
+                    "ACR010",
+                    line=conditional.line,
                     message=message,
                     evidence=evidence,
                 )

@@ -5,5 +5,6 @@ include SECURITY.md
 include RELEASE_NOTES_v0.1.0.md
 include RELEASE_NOTES_v0.1.1.md
 include RELEASE_NOTES_v0.2.0.md
+include RELEASE_NOTES_v0.3.0.md
 recursive-include tests *.py *.json *.jsonl
 recursive-include docs/rules *.md

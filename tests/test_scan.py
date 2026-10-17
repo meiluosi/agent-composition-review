@@ -173,6 +173,18 @@ def test_acr008_negative_named_function() -> None:
     assert findings_for(result, "ACR008") == []
 
 
+def test_acr008_lambda_cache() -> None:
+    result = scan_fixture("acr008_lambda_cache.py")
+    findings = findings_for(result, "ACR008")
+    assert len(findings) == 1
+    assert "dynamic namespace" in findings[0].message
+
+
+def test_acr008_negative_without_cache_policy() -> None:
+    result = scan_fixture("acr008_negative_without_policy.py")
+    assert findings_for(result, "ACR008") == []
+
+
 def test_acr009_retry_with_multiple_subgraphs() -> None:
     result = scan_fixture("acr009_retry_subgraphs.py")
     findings = findings_for(result, "ACR009")
@@ -189,6 +201,34 @@ def test_acr009_negative_single_subgraph() -> None:
     assert findings_for(result, "ACR009") == []
 
 
+def test_acr009_class_node_retry_two_subgraphs() -> None:
+    result = scan_fixture("acr009_class_retry_subgraphs.py")
+    findings = findings_for(result, "ACR009")
+    assert len(findings) == 1
+    assert "'research'" in findings[0].message and "'review'" in findings[0].message
+
+
+def test_acr009_negative_two_subgraphs_without_retry() -> None:
+    result = scan_fixture("acr009_negative_two_subgraphs_no_retry.py")
+    assert findings_for(result, "ACR009") == []
+
+
+def test_acr010_retry_self_loop_with_non_reducer_key() -> None:
+    result = scan_fixture("acr010_retry_loop.py")
+    findings = findings_for(result, "ACR010")
+    assert len(findings) == 1
+    finding = findings[0]
+    assert finding.severity == "medium"
+    assert "self-loop" in finding.message
+    assert "'count_b'" in finding.message
+    assert finding.docs == "docs/rules/ACR010.md"
+
+
+def test_acr010_negative_reducer_backed_loop() -> None:
+    result = scan_fixture("acr010_negative_reducer.py")
+    assert findings_for(result, "ACR010") == []
+
+
 def test_scan_directory_aggregates_findings() -> None:
     result = scan_path(FIXTURES)
     rules = {finding.rule for finding in result.findings}
@@ -202,6 +242,7 @@ def test_scan_directory_aggregates_findings() -> None:
         "ACR007",
         "ACR008",
         "ACR009",
+        "ACR010",
     } <= rules
     assert result.files_parsed >= 7
 

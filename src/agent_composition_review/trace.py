@@ -84,6 +84,10 @@ _KIND_ALIASES = {
     "state_snapshot": "state",
     "checkpoint": "state",
     "update_state": "state",
+    "resume": "resume",
+    "resumed": "resume",
+    "replay": "replay",
+    "replayed": "replay",
 }
 
 _FRAMEWORK_CHAIN_NAMES = {"LangGraph", "RunnableSequence", "RunnableLambda", "_start", "_end"}
@@ -392,6 +396,7 @@ class TraceAnalyzer:
         self._rule_acr103()
         self._rule_acr104()
         self._rule_acr105()
+        self._rule_acr106()
         self.findings.sort(
             key=lambda finding: (
                 -finding.severity_rank,
@@ -692,6 +697,42 @@ class TraceAnalyzer:
             "state. A node or subgraph dropped state the caller expected to keep."
         )
         self._emit("ACR105", line=1, message=message, evidence=evidence)
+
+    # -- ACR106 -----------------------------------------------------------
+
+    def _rule_acr106(self) -> None:
+        """A completed node restarted after a resume/replay marker."""
+
+        completed: dict[str, TraceEvent] = {}
+        marker: TraceEvent | None = None
+        reported: set[tuple[str, str]] = set()
+        for event in self.events:
+            if event.kind in {"resume", "replay"}:
+                marker = event
+                continue
+            if event.kind == "node_end" and event.node:
+                completed[event.node] = event
+                continue
+            if event.kind != "node_start" or not event.node or marker is None:
+                continue
+            previous = completed.get(event.node)
+            if previous is None or previous.seq > marker.seq:
+                continue
+            key = (marker.id, event.node)
+            if key in reported:
+                continue
+            reported.add(key)
+            evidence = [
+                f"{previous.id}: node '{event.node}' completed at seq {previous.seq}",
+                f"{marker.id}: {marker.kind} marker at seq {marker.seq}",
+                f"{event.id}: node '{event.node}' started again at seq {event.seq}",
+            ]
+            message = (
+                f"Node '{event.node}' had already completed before {marker.kind} "
+                f"marker {marker.id}, but started again after it. Resuming/replaying "
+                "a completed task can repeat its side effects or overwrite newer state."
+            )
+            self._emit("ACR106", line=event.seq, message=message, evidence=evidence)
 
 
 # ---------------------------------------------------------------------------

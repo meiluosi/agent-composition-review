@@ -1,0 +1,11 @@
+{
+  "events": [
+    {"id": "e1", "kind": "node_start", "node": "gate", "seq": 1},
+    {"id": "e2", "kind": "node_end", "node": "gate", "seq": 2},
+    {"id": "e3", "kind": "node_start", "node": "agent", "seq": 3},
+    {"id": "e4", "kind": "node_end", "node": "agent", "seq": 4},
+    {"id": "e5", "kind": "resume", "node": "gate", "seq": 5},
+    {"id": "e6", "kind": "node_start", "node": "gate", "seq": 6},
+    {"id": "e7", "kind": "node_end", "node": "gate", "seq": 7}
+  ]
+}

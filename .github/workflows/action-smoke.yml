@@ -1,0 +1,26 @@
+name: ACR action smoke
+
+# Manual end-to-end check of the published composite action.
+# It intentionally scans a known-broken example with fail-on: never, so the
+# job verifies installation + finding output without failing the build.
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - name: Run the published ACR action
+        uses: meiluosi/agent-composition-review@v0.4.0
+        with:
+          path: examples/langgraph-subgraph-leak/broken.py
+          fail-on: never
+          args: --json

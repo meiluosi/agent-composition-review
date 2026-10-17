@@ -1,4 +1,4 @@
 interface:
-  display_name: "Agent 组合架构审查"
-  short_description: "沿数据流检查类型、契约与不变量，定位 Agent 组合故障并验证重构"
-  default_prompt: "使用 $agent-composition-review 审查当前 Agent 系统；沿数据流定位类型、契约、状态与组合风险，并给出有证据的发现和最小验证方法。"
+  display_name: "ACR · LangGraph 组合故障诊断"
+  short_description: "定位 LangGraph 子图、并行分支与重试缓存引发的组合故障"
+  default_prompt: "使用 $agent-composition-review 诊断 LangGraph/LangChain 组合故障。先运行 acr scan 与 acr trace 收集证据，再逐条验证 finding，给出最小修复和回归测试；证据不足时明确说明，不要先猜测根因。"

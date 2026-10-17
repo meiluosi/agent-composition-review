@@ -1,0 +1,6 @@
+[
+  {"id": "e1", "kind": "node_start", "node": "retryer", "step": 1},
+  {"id": "e2", "kind": "node_end", "node": "retryer", "writes": {"attempt": 1}, "step": 1},
+  {"id": "e3", "kind": "node_start", "node": "retryer", "step": 2},
+  {"id": "e4", "kind": "node_end", "node": "retryer", "writes": {"attempt": 2}, "step": 2}
+]

@@ -1,268 +1,293 @@
-# Agent Composition Review
+# Agent Composition Review (ACR)
 
-一个以组合思想为指导的 Agent 架构诊断 Skill。沿数据流检查类型、语义契约、状态与不变量，把异常转化为有证据的根因判断、最小修复和可执行验证。
+[![package](https://github.com/meiluosi/agent-composition-review/actions/workflows/package.yml/badge.svg)](https://github.com/meiluosi/agent-composition-review/actions/workflows/package.yml)
+[![license: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+[![python](https://img.shields.io/badge/python-3.10%2B-blue.svg)](pyproject.toml)
 
-**当前状态：`0.1.0-dev`，可运行的发布草案。** 项目独立维护于 [meiluosi/agent-composition-review](https://github.com/meiluosi/agent-composition-review)，当前为私有仓库。最新模型与指导交互实验记录 100/144 次后按停止规则结束，44 项未开始。没有获得 v4 超过普通清单的证据，继续保留候选，不升级默认 Skill。[查看本轮复核](docs/model-interaction-findings.md)。自动检查状态见 [GitHub Actions](https://github.com/meiluosi/agent-composition-review/actions)。许可证尚未选择，不宣称已经完成开源发布。
+**Find the boundary where your LangGraph agent breaks.**
 
-## 它适合什么
-
-- Agent 各节点单独工作正常，组合起来却失败。
-- 数据结构合法，但单位、知识状态、错误含义或字段所有权不一致。
-- 缓存改变了采样语义，重试或恢复造成重复副作用。
-- 多智能体输出能解析，却无法按整体约束合并。
-- 重构后局部差异很小，但端到端动作发生变化。
-
-对于普通文案润色或孤立算法问题，无需加载它。进入诊断后若证据指向节点内部，也应直接处理，不强行归因为“组合问题”。
-
-## 使用
-
-主运行包位于 `skills/agent-composition-review/`，与维护脚本、文档和评测分开。将该完整目录安装到目标环境的技能目录；目前 OpenAI 文档列出的个人发现路径为 `~/.agents/skills/`，已存在的本机安装路径不由本次改动迁移。无需将评测答案或框架依赖安装到技能目录。
-
-可以生成只含这五个运行时文件的迁移包：
-
-```sh
-python3 scripts/build_skill.py
-```
-
-解压 `dist/agent-composition-review.zip` 后，把其中的技能目录放入目标运行环境的技能目录。覆盖已有安装前先保留自己的修改。
-
-调用示例：
+`acr` 是一个诊断 LangGraph/LangChain **组合故障**的命令行工具。每个节点单独跑都正常，拼成图之后却报 `InvalidUpdateError`、字段被覆盖、工具被重复调用——`acr` 帮你把故障收敛到具体的文件行号或轨迹事件，并给出最小修复建议。
 
 ```text
-使用 $agent-composition-review 排查当前 Agent 的异常。
-先还原失败链路，根据实际输入输出检查类型、状态与契约；
-区分已证实和待验证的原因，给出最小修复并运行相关验证。
+acr scan     静态分析构图代码，找子图输出越界、并行写冲突、重试/缓存副作用
+acr trace    分析一次失败轨迹，找重复调用、部分写入、丢字段
+acr report   把 scan + trace 合并成一页 Markdown 报告
+acr demo     真实跑通一个 LangGraph #6446 类故障：broken → scan → 修复 → 通过
+acr rules    列出全部规则
 ```
 
-也可以请求架构审查或新旧路径的重构验证。具体执行规则见 [SKILL.md](skills/agent-composition-review/SKILL.md)。
+v0.1 是早期版本：MIT 许可、本地运行、不需要 API key。**它不宣称 benchmark 提升，也不是运行时追踪器。** 旧版评测历史见 [docs/evaluation-history.md](docs/evaluation-history.md)，那是历史证据档案，不是本产品的效果承诺。
 
-## 模块化框架开发
+## 你会遇到的那类故障
 
-项目继续使用一个主 Skill、一个 Git 仓库。新理论按诊断需要放入参考模块；只有出现独立任务、独立验收和独立发布需求，才考虑拆成其他 Skill。
+- 图单独跑正常，组合后报 `InvalidUpdateError: At key 'x': Can receive only one value per step`。
+- 子图把完整状态当补丁回传，覆盖父图其他分支刚写的新值（子图覆盖父图状态）。
+- 并行分支（fan-out）写同一个状态键，结果取决于谁后完成（并行同键冲突）。
+- 重试、恢复或回放让同一个工具被再次调用，产生重复副作用（重复发消息、重复扣款）。
+- 缓存命中后不再重新采样；多智能体合并时丢了字段，下游读到空值。
+- 节点报错后留下部分写入，重试时状态已经污染。
 
-[系统性框架设计](docs/categorical-framework.md) 将接口与组合、运行语义、契约与精化、证据抽象、随机与因果、局部与整体、定量验证连接起来。[v3 候选](evals/iterations/v3-candidate/SKILL.md) 包含一个入口、六份按需参考及一个证据记录检查器。它尚未替换当前主版本或个人安装；数学依据、工程假设和模型效果分别说明。
+这类问题的共同点：**结构合法，组合后语义变了**。单看每个节点都没错，错在边界。
 
-检查器只能验证记录引用与状态一致性，不能证明事实真实或根因正确。候选评测协议见 [成对机制方案](evals/iterations/mechanisms-2026-09-29/ANALYSIS_PLAN.md)。单独打包候选：
+## 60 秒 demo
 
 ```sh
-python3 scripts/build_skill.py --source evals/iterations/v3-candidate
+pipx install "git+https://github.com/meiluosi/agent-composition-review.git@v0.1.0"
+pipx inject agent-composition-review "langgraph>=1.0,<2"   # acr demo 需要；scan/trace 可跳过
+acr demo
 ```
 
-输出为 `dist/agent-composition-review-candidate.zip`，包含九个运行文件，不包含评测案例、标签和维护文档。默认打包命令仍生成当前主版本。
+`acr demo` 会在本地运行一个 LangGraph #6446 风格的 broken 示例，捕获 `InvalidUpdateError`，用 `acr scan` 找到 ACR001，演示一行 `output_schema` 修复，再跑回归确认通过。它需要可选依赖 `[langgraph]`；只跑 `scan` / `trace` / `report` 不需要安装 LangGraph。
 
-[v4 执行候选](candidates/v4/agent-composition-review/SKILL.md) 增加动作/状态结构、测试生成和回放检查，仍在开发。目录职责与官方依据见 [组织说明](docs/skill-organization.md)，可运行流程和 336 条工具回归见 [执行说明](docs/executable-workflow.md)。
+真实运行输出（`acr` 0.1.0，本地环境）：
 
-## 一个已复现的例子
+```text
+$ acr demo
+acr demo - LangGraph subgraph state leak walkthrough (acr 0.1.0)
 
-[LangGraph #6446](https://github.com/langchain-ai/langgraph/issues/6446) 报告了父图与子图并行时的字段冲突。本地执行发现：叶节点只修改 s1/s2，但子图输出完整状态，旧 b 被父图当作更新，与另一节点的新 b 冲突。
+1) run the broken graph from examples/langgraph-subgraph-leak/broken.py
+   x InvalidUpdateError: At key 'b': Can receive only one value per step. Use an Annotated key to handle multiple values.
+     (the child returned its full state including the stale 'b', colliding with the sibling write)
 
-修复明确子图的输出 schema，只提交它负责的字段，同时保留完整读取上下文和原有并行关系。之前的独立执行中，有/无 Skill 两组都完成了该修复，并各通过 8 项验收及原例处理函数回接检查。详细结论见 [历史评测摘要](evals/runs/history-v1.md)。
+2) static analysis of the broken source
+   acr scan found 2 finding(s) before the runtime failure:
+   HIGH   ACR001  Compiled subgraph shares state keys with the parent graph
+           Compiled subgraph registered as node 'child' has no output_schema, and child state 'State' shares 'a', 'b', 's1', 's2' with parent state 'State'. The child's full state is merged back into the parent, so writes from this node can collide with sibling branches.
+           - shared state key(s): 'a', 'b', 's1', 's2'
+           - parent state 'State' declared at line 21; key line(s): 'a' at line 22, 'b' at line 23, 's1' at line 24, 's2' at line 25
+           - ... 3 more evidence item(s)
+           fix: Declare ``output_schema=<SubgraphOutput>`` on the child ``StateGraph`` so only intended keys flow back to the parent, or split the shared key into distinct keys.
+           docs: docs/rules/ACR001.md
+   HIGH   ACR002  Parallel branches write the same state key without a reducer
+           After START, branches 'child', 'sibling' can run in the same superstep and all write state key 'b', which has no reducer. LangGraph raises InvalidUpdateError for concurrent writes to a non-reduced key.
+           - source START has unconditional edges to 'child', 'sibling' (edge line(s): 53, 54)
+           - state key 'b' declared at line 23 with annotation 'str' and no reducer
+           - ... 2 more evidence item(s)
+           fix: Give the key a reducer, e.g. ``Annotated[list, operator.add]`` (or ``add_messages`` for messages), or make the branches write disjoint keys / run sequentially.
+           docs: docs/rules/ACR002.md
 
-这体现了一个重要问题：组件返回的是完整快照、更新补丁，还是操作命令？结构相同不代表语义相同。
+3) run the fixed graph from examples/langgraph-subgraph-leak/fixed.py
+   ok: graph.invoke() completed without InvalidUpdateError
+   final state: {"a": 1, "b": "old|updated", "s1": 4, "s2": -2}
+     (child declares output_schema=ChildOutput, so only s1/s2 are merged back; the parallel fan-out is unchanged)
 
-## 案例库
+4) static analysis of the fixed source
+   acr scan found 0 finding(s)
 
-| 案例 | 来源类型 | 主要检查 | 当前证据 |
+Summary: acr scan flagged the shared key and the unreduced parallel write before the graph ran; adding output_schema=ChildOutput removes both findings and the run succeeds.
+```
+
+## 真实案例：LangGraph #6446
+
+[LangGraph #6446](https://github.com/langchain-ai/langgraph/issues/6446) 是一个真实的父子图并行冲突：父图同时扇出 `sibling`（写 `b`）和子图 `child`（写 `s1`/`s2`），子图**没有声明 `output_schema`**，于是把完整状态（包括自己从未写过的旧 `b`）当更新回传。父图把它和 `sibling` 的新 `b` 放在同一个 superstep 合并，触发冲突。
+
+最小复现与修复在 [examples/langgraph-subgraph-leak/](examples/langgraph-subgraph-leak/)，用 `run.py` 可一次跑完。下面是本地真实运行输出：
+
+```text
+$ python examples/langgraph-subgraph-leak/run.py
+================================================================
+1) broken.py：子图未声明 output_schema，回传完整状态
+================================================================
+按预期失败：InvalidUpdateError: At key 'b': Can receive only one value per step. Use an Annotated key to handle multiple values.
+For troubleshooting, visit: https://docs.langchain.com/oss/python/langgraph/errors/INVALID_CONCURRENT_GRAPH_UPDATE
+
+================================================================
+2) fixed.py：子图声明 output_schema=ChildOutput，只写 s1/s2
+================================================================
+结果：  {'a': 1, 'b': 'old|updated', 's1': 4, 's2': -2}
+期望：  {'a': 1, 'b': 'old|updated', 's1': 4, 's2': -2}
+
+通过：broken 复现 InvalidUpdateError (At key 'b')，fixed 输出正确。
+```
+
+`acr scan` 一条命令就把边界指到两处：子图输出越界（ACR001），以及同一 superstep 对 `b` 的竞争（ACR002）。真实输出：
+
+```text
+$ acr scan examples/langgraph-subgraph-leak/broken.py
+acr scan - examples/langgraph-subgraph-leak/broken.py
+1 file(s) parsed, 0 skipped - 2 finding(s): high 2, medium 0, low 0
+
+  HIGH   ACR001  Compiled subgraph shares state keys with the parent graph
+    examples/langgraph-subgraph-leak/broken.py:51
+    Compiled subgraph registered as node 'child' has no output_schema, and child state 'State' shares 'a', 'b', 's1', 's2' with parent state 'State'. The child's full state is merged back into the parent, so writes from this node can collide with sibling branches.
+    evidence:
+      - shared state key(s): 'a', 'b', 's1', 's2'
+      - parent state 'State' declared at line 21; key line(s): 'a' at line 22, 'b' at line 23, 's1' at line 24, 's2' at line 25
+      - child state 'State' declared at line 21; key line(s): 'a' at line 22, 'b' at line 23, 's1' at line 24, 's2' at line 25
+      - child graph compiled without output_schema at line 51
+      - parent node 'child' registered with add_node at line 51
+    fix: Declare ``output_schema=<SubgraphOutput>`` on the child ``StateGraph`` so only intended keys flow back to the parent, or split the shared key into distinct keys.
+    docs: docs/rules/ACR001.md
+
+  HIGH   ACR002  Parallel branches write the same state key without a reducer
+    examples/langgraph-subgraph-leak/broken.py:53
+    After START, branches 'child', 'sibling' can run in the same superstep and all write state key 'b', which has no reducer. LangGraph raises InvalidUpdateError for concurrent writes to a non-reduced key.
+    evidence:
+      - source START has unconditional edges to 'child', 'sibling' (edge line(s): 53, 54)
+      - state key 'b' declared at line 23 with annotation 'str' and no reducer
+      - node 'child' writes 'b' (add_node at line 51)
+      - node 'sibling' writes 'b' (add_node at line 50)
+    fix: Give the key a reducer, e.g. ``Annotated[list, operator.add]`` (or ``add_messages`` for messages), or make the branches write disjoint keys / run sequentially.
+    docs: docs/rules/ACR002.md
+```
+
+修复后同一条命令返回 0 条 finding：
+
+```text
+$ acr scan examples/langgraph-subgraph-leak/fixed.py
+acr scan - examples/langgraph-subgraph-leak/fixed.py
+1 file(s) parsed, 0 skipped - 0 finding(s): high 0, medium 0, low 0
+
+  No composition issues found.
+```
+
+修复只有一行，但方向必须是“收窄子图输出边界”，而不是砍掉并行或让子图少读上下文：
+
+```diff
+- child = StateGraph(State)
++ child = StateGraph(State, output_schema=ChildOutput)
+```
+
+```python
+class ChildOutput(TypedDict):
+    s1: int
+    s2: int
+```
+
+修复后：父图的 `b` 保留为 `old|updated`，子图仍能读取父图的 `a`/`b` 计算 `s1`/`s2`，并行结构不变，回归输出 `{'a': 1, 'b': 'old|updated', 's1': 4, 's2': -2}` 并通过。
+
+## 安装
+
+需要 Python 3.10+。四种方式任选：
+
+```sh
+# 1) pipx（推荐，隔离环境）
+pipx install "git+https://github.com/meiluosi/agent-composition-review.git@v0.1.0"
+pipx inject agent-composition-review "langgraph>=1.0,<2"    # 可选，仅 acr demo 需要
+
+# 2) uv tool
+uv tool install "agent-composition-review[langgraph] @ git+https://github.com/meiluosi/agent-composition-review.git@v0.1.0"
+
+# 3) pip
+python3 -m pip install "agent-composition-review[langgraph] @ git+https://github.com/meiluosi/agent-composition-review.git@v0.1.0"
+
+# 4) 源码
+git clone https://github.com/meiluosi/agent-composition-review.git
+cd agent-composition-review
+python3 -m pip install -e ".[langgraph]"
+```
+
+`[langgraph]` 只影响 `acr demo` 的示例运行；`scan` / `trace` / `report` 不依赖 LangGraph 也能用。安装脚本 [install.sh](install.sh) 会自动检测 `uv` / `pipx` / `pip`，但它只安装 CLI 本体；跑 demo 时再按上面的方式补 `langgraph`。
+
+验证安装：
+
+```sh
+acr --version
+acr rules
+acr --help
+```
+
+## 命令
+
+| 命令 | 作用 | 常用参数 |
+| --- | --- | --- |
+| `acr scan PATH` | 静态分析构图代码（Python AST），输出 finding | `--json`；`--fail-on high\|review\|never` |
+| `acr trace TRACE` | 分析失败轨迹，输出时间线与证据事件 ID | `--json`；支持 JSON 数组 / JSONL / 统一事件格式，并兼容 LangGraph debug stream |
+| `acr report` | 合并 scan 与 trace 结果为一页 Markdown | `--scan FILE --trace FILE -o report.md` |
+| `acr demo` | 本地跑通 #6446 类示例：broken → scan → 修复 → 通过 | 需要 `[langgraph]` |
+| `acr rules` | 列出全部规则 ID、标题、严重度与文档链接 | — |
+
+`--fail-on` 用于 CI：`high` 只在 high finding 时非零退出，`review` 把 medium 也算失败，`never` 永不因 finding 失败。所有 finding 都带 `rule`、`severity`、`file`、`line`、`evidence`、`fix`、`docs` 字段。
+
+## 规则
+
+共 11 条。每条都有独立的说明页（症状、为什么发生、输出示例、最小修复、误报边界）；finding 的 `docs` 字段是 `docs/rules/<RULE>.md` 仓库相对路径，安装版可在 [GitHub 的 docs/rules/](https://github.com/meiluosi/agent-composition-review/tree/main/docs/rules) 查看同一个页面。
+
+### 静态检查（`acr scan`）
+
+| 规则 | 症状 | 级别 | 文档 |
 | --- | --- | --- | --- |
-| LG-6446：子图透传旧状态 | 公开 issue 的本地复现 | 读字段和写字段的边界 | 原例复现、独立修复试用、运行回归 |
-| LG-8754：读取创建空线程 | 公开 issue 的本地复现，版本不同 | 读取是否有隐藏副作用 | 本地复现及有限范围的修复对照 |
-| DOC-INTERRUPT：恢复重复执行 | 官方文档行为的自建例子 | 重放范围和操作幂等性 | 真框架运行及本地效果计数 |
-| 六个文本场景 | 自建场景，由模型编写 | 单位、采样、反例、全局约束、缺证据、节点错误 | 旧版两组独立回答与匿名评审 |
+| ACR001 | 子图与父图共享状态键，且未声明 `output_schema` | high | [ACR001](docs/rules/ACR001.md) |
+| ACR002 | 并行分支写同一状态键，且没有 reducer | high | [ACR002](docs/rules/ACR002.md) |
+| ACR003 | 子图作为节点使用但未声明 `output_schema` | medium | [ACR003](docs/rules/ACR003.md) |
+| ACR004 | 副作用节点/图被缓存包裹 | medium | [ACR004](docs/rules/ACR004.md) |
+| ACR005 | 副作用节点启用了 retry | medium | [ACR005](docs/rules/ACR005.md) |
+| ACR006 | 节点内通过 checkpointer 读写图状态 | low | [ACR006](docs/rules/ACR006.md) |
 
-详见 [案例说明](docs/cases.md) 和 [机器可读清单](evals/cases.json)。上述案例已参与设计，属于开发集；外部实验的独立抽样另见下文。框架测试使用真实 LangGraph 执行器，不调用模型或外部业务服务。
+### 轨迹检查（`acr trace`）
 
-## 验证
+| 规则 | 症状 | 级别 | 文档 |
+| --- | --- | --- | --- |
+| ACR101 | 相同参数与结果的工具被重复调用 | medium | [ACR101](docs/rules/ACR101.md) |
+| ACR102 | 同一节点重复执行并重复写同一状态键 | medium | [ACR102](docs/rules/ACR102.md) |
+| ACR103 | 同一步的并行节点写同一状态键 | high | [ACR103](docs/rules/ACR103.md) |
+| ACR104 | 状态已部分写入后抛错 | high | [ACR104](docs/rules/ACR104.md) |
+| ACR105 | 最终状态缺少输入中存在的键 | medium | [ACR105](docs/rules/ACR105.md) |
 
-Python 3.12；在独立虚拟环境安装锁定依赖：
+级别含义：`high` 很可能是真实的组合故障；`medium` 需要人工确认为“故障”还是“设计如此”；`low` 是提示，通常不改变行为。**规则命中不等于根因**，先核对证据再改代码。
 
-```sh
-python3.12 -m venv .venv
-.venv/bin/python -m pip install -r requirements-eval.txt
-.venv/bin/python scripts/check_repo.py
-.venv/bin/python scripts/run_evals.py
-.venv/bin/python scripts/build_skill.py
-```
+## 工作原理
 
-这些命令验证格式、文件引用、案例登记、框架行为与打包。**它们不测模型读完 Skill 后是否更会排障。** 当前框架回归有 10 个测试方法，涵盖三个案例；完整记录见 [本轮执行结果](evals/runs/2026-09-29-framework.json)。
+- **scan**：用 Python `ast` 解析目标路径下的构图代码，识别 `StateGraph` 构造、`add_node` / `add_edge`、从 `START` 的扇出、状态键的 `Annotated[...]` reducer、`cache` / `retry` 装饰器，以及节点内的 `get_state` / `update_state` 调用。纯本地分析，不执行代码。
+- **trace**：把 JSON 数组、JSONL、统一事件格式或 LangGraph debug stream 归一化为带 `id` / `seq` / `kind` 的事件流，再检查同一工具重复调用、同一节点重复写、同一步并行写同键、错误后的部分写入、最终状态丢键。输出会引用具体事件 ID，方便回到原始轨迹核对。
+- **report**：只做合并与排版，不引入新的判断。
+- 不需要模型、不需要 API key、不上传代码、不内置遥测。
 
-模型能力评测的对照条件、指标、阻止发布的条件和记录要求见 [评测协议](evals/PROTOCOL.md)。以后提出“效果更好”的结论，需要附有该协议下的对照证据，而不是仅展示绿色 CI。
+## 限制
 
-外部数据已接入 Who&When 与 Who&When Pro text，并完成下方列出的首轮 144 次对照运行；AgentRx 等待访问授权。来源与覆盖限制见 [专业数据集与接入状态](docs/benchmarks.md)。数据集完整规模不等于本轮已评测样本数。
+- 只支持 **Python** 的构图代码，且基于 **AST 静态分析**。动态构造（工厂函数里循环 `add_node`、`getattr` 拼函数名、运行时才决定边）可能漏报。
+- 面向 **LangGraph 1.x**；更老的 API 或不同小版本的 `StateGraph` 参数可能无法识别。
+- **不是运行时追踪器**：不会自动插桩或采集线上运行；`trace` 需要你提供轨迹文件。
+- **不自动改代码**：`fix` 是文字建议，所有修改由你决定。
+- 静态规则是启发式的：装饰器名字、状态键是否重叠等判断都可能误报。v0.1 宁愿把不确定项标成 medium/low，也不替你做结论。
+- **v0.1 不宣称 benchmark 提升**，不提供检测准确率或生产效果承诺；旧实验记录见 [评测档案](docs/evaluation-history.md)。
 
-本轮新增参考指令另做了 [独立前向试用](evals/runs/2026-09-29-forward/report.md)：执行者识别出违规的查询写入，给出并验证修复，也没有把明确允许的缓存写入误报为故障。这是两个简化组件的一次开发集检查，无对照组；判据登记晚于任务分发，不能视为完整协议下的效果评测。范围与证据见 [记录](evals/runs/2026-09-29-forward/result.json)。
+## 评测档案（不是产品承诺）
 
-## 最新：不同模型是否从指导中获益
+本项目最初是一份“组合审查方法论”的研究型 Skill，2026 年 9–10 月做过若干轮模型行为实验：外部基准 144 次、开发集消融 96 次、机制检查 72 次、v4 执行修复 48 次、模型交互 100/144 次、自主代码修复 36 次。这些记录保留在 [docs/evaluation-history.md](docs/evaluation-history.md)，包括关键数字、结论和限制。
 
-固定共同工具，比较无附加指导、普通工程清单和 v4 Skill；使用 Astra/high、Luna/high，12 道自建开发任务各重复两次，共计划 144 次。共同提示不强制契约建模。正式调用前已冻结题目、输入、评分和决策门槛，不能把 Luna 预先当作在这些题上更弱的模型。
+从 v0.1 起，**产品优先**：主入口是 `acr` CLI，实验历史只作为证据档案维护。那些实验的对象是“模型读完 Skill 文本后的排障表现”，不是 `acr scan` / `acr trace` 的规则准确率；它们不能用来证明本产品有效，也没有被改写成 v0.1 的 benchmark 承诺。想核查原始材料，可读 [评测协议](evals/PROTOCOL.md) 与 [案例清单](evals/cases.json)。
 
-累计记录 **100/144 次：97 次有效完成，96 次成功交付，44 项未开始**。首指标要求有效完成且通过全部隐藏验收，超时留下的代码即使通过也不升级成完成。
+> 一句话：我们保留负结果和未完成记录，不把“没有观察到提升”包装成提升。
 
-| 条件 | Astra 成功 / 已尝试 | Luna 成功 / 已尝试 |
-| --- | ---: | ---: |
-| A · 共同工具 | 15/16 | 15/16 |
-| B · 加普通工程清单 | 17/17 | 17/17 |
-| C · 加 v4 Skill | 15/17 | 17/17 |
+## 给 Agent 使用
 
-每个单元计划 24 次，未完成导致实际分母不同。16 个完整配对块按家族等权后，Luna 的 C−A 为 +8.3 个百分点，但 C−B 为 0；差异来自一条基线修复遗漏，普通清单同样解决。Astra 的交付差异涉及超时，不能直接解释为代码能力退化。Luna B/C 覆盖相同 17 项且用量完整，C 已记录输入 token 比 B 多约 24.85%；输入含缓存，不等于实际费用，也不是总体效率结论。
+同一个仓库还提供运行时 Skill 入口：[skills/agent-composition-review/SKILL.md](skills/agent-composition-review/SKILL.md)。它把上面的流程写成 Agent 可执行的步骤：判断症状 → `acr scan` / `acr trace` → 读 finding 并验证 → 最小修复 → 加回归测试 → 输出一页报告，并明确要求“证据不足时说不知道”。规则速查与修复模式分别在 [references/rules.md](skills/agent-composition-review/references/rules.md) 和 [references/fix-patterns.md](skills/agent-composition-review/references/fix-patterns.md)。
 
-![模型与指导的业务结果及配对差值](assets/model-interaction-results.png)
+## 贡献
 
-原阶段 64 次后，执行器把文件名中的 `401` 误判成鉴权错误；该次仍是未交付的超时，原记录不改。[独立恢复登记](evals/iterations/model-interaction-2026-10-04/RECOVERY_PLAN.md)后只继续未开始项，新增 36 次。其中一次执行超时伴随模型目录及遥测请求错误，按停止规则结束；证据不能确认推理通道故障或超时因果。没有重跑旧任务，两个 canary 另列。
+欢迎提交：脱敏后的最小故障复现、正常反例（证明某条 finding 是误报）、安装/兼容问题、规则文档改进。
 
-![固定任务顺序的累计成功交付比例](assets/model-interaction-cumulative.png)
+一次改动最好只对应一个问题：
 
-曲线不是训练曲线；未开始项不当作答错。**本轮不能确定弱模型是否更受益，也没有证据支持继续加长指导。** 两个“正常”样例暴露了原验收遗漏：非法 JSON 接受，以及 Python 字符串存储/往返边界。正常误报计数不能按字面解释；预注册升级和饱和门槛均不能在不完整计划上执行。
+1. 提交最小复现（构图代码、版本、实际报错/轨迹）或误报样例；
+2. 说明期望行为与现有 finding 的差异；
+3. 修改最小规则或文档，不顺手重构无关代码；
+4. 回归旧案例，补一条能复现旧行为的测试；
+5. 在 PR 中说明证据：为什么这条规则能命中、误报边界是什么。
 
-保留范畴论用于明确输入域、保持关系和反例设计；当前 v4 不升级、不继续追加本轮调用。下一阶段应先校准验收，再在另行登记的新任务上决定是否比较简短清单与按需工具。本轮共有工具无法证明工具自身的收益。
+误报报告和真实修复案例比 star 更有用。流程细节见 [CONTRIBUTING.md](CONTRIBUTING.md)，安全问题见 [SECURITY.md](SECURITY.md)。
 
-[全部已尝试记录与生成报告](evals/iterations/model-interaction-2026-10-04/REPORT.md) · [复现方法](docs/model-interaction-evaluation.md) · [执行审计](evals/iterations/model-interaction-2026-10-04/EXECUTION_REVIEW.md) · [框架复盘](docs/model-interaction-findings.md)
+## 许可证
 
-## 前轮：自主建模与跨运行机制代码修复
-
-LangGraph 子图、SQLite 事务、asyncio 任务组各两个变体，比较基本工具、增加契约工具、再增加 v4 指导。不给当前任务的参考模型，直接交付代码和自行建立的结构。三组各两次重复，共 36 次尝试；都是开发材料。
-
-| 条件 | 有效完成 / 计划 | 原行为验收通过 / 有效完成 | 恢复评审三项 covered / 完成任务的模型 | 已记录修复输入 token |
-| --- | ---: | ---: | ---: | ---: |
-| A · 基本工具 | 10/12 | 10/10 | 10/10 | 1,231,665 |
-| B · 加契约工具 | 10/12 | 10/10 | 10/10 | 1,296,781 |
-| C · 再加 v4 指导 | 10/12 | 10/10 | 10/10 | 1,629,543 |
-
-**每组两次额度失败保留，不能解释为能力失败。** 原 36 次评审也因额度失败不可用；2026-10-04 另行登记并完成 31 次评审，包含一份中断任务的中间模型。表中仅列已完成任务，未升级中断任务状态。恢复批次使用相同请求模型和判据，但 CLI 版本不同。失败调用用量缺失，输入含缓存，不等于费用。
-
-![自主修复原验收、额度失败与固定顺序累计曲线](assets/code-repair-audited.png)
-
-曲线分母保留全部计划尝试，下降来自额度失败，不是训练退化。**原正常标签 c04/c06 有误**：提交失败、清理期间取消的交错未被原验收覆盖。修订参考和反例已保留；正常保持仅能在 c02 上作有限解释，每组两次均保留代码。
-
-| 事后探针：仅有效完成产物 | A | B | C |
-| --- | ---: | ---: | ---: |
-| 两个异步清理交错均通过 | 2/3 | 3/3 | 3/3 |
-| 提交失败撤销并可复用连接 | 1/3 | 2/3 | 2/3 |
-
-这些探针由观察到的结果启发，不是预注册或保留集成绩。评审 covered 也不能代替完整行为验收：任务已终止仍可能没有完成业务清理。**没有获得 v4 指导的升级依据，继续保留候选。** C 的已记录修复输入比 A 多约 32.3%；目录拆分或增加理论文字的收益尚未得到证明。
-
-[完整报告](evals/iterations/code-repair-2026-09-30/REPORT.md) · [维护者复核](evals/iterations/code-repair-2026-09-30/CURATOR_REVIEW.md) · [复现与恢复批次说明](docs/code-repair-evaluation.md) · [复盘与框架推进](docs/code-repair-findings.md)
-
-<!-- external-pilot:start -->
-## 外部基准首轮实验
-
-2026-09-29，**完成 144/144 次计划运行；有效完成 144 次**。请求模型为 **gpt-6-astra / high**，每个数据集 12 个任务、每组每例 3 次重复。实验前冻结输入、评分器、Skill 快照和分析方案；运行中未调优 Skill。
-
-首要指标为错误位置严格匹配的准确率。先对同一任务的重复取平均，区间按任务聚类进行 10,000 次配对 bootstrap；不是把 144 次运行当作 144 个独立样本。
-
-| 数据集 | 任务数 | 无 Skill | 有 Skill | 差值（百分点） | 差值的 95% 区间（百分点） |
-| --- | ---: | ---: | ---: | ---: | --- |
-| Who&When | 12 | 50.0% | 41.7% | -8.3 | [-22.2, +0.0] |
-| Who&When Pro | 12 | 52.8% | 52.8% | +0.0 | [+0.0, +0.0] |
-
-**本轮未观察到首要指标的提升。** Who&When 的差值区间包含 0；Who&When Pro 的差值区间包含 0。这是一项分层抽样的小样本试验，不是全量基准成绩，也不能据此证明生产系统、代码修复或整体架构质量的提升。 若差值区间为 [0, 0]，表示本次每个任务的两组平均得分恰好相同；小样本的经验 bootstrap 无法由此推断未来差异也为零。
-
-![有无 Skill 的归因准确率及任务聚类区间](docs/assets/external-pilot-accuracy.png)
-
-图中 n 为指标适用的任务数；无 Agent 标签时联合指标只检查位置。[查看配对差值图](docs/assets/external-pilot-difference.png)。
-
-下图按预先固定的任务顺序展示累计定位准确率。它反映样本增加时估计如何变化，**不是训练曲线**，没有按结果调整顺序。
-
-![固定任务顺序下的累计定位准确率](docs/assets/external-pilot-cumulative.png)
-
-范围：已下载 Who&When 184 条及 Pro text 6,257 条；这里只评测所列 24 个任务。Pro 的部分位置映射及 Who&When 的超长输入未进入抽样池，详见排除记录。AgentRx 尚受访问授权限制，未运行。所有外部样本都是失败轨迹，不能据此估计正常系统误报率。公开数据也可能已被模型预训练见过。
-
-结果与复现：[完整实验说明](docs/external-evaluation.md) · [冻结清单](evals/external/pilot-manifest.json) · [逐次预测与评分](evals/external/results/pilot-2026-09-29/predictions.json) · [汇总](evals/external/results/pilot-2026-09-29/summary.json) · [资源统计](evals/external/results/pilot-2026-09-29/report.md)。图表可以从公开评分表重画，无需再次调用模型。
-<!-- external-pilot:end -->
-
-事后逐例分析见 [首轮复盘与迭代设计](docs/pilot-postmortem.md)：净退化集中在两个任务，涉及已恢复错误、未执行风险及最早责任位置的区分。已保存未启用的 v2 候选，并完成下方四组开发消融。主 Skill 尚未替换，首轮成绩保持原样。
-
-<!-- development-ablation:start -->
-## 四组开发集消融
-
-首轮复盘后，针对 8 个已参与设计的任务重新运行四组、每例每组 3 次，共 **96 次新运行**。A 无 Skill；B 旧版全包；C 旧版正文；D 候选正文。A/B 提示词与首轮一致，本轮重新采样；正文组不能读取参考链接。这是开发机制检查，不能证明保留集提升或实际自动触发效果。
-
-| 条件 | 定位命中 | 准确率 | 输入 token 合计 | 输出 token 合计 | 墙钟中位数 |
-| --- | ---: | ---: | ---: | ---: | ---: |
-| A · No skill | 11/24 | 45.8% | 326,014 | 6,943 | 34.2s |
-| B · V1 full | 11/24 | 45.8% | 480,904 | 7,996 | 35.2s |
-| C · V1 core | 12/24 | 50.0% | 367,076 | 7,057 | 34.3s |
-| D · V2 core | 10/24 | 41.7% | 349,428 | 7,191 | 35.3s |
-
-![开发集四组准确率与上下文成本](docs/assets/development-ablation-overview.png)
-
-每个条件有 24 次运行，但只有 8 个任务。按任务聚类的区间和逐例变化见 [实验报告](evals/iterations/ablation-2026-09-29/REPORT.md)。历史 144 次未并入此表；费用未知，token 与墙钟记录不等于货币报价或纯服务延迟。
-
-[逐任务成功次数图](docs/assets/development-ablation-cases.png) · [冻结清单](evals/iterations/ablation-2026-09-29/manifest.json) · [逐次预测](evals/iterations/ablation-2026-09-29/predictions.json) · [复现方法](docs/ablation-evaluation.md)
-<!-- development-ablation:end -->
-
-**本轮决定：v2 候选未获升级依据，继续保留主版本。** 旧版正文较全包少用 23.7% 输入 token，但准确率仅多命中一次；旧版全包在这次复测中与无 Skill 持平。详见 [逐例复盘与下一步实验方向](docs/ablation-findings.md)。
-
-## 模块化 v3：72 次成对机制检查
-
-完成 **72/72 次有效运行**：六个自建开发家族、每家族两个相邻变体，比较无 Skill、v1、v3，每例各两次。主入口强制注入，参考文件由模型实际按需读取；三组具有相同的只读工具和共同输出协议。这不是自动触发测试，也不是新的外部基准成绩。
-
-| 条件 | 成对契约判断 | 离散命题严格匹配 | 正常例误报 | 输入 token |
-| --- | ---: | ---: | ---: | ---: |
-| 无 Skill | 100% | 71/72 | 0/10 | 519,767 |
-| v1 按需参考 | 100% | 70/72 | 0/10 | 960,368 |
-| v3 按需参考 | 100% | 72/72 | 0/10 | 848,565 |
-
-![成对机制判断及实际上下文成本](docs/assets/mechanisms-v3-overview.png)
-
-**主指标未观察到提升，v3 继续保留为候选。** 这套短案例出现天花板，且次要位置与命题题面存在目标歧义；不能将候选的命题匹配结果直接解释为稳定收益。v3 输入比 v1 少 11.6%，仍比无 Skill 多 63.3%。本轮与前两轮的任务、工具和指标不同，不能接成一条效果提升曲线。
-
-![固定家族顺序下的累计成对判断](docs/assets/mechanisms-v3-cumulative.png)
-
-三条线重叠反映相同成绩；这不是训练曲线。只有六个开发家族，经验区间退化不代表未来确定性。实际读取参考的运行数为 v1 23/24、v3 22/24；程序检查器本轮未被模型调用，其作用不能由该表推出。
-
-[实验报告](evals/iterations/mechanisms-2026-09-29/REPORT.md) · [逐次预测](evals/iterations/mechanisms-2026-09-29/predictions.json) · [机制复盘与版本决定](docs/mechanism-findings.md) · [复现与边界](docs/mechanism-evaluation.md)
-
-## v4：48 次执行修复对照
-
-新增动作/状态结构、组合义务、有限输入域生成及轨迹验收，见 [执行工作流](docs/executable-workflow.md)。先完成 336 条确定性工具回归，再对模型给出的每份配置实际执行 57 个验收输入。
-
-本轮完成 **48/48 次有效模型运行**：同一自建检索系统的 8 个开发任务，三组各重复两次。三组都具有相同结构模型、代码和回放工具；“无 Skill”在此指无额外 Skill 指导。任务是有限配置修复，不是任意代码修改或自动建模。
-
-| 条件 | 全部验收通过 | 最小改动通过 | 正常例不必要改动 | 输入 token |
-| --- | ---: | ---: | ---: | ---: |
-| 无额外 Skill 指导 | 16/16 | 16/16 | 0/4 | 878,508 |
-| v3 指导 | 16/16 | 16/16 | 0/4 | 1,148,308 |
-| v4 指导 | 16/16 | 16/16 | 0/4 | 1,127,561 |
-
-![配置修复验收与上下文成本](docs/assets/replay-v4-overview.png)
-
-**未观察到额外指导的增量收益，v4 继续保留为候选。** v4 输入比无额外指导组多 28.3%；不能由此评价工具本身是否有用，因为三组都拿到了工具。主包及个人安装未升级。三组均为满分，存在天花板；任务配对区间 [0,0] 不能证明未来差异为零。
-
-![固定开发任务顺序的累计验收率](docs/assets/replay-v4-cumulative.png)
-
-这不是训练曲线；不与前轮外部归因成绩拼接。只有一个系统的八个变体，不能宣称真实系统泛化提升或自然触发已验证。
-
-[实验报告](evals/iterations/replay-2026-09-30/REPORT.md) · [逐次预测与验收](evals/iterations/replay-2026-09-30/predictions.json) · [复盘与版本决定](docs/replay-findings.md) · [复现说明](docs/replay-evaluation.md)
-
-显式打包 v4：
-
-```sh
-python3 scripts/build_skill.py --source candidates/v4/agent-composition-review --output dist/agent-composition-review-v4.zip
-```
+[MIT](LICENSE)。Copyright (c) 2026 Agent Composition Review contributors。
 
 ## 仓库结构
 
 ```text
-skills/agent-composition-review/  当前主版本运行包
-candidates/v4/agent-composition-review/ 下一轮候选运行包
-README.md / docs/                 人类使用和维护说明
-evals/cases/                      可执行的框架复现与回归
-evals/scenarios/                  模型试用输入与维护者判据
-evals/runs/                       已完成评测的证据与限制
-evals/external/                   外部数据适配、冻结清单与模型对照结果
-scripts/                         维护用校验、测试、打包
-evals/replay/                    动作/状态契约的执行回放与验收
-evals/code_repair/               自主建模、代码修复与原冻结验收
-evals/code_repair_followup/      正常标签纠错、补充探针与修订参考
-.github/                         CI、案例提交表与 PR 模板
+src/agent_composition_review/          acr CLI 实现（产品代码）
+tests/                                 CLI 与规则测试
+examples/langgraph-subgraph-leak/      #6446 类可运行示例（broken/fixed/run）
+docs/rules/                            11 条规则的独立说明页
+docs/evaluation-history.md             旧评测档案（历史证据，非产品承诺）
+docs/launch/                           公开发布清单与渠道文案
+skills/agent-composition-review/       Agent Skill 入口与参考
+evals/                                 评测历史、协议与原始证据（不参与运行时）
+scripts/                               仓库检查、评测与维护脚本
 ```
 
-未来补充的信息优先是：真实边界契约、可复现失效条件、能区分竞争假设的问题，以及明确的验证判据。理论背景按需放入 references，不把更多术语或更长文件作为进步指标。
+产品代码（`src/`、`tests/`、`examples/`、`skills/`）与评测档案（`evals/`、`docs/evaluation-history.md`）刻意分开：前者承诺可运行、可回归；后者只承诺保留证据和限制，不被当作产品效果宣传。
 
-## 贡献与持续迭代
+---
 
-欢迎提交脱敏故障、正常反例和复现差异。一次改动最好对应一个具体问题：添加失败案例与验收 → 修改最小规则 → 回归旧案例 → 用未参与修改的新案例检查迁移。步骤见 [CONTRIBUTING.md](CONTRIBUTING.md)。
-
-灵感来自用户提供的《组合智能》摘要；数学参考在技能参考文件中。没有该书全文，不声称复刻原书的定义、公式或章节。写法参考过 [女娲.skill](https://github.com/alchaincyf/nuwa-skill)，本项目不是人物蒸馏或角色扮演 Skill。公开案例链接用于说明来源；本仓库中的新回归实现没有打包原 issue 页面、原仓库代码或本地虚拟环境。
-
-当前仓库归属 meiluosi，使用独立 Git 历史。对外公开前由维护者选择许可证并确定发布范围；本项目没有默认授予开源许可。
+**Find the boundary where your LangGraph agent breaks.**

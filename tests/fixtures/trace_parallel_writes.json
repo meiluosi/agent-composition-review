@@ -1,0 +1,16 @@
+{
+  "input": {"a": 0, "b": 0},
+  "events": [
+    {"id": "e1", "kind": "node_start", "node": "left", "step": 1},
+    {"id": "e2", "kind": "node_start", "node": "right", "step": 1},
+    {"id": "e3", "kind": "node_end", "node": "left", "writes": {"b": 1}, "step": 1},
+    {"id": "e4", "kind": "node_end", "node": "right", "writes": {"b": 2}, "step": 1},
+    {
+      "id": "e5",
+      "kind": "error",
+      "message": "InvalidUpdateError: At key 'b': Can receive only one value per step.",
+      "step": 1
+    }
+  ],
+  "final_state": {"a": 0}
+}

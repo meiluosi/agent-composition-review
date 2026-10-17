@@ -1,0 +1,4 @@
+{"step": 1, "timestamp": "2026-10-17T12:43:57.822185+00:00", "type": "task", "payload": {"id": "9100ecf7-acec-a2cf-54bc-268c12b86914", "name": "child", "input": {"a": 1, "b": "old", "s1": 0, "s2": 0}, "triggers": ["branch:to:child"]}}
+{"step": 1, "timestamp": "2026-10-17T12:43:57.822190+00:00", "type": "task", "payload": {"id": "1d9548f1-b963-08b9-cffa-30a940f9ff31", "name": "sibling", "input": {"a": 1, "b": "old", "s1": 0, "s2": 0}, "triggers": ["branch:to:sibling"]}}
+{"step": 1, "timestamp": "2026-10-17T12:43:57.822955+00:00", "type": "task_result", "payload": {"id": "1d9548f1-b963-08b9-cffa-30a940f9ff31", "name": "sibling", "error": null, "result": {"b": "old|updated"}, "interrupts": []}}
+{"step": 1, "timestamp": "2026-10-17T12:43:57.823158+00:00", "type": "task_result", "payload": {"id": "9100ecf7-acec-a2cf-54bc-268c12b86914", "name": "child", "error": null, "result": {"a": 1, "b": "old", "s1": 4, "s2": -2}, "interrupts": []}}

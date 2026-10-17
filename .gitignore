@@ -5,7 +5,12 @@ __pycache__/
 .env
 .env.*
 !.env.example
+build/
 dist/
+*.egg-info/
+.pytest_cache/
+.coverage
+htmlcov/
 evals/runs/latest-local.json
 evals/runs/private/
 evals/external/data/

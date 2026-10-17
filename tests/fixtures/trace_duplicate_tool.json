@@ -1,0 +1,38 @@
+[
+  {"id": "e1", "kind": "node_start", "node": "agent", "step": 1},
+  {
+    "id": "e2",
+    "kind": "tool_start",
+    "tool": "search",
+    "args": {"query": "langgraph state leak"},
+    "step": 1
+  },
+  {
+    "id": "e3",
+    "kind": "tool_end",
+    "tool": "search",
+    "result": {"hits": 3},
+    "step": 1
+  },
+  {
+    "id": "e4",
+    "kind": "tool_start",
+    "tool": "search",
+    "args": {"query": "langgraph state leak"},
+    "step": 1
+  },
+  {
+    "id": "e5",
+    "kind": "tool_end",
+    "tool": "search",
+    "result": {"hits": 3},
+    "step": 1
+  },
+  {
+    "id": "e6",
+    "kind": "node_end",
+    "node": "agent",
+    "writes": {"messages": ["done"]},
+    "step": 1
+  }
+]

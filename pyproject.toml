@@ -1,0 +1,60 @@
+[build-system]
+requires = ["setuptools>=77", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "agent-composition-review"
+version = "0.1.0"
+description = "Static and runtime diagnostics for LangGraph/LangChain composition failures"
+readme = "README.md"
+requires-python = ">=3.10"
+license = "MIT"
+authors = [
+    { name = "agent-composition-review contributors" },
+]
+keywords = [
+    "langgraph",
+    "langchain",
+    "agents",
+    "diagnostics",
+    "static-analysis",
+    "agent-composition",
+]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Environment :: Console",
+    "Intended Audience :: Developers",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Software Development :: Quality Assurance",
+]
+dependencies = []
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8",
+    "build>=1",
+]
+langgraph = [
+    "langgraph>=1.0,<2",
+]
+
+[project.scripts]
+acr = "agent_composition_review.cli:main"
+
+[project.urls]
+Homepage = "https://github.com/meiluosi/agent-composition-review"
+Issues = "https://github.com/meiluosi/agent-composition-review/issues"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+agent_composition_review = ["py.typed"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-ra"

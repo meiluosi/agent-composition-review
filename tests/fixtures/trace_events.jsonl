@@ -1,0 +1,2 @@
+{"id": "e1", "kind": "node_start", "node": "only", "step": 1}
+{"id": "e2", "kind": "node_end", "node": "only", "writes": {"a": 1}, "step": 1}

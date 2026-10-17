@@ -1,0 +1,135 @@
+name: 报告缺陷
+description: 报告 acr CLI、诊断规则或文档的可复现问题
+title: "[bug] "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        感谢报告缺陷。提交前请先搜索现有 issue，确认不是重复问题。
+
+        **安全漏洞不要发在这里。** 请按 [SECURITY.md](https://github.com/meiluosi/agent-composition-review/blob/main/SECURITY.md) 私下报告。
+
+        请删除或替换提交内容中的密钥、令牌、个人信息、客户数据和未脱敏的生产轨迹。
+  - type: textarea
+    id: summary
+    attributes:
+      label: 问题描述
+      description: 哪个命令、规则或文档出了问题？用一两句话说明。
+      placeholder: 例如：acr scan 对已经声明 output_schema 的子图仍然报 ACR003。
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: 最小复现
+      description: |
+        提供能独立复现的最小代码、命令或输入，并附上完整命令与输出。
+        不要只写“某个项目里会出错”；请缩小到一个文件或最小片段。
+        如无法公开完整代码，可提供脱敏后的最小等价示例。
+      render: shell
+      placeholder: |
+        # 目录结构
+        repro/
+          graph.py
+
+        # 运行命令
+        acr scan repro/
+
+        # 实际输出（完整粘贴）
+    validations:
+      required: true
+  - type: input
+    id: acr-version
+    attributes:
+      label: acr 版本
+      description: 运行 `acr --version` 并粘贴输出。
+      placeholder: acr 0.1.0
+    validations:
+      required: true
+  - type: input
+    id: python-version
+    attributes:
+      label: Python 版本
+      description: 运行 `python3 --version` 并粘贴输出。
+      placeholder: Python 3.12.10
+    validations:
+      required: true
+  - type: input
+    id: langgraph-version
+    attributes:
+      label: LangGraph / LangChain 版本
+      description: 运行 `python3 -c "import langgraph; print(langgraph.__version__)"`。只跑 `acr scan`、未安装 LangGraph 时填“未安装”。
+      placeholder: langgraph 1.0.3 / langchain-core 1.0.4
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: 期望行为
+      description: 你期望 acr 输出什么、退出码是什么？附上依据（规则文档、README 或最小推理）。
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: 实际行为
+      description: 实际输出了什么？请粘贴完整输出、traceback 或错误信息，不要只写“报错了”。
+    validations:
+      required: true
+  - type: textarea
+    id: trace
+    attributes:
+      label: 脱敏后的 trace / 日志
+      description: |
+        如与 `acr trace` 或运行失败有关，请附最小事件片段（JSON/JSONL 或关键日志）。
+        必须脱敏：删除 API key、cookie、用户标识、客户数据、私有 URL 和无关事件。
+        不涉及 trace 时填“无”。
+      render: json
+      placeholder: |
+        {"event": "node_start", "node": "child", "step": 1}
+        {"event": "node_end", "node": "child", "writes": {"b": "old"}}
+    validations:
+      required: true
+  - type: dropdown
+    id: install-method
+    attributes:
+      label: 安装方式
+      description: acr 是如何安装的？
+      options:
+        - uv tool install
+        - pipx install
+        - python3 -m pip install --user
+        - 源码 / 虚拟环境（pip install -e）
+        - 其他
+    validations:
+      required: false
+  - type: dropdown
+    id: operating-system
+    attributes:
+      label: 操作系统
+      options:
+        - macOS
+        - Linux
+        - Windows（WSL）
+        - 其他
+    validations:
+      required: false
+  - type: textarea
+    id: additional-context
+    attributes:
+      label: 补充信息
+      description: 相关 issue、文档链接、临时绕过方式或你已尝试的排查步骤。
+    validations:
+      required: false
+  - type: checkboxes
+    id: checklist
+    attributes:
+      label: 提交前检查
+      options:
+        - label: 我已搜索现有 issue，确认这不是重复报告。
+          required: true
+        - label: 我已删除或替换提交内容中的密钥、个人信息、客户数据和未脱敏轨迹。
+          required: true
+        - label: 这不是安全漏洞；若是，我会按 SECURITY.md 私下报告。
+          required: true

@@ -1,41 +1,97 @@
 # 贡献与维护
 
-本项目希望积累可验证的诊断经验。请优先提供一个具体故障或正常反例，而非只增加抽象原则。
+ACR 是一个面向公开开发者的 LangGraph/LangChain 组合故障诊断工具。最有价值的贡献是：**一个可复现的故障、一个证明规则误报的正常反例，或一个真实修复案例**。比新增抽象原则更有用。
 
-## 提交案例
+## 本地开发
 
-1. 用 issue 表说明预期行为、实际行为、相关版本和公开来源；内部案例先脱敏，移除账号、密钥和真实业务标识。
-2. 给出最小可运行代码或必要中间产物。不要上传整个用户目录、虚拟环境、聊天导出或不相关日志。
-3. 说明目标不变量和怎样确认修复有效。记录材料不足的部分，不补造“生产事故”背景。
-4. 在 `evals/cases.json` 登记来源类型、失效家族和实际版本。文档构造示例与公开事件必须分开标注。
+需要 Python 3.10+。
 
-如果案例将用作保留测试，不把答案塞入执行者可读目录；已用于规则设计的案例不能继续算保留集。第三方代码的复制、修改与分发须保留适用许可；当前项目的回归采用独立实现并链接来源。
+```sh
+git clone https://github.com/meiluosi/agent-composition-review.git
+cd agent-composition-review
+python3 -m venv .venv
+.venv/bin/python -m pip install -e ".[dev,langgraph]"
+
+.venv/bin/python -m pytest -q          # 产品代码测试
+.venv/bin/python scripts/check_repo.py # 仓库结构、链接、Skill frontmatter
+```
+
+跑真实 demo：
+
+```sh
+.venv/bin/acr demo
+.venv/bin/acr scan examples/langgraph-subgraph-leak/broken.py
+.venv/bin/acr trace examples/langgraph-subgraph-leak/trace.jsonl
+```
+
+## 提交故障或误报
+
+请附：
+
+1. 最小构图代码或最小 trace（脱敏，删除密钥、用户数据、客户数据和私有 URL）。
+2. Python、LangGraph/LangChain、`acr --version`。
+3. 实际输出与期望输出；如果是误报，说明为什么这段代码在业务上是正确的。
+4. 能复现的命令。不要上传整个仓库、虚拟环境或聊天导出。
+
+Issue 模板在 `.github/ISSUE_TEMPLATE/`。安全漏洞不要公开提交，见 [SECURITY.md](SECURITY.md)。
+
+## 修改规则
+
+新增或修改 `acr scan` / `acr trace` 规则时，一次只改一个规则，并同时提交：
+
+1. **正例 fixture**：`tests/fixtures/` 下能被规则命中、且最小可读的代码或 trace。
+2. **负例 fixture**：证明“看起来像但不应报”的情况，防止规则退化成噪声。
+3. **测试**：在 `tests/test_scan.py` 或 `tests/test_trace.py` 中断言规则 ID、严重度、证据行/事件 ID。
+4. **规则页**：在 `docs/rules/<RULE>.md` 写症状、为什么发生、输出示例、最小修复、误报边界。
+5. **规则表**：更新 `src/agent_composition_review/rules.py` 的标题、严重度、摘要与修复建议，保持 README 规则表一致。
+
+原则：
+
+- 不确定就降级为 medium/low 或跳过，不要硬报 high。
+- 证据必须回到具体文件行号或事件 ID，不能只给结论。
+- 规则命中不等于根因；修复建议必须是最小改动，不要建议重写整张图。
+- 跨文件、动态构图、无法解析的写者：宁可漏报，不要猜。
 
 ## 修改 Skill
 
-先说明当前指令在哪个实际请求中造成了漏判、误报或无效操作，再做最小修改。主运行包在 `skills/agent-composition-review/`，候选在 `candidates/`。核心执行决策放在各自的 SKILL.md，条件性细节放 references；完整案例、答案和评测记录留在 evals。
-
-PR 说明应包含：触发问题、变化后的行为、相关案例 ID、运行的验证、已知局限。不要因为某条经验有效就把它变成所有任务必须执行的步骤。
-
-运行本地检查：
+Skill 入口在 `skills/agent-composition-review/`，规则速查在 `references/rules.md`，修复模式在 `references/fix-patterns.md`。修改后运行：
 
 ```sh
 .venv/bin/python scripts/check_repo.py
-.venv/bin/python scripts/run_evals.py
-.venv/bin/python -m unittest evals.external.test_core evals.external.test_analysis -v
 .venv/bin/python scripts/build_skill.py
 ```
 
-仅改 README 等人类说明，结构检查通常足够。修改模型可见指令时，按 [评测协议](evals/PROTOCOL.md) 做受影响场景的前向试用；自动回归不替代它。发布能力提升结论时需给出有/无 Skill 或新旧版本的可比证据。
+PR 说明写清楚：哪个真实请求或故障触发了修改、改动前后行为、相关规则/测试、未覆盖的边界。不要因为一条经验有效就把它变成所有任务都必须执行的步骤。
 
-外部模型实验的固定版本、抽样、重复和图表复现见 [实验说明](docs/external-evaluation.md)。模型运行使用登录额度，须单独安排；CI 只验证适配和评分逻辑，不自动重跑 144 次实验。
+## 评测档案
 
-## 版本与发布
+`evals/`、`docs/evaluation-history.md` 和 2026 年 9–10 月的实验记录是**历史证据档案**，不是 v0.1 的产品效果承诺。它们记录了当时的负结果、未完成记录和限制，不应被改写或挑选性地引用为 `acr` 的准确率。
 
-本项目独立维护 Git 历史、依赖、评测、Issue 和版本。外层 tools 或 skill 目录只用于组织多个项目，不作为统一仓库；其他 Skill 不纳入本项目。以后若需要统一展示，可建立链接目录，不必先合并代码。
+如果要做新的效果评测：
 
-仓库是维护源；安装目录是打包后用于运行的副本。避免两处独立修改导致漂移。更新 VERSION、保存评测记录并说明哪些模型可见文件改变，再构建技能包。
+- 先冻结题目、输入、评分器和判据，再运行；
+- 保留无工具/旧版本对照，按任务配对统计，不把重复运行当独立样本；
+- 不把开发集成绩写成保留集成绩；
+- 不编造运行结果或把绿色 CI 当模型能力证据。
 
-GitHub CI 仅运行无外部业务服务的确定性检查，不保存模型 API 密钥，也不会自动调用付费模型。升级依赖后复现断言变红时，应查明上游是否已修复并登记版本，不能直接删测试。
+## PR 检查清单
 
-仓库归属 meiluosi，当前为私有。对外公开前选定许可证，并添加 LICENSE 及相应说明。推送前检查文件列表；CI 是否成功以对应提交的实际运行记录为准。
+- [ ] `pytest -q` 通过；
+- [ ] `scripts/check_repo.py` 通过（Markdown 链接、SKILL frontmatter）；
+- [ ] 新规则有正例 + 负例 + 规则页；
+- [ ] `acr demo` 仍能跑通（改了 demo/示例时）；
+- [ ] 没有提交密钥、私有轨迹、客户数据、`.venv/`、`build/`、`dist/`、`*.egg-info/`；
+- [ ] PR 描述包含触发问题、行为变化、验证命令与已知限制。
+
+## 发布
+
+维护者发布流程见 [docs/launch/README.md](docs/launch/README.md)。版本号在 `VERSION` 与 `pyproject.toml` 保持一致；tag 使用 `vX.Y.Z`。发布前构建 sdist/wheel 并在干净环境验证安装：
+
+```sh
+python -m build
+twine check dist/*
+```
+
+## 许可证
+
+贡献即同意以 [MIT](LICENSE) 许可发布。第三方代码、数据和图片必须保留其适用许可与来源说明。

@@ -37,9 +37,12 @@ description: "诊断 LangGraph/LangChain 组合故障：图单独跑正常、组
 ```sh
 acr scan path/to/graph.py            # 静态检查构图代码
 acr trace path/to/trace.jsonl        # 检查一次失败轨迹
+acr trace trace.jsonl --resume-at 4  # LangGraph debug 流没有 resume 事件时，指向恢复前最后一条事件
 acr scan . --json > scan.json        # 机器可读，便于逐条核对
 acr trace trace.jsonl --json         # 输出时间线与证据事件 ID
 ```
+
+`acr rules` 会显示每条规则是 `grounded` 还是 `experimental`；experimental 的 finding 只能当线索，不要当已验证结论。
 
 读 finding 时按这个顺序核对，不要看到规则 ID 就改代码：
 

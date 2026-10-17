@@ -284,7 +284,7 @@ acr --help
 **v0.3.0 根据这份报告补了 ACR010/ACR106：**
 
 - ACR010 覆盖条件自环写非 reducer 键，复扫 `lg2-2336` 命中；该案例已用于设计，属开发集，不是独立验证；
-- ACR106 在 trace 中识别 `resume`/`replay` 后重启已完成节点；目前只有合成 trace fixture，**没有真实社区 trace 样本**；
+- ACR106 在 trace 中识别 `resume`/`replay` 后重启已完成节点；v0.3.1 已用真实公开 trace #3875 做负向控制、本地复现 #9276 做正向样本；仍**没有社区直接附带的 resume trace**；
 - ACR008/ACR009 仍无真实案例命中；v0.3.0 只补了合成正负 fixture，不宣称已验证。
 
 补充记录：[POSTFIX.md](evals/realworld2/results/pilot2-2026-10-18/POSTFIX.md)。

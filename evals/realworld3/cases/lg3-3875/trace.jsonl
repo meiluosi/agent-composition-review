@@ -1,0 +1,8 @@
+{"id": "e1", "kind": "node_start", "node": "branch_1", "step": 1}
+{"id": "e2", "kind": "node_start", "node": "branch_2", "step": 1}
+{"id": "e3", "kind": "node_end", "node": "branch_1", "step": 1, "result": [], "interrupts": [{"ns": ["branch_1:df0596a6-77a4-8ede-eb0d-0025c2cb5437"], "resumable": true, "value": "Interruption!", "when": "during"}]}
+{"id": "e4", "kind": "resume", "step": 1}
+{"id": "e5", "kind": "node_start", "node": "branch_1", "step": 1}
+{"id": "e6", "kind": "node_start", "node": "branch_2", "step": 1}
+{"id": "e7", "kind": "error", "node": "branch_1", "step": 1, "message": "ValueError('list.remove(x): x not in list')"}
+{"id": "e8", "kind": "node_end", "node": "branch_2", "step": 1, "result": [["integer", 1]]}

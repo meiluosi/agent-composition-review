@@ -233,6 +233,9 @@ def normalise_events(raw_events: list[Any]) -> list[TraceEvent]:
             and raw.get("role") in {"initial", "input"}
         )
         ts = _first_not_none(raw.get("ts"), raw.get("timestamp"), raw.get("time"))
+        interrupts = _first_not_none(
+            payload.get("interrupts"), raw.get("interrupts")
+        )
 
         events.append(
             TraceEvent(
@@ -249,6 +252,7 @@ def normalise_events(raw_events: list[Any]) -> list[TraceEvent]:
                 message=message,
                 final=final,
                 initial=initial,
+                interrupts=interrupts,
             )
         )
     return events
@@ -711,7 +715,10 @@ class TraceAnalyzer:
                 marker = event
                 continue
             if event.kind == "node_end" and event.node:
-                completed[event.node] = event
+                # An interrupted task is not a completed task: the node may
+                # legitimately start again after resume.
+                if not event.interrupts:
+                    completed[event.node] = event
                 continue
             if event.kind != "node_start" or not event.node or marker is None:
                 continue

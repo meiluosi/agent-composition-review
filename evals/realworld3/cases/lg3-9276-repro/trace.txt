@@ -1,0 +1,54 @@
+acr trace - evals/realworld3/cases/lg3-9276-repro/trace.jsonl
+13 event(s) (jsonl) - 4 finding(s): high 2, medium 2, low 0
+
+timeline:
+  #001  e1      node_start   node=block  step=1  args={"text": "hello"}
+  #002  e2      node_start   node=agent  step=1  args={"text": "hello"}
+  #003  e3      node_start   node=gate  step=1  args={"text": "hello"}
+  #004  e4      node_end     node=gate  step=1  result={}
+  #005  e5      node_end     node=agent  step=1  writes={"answer": "reply 1"}  result={"answer": "reply 1"}
+  #006  e6      node_end     node=block  step=1  result={}
+  #007  e7      resume
+  #008  e8      node_start   node=block  step=1  args={"text": "hello"}
+  #009  e9      node_start   node=agent  step=1  args={"text": "hello"}
+  #010  e10     node_start   node=gate  step=1  args={"text": "hello"}
+  #011  e11     node_end     node=agent  step=1  writes={"answer": "reply 2"}  result={"answer": "reply 2"}
+  #012  e12     node_end     node=gate  step=1  writes={"approved": 1}  result={"approved": 1}
+  #013  e13     node_end     node=block  step=1  writes={"answer": "reply 2", "approved": 1, "text": "hello"}  result={"answer": "reply 2", "approved": 1, "text": "hello"}
+
+  HIGH   ACR103  Parallel nodes in one step wrote the same state key
+    event seq 5
+    Step 1: nodes 'agent', 'block' both wrote state key 'answer'. Concurrent writes to a non-reduced key raise InvalidUpdateError; with a reducer the ordering is implicit.
+    evidence:
+      - e5: node 'agent' wrote 'answer' in step 1 (seq 5)
+      - e13: node 'block' wrote 'answer' in step 1 (seq 13)
+    fix: Give the key a reducer (e.g. ``Annotated[list, operator.add]``) or route the parallel nodes to write different keys.
+    docs: docs/rules/ACR103.md
+
+  HIGH   ACR103  Parallel nodes in one step wrote the same state key
+    event seq 12
+    Step 1: nodes 'block', 'gate' both wrote state key 'approved'. Concurrent writes to a non-reduced key raise InvalidUpdateError; with a reducer the ordering is implicit.
+    evidence:
+      - e12: node 'gate' wrote 'approved' in step 1 (seq 12)
+      - e13: node 'block' wrote 'approved' in step 1 (seq 13)
+    fix: Give the key a reducer (e.g. ``Annotated[list, operator.add]``) or route the parallel nodes to write different keys.
+    docs: docs/rules/ACR103.md
+
+  MEDIUM ACR102  Node re-executed and rewrote the same state key
+    event seq 5
+    Node 'agent' executed 2 times and rewrote state key(s) 'answer'. Repeated writes to the same key usually mean a retry loop or a missing conditional exit.
+    evidence:
+      - e5: node 'agent' wrote 'answer' (seq 5)
+      - e11: node 'agent' wrote 'answer' (seq 11)
+    fix: Check loop conditions and edge routing; a node that rewrites the same key twice usually indicates a retry loop or a missing conditional exit.
+    docs: docs/rules/ACR102.md
+
+  MEDIUM ACR106  Completed node restarted after a resume/replay marker
+    event seq 9
+    Node 'agent' had already completed before resume marker e7, but started again after it. Resuming/replaying a completed task can repeat its side effects or overwrite newer state.
+    evidence:
+      - e5: node 'agent' completed at seq 5
+      - e7: resume marker at seq 7
+      - e9: node 'agent' started again at seq 9
+    fix: Check the resume/replay checkpoint boundary: do not re-run nodes whose writes were already durable. Prefer checkpoint-level resume over replay of the whole superstep.
+    docs: docs/rules/ACR106.md

@@ -1,0 +1,268 @@
+{
+  "schema_version": 1,
+  "task": "task-15",
+  "collected_at": "2026-10-18",
+  "collector": "gap-analyst",
+  "scope": "Targeted round-3 community candidates for ACR106 / ACR008 / ACR009 / ACR010. Non-GitHub sources only (LangChain Forum, Stack Overflow, public blogs/gists). Excludes all cases already used in evals/realworld and evals/realworld2.",
+  "sources_attempted": [
+    {
+      "source": "forum.langchain.com",
+      "method": "Discourse public search.json + /raw/<topic>/<post>; queries: cache_policy, cache key, retry_policy, retry loop, node executed twice, one value per step, self loop, resume, debug",
+      "status": "ok",
+      "candidates": 11
+    },
+    {
+      "source": "stackoverflow.com",
+      "method": "StackExchange API 2.3 tagged=langgraph (cache, InMemoryCache, retry_policy, resume, interrupt, one value per step, subgraph retry) + questions?filter=withbody",
+      "status": "ok",
+      "candidates": 2
+    },
+    {
+      "source": "reddit.com/r/LangChain",
+      "status": "blocked",
+      "detail": "web_fetch to www.reddit.com / old.reddit.com resolves to a non-public IP in this environment; web_search returned no public Reddit results. No login/paywall bypass attempted.",
+      "candidates": 0
+    },
+    {
+      "source": "blogs / public gists / repos",
+      "method": "web_search for debug trace, node_start/node_end, replay-safe HITL, retry tracing",
+      "status": "no_usable_trace",
+      "detail": "Several tracing/replay-safety writeups were found, but none exposed a raw resume/replay event sequence or a citable trace file; one raw ADR fetch timed out and no public gist with a LangGraph resume trace was located.",
+      "candidates": 0
+    }
+  ],
+  "target_results": {
+    "ACR106": {
+      "candidate_count": 6,
+      "exact_samples": 0,
+      "has_trace": 1,
+      "resume_marked_traces": 0,
+      "result": "no_sample_found",
+      "note": "No public non-GitHub post with a resume/replay-marked debug trace was found. One Stack Overflow post contains an actual checkpoint-history event sequence, but it demonstrates update_state/time-travel behavior, not a completed node being restarted after resume."
+    },
+    "ACR008": {
+      "candidate_count": 3,
+      "exact_samples": 0,
+      "result": "no_sample_found",
+      "note": "CachePolicy / cache-key material found, but none shows the ACR008 contract: cache_policy on a callable object / lambda / partial / unresolved parameter, with shared cache or an identity-collision consequence."
+    },
+    "ACR009": {
+      "candidate_count": 3,
+      "exact_samples": 0,
+      "result": "no_sample_found",
+      "note": "retry_policy material found, but no post shows a retried node invoking two or more subgraphs with a checkpoint-namespace consequence."
+    },
+    "ACR010": {
+      "candidate_count": 1,
+      "exact_samples": 0,
+      "result": "no_sample_found",
+      "note": "Only an adjacent duplicate-execution case (conditional edge plus plain edge) was found; it is not a self-loop and its state key has a reducer. #2336 is excluded as already used."
+    }
+  },
+  "candidate_count": 13,
+  "counts": {
+    "ACR106": 6,
+    "ACR008": 3,
+    "ACR009": 3,
+    "ACR010": 1,
+    "has_code": 10,
+    "has_trace": 1,
+    "exact_samples": 0,
+    "reproducible": {"yes": 3, "partial": 8, "no": 2}
+  },
+  "recommended_top3": [
+    "forum-2964",
+    "forum-2456",
+    "forum-1283"
+  ],
+  "recommendations": {
+    "forum-2964": "Closest ACR106 material: resume after interrupt re-runs agent_node and produces a second AIMessage; includes graph/node code plus a detailed debug narrative, though no raw trace.",
+    "forum-2456": "Closest ACR010-adjacent material: a complete runnable graph where conditional and plain edges make fanin execute twice; not a self-loop and the affected key has a reducer, so it can only be a near-miss / fixture seed.",
+    "forum-1283": "Complete runnable cache example (CachePolicy on a named node + InMemoryCache + InMemorySaver) where caching silently stops; tests cache/checkpointer interaction rather than callable identity."
+  },
+  "selection_note": "This is a targeted capability search, not a prevalence sample. Candidates marked target_fit=near_miss are kept for fixture planning but do not satisfy the protocol's exact target definitions; they must not be counted as real validation samples.",
+  "candidates": [
+    {
+      "candidate_id": "forum-2964",
+      "target": "ACR106",
+      "target_fit": "near_miss",
+      "source": "forum.langchain.com",
+      "url": "https://forum.langchain.com/t/2964",
+      "title": "Twice execution of agent when using the interrupt",
+      "date": "2026-02-17",
+      "has_code": true,
+      "has_trace": false,
+      "reproducible": "partial",
+      "summary": "After resuming an interrupt, the agent node produces two AI messages: the OP's debug narrative describes the resumed run entering agent_node, re-entering interrupt_node, then starting agent_node again from the top. Graph and node code are included.",
+      "notes": "Closest ACR106 material: explicit resume-reported duplicate execution. No raw trace/debug stream or node_start/node_end events were attached, so has_trace=false; needs a fixture or trace instrumentation before ACR106 can be judged."
+    },
+    {
+      "candidate_id": "forum-1240",
+      "target": "ACR106",
+      "target_fit": "near_miss",
+      "source": "forum.langchain.com",
+      "url": "https://forum.langchain.com/t/1240",
+      "title": "Can we resume from the checkpoint and continue running at the interruption point instead of starting from the first node?",
+      "date": "2025-08-19",
+      "has_code": true,
+      "has_trace": false,
+      "reproducible": "partial",
+      "summary": "A checkpoint is saved at B and C fails, but restarting with the stored checkpoint_id still starts at A instead of resuming near B/C; the OP prints the restored checkpoint id but sees no continuation. LangGraph 0.6.5.",
+      "notes": "Resume/checkpoint near-miss; no duplicate-completed-node trace, no raw node events. Includes config/code snippet but not a minimal graph."
+    },
+    {
+      "candidate_id": "forum-4341",
+      "target": "ACR106",
+      "target_fit": "near_miss",
+      "source": "forum.langchain.com",
+      "url": "https://forum.langchain.com/t/4341",
+      "title": "Refreshing event stream using langchain/react use stream replays old checkpoints",
+      "date": "2026-08-12",
+      "has_code": true,
+      "has_trace": false,
+      "reproducible": "partial",
+      "summary": "On reconnect/first subscribe, a self-hosted LangGraph server replays buffered protocol events; the client re-applies old values snapshots and replays terminal lifecycle events. The OP instrumented the wire (583 protocol events, 0 checkpoint events, 14 pauses / 6 resumes) but attached no raw trace file.",
+      "notes": "Event-replay near-miss: useful for understanding protocol-level replay and why UI state rewinds, but not an ACR106 resume trace. The instrumentation metrics are in prose, not an event log, so has_trace=false."
+    },
+    {
+      "candidate_id": "forum-1837",
+      "target": "ACR106",
+      "target_fit": "near_miss",
+      "source": "forum.langchain.com",
+      "url": "https://forum.langchain.com/t/1837",
+      "title": "Debug issues during node transitions",
+      "date": "2025-10-16",
+      "has_code": false,
+      "has_trace": false,
+      "reproducible": "no",
+      "summary": "A graph exits without running an expected next node; enabling set_debug(True) and set_verbose(True) produced no useful clue, and the OP asks what conditions can stop node execution and how to debug it.",
+      "notes": "Documents the absence of usable debug/trace output for a node-transition failure. No code, no trace; this is a material-limitation candidate, not a validation sample."
+    },
+    {
+      "candidate_id": "so-79615551",
+      "target": "ACR106",
+      "target_fit": "near_miss",
+      "source": "stackoverflow.com",
+      "url": "https://stackoverflow.com/questions/79615551/langgraph-resume-after-interrupt-is-not-working-properly-when-running-with-more",
+      "title": "LangGraph resume after interrupt is not working properly when running with more than 1 worker in uvicorn",
+      "date": "2025-05-10",
+      "has_code": true,
+      "has_trace": false,
+      "reproducible": "partial",
+      "summary": "Resume after an interrupt works with one uvicorn worker but returns a 500 ('query') with four workers; includes graph construction, MemorySaver and a custom interrupt tool. Deployment/worker-concurrency symptom.",
+      "notes": "Resume near-miss: points at process-local checkpointer/worker state, not at replaying a completed node. No trace or event sequence."
+    },
+    {
+      "candidate_id": "so-79840771",
+      "target": "ACR106",
+      "target_fit": "near_miss",
+      "source": "stackoverflow.com",
+      "url": "https://stackoverflow.com/questions/79840771/langgraph-update-state-modifies-unexpected-fields",
+      "title": "Langgraph `update_state` modifies unexpected fields",
+      "date": "2025-12-08",
+      "has_code": true,
+      "has_trace": true,
+      "reproducible": "yes",
+      "summary": "A complete runnable example prints the checkpoint history twice around update_state, including checkpoint ids, parent ids and state values; the second update unexpectedly carries node2 values while as_node says node1.",
+      "notes": "Only candidate with an actual event/checkpoint sequence (has_trace=true), but the sequence is update_state/time-travel history, not a resume of a completed node. It is useful as a trace-format reference for acr trace, not as an ACR106 resume sample."
+    },
+    {
+      "candidate_id": "forum-1283",
+      "target": "ACR008",
+      "target_fit": "near_miss",
+      "source": "forum.langchain.com",
+      "url": "https://forum.langchain.com/t/1283",
+      "title": "InMemoryCache usage conditions and potential incompatibility with InMemorySaver",
+      "date": "2025-08-20",
+      "has_code": true,
+      "has_trace": false,
+      "reproducible": "yes",
+      "summary": "With a complete runnable example, adding an InMemorySaver makes an InMemoryCache node cache stop working; CachePolicy is attached to a normal named function, and the OP asks about cache/checkpointer invocation conditions.",
+      "notes": "CachePolicy + shared cache material, but not ACR008's callable-identity contract (the callable is a module-level function with stable identity). Useful for cache/checkpointer interaction, not for validating ACR008."
+    },
+    {
+      "candidate_id": "forum-3991",
+      "target": "ACR008",
+      "target_fit": "near_miss",
+      "source": "forum.langchain.com",
+      "url": "https://forum.langchain.com/t/3991",
+      "title": "Re-execute / restart from a specific task in a functional API",
+      "date": "2026-06-20",
+      "has_code": false,
+      "has_trace": false,
+      "reproducible": "partial",
+      "summary": "Functional-API restart/caching discussion; a reply notes that key_func only receives task input args (no thread_id/run_id), so cache-run identity must be passed as task arguments.",
+      "notes": "Cache-key identity/scope near-miss (key_func args), not the ACR008 callable-object/lambda/partial identity case. No failing repro or code in the OP."
+    },
+    {
+      "candidate_id": "forum-3065",
+      "target": "ACR008",
+      "target_fit": "near_miss",
+      "source": "forum.langchain.com",
+      "url": "https://forum.langchain.com/t/3065",
+      "title": "Does the cache param do anything when using create_agent?",
+      "date": "2026-03-03",
+      "has_code": false,
+      "has_trace": false,
+      "reproducible": "no",
+      "summary": "Asks whether compile(cache=...) applies to tool nodes created by create_agent, since the user cannot attach CachePolicy to those internal tool nodes.",
+      "notes": "Cache-policy exposure question; no callable identity and no failure trace. Not an ACR008 sample."
+    },
+    {
+      "candidate_id": "forum-2018",
+      "target": "ACR009",
+      "target_fit": "near_miss",
+      "source": "forum.langchain.com",
+      "url": "https://forum.langchain.com/t/2018",
+      "title": "Gracefully handling GraphRecursionError from subgraphs so the parent agent can retry or degrade",
+      "date": "2025-10-30",
+      "has_code": true,
+      "has_trace": false,
+      "reproducible": "partial",
+      "summary": "A parent create_agent delegates to a subgraph; when the subgraph exceeds recursion_limit it raises GraphRecursionError, and the OP asks how to retry/degrade and whether per-subgraph limits can be set. Includes create_agent/middleware configuration.",
+      "notes": "Parent retry + subgraph near-miss, but uses GraphRecursionError and manual retry, not retry_policy on a node invoking 2+ subgraphs. No multi-subgraph checkpoint-namespace symptom."
+    },
+    {
+      "candidate_id": "forum-3226",
+      "target": "ACR009",
+      "target_fit": "near_miss",
+      "source": "forum.langchain.com",
+      "url": "https://forum.langchain.com/t/3226",
+      "title": "Parallel Nodes: how to manage failures or exceptions",
+      "date": "2026-03-20",
+      "has_code": true,
+      "has_trace": false,
+      "reproducible": "partial",
+      "summary": "Q&A about failure handling for parallel nodes; a reply shows retry_policy on nodes plus try/except fallbacks and Send fan-out error handling.",
+      "notes": "retry_policy material, but nodes invoke APIs, not multiple subgraphs. It is guidance, not a failure report, and cannot validate ACR009."
+    },
+    {
+      "candidate_id": "forum-1574",
+      "target": "ACR009",
+      "target_fit": "near_miss",
+      "source": "forum.langchain.com",
+      "url": "https://forum.langchain.com/t/1574",
+      "title": "The best way in LangGraph to control flow after retries exhausted",
+      "date": "2025-09-18",
+      "has_code": true,
+      "has_trace": false,
+      "reproducible": "partial",
+      "summary": "Asks how to redirect flow when a retriable node exhausts attempts; the answer explains RetryPolicy has no exhaustion hook and shows manual retry / Command.goto / conditional-edge patterns.",
+      "notes": "Retry-semantics near-miss with code, but no subgraph invocation and no checkpoint namespace symptom. Not an ACR009 sample."
+    },
+    {
+      "candidate_id": "forum-2456",
+      "target": "ACR010",
+      "target_fit": "near_miss",
+      "source": "forum.langchain.com",
+      "url": "https://forum.langchain.com/t/2456",
+      "title": "Duplicate node execution when using conditionals",
+      "date": "2025-12-09",
+      "has_code": true,
+      "has_trace": false,
+      "reproducible": "yes",
+      "summary": "A conditional edge fan-out plus a plain edge makes the fanin node execute twice when a preparation node is enabled; complete runnable example.",
+      "notes": "Execution-duplication near-miss, but the duplicated execution comes from conditional + plain edges, not a self-loop; the affected keys use an operator.add reducer. It does not satisfy ACR010 and must not be counted as a validated sample."
+    }
+  ]
+}

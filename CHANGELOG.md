@@ -13,6 +13,26 @@
 - 把 command-send / resume-replay / parallel-interrupt 交给 `acr trace` 或版本感知提示，不硬加静态规则。
 - 在更多真实 LangGraph/LangChain 组合故障上校准误报率，并公开可复现的测试样例。
 
+## [0.3.1] - 2026-10-18
+
+### Fixed
+
+- ACR106 不再把带 `interrupts` 的 `node_end` 当成“已完成”。真实公开 trace #3875 暴露了该误报：被 interrupt 的节点在 resume 后重启是预期行为，不应报 ACR106。
+- `TraceEvent` 增加 `interrupts` 字段，归一化时保留 `task_result.payload.interrupts`；新增回归测试。
+
+### Added
+
+- 第三轮定向验证报告：`evals/realworld3/results/pilot3-2026-10-18/REPORT.md`。
+  - ACR106：本地复现 #9276 的正向 trace 命中；真实公开 trace #3875 作为负向控制 0 误报。
+  - ACR008：只有 7 条邻近 cache 案例，0 exact；未验证。
+  - ACR009/ACR010：没有新 exact 样本，记 `no_sample_found`。
+
+### Notes
+
+- ACR106 正向 trace 是本地复现公开 issue，不是 reporter 附件；且需要显式 resume/replay 标记（LangGraph 默认 debug 流不产生）。
+- 本批用于发现 ACR106 误报并修正规则，因此对 ACR106 修复而言是开发集，不是独立验证。
+- ACR008/ACR009/ACR010 仍未验证；不要用邻近案例冒充 exact。
+
 ## [0.3.0] - 2026-10-18
 
 ### Added
@@ -105,7 +125,8 @@
 - **v0.1 不宣称 benchmark 提升。** 本版本是工具与文档的重新定位，不是新的模型能力评测；历史实验结论保持原样，不应被解读为 v0.1 的收益证据。
 - `acr scan`/`acr trace` 的规则是可解释的启发式检查：不确定的情况只报 `review` 级别，可能仍有误报，请结合证据人工确认。
 
-[Unreleased]: https://github.com/meiluosi/agent-composition-review/compare/v0.3.0...HEAD
+[Unreleased]: https://github.com/meiluosi/agent-composition-review/compare/v0.3.1...HEAD
+[0.3.1]: https://github.com/meiluosi/agent-composition-review/releases/tag/v0.3.1
 [0.3.0]: https://github.com/meiluosi/agent-composition-review/releases/tag/v0.3.0
 [0.2.0]: https://github.com/meiluosi/agent-composition-review/releases/tag/v0.2.0
 [0.1.1]: https://github.com/meiluosi/agent-composition-review/releases/tag/v0.1.1

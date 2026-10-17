@@ -1,0 +1,14 @@
+{
+  "case_id": "lg3-5980",
+  "target": "ACR008",
+  "source_url": "https://github.com/langchain-ai/langgraph/issues/5980",
+  "title": "In memory cache doesn't work with in memory checkpointer",
+  "date": "2026-03-24",
+  "source_type": "adjacent_real_case",
+  "graph_visible": true,
+  "has_trace": false,
+  "expected_rule": "NONE",
+  "expected_behavior": "Adjacent cache/checkpointer interaction. The node is a module-level named function, so ACR008's callable-identity precondition does not apply; a quiet result is correct.",
+  "material_level": "medium",
+  "notes": "Not an ACR008 exact sample; used only to check that the rule does not over-fire on named functions with cache_policy + checkpointer."
+}

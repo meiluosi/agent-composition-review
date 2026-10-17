@@ -1,0 +1,13 @@
+{"id": "e1", "seq": 1, "kind": "node_start", "node": "block", "step": 1, "args": {"text": "hello"}, "ns": []}
+{"id": "e2", "seq": 2, "kind": "node_start", "node": "agent", "step": 1, "args": {"text": "hello"}, "ns": ["block:368dd79e-7a8a-a23d-db34-6bfb9baafb95"]}
+{"id": "e3", "seq": 3, "kind": "node_start", "node": "gate", "step": 1, "args": {"text": "hello"}, "ns": ["block:368dd79e-7a8a-a23d-db34-6bfb9baafb95"]}
+{"id": "e4", "seq": 4, "kind": "node_end", "node": "gate", "step": 1, "result": {}, "interrupts": [{"value": "approve?", "id": "378948e0a506771b5bebb5b0555de182", "response_schema": null}], "ns": ["block:368dd79e-7a8a-a23d-db34-6bfb9baafb95"]}
+{"id": "e5", "seq": 5, "kind": "node_end", "node": "agent", "step": 1, "result": {"answer": "reply 1"}, "interrupts": [], "ns": ["block:368dd79e-7a8a-a23d-db34-6bfb9baafb95"]}
+{"id": "e6", "seq": 6, "kind": "node_end", "node": "block", "step": 1, "result": {}, "interrupts": [{"value": "approve?", "id": "378948e0a506771b5bebb5b0555de182", "response_schema": null}], "ns": []}
+{"id": "e7", "seq": 7, "kind": "resume"}
+{"id": "e8", "seq": 8, "kind": "node_start", "node": "block", "step": 1, "args": {"text": "hello"}, "ns": []}
+{"id": "e9", "seq": 9, "kind": "node_start", "node": "agent", "step": 1, "args": {"text": "hello"}, "ns": ["block:368dd79e-7a8a-a23d-db34-6bfb9baafb95"]}
+{"id": "e10", "seq": 10, "kind": "node_start", "node": "gate", "step": 1, "args": {"text": "hello"}, "ns": ["block:368dd79e-7a8a-a23d-db34-6bfb9baafb95"]}
+{"id": "e11", "seq": 11, "kind": "node_end", "node": "agent", "step": 1, "result": {"answer": "reply 2"}, "interrupts": [], "ns": ["block:368dd79e-7a8a-a23d-db34-6bfb9baafb95"]}
+{"id": "e12", "seq": 12, "kind": "node_end", "node": "gate", "step": 1, "result": {"approved": 1}, "interrupts": [], "ns": ["block:368dd79e-7a8a-a23d-db34-6bfb9baafb95"]}
+{"id": "e13", "seq": 13, "kind": "node_end", "node": "block", "step": 1, "result": {"text": "hello", "approved": 1, "answer": "reply 2"}, "interrupts": [], "ns": []}

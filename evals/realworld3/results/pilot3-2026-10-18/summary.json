@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "pilot": "pilot3-2026-10-18",
+  "kind": "targeted_capability_validation",
+  "not_a_prevalence_estimate": true,
+  "collection": {
+    "github_candidates": 15,
+    "community_candidates": 13,
+    "github_by_target": {"ACR106": 8, "ACR008": 7, "ACR009": 0, "ACR010": 0},
+    "community_by_target": {"ACR106": 6, "ACR008": 3, "ACR009": 3, "ACR010": 1},
+    "github_traces": 5,
+    "community_traces": 1
+  },
+  "verdicts": {
+    "ACR106": {
+      "status": "positive_on_local_reproduction_negative_on_public_trace",
+      "positive_samples": 1,
+      "negative_trace_samples": 1,
+      "community_attached_resume_trace": 0,
+      "note": "Positive: locally reproduced langgraph#9276 on 1.2.14; negative: real public trace from #3875. Resolved a false positive on interrupted node_end."
+    },
+    "ACR008": {
+      "status": "adjacent_only_no_exact_sample",
+      "exact_samples": 0,
+      "adjacent_candidates": 7,
+      "built_adjacent_controls": 1,
+      "note": "No callable object/lambda/partial + shared-cache identity collision in the new batch; #8753 is the excluded design case."
+    },
+    "ACR009": {
+      "status": "no_sample_found",
+      "exact_samples": 0,
+      "note": "No new retry_policy + 2-subgraph sample; #9253 is the excluded design case."
+    },
+    "ACR010": {
+      "status": "no_sample_found",
+      "exact_samples": 0,
+      "note": "No new conditional self-loop + non-reducer sample; #2336 is the excluded design case."
+    }
+  },
+  "limits": [
+    "Targeted keyword selection, not random sampling; no prevalence estimate.",
+    "The ACR106 positive trace is a local reproduction of a public issue, not a trace file supplied by the reporter.",
+    "ACR106 requires an explicit resume/replay marker; LangGraph debug output does not emit one by default.",
+    "ACR008/ACR009/ACR010 have no exact new samples; they are not validated by this pilot."
+  ]
+}

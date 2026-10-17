@@ -1,0 +1,9 @@
+{
+  "events": [
+    {"id": "e1", "kind": "node_start", "node": "gate", "seq": 1},
+    {"id": "e2", "kind": "node_end", "node": "gate", "seq": 2, "interrupts": [{"id": "i1", "value": "approve?"}]},
+    {"id": "e3", "kind": "resume", "seq": 3},
+    {"id": "e4", "kind": "node_start", "node": "gate", "seq": 4},
+    {"id": "e5", "kind": "node_end", "node": "gate", "seq": 5}
+  ]
+}

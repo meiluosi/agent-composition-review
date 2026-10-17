@@ -1,0 +1,14 @@
+acr trace - evals/realworld3/cases/lg3-3875/trace.jsonl
+8 event(s) (jsonl) - 0 finding(s): high 0, medium 0, low 0
+
+timeline:
+  #001  e1      node_start   node=branch_1  step=1
+  #002  e2      node_start   node=branch_2  step=1
+  #003  e3      node_end     node=branch_1  step=1  result=[]
+  #004  e4      resume       step=1
+  #005  e5      node_start   node=branch_1  step=1
+  #006  e6      node_start   node=branch_2  step=1
+  #007  e7      error        node=branch_1  step=1  message="ValueError('list.remove(x): x not in list')"
+  #008  e8      node_end     node=branch_2  step=1  result=[["integer", 1]]
+
+  No runtime composition issues found.

@@ -163,6 +163,7 @@ class TraceEvent:
     message: str | None = None
     final: bool = False
     initial: bool = False
+    interrupts: Any = None
 
     def to_dict(self) -> dict[str, Any]:
         payload: dict[str, Any] = {
@@ -170,7 +171,17 @@ class TraceEvent:
             "seq": self.seq,
             "kind": self.kind,
         }
-        for name in ("node", "tool", "step", "writes", "args", "result", "ts", "message"):
+        for name in (
+            "node",
+            "tool",
+            "step",
+            "writes",
+            "args",
+            "result",
+            "ts",
+            "message",
+            "interrupts",
+        ):
             value = getattr(self, name)
             if value is not None:
                 payload[name] = value

@@ -1,0 +1,11 @@
+acr scan - evals/realworld3/cases/lg3-5980
+1 file(s) parsed, 0 skipped - 1 finding(s): high 0, medium 1, low 0
+
+  MEDIUM ACR004  Cache on a side-effecting node or graph
+    evals/realworld3/cases/lg3-5980/graph.py:26
+    The graph is compiled with a cache while node(s) 'expensive_node' have side effects. Cached results can skip the side effect or replay an old state update.
+    evidence:
+      - graph compiled with cache=... at line 26
+      - side-effecting node(s): 'expensive_node'
+    fix: Remove the cache from this node, or move the side effect outside the cached function; cache only pure computations.
+    docs: docs/rules/ACR004.md

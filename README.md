@@ -32,18 +32,18 @@ v0.1 是早期版本：MIT 许可、本地运行、不需要 API key。**它不�
 ## 60 秒 demo
 
 ```sh
-pipx install "git+https://github.com/meiluosi/agent-composition-review.git@v0.3.0"
+pipx install "git+https://github.com/meiluosi/agent-composition-review.git@v0.3.1"
 pipx inject agent-composition-review "langgraph>=1.0,<2"   # acr demo 需要；scan/trace 可跳过
 acr demo
 ```
 
 `acr demo` 会在本地运行一个 LangGraph #6446 风格的 broken 示例，捕获 `InvalidUpdateError`，用 `acr scan` 找到 ACR001，演示一行 `output_schema` 修复，再跑回归确认通过。它需要可选依赖 `[langgraph]`；只跑 `scan` / `trace` / `report` 不需要安装 LangGraph。
 
-真实运行输出（`acr` 0.3.0，本地环境）：
+真实运行输出（`acr` 0.3.1，本地环境）：
 
 ```text
 $ acr demo
-acr demo - LangGraph subgraph state leak walkthrough (acr 0.3.0)
+acr demo - LangGraph subgraph state leak walkthrough (acr 0.3.1)
 
 1) run the broken graph from examples/langgraph-subgraph-leak/broken.py
    x InvalidUpdateError: At key 'b': Can receive only one value per step. Use an Annotated key to handle multiple values.
@@ -162,14 +162,14 @@ class ChildOutput(TypedDict):
 
 ```sh
 # 1) pipx（推荐，隔离环境）
-pipx install "git+https://github.com/meiluosi/agent-composition-review.git@v0.3.0"
+pipx install "git+https://github.com/meiluosi/agent-composition-review.git@v0.3.1"
 pipx inject agent-composition-review "langgraph>=1.0,<2"    # 可选，仅 acr demo 需要
 
 # 2) uv tool
-uv tool install "agent-composition-review[langgraph] @ git+https://github.com/meiluosi/agent-composition-review.git@v0.3.0"
+uv tool install "agent-composition-review[langgraph] @ git+https://github.com/meiluosi/agent-composition-review.git@v0.3.1"
 
 # 3) pip
-python3 -m pip install "agent-composition-review[langgraph] @ git+https://github.com/meiluosi/agent-composition-review.git@v0.3.0"
+python3 -m pip install "agent-composition-review[langgraph] @ git+https://github.com/meiluosi/agent-composition-review.git@v0.3.1"
 
 # 4) 源码
 git clone https://github.com/meiluosi/agent-composition-review.git
@@ -288,6 +288,16 @@ acr --help
 - ACR008/ACR009 仍无真实案例命中；v0.3.0 只补了合成正负 fixture，不宣称已验证。
 
 补充记录：[POSTFIX.md](evals/realworld2/results/pilot2-2026-10-18/POSTFIX.md)。
+
+### 第三轮定向验证（2026-10-18）
+
+不再估计总体命中率，只针对四个能力找真实样本：
+
+- **ACR106**：本地复现 #9276（langgraph 1.2.14）得到正向 trace，`agent` 在 resume 前完成、resume 后重跑，命中 ACR106；真实公开 trace #3875 作为负向控制，修复后 0 误报。这个负向 trace 还暴露了“被 interrupt 的节点被当成已完成”的真实误报，v0.3.1 已修。
+- **ACR008**：找到 7 条 cache identity 邻近案例，**0 条 exact**，不能算验证。
+- **ACR009 / ACR010**：没有新的 exact 样本，明确记 `no_sample_found`；#9253 / #2336 属已用于设计的旧案例，不能复用。
+
+报告：[第三轮定向验证报告](evals/realworld3/results/pilot3-2026-10-18/REPORT.md)。ACR106 的正向 trace 是本地复现，不是社区附件；且需要显式 resume/replay 标记，LangGraph 默认 debug 流不产生。
 
 ## 给 Agent 使用
 

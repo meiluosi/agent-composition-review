@@ -109,6 +109,13 @@ def test_resume_restarts_completed_node() -> None:
     assert finding.docs == "docs/rules/ACR106.md"
 
 
+def test_acr106_ignores_interrupted_node_end() -> None:
+    """An interrupted task is not a completed task; resume may legitimately restart it."""
+
+    result = trace_path(FIXTURES / "trace_resume_interrupted.json")
+    assert findings_for(result, "ACR106") == []
+
+
 def test_trace_json_shape() -> None:
     result = trace_path(FIXTURES / "trace_parallel_writes.json")
     payload = result.to_dict()

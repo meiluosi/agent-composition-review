@@ -1,0 +1,15 @@
+{
+  "case_id": "lg3-9276-repro",
+  "target": "ACR106",
+  "source_url": "https://github.com/langchain-ai/langgraph/issues/9276",
+  "title": "Resuming a compiled subgraph re-runs a node that already completed in the interrupted or failed super-step",
+  "date": "2026-10-12",
+  "source_type": "locally_reproduced_public_issue",
+  "graph_visible": true,
+  "has_trace": true,
+  "trace_origin": "Locally reproduced from the issue's graph structure on langgraph 1.2.14; captured with graph.stream(..., stream_mode='debug', subgraphs=True) for the first run and the Command(resume=...) run. A resume marker was inserted at the second stream boundary because LangGraph debug chunks do not emit one.",
+  "expected_rule": "ACR106",
+  "expected_behavior": "Positive: node 'agent' completed before the resume marker (model call 1) and starts again after resume (model call 2). ACR106 should report it; node 'gate' was interrupted before resume and must NOT be reported.",
+  "material_level": "high",
+  "notes": "This is not a community-attached trace; it is a local reproduction of a public issue, recorded on a pinned langgraph version. It validates ACR106 against real runtime behavior, not against a trace file supplied by the reporter."
+}

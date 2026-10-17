@@ -1,0 +1,15 @@
+{
+  "case_id": "lg3-3875",
+  "target": "ACR106",
+  "source_url": "https://github.com/langchain-ai/langgraph/issues/3875",
+  "title": "Bug: Error when having multiple nodes, each with a single `interrupt`",
+  "date": "2025-03-17",
+  "source_type": "real_public_trace",
+  "graph_visible": true,
+  "has_trace": true,
+  "trace_origin": "Debug stream pasted in the GitHub issue body (pprint of stream_mode='debug' chunks), normalized to the acr trace schema. Resume boundary is the issue's 'Interrupted! Continuing...' + Command(resume='continue'); no fields were invented.",
+  "expected_rule": "ACR106",
+  "expected_behavior": "Negative control: both branch_1 and branch_2 are interrupted before the resume; the nodes that start again after resume were interrupted, not completed. ACR106 must not report them.",
+  "material_level": "high",
+  "notes": "The issue's own trace shows task_result for branch_1 with interrupts=[...] and no prior completion of branch_2. The node restarts after resume are expected for interrupted tasks. This exposed that ACR106 must not treat interrupted node_end as completed."
+}

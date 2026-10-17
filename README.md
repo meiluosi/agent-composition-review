@@ -281,6 +281,14 @@ acr --help
 
 本批选择偏向 user_graph/usage，不能把“framework GAP 比例下降”解读为真实分布变化。报告：[第二轮验证报告](evals/realworld2/results/pilot2-2026-10-18/REPORT.md)。
 
+**v0.3.0 根据这份报告补了 ACR010/ACR106：**
+
+- ACR010 覆盖条件自环写非 reducer 键，复扫 `lg2-2336` 命中；该案例已用于设计，属开发集，不是独立验证；
+- ACR106 在 trace 中识别 `resume`/`replay` 后重启已完成节点；目前只有合成 trace fixture，**没有真实社区 trace 样本**；
+- ACR008/ACR009 仍无真实案例命中；v0.3.0 只补了合成正负 fixture，不宣称已验证。
+
+补充记录：[POSTFIX.md](evals/realworld2/results/pilot2-2026-10-18/POSTFIX.md)。
+
 ## 给 Agent 使用
 
 同一个仓库还提供运行时 Skill 入口：[skills/agent-composition-review/SKILL.md](skills/agent-composition-review/SKILL.md)。它把上面的流程写成 Agent 可执行的步骤：判断症状 → `acr scan` / `acr trace` → 读 finding 并验证 → 最小修复 → 加回归测试 → 输出一页报告，并明确要求“证据不足时说不知道”。规则速查与修复模式分别在 [references/rules.md](skills/agent-composition-review/references/rules.md) 和 [references/fix-patterns.md](skills/agent-composition-review/references/fix-patterns.md)。

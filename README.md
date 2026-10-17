@@ -252,14 +252,16 @@ acr --help
 
 ### 真实案例试点（2026-10-17）
 
-除了自建案例，我们还从 LangGraph GitHub issue 收集了 **14 个真实故障 + 3 个正常控制图**，按“盲标 → 扫描 → 逐例判定”的协议跑了一轮开发型试点。结论不漂亮，但有用：
+除了自建案例，我们还从 LangGraph GitHub issue 收集了 **14 个真实故障 + 3 个正常控制图**，按“盲标 → 扫描 → 逐例判定”的协议跑了一轮开发型试点。v0.1.0 的结论不漂亮，但有用：
 
 - 13/14 可以读出构图；现有 11 条规则只能表达其中 **1 个**（#6446）；
 - 这个唯一可表达的案例因为子图写在 helper 函数里返回 compiled graph，**扫描漏掉了**；
 - 真实案例上只发出 3 条 finding：**0 条与故障相关**，1 条误导（`ReadOnly` 里的 reducer 被误判为没有 reducer），2 条顺带；
 - 3 个正常控制图 0 误报。
 
-这不是 benchmark，样本也很小；它直接暴露了 v0.2 要补的两个 P0：**跨函数解析 helper 返回的 compiled subgraph** 和 **reducer 注解限定符解包**。完整报告（含逐例判定、GAP 分布、材料限制）在 [真实案例试点报告](evals/realworld/results/pilot-2026-10-17/REPORT.md)。
+这不是 benchmark，样本也很小；它直接暴露了两个 P0，并在 **v0.1.1** 修复：**跨函数解析 helper 返回的 compiled subgraph** 和 **reducer 注解限定符解包**。同一批开发案例的复扫结果：`lg-6446` 命中 ACR001 + ACR002，`lg-9311` 的误导 finding 消失，3 个控制图仍 0 findings。其余 12 个案例仍是 GAP，多数是框架内部运行时 bug，静态构图规则不应硬覆盖。
+
+完整报告（含逐例判定、GAP 分布、材料限制）在 [真实案例试点报告](evals/realworld/results/pilot-2026-10-17/REPORT.md)，修复后复扫记录在 [POSTFIX.md](evals/realworld/results/pilot-2026-10-17/POSTFIX.md)。
 
 ## 给 Agent 使用
 

@@ -39,6 +39,28 @@ def test_acr001_positive_shared_key() -> None:
     assert findings_for(result, "ACR003") == []
 
 
+def test_acr001_resolves_helper_returning_compiled_graph() -> None:
+    """Real-world shape: the child is built by a helper and returned compiled."""
+
+    result = scan_fixture("acr001_helper.py")
+    findings = findings_for(result, "ACR001")
+    assert len(findings) == 1
+    finding = findings[0]
+    assert finding.severity == "high"
+    assert finding.file.endswith("acr001_helper.py")
+    assert "child state 'State' shares" in finding.message
+    assert "compiled without output_schema" in "\n".join(finding.evidence)
+    # ACR002 may also fire for the same fan-out; it is part of the same root cause.
+    assert findings_for(result, "ACR002")
+
+
+def test_acr001_helper_with_output_schema_not_reported() -> None:
+    result = scan_fixture("acr001_helper_healthy.py")
+    assert findings_for(result, "ACR001") == []
+    assert findings_for(result, "ACR003") == []
+    assert result.findings == []
+
+
 def test_acr002_positive_parallel_writes() -> None:
     result = scan_fixture("acr002_positive.py")
     findings = findings_for(result, "ACR002")
@@ -56,6 +78,14 @@ def test_acr002_positive_parallel_writes() -> None:
 
 def test_acr002_negative_reducer_not_reported() -> None:
     result = scan_fixture("acr002_negative_reducer.py")
+    assert findings_for(result, "ACR002") == []
+    assert result.findings == []
+
+
+def test_acr002_negative_readonly_reducer() -> None:
+    """ReadOnly[Annotated[..., reducer]] still has a reducer."""
+
+    result = scan_fixture("acr002_negative_readonly_reducer.py")
     assert findings_for(result, "ACR002") == []
     assert result.findings == []
 

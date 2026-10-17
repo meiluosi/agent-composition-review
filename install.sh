@@ -3,7 +3,7 @@
 #
 # Usage:
 #   ./install.sh
-#   ACR_VERSION=v0.1.0 ./install.sh
+#   ACR_VERSION=v0.1.1 ./install.sh
 #
 # The installer tries, in order:
 #   1. uv tool install
@@ -15,7 +15,7 @@
 set -eu
 
 REPO_URL="https://github.com/meiluosi/agent-composition-review.git"
-ACR_VERSION="${ACR_VERSION:-v0.1.0}"
+ACR_VERSION="${ACR_VERSION:-v0.1.1}"
 INSTALL_SPEC="git+${REPO_URL}@${ACR_VERSION}"
 PYTHON="${PYTHON:-python3}"
 

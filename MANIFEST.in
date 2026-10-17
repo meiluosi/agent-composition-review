@@ -3,5 +3,6 @@ include README.md
 include CHANGELOG.md
 include SECURITY.md
 include RELEASE_NOTES_v0.1.0.md
+include RELEASE_NOTES_v0.1.1.md
 recursive-include tests *.py *.json *.jsonl
 recursive-include docs/rules *.md

@@ -113,7 +113,12 @@ def _is_typed_dict_base(node: ast.expr) -> bool:
 
 
 def _annotated_parts(annotation: ast.expr) -> tuple[ast.expr, ...] | None:
-    """Return the members of ``Annotated[...]`` (unwrapping Required/NotRequired)."""
+    """Return the members of ``Annotated[...]``.
+
+    TypedDict qualifiers (``Required``/``NotRequired``/``ReadOnly``) wrap the
+    annotation without changing the reducer; unwrap them before looking for
+    ``Annotated``.
+    """
 
     if not isinstance(annotation, ast.Subscript):
         return None
@@ -123,7 +128,7 @@ def _annotated_parts(annotation: ast.expr) -> tuple[ast.expr, ...] | None:
         if isinstance(slice_node, ast.Tuple):
             return tuple(slice_node.elts)
         return (slice_node,)
-    if base in {"Required", "NotRequired"}:
+    if base in {"Required", "NotRequired", "ReadOnly"}:
         return _annotated_parts(annotation.slice)
     return None
 
@@ -189,6 +194,27 @@ def _return_keys(value: ast.expr | None) -> set[str] | None:
     return None
 
 
+def _graph_return_ref(value: ast.expr | None) -> tuple[str, str, str | None] | None:
+    """Recognise a helper that returns a graph.
+
+    ``return child.compile()`` -> ``("compile", "child", output_schema)``.
+    ``return child`` -> ``("name", "child", None)``.
+    """
+
+    if value is None:
+        return None
+    if isinstance(value, ast.Call):
+        if isinstance(value.func, ast.Attribute) and value.func.attr == "compile":
+            base = expr_name(value.func.value)
+            if base:
+                output = _class_arg_name(_keyword(value, "output_schema"))
+                return ("compile", base, output)
+        return None
+    if isinstance(value, ast.Name):
+        return ("name", value.id, None)
+    return None
+
+
 def display_path(path: Path) -> str:
     """Return a stable, repository-relative display path when possible."""
 
@@ -250,6 +276,11 @@ class FunctionInfo:
     cache_decorators: list[tuple[str, int]] = field(default_factory=list)
     retry_decorators: list[tuple[str, int]] = field(default_factory=list)
     checkpointer_calls: list[tuple[str, int]] = field(default_factory=list)
+    # (kind, graph variable, output_schema) when a helper returns a compiled
+    # graph: ``return child.compile()`` -> ("compile", "child", schema) and
+    # ``return child`` -> ("name", "child", None). Used to resolve
+    # ``add_node("child", build_child())`` and ``child = build_child()``.
+    return_graph_ref: tuple[str, str, str | None] | None = None
 
 
 @dataclass
@@ -401,11 +432,15 @@ class FileScanner:
         return_keys: set[str] = set()
         unknown_return = False
         return_lines: list[int] = []
+        return_graph_refs: list[tuple[str, str, str | None]] = []
         side_effects: list[str] = []
         checkpointer_calls: list[tuple[str, int]] = []
 
         for node in _shallow_body_nodes(fn):
             if isinstance(node, ast.Return):
+                ref = _graph_return_ref(node.value)
+                if ref is not None:
+                    return_graph_refs.append(ref)
                 parsed = _return_keys(node.value)
                 if parsed is None:
                     unknown_return = True
@@ -444,6 +479,7 @@ class FileScanner:
             first_line = return_lines[0] if return_lines else fn.lineno
             side_effects.append(f"returns state update key(s) [{keys}] at line {first_line}")
 
+        unique_graph_refs = list(dict.fromkeys(return_graph_refs))
         return FunctionInfo(
             name=fn.name,
             line=fn.lineno,
@@ -453,6 +489,9 @@ class FileScanner:
             cache_decorators=cache_decorators,
             retry_decorators=retry_decorators,
             checkpointer_calls=_dedupe_pairs(checkpointer_calls),
+            return_graph_ref=(
+                unique_graph_refs[0] if len(unique_graph_refs) == 1 else None
+            ),
         )
 
     # -- graph construction ----------------------------------------------
@@ -505,6 +544,18 @@ class FileScanner:
                     cache=graph.compile_cache,
                 )
                 graph.compiled_var = target
+            return
+
+        helper = self._resolve_helper_graph(value)
+        if helper is not None:
+            if target:
+                self.compiled[target] = CompiledInfo(
+                    graph_var=helper.var,
+                    line=value.lineno,
+                    cache=helper.compile_cache,
+                )
+                helper.compiled_var = target
+            return
 
     def _handle_expr_call(self, call: ast.Call) -> None:
         func = call.func
@@ -559,6 +610,13 @@ class FileScanner:
                     node.action_kind = "subgraph"
                     node.graph_var = child.var
                     self._mark_compiled(child, action)
+            elif isinstance(action, ast.Call):
+                # Helper returning a compiled graph, e.g.
+                # add_node("child", build_child()).
+                child = self._resolve_helper_graph(action)
+                if child is not None:
+                    node.action_kind = "subgraph"
+                    node.graph_var = child.var
             elif isinstance(action, ast.Name):
                 if action.id in self.functions:
                     node.action_kind = "function"
@@ -615,6 +673,40 @@ class FileScanner:
             func = expr.func
             if isinstance(func, ast.Attribute) and func.attr in BUILDER_METHODS:
                 return self._resolve_graph(func.value)
+        return None
+
+    def _resolve_helper_graph(self, call: ast.Call) -> GraphSpec | None:
+        """Resolve a helper call whose return value is a compiled graph.
+
+        This is deliberately narrow: only zero-config helpers that return
+        ``child.compile()`` or an already-compiled ``child`` are resolved. A
+        helper that builds graphs dynamically or conditionally returns no
+        unique graph and is skipped.
+        """
+
+        name = _last_name(expr_name(call.func))
+        if not name:
+            return None
+        info = self.functions.get(name)
+        if info is None or info.return_graph_ref is None:
+            return None
+        kind, graph_name, output_schema = info.return_graph_ref
+        if kind == "compile":
+            graph = self.graphs.get(graph_name)
+            if graph is None:
+                return None
+            if graph.compile_line is None:
+                graph.compile_line = info.line
+            if output_schema and graph.compile_output_schema is None:
+                graph.compile_output_schema = output_schema
+            return graph
+        if kind == "name":
+            compiled = self.compiled.get(graph_name)
+            if compiled is not None:
+                return self.graphs.get(compiled.graph_var)
+            graph = self.graphs.get(graph_name)
+            if graph is not None and graph.compile_line is not None:
+                return graph
         return None
 
     def _is_stategraph_call(self, call: ast.Call) -> bool:

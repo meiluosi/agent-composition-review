@@ -7,15 +7,28 @@
 
 ## [Unreleased]
 
-### Added
-
-- 真实案例试点：从 LangGraph GitHub issue 收集 14 个真实故障 + 3 个正常控制图，按冻结协议做盲标、离线扫描与逐例判定；报告见 `evals/realworld/results/pilot-2026-10-17/REPORT.md`。结论用于 v0.2 缺口排序，不宣称泛化。
-
 ### 计划中
 
 - 根据 v0.1 的早期使用反馈补充扫描/轨迹规则与最小修复模式。
 - 在更多真实 LangGraph/LangChain 组合故障上校准误报率，并公开可复现的测试样例。
 - 评估对更多 LangGraph 版本与常见编排封装的兼容性。
+
+## [0.1.1] - 2026-10-17
+
+### Fixed
+
+- ACR001 现在能解析 helper 返回 compiled graph 的真实形态（`add_node("child", build_child())`、`child = build_child()`），修复了真实案例 #6446 的漏报。
+- ACR002 现在会解包 `ReadOnly`/`Required`/`NotRequired` 限定符后再判断 reducer，修复了 `ReadOnly[Annotated[..., operator.add]]` 被误报为 “no reducer” 的问题。
+- 新增对应回归测试：helper 返回带/不带 `output_schema` 的图、`ReadOnly` 包裹 reducer 的负例。
+
+### Added
+
+- 真实案例试点：从 LangGraph GitHub issue 收集 14 个真实故障 + 3 个正常控制图，按冻结协议做盲标、离线扫描与逐例判定；报告见 `evals/realworld/results/pilot-2026-10-17/REPORT.md`。结论用于 v0.2 缺口排序，不宣称泛化。
+- 修复后同一批开发案例的复扫记录：`evals/realworld/results/pilot-2026-10-17/POSTFIX.md`（#6446 现在命中，`ReadOnly` 误报消失，控制图仍 0 findings）。
+
+### Notes
+
+- 本次补丁只修复规则召回/误报，不改变“静态构图规则不覆盖框架内部运行时 bug”的边界；真实案例中的 resume/replay、parallel interrupt、cache/retry 身份等缺口仍未覆盖。
 
 ## [0.1.0] - 2026-10-17
 
@@ -56,5 +69,6 @@
 - **v0.1 不宣称 benchmark 提升。** 本版本是工具与文档的重新定位，不是新的模型能力评测；历史实验结论保持原样，不应被解读为 v0.1 的收益证据。
 - `acr scan`/`acr trace` 的规则是可解释的启发式检查：不确定的情况只报 `review` 级别，可能仍有误报，请结合证据人工确认。
 
-[Unreleased]: https://github.com/meiluosi/agent-composition-review/compare/v0.1.0...HEAD
+[Unreleased]: https://github.com/meiluosi/agent-composition-review/compare/v0.1.1...HEAD
+[0.1.1]: https://github.com/meiluosi/agent-composition-review/releases/tag/v0.1.1
 [0.1.0]: https://github.com/meiluosi/agent-composition-review/releases/tag/v0.1.0

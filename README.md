@@ -16,12 +16,12 @@ acr demo     本地跑通一个 #6446 类故障（broken → scan → 修复 →
 acr rules    列出全部规则与 grounded/experimental 状态
 ```
 
-**当前状态（v0.5.1，维护模式）**：功能已冻结在 v0.5.1；优先处理真实误报、兼容性和文档问题，不主动增加新规则。它不是运行时追踪器，不宣称 benchmark 或生产准确率。
+**当前状态（v0.6.0，维护模式）**：功能已冻结在 v0.6.0；优先处理真实误报、兼容性和文档问题，不主动增加新规则。它不是运行时追踪器，不宣称 benchmark 或生产准确率。
 
 ## 30 秒开始
 
 ```sh
-pipx install "git+https://github.com/meiluosi/agent-composition-review.git@v0.5.1"
+pipx install "git+https://github.com/meiluosi/agent-composition-review.git@v0.6.0"
 pipx inject agent-composition-review "langgraph>=1.0,<2"   # 仅 acr demo 需要，scan/trace 可跳过
 
 acr --version
@@ -33,10 +33,10 @@ acr demo
 
 ```sh
 # uv
-uv tool install "agent-composition-review[langgraph] @ git+https://github.com/meiluosi/agent-composition-review.git@v0.5.1"
+uv tool install "agent-composition-review[langgraph] @ git+https://github.com/meiluosi/agent-composition-review.git@v0.6.0"
 
 # pip
-python3 -m pip install "agent-composition-review[langgraph] @ git+https://github.com/meiluosi/agent-composition-review.git@v0.5.1"
+python3 -m pip install "agent-composition-review[langgraph] @ git+https://github.com/meiluosi/agent-composition-review.git@v0.6.0"
 
 # 源码
 git clone https://github.com/meiluosi/agent-composition-review.git
@@ -91,7 +91,7 @@ acr scan . --sarif -o acr.sarif          # GitHub code scanning
 
 ```yaml
 - uses: actions/checkout@v4
-- uses: meiluosi/agent-composition-review@v0.5.1
+- uses: meiluosi/agent-composition-review@v0.6.0
   with:
     path: .
     fail-on: high
@@ -106,7 +106,7 @@ permissions:
 steps:
   - uses: actions/checkout@v4
   - id: acr
-    uses: meiluosi/agent-composition-review@v0.5.1
+    uses: meiluosi/agent-composition-review@v0.6.0
     with:
       path: .
       fail-on: high
@@ -205,7 +205,16 @@ scripts/                               仓库检查、评测与维护脚本
 
 ## 给 Agent 使用
 
-运行时 Skill 入口：[skills/agent-composition-review/SKILL.md](skills/agent-composition-review/SKILL.md)。它把流程写成 Agent 可执行步骤：判断症状 → `acr scan` / `acr trace` → 读 finding 并验证 → 最小修复 → 加回归测试 → 输出一页报告，并明确要求“证据不足时说不知道”。规则速查与修复模式在 [references/rules.md](skills/agent-composition-review/references/rules.md) 和 [references/fix-patterns.md](skills/agent-composition-review/references/fix-patterns.md)。
+运行时 Skill 入口：[skills/agent-composition-review/SKILL.md](skills/agent-composition-review/SKILL.md)。它把流程写成 Agent 可执行步骤：判断症状 → `acr scan` / `acr trace` → 读 finding 并验证 → 最小修复 → 加回归测试 → 输出一页报告，并明确要求“证据不足时说不知道”。
+
+v0.6 的 Agent-ready 材料：
+
+- [病例索引](skills/agent-composition-review/references/case-index.md)：症状/错误文本 → 规则 → 11 个真实案例；
+- [无 CLI 降级检查单](skills/agent-composition-review/references/no-cli-checklist.md)：没有 `acr` 时的 10 步人工审计；
+- [三个 worked examples](skills/agent-composition-review/references/worked-examples.md)：ACR001 / ACR007 / ACR106 的“错误假设 → 证据 → 最小修复 → 回归断言”；
+- [Skill 协议评测集](skills/agent-composition-review/references/skill-evals/README.md)：10 个 prompt + 评分表，测协议遵守，不测规则准确率。
+
+规则速查与修复模式在 [references/rules.md](skills/agent-composition-review/references/rules.md) 和 [references/fix-patterns.md](skills/agent-composition-review/references/fix-patterns.md)。
 
 ## 贡献
 

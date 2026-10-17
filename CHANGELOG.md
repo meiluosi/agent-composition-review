@@ -13,6 +13,29 @@
 - 把 command-send / resume-replay / parallel-interrupt 交给 `acr trace` 或版本感知提示，不硬加静态规则。
 - 在更多真实 LangGraph/LangChain 组合故障上校准误报率，并公开可复现的测试样例。
 
+## [0.6.0] - 2026-10-18
+
+### Added
+
+- **Agent-ready Skill pack**：
+  - `references/case-index.md`：症状/错误文本 → 规则 → 11 个真实案例；
+  - `references/no-cli-checklist.md`：没有 `acr` 时的 10 步人工审计清单；
+  - `references/worked-examples.md`：ACR001 / ACR007 / ACR106 的“错误假设 → 证据 → 最小修复 → 回归断言”；
+  - `references/skill-evals/`：10 个协议评测 prompt + 五维评分表，不调用模型 API。
+- `tests/test_skill_docs.py`：检查 Skill 文档完整性、病例索引覆盖、评测 prompt 数量与结构。
+- README / SKILL 增加维护模式和 grounded/experimental 边界说明。
+
+### Changed
+
+- SKILL 从“v0.1 边界”更新到当前 v0.6：维护模式、grounded 规则列表、无 CLI 降级链接、病例索引入口。
+- 无 CLI 时不再只说“手工检查”，改为指向 10 步审计清单。
+
+### Notes
+
+- 本轮**不新增规则、不改 CLI 行为**；ACR008/009/010 仍为 experimental。
+- 评测集测的是 Agent 是否遵守协议（复现、证据、分级、作用域、诚实），不是规则准确率或模型排名。
+- 81 tests passed。
+
 ## [0.5.1] - 2026-10-18
 
 ### Fixed
@@ -180,7 +203,8 @@
 - **v0.1 不宣称 benchmark 提升。** 本版本是工具与文档的重新定位，不是新的模型能力评测；历史实验结论保持原样，不应被解读为 v0.1 的收益证据。
 - `acr scan`/`acr trace` 的规则是可解释的启发式检查：不确定的情况只报 `review` 级别，可能仍有误报，请结合证据人工确认。
 
-[Unreleased]: https://github.com/meiluosi/agent-composition-review/compare/v0.5.1...HEAD
+[Unreleased]: https://github.com/meiluosi/agent-composition-review/compare/v0.6.0...HEAD
+[0.6.0]: https://github.com/meiluosi/agent-composition-review/releases/tag/v0.6.0
 [0.5.1]: https://github.com/meiluosi/agent-composition-review/releases/tag/v0.5.1
 [0.5.0]: https://github.com/meiluosi/agent-composition-review/releases/tag/v0.5.0
 [0.4.0]: https://github.com/meiluosi/agent-composition-review/releases/tag/v0.4.0

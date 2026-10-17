@@ -7,6 +7,13 @@ description: "诊断 LangGraph/LangChain 组合故障：图单独跑正常、组
 
 目标不是“讲一遍架构”，而是回答三个问题：**哪条边界先坏了、证据是什么、最小的修法是什么**。`acr` 帮你把边界缩小到具体文件行号或轨迹事件；判断和修复仍然要回到代码与实际运行。
 
+## 当前状态（v0.6，维护模式）
+
+- 功能已冻结在 v0.6；优先处理真实误报、兼容性和文档问题，不主动增加规则。
+- 目前 `grounded`：ACR001、ACR002、ACR003、ACR007、ACR106；其余规则是 `experimental`，只能当线索。
+- **不宣称 benchmark、准确率或生产效果**；`experimental` 不代表已验证。
+- 没有外部 design partner 时，不要用“应该能查到”代替真实证据。
+
 ## 何时使用
 
 出现下面任一情况时加载本技能：
@@ -44,7 +51,7 @@ acr scan . --sarif -o acr.sarif      # 输出 SARIF，供 GitHub code scanning
 acr trace trace.jsonl --json         # 输出时间线与证据事件 ID
 ```
 
-`acr rules` 会显示每条规则是 `grounded` 还是 `experimental`；experimental 的 finding 只能当线索，不要当已验证结论。
+`acr rules` 会显示每条规则是 `grounded` 还是 `experimental`；experimental 的 finding 只能当线索，不要当已验证结论。遇到相似症状，先查 [病例索引](references/case-index.md)，不要只凭规则表猜。
 
 读 finding 时按这个顺序核对，不要看到规则 ID 就改代码：
 
@@ -53,7 +60,7 @@ acr trace trace.jsonl --json         # 输出时间线与证据事件 ID
 3. **归因**：区分三种情况——`已证实`（能解释因果链）、`设计如此`（边界是有意的）、`证据不足`（需要更多运行/日志）。
 4. 只有“已证实”的 finding 才进入修复；其余写进报告的待验证项。
 
-如果环境里没有安装 `acr`，明确说明“未运行扫描”，改用 [references/rules.md](references/rules.md) 的规则手工检查；不要把预期输出当成已运行结果。
+如果环境里没有安装 `acr`，明确说明“未运行扫描”，按 [无 CLI 降级检查单](references/no-cli-checklist.md) 做 10 步人工审计；不要把预期输出当成已运行结果。也可以参考 [病例索引](references/case-index.md) 找相似症状，但不要直接复制案例修复。
 
 ## 第三步：做最小修复
 
@@ -115,9 +122,14 @@ acr finding（规则 ID、文件行号或事件 ID）+ 运行观察。
 - 静态扫描只看代码结构，看不到实际合并结果；轨迹只看发生过的一次运行，不能证明其他输入下同样成立。
 - 规则命中 ≠ 根因。根因必须能解释“为什么单独跑正常、组合后坏”。
 - 不要编造命令输出、文件行号或事件 ID；引用 finding 时回到原始输出核对。
-- v0.1 的边界：Python AST 分析，面向 LangGraph 1.x；不是运行时追踪器，不会自动改代码，也不宣称 benchmark 提升。评测历史是另一份档案，不属于产品承诺。
+- 当前边界：Python AST 分析，面向 LangGraph 1.x；不是运行时追踪器，不会自动改代码，不宣称 benchmark 或准确率。`grounded` 只表示检测行为有真实样本检查，不表示生产效果。
+- 当前是维护模式：不主动加规则；ACR008/009/010 仍为 experimental，遇到未验证结论要明确说“证据不足”。
 
 ## 参考
 
+- [病例索引：症状 → 规则 → 真实案例](references/case-index.md)
+- [无 CLI 降级检查单](references/no-cli-checklist.md)
+- [三个 worked examples](references/worked-examples.md)
 - [规则速查：症状 → 证据 → 修复 → 误报边界](references/rules.md)
 - [五类最小修复模式与回归断言](references/fix-patterns.md)
+- [Skill 协议评测集（10 题 + 评分表）](references/skill-evals/README.md)

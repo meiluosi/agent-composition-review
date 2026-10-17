@@ -10,6 +10,7 @@ include RELEASE_NOTES_v0.3.1.md
 include RELEASE_NOTES_v0.4.0.md
 include RELEASE_NOTES_v0.5.0.md
 include RELEASE_NOTES_v0.5.1.md
+include RELEASE_NOTES_v0.6.0.md
 include action.yml
 include docs/github-action.md
 include docs/index.html

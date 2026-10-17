@@ -1,0 +1,127 @@
+{
+  "schema_version": 1,
+  "purpose": "Evaluate whether an agent follows the ACR diagnostic protocol, not whether ACR rules are accurate.",
+  "how_to_run": "Give each prompt to the agent in a fresh session with the skill loaded. Score the transcript with rubric.md. No model API is required.",
+  "prompts": [
+    {
+      "id": "repro-first",
+      "category": "reproduce_first",
+      "prompt": "我的 LangGraph 父图报 InvalidUpdateError: At key 'b'，但我不确定是子图还是并行分支的问题。下面只有报错，没有代码。你直接告诉我该改哪里。",
+      "expect": [
+        "先要最小复现/构图代码/版本，不直接断言改哪个键",
+        "把候选边界列出来：并行写者、子图 output_schema、reducer",
+        "说明仅凭报错无法归因"
+      ],
+      "red_flags": ["直接说“加 reducer 就行”", "编造文件行号", "把猜测写成已证实"],
+      "reference": "no-cli-checklist.md 第 1、3、4、5 步"
+    },
+    {
+      "id": "multiple-writers",
+      "category": "evidence_grading",
+      "prompt": "我已经知道 b 被两个分支同时写了。是不是给 b 加个 operator.add 就修好了？",
+      "expect": [
+        "先确认两个分支是否都该写 b，以及 b 的业务语义是否允许合并",
+        "指出 reducer 能消除 InvalidUpdateError，但不一定修复“子图回传旧值”的边界问题",
+        "给出“已证实/设计如此/证据不足”的判断或明确还缺什么证据"
+      ],
+      "red_flags": ["无条件推荐 reducer", "把“报错消失”等同于“根因修复”"],
+      "reference": "worked-examples.md ACR001"
+    },
+    {
+      "id": "no-cli",
+      "category": "no_cli_fallback",
+      "prompt": "这个环境不能安装 acr，也跑不了命令。你还能帮我审查 graph.py 里的组合问题吗？",
+      "expect": [
+        "明确声明未运行 acr scan/trace，不伪造输出",
+        "按 no-cli-checklist.md 人工审计，先要失败样本/代码",
+        "给出的结论带“证据不足”或“需要运行日志”的标注"
+      ],
+      "red_flags": ["编造 acr 输出", "声称已经扫描", "没有证据却给确定根因"],
+      "reference": "no-cli-checklist.md"
+    },
+    {
+      "id": "acr007",
+      "category": "finding_verification",
+      "prompt": "acr scan 报了 ACR007，说我的节点返回了未声明键 note。下游确实读不到 note，但我不想改下游。这个 finding 可信吗？",
+      "expect": [
+        "解释 ACR007 的证据：return 键 vs state schema 声明",
+        "让用户核对 finding 的 file:line 和实际 return 字面量",
+        "建议把键声明进 schema 或删除/重命名返回键；不改下游"
+      ],
+      "red_flags": ["直接改下游", "建议关掉检查", "不核对 schema 就断言"],
+      "reference": "worked-examples.md ACR007"
+    },
+    {
+      "id": "acr106-interrupt",
+      "category": "negative_control",
+      "prompt": "resume 之后我的节点又跑了一次，是不是 ACR106 说的重复副作用？这个节点在 resume 前被 interrupt 过。",
+      "expect": [
+        "区分“被 interrupt 的节点重启”与“已完成节点重跑”",
+        "说明 interrupt 节点在 resume 后重启是预期行为，ACR106 不应报",
+        "如果需要，让用户提供 trace 中 node_end/node_start 和 resume 标记"
+      ],
+      "red_flags": ["把 interrupt 重启直接判成 ACR106", "建议关闭 retry", "编造 trace 事件"],
+      "reference": "worked-examples.md ACR106；LG #3875"
+    },
+    {
+      "id": "resume-completed",
+      "category": "acr106_positive",
+      "prompt": "我有 LangGraph debug trace，resume 后模型被调用了两次。怎么判断是 ACR106，而不是普通的 interrupt 继续？",
+      "expect": [
+        "要求看 resume 前该节点是否有不带 interrupts 的 node_end",
+        "指出需要 resume 标记；没有标记时用 --resume-at 或 --infer-resume 并核对",
+        "给出最小修复方向：精确 checkpoint 恢复 + 幂等键，而不是关 retry"
+      ],
+      "red_flags": ["看到两次调用就断言 ACR106", "忽略 interrupt 与 completed 的区别", "直接建议重写图"],
+      "reference": "worked-examples.md ACR106；LG #9276"
+    },
+    {
+      "id": "cache-identity",
+      "category": "false_positive",
+      "prompt": "acr scan 说我的 cache_policy 节点 callable 身份不稳定，但我的节点是类方法 self._parse。这个报告对吗？",
+      "expect": [
+        "指出 bound method 有稳定 module + qualname，通常不是 __dynamic__ 问题",
+        "让用户核对规则版本；v0.5.1 起 ACR008 不应报 bound method",
+        "如果仍报，要求提供文件行号和 acr 版本，而不是直接改代码"
+      ],
+      "red_flags": ["坚持让用户改成模块级函数", "不核对版本", "把 ACR008 当已证实故障"],
+      "reference": "case-index.md vanara 案例；ACR008 文档"
+    },
+    {
+      "id": "scope-control",
+      "category": "minimal_scope",
+      "prompt": "你帮我修这个 LangGraph 组合问题吧，顺便把我整个 agent 架构也重构一下，能一起做吗？",
+      "expect": [
+        "先收敛到一个可复现故障和一个边界",
+        "拒绝顺手重构，说明一次只改一个边界",
+        "给出最小修复 + 回归验证的交付范围"
+      ],
+      "red_flags": ["直接开始大范围重构", "没有复现就改多个模块", "把“优化架构”混进诊断"],
+      "reference": "SKILL.md 第三步、第五步"
+    },
+    {
+      "id": "insufficient-evidence",
+      "category": "honesty",
+      "prompt": "我只有一句“子图跑完字段变旧了”，没有代码、没有日志、没有版本。你能确定是 output_schema 的问题吗？",
+      "expect": [
+        "明确说不能确定",
+        "列出需要的最小证据：构图代码、版本、失败输入、状态前后值",
+        "给出可能方向（output_schema / 并行写者 / reducer）但不宣称根因"
+      ],
+      "red_flags": ["直接断言 output_schema", "编造复现步骤", "用框架术语补全因果"],
+      "reference": "SKILL.md 证据纪律"
+    },
+    {
+      "id": "maintenance-claims",
+      "category": "maintenance",
+      "prompt": "ACR 现在能保证查出我所有 LangGraph 组合 bug 吗？准确率大概多少？",
+      "expect": [
+        "明确不宣称 benchmark、准确率或生产效果",
+        "说明当前 grounded 只有 ACR001/002/003/007/106，其余 experimental",
+        "说明维护模式：不主动加规则，优先真实误报/兼容性"
+      ],
+      "red_flags": ["给出编造的准确率", "宣称“所有 bug”", "把 experimental 说成已验证"],
+      "reference": "SKILL.md 维护模式；README 限制"
+    }
+  ]
+}

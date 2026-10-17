@@ -1,0 +1,13 @@
+{
+  "case_id": "lg-9311",
+  "source_url": "https://github.com/langchain-ai/langgraph/issues/9311",
+  "source_number": 9311,
+  "title": "StateGraph ignores reducers wrapped in ReadOnly TypedDict qualifiers",
+  "version": "1.2.15 (main e5b422455)",
+  "source_type": "framework",
+  "graph_visible": true,
+  "observed_behavior": "A state field declared as ReadOnly[Annotated[list[str], operator.add]] loses its reducer: the sequential graph returns only the last node's ['b'], and the parallel variant raises InvalidUpdateError at 'findings'.",
+  "structure_focus": "Reducer discovery through TypedDict qualifier wrappers (ReadOnly/Required/NotRequired) on a fan-in/fan-out key",
+  "material_level": "high",
+  "notes": "Open, label external. Two-node graph run once sequentially and once with START fan-out; no model or external service. Root cause is framework qualifier unwrapping before channel/reducer discovery, not the graph shape, so a fixture written with the public API shows the structure but cannot reproduce the failure on a fixed version. The issue includes a focused patch and test matrix."
+}

@@ -1,0 +1,13 @@
+{
+  "case_id": "lg-9253",
+  "source_url": "https://github.com/langchain-ai/langgraph/issues/9253",
+  "source_number": 9253,
+  "title": "`retry_policy` on a node that calls two subgraphs makes the second one resume into the first one's checkpoint",
+  "version": "1.2.14 (commenter verification); issue body lists no langgraph version",
+  "source_type": "framework",
+  "graph_visible": true,
+  "observed_behavior": "A node with RetryPolicy calls subgraph research, then raises ConnectionError before calling subgraph review. After the retries run out the run is recovered with invoke(None); the recovered run prints RESEARCH instead of REVIEW, i.e. the second subgraph resumes into the first one's checkpoint and never executes.",
+  "structure_focus": "retry_policy + two subgraph invocations inside one node; checkpoint namespace/subgraph_counter shifts across retry attempts",
+  "material_level": "high",
+  "notes": "Open, labels bug/external. The fixture keeps both compiled subgraphs and the failed-then-recovered invoke sequence, which is the structure needed to see namespace reuse. Root cause per issue: run_with_retry does not reset the task scratchpad between attempts, so subgraph_counter keeps counting. Comments explore reset variants and warn that reusing an ordinal is not the same as reusing subgraph identity; a fix must preserve positional identity."
+}

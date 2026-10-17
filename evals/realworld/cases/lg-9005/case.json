@@ -1,0 +1,13 @@
+{
+  "case_id": "lg-9005",
+  "source_url": "https://github.com/langchain-ai/langgraph/issues/9005",
+  "source_number": 9005,
+  "title": "`Command(update=...)` applies an overridden inherited state field twice",
+  "version": "1.2.11",
+  "source_type": "framework",
+  "graph_visible": true,
+  "observed_behavior": "A dataclass subclass re-declares an inherited Annotated[int, operator.add] field. Returning State(count=2) directly with input count=1 yields 3; returning Command(update=State(count=2)) applies the field twice and yields 5. With a non-reducer field the same path raises InvalidUpdateError.",
+  "structure_focus": "Command(update=...) vs plain dict update on an inherited field with duplicated annotations in the class MRO",
+  "material_level": "high",
+  "notes": "Open, label external. Single-node graph with dataclass state; the graph shape is trivial and the reported defect is in Command.update field collection. comments trace it to get_cached_annotated_keys walking the full MRO and appending inherited annotations twice; a PR (#9012) is proposed. The fixture keeps the two-path comparison because that contrast is the observed behavior."
+}

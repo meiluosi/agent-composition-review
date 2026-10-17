@@ -1,0 +1,13 @@
+{
+  "case_id": "control-reducer",
+  "source_url": "internal control",
+  "title": "Healthy parallel writes with an explicit reducer",
+  "version": "langgraph 1.0.3",
+  "source_type": "control",
+  "graph_visible": true,
+  "normal_control": true,
+  "observed_behavior": "No composition failure; the shared items key merges with operator.add.",
+  "structure_focus": "Correct reducer: parallel writers target an Annotated key with a reducer.",
+  "material_level": "control",
+  "notes": "False-positive control for ACR002."
+}

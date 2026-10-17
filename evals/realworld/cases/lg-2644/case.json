@@ -1,0 +1,13 @@
+{
+  "case_id": "lg-2644",
+  "source_url": "https://github.com/langchain-ai/langgraph/issues/2644",
+  "source_number": 2644,
+  "title": "langgraph.errors.InvalidUpdateError: Must write to at least one of ['foo']",
+  "version": "0.2.27",
+  "source_type": "usage",
+  "graph_visible": true,
+  "observed_behavior": "Two class-based nodes return dicts typed as a second schema (TmpState with 'zoo'), while the graph's state schema declares only 'foo'. node_1 completes, then the graph raises InvalidUpdateError: Must write to at least one of ['foo']. The user expected {'foo': 3}.",
+  "structure_focus": "Node return keys outside the graph's declared state schema; class-based nodes with foreign return annotations",
+  "material_level": "medium",
+  "notes": "Closed, no labels. The maintainer could not reproduce the reported error on the original snippet and the reporter's own environment/version remained inconsistent, so the observed behavior is not fully confirmed; on the repository's pinned langgraph 1.0.3 this fixture also completes with {'foo': 3} rather than raising. Structurally, a node may only update keys declared on the graph's state schema; returning only 'zoo' cannot update 'foo', which is the composition lesson. This is a usage/schema misunderstanding rather than a framework defect; the non-reproduction is preserved because it limits how strongly the fixture can be said to reproduce anything."
+}

@@ -1,0 +1,13 @@
+{
+  "case_id": "control-disjoint",
+  "source_url": "internal control",
+  "title": "Healthy parallel branches with disjoint writes",
+  "version": "langgraph 1.0.3",
+  "source_type": "control",
+  "graph_visible": true,
+  "normal_control": true,
+  "observed_behavior": "No composition failure; each parallel branch writes a different key.",
+  "structure_focus": "Correct parallel shape: disjoint writers need no reducer.",
+  "material_level": "control",
+  "notes": "False-positive control for ACR002."
+}

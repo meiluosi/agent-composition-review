@@ -1,0 +1,13 @@
+acr scan - evals/realworld/cases/lg-9311
+1 file(s) parsed, 0 skipped - 1 finding(s): high 1, medium 0, low 0
+
+  HIGH   ACR002  Parallel branches write the same state key without a reducer
+    evals/realworld/cases/lg-9311/graph.py:37
+    After START, branches 'a', 'b' can run in the same superstep and all write state key 'findings', which has no reducer. LangGraph raises InvalidUpdateError for concurrent writes to a non-reduced key.
+    evidence:
+      - source START has unconditional edges to 'a', 'b' (edge line(s): 37, 39)
+      - state key 'findings' declared at line 22 with annotation 'ReadOnly[Annotated[list[str], operator.add]]' and no reducer
+      - node 'a' writes 'findings' (add_node at line 35)
+      - node 'b' writes 'findings' (add_node at line 36)
+    fix: Give the key a reducer, e.g. ``Annotated[list, operator.add]`` (or ``add_messages`` for messages), or make the branches write disjoint keys / run sequentially.
+    docs: docs/rules/ACR002.md

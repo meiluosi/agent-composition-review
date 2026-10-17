@@ -1,0 +1,13 @@
+{
+  "case_id": "lg-9276",
+  "source_url": "https://github.com/langchain-ai/langgraph/issues/9276",
+  "source_number": 9276,
+  "title": "Resuming a compiled subgraph re-runs a node that already completed in the interrupted or failed super-step",
+  "version": "1.2.14 (also reproduced on 1.2.12)",
+  "source_type": "framework",
+  "graph_visible": true,
+  "observed_behavior": "In a flat graph, a completed sibling survives resume of an interrupt/failure in the same super-step (model called once). When the same gate/agent pair is compiled as a subgraph and added as a node, the agent runs again on resume (model called twice) and its answer changes from 'reply 1' to 'reply 2', for both interrupt and failure.",
+  "structure_focus": "Compiled subgraph as a node; parallel interrupt/failure super-step; pending-write reuse on resume",
+  "material_level": "high",
+  "notes": "Open, labels bug/external. Fixture replaces the real chat model with a call counter so the duplicate side effect is visible offline, while keeping the flat-vs-nested and interrupt-vs-failure matrix. Issue compares sync resume paths only; a fix PR (#9306) exists and has independent verification. The bug is framework replay behavior, not graph construction, so the public-API fixture shows the topology but may not fail on every version."
+}

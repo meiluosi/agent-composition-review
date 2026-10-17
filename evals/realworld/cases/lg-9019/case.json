@@ -1,0 +1,13 @@
+{
+  "case_id": "lg-9019",
+  "source_url": "https://github.com/langchain-ai/langgraph/issues/9019",
+  "source_number": 9019,
+  "title": "update_state with Overwrite on a plain key persists the Overwrite wrapper instead of its payload (LastValue / LastValueAfterFinish / UntrackedValue)",
+  "version": "main 230927fb3a9ac9b2893a30322b4dfea7cdea9a8f (no release version stated)",
+  "source_type": "framework",
+  "graph_visible": true,
+  "observed_behavior": "After a normal run, graph.update_state(cfg, {'x': Overwrite('replaced')}) on a plain (non-reducer) key stores the Overwrite wrapper itself: get_state(cfg).values returns {'x': Overwrite(value='replaced', ...)} instead of {'x': 'replaced'}. No error is raised at update time; consumers fail later.",
+  "structure_focus": "update_state replace-write on a LastValue channel; Overwrite unwrapping consistency across channel types",
+  "material_level": "high",
+  "notes": "Open, label external. Single-node graph plus checkpointer, so the fixture is fully offline. Root cause per issue: LastValue.update (also LastValueAfterFinish/UntrackedValue) assigns values[-1] without the _get_overwrite check that BinaryOperatorAggregate and DeltaChannel perform. A focused PR (#9032) unwraps the wrapper in the single-value channels. The issue also includes a direct channel-level repro, which is not reproduced here because the deliverable is a graph fixture."
+}

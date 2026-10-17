@@ -1,0 +1,13 @@
+{
+  "case_id": "lg-7580",
+  "source_url": "https://github.com/langchain-ai/langgraph/issues/7580",
+  "source_number": 7580,
+  "title": "BinaryOperatorAggregate silently drops regular values that appear after an Overwrite",
+  "version": "1.1.8",
+  "source_type": "usage",
+  "graph_visible": true,
+  "observed_behavior": "In one super-step, a reducer channel (Annotated[int, operator.add]) receives three writes in order: 5, Overwrite(10), 3. The update ends at 10; the '3' written after the Overwrite is silently discarded with no error or warning.",
+  "structure_focus": "Overwrite mixed with regular writes to the same reducer channel in a single super-step",
+  "material_level": "medium",
+  "notes": "Open, labels bug/external. The issue's own repro is channel-level (calls BinaryOperatorAggregate.update directly), not a graph; the fixture reconstructs the implied topology of three parallel START branches writing 5 / Overwrite(10) / 3 to one reducer key. A maintainer comment says this is expected behavior that is just not well documented, which is why this is classified as usage + a semantics/documentation gap rather than a framework defect; later comments propose a docs-only fix. The parallel write order is not guaranteed by the runtime, so the fixture shows the structure rather than deterministic ordering."
+}

@@ -1,0 +1,13 @@
+{
+  "case_id": "lg-8753",
+  "source_url": "https://github.com/langchain-ai/langgraph/issues/8753",
+  "source_number": 8753,
+  "title": "Cache namespace collapses to \"__dynamic__\" for non-function callables, so different graphs sharing a cache return each other's results",
+  "version": "1.2.11",
+  "source_type": "framework",
+  "graph_visible": true,
+  "observed_behavior": "Two graphs each have a node named 'process', implemented as callable objects and sharing one InMemoryCache. The first graph stores 'from graph A'; the second graph returns 'from graph A' and its node never runs, because both nodes hash to the same cache namespace '__dynamic__'.",
+  "structure_focus": "Graph-level cache sharing across separate compiled graphs; node identity in cache namespace",
+  "material_level": "high",
+  "notes": "Open, label external. The fixture keeps the two build() calls sharing one cache and the callable-object nodes; a named-function control in the issue shows the collision is specific to the identifier() fallback for callables without __qualname__/__module__ (also functools.partial). Root cause is cache key construction in pregel/_algo.py (namespace carries no graph identity); comments discuss wrapper/closure/bound-method controls and an execution-identity framing."
+}

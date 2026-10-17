@@ -1,0 +1,207 @@
+{
+  "schema_version": 1,
+  "collected_at": "2026-10-17",
+  "source": "GitHub search across langchain-ai/langgraph",
+  "query_seeds": [
+    "InvalidUpdateError",
+    "output_schema",
+    "subgraph+state",
+    "parallel+state",
+    "overwrite+state",
+    "duplicate+tool",
+    "checkpoint+retry",
+    "cache+state",
+    "reducer+state"
+  ],
+  "selection_note": "Pilot selection favors issues with concrete graph code or a concrete composition failure. This is a development pilot, not a held-out benchmark.",
+  "cases": [
+    {
+      "case_id": "lg-6446",
+      "number": 6446,
+      "title": "GitHub Issue Title: InvalidUpdateError when using parallel subgraphs with shared state keys in LangGraph",
+      "url": "https://github.com/langchain-ai/langgraph/issues/6446",
+      "state": "open",
+      "created_at": "2025-11-14T10:27:27Z",
+      "labels": [
+        "bug",
+        "pending",
+        "external"
+      ],
+      "selected_for_pilot": true,
+      "material": "issue body"
+    },
+    {
+      "case_id": "lg-8320",
+      "number": 8320,
+      "title": "StateGraph silently drops node output keys not declared in TypedDict",
+      "url": "https://github.com/langchain-ai/langgraph/issues/8320",
+      "state": "open",
+      "created_at": "2026-07-10T15:04:16Z",
+      "labels": [
+        "bug",
+        "external"
+      ],
+      "selected_for_pilot": true,
+      "material": "issue body"
+    },
+    {
+      "case_id": "lg-9311",
+      "number": 9311,
+      "title": "StateGraph ignores reducers wrapped in ReadOnly TypedDict qualifiers",
+      "url": "https://github.com/langchain-ai/langgraph/issues/9311",
+      "state": "open",
+      "created_at": "2026-10-14T18:25:32Z",
+      "labels": [
+        "external"
+      ],
+      "selected_for_pilot": true,
+      "material": "issue body"
+    },
+    {
+      "case_id": "lg-9005",
+      "number": 9005,
+      "title": "`Command(update=...)` applies an overridden inherited state field twice",
+      "url": "https://github.com/langchain-ai/langgraph/issues/9005",
+      "state": "open",
+      "created_at": "2026-09-19T19:06:37Z",
+      "labels": [
+        "external"
+      ],
+      "selected_for_pilot": true,
+      "material": "issue body"
+    },
+    {
+      "case_id": "lg-9086",
+      "number": 9086,
+      "title": "A tuple reducer permanently breaks a thread on resume: BinaryOperatorAggregate.from_checkpoint restores the value as a list",
+      "url": "https://github.com/langchain-ai/langgraph/issues/9086",
+      "state": "open",
+      "created_at": "2026-09-26T20:28:55Z",
+      "labels": [
+        "external"
+      ],
+      "selected_for_pilot": true,
+      "material": "issue body"
+    },
+    {
+      "case_id": "lg-9253",
+      "number": 9253,
+      "title": "`retry_policy` on a node that calls two subgraphs makes the second one resume into the first one's checkpoint",
+      "url": "https://github.com/langchain-ai/langgraph/issues/9253",
+      "state": "open",
+      "created_at": "2026-10-09T00:44:25Z",
+      "labels": [
+        "bug",
+        "external"
+      ],
+      "selected_for_pilot": true,
+      "material": "issue body"
+    },
+    {
+      "case_id": "lg-9106",
+      "number": 9106,
+      "title": "Resuming one of two parallel interrupts inside a subgraph re-runs a sibling node that already completed",
+      "url": "https://github.com/langchain-ai/langgraph/issues/9106",
+      "state": "closed",
+      "created_at": "2026-09-29T02:46:24Z",
+      "labels": [
+        "bug",
+        "external"
+      ],
+      "selected_for_pilot": true,
+      "material": "issue body"
+    },
+    {
+      "case_id": "lg-9276",
+      "number": 9276,
+      "title": "Resuming a compiled subgraph re-runs a node that already completed in the interrupted or failed super-step",
+      "url": "https://github.com/langchain-ai/langgraph/issues/9276",
+      "state": "open",
+      "created_at": "2026-10-11T20:38:48Z",
+      "labels": [
+        "bug",
+        "external"
+      ],
+      "selected_for_pilot": true,
+      "material": "issue body"
+    },
+    {
+      "case_id": "lg-8753",
+      "number": 8753,
+      "title": "Cache namespace collapses to \"__dynamic__\" for non-function callables, so different graphs sharing a cache return each other's results",
+      "url": "https://github.com/langchain-ai/langgraph/issues/8753",
+      "state": "open",
+      "created_at": "2026-08-29T16:03:17Z",
+      "labels": [
+        "external"
+      ],
+      "selected_for_pilot": true,
+      "material": "issue body"
+    },
+    {
+      "case_id": "lg-2644",
+      "number": 2644,
+      "title": "langgraph.errors.InvalidUpdateError: Must write to at least one of ['foo']",
+      "url": "https://github.com/langchain-ai/langgraph/issues/2644",
+      "state": "closed",
+      "created_at": "2024-12-05T02:17:39Z",
+      "labels": [],
+      "selected_for_pilot": true,
+      "material": "issue body"
+    },
+    {
+      "case_id": "lg-7580",
+      "number": 7580,
+      "title": "BinaryOperatorAggregate silently drops regular values that appear after an Overwrite",
+      "url": "https://github.com/langchain-ai/langgraph/issues/7580",
+      "state": "open",
+      "created_at": "2026-04-22T10:40:13Z",
+      "labels": [
+        "bug",
+        "external"
+      ],
+      "selected_for_pilot": true,
+      "material": "issue body"
+    },
+    {
+      "case_id": "lg-9084",
+      "number": 9084,
+      "title": "Tags are duplicated at every subgraph level since 1.2.3 (2^depth copies)",
+      "url": "https://github.com/langchain-ai/langgraph/issues/9084",
+      "state": "open",
+      "created_at": "2026-09-26T10:14:57Z",
+      "labels": [
+        "external"
+      ],
+      "selected_for_pilot": true,
+      "material": "issue body"
+    },
+    {
+      "case_id": "lg-9019",
+      "number": 9019,
+      "title": "update_state with Overwrite on a plain key persists the Overwrite wrapper instead of its payload (LastValue / LastValueAfterFinish / UntrackedValue)",
+      "url": "https://github.com/langchain-ai/langgraph/issues/9019",
+      "state": "open",
+      "created_at": "2026-09-20T12:54:31Z",
+      "labels": [
+        "external"
+      ],
+      "selected_for_pilot": true,
+      "material": "issue body"
+    },
+    {
+      "case_id": "lg-8608",
+      "number": 8608,
+      "title": "error_handler runs but the original exception is still raised (parallel nodes, custom/messages streaming, subgraphs=True)",
+      "url": "https://github.com/langchain-ai/langgraph/issues/8608",
+      "state": "open",
+      "created_at": "2026-08-13T08:28:09Z",
+      "labels": [
+        "bug",
+        "external"
+      ],
+      "selected_for_pilot": true,
+      "material": "issue body"
+    }
+  ]
+}

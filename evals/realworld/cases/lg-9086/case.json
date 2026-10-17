@@ -1,0 +1,13 @@
+{
+  "case_id": "lg-9086",
+  "source_url": "https://github.com/langchain-ai/langgraph/issues/9086",
+  "source_number": 9086,
+  "title": "A tuple reducer permanently breaks a thread on resume: BinaryOperatorAggregate.from_checkpoint restores the value as a list",
+  "version": "editable checkout 11ee18599 (no release version stated; upstream main 7daa3ab49)",
+  "source_type": "framework",
+  "graph_visible": true,
+  "observed_behavior": "With a state key Annotated[tuple[str, ...], operator.add] and an InMemorySaver checkpointer, the first invoke returns a tuple, but get_state() already shows a list; the next invoke on the same thread raises TypeError: can only concatenate list (not \"tuple\") to list, and the thread stays broken.",
+  "structure_focus": "Reducer channel value type across a checkpoint boundary (checkpoint serialization + resume)",
+  "material_level": "high",
+  "notes": "Open, label external. Single-node graph plus checkpointer; issue body contains the exact minimal repro and traces the root cause to BinaryOperatorAggregate.from_checkpoint assigning the deserialized (list) value without reconciling it to the declared tuple type. The fixture represents the user-writable graph/state declaration; the defect itself is framework-internal and will only reproduce on affected versions (msgpack has no tuple type). Related set/frozenset report #8388 is explicitly separate."
+}

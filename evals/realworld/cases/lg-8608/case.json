@@ -1,0 +1,13 @@
+{
+  "case_id": "lg-8608",
+  "source_url": "https://github.com/langchain-ai/langgraph/issues/8608",
+  "source_number": 8608,
+  "title": "error_handler runs but the original exception is still raised (parallel nodes, custom/messages streaming, subgraphs=True)",
+  "version": "1.2.11",
+  "source_type": "framework",
+  "graph_visible": true,
+  "observed_behavior": "a node raises RuntimeError and add_node(..., error_handler=...) runs exactly once in every configuration, but the original exception still escapes the graph for parallel invoke/stream/ainvoke, stream_mode='custom'/'messages', and subgraphs=True. Only a lone failing node via invoke/ainvoke or values/updates streaming finishes cleanly with the handler's Command update.",
+  "structure_focus": "error_handler on a node; failure super-step with a parallel sibling; streaming mode / subgraph combinations",
+  "material_level": "high",
+  "notes": "Open, labels bug/external. Fixture keeps the error_handler node plus the optional parallel sibling, which is the minimal configuration that re-raises on plain invoke. Running it needs a langgraph version that implements the error_handler node parameter (the issue used 1.2.11); the repository's pinned 1.0.3 accepts the extra keyword but never calls the handler, so a run there raises RuntimeError without exercising the reported path. The fixture is therefore AST-valid everywhere and only meaningful on >=1.2. Comments localize the re-raise to BackgroundExecutor/AsyncBackgroundExecutor __exit__ and report fixes on forks."
+}

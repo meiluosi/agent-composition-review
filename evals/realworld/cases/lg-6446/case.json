@@ -1,0 +1,13 @@
+{
+  "case_id": "lg-6446",
+  "source_url": "https://github.com/langchain-ai/langgraph/issues/6446",
+  "source_number": 6446,
+  "title": "InvalidUpdateError when using parallel subgraphs with shared state keys in LangGraph",
+  "version": "1.1.6 (commenter verification); issue body does not state the langgraph version",
+  "source_type": "user_graph",
+  "graph_visible": true,
+  "observed_behavior": "Fan-out from nodea to nodeb and to an output_schema-less child subgraph raises InvalidUpdateError at key 'b'. The reporter reads this as the framework writing 'b' even though the child never touches it; structurally the child returns its full shared State as the update patch.",
+  "structure_focus": "Compiled subgraph without output_schema registered as a node, fanned out in parallel with a sibling that writes a shared parent key",
+  "material_level": "high",
+  "notes": "Open, labels bug/pending/external. Filed as a framework bug, but the structure is a composition/state-ownership issue: the child StateGraph shares all four parent keys and compiles without output_schema, so its full state (including the old 'b') is merged back into the parent in the same super-step as nodeb's write. This is the same field-ownership pattern the ACR001/ACR002 rules describe, and the repo's examples/langgraph-subgraph-leak fixture; source_type is therefore user_graph rather than framework. One comment reports a related output_schema/astream_events variant."
+}

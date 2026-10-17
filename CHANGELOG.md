@@ -7,6 +7,10 @@
 
 ## [Unreleased]
 
+### Added
+
+- 真实案例试点：从 LangGraph GitHub issue 收集 14 个真实故障 + 3 个正常控制图，按冻结协议做盲标、离线扫描与逐例判定；报告见 `evals/realworld/results/pilot-2026-10-17/REPORT.md`。结论用于 v0.2 缺口排序，不宣称泛化。
+
 ### 计划中
 
 - 根据 v0.1 的早期使用反馈补充扫描/轨迹规则与最小修复模式。

@@ -18,3 +18,4 @@ evals/external/private/
 evals/external/raw-runs/
 evals/iterations/*/raw-runs/
 evals/iterations/*/review-recovery-*/raw-runs/
+evals/realworld/raw/

@@ -1,0 +1,13 @@
+{
+  "case_id": "lg-9106",
+  "source_url": "https://github.com/langchain-ai/langgraph/issues/9106",
+  "source_number": 9106,
+  "title": "Resuming one of two parallel interrupts inside a subgraph re-runs a sibling node that already completed",
+  "version": "1.2.10 (also reproduced on 1.2.12)",
+  "source_type": "framework",
+  "graph_visible": true,
+  "observed_behavior": "A child subgraph has two parallel nodes, each calling interrupt() before a side effect. Resuming the two interrupts one at a time, each by its own id, produces the correct final log but the node completed first runs its side effect twice: runs == {'a': 2, 'b': 1} instead of {'a': 1, 'b': 1}.",
+  "structure_focus": "Parallel interrupts inside a compiled subgraph; per-interrupt-id resume and replay of already-completed sibling tasks",
+  "material_level": "high",
+  "notes": "Closed (fixed by #9315, per last comment); labels bug/external. Side-effect counters make the duplicate execution visible even though final state is correct. Issue traces it to PregelLoop.is_replaying being true for every nested graph because task configs carry checkpoint_id=None; the candidate fix clears is_replaying for nested non-time-traveling runs. Fixture keeps the one-at-a-time resume loop and the counter assertions."
+}

@@ -1,0 +1,233 @@
+{
+  "counts": {
+    "analyzable_cases": 13,
+    "cases_with_findings": 3,
+    "expressible_cases": 1,
+    "gap_cases": 13,
+    "issue_cases": 14,
+    "material_insufficient_cases": 1,
+    "normal_controls": 3,
+    "soft_material_concerns": 3
+  },
+  "disagreements": [
+    {
+      "blind": false,
+      "case_id": "lg-7580",
+      "field": "graph_visible",
+      "fixture": true
+    },
+    {
+      "blind": "feature",
+      "case_id": "lg-8320",
+      "field": "source_type",
+      "fixture": "framework"
+    }
+  ],
+  "environment": {
+    "acr_invocation": "PYTHONPATH=src python3 -m agent_composition_review (acr 0.1.0)",
+    "acr_version": "0.1.0",
+    "analysis_mode": "static-only; archived acr scan output parsed offline",
+    "python_version": "3.13.5"
+  },
+  "findings": {
+    "emitted_by_case": {
+      "lg-9084": [
+        "ACR001"
+      ],
+      "lg-9276": [
+        "ACR001"
+      ],
+      "lg-9311": [
+        "ACR002"
+      ]
+    },
+    "misleading": 1,
+    "per_case": {
+      "lg-9084": 1,
+      "lg-9276": 1,
+      "lg-9311": 1
+    },
+    "relevant": 0,
+    "total_findings_controls": 0,
+    "total_findings_issue_cases": 3,
+    "unrelated": 2
+  },
+  "frozen_inputs": {
+    "labels_blind": true,
+    "labels_case_count": 14,
+    "labels_path": "evals/realworld/labels.json",
+    "labels_sha256_actual": "d5c48148b6b4c27df7a37ae90fc75e818fb5ecbffb0d463cc5dcaea541576ab9",
+    "labels_sha256_expected": "d5c48148b6b4c27df7a37ae90fc75e818fb5ecbffb0d463cc5dcaea541576ab9",
+    "labels_sha256_verified": true,
+    "protocol_frozen_at": "2026-10-17"
+  },
+  "gap": {
+    "analyzable_cases": 12,
+    "by_category": {
+      "command-send": {
+        "cases": [
+          "lg-9005"
+        ],
+        "count": 1
+      },
+      "declared-keys": {
+        "cases": [
+          "lg-2644",
+          "lg-8320"
+        ],
+        "count": 2
+      },
+      "other": {
+        "cases": [
+          "lg-8608",
+          "lg-9084"
+        ],
+        "count": 2
+      },
+      "parallel-interrupt": {
+        "cases": [
+          "lg-9106"
+        ],
+        "count": 1
+      },
+      "reducer-semantics": {
+        "cases": [
+          "lg-7580",
+          "lg-9019",
+          "lg-9086",
+          "lg-9311"
+        ],
+        "count": 4
+      },
+      "resume-replay": {
+        "cases": [
+          "lg-9276"
+        ],
+        "count": 1
+      },
+      "retry-cache": {
+        "cases": [
+          "lg-8753",
+          "lg-9253"
+        ],
+        "count": 2
+      }
+    },
+    "by_source_type_blind": {
+      "feature": 1,
+      "framework": 10,
+      "usage": 2
+    },
+    "by_source_type_fixture": {
+      "framework": 11,
+      "usage": 2
+    },
+    "cases_total": 13,
+    "verdict_counts": {
+      "false_positive": 1,
+      "gap": 9,
+      "incidental": 2,
+      "not_applicable": 1
+    }
+  },
+  "generated_by": "scripts/summarize_realworld_eval.py",
+  "limitations": [
+    "开发型试点：14 个 issue（+3 个内部正常控制），样本小，未计算置信区间，不宣称泛化。",
+    "本批案例已用于发现缺口，不能当作未见保留集复用；后续规则修改不得把同批案例当 benchmark 宣称。",
+    "静态分析：本报告只汇总存档的 acr scan 结果，没有运行 fixture，不能证明运行时行为；运行时故障判定依赖 issue 文本、评论与 expected.md。",
+    "相关性/误导/顺带判定是分析者判断，逐条写在 predictions.json 的 notes 中；没有第二标注者，无一致性统计。",
+    "版本敏感：lg-8608 需 langgraph>=1.2、lg-9084 需 >=1.2.3，pinned 1.0.3 下 fixture 不表现报告行为；静态扫描不受影响，但复跑 fixture 需要版本矩阵。",
+    "正常控制是内部 fixture，不是社区里的正常图；0/3 误报率是很弱的证据。",
+    "acr 0.1.0 的静态 AST 规则不等于 acr trace 能力；本报告的 GAP 结论只针对 scan 路径。",
+    "GAP 中多数是框架内部语义（framework 10/13），静态构图规则本来就不覆盖，不能算 ACR 的 false-negative 能力问题。"
+  ],
+  "material": {
+    "hard_insufficient": {
+      "cases": [
+        "lg-7580"
+      ],
+      "count": 1,
+      "reason": "盲标 graph_visible=false，材料不足以做构图分析。"
+    },
+    "soft_concerns": {
+      "lg-2644": "维护者未能复现；仓库 pinned langgraph 1.0.3 下 fixture 正常完成，报告错误未被确认（盲标 confidence=low）。",
+      "lg-8608": "fixture 只在 langgraph>=1.2 有意义；pinned 1.0.3 接受 error_handler 参数但不调用 handler。",
+      "lg-9084": "tags 重复自 1.2.3 起出现；pinned 1.0.3 不出现该行为。"
+    }
+  },
+  "metrics": {
+    "analyzability_rate": {
+      "denominator": 14,
+      "numerator": 13,
+      "rate": 0.9286
+    },
+    "control_false_positive_rate": {
+      "denominator": 3,
+      "numerator": 0,
+      "rate": 0.0
+    },
+    "hit_rate": {
+      "denominator": 1,
+      "numerator": 0,
+      "rate": 0.0
+    },
+    "misleading_finding_rate": {
+      "denominator": 3,
+      "numerator": 1,
+      "rate": 0.3333
+    },
+    "real_case_finding_relevance_rate": {
+      "denominator": 3,
+      "numerator": 0,
+      "rate": 0.0
+    },
+    "rule_expressibility_rate_all_cases": {
+      "denominator": 14,
+      "numerator": 1,
+      "rate": 0.0714
+    },
+    "rule_expressibility_rate_analyzable": {
+      "denominator": 13,
+      "numerator": 1,
+      "rate": 0.0769
+    }
+  },
+  "pilot": "pilot-2026-10-17",
+  "schema_version": 1,
+  "verdicts": {
+    "cases": {
+      "false_positive": [
+        "lg-9311"
+      ],
+      "gap": [
+        "lg-2644",
+        "lg-8320",
+        "lg-8608",
+        "lg-8753",
+        "lg-9005",
+        "lg-9019",
+        "lg-9086",
+        "lg-9106",
+        "lg-9253"
+      ],
+      "incidental": [
+        "lg-9084",
+        "lg-9276"
+      ],
+      "miss": [
+        "lg-6446"
+      ],
+      "not_applicable": [
+        "lg-7580"
+      ]
+    },
+    "counts": {
+      "false_positive": 1,
+      "gap": 9,
+      "incidental": 2,
+      "miss": 1,
+      "not_applicable": 1
+    }
+  },
+  "warnings": []
+}

@@ -1,0 +1,13 @@
+{
+  "case_id": "lg-8320",
+  "source_url": "https://github.com/langchain-ai/langgraph/issues/8320",
+  "source_number": 8320,
+  "title": "StateGraph silently drops node output keys not declared in TypedDict",
+  "version": "1.2.9",
+  "source_type": "framework",
+  "graph_visible": true,
+  "observed_behavior": "A node returns {'x': 1, 'undeclared_key': ...} against a State that declares only 'x'. The graph completes with {'x': 1}; the undeclared key is filtered out before the Pregel merge, with no warning or error.",
+  "structure_focus": "Node return patch vs declared state schema; silent boundary filtering of undeclared keys",
+  "material_level": "high",
+  "notes": "Open, labels bug/external. Minimal single-node graph; the reported problem is the silent filtering in the node-return-to-state boundary, not the graph topology. The issue asks for a warning or an opt-in strict mode, so the fix direction is a diagnostic feature; comments trace the drop to _get_updates and several PR attempts add a UserWarning. Classified as framework because the gap is in how the framework validates node output against the declared schema."
+}

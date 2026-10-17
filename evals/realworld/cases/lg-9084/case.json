@@ -1,0 +1,13 @@
+{
+  "case_id": "lg-9084",
+  "source_url": "https://github.com/langchain-ai/langgraph/issues/9084",
+  "source_number": 9084,
+  "title": "Tags are duplicated at every subgraph level since 1.2.3 (2^depth copies)",
+  "version": "1.2.12 (also 1.2.3, 1.2.4, main)",
+  "source_type": "framework",
+  "graph_visible": true,
+  "observed_behavior": "An invoke-time tag 'my-tag' reaches the leaf node once at depth 0 but 2, 4 and 8 times at nesting depths 1, 2 and 3. The duplication is visible in config['tags'] inside nodes (and in callbacks/astream_events); metadata is unaffected.",
+  "structure_focus": "Nested compiled subgraphs as nodes; config/tag propagation across graph boundaries (2^depth concatenation)",
+  "material_level": "high",
+  "notes": "Open, label external. The fixture mirrors build(depth) nesting and reads config['tags'] in the leaf; on pre-1.2.3 versions it prints 1x at every depth. Root cause per issue: ensure_config merges explicit tags onto ambient tags since #7926 changed overwrite to merge, and every subgraph level re-adds the same tags. Comments reference PR #9110 with a dedupe fix. Not a state-graph composition hazard in the ACR sense; tags/config propagation is outside the current rule set."
+}

@@ -250,6 +250,17 @@ acr --help
 
 > 一句话：我们保留负结果和未完成记录，不把“没有观察到提升”包装成提升。
 
+### 真实案例试点（2026-10-17）
+
+除了自建案例，我们还从 LangGraph GitHub issue 收集了 **14 个真实故障 + 3 个正常控制图**，按“盲标 → 扫描 → 逐例判定”的协议跑了一轮开发型试点。结论不漂亮，但有用：
+
+- 13/14 可以读出构图；现有 11 条规则只能表达其中 **1 个**（#6446）；
+- 这个唯一可表达的案例因为子图写在 helper 函数里返回 compiled graph，**扫描漏掉了**；
+- 真实案例上只发出 3 条 finding：**0 条与故障相关**，1 条误导（`ReadOnly` 里的 reducer 被误判为没有 reducer），2 条顺带；
+- 3 个正常控制图 0 误报。
+
+这不是 benchmark，样本也很小；它直接暴露了 v0.2 要补的两个 P0：**跨函数解析 helper 返回的 compiled subgraph** 和 **reducer 注解限定符解包**。完整报告（含逐例判定、GAP 分布、材料限制）在 [真实案例试点报告](evals/realworld/results/pilot-2026-10-17/REPORT.md)。
+
 ## 给 Agent 使用
 
 同一个仓库还提供运行时 Skill 入口：[skills/agent-composition-review/SKILL.md](skills/agent-composition-review/SKILL.md)。它把上面的流程写成 Agent 可执行的步骤：判断症状 → `acr scan` / `acr trace` → 读 finding 并验证 → 最小修复 → 加回归测试 → 输出一页报告，并明确要求“证据不足时说不知道”。规则速查与修复模式分别在 [references/rules.md](skills/agent-composition-review/references/rules.md) 和 [references/fix-patterns.md](skills/agent-composition-review/references/fix-patterns.md)。

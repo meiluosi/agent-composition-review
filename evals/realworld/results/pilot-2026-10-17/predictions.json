@@ -1,0 +1,678 @@
+{
+  "cases": [
+    {
+      "analyzable": true,
+      "case_id": "control-disjoint",
+      "confidence": null,
+      "control_pass": true,
+      "disagreements": [],
+      "expected_finding": null,
+      "expected_rule": "NONE",
+      "fixture_ast_parseable": true,
+      "graph_visible_blind": true,
+      "graph_visible_fixture": true,
+      "incidental": false,
+      "kind": "control",
+      "normal_control": true,
+      "notes": "正常控制图：并行分支写不相交的键，不需要 reducer；scan 0 findings，控制通过。",
+      "report_hint": "正常控制，0 findings（ACR002 误报控制）",
+      "scan": {
+        "declared_findings": 0,
+        "findings": [],
+        "severity_totals": {
+          "high": 0,
+          "low": 0,
+          "medium": 0
+        }
+      },
+      "scan_findings": [],
+      "source_type_blind": "control",
+      "source_type_fixture": "control",
+      "source_url": "internal control",
+      "title": "Healthy parallel branches with disjoint writes",
+      "verdict": "not_applicable"
+    },
+    {
+      "analyzable": true,
+      "case_id": "control-output-schema",
+      "confidence": null,
+      "control_pass": true,
+      "disagreements": [],
+      "expected_finding": null,
+      "expected_rule": "NONE",
+      "fixture_ast_parseable": true,
+      "graph_visible_blind": true,
+      "graph_visible_fixture": true,
+      "incidental": false,
+      "kind": "control",
+      "normal_control": true,
+      "notes": "正常控制图：子图声明了窄化 output_schema，只回传自己拥有的键；scan 0 findings，控制通过。",
+      "report_hint": "正常控制，0 findings（ACR001/ACR003 误报控制）",
+      "scan": {
+        "declared_findings": 0,
+        "findings": [],
+        "severity_totals": {
+          "high": 0,
+          "low": 0,
+          "medium": 0
+        }
+      },
+      "scan_findings": [],
+      "source_type_blind": "control",
+      "source_type_fixture": "control",
+      "source_url": "internal control",
+      "title": "Healthy subgraph with narrow output_schema",
+      "verdict": "not_applicable"
+    },
+    {
+      "analyzable": true,
+      "case_id": "control-reducer",
+      "confidence": null,
+      "control_pass": true,
+      "disagreements": [],
+      "expected_finding": null,
+      "expected_rule": "NONE",
+      "fixture_ast_parseable": true,
+      "graph_visible_blind": true,
+      "graph_visible_fixture": true,
+      "incidental": false,
+      "kind": "control",
+      "normal_control": true,
+      "notes": "正常控制图：并行分支写 Annotated 且带 operator.add reducer；scan 0 findings，控制通过。",
+      "report_hint": "正常控制，0 findings（ACR002 误报控制）",
+      "scan": {
+        "declared_findings": 0,
+        "findings": [],
+        "severity_totals": {
+          "high": 0,
+          "low": 0,
+          "medium": 0
+        }
+      },
+      "scan_findings": [],
+      "source_type_blind": "control",
+      "source_type_fixture": "control",
+      "source_url": "internal control",
+      "title": "Healthy parallel writes with an explicit reducer",
+      "verdict": "not_applicable"
+    },
+    {
+      "analyzable": true,
+      "case_id": "lg-2644",
+      "confidence": "low",
+      "control_pass": null,
+      "disagreements": [],
+      "expected_finding": "class node 返回图 state 未声明的 zoo 键，被过滤后没有任何合法写入，运行时报 \"Must write to at least one of ['foo']\"；应指出 declared-key 不匹配。",
+      "expected_rule": "GAP:declared-keys",
+      "fixture_ast_parseable": true,
+      "graph_visible_blind": true,
+      "graph_visible_fixture": true,
+      "incidental": false,
+      "kind": "issue",
+      "normal_control": false,
+      "notes": "盲标预期 GAP:declared-keys，scan 为 0 findings。class node 返回图 state 未声明的 zoo 键，被过滤后没有合法写入，报 'Must write to at least one of [\\'foo\\']'。与 lg-8320 同属 declared-keys 缺口。材料限制：维护者表示原样代码无法复现，仓库 pinned langgraph 1.0.3 下 fixture 正常完成，故盲标 confidence=low，记为软性材料限制。",
+      "report_hint": "节点返回未声明键；材料低置信度（维护者未复现）→ GAP",
+      "scan": {
+        "declared_findings": 0,
+        "findings": [],
+        "severity_totals": {
+          "high": 0,
+          "low": 0,
+          "medium": 0
+        }
+      },
+      "scan_findings": [],
+      "source_type_blind": "usage",
+      "source_type_fixture": "usage",
+      "source_url": "https://github.com/langchain-ai/langgraph/issues/2644",
+      "title": "langgraph.errors.InvalidUpdateError: Must write to at least one of ['foo']",
+      "verdict": "gap"
+    },
+    {
+      "analyzable": true,
+      "case_id": "lg-6446",
+      "confidence": "high",
+      "control_pass": null,
+      "disagreements": [],
+      "expected_finding": "子图未声明 output_schema，把整份父状态（含 b 的旧值）作为输出回传，与并行 nodeb 在同一 superstep 写 b 冲突；应指出子图输出边界泄漏导致的共享键竞争。",
+      "expected_rule": "ACR001",
+      "fixture_ast_parseable": true,
+      "graph_visible_blind": true,
+      "graph_visible_fixture": true,
+      "incidental": false,
+      "kind": "issue",
+      "normal_control": false,
+      "notes": "盲标预期 ACR001，scan 为 0 findings。fixture 在 build_child() 中构建子图并返回 compiled graph，再通过 add_node('child', build_child()) 注册；scanner 不跨函数解析 helper 的返回值，因此 helper function boundary -> miss。fixture 本身是 ACR001 的典型形态（子图无 output_schema、与父图共享 'b'），所以这是 ACR001 的分析深度/召回缺口，不是规则语义缺口，也不是框架内部 bug。",
+      "report_hint": "ACR001 形态，但子图由 helper 返回 compiled graph，跨函数解析缺口 → miss",
+      "scan": {
+        "declared_findings": 0,
+        "findings": [],
+        "severity_totals": {
+          "high": 0,
+          "low": 0,
+          "medium": 0
+        }
+      },
+      "scan_findings": [],
+      "source_type_blind": "user_graph",
+      "source_type_fixture": "user_graph",
+      "source_url": "https://github.com/langchain-ai/langgraph/issues/6446",
+      "title": "InvalidUpdateError when using parallel subgraphs with shared state keys in LangGraph",
+      "verdict": "miss"
+    },
+    {
+      "analyzable": false,
+      "case_id": "lg-7580",
+      "confidence": "medium",
+      "control_pass": null,
+      "disagreements": [
+        {
+          "blind": false,
+          "field": "graph_visible",
+          "fixture": true
+        }
+      ],
+      "expected_finding": "同一 superstep 中 Overwrite 之后的普通写入被 BinaryOperatorAggregate 静默丢弃（最终只剩 10）；应指出 Overwrite 与该步其他写入的语义，而现有规则不覆盖。",
+      "expected_rule": "GAP:reducer-semantics",
+      "fixture_ast_parseable": true,
+      "graph_visible_blind": false,
+      "graph_visible_fixture": true,
+      "incidental": false,
+      "kind": "issue",
+      "normal_control": false,
+      "notes": "盲标 graph_visible=false：issue 的复现直接调用 BinaryOperatorAggregate.update，没有 StateGraph 构图；fixture 虽重建了隐含拓扑，但盲标判为材料不足以做构图分析。故记为 not_applicable（材料不足），不算 miss、不算可分析案例；其预期缺口 GAP:reducer-semantics 仍计入缺口分布并标注 not_analyzable。维护者表示这是 expected behavior、只缺文档，后续方向是文档修正。",
+      "report_hint": "盲标 graph_visible=false，材料是 channel 级而非构图 → not_applicable（材料不足）",
+      "scan": {
+        "declared_findings": 0,
+        "findings": [],
+        "severity_totals": {
+          "high": 0,
+          "low": 0,
+          "medium": 0
+        }
+      },
+      "scan_findings": [],
+      "source_type_blind": "usage",
+      "source_type_fixture": "usage",
+      "source_url": "https://github.com/langchain-ai/langgraph/issues/7580",
+      "title": "BinaryOperatorAggregate silently drops regular values that appear after an Overwrite",
+      "verdict": "not_applicable"
+    },
+    {
+      "analyzable": true,
+      "case_id": "lg-8320",
+      "confidence": "medium",
+      "control_pass": null,
+      "disagreements": [
+        {
+          "blind": "feature",
+          "field": "source_type",
+          "fixture": "framework"
+        }
+      ],
+      "expected_finding": "节点返回未声明的 undeclared_key 被框架静默过滤；应指出 declared-key 不匹配会丢数据，而现有 11 条规则没有覆盖该结构。",
+      "expected_rule": "GAP:declared-keys",
+      "fixture_ast_parseable": true,
+      "graph_visible_blind": true,
+      "graph_visible_fixture": true,
+      "incidental": false,
+      "kind": "issue",
+      "normal_control": false,
+      "notes": "盲标预期 GAP:declared-keys，scan 为 0 findings。节点返回 {'x': 1, 'undeclared_key': ...}，框架在 node-return-to-state 边界静默过滤未声明键；现有规则不检查 declared-key 不匹配。fixture 元数据把 source_type 写成 framework，盲标写 feature（issue 实际请求 warning/strict，接近功能请求），分歧已记录但未修改任何一侧。",
+      "report_hint": "节点返回未声明键被静默过滤；现有 11 条规则无覆盖 → GAP",
+      "scan": {
+        "declared_findings": 0,
+        "findings": [],
+        "severity_totals": {
+          "high": 0,
+          "low": 0,
+          "medium": 0
+        }
+      },
+      "scan_findings": [],
+      "source_type_blind": "feature",
+      "source_type_fixture": "framework",
+      "source_url": "https://github.com/langchain-ai/langgraph/issues/8320",
+      "title": "StateGraph silently drops node output keys not declared in TypedDict",
+      "verdict": "gap"
+    },
+    {
+      "analyzable": true,
+      "case_id": "lg-8608",
+      "confidence": "high",
+      "control_pass": null,
+      "disagreements": [],
+      "expected_finding": "error_handler 已经运行并提交恢复更新，但在并行 sibling、stream_mode=custom/messages、subgraphs=True 等配置下原始异常仍被重抛；应指出 error_handler 终止语义不一致（executor 重抛已处理异常）。",
+      "expected_rule": "GAP:other",
+      "fixture_ast_parseable": true,
+      "graph_visible_blind": true,
+      "graph_visible_fixture": true,
+      "incidental": false,
+      "kind": "issue",
+      "normal_control": false,
+      "notes": "盲标预期 GAP:other，scan 为 0 findings。error_handler 已运行并提交恢复更新，但在并行 sibling、stream_mode=custom/messages、subgraphs=True 等配置下原异常仍被重抛。根因在 BackgroundExecutor/AsyncBackgroundExecutor 的终止语义，不在用户构图；静态规则不覆盖。材料限制：fixture 只在 langgraph>=1.2 有意义，pinned 1.0.3 不调用 handler。",
+      "report_hint": "error_handler 已处理仍重抛原异常 → 框架 executor 语义，GAP",
+      "scan": {
+        "declared_findings": 0,
+        "findings": [],
+        "severity_totals": {
+          "high": 0,
+          "low": 0,
+          "medium": 0
+        }
+      },
+      "scan_findings": [],
+      "source_type_blind": "framework",
+      "source_type_fixture": "framework",
+      "source_url": "https://github.com/langchain-ai/langgraph/issues/8608",
+      "title": "error_handler runs but the original exception is still raised (parallel nodes, custom/messages streaming, subgraphs=True)",
+      "verdict": "gap"
+    },
+    {
+      "analyzable": true,
+      "case_id": "lg-8753",
+      "confidence": "high",
+      "control_pass": null,
+      "disagreements": [],
+      "expected_finding": "共享 InMemoryCache 下，非函数 callable（callable object / lambda / partial / named async）的 cache namespace 退化为 \"__dynamic__\"，不同图的同名节点互相命中缓存；应指出 cache key 缺少调用者身份。",
+      "expected_rule": "GAP:retry-cache",
+      "fixture_ast_parseable": true,
+      "graph_visible_blind": true,
+      "graph_visible_fixture": true,
+      "incidental": false,
+      "kind": "issue",
+      "normal_control": false,
+      "notes": "盲标预期 GAP:retry-cache，scan 为 0 findings。共享 InMemoryCache 时，callable object / lambda / partial / named async 的 cache namespace 退化为 '__dynamic__'，不同图的同名节点互相命中缓存。根因是 cache key 缺少调用者身份；ACR004 只覆盖副作用被缓存，不覆盖键身份，这一项静态规则有部分可检测空间。",
+      "report_hint": "非函数 callable 的 cache namespace 退化为 __dynamic__ → 静态可部分检测，GAP",
+      "scan": {
+        "declared_findings": 0,
+        "findings": [],
+        "severity_totals": {
+          "high": 0,
+          "low": 0,
+          "medium": 0
+        }
+      },
+      "scan_findings": [],
+      "source_type_blind": "framework",
+      "source_type_fixture": "framework",
+      "source_url": "https://github.com/langchain-ai/langgraph/issues/8753",
+      "title": "Cache namespace collapses to \"__dynamic__\" for non-function callables, so different graphs sharing a cache return each other's results",
+      "verdict": "gap"
+    },
+    {
+      "analyzable": true,
+      "case_id": "lg-9005",
+      "confidence": "high",
+      "control_pass": null,
+      "disagreements": [],
+      "expected_finding": "Command(update=State(count=2)) 对子类覆盖的继承字段重复应用 reducer，返回 count=5 而非 3（无 reducer 时抛 InvalidUpdateError）；应指出 Command 更新路径按 MRO 去重的缺陷。",
+      "expected_rule": "GAP:command-send",
+      "fixture_ast_parseable": true,
+      "graph_visible_blind": true,
+      "graph_visible_fixture": true,
+      "incidental": false,
+      "kind": "issue",
+      "normal_control": false,
+      "notes": "盲标预期 GAP:command-send，scan 为 0 findings。图结构只是单节点，故障在 Command(update=...) 的字段收集路径（get_cached_annotated_keys 沿 MRO 重复追加继承注解，使 reducer 应用两次，count=5 而非 3）。属于 Command.update 通道的运行时语义，静态构图规则不覆盖。",
+      "report_hint": "Command.update 按 MRO 重复应用继承字段 → 运行时语义，GAP",
+      "scan": {
+        "declared_findings": 0,
+        "findings": [],
+        "severity_totals": {
+          "high": 0,
+          "low": 0,
+          "medium": 0
+        }
+      },
+      "scan_findings": [],
+      "source_type_blind": "framework",
+      "source_type_fixture": "framework",
+      "source_url": "https://github.com/langchain-ai/langgraph/issues/9005",
+      "title": "`Command(update=...)` applies an overridden inherited state field twice",
+      "verdict": "gap"
+    },
+    {
+      "analyzable": true,
+      "case_id": "lg-9019",
+      "confidence": "high",
+      "control_pass": null,
+      "disagreements": [],
+      "expected_finding": "update_state 对普通 key 写 Overwrite 时，LastValue / LastValueAfterFinish / UntrackedValue 把 Overwrite wrapper 本身存进状态而不是 payload；应指出单值通道未解包 Overwrite 的语义缺陷。",
+      "expected_rule": "GAP:reducer-semantics",
+      "fixture_ast_parseable": true,
+      "graph_visible_blind": true,
+      "graph_visible_fixture": true,
+      "incidental": false,
+      "kind": "issue",
+      "normal_control": false,
+      "notes": "盲标预期 GAP:reducer-semantics，scan 为 0 findings。update_state 对普通 key 写 Overwrite 时，LastValue / LastValueAfterFinish / UntrackedValue 把 Overwrite wrapper 本身存进状态而不是 payload；属于单值通道的运行时语义缺陷，静态规则不覆盖。",
+      "report_hint": "LastValue 未解包 Overwrite，把 wrapper 存进状态 → 运行时，GAP",
+      "scan": {
+        "declared_findings": 0,
+        "findings": [],
+        "severity_totals": {
+          "high": 0,
+          "low": 0,
+          "medium": 0
+        }
+      },
+      "scan_findings": [],
+      "source_type_blind": "framework",
+      "source_type_fixture": "framework",
+      "source_url": "https://github.com/langchain-ai/langgraph/issues/9019",
+      "title": "update_state with Overwrite on a plain key persists the Overwrite wrapper instead of its payload (LastValue / LastValueAfterFinish / UntrackedValue)",
+      "verdict": "gap"
+    },
+    {
+      "analyzable": true,
+      "case_id": "lg-9084",
+      "confidence": "high",
+      "control_pass": null,
+      "disagreements": [],
+      "expected_finding": "invoke 时传入的 tags 在每层子图被重复拼接，深度 d 的 leaf 看到 2^d 份；应指出 ensure_config 对 ambient tags 的合并导致 config 传播重复。",
+      "expected_rule": "GAP:other",
+      "fixture_ast_parseable": true,
+      "graph_visible_blind": true,
+      "graph_visible_fixture": true,
+      "incidental": true,
+      "kind": "issue",
+      "normal_control": false,
+      "notes": "盲标预期 GAP:other，scan 报 1 条 ACR001（父子图共享键 copies、子图无 output_schema）。issue 的故障是 tags 在每层子图被重复拼接（深度 d 看到 2^d 份），与共享键/并行写无关；fixture 用同一个 State 类逐层包裹，才让 ACR001 顺带触发。记为 incidental/unrelated，不算 hit。",
+      "report_hint": "scan 的 ACR001 来自共享 State/嵌套链条的副作用，与 tags 重复无关 → 顺带",
+      "scan": {
+        "declared_findings": 1,
+        "findings": [
+          {
+            "file": "evals/realworld/cases/lg-9084/graph.py",
+            "kind": "unrelated",
+            "line": 32,
+            "message": "Compiled subgraph registered as node 'sub' has no output_schema, and child state 'State' shares 'copies' with parent state 'State'. The child's full state is merged back into the parent, so writes from this node can collide with sibling branches.",
+            "message_keywords": [
+              "compiled subgraph",
+              "output_schema",
+              "state key",
+              "subgraph"
+            ],
+            "relevant": false,
+            "rule": "ACR001",
+            "severity": "high",
+            "title": "Compiled subgraph shares state keys with the parent graph"
+          }
+        ],
+        "severity_totals": {
+          "high": 1,
+          "low": 0,
+          "medium": 0
+        }
+      },
+      "scan_findings": [
+        {
+          "file": "evals/realworld/cases/lg-9084/graph.py",
+          "kind": "unrelated",
+          "line": 32,
+          "message": "Compiled subgraph registered as node 'sub' has no output_schema, and child state 'State' shares 'copies' with parent state 'State'. The child's full state is merged back into the parent, so writes from this node can collide with sibling branches.",
+          "message_keywords": [
+            "compiled subgraph",
+            "output_schema",
+            "state key",
+            "subgraph"
+          ],
+          "relevant": false,
+          "rule": "ACR001",
+          "severity": "high",
+          "title": "Compiled subgraph shares state keys with the parent graph"
+        }
+      ],
+      "source_type_blind": "framework",
+      "source_type_fixture": "framework",
+      "source_url": "https://github.com/langchain-ai/langgraph/issues/9084",
+      "title": "Tags are duplicated at every subgraph level since 1.2.3 (2^depth copies)",
+      "verdict": "incidental"
+    },
+    {
+      "analyzable": true,
+      "case_id": "lg-9086",
+      "confidence": "high",
+      "control_pass": null,
+      "disagreements": [],
+      "expected_finding": "Annotated[tuple, operator.add] 的 checkpoint 恢复时 BinaryOperatorAggregate.from_checkpoint 把 tuple 还原成 list，下一次 invoke 永久抛 TypeError；应指出 reducer 通道的 checkpoint 类型往返问题。",
+      "expected_rule": "GAP:reducer-semantics",
+      "fixture_ast_parseable": true,
+      "graph_visible_blind": true,
+      "graph_visible_fixture": true,
+      "incidental": false,
+      "kind": "issue",
+      "normal_control": false,
+      "notes": "盲标预期 GAP:reducer-semantics，scan 为 0 findings。Annotated[tuple, operator.add] 在 checkpoint 恢复时被 BinaryOperatorAggregate.from_checkpoint 还原成 list，下一次 invoke 永久抛 TypeError。属于 checkpoint 序列化/类型往返的框架内部行为，静态构图不可见。",
+      "report_hint": "tuple reducer 经 checkpoint 往返退化成 list → 运行时，GAP",
+      "scan": {
+        "declared_findings": 0,
+        "findings": [],
+        "severity_totals": {
+          "high": 0,
+          "low": 0,
+          "medium": 0
+        }
+      },
+      "scan_findings": [],
+      "source_type_blind": "framework",
+      "source_type_fixture": "framework",
+      "source_url": "https://github.com/langchain-ai/langgraph/issues/9086",
+      "title": "A tuple reducer permanently breaks a thread on resume: BinaryOperatorAggregate.from_checkpoint restores the value as a list",
+      "verdict": "gap"
+    },
+    {
+      "analyzable": true,
+      "case_id": "lg-9106",
+      "confidence": "high",
+      "control_pass": null,
+      "disagreements": [],
+      "expected_finding": "子图内两个并行节点各自 interrupt，逐个按 id 恢复时已完成的 sibling 会再次执行 interrupt 之后的副作用；应指出嵌套图 is_replaying 误判导致的并行 interrupt 恢复重放。",
+      "expected_rule": "GAP:parallel-interrupt",
+      "fixture_ast_parseable": true,
+      "graph_visible_blind": true,
+      "graph_visible_fixture": true,
+      "incidental": false,
+      "kind": "issue",
+      "normal_control": false,
+      "notes": "盲标预期 GAP:parallel-interrupt，scan 为 0 findings。子图内两个并行节点各自 interrupt，逐个按 id 恢复时已完成 sibling 会再次执行 interrupt 之后的副作用；维护者已确认并在 #9315 修复。根因是嵌套图 is_replaying 误判，属于运行时恢复语义，静态构图规则不覆盖。",
+      "report_hint": "嵌套并行 interrupt 已完成 sibling 被重放 → 运行时，GAP",
+      "scan": {
+        "declared_findings": 0,
+        "findings": [],
+        "severity_totals": {
+          "high": 0,
+          "low": 0,
+          "medium": 0
+        }
+      },
+      "scan_findings": [],
+      "source_type_blind": "framework",
+      "source_type_fixture": "framework",
+      "source_url": "https://github.com/langchain-ai/langgraph/issues/9106",
+      "title": "Resuming one of two parallel interrupts inside a subgraph re-runs a sibling node that already completed",
+      "verdict": "gap"
+    },
+    {
+      "analyzable": true,
+      "case_id": "lg-9253",
+      "confidence": "medium",
+      "control_pass": null,
+      "disagreements": [],
+      "expected_finding": "retry_policy 重试时未重置 task scratchpad 的 subgraph_counter，导致 review 子图按位置命中了 research 的 checkpoint（返回 RESEARCH 而非 REVIEW）；应指出 retry 与子图 checkpoint 命名空间绑定问题。",
+      "expected_rule": "GAP:retry-cache",
+      "fixture_ast_parseable": true,
+      "graph_visible_blind": true,
+      "graph_visible_fixture": true,
+      "incidental": false,
+      "kind": "issue",
+      "normal_control": false,
+      "notes": "盲标预期 GAP:retry-cache，scan 为 0 findings。节点上的 RetryPolicy 重试时 task scratchpad 的 subgraph_counter 未重置，review 子图按位置命中 research 的 checkpoint（返回 RESEARCH）。根因是 retry 与子图 checkpoint 命名空间/身份的绑定，需要运行时 trace 或版本感知，静态规则只能给出可疑提示，不能断言。",
+      "report_hint": "retry 未重置 subgraph 计数，第二个子图续用第一个的 checkpoint → 运行时，GAP",
+      "scan": {
+        "declared_findings": 0,
+        "findings": [],
+        "severity_totals": {
+          "high": 0,
+          "low": 0,
+          "medium": 0
+        }
+      },
+      "scan_findings": [],
+      "source_type_blind": "framework",
+      "source_type_fixture": "framework",
+      "source_url": "https://github.com/langchain-ai/langgraph/issues/9253",
+      "title": "`retry_policy` on a node that calls two subgraphs makes the second one resume into the first one's checkpoint",
+      "verdict": "gap"
+    },
+    {
+      "analyzable": true,
+      "case_id": "lg-9276",
+      "confidence": "high",
+      "control_pass": null,
+      "disagreements": [],
+      "expected_finding": "编译子图在 interrupt 或失败 superstep 后恢复时，会把同一步已完成的 sibling 节点再跑一遍（model 被调用两次）；应指出嵌套图恢复时未复用已成功任务的 pending writes。",
+      "expected_rule": "GAP:resume-replay",
+      "fixture_ast_parseable": true,
+      "graph_visible_blind": true,
+      "graph_visible_fixture": true,
+      "incidental": true,
+      "kind": "issue",
+      "normal_control": false,
+      "notes": "盲标预期 GAP:resume-replay，scan 报 1 条 ACR001（父子图共享 answer/approved/text、子图无 output_schema）。issue 的故障是 resume 后已完成的 sibling 节点被重跑（model 被调用两次），fixture 复用同一个 State 类只是让 ACR001 顺带触发；该 finding 与故障无关，记为 incidental/unrelated，不算 hit。",
+      "report_hint": "scan 的 ACR001 来自共享 State 的副作用，与 resume 重放故障无关 → 顺带",
+      "scan": {
+        "declared_findings": 1,
+        "findings": [
+          {
+            "file": "evals/realworld/cases/lg-9276/graph.py",
+            "kind": "unrelated",
+            "line": 52,
+            "message": "Compiled subgraph registered as node 'block' has no output_schema, and child state 'State' shares 'answer', 'approved', 'text' with parent state 'State'. The child's full state is merged back into the parent, so writes from this node can collide with sibling branches.",
+            "message_keywords": [
+              "compiled subgraph",
+              "output_schema",
+              "state key",
+              "subgraph"
+            ],
+            "relevant": false,
+            "rule": "ACR001",
+            "severity": "high",
+            "title": "Compiled subgraph shares state keys with the parent graph"
+          }
+        ],
+        "severity_totals": {
+          "high": 1,
+          "low": 0,
+          "medium": 0
+        }
+      },
+      "scan_findings": [
+        {
+          "file": "evals/realworld/cases/lg-9276/graph.py",
+          "kind": "unrelated",
+          "line": 52,
+          "message": "Compiled subgraph registered as node 'block' has no output_schema, and child state 'State' shares 'answer', 'approved', 'text' with parent state 'State'. The child's full state is merged back into the parent, so writes from this node can collide with sibling branches.",
+          "message_keywords": [
+            "compiled subgraph",
+            "output_schema",
+            "state key",
+            "subgraph"
+          ],
+          "relevant": false,
+          "rule": "ACR001",
+          "severity": "high",
+          "title": "Compiled subgraph shares state keys with the parent graph"
+        }
+      ],
+      "source_type_blind": "framework",
+      "source_type_fixture": "framework",
+      "source_url": "https://github.com/langchain-ai/langgraph/issues/9276",
+      "title": "Resuming a compiled subgraph re-runs a node that already completed in the interrupted or failed super-step",
+      "verdict": "incidental"
+    },
+    {
+      "analyzable": true,
+      "case_id": "lg-9311",
+      "confidence": "high",
+      "control_pass": null,
+      "disagreements": [],
+      "expected_finding": "ReadOnly[Annotated[list, operator.add]] 包裹的 reducer 未被识别：顺序图静默覆盖累积值，并行图报 InvalidUpdateError；应指出 reducer 发现逻辑不识别 ReadOnly 限定符。",
+      "expected_rule": "GAP:reducer-semantics",
+      "fixture_ast_parseable": true,
+      "graph_visible_blind": true,
+      "graph_visible_fixture": true,
+      "incidental": false,
+      "kind": "issue",
+      "normal_control": false,
+      "notes": "盲标预期 GAP:reducer-semantics，但 scan 报 ACR002，message 断言键 'findings' 'has no reducer'。源码是 findings: ReadOnly[Annotated[list[str], operator.add]]，reducer 存在、只是被 ReadOnly 限定符包住；scan.py 的 _annotated_parts 只解包 Required/NotRequired，不识别 ReadOnly，因此 reducer 未被发现。该 finding 对故障给出了错误解释（issue 的真实问题是框架忽略被限定符包的 reducer），应记为 false_positive/misleading，不能算 gap hit。",
+      "report_hint": "ReadOnly 包住 reducer，ACR002 误判为 no reducer → 误导性 finding",
+      "scan": {
+        "declared_findings": 1,
+        "findings": [
+          {
+            "file": "evals/realworld/cases/lg-9311/graph.py",
+            "kind": "misleading",
+            "line": 37,
+            "message": "After START, branches 'a', 'b' can run in the same superstep and all write state key 'findings', which has no reducer. LangGraph raises InvalidUpdateError for concurrent writes to a non-reduced key.",
+            "message_keywords": [
+              "invalidupdate",
+              "no reducer",
+              "parallel",
+              "reducer",
+              "state key",
+              "superstep"
+            ],
+            "relevant": false,
+            "rule": "ACR002",
+            "severity": "high",
+            "title": "Parallel branches write the same state key without a reducer"
+          }
+        ],
+        "severity_totals": {
+          "high": 1,
+          "low": 0,
+          "medium": 0
+        }
+      },
+      "scan_findings": [
+        {
+          "file": "evals/realworld/cases/lg-9311/graph.py",
+          "kind": "misleading",
+          "line": 37,
+          "message": "After START, branches 'a', 'b' can run in the same superstep and all write state key 'findings', which has no reducer. LangGraph raises InvalidUpdateError for concurrent writes to a non-reduced key.",
+          "message_keywords": [
+            "invalidupdate",
+            "no reducer",
+            "parallel",
+            "reducer",
+            "state key",
+            "superstep"
+          ],
+          "relevant": false,
+          "rule": "ACR002",
+          "severity": "high",
+          "title": "Parallel branches write the same state key without a reducer"
+        }
+      ],
+      "source_type_blind": "framework",
+      "source_type_fixture": "framework",
+      "source_url": "https://github.com/langchain-ai/langgraph/issues/9311",
+      "title": "StateGraph ignores reducers wrapped in ReadOnly TypedDict qualifiers",
+      "verdict": "false_positive"
+    }
+  ],
+  "frozen_inputs": {
+    "labels_blind": true,
+    "labels_case_count": 14,
+    "labels_path": "evals/realworld/labels.json",
+    "labels_sha256_actual": "d5c48148b6b4c27df7a37ae90fc75e818fb5ecbffb0d463cc5dcaea541576ab9",
+    "labels_sha256_expected": "d5c48148b6b4c27df7a37ae90fc75e818fb5ecbffb0d463cc5dcaea541576ab9",
+    "labels_sha256_verified": true,
+    "protocol_frozen_at": "2026-10-17"
+  },
+  "generated_by": "scripts/summarize_realworld_eval.py",
+  "pilot": "pilot-2026-10-17",
+  "schema_version": 1
+}

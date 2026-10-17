@@ -1,0 +1,147 @@
+{
+  "schema_version": 1,
+  "labeled_at": "2026-10-17",
+  "blind": true,
+  "cases": [
+    {
+      "case_id": "lg-6446",
+      "source_type": "user_graph",
+      "graph_visible": true,
+      "expected_rule": "ACR001",
+      "expected_finding": "子图未声明 output_schema，把整份父状态（含 b 的旧值）作为输出回传，与并行 nodeb 在同一 superstep 写 b 冲突；应指出子图输出边界泄漏导致的共享键竞争。",
+      "normal_control": false,
+      "material_notes": "主体复现就是 ACR001 场景；评论补充 output_schema 在 astream_events 下被忽略（1.1.6，属于另一条 framework 子问题），不影响主判定。",
+      "confidence": "high"
+    },
+    {
+      "case_id": "lg-8320",
+      "source_type": "feature",
+      "graph_visible": true,
+      "expected_rule": "GAP:declared-keys",
+      "expected_finding": "节点返回未声明的 undeclared_key 被框架静默过滤；应指出 declared-key 不匹配会丢数据，而现有 11 条规则没有覆盖该结构。",
+      "normal_control": false,
+      "material_notes": "按 schema 过滤是现有设计行为，issue 实际请求 warning / strict 选项（准功能请求）；无维护者表态。source_type 在 feature 与 framework 间可争议。",
+      "confidence": "medium"
+    },
+    {
+      "case_id": "lg-9311",
+      "source_type": "framework",
+      "graph_visible": true,
+      "expected_rule": "GAP:reducer-semantics",
+      "expected_finding": "ReadOnly[Annotated[list, operator.add]] 包裹的 reducer 未被识别：顺序图静默覆盖累积值，并行图报 InvalidUpdateError；应指出 reducer 发现逻辑不识别 ReadOnly 限定符。",
+      "normal_control": false,
+      "material_notes": "issue 较新、无评论；作者附 PR 补丁但未合并。ACR002 可能把该键当无 reducer 而误报，属于 reducer 语义缺口而非普通并行写。",
+      "confidence": "high"
+    },
+    {
+      "case_id": "lg-9005",
+      "source_type": "framework",
+      "graph_visible": true,
+      "expected_rule": "GAP:command-send",
+      "expected_finding": "Command(update=State(count=2)) 对子类覆盖的继承字段重复应用 reducer，返回 count=5 而非 3（无 reducer 时抛 InvalidUpdateError）；应指出 Command 更新路径按 MRO 去重的缺陷。",
+      "normal_control": false,
+      "material_notes": "评论给出根因（get_cached_annotated_keys MRO 重复字段）与外部 PR #9012；维护者未确认。图结构简单可见，但问题在 Command.update 通道语义。",
+      "confidence": "high"
+    },
+    {
+      "case_id": "lg-9086",
+      "source_type": "framework",
+      "graph_visible": true,
+      "expected_rule": "GAP:reducer-semantics",
+      "expected_finding": "Annotated[tuple, operator.add] 的 checkpoint 恢复时 BinaryOperatorAggregate.from_checkpoint 把 tuple 还原成 list，下一次 invoke 永久抛 TypeError；应指出 reducer 通道的 checkpoint 类型往返问题。",
+      "normal_control": false,
+      "material_notes": "评论独立复现并验证 scoped 补丁；无维护者裁决。属于 tuple reducer 语义，不是构图问题。",
+      "confidence": "high"
+    },
+    {
+      "case_id": "lg-9253",
+      "source_type": "framework",
+      "graph_visible": true,
+      "expected_rule": "GAP:retry-cache",
+      "expected_finding": "retry_policy 重试时未重置 task scratchpad 的 subgraph_counter，导致 review 子图按位置命中了 research 的 checkpoint（返回 RESEARCH 而非 REVIEW）；应指出 retry 与子图 checkpoint 命名空间绑定问题。",
+      "normal_control": false,
+      "material_notes": "评论证伪了单纯 reset counter 在调用顺序变化时仍不安全；无维护者定性。缺口类别在 retry-cache 与 resume-replay 间有歧义，取 retry 触发这一面。",
+      "confidence": "medium"
+    },
+    {
+      "case_id": "lg-9106",
+      "source_type": "framework",
+      "graph_visible": true,
+      "expected_rule": "GAP:parallel-interrupt",
+      "expected_finding": "子图内两个并行节点各自 interrupt，逐个按 id 恢复时已完成的 sibling 会再次执行 interrupt 之后的副作用；应指出嵌套图 is_replaying 误判导致的并行 interrupt 恢复重放。",
+      "normal_control": false,
+      "material_notes": "维护者 eliornl 回复已在 #9315 修复，issue 已关闭，framework 定性明确；根因与重放守卫有关。",
+      "confidence": "high"
+    },
+    {
+      "case_id": "lg-9276",
+      "source_type": "framework",
+      "graph_visible": true,
+      "expected_rule": "GAP:resume-replay",
+      "expected_finding": "编译子图在 interrupt 或失败 superstep 后恢复时，会把同一步已完成的 sibling 节点再跑一遍（model 被调用两次）；应指出嵌套图恢复时未复用已成功任务的 pending writes。",
+      "normal_control": false,
+      "material_notes": "无维护者回复，只有外部 PR #9306 与独立复现（SqliteSaver、新进程）；flat graph 对照正常，指向子图恢复路径。",
+      "confidence": "high"
+    },
+    {
+      "case_id": "lg-8753",
+      "source_type": "framework",
+      "graph_visible": true,
+      "expected_rule": "GAP:retry-cache",
+      "expected_finding": "共享 InMemoryCache 下，非函数 callable（callable object / lambda / partial / named async）的 cache namespace 退化为 \"__dynamic__\"，不同图的同名节点互相命中缓存；应指出 cache key 缺少调用者身份。",
+      "normal_control": false,
+      "material_notes": "评论文档扩展了碰撞矩阵与 named-function 对照；无维护者定性。属于 cache 命名空间缺口，ACR004 只覆盖副作用被缓存，不覆盖键身份。",
+      "confidence": "high"
+    },
+    {
+      "case_id": "lg-2644",
+      "source_type": "usage",
+      "graph_visible": true,
+      "expected_rule": "GAP:declared-keys",
+      "expected_finding": "class node 返回图 state 未声明的 zoo 键，被过滤后没有任何合法写入，运行时报 \"Must write to at least one of ['foo']\"；应指出 declared-key 不匹配。",
+      "normal_control": false,
+      "material_notes": "维护者 hinthornw 表示原样代码可复现失败（无法复现），issue 已关闭；用户环境 langgraph 0.2.27 且多 schema class node 用法不清，材料不能完全定论。",
+      "confidence": "low"
+    },
+    {
+      "case_id": "lg-7580",
+      "source_type": "usage",
+      "graph_visible": false,
+      "expected_rule": "GAP:reducer-semantics",
+      "expected_finding": "同一 superstep 中 Overwrite 之后的普通写入被 BinaryOperatorAggregate 静默丢弃（最终只剩 10）；应指出 Overwrite 与该步其他写入的语义，而现有规则不覆盖。",
+      "normal_control": false,
+      "material_notes": "维护者 sydney-runkle 明确说这是 expected behavior、只是文档没写清，后续方向是文档修正；复现是 channel 级、没有 StateGraph 构图，故 graph_visible=false。",
+      "confidence": "medium"
+    },
+    {
+      "case_id": "lg-9084",
+      "source_type": "framework",
+      "graph_visible": true,
+      "expected_rule": "GAP:other",
+      "expected_finding": "invoke 时传入的 tags 在每层子图被重复拼接，深度 d 的 leaf 看到 2^d 份；应指出 ensure_config 对 ambient tags 的合并导致 config 传播重复。",
+      "normal_control": false,
+      "material_notes": "自 1.2.3 的回归，评论指 PR #9110（未分配被自动关闭）；无维护者裁决。tags/config 传播不在 11 条规则内。",
+      "confidence": "high"
+    },
+    {
+      "case_id": "lg-9019",
+      "source_type": "framework",
+      "graph_visible": true,
+      "expected_rule": "GAP:reducer-semantics",
+      "expected_finding": "update_state 对普通 key 写 Overwrite 时，LastValue / LastValueAfterFinish / UntrackedValue 把 Overwrite wrapper 本身存进状态而不是 payload；应指出单值通道未解包 Overwrite 的语义缺陷。",
+      "normal_control": false,
+      "material_notes": "评论给出根因与 PR #9032（因未分配被自动关闭）；无维护者裁决。属于 Overwrite/reducer 语义缺口。",
+      "confidence": "high"
+    },
+    {
+      "case_id": "lg-8608",
+      "source_type": "framework",
+      "graph_visible": true,
+      "expected_rule": "GAP:other",
+      "expected_finding": "error_handler 已经运行并提交恢复更新，但在并行 sibling、stream_mode=custom/messages、subgraphs=True 等配置下原始异常仍被重抛；应指出 error_handler 终止语义不一致（executor 重抛已处理异常）。",
+      "normal_control": false,
+      "material_notes": "多路独立复现（sibling、stream 模式、stream_eager/step_timeout、异步）；维护者尚未裁决。error_handler 语义不在 11 条规则内。",
+      "confidence": "high"
+    }
+  ]
+}

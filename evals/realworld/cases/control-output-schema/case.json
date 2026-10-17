@@ -1,0 +1,13 @@
+{
+  "case_id": "control-output-schema",
+  "source_url": "internal control",
+  "title": "Healthy subgraph with narrow output_schema",
+  "version": "langgraph 1.0.3",
+  "source_type": "control",
+  "graph_visible": true,
+  "normal_control": true,
+  "observed_behavior": "No composition failure; child reads full parent state but commits only s1/s2.",
+  "structure_focus": "Correct output boundary: output_schema narrows the child update to the keys it owns.",
+  "material_level": "control",
+  "notes": "False-positive control for ACR001/ACR003."
+}

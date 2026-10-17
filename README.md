@@ -32,18 +32,18 @@ v0.1 是早期版本：MIT 许可、本地运行、不需要 API key。**它不�
 ## 60 秒 demo
 
 ```sh
-pipx install "git+https://github.com/meiluosi/agent-composition-review.git@v0.5.0"
+pipx install "git+https://github.com/meiluosi/agent-composition-review.git@v0.5.1"
 pipx inject agent-composition-review "langgraph>=1.0,<2"   # acr demo 需要；scan/trace 可跳过
 acr demo
 ```
 
 `acr demo` 会在本地运行一个 LangGraph #6446 风格的 broken 示例，捕获 `InvalidUpdateError`，用 `acr scan` 找到 ACR001，演示一行 `output_schema` 修复，再跑回归确认通过。它需要可选依赖 `[langgraph]`；只跑 `scan` / `trace` / `report` 不需要安装 LangGraph。
 
-真实运行输出（`acr` 0.5.0，本地环境）：
+真实运行输出（`acr` 0.5.1，本地环境）：
 
 ```text
 $ acr demo
-acr demo - LangGraph subgraph state leak walkthrough (acr 0.5.0)
+acr demo - LangGraph subgraph state leak walkthrough (acr 0.5.1)
 
 1) run the broken graph from examples/langgraph-subgraph-leak/broken.py
    x InvalidUpdateError: At key 'b': Can receive only one value per step. Use an Annotated key to handle multiple values.
@@ -162,14 +162,14 @@ class ChildOutput(TypedDict):
 
 ```sh
 # 1) pipx（推荐，隔离环境）
-pipx install "git+https://github.com/meiluosi/agent-composition-review.git@v0.5.0"
+pipx install "git+https://github.com/meiluosi/agent-composition-review.git@v0.5.1"
 pipx inject agent-composition-review "langgraph>=1.0,<2"    # 可选，仅 acr demo 需要
 
 # 2) uv tool
-uv tool install "agent-composition-review[langgraph] @ git+https://github.com/meiluosi/agent-composition-review.git@v0.5.0"
+uv tool install "agent-composition-review[langgraph] @ git+https://github.com/meiluosi/agent-composition-review.git@v0.5.1"
 
 # 3) pip
-python3 -m pip install "agent-composition-review[langgraph] @ git+https://github.com/meiluosi/agent-composition-review.git@v0.5.0"
+python3 -m pip install "agent-composition-review[langgraph] @ git+https://github.com/meiluosi/agent-composition-review.git@v0.5.1"
 
 # 4) 源码
 git clone https://github.com/meiluosi/agent-composition-review.git
@@ -193,7 +193,7 @@ acr --help
 
 ```yaml
 - uses: actions/checkout@v4
-- uses: meiluosi/agent-composition-review@v0.5.0
+- uses: meiluosi/agent-composition-review@v0.5.1
   with:
     path: .
     fail-on: high
@@ -208,7 +208,7 @@ permissions:
 steps:
   - uses: actions/checkout@v4
   - id: acr
-    uses: meiluosi/agent-composition-review@v0.5.0
+    uses: meiluosi/agent-composition-review@v0.5.1
     with:
       path: .
       fail-on: high
@@ -279,7 +279,7 @@ GitHub Action 可选 `upload-sarif: true` 把结果送进 code scanning（需要
 
 ## 案例图谱
 
-按症状查真实案例：[docs/atlas/](docs/atlas/README.md)。收录 10 个公开 issue（#6446/#1964/#8320/#2644/#2581/#3875/#9276/#8753/#9253/#2336），每个都写清“症状 → 规则 → 证据 → 最小修复 → 验证边界”，并区分 grounded / experimental。
+按症状查真实案例：[docs/atlas/](docs/atlas/README.md)。收录 11 个真实案例（#6446/#1964/#8320/#2644/#2581/#3875/#9276/#8753/#9253/#2336 + vanara bound-method 负向控制），每个都写清“症状 → 规则 → 证据 → 最小修复 → 验证边界”，并区分 grounded / experimental。
 
 在线搜索页：<https://meiluosi.github.io/agent-composition-review/atlas/>。
 
@@ -351,7 +351,7 @@ GitHub Action 可选 `upload-sarif: true` 把结果送进 code scanning（需要
 
 报告：[第三轮定向验证报告](evals/realworld3/results/pilot3-2026-10-18/REPORT.md)。ACR106 的正向 trace 是本地复现，不是社区附件；且需要显式 resume/replay 标记，LangGraph 默认 debug 流不产生。
 
-补充搜索（`evals/realworld4/`）：ACR008/009/010 仍 **0 条新 exact 样本**，保持 experimental；本轮社区源因中断未抓取，空结果不代表社区没有样本。
+补充搜索（`evals/realworld4/`）：ACR008/009/010 仍 **0 条新 exact 样本**，保持 experimental；本轮社区源因中断未抓取，空结果不代表社区没有样本。不过 lead 追踪在真实公开代码上发现并修复了 ACR008 的一个 **bound method 误报**，见 [LEADS_VERIFIED.md](evals/realworld4/LEADS_VERIFIED.md) / [vanara 案例](docs/atlas/lg-vanara-bound-method.md)；这是“少一个误报”，不是“抓到真实 cache 故障”。
 
 ## 给 Agent 使用
 

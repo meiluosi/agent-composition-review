@@ -20,7 +20,7 @@ jobs:
 
       - name: Run the published ACR action
         id: acr
-        uses: meiluosi/agent-composition-review@v0.5.0
+        uses: meiluosi/agent-composition-review@v0.5.1
         with:
           path: examples/langgraph-subgraph-leak/broken.py
           fail-on: never

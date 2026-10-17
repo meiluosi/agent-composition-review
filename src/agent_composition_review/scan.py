@@ -347,6 +347,7 @@ class FileScanner:
         self.typed_dicts: dict[str, TypedDictInfo] = {}
         self.functions: dict[str, FunctionInfo] = {}
         self.class_names: set[str] = set()
+        self.method_names: set[str] = set()
         self.graphs: dict[str, GraphSpec] = {}
         self.compiled: dict[str, CompiledInfo] = {}
         self.stategraph_names: set[str] = set()
@@ -437,10 +438,10 @@ class FileScanner:
             if not isinstance(node, ast.ClassDef):
                 continue
             for item in node.body:
-                if (
-                    isinstance(item, (ast.FunctionDef, ast.AsyncFunctionDef))
-                    and item.name == "__call__"
-                ):
+                if not isinstance(item, (ast.FunctionDef, ast.AsyncFunctionDef)):
+                    continue
+                self.method_names.add(item.name)
+                if item.name == "__call__":
                     qualified = f"{node.name}.__call__"
                     self.class_names.add(node.name)
                     self.functions[qualified] = self._analyze_function(item)
@@ -672,6 +673,14 @@ class FileScanner:
                 elif action.id in self.compiled:
                     node.action_kind = "subgraph"
                     node.graph_var = self.compiled[action.id].graph_var
+            elif isinstance(action, ast.Attribute):
+                # Bound methods (self.node_fn / instance.node_fn) have a stable
+                # module + qualname identity. ACR008's cache-identity concern
+                # applies to callable objects/lambdas/partials, not to methods
+                # whose class/name are statically visible.
+                if action.attr in self.method_names:
+                    node.action_kind = "function"
+                    node.func_name = action.attr
         graph.nodes[name] = node
 
     def _add_edge(self, graph: GraphSpec, call: ast.Call) -> None:

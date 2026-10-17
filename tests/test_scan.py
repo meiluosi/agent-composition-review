@@ -180,6 +180,13 @@ def test_acr008_lambda_cache() -> None:
     assert "dynamic namespace" in findings[0].message
 
 
+def test_acr008_negative_bound_method() -> None:
+    """Bound methods have stable module/qualname identity; do not flag them."""
+
+    result = scan_fixture("acr008_negative_bound_method.py")
+    assert findings_for(result, "ACR008") == []
+
+
 def test_acr008_negative_without_cache_policy() -> None:
     result = scan_fixture("acr008_negative_without_policy.py")
     assert findings_for(result, "ACR008") == []

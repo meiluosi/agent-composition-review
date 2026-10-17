@@ -13,13 +13,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: meiluosi/agent-composition-review@v0.5.0
+      - uses: meiluosi/agent-composition-review@v0.5.1
         with:
           path: .
           fail-on: high
 ```
 
-Action 会把 SARIF 写到 workspace 的 `acr.sarif`，但默认不上传。把 `uses:` 换成你实际使用的发布 tag；示例固定为 `v0.5.0`，发布新版本后需要同步更新，并建议 pin 到完整 commit SHA 以获得可复现、不可被移动的构建。
+Action 会把 SARIF 写到 workspace 的 `acr.sarif`，但默认不上传。把 `uses:` 换成你实际使用的发布 tag；示例固定为 `v0.5.1`，发布新版本后需要同步更新，并建议 pin 到完整 commit SHA 以获得可复现、不可被移动的构建。
 
 ## 上传到 GitHub code scanning
 
@@ -35,7 +35,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: meiluosi/agent-composition-review@v0.5.0
+      - uses: meiluosi/agent-composition-review@v0.5.1
         with:
           upload-sarif: true
 ```
@@ -66,7 +66,7 @@ jobs:
 ```yaml
       - name: ACR scan
         id: acr
-        uses: meiluosi/agent-composition-review@v0.5.0
+        uses: meiluosi/agent-composition-review@v0.5.1
         with:
           upload-sarif: true
       - name: Show findings count
@@ -117,7 +117,7 @@ acr rules
 
 ## 版本与可复现性
 
-- Action 安装的包版本由 action ref 决定：`@v0.5.0` 安装 `v0.5.0`，`@<sha>` 安装对应 commit。
+- Action 安装的包版本由 action ref 决定：`@v0.5.1` 安装 `v0.5.1`，`@<sha>` 安装对应 commit。
 - 本 Action 随仓库根目录的 `action.yml` 提供。如果某个 tag 早于该文件，GitHub 会报告找不到 `action.yml`；请改用包含本 Action 的 tag 或直接 pin 到对应 commit SHA。
 - 用 `uses: ./`（仓库内示例 workflow）时没有 action ref，会安装 `main`，因此结果可能跟随最新提交变化；只建议用于本仓库演示。
 - 运行时需要访问 GitHub（`pip install` 会 clone 仓库），并需要 runner 提供 `git`；GitHub 托管的 Ubuntu/macOS/Windows runner 默认满足。

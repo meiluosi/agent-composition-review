@@ -2,7 +2,7 @@
   "schema_version": 1,
   "task": "task-19",
   "collected_at": "2026-10-18",
-  "status": "partial_interrupted",
+  "status": "candidate_search_partial_lead_followup_completed",
   "scope": "Minimal delivery after lead interrupted round-4 search. No new downloads or fetches were made; entries reuse already-fetched round-3 snapshots (copied into raw/) and are labelled match_level=adjacent.",
   "search_status": "Round-4 GitHub code search and issue search were started but stopped before file contents / community sources were fetched and verified. Therefore no new exact sample is claimed.",
   "excluded_prior_batches": [
@@ -265,5 +265,21 @@
       "why_lead": "code-search leads were framework source files or unrelated; no exact structural lead confirmed",
       "status": "unverified"
     }
-  ]
+  ],
+  "lead_followup": {
+    "checked_at": "2026-10-18",
+    "verified_leads_file": "evals/realworld4/verified_leads.json",
+    "narrative_file": "evals/realworld4/LEADS_VERIFIED.md",
+    "summary": "Tracked the unverified code-search leads. ACR008: one real public bound-method code sample exposed a false positive, fixed in v0.5.1; no positive exact failure sample. ACR009: four retry/subgraph leads were adjacent only. ACR010: no lead.",
+    "exact_counts": {
+      "ACR008": 0,
+      "ACR009": 0,
+      "ACR010": 0
+    },
+    "false_positive_fixed": {
+      "rule": "ACR008",
+      "repo": "vanara-ai/vanara-server",
+      "path": "app/resume_optimizer.py"
+    }
+  }
 }

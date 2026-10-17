@@ -1,0 +1,101 @@
+{
+  "schema_version": 1,
+  "checked_at": "2026-10-18",
+  "method": "Fetched the public file through the GitHub API, inspected the graph construction, and ran acr scan on the fetched source. No code was executed.",
+  "targets": {
+    "ACR008": {
+      "exact_failure_samples": 0,
+      "real_negative_controls": 1,
+      "false_positive_fixed": 1
+    },
+    "ACR009": {
+      "exact_failure_samples": 0,
+      "adjacent_retry_cases": 4
+    },
+    "ACR010": {
+      "exact_failure_samples": 0,
+      "new_leads": 0
+    }
+  },
+  "leads": [
+    {
+      "id": "lead-vanara",
+      "target": "ACR008",
+      "repo": "vanara-ai/vanara-server",
+      "path": "app/resume_optimizer.py",
+      "url": "https://github.com/vanara-ai/vanara-server/blob/main/app/resume_optimizer.py",
+      "source_type": "real_public_code",
+      "match_level": "negative_control",
+      "before_fix": "ACR008 at line 218: cache_policy on self._parse_jd_node treated as unknown callable",
+      "after_fix": "0 ACR008 findings",
+      "evidence": "Bound method identifier is stable (module.Class.method), not LangGraph's __dynamic__ case; scanner now resolves methods.",
+      "notes": "No reported failure; this is a detection false-positive, not a confirmed cache bug. ACR007 also reported undeclared keys on rewrite_resume, but that is outside this target."
+    },
+    {
+      "id": "lead-pdhoolia",
+      "target": "ACR008",
+      "repo": "pdhoolia/langgraph-mcp",
+      "path": "src/langgraph_mcp/planner_style/graph.py",
+      "url": "https://github.com/pdhoolia/langgraph-mcp/blob/main/src/langgraph_mcp/planner_style/graph.py",
+      "source_type": "real_public_code",
+      "match_level": "adjacent",
+      "scan_result": "0 ACR008; 1 ACR004",
+      "notes": "cache_policy is on module-level named functions, so callable identity is stable; not an ACR008 sample."
+    },
+    {
+      "id": "lead-corovcam",
+      "target": "ACR008",
+      "repo": "corovcam/Universal-Object-Mapping",
+      "path": "services/orchestrator/src/react_agent/graph.py",
+      "url": "https://github.com/corovcam/Universal-Object-Mapping/blob/main/services/orchestrator/src/react_agent/graph.py",
+      "source_type": "real_public_code",
+      "match_level": "adjacent",
+      "scan_result": "0 ACR008; 1 ACR004",
+      "notes": "cache_policy is on named functions; not a callable-identity sample."
+    },
+    {
+      "id": "lead-quizzer",
+      "target": "ACR009",
+      "repo": "Theedon/Quizzer",
+      "path": "src/agent/graph.py",
+      "url": "https://github.com/Theedon/Quizzer/blob/main/src/agent/graph.py",
+      "source_type": "real_public_code",
+      "match_level": "adjacent",
+      "scan_result": "0 ACR009",
+      "notes": "Retry policy is on inner LLM nodes; the node that invokes a subgraph does not carry retry_policy. Not the retry + two-subgraph shape."
+    },
+    {
+      "id": "lead-sieve",
+      "target": "ACR009",
+      "repo": "SE-UUlm/sieve",
+      "path": "apps/ai-backend/src/ai_backend/product_flow.py",
+      "url": "https://github.com/SE-UUlm/sieve/blob/main/apps/ai-backend/src/ai_backend/product_flow.py",
+      "source_type": "real_public_code",
+      "match_level": "adjacent",
+      "scan_result": "0 ACR009",
+      "notes": "retry_policy is on db_step; the subgraph is invoked later outside that node. Not exact."
+    },
+    {
+      "id": "lead-odoo",
+      "target": "ACR009",
+      "repo": "rizkikadafi/odoo-agent",
+      "path": "src/agent/graph.py",
+      "url": "https://github.com/rizkikadafi/odoo-agent/blob/main/src/agent/graph.py",
+      "source_type": "real_public_code",
+      "match_level": "adjacent",
+      "scan_result": "0 ACR009",
+      "notes": "context_collection_wrapper has retry_policy and invokes exactly one compiled subgraph, not two."
+    },
+    {
+      "id": "lead-actus",
+      "target": "ACR009",
+      "repo": "hahaliu1029/Actus",
+      "path": "api/app/domain/services/graphs/main_graph.py",
+      "url": "https://github.com/hahaliu1029/Actus/blob/main/api/app/domain/services/graphs/main_graph.py",
+      "source_type": "real_public_code",
+      "match_level": "adjacent",
+      "scan_result": "0 ACR009",
+      "notes": "The retry-wrapped planner node calls an LLM; the subgraph invocation is in a different helper without retry_policy. Not exact."
+    }
+  ]
+}

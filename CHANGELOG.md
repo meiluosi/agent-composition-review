@@ -13,6 +13,23 @@
 - 把 command-send / resume-replay / parallel-interrupt 交给 `acr trace` 或版本感知提示，不硬加静态规则。
 - 在更多真实 LangGraph/LangChain 组合故障上校准误报率，并公开可复现的测试样例。
 
+## [0.5.1] - 2026-10-18
+
+### Fixed
+
+- ACR008 不再把 bound method（`self.node_fn` / `instance.node_fn`）当成匿名 callable。真实公开代码 vanara-ai/vanara-server 暴露了该误报：LangGraph 对 bound method 用稳定的 module + qualname 生成 cache key，不会落到 `__dynamic__`。
+- scanner 收集类方法名，`add_node(..., nodes.run, ...)` 这类 `ast.Attribute` 可解析为 method；新增负向回归 fixture。
+
+### Added
+
+- `evals/realworld4/LEADS_VERIFIED.md` / `verified_leads.json`：逐条追踪第三轮未验证代码搜索线索；ACR009/010 仍无新 exact 样本。
+- 案例图谱新增第 11 个案例：[vanara bound method 误报](docs/atlas/lg-vanara-bound-method.md)，并在静态站点索引。
+
+### Notes
+
+- 这是“少一个真实误报”，不是“ACR008 正向抓到了真实 cache 故障”；ACR008 仍保持 `experimental`。
+- ACR009/ACR010 没有新的 exact 真实样本，继续保持 `experimental`。
+
 ## [0.5.0] - 2026-10-18
 
 ### Added
@@ -163,7 +180,8 @@
 - **v0.1 不宣称 benchmark 提升。** 本版本是工具与文档的重新定位，不是新的模型能力评测；历史实验结论保持原样，不应被解读为 v0.1 的收益证据。
 - `acr scan`/`acr trace` 的规则是可解释的启发式检查：不确定的情况只报 `review` 级别，可能仍有误报，请结合证据人工确认。
 
-[Unreleased]: https://github.com/meiluosi/agent-composition-review/compare/v0.5.0...HEAD
+[Unreleased]: https://github.com/meiluosi/agent-composition-review/compare/v0.5.1...HEAD
+[0.5.1]: https://github.com/meiluosi/agent-composition-review/releases/tag/v0.5.1
 [0.5.0]: https://github.com/meiluosi/agent-composition-review/releases/tag/v0.5.0
 [0.4.0]: https://github.com/meiluosi/agent-composition-review/releases/tag/v0.4.0
 [0.3.1]: https://github.com/meiluosi/agent-composition-review/releases/tag/v0.3.1

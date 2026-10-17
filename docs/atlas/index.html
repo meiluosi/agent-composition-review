@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="color-scheme" content="light dark">
 <title>ACR · 真实案例图谱（可搜索）</title>
-<meta name="description" content="按症状、规则 ID 或 LangGraph issue 号搜索 10 个真实案例，查看证据边界与对应 Markdown 页面。Agent Composition Review 静态案例图谱。">
+<meta name="description" content="按症状、规则 ID 或 LangGraph issue 号搜索 11 个真实案例，查看证据边界与对应 Markdown 页面。Agent Composition Review 静态案例图谱。">
 <link rel="stylesheet" href="site.css">
 </head>
 <body>
@@ -14,7 +14,7 @@
 <header class="site-header">
   <p class="eyebrow">Agent Composition Review · 真实案例图谱</p>
   <h1>按症状找到对应的 ACR 规则</h1>
-  <p class="lede">10 个 LangGraph 真实案例：<strong>症状 → 规则/命令 → 证据 → 最小修复 → 验证边界</strong>。搜索症状关键词、规则 ID 或 issue 号，或按证据状态筛选。</p>
+  <p class="lede">11 个 LangGraph 真实案例：<strong>症状 → 规则/命令 → 证据 → 最小修复 → 验证边界</strong>。搜索症状关键词、规则 ID 或 issue 号，或按证据状态筛选。</p>
   <p class="note">这是索引页。案例正文、证据摘录与限制都在对应的 Markdown 页；状态只描述规则检测的证据强度，不是 benchmark 分数。</p>
 </header>
 
@@ -49,7 +49,7 @@
   <noscript>
     <section class="noscript" aria-labelledby="noscript-heading">
       <h2 id="noscript-heading">JavaScript 未启用时的案例索引</h2>
-      <p>搜索与状态筛选需要 JavaScript。以下是全部 10 个案例的 Markdown 链接：</p>
+      <p>搜索与状态筛选需要 JavaScript。以下是全部 11 个案例的 Markdown 链接：</p>
       <ul class="noscript-list">
         <li><a href="lg-6446.md">LG #6446 · 子图回传完整状态，父图并行写同一个键</a></li>
         <li><a href="lg-1964.md">LG #1964 · 两个并行子图把父图状态回传到 sink</a></li>
@@ -61,14 +61,15 @@
         <li><a href="lg-8753.md">LG #8753 · 共享 cache 后，B 图返回 A 图结果</a></li>
         <li><a href="lg-9253.md">LG #9253 · retry 节点调用两个子图</a></li>
         <li><a href="lg-2336.md">LG #2336 · retry 自环与并行分支竞争 count_b</a></li>
+        <li><a href="lg-vanara-bound-method.md">vanara · bound method 上的 cache_policy 被误报</a></li>
       </ul>
     </section>
   </noscript>
 </main>
 
 <footer class="site-footer">
-  <p>索引数据来自 <a href="README.md">docs/atlas/README.md</a> 中的 10 个案例页 · 纯静态页面，无外部 CDN、无追踪脚本。</p>
-  <p class="footer-meta">ACR 0.5.0 · GitHub Pages 路径：<code>/agent-composition-review/atlas/</code></p>
+  <p>索引数据来自 <a href="README.md">docs/atlas/README.md</a> 中的 11 个案例页 · 纯静态页面，无外部 CDN、无追踪脚本。</p>
+  <p class="footer-meta">ACR 0.5.1 · GitHub Pages 路径：<code>/agent-composition-review/atlas/</code></p>
 </footer>
 
 <script type="application/json" id="case-data">
@@ -184,6 +185,17 @@
       "status": "experimental",
       "boundary": "ACR010 开发集；无独立 exact 样本",
       "source": "https://github.com/langchain-ai/langgraph/issues/2336"
+    },
+    {
+      "issue": "lead-vanara",
+      "slug": "lg-vanara-bound-method",
+      "title": "bound method 上的 cache_policy 被误报",
+      "summary": "cache_policy 放在 self.method 上；LangGraph 用 module + qualname 生成稳定 identity，ACR008 曾误报为匿名 callable。",
+      "keywords": ["cache_policy", "bound method", "cache identity", "__dynamic__", "误报"],
+      "rules": ["ACR008"],
+      "status": "experimental",
+      "boundary": "真实公开代码负向控制；无故障报告；v0.5.1 修复误报",
+      "source": "https://github.com/vanara-ai/vanara-server/blob/main/app/resume_optimizer.py"
     }
   ]
 }

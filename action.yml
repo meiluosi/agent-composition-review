@@ -16,9 +16,25 @@ inputs:
     required: false
     default: high
   args:
-    description: Extra arguments appended to `acr scan`, for example `--json`. Split like shell words; leave empty by default.
+    description: Extra arguments appended to `acr scan`. Do not pass `--json`, `--sarif`, or `--output`; the action adds those itself.
     required: false
     default: ""
+  upload-sarif:
+    description: "Upload the SARIF file to GitHub code scanning. Requires `permissions: security-events: write`; stays false by default so jobs without that permission do not fail."
+    required: false
+    default: "false"
+  sarif-file:
+    description: SARIF output path. Relative paths resolve against github.workspace; absolute paths are used as-is.
+    required: false
+    default: "acr.sarif"
+
+outputs:
+  findings:
+    description: Number of SARIF results produced by `acr scan` (0 when there are no findings).
+    value: ${{ steps.scan.outputs.findings }}
+  sarif-file:
+    description: Path to the generated SARIF file (absolute when the input was relative).
+    value: ${{ steps.scan.outputs['sarif-file'] }}
 
 runs:
   using: composite
@@ -42,11 +58,13 @@ runs:
           "agent-composition-review @ git+https://github.com/meiluosi/agent-composition-review.git@${ref}"
 
     - name: Run acr scan
+      id: scan
       shell: bash
       env:
         ACR_INPUT_PATH: ${{ inputs.path }}
         ACR_FAIL_ON: ${{ inputs['fail-on'] }}
         ACR_EXTRA_ARGS: ${{ inputs.args }}
+        ACR_SARIF_FILE: ${{ inputs['sarif-file'] }}
       run: |
         set -euo pipefail
         case "${ACR_FAIL_ON}" in
@@ -56,6 +74,53 @@ runs:
             exit 2
             ;;
         esac
+
+        # Relative SARIF paths resolve against the workspace; absolute paths
+        # pass through unchanged.
+        sarif_input="${ACR_SARIF_FILE:-acr.sarif}"
+        case "${sarif_input}" in
+          /*) sarif_path="${sarif_input}" ;;
+          *) sarif_path="${GITHUB_WORKSPACE:-${PWD}}/${sarif_input}" ;;
+        esac
+
+        set +e
         # ACR_EXTRA_ARGS is intentionally unquoted so it splits into separate CLI flags.
         # shellcheck disable=SC2086
-        acr scan "${ACR_INPUT_PATH}" --fail-on "${ACR_FAIL_ON}" ${ACR_EXTRA_ARGS}
+        acr scan "${ACR_INPUT_PATH}" --fail-on "${ACR_FAIL_ON}" --sarif --output "${sarif_path}" ${ACR_EXTRA_ARGS}
+        scan_status=$?
+        set -e
+
+        # Write outputs even when scan exits 1 (findings at the fail-on level):
+        # the SARIF file is still produced and can be uploaded by the next step.
+        findings="0"
+        if [ -f "${sarif_path}" ]; then
+          if ! findings="$(python -c 'import json
+        import sys
+
+        try:
+            with open(sys.argv[1], encoding="utf-8") as handle:
+                document = json.load(handle)
+            runs = document.get("runs") or []
+            print(sum(len(run.get("results") or []) for run in runs))
+        except (OSError, ValueError, AttributeError):
+            print(0)' "${sarif_path}")"; then
+            findings="0"
+            echo "::warning::Could not count SARIF results in ${sarif_path}" >&2
+          fi
+        else
+          echo "::warning::acr scan did not create SARIF file ${sarif_path}" >&2
+        fi
+
+        {
+          printf 'findings=%s\n' "${findings}"
+          printf 'sarif-file=%s\n' "${sarif_path}"
+        } >> "${GITHUB_OUTPUT}"
+
+        exit "${scan_status}"
+
+    - name: Upload SARIF to GitHub code scanning
+      if: ${{ always() && inputs['upload-sarif'] == 'true' }}
+      uses: github/codeql-action/upload-sarif@v3
+      with:
+        sarif_file: ${{ steps.scan.outputs['sarif-file'] }}
+        category: acr

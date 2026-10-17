@@ -19,8 +19,21 @@ jobs:
           persist-credentials: false
 
       - name: Run the published ACR action
-        uses: meiluosi/agent-composition-review@v0.4.0
+        id: acr
+        uses: meiluosi/agent-composition-review@v0.5.0
         with:
           path: examples/langgraph-subgraph-leak/broken.py
           fail-on: never
-          args: --json
+
+      - name: Check Action outputs and SARIF
+        run: |
+          set -euo pipefail
+          test "${{ steps.acr.outputs.findings }}" = "2"
+          test -f "${{ steps.acr.outputs['sarif-file'] }}"
+          python - "${{ steps.acr.outputs['sarif-file'] }}" <<'PY'
+          import json, sys
+          doc = json.load(open(sys.argv[1], encoding="utf-8"))
+          results = doc["runs"][0]["results"]
+          assert len(results) == 2, results
+          print("SARIF results:", len(results))
+          PY

@@ -38,7 +38,9 @@ description: "诊断 LangGraph/LangChain 组合故障：图单独跑正常、组
 acr scan path/to/graph.py            # 静态检查构图代码
 acr trace path/to/trace.jsonl        # 检查一次失败轨迹
 acr trace trace.jsonl --resume-at 4  # LangGraph debug 流没有 resume 事件时，指向恢复前最后一条事件
+acr trace trace.jsonl --infer-resume # 可选：从重复 checkpoint_id 推断 resume 边界，默认关闭
 acr scan . --json > scan.json        # 机器可读，便于逐条核对
+acr scan . --sarif -o acr.sarif      # 输出 SARIF，供 GitHub code scanning
 acr trace trace.jsonl --json         # 输出时间线与证据事件 ID
 ```
 

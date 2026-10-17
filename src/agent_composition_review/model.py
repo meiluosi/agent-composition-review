@@ -170,6 +170,7 @@ class TraceEvent:
     final: bool = False
     initial: bool = False
     interrupts: Any = None
+    checkpoint_id: str | None = None
 
     def to_dict(self) -> dict[str, Any]:
         payload: dict[str, Any] = {
@@ -187,6 +188,7 @@ class TraceEvent:
             "ts",
             "message",
             "interrupts",
+            "checkpoint_id",
         ):
             value = getattr(self, name)
             if value is not None:

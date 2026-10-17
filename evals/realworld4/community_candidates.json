@@ -1,0 +1,34 @@
+{
+  "schema_version": 1,
+  "task": "task-19",
+  "collected_at": "2026-10-18",
+  "status": "not_collected_due_to_interrupt",
+  "scope": "Community sources for ACR008/ACR009/ACR010 exact samples (LangChain Forum, Stack Overflow, Reddit/blogs).",
+  "sources_attempted": [],
+  "sources_not_attempted": [
+    {
+      "source": "forum.langchain.com",
+      "reason": "lead interrupted before community search"
+    },
+    {
+      "source": "stackoverflow.com",
+      "reason": "lead interrupted before community search"
+    },
+    {
+      "source": "reddit.com",
+      "reason": "not attempted; prior round reported unreachable"
+    }
+  ],
+  "exact_counts": {
+    "ACR008": 0,
+    "ACR009": 0,
+    "ACR010": 0
+  },
+  "no_sample_found": [
+    "ACR008",
+    "ACR009",
+    "ACR010"
+  ],
+  "conclusion": "No community material was fetched in this round, so no sample can be claimed. This is an empty, honest result caused by the stop instruction, not evidence that no community sample exists.",
+  "candidates": []
+}

@@ -2,6 +2,8 @@ name: ACR example
 
 # Manual demo of the local composite action.
 # `uses: ./` has no action ref, so the action installs the package from `main`.
+# This example does not upload to code scanning: the SARIF file is kept as an
+# artifact instead, so no `security-events: write` permission is required.
 on:
   workflow_dispatch:
 
@@ -18,7 +20,21 @@ jobs:
           persist-credentials: false
 
       - name: Run ACR scan from the local action
+        id: acr
         uses: ./
         with:
           path: .
           fail-on: high
+
+      - name: Show findings count
+        if: always()
+        run: |
+          echo "ACR findings: ${{ steps.acr.outputs.findings }}"
+
+      - name: Keep the SARIF file as an artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: acr-sarif
+          path: ${{ steps.acr.outputs['sarif-file'] }}
+          if-no-files-found: warn

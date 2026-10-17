@@ -236,6 +236,12 @@ def normalise_events(raw_events: list[Any]) -> list[TraceEvent]:
         interrupts = _first_not_none(
             payload.get("interrupts"), raw.get("interrupts")
         )
+        checkpoint_id = _first_not_none(
+            raw.get("checkpoint_id"),
+            (payload.get("config") or {}).get("configurable", {}).get("checkpoint_id")
+            if isinstance(payload.get("config"), dict)
+            else None,
+        )
 
         events.append(
             TraceEvent(
@@ -253,6 +259,7 @@ def normalise_events(raw_events: list[Any]) -> list[TraceEvent]:
                 final=final,
                 initial=initial,
                 interrupts=interrupts,
+                checkpoint_id=str(checkpoint_id) if checkpoint_id is not None else None,
             )
         )
     return events
@@ -295,6 +302,35 @@ def _insert_resume_markers(
             "resume marker seq not found in trace: "
             + ", ".join(str(value) for value in missing)
         )
+    return result
+
+
+def _insert_inferred_resume(events: list[TraceEvent]) -> list[TraceEvent]:
+    """Infer resume markers from repeated checkpoint ids (opt-in heuristic).
+
+    A checkpoint id that appears again later in the same trace usually means
+    the run resumed/replayed from that checkpoint. This is intentionally not
+    the default: repeated ids can come from unusual nested/subgraph traces, so
+    callers must opt in with ``--infer-resume``.
+    """
+
+    seen: set[str] = set()
+    inserted: set[str] = set()
+    result: list[TraceEvent] = []
+    for event in events:
+        if event.kind == "state" and event.checkpoint_id:
+            checkpoint = event.checkpoint_id
+            if checkpoint in seen and checkpoint not in inserted:
+                result.append(
+                    TraceEvent(
+                        id=f"resume@inferred:{checkpoint[:8]}",
+                        seq=event.seq,
+                        kind="resume",
+                    )
+                )
+                inserted.add(checkpoint)
+            seen.add(checkpoint)
+        result.append(event)
     return result
 
 
@@ -788,7 +824,9 @@ class TraceAnalyzer:
 
 
 def trace_path(
-    path: str | Path, resume_at: list[int] | None = None
+    path: str | Path,
+    resume_at: list[int] | None = None,
+    infer_resume: bool = False,
 ) -> TraceResult:
     """Analyse a trace file and return a :class:`TraceResult`.
 
@@ -819,6 +857,8 @@ def trace_path(
         ):
             resume_at = list(top_resume)
     events = _insert_resume_markers(events, resume_at)
+    if infer_resume and not any(event.kind in {"resume", "replay"} for event in events):
+        events = _insert_inferred_resume(events)
     analyzer = TraceAnalyzer(events, top_level)
     findings = analyzer.run()
     display = display_path(target)

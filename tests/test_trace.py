@@ -126,6 +126,15 @@ def test_acr106_resume_at_injects_marker() -> None:
     assert findings[0].status == "grounded"
 
 
+def test_acr106_infer_resume_from_repeated_checkpoint() -> None:
+    path = FIXTURES / "trace_checkpoint_replay.json"
+    assert findings_for(trace_path(path), "ACR106") == []
+    result = trace_path(path, infer_resume=True)
+    findings = findings_for(result, "ACR106")
+    assert len(findings) == 1
+    assert "agent" in findings[0].message
+
+
 def test_acr106_resume_seq_from_top_level(tmp_path: Path) -> None:
     trace = {
         "resume_seq": 4,

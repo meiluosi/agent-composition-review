@@ -1,6 +1,8 @@
 # ACR 真实案例图谱
 
-按“症状 → 规则/命令 → 证据 → 最小修复 → 验证边界”整理的 10 个 LangGraph 真实案例。每个案例都给出原始 issue、仓库内可扫描的 fixture / trace、当前 `acr 0.4.0` 的真实输出，以及它到底能被算作哪种证据。
+> **静态站点**：[`index.html`](index.html)（GitHub Pages `/atlas/`）提供按症状关键词、规则 ID、issue 号与证据状态的搜索；它只是索引和筛选器，案例正文、证据与验证边界仍以本目录的 Markdown 页为准。
+
+按“症状 → 规则/命令 → 证据 → 最小修复 → 验证边界”整理的 10 个 LangGraph 真实案例。每个案例都给出原始 issue、仓库内可扫描的 fixture / trace、当前 `acr 0.5.0` 的真实输出，以及它到底能被算作哪种证据。
 
 这不是 benchmark，也不是命中率报告。样本来自两轮真实案例验证和一轮定向验证；案例页只陈述“这一条规则在这个案例上检测到了什么”，不推断真实世界分布，也不代表 issue 已被上游修复。
 
@@ -70,6 +72,13 @@ acr trace evals/realworld3/cases/lg3-9276-repro/trace.jsonl
 - **第二批**（2026-10-18）：20 个新案例（15 GitHub + 3 LangChain Forum + 2 Stack Overflow），ACR007 的验证命中来自这一批；报告在 [pilot2-2026-10-18/REPORT.md](../../evals/realworld2/results/pilot2-2026-10-18/REPORT.md)，后续补充在 [POSTFIX.md](../../evals/realworld2/results/pilot2-2026-10-18/POSTFIX.md)。
 - **第三轮定向验证**（2026-10-18）：专门找 ACR106/ACR008/ACR009/ACR010 的真实样本；报告在 [pilot3-2026-10-18/REPORT.md](../../evals/realworld3/results/pilot3-2026-10-18/REPORT.md)。
 - 每个 `case.json` / `graph.py` / `trace.jsonl` 都是仓库内最小重构，不是 issue 原文；部分 fixture 不在本地运行，只做静态扫描。
-- `scan.txt` 是历史版本冻结的归档输出，**不要**拿它和当前 `acr` 输出比较；案例页引用的是 `acr 0.4.0` 的当前输出。
+- `scan.txt` 是历史版本冻结的归档输出，**不要**拿它和当前 `acr` 输出比较；案例页引用的是 `acr 0.5.0` 的当前输出。
 - 这些案例已参与规则设计或验证，不能当“未见保留集”；不能用它们计算或宣称真实世界的召回率、准确率或 benchmark 提升。
 - 没有第二标注者；状态与判断是维护者依据仓库证据做的分类，`experimental` 就是明确承认“证据不足”。
+
+## 站点维护
+
+- 站点是纯静态文件：`index.html`（页面 + 内嵌案例 JSON）、`site.js`、`site.css`；没有构建步骤，不依赖外部 CDN、字体或追踪脚本。
+- 新增或修改案例时，同步更新 `index.html` 中 `id="case-data"` 的 JSON（字段：`issue`、`slug`、`title`、`summary`、`keywords`、`rules`、`status`、`boundary`、`source`）以及上面的索引表。
+- `docs/.nojekyll` 让 GitHub Pages 原样提供文件；`docs/index.html` 把站点根重定向到 `atlas/`。
+- 本地查看：`python3 -m http.server -d docs` 后打开 `/atlas/`（直接双击 `index.html` 也能用，但相对链接的体验可能不同）。

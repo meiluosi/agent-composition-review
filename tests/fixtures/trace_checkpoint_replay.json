@@ -1,0 +1,10 @@
+{
+  "events": [
+    {"id": "e1", "kind": "state", "seq": 1, "checkpoint_id": "ckpt-1"},
+    {"id": "e2", "kind": "node_start", "node": "agent", "seq": 2},
+    {"id": "e3", "kind": "node_end", "node": "agent", "seq": 3},
+    {"id": "e4", "kind": "state", "seq": 4, "checkpoint_id": "ckpt-1"},
+    {"id": "e5", "kind": "node_start", "node": "agent", "seq": 5},
+    {"id": "e6", "kind": "node_end", "node": "agent", "seq": 6}
+  ]
+}

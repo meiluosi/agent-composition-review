@@ -1,0 +1,193 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<title>ACR · 真实案例图谱（可搜索）</title>
+<meta name="description" content="按症状、规则 ID 或 LangGraph issue 号搜索 10 个真实案例，查看证据边界与对应 Markdown 页面。Agent Composition Review 静态案例图谱。">
+<link rel="stylesheet" href="site.css">
+</head>
+<body>
+<a class="skip-link" href="#cases">跳到案例列表</a>
+
+<header class="site-header">
+  <p class="eyebrow">Agent Composition Review · 真实案例图谱</p>
+  <h1>按症状找到对应的 ACR 规则</h1>
+  <p class="lede">10 个 LangGraph 真实案例：<strong>症状 → 规则/命令 → 证据 → 最小修复 → 验证边界</strong>。搜索症状关键词、规则 ID 或 issue 号，或按证据状态筛选。</p>
+  <p class="note">这是索引页。案例正文、证据摘录与限制都在对应的 Markdown 页；状态只描述规则检测的证据强度，不是 benchmark 分数。</p>
+</header>
+
+<main id="main">
+  <section class="controls" aria-labelledby="filter-heading">
+    <h2 class="visually-hidden" id="filter-heading">筛选案例</h2>
+
+    <div class="field search-field">
+      <label for="search">搜索案例</label>
+      <input id="search" type="search" autocomplete="off" spellcheck="false"
+             aria-describedby="search-hint"
+             placeholder="例如：InvalidUpdateError / ACR007 / 6446 / resume">
+      <p class="hint" id="search-hint">匹配标题、症状关键词、规则 ID 与 issue 号。按 <kbd>/</kbd> 聚焦搜索，按 <kbd>Esc</kbd> 清空。</p>
+    </div>
+
+    <fieldset class="field status-field">
+      <legend>证据状态</legend>
+      <label class="radio"><input type="radio" name="status" value="all" checked> 全部</label>
+      <label class="radio"><input type="radio" name="status" value="grounded"> grounded</label>
+      <label class="radio"><input type="radio" name="status" value="experimental"> experimental</label>
+    </fieldset>
+
+    <p class="result-count" id="result-count" role="status" aria-live="polite">正在载入案例…</p>
+  </section>
+
+  <section id="cases" aria-labelledby="cases-heading">
+    <h2 class="visually-hidden" id="cases-heading">案例列表</h2>
+    <ul class="case-list" id="case-list"></ul>
+    <p class="empty" id="empty" hidden>没有匹配的案例。清空搜索、切换状态，或试试 <code>ACR001</code>、<code>6446</code>、<code>InvalidUpdateError</code>。</p>
+  </section>
+
+  <noscript>
+    <section class="noscript" aria-labelledby="noscript-heading">
+      <h2 id="noscript-heading">JavaScript 未启用时的案例索引</h2>
+      <p>搜索与状态筛选需要 JavaScript。以下是全部 10 个案例的 Markdown 链接：</p>
+      <ul class="noscript-list">
+        <li><a href="lg-6446.md">LG #6446 · 子图回传完整状态，父图并行写同一个键</a></li>
+        <li><a href="lg-1964.md">LG #1964 · 两个并行子图把父图状态回传到 sink</a></li>
+        <li><a href="lg-8320.md">LG #8320 · 节点返回未声明键，被静默过滤</a></li>
+        <li><a href="lg-2644.md">LG #2644 · 类节点返回另一个 schema 的键</a></li>
+        <li><a href="lg-2581.md">LG #2581 · Send 到子图，返回未声明的 kids</a></li>
+        <li><a href="lg-3875.md">LG #3875 · interrupt 节点在 resume 后重启</a></li>
+        <li><a href="lg-9276.md">LG #9276 · resume 后重跑已完成节点</a></li>
+        <li><a href="lg-8753.md">LG #8753 · 共享 cache 后，B 图返回 A 图结果</a></li>
+        <li><a href="lg-9253.md">LG #9253 · retry 节点调用两个子图</a></li>
+        <li><a href="lg-2336.md">LG #2336 · retry 自环与并行分支竞争 count_b</a></li>
+      </ul>
+    </section>
+  </noscript>
+</main>
+
+<footer class="site-footer">
+  <p>索引数据来自 <a href="README.md">docs/atlas/README.md</a> 中的 10 个案例页 · 纯静态页面，无外部 CDN、无追踪脚本。</p>
+  <p class="footer-meta">ACR 0.5.0 · GitHub Pages 路径：<code>/agent-composition-review/atlas/</code></p>
+</footer>
+
+<script type="application/json" id="case-data">
+{
+  "schema_version": 1,
+  "cases": [
+    {
+      "issue": 6446,
+      "slug": "lg-6446",
+      "title": "子图回传完整状态，父图并行写同一个键",
+      "summary": "父图并行扇出到写 b 的 sibling 和未声明 output_schema 的子图；子图把整份状态（含旧 b）当补丁回传，触发 InvalidUpdateError。",
+      "keywords": ["InvalidUpdateError", "At key 'b'", "子图覆盖父图", "output_schema", "并行写同一键"],
+      "rules": ["ACR001", "ACR002"],
+      "status": "grounded",
+      "boundary": "开发集复扫命中；配套运行示例可在本地跑通",
+      "source": "https://github.com/langchain-ai/langgraph/issues/6446"
+    },
+    {
+      "issue": 1964,
+      "slug": "lg-1964",
+      "title": "两个并行子图把父图状态回传到 sink",
+      "summary": "两个子图从 question_generation 并行扇出、汇入 sink，都未声明 output_schema，各自回传父图 question，导致同一步重复写入。",
+      "keywords": ["InvalidUpdateError", "At key 'question'", "并行子图", "sink", "output_schema"],
+      "rules": ["ACR001", "ACR002"],
+      "status": "grounded",
+      "boundary": "第二批案例验证命中",
+      "source": "https://github.com/langchain-ai/langgraph/issues/1964"
+    },
+    {
+      "issue": 8320,
+      "slug": "lg-8320",
+      "title": "节点返回未声明键，被静默过滤",
+      "summary": "节点返回 note，但 State 只声明 x；LangGraph 在节点边界静默过滤未声明键，图正常结束但下游看不到 note。",
+      "keywords": ["静默丢字段", "未声明键", "silently dropped", "TypedDict", "field missing"],
+      "rules": ["ACR007"],
+      "status": "grounded",
+      "boundary": "ACR007 设计源；静态命中",
+      "source": "https://github.com/langchain-ai/langgraph/issues/8320"
+    },
+    {
+      "issue": 2644,
+      "slug": "lg-2644",
+      "title": "类节点返回另一个 schema 的键",
+      "summary": "class 节点返回 TmpState 的 zoo，而图只声明 foo；报告者看到 Must write to at least one of ['foo']，但固定版本未复现该报错。",
+      "keywords": ["Must write to at least one", "class node", "未声明键", "TmpState", "InvalidUpdateError"],
+      "rules": ["ACR007"],
+      "status": "grounded",
+      "boundary": "ACR007 设计源；原报错未在本地复现",
+      "source": "https://github.com/langchain-ai/langgraph/issues/2644"
+    },
+    {
+      "issue": 2581,
+      "slug": "lg-2581",
+      "title": "Send 到子图，返回未声明的 kids",
+      "summary": "Send 扇出到编译子图后，get_kids 返回未在 SubgraphState 声明的 kids；子图边界拒绝写入，报 Expected node father to update at least one of ['father']。",
+      "keywords": ["Send", "fan-out", "Expected node father", "kids", "子图", "未声明键"],
+      "rules": ["ACR007", "ACR003"],
+      "status": "grounded",
+      "boundary": "第二批案例验证命中；ACR003 为 incidental",
+      "source": "https://github.com/langchain-ai/langgraph/issues/2581"
+    },
+    {
+      "issue": 3875,
+      "slug": "lg-3875",
+      "title": "interrupt 节点在 resume 后重启（负向控制）",
+      "summary": "两个分支各有一个 interrupt，resume 后节点重新开始；它们在 resume 前只是被中断、并未完成，ACR106 不应报告。",
+      "keywords": ["resume", "interrupt", "重启", "负向控制", "ACR106", "false positive"],
+      "rules": ["ACR106"],
+      "status": "grounded",
+      "boundary": "真实公开 trace 负向控制；0 findings",
+      "source": "https://github.com/langchain-ai/langgraph/issues/3875"
+    },
+    {
+      "issue": 9276,
+      "slug": "lg-9276",
+      "title": "resume 后重跑已完成节点",
+      "summary": "agent 在第一段运行中已 node_end，resume 后又 node_start；被 interrupt 的 gate 重启则是预期行为。",
+      "keywords": ["resume", "replay", "已完成节点", "重跑", "副作用", "ACR106"],
+      "rules": ["ACR106"],
+      "status": "grounded",
+      "boundary": "本地复现正向；非社区附件",
+      "source": "https://github.com/langchain-ai/langgraph/issues/9276"
+    },
+    {
+      "issue": 8753,
+      "slug": "lg-8753",
+      "title": "共享 cache 后，B 图返回 A 图结果",
+      "summary": "两个图各有一个 process 节点，用 callable object 实现并共享 InMemoryCache；B 图返回 from graph A，自己的节点没有运行。",
+      "keywords": ["cache", "callable object", "__dynamic__", "串结果", "共享缓存", "cache_policy"],
+      "rules": ["ACR008"],
+      "status": "experimental",
+      "boundary": "exact 设计源；无独立 exact 命中",
+      "source": "https://github.com/langchain-ai/langgraph/issues/8753"
+    },
+    {
+      "issue": 9253,
+      "slug": "lg-9253",
+      "title": "retry 节点调用两个子图",
+      "summary": "带 RetryPolicy 的节点先调 research、再在调 review 前抛错；恢复后拿到 RESEARCH 而不是 REVIEW，第二个子图续用第一个子图的 checkpoint。",
+      "keywords": ["retry_policy", "retry", "多子图", "checkpoint", "namespace", "恢复"],
+      "rules": ["ACR009"],
+      "status": "experimental",
+      "boundary": "exact 设计源；批次无新样本",
+      "source": "https://github.com/langchain-ai/langgraph/issues/9253"
+    },
+    {
+      "issue": 2336,
+      "slug": "lg-2336",
+      "title": "retry 自环与并行分支竞争 count_b",
+      "summary": "a 并行扇出到 b 和 c，c 有条件边回到自己（retry），重叠 superstep 多次写无 reducer 的 count_b，报 InvalidUpdateError。",
+      "keywords": ["retry 自环", "条件边", "count_b", "InvalidUpdateError", "reducer", "并行分支"],
+      "rules": ["ACR010"],
+      "status": "experimental",
+      "boundary": "ACR010 开发集；无独立 exact 样本",
+      "source": "https://github.com/langchain-ai/langgraph/issues/2336"
+    }
+  ]
+}
+</script>
+<script src="site.js"></script>
+</body>
+</html>

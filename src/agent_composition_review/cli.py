@@ -11,7 +11,10 @@ from . import __version__
 from .demo import DemoDependencyError, run_demo
 from .model import FAIL_ON_CHOICES, Finding
 from .report import ReportError, write_report
+from pathlib import Path
+
 from .rules import format_rules_text
+from .sarif import render_sarif
 from .scan import ScanError, render_scan_text, scan_path
 from .trace import TraceParseError, render_trace_text, trace_path
 
@@ -48,6 +51,18 @@ def _build_parser() -> argparse.ArgumentParser:
         help="emit the stable JSON schema instead of text",
     )
     scan.add_argument(
+        "--sarif",
+        action="store_true",
+        help="emit SARIF 2.1.0 for GitHub code scanning instead of text",
+    )
+    scan.add_argument(
+        "-o",
+        "--output",
+        metavar="FILE",
+        default=None,
+        help="write scan output to FILE instead of stdout",
+    )
+    scan.add_argument(
         "--fail-on",
         choices=FAIL_ON_CHOICES,
         default="high",
@@ -80,6 +95,14 @@ def _build_parser() -> argparse.ArgumentParser:
         help=(
             "insert a resume marker after event SEQ (repeatable); useful for "
             "LangGraph debug traces that do not emit a resume event"
+        ),
+    )
+    trace.add_argument(
+        "--infer-resume",
+        action="store_true",
+        help=(
+            "opt-in heuristic: infer a resume marker when a previously seen "
+            "checkpoint id appears again in the trace"
         ),
     )
 
@@ -141,20 +164,35 @@ def main(argv: Sequence[str] | None = None) -> int:
         return 2
 
     if args.command == "scan":
+        if args.json and args.sarif:
+            parser.error("--json and --sarif are mutually exclusive")
         try:
             result = scan_path(args.path)
         except ScanError as exc:
             print(f"acr scan: {exc}", file=sys.stderr)
             return 2
         if args.json:
-            _print_json(result.to_dict())
+            text = json.dumps(result.to_dict(), indent=2, ensure_ascii=False)
+        elif args.sarif:
+            text = render_sarif(result.findings)
         else:
-            print(render_scan_text(result))
+            text = render_scan_text(result)
+        if args.output:
+            output = Path(args.output)
+            output.parent.mkdir(parents=True, exist_ok=True)
+            output.write_text(text + "\n", encoding="utf-8")
+            print(f"acr scan: wrote {output}")
+        else:
+            print(text)
         return _scan_exit_code(result.findings, args.fail_on)
 
     if args.command == "trace":
         try:
-            result = trace_path(args.path, resume_at=args.resume_at)
+            result = trace_path(
+                args.path,
+                resume_at=args.resume_at,
+                infer_resume=args.infer_resume,
+            )
         except TraceParseError as exc:
             print(f"acr trace: {exc}", file=sys.stderr)
             return 2

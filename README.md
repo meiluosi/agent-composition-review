@@ -32,18 +32,18 @@ v0.1 是早期版本：MIT 许可、本地运行、不需要 API key。**它不�
 ## 60 秒 demo
 
 ```sh
-pipx install "git+https://github.com/meiluosi/agent-composition-review.git@v0.4.0"
+pipx install "git+https://github.com/meiluosi/agent-composition-review.git@v0.5.0"
 pipx inject agent-composition-review "langgraph>=1.0,<2"   # acr demo 需要；scan/trace 可跳过
 acr demo
 ```
 
 `acr demo` 会在本地运行一个 LangGraph #6446 风格的 broken 示例，捕获 `InvalidUpdateError`，用 `acr scan` 找到 ACR001，演示一行 `output_schema` 修复，再跑回归确认通过。它需要可选依赖 `[langgraph]`；只跑 `scan` / `trace` / `report` 不需要安装 LangGraph。
 
-真实运行输出（`acr` 0.4.0，本地环境）：
+真实运行输出（`acr` 0.5.0，本地环境）：
 
 ```text
 $ acr demo
-acr demo - LangGraph subgraph state leak walkthrough (acr 0.4.0)
+acr demo - LangGraph subgraph state leak walkthrough (acr 0.5.0)
 
 1) run the broken graph from examples/langgraph-subgraph-leak/broken.py
    x InvalidUpdateError: At key 'b': Can receive only one value per step. Use an Annotated key to handle multiple values.
@@ -162,14 +162,14 @@ class ChildOutput(TypedDict):
 
 ```sh
 # 1) pipx（推荐，隔离环境）
-pipx install "git+https://github.com/meiluosi/agent-composition-review.git@v0.4.0"
+pipx install "git+https://github.com/meiluosi/agent-composition-review.git@v0.5.0"
 pipx inject agent-composition-review "langgraph>=1.0,<2"    # 可选，仅 acr demo 需要
 
 # 2) uv tool
-uv tool install "agent-composition-review[langgraph] @ git+https://github.com/meiluosi/agent-composition-review.git@v0.4.0"
+uv tool install "agent-composition-review[langgraph] @ git+https://github.com/meiluosi/agent-composition-review.git@v0.5.0"
 
 # 3) pip
-python3 -m pip install "agent-composition-review[langgraph] @ git+https://github.com/meiluosi/agent-composition-review.git@v0.4.0"
+python3 -m pip install "agent-composition-review[langgraph] @ git+https://github.com/meiluosi/agent-composition-review.git@v0.5.0"
 
 # 4) 源码
 git clone https://github.com/meiluosi/agent-composition-review.git
@@ -193,25 +193,52 @@ acr --help
 
 ```yaml
 - uses: actions/checkout@v4
-- uses: meiluosi/agent-composition-review@v0.4.0
+- uses: meiluosi/agent-composition-review@v0.5.0
   with:
     path: .
     fail-on: high
 ```
 
-Action 只静态扫描，不执行被扫描代码、不需要 API key。完整输入/退出码/安全说明见 [GitHub Action 文档](docs/github-action.md)。
+Action 只静态扫描，不执行被扫描代码、不需要 API key。要上传到 GitHub code scanning，加上权限并打开 `upload-sarif`：
+
+```yaml
+permissions:
+  contents: read
+  security-events: write
+steps:
+  - uses: actions/checkout@v4
+  - id: acr
+    uses: meiluosi/agent-composition-review@v0.5.0
+    with:
+      path: .
+      fail-on: high
+      upload-sarif: true
+  - run: echo "ACR findings: ${{ steps.acr.outputs.findings }}"
+```
+
+完整输入/outputs/退出码/安全说明见 [GitHub Action 文档](docs/github-action.md)。
+
+## SARIF / code scanning
+
+`acr scan` 可以直接输出 SARIF 2.1.0：
+
+```sh
+acr scan . --sarif -o acr.sarif
+```
+
+GitHub Action 可选 `upload-sarif: true` 把结果送进 code scanning（需要 `permissions: security-events: write`）；不开上传时 SARIF 文件仍留在 workspace，可交给后续 step 或 artifact。`--sarif` 与 `--json` 互斥。
 
 ## 命令
 
 | 命令 | 作用 | 常用参数 |
 | --- | --- | --- |
-| `acr scan PATH` | 静态分析构图代码（Python AST），输出 finding | `--json`；`--fail-on high\|review\|never` |
-| `acr trace TRACE` | 分析失败轨迹，输出时间线与证据事件 ID | `--json`；`--resume-at SEQ`；支持 JSON 数组 / JSONL / 统一事件格式，并兼容 LangGraph debug stream |
+| `acr scan PATH` | 静态分析构图代码（Python AST），输出 finding | `--json`；`--sarif`；`-o FILE`；`--fail-on high\|review\|never` |
+| `acr trace TRACE` | 分析失败轨迹，输出时间线与证据事件 ID | `--json`；`--resume-at SEQ`；`--infer-resume`；支持 JSON 数组 / JSONL / 统一事件格式，并兼容 LangGraph debug stream |
 | `acr report` | 合并 scan 与 trace 结果为一页 Markdown | `--scan FILE --trace FILE -o report.md` |
 | `acr demo` | 本地跑通 #6446 类示例：broken → scan → 修复 → 通过 | 需要 `[langgraph]` |
 | `acr rules` | 列出全部规则 ID、标题、严重度与文档链接 | — |
 
-`--fail-on` 用于 CI：`high` 只在 high finding 时非零退出，`review` 把 medium 也算失败，`never` 永不因 finding 失败。所有 finding 都带 `rule`、`severity`、`file`、`line`、`evidence`、`fix`、`docs` 字段。
+`--fail-on` 用于 CI：`high` 只在 high finding 时非零退出，`review` 把 medium 也算失败，`never` 永不因 finding 失败。所有 finding 都带 `rule`、`severity`、`status`、`file`、`line`、`evidence`、`fix`、`docs` 字段。
 
 ## 规则
 
@@ -253,6 +280,8 @@ Action 只静态扫描，不执行被扫描代码、不需要 API key。完整�
 ## 案例图谱
 
 按症状查真实案例：[docs/atlas/](docs/atlas/README.md)。收录 10 个公开 issue（#6446/#1964/#8320/#2644/#2581/#3875/#9276/#8753/#9253/#2336），每个都写清“症状 → 规则 → 证据 → 最小修复 → 验证边界”，并区分 grounded / experimental。
+
+在线搜索页：<https://meiluosi.github.io/agent-composition-review/atlas/>。
 
 ## 工作原理
 
@@ -321,6 +350,8 @@ Action 只静态扫描，不执行被扫描代码、不需要 API key。完整�
 - **ACR009 / ACR010**：没有新的 exact 样本，明确记 `no_sample_found`；#9253 / #2336 属已用于设计的旧案例，不能复用。
 
 报告：[第三轮定向验证报告](evals/realworld3/results/pilot3-2026-10-18/REPORT.md)。ACR106 的正向 trace 是本地复现，不是社区附件；且需要显式 resume/replay 标记，LangGraph 默认 debug 流不产生。
+
+补充搜索（`evals/realworld4/`）：ACR008/009/010 仍 **0 条新 exact 样本**，保持 experimental；本轮社区源因中断未抓取，空结果不代表社区没有样本。
 
 ## 给 Agent 使用
 

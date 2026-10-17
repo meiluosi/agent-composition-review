@@ -13,6 +13,23 @@
 - 把 command-send / resume-replay / parallel-interrupt 交给 `acr trace` 或版本感知提示，不硬加静态规则。
 - 在更多真实 LangGraph/LangChain 组合故障上校准误报率，并公开可复现的测试样例。
 
+## [0.5.0] - 2026-10-18
+
+### Added
+
+- `acr scan --sarif -o FILE`：输出 SARIF 2.1.0，供 GitHub code scanning 注解；`--sarif` 与 `--json` 互斥。
+- `acr trace --infer-resume`：opt-in 启发式，从重复 `checkpoint_id` 推断 resume 边界，减少手工 `--resume-at`；默认关闭，避免嵌套/子图 trace 误判。
+- GitHub Action：新增 `upload-sarif`（默认 false）和 `sarif-file` 输入，`findings` / `sarif-file` outputs；可选调用 `github/codeql-action/upload-sarif@v3`，即使 scan 因 high finding 退出 1 也会在 `always()` 下上传已有 SARIF。
+- 案例图谱静态站点：`docs/atlas/index.html` + `site.js` + `site.css`，支持按症状/规则/issue 号搜索和 grounded/experimental 过滤；`docs/index.html` 重定向，`docs/.nojekyll` 供 GitHub Pages。
+- 新增 SARIF、infer-resume、Action 元数据、静态站点相关测试。
+
+### Notes
+
+- SARIF 只由 `acr scan` 生成；`acr trace` 不产 SARIF。
+- `--infer-resume` 是启发式，不替代 `--resume-at` 的显式标注；推断结果要结合 checkpoint/step 证据核对。
+- `upload-sarif: true` 需要调用方 workflow 授予 `permissions: security-events: write`；默认 false 是为了无权限 job 不失败。
+- 本轮 ACR008/009/010 的补充搜索若仍无 exact 样本，继续保持 experimental，不提升为 grounded。
+
 ## [0.4.0] - 2026-10-18
 
 ### Added
@@ -146,7 +163,8 @@
 - **v0.1 不宣称 benchmark 提升。** 本版本是工具与文档的重新定位，不是新的模型能力评测；历史实验结论保持原样，不应被解读为 v0.1 的收益证据。
 - `acr scan`/`acr trace` 的规则是可解释的启发式检查：不确定的情况只报 `review` 级别，可能仍有误报，请结合证据人工确认。
 
-[Unreleased]: https://github.com/meiluosi/agent-composition-review/compare/v0.4.0...HEAD
+[Unreleased]: https://github.com/meiluosi/agent-composition-review/compare/v0.5.0...HEAD
+[0.5.0]: https://github.com/meiluosi/agent-composition-review/releases/tag/v0.5.0
 [0.4.0]: https://github.com/meiluosi/agent-composition-review/releases/tag/v0.4.0
 [0.3.1]: https://github.com/meiluosi/agent-composition-review/releases/tag/v0.3.1
 [0.3.0]: https://github.com/meiluosi/agent-composition-review/releases/tag/v0.3.0

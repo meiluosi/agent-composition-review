@@ -1,0 +1,37 @@
+acr scan - evals/realworld2/cases/lg2-1964
+1 file(s) parsed, 0 skipped - 3 finding(s): high 3, medium 0, low 0
+
+  HIGH   ACR001  Compiled subgraph shares state keys with the parent graph
+    evals/realworld2/cases/lg2-1964/graph.py:53
+    Compiled subgraph registered as node 'child1' has no output_schema, and child state 'ChildState' shares 'question', 'results' with parent state 'ParentState'. The child's full state is merged back into the parent, so writes from this node can collide with sibling branches.
+    evidence:
+      - shared state key(s): 'question', 'results'
+      - parent state 'ParentState' declared at line 25; key line(s): 'question' at line 26, 'results' at line 27
+      - child state 'ChildState' declared at line 20; key line(s): 'question' at line 21, 'results' at line 22
+      - child graph compiled without output_schema at line 34
+      - parent node 'child1' registered with add_node at line 53
+    fix: Declare ``output_schema=<SubgraphOutput>`` on the child ``StateGraph`` so only intended keys flow back to the parent, or split the shared key into distinct keys.
+    docs: docs/rules/ACR001.md
+
+  HIGH   ACR001  Compiled subgraph shares state keys with the parent graph
+    evals/realworld2/cases/lg2-1964/graph.py:54
+    Compiled subgraph registered as node 'child2' has no output_schema, and child state 'ChildState' shares 'question', 'results' with parent state 'ParentState'. The child's full state is merged back into the parent, so writes from this node can collide with sibling branches.
+    evidence:
+      - shared state key(s): 'question', 'results'
+      - parent state 'ParentState' declared at line 25; key line(s): 'question' at line 26, 'results' at line 27
+      - child state 'ChildState' declared at line 20; key line(s): 'question' at line 21, 'results' at line 22
+      - child graph compiled without output_schema at line 34
+      - parent node 'child2' registered with add_node at line 54
+    fix: Declare ``output_schema=<SubgraphOutput>`` on the child ``StateGraph`` so only intended keys flow back to the parent, or split the shared key into distinct keys.
+    docs: docs/rules/ACR001.md
+
+  HIGH   ACR002  Parallel branches write the same state key without a reducer
+    evals/realworld2/cases/lg2-1964/graph.py:57
+    After node 'question_generation', branches 'child1', 'child2' can run in the same superstep and all write state key 'question', which has no reducer. LangGraph raises InvalidUpdateError for concurrent writes to a non-reduced key.
+    evidence:
+      - source node 'question_generation' has unconditional edges to 'child1', 'child2' (edge line(s): 57, 58)
+      - state key 'question' declared at line 26 with annotation 'str' and no reducer
+      - node 'child1' writes 'question' (add_node at line 53)
+      - node 'child2' writes 'question' (add_node at line 54)
+    fix: Give the key a reducer, e.g. ``Annotated[list, operator.add]`` (or ``add_messages`` for messages), or make the branches write disjoint keys / run sequentially.
+    docs: docs/rules/ACR002.md

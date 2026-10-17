@@ -1,0 +1,13 @@
+{
+  "case_id": "lg2-4523",
+  "source_id": 4523,
+  "source_url": "https://github.com/langchain-ai/langgraph/issues/4523",
+  "title": "Update state fails when resuming subgraph after interrupt",
+  "version": "0.4.1",
+  "source_type": "framework",
+  "graph_visible": true,
+  "observed_behavior": "A parent graph routes to a compiled tech-support subgraph whose parse node calls interrupt(). On resume the caller sends Command(update={'message': 'This is a problem description'}, resume=True). Inside the resumed subgraph node, state['message'] is still the original 'Hi, I've a technical issue'; the update appears only after the node terminates. The top-level graph is said to behave as documented, but the subgraph does not.",
+  "structure_focus": "Command(update=..., resume=...) through a parent/subgraph boundary; when the update becomes visible to the resumed node",
+  "material_level": "high",
+  "notes": "Open at collection; maintainer reply says the top-level behavior works but the subgraph case does not, recommends Command(resume=value), and says they will investigate. Classified framework: the same resume API behaves inconsistently when the interrupted node is inside a compiled subgraph. The fixture keeps the input_schema/state_schema split, the compiled tech-support child with interrupt, and the resume call with both update and resume."
+}

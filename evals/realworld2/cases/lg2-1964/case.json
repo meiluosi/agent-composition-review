@@ -1,0 +1,13 @@
+{
+  "case_id": "lg2-1964",
+  "source_id": 1964,
+  "source_url": "https://github.com/langchain-ai/langgraph/issues/1964",
+  "title": "Sink node issue, if multiple subgraphs are used in parallel",
+  "version": "0.2.21",
+  "source_type": "user_graph",
+  "graph_visible": true,
+  "observed_behavior": "Two child subgraphs run in parallel from question_generation and fan in to a sink node. Both children compile with the same shared state (question, results) and no output schema, so each echoes the parent's question; the sink step receives two writes to the non-reduced key question and raises InvalidUpdateError: At key 'question': Can receive only one value per step.",
+  "structure_focus": "Parallel compiled subgraphs as parent nodes with no output_schema; subgraph full-state echo collides with a sibling at the fan-in",
+  "material_level": "high",
+  "notes": "Closed. The maintainer/community answer is to separate input and output schemas so each child only emits the keys it owns (the accepted workaround defines an output schema). This is the same subgraph output-boundary pattern as batch 1's ACR001 case, with the fan-in sink making the duplicate echo visible. Fixture keeps two compiled children, the shared ChildState/ParentState and the list-edge fan-in."
+}

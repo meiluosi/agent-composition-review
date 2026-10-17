@@ -1,0 +1,13 @@
+{
+  "case_id": "lg2-740",
+  "source_id": 740,
+  "source_url": "https://github.com/langchain-ai/langgraph/issues/740",
+  "title": "langgraph.errors.InvalidUpdateError: Must write to at least one of ['input', 'plan', 'past_steps', 'response']",
+  "version": "unknown (2024-06 issue; no version block in body)",
+  "source_type": "usage",
+  "graph_visible": true,
+  "observed_behavior": "A single-node graph invokes with an empty/partial input, the node returns no declared state key, and the graph raises InvalidUpdateError: Must write to at least one of ['input', 'plan', 'past_steps', 'response']. The same thread also shows a reduced case: a TypedDict field default is silently ignored by Python, so the field is absent at runtime unless the caller supplies it.",
+  "structure_focus": "Node return contract against the declared state keys; TypedDict defaults are not runtime defaults",
+  "material_level": "medium",
+  "notes": "Long thread, closed by maintainer explanation: TypedDict does not support default values (the Python interpreter ignores them), so callers must pass the initial state; LangGraph also requires each node to write at least one declared key. The issue body only shows one async node (execute_step returning past_steps), not the full plan-and-execute graph, so the fixture uses the thread's reduced single-node repro and the four keys named in the traceback. This is a usage/API-misunderstanding case, not a framework bug; the fixture documents the contract rather than reproducing every side discussion."
+}

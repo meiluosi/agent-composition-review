@@ -1,0 +1,13 @@
+{
+  "case_id": "lg2-1950",
+  "source_id": 1950,
+  "source_url": "https://github.com/langchain-ai/langgraph/issues/1950",
+  "title": "Passing private state with Class Node",
+  "version": "unknown (2024-10 issue; body has no system-info block)",
+  "source_type": "usage",
+  "graph_visible": true,
+  "observed_behavior": "A class-based node RetrieveDocumentsNode is annotated to take QueryOutputState and return DocumentOutputState but is registered without a node input schema. The update it returns does not write a declared OverallState key, and the graph raises InvalidUpdateError: Must write to at least one of ['question', 'answer', 'docs'].",
+  "structure_focus": "Class-based node with private input/output schemas; missing per-node input schema declaration",
+  "material_level": "high",
+  "notes": "Closed; maintainer-confirmed fix is graph.add_node('retrieve_documents', RetrieveDocumentsNode(), input=QueryOutputState), which the fixture records in a comment while keeping the broken registration so the structure matches the report. This is usage/API knowledge (per-node private state must be declared), not a framework defect; the function-node version of the same pipeline works. The fixture keeps the three-node query -> retrieve -> generate pipeline and the three schemas. On the pinned langgraph 1.0.3 the class node's undeclared 'docs' update is filtered rather than raising the reported InvalidUpdateError, so the run then fails one step later with KeyError: 'docs' in the generate node; the composition mistake is the same."
+}

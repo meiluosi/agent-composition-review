@@ -19,7 +19,7 @@ def test_version(capsys: pytest.CaptureFixture[str]) -> None:
     with pytest.raises(SystemExit) as excinfo:
         main(["--version"])
     assert excinfo.value.code == 0
-    assert capsys.readouterr().out.strip() == "acr 0.1.1"
+    assert capsys.readouterr().out.strip() == "acr 0.2.0"
 
 
 def test_scan_json_schema_and_exit_code(capsys: pytest.CaptureFixture[str]) -> None:

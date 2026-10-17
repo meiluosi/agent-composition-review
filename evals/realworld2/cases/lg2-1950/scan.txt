@@ -1,0 +1,22 @@
+acr scan - evals/realworld2/cases/lg2-1950
+1 file(s) parsed, 0 skipped - 2 finding(s): high 0, medium 2, low 0
+
+  MEDIUM ACR007  Node returns keys not declared in the state schema
+    evals/realworld2/cases/lg2-1950/graph.py:44
+    Node 'generate_query' returns key(s) 'query' that are not declared in state schema 'OverallState'. LangGraph filters undeclared keys at the node boundary, so this update is silently dropped and downstream nodes cannot see it.
+    evidence:
+      - node 'generate_query' registered with add_node at line 44
+      - state schema 'OverallState' declared at line 17 with key(s): 'answer', 'question'
+      - node returns undeclared key(s): 'query' (return line(s): 31)
+    fix: Declare the key in the graph state ``TypedDict`` (with a reducer if multiple nodes write it), or remove/rename the returned key. Do not rely on undeclared keys surviving the node boundary.
+    docs: docs/rules/ACR007.md
+
+  MEDIUM ACR007  Node returns keys not declared in the state schema
+    evals/realworld2/cases/lg2-1950/graph.py:46
+    Node 'retrieve_documents' returns key(s) 'docs' that are not declared in state schema 'OverallState'. LangGraph filters undeclared keys at the node boundary, so this update is silently dropped and downstream nodes cannot see it.
+    evidence:
+      - node 'retrieve_documents' registered with add_node at line 46
+      - state schema 'OverallState' declared at line 17 with key(s): 'answer', 'question'
+      - node returns undeclared key(s): 'docs' (return line(s): 36)
+    fix: Declare the key in the graph state ``TypedDict`` (with a reducer if multiple nodes write it), or remove/rename the returned key. Do not rely on undeclared keys surviving the node boundary.
+    docs: docs/rules/ACR007.md

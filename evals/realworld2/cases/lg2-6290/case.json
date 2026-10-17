@@ -1,0 +1,13 @@
+{
+  "case_id": "lg2-6290",
+  "source_id": 6290,
+  "source_url": "https://github.com/langchain-ai/langgraph/issues/6290",
+  "title": "Subgraphs channels reducer updating out of turn",
+  "version": "unknown (body lists langchain-core 0.3.72; no langgraph version)",
+  "source_type": "framework",
+  "graph_visible": true,
+  "observed_behavior": "Two compiled sibling subgraphs share the parent AgentState, including g_retry_count behind a custom increment reducer. subgraph_1's node returns {}, yet the parent reducer is called again for g_retry_count each super-step, so the retry loop stops after two iterations instead of three.",
+  "structure_focus": "Compiled sibling subgraphs sharing the parent state and a custom reducer; subgraph output echoes untouched keys, re-invoking the reducer",
+  "material_level": "high",
+  "notes": "Open. The issue is about reducer semantics across the subgraph boundary: a compiled subgraph used as a node returns every key in its output schema, including keys none of its nodes wrote, and the parent treats the echoed value as a fresh write. A commenter reproduces this analysis. Classified framework because the reported misbehavior is in how subgraph echoes are merged, not in the loop shape; the fixture keeps the shared state, custom reducer, two children and the loop conditional edge."
+}

@@ -116,8 +116,10 @@ SCAN_RULES: tuple[Rule, ...] = (
         ),
         fix=(
             "Declare the key in the graph state ``TypedDict`` (with a reducer if "
-            "multiple nodes write it), or remove/rename the returned key. Do not "
-            "rely on undeclared keys surviving the node boundary."
+            "multiple nodes write it), remove/rename the returned key, or — for a "
+            "class node with a private input schema — pass an explicit node input "
+            "schema (``add_node(..., input=...)``) so the return shape maps onto the "
+            "graph state. Do not rely on undeclared keys surviving the node boundary."
         ),
     ),
     Rule(

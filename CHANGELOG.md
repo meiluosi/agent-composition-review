@@ -7,17 +7,33 @@
 
 ## [Unreleased]
 
+### 计划中
+
+- 扩展 ACR002 到 retry 自环/并行分支重叠写同一无 reducer 键的 review 级检测。
+- 为 ACR008/ACR009 补独立正负样本后再谈验证结论。
+- 把 command-send / resume-replay / parallel-interrupt 交给 `acr trace` 或版本感知提示，不硬加静态规则。
+- 在更多真实 LangGraph/LangChain 组合故障上校准误报率，并公开可复现的测试样例。
+
+## [0.2.0] - 2026-10-18
+
 ### Added
 
 - 新增 ACR007：检测节点（含 class-based `__call__`）返回 dict 字面量里不在 graph state schema 中的键；这类写入会被 LangGraph 静默过滤。覆盖真实案例 #8320 与 #2644 的形态。
 - 新增 ACR008：检测 `cache_policy` 节点使用 callable object / lambda / partial / 未解析参数，cache key 可能失去稳定身份并与共享 cache 串结果。覆盖真实案例 #8753 的形态。
 - 新增 ACR009：检测 `retry_policy` 节点内调用多个子图，重试/恢复后可能复用第一个子图的 checkpoint 命名空间。覆盖真实案例 #9253 的形态。
+- 解析链式构图赋值（`StateGraph(S).add_node(...).add_edge(...).compile()`），使这类真实写法进入 ACR001/002/007/009 分析。
+- 第二轮真实案例验证：20 个新案例（15 GitHub + 3 Forum + 2 Stack Overflow），报告见 `evals/realworld2/results/pilot2-2026-10-18/REPORT.md`。
 
-### 计划中
+### Changed
 
-- 根据 v0.1 的早期使用反馈补充扫描/轨迹规则与最小修复模式。
-- 在更多真实 LangGraph/LangChain 组合故障上校准误报率，并公开可复现的测试样例。
-- 评估对更多 LangGraph 版本与常见编排封装的兼容性。
+- ACR007 的修复建议补充 class node/私有 schema 场景：优先考虑 `add_node(..., input=...)`，不要盲目把键补进全局 state。
+
+### Notes
+
+- ACR007 在第二轮 3/3 预期案例命中；但 1406 有 3 条 off-rule finding，1950 的 fix 文本场景不匹配（已在 0.2.0 文案中修正）。
+- ACR008/ACR009 在第二轮 **0 个预期样本、0 命中，未验证**；不能宣称已验证。
+- ACR002 在第二轮 3 个预期案例全部 miss（只建模兄弟扇出，漏 retry 自环重叠）；command-send 是最大 GAP，属运行时语义。
+- 第二轮验证是验证批次，不是统计保留集；选择偏向 user_graph/usage，不能据此推断真实分布。
 
 ## [0.1.1] - 2026-10-17
 
@@ -75,6 +91,7 @@
 - **v0.1 不宣称 benchmark 提升。** 本版本是工具与文档的重新定位，不是新的模型能力评测；历史实验结论保持原样，不应被解读为 v0.1 的收益证据。
 - `acr scan`/`acr trace` 的规则是可解释的启发式检查：不确定的情况只报 `review` 级别，可能仍有误报，请结合证据人工确认。
 
-[Unreleased]: https://github.com/meiluosi/agent-composition-review/compare/v0.1.1...HEAD
+[Unreleased]: https://github.com/meiluosi/agent-composition-review/compare/v0.2.0...HEAD
+[0.2.0]: https://github.com/meiluosi/agent-composition-review/releases/tag/v0.2.0
 [0.1.1]: https://github.com/meiluosi/agent-composition-review/releases/tag/v0.1.1
 [0.1.0]: https://github.com/meiluosi/agent-composition-review/releases/tag/v0.1.0

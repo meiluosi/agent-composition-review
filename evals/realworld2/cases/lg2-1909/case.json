@@ -1,0 +1,13 @@
+{
+  "case_id": "lg2-1909",
+  "source_id": 1909,
+  "source_url": "https://github.com/langchain-ai/langgraph/issues/1909",
+  "title": "PrivateState not working if the node is activated by a Send object",
+  "version": "0.2.28",
+  "source_type": "user_graph",
+  "graph_visible": true,
+  "observed_behavior": "A conditional router returns one Send per item, each targeting a node annotated to return a pydantic PrivateState. The node returns only {'private_var': [...]}, which is not declared on the graph's State, so the graph raises InvalidUpdateError: Must write to at least one of ['list_of_vars']. Without Send activation the private-state pattern behaves differently.",
+  "structure_focus": "Send activation bypasses the node-level private output schema; returned keys must still be declared on the graph state",
+  "material_level": "high",
+  "notes": "Open, no maintainer resolution in the thread; a community reply suggests declaring output=PrivateState on the graph, and the reporter shows an updated example where that is not possible. The essential composition fact: a node's return annotation does not register its keys on the graph state, and Send arguments are node input, not a schema escape hatch. Classified user_graph (state/output declaration design), with the Send interaction as the reported trigger. The fixture keeps the Send fan-out and the undeclared private key."
+}

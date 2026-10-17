@@ -32,18 +32,18 @@ v0.1 是早期版本：MIT 许可、本地运行、不需要 API key。**它不�
 ## 60 秒 demo
 
 ```sh
-pipx install "git+https://github.com/meiluosi/agent-composition-review.git@v0.1.1"
+pipx install "git+https://github.com/meiluosi/agent-composition-review.git@v0.2.0"
 pipx inject agent-composition-review "langgraph>=1.0,<2"   # acr demo 需要；scan/trace 可跳过
 acr demo
 ```
 
 `acr demo` 会在本地运行一个 LangGraph #6446 风格的 broken 示例，捕获 `InvalidUpdateError`，用 `acr scan` 找到 ACR001，演示一行 `output_schema` 修复，再跑回归确认通过。它需要可选依赖 `[langgraph]`；只跑 `scan` / `trace` / `report` 不需要安装 LangGraph。
 
-真实运行输出（`acr` 0.1.1，本地环境）：
+真实运行输出（`acr` 0.2.0，本地环境）：
 
 ```text
 $ acr demo
-acr demo - LangGraph subgraph state leak walkthrough (acr 0.1.1)
+acr demo - LangGraph subgraph state leak walkthrough (acr 0.2.0)
 
 1) run the broken graph from examples/langgraph-subgraph-leak/broken.py
    x InvalidUpdateError: At key 'b': Can receive only one value per step. Use an Annotated key to handle multiple values.
@@ -162,14 +162,14 @@ class ChildOutput(TypedDict):
 
 ```sh
 # 1) pipx（推荐，隔离环境）
-pipx install "git+https://github.com/meiluosi/agent-composition-review.git@v0.1.1"
+pipx install "git+https://github.com/meiluosi/agent-composition-review.git@v0.2.0"
 pipx inject agent-composition-review "langgraph>=1.0,<2"    # 可选，仅 acr demo 需要
 
 # 2) uv tool
-uv tool install "agent-composition-review[langgraph] @ git+https://github.com/meiluosi/agent-composition-review.git@v0.1.1"
+uv tool install "agent-composition-review[langgraph] @ git+https://github.com/meiluosi/agent-composition-review.git@v0.2.0"
 
 # 3) pip
-python3 -m pip install "agent-composition-review[langgraph] @ git+https://github.com/meiluosi/agent-composition-review.git@v0.1.1"
+python3 -m pip install "agent-composition-review[langgraph] @ git+https://github.com/meiluosi/agent-composition-review.git@v0.2.0"
 
 # 4) 源码
 git clone https://github.com/meiluosi/agent-composition-review.git
@@ -265,6 +265,19 @@ acr --help
 这不是 benchmark，样本也很小；它直接暴露了两个 P0，并在 **v0.1.1** 修复：**跨函数解析 helper 返回的 compiled subgraph** 和 **reducer 注解限定符解包**。同一批开发案例的复扫结果：`lg-6446` 命中 ACR001 + ACR002，`lg-9311` 的误导 finding 消失，3 个控制图仍 0 findings。其余 12 个案例仍是 GAP，多数是框架内部运行时 bug，静态构图规则不应硬覆盖。
 
 完整报告（含逐例判定、GAP 分布、材料限制）在 [真实案例试点报告](evals/realworld/results/pilot-2026-10-17/REPORT.md)，修复后复扫记录在 [POSTFIX.md](evals/realworld/results/pilot-2026-10-17/POSTFIX.md)。
+
+### 第二轮验证（2026-10-18）
+
+接着又收集了 **20 个未参与规则设计的新案例**（15 个 GitHub issue + 3 个 LangChain Forum + 2 个 Stack Overflow），在 ACR007–ACR009 实现后做验证。规则集为 14 条，本轮随 v0.2.0 发布：
+
+- 可分析 15/20；规则可表达 9/15 = 60%；可表达案例命中 6/9 = 66.7%；
+- 19 条 finding 中 0 条误导性解释，但 ACR007 有 2 条修法建议场景不匹配（class node 应优先考虑 `add_node(input=...)`，该问题已在 v0.2.0 的规则文案/文档中修正）；
+- **ACR007 预期 3 例全部命中**，但另有 1 个 off-rule（1406）和重复 finding，precision 不干净；
+- **ACR008/ACR009 本批 0 样本、0 命中，未验证**；
+- ACR002 预期 3 例全部 miss（只建模兄弟扇出，漏 retry 自环重叠）；最大缺口是 command-send（4/9 GAP），属运行时语义，不建议硬加静态规则；
+- 3 个正常控制图仍 0 误报。
+
+本批选择偏向 user_graph/usage，不能把“framework GAP 比例下降”解读为真实分布变化。报告：[第二轮验证报告](evals/realworld2/results/pilot2-2026-10-18/REPORT.md)。
 
 ## 给 Agent 使用
 

@@ -1,0 +1,12 @@
+acr scan - evals/realworld2/cases/lg2-1909
+1 file(s) parsed, 0 skipped - 1 finding(s): high 0, medium 1, low 0
+
+  MEDIUM ACR007  Node returns keys not declared in the state schema
+    evals/realworld2/cases/lg2-1909/graph.py:43
+    Node 'node_activate_by_Send' returns key(s) 'private_var' that are not declared in state schema 'State'. LangGraph filters undeclared keys at the node boundary, so this update is silently dropped and downstream nodes cannot see it.
+    evidence:
+      - node 'node_activate_by_Send' registered with add_node at line 43
+      - state schema 'State' declared at line 25 with key(s): 'list_of_vars'
+      - node returns undeclared key(s): 'private_var' (return line(s): 38)
+    fix: Declare the key in the graph state ``TypedDict`` (with a reducer if multiple nodes write it), or remove/rename the returned key. Do not rely on undeclared keys surviving the node boundary.
+    docs: docs/rules/ACR007.md

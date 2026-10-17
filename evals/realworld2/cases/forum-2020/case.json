@@ -1,0 +1,13 @@
+{
+  "case_id": "forum-2020",
+  "source_id": "forum-2020",
+  "source_url": "https://forum.langchain.com/t/2020",
+  "title": "State is not being copied between sub-graphs",
+  "version": "unknown (forum post, 2025-10-30; no version given)",
+  "source_type": "user_graph",
+  "graph_visible": true,
+  "observed_behavior": "Several subgraphs hand off to each other with Command(graph=Command.PARENT, goto=next_agent, update=update_data). When the handoff happens inside the same stream, updates accumulated in the current subgraph (messages, elements) are missing from the parent after the jump; only the Command(update=...) payload arrives. When the user interaction interrupts the stream first, the state is projected correctly.",
+  "structure_focus": "Command.PARENT handoff between sibling subgraphs: only the returned update crosses the boundary; accumulated in-memory subgraph state does not",
+  "material_level": "medium",
+  "notes": "Forum thread; the reply states this is expected behavior (state crosses a subgraph boundary through the node's/Command's returned update, not by implicit copying) and recommends including the full data in Command.update. Classified user_graph because the handoff design assumes implicit state copying. The post does not include full graph code (only the State and Command snippets and a written architecture), so the fixture reconstructs two sibling subgraphs with a Command.PARENT handoff and keeps the update payload minimal, which is the reported shape."
+}

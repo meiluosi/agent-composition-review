@@ -1,0 +1,13 @@
+{
+  "case_id": "so-79788210",
+  "source_id": "so-79788210",
+  "source_url": "https://stackoverflow.com/questions/79788210/langgraph-keyerror-when-embedding-a-compiled-subgraph-node-in-a-parent-graph-wor",
+  "title": "LangGraph KeyError: when embedding a compiled subgraph node in a parent graph workflow",
+  "version": "0.5.x / 0.6.7 (body)",
+  "source_type": "user_graph",
+  "graph_visible": true,
+  "observed_behavior": "A compiled scheduler-assistant subgraph is registered in a parent graph as node 'scheduler_assistant', and a conditional edge from START can route to it. During execution/streaming LangGraph raises KeyError: 'scheduler_assistant' inside its routing (the traceback mentions the __start__ task and the scheduler_assistant task).",
+  "structure_focus": "Compiled subgraph registered as a parent node and targeted from a START conditional edge; node-name/routing consistency",
+  "material_level": "medium",
+  "notes": "Stack Overflow question with no answers (0 answers at fetch time); the failure is unresolved and the post only gives a minimal structure rather than full code. The fixture reconstructs that structure: a compiled child node plus entry node, and a START conditional edge whose path map includes the scheduler node. It may not reproduce the KeyError on current versions; the case is classified user_graph because the likely cause is node registration/routing wiring (a name or subgraph wiring error) rather than a confirmed framework defect. The post's version is inconsistent (0.5.x vs 0.6.7), which further limits confidence."
+}

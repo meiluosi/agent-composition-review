@@ -1,0 +1,13 @@
+{
+  "case_id": "so-79725144",
+  "source_id": "so-79725144",
+  "source_url": "https://stackoverflow.com/questions/79725144/the-conditional-edge-in-langgraph-causes-the-reduce-function-to-be-invoked-twice",
+  "title": "The conditional edge in LangGraph causes the reduce function to be invoked twice",
+  "version": "unknown (Stack Overflow question, 2025-08-04; no version given)",
+  "source_type": "usage",
+  "graph_visible": true,
+  "observed_behavior": "A Fibonacci loop uses a pydantic state with fibonacci_list: Annotated[list[int], append_to_list] and a conditional edge from n1 back to n1. Each loop iteration appends the new value twice: expected [1, 1, 2, 3, 5, 8, 13], actual [1, 1, 2, 2, 3, 3, 5, 5, 8, 8, 13, 13].",
+  "structure_focus": "A mutating reducer combined with a conditional (looping) edge; reducer purity across repeated application",
+  "material_level": "high",
+  "notes": "No accepted answer; the OP's own follow-up answer identifies the cause: append_to_list mutates its input list in place and returns it, so when the same channel value is fed through the reducer again the already-added element is added a second time. The remaining question (why the conditional edge triggers the reducer again) was still unclear to the OP. The fixture keeps the pydantic state, the mutating reducer, the Runnable-based nodes and the looping conditional edge; it returns the bool route key directly (the post's ConditionalNode returns {'path': ...}) so the loop actually runs. On the pinned langgraph 1.0.3 it reproduces the doubling exactly ([1, 1, 2, 2, 3, 3, 5, 5, 8, 8, 13, 13]). Classified usage because the fix is a pure/reducer-safe append."
+}

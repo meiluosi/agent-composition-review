@@ -1,0 +1,547 @@
+{
+  "comparison": {
+    "batch1": {
+      "analyzable": 13,
+      "control_false_positive_rate": 0.0,
+      "expressibility_rate_analyzable": 0.0769,
+      "gap_by_category": {
+        "command-send": 1,
+        "declared-keys": 2,
+        "other": 2,
+        "parallel-interrupt": 1,
+        "reducer-semantics": 4,
+        "resume-replay": 1,
+        "retry-cache": 2
+      },
+      "gap_by_source_type_blind": {
+        "feature": 1,
+        "framework": 10,
+        "usage": 2
+      },
+      "gap_cases": 13,
+      "hit_rate": 0.0,
+      "issue_cases": 14,
+      "misleading_findings": 1,
+      "relevant_findings": 0,
+      "rules_available": 11,
+      "total_findings": 3
+    },
+    "batch2": {
+      "analyzable": 15,
+      "control_false_positive_rate": 0.0,
+      "expressibility_rate_analyzable": 0.6,
+      "fix_advice_misleading_findings": 2,
+      "gap_by_category": {
+        "command-send": 4,
+        "other": 3,
+        "reducer-semantics": 2
+      },
+      "gap_by_source_type_blind": {
+        "framework": 3,
+        "usage": 4,
+        "user_graph": 2
+      },
+      "gap_cases": 9,
+      "hit_rate": 0.6667,
+      "issue_cases": 20,
+      "misleading_explanations": 0,
+      "relevant_findings": 9,
+      "rules_available": 14,
+      "total_findings": 19
+    },
+    "notes": [
+      "第一批规则集为 11 条，第二批为 14 条（新增 ACR007–ACR009）。",
+      "第一批选择范围更宽（含 framework bug）；第二批 GitHub 案例按『用户构图/用法优先』排序，source_type 分布不可直接比较。",
+      "第一批 GAP 以 framework 为主（10/13）；第二批为 3/9，但这是选择偏差 + 来源变化的结果，不能解读为真实世界 framework bug 占比下降。"
+    ]
+  },
+  "controls": {
+    "cases": [
+      {
+        "case_id": "control-disjoint",
+        "findings_rules": [],
+        "scan_findings": 0
+      },
+      {
+        "case_id": "control-output-schema",
+        "findings_rules": [],
+        "scan_findings": 0
+      },
+      {
+        "case_id": "control-reducer",
+        "findings_rules": [],
+        "scan_findings": 0
+      }
+    ],
+    "count": 3,
+    "false_positive_rate": {
+      "denominator": 3,
+      "numerator": 0,
+      "rate": 0.0
+    },
+    "findings_total": 0,
+    "source": "batch-1 internal controls (evals/realworld/cases/control-*): no batch-2 control fixtures exist; re-scanned with acr 0.2.0 and still 0 findings"
+  },
+  "counts": {
+    "analyzable_cases": 15,
+    "cases_with_findings": 12,
+    "control_findings": 0,
+    "controls": 3,
+    "expressible_cases": 9,
+    "false_positive_cases": 0,
+    "findings_fix_advice_misleading": 2,
+    "findings_incidental": 6,
+    "findings_off_rule": 3,
+    "findings_relevant": 9,
+    "findings_secondary": 1,
+    "findings_total": 19,
+    "gap_cases": 9,
+    "hit_cases": 6,
+    "issue_cases": 20,
+    "material_insufficient_cases": 5,
+    "miss_cases": 3,
+    "none_cases": 2,
+    "source_type_insufficient_cases": 2
+  },
+  "disagreements": [
+    {
+      "case_id": "forum-2020",
+      "detail": "blind usage/graph_visible=false vs fixture user_graph/graph_visible=true"
+    },
+    {
+      "case_id": "lg2-4523",
+      "detail": "blind usage vs fixture framework"
+    },
+    {
+      "case_id": "lg2-5362",
+      "detail": "blind usage/graph_visible=false vs fixture framework/graph_visible=true"
+    },
+    {
+      "case_id": "lg2-6290",
+      "detail": "blind user_graph vs fixture framework"
+    },
+    {
+      "case_id": "lg2-740",
+      "detail": "blind insufficient/graph_visible=false vs fixture usage/graph_visible=true"
+    },
+    {
+      "case_id": "so-79725144",
+      "detail": "blind user_graph vs fixture usage"
+    },
+    {
+      "case_id": "so-79788210",
+      "detail": "blind insufficient/graph_visible=false vs fixture user_graph/graph_visible=true"
+    }
+  ],
+  "environment": {
+    "acr_invocation": "PYTHONPATH=src python3 -m agent_composition_review (acr 0.2.0)",
+    "acr_version": "0.2.0",
+    "analysis_mode": "static-only; archived acr scan output parsed offline",
+    "new_rules_in_batch": [
+      "ACR007",
+      "ACR008",
+      "ACR009"
+    ],
+    "python_version": "3.13.5",
+    "rules_available": [
+      "ACR001",
+      "ACR002",
+      "ACR003",
+      "ACR004",
+      "ACR005",
+      "ACR006",
+      "ACR007",
+      "ACR008",
+      "ACR009",
+      "ACR101",
+      "ACR102",
+      "ACR103",
+      "ACR104",
+      "ACR105"
+    ]
+  },
+  "findings": {
+    "false_positive": 0,
+    "fix_advice_misleading": 2,
+    "incidental": 6,
+    "off_rule": 3,
+    "per_case": {
+      "forum-2020": [
+        "ACR003"
+      ],
+      "lg2-1406": [
+        "ACR007",
+        "ACR007",
+        "ACR007"
+      ],
+      "lg2-1909": [
+        "ACR007"
+      ],
+      "lg2-1950": [
+        "ACR007",
+        "ACR007"
+      ],
+      "lg2-1964": [
+        "ACR001",
+        "ACR001",
+        "ACR002"
+      ],
+      "lg2-2392": [
+        "ACR003"
+      ],
+      "lg2-2581": [
+        "ACR007",
+        "ACR003"
+      ],
+      "lg2-4523": [
+        "ACR003"
+      ],
+      "lg2-5062": [
+        "ACR001"
+      ],
+      "lg2-5362": [
+        "ACR001"
+      ],
+      "lg2-6290": [
+        "ACR001",
+        "ACR001"
+      ],
+      "so-79788210": [
+        "ACR003"
+      ]
+    },
+    "relevant": 9,
+    "secondary": 1,
+    "total": 19
+  },
+  "frozen_inputs": {
+    "labels_blind": true,
+    "labels_case_count": 20,
+    "labels_path": "evals/realworld2/labels.json",
+    "labels_sha256_actual": "0510774269aa3032be5cb7ce301bddd68ea70ee6c2b4941116a5e93b02201781",
+    "labels_sha256_expected": "0510774269aa3032be5cb7ce301bddd68ea70ee6c2b4941116a5e93b02201781",
+    "labels_sha256_verified": true,
+    "protocol_frozen_at": "2026-10-18"
+  },
+  "gap": {
+    "analyzable_cases": 6,
+    "by_category": {
+      "command-send": {
+        "cases": [
+          "forum-2020",
+          "lg2-4523",
+          "lg2-4879",
+          "lg2-5062"
+        ],
+        "count": 4
+      },
+      "other": {
+        "cases": [
+          "forum-2839",
+          "lg2-5362",
+          "lg2-766"
+        ],
+        "count": 3
+      },
+      "reducer-semantics": {
+        "cases": [
+          "lg2-5225",
+          "so-79725144"
+        ],
+        "count": 2
+      }
+    },
+    "by_source_type_blind": {
+      "framework": 3,
+      "usage": 4,
+      "user_graph": 2
+    },
+    "by_visibility": {
+      "analyzable": [
+        "forum-2839",
+        "lg2-4523",
+        "lg2-4879",
+        "lg2-5062",
+        "lg2-766",
+        "so-79725144"
+      ],
+      "material_insufficient": [
+        "forum-2020",
+        "lg2-5225",
+        "lg2-5362"
+      ]
+    },
+    "cases_total": 9
+  },
+  "generated_by": "scripts/summarize_realworld2_eval.py",
+  "limitations": [
+    "验证批次：20 个新案例（15 GitHub + 3 Forum + 2 Stack Overflow），不是统计保留集，样本小，不计算置信区间，不宣称泛化。",
+    "选择偏差：本批 GitHub 案例按『用户构图/用法优先、有代码、有具体报错』排序，source_type 分布明显偏向 user_graph/usage；因此 framework 占比变化不能解读为真实世界分布变化。",
+    "社区来源只有 5 例（Forum 3、SO 2）；论坛/SO 的结论只能是方向性的，不能代表 Forum/SO 总体。",
+    "ACR007–ACR009 在第一批 14 个 issue 上设计，本批没有参与规则设计；但本批已被用于评估，后续若据本批改规则，本批必须改记为开发集，不能当未见保留集。",
+    "静态分析：只汇总存档的 acr scan 结果，没有运行 fixture，不能证明运行时行为；framework 内部 bug 的 GAP 不是静态构图规则的 false negative。",
+    "本批没有新的正常控制 fixture；控制误报率沿用第一批 3 个内部 controls（0/3），只能证明当前规则集在这 3 张图上不误报，不是独立证据。",
+    "ACR008/ACR009 本批 0 个预期样本、0 条 finding：未验证，既不能说有效，也不能说只有噪声。ACR004/ACR005/ACR006/ACR101–ACR105 同样无本批样本。",
+    "labels 与 fixture 元数据在 7 个 case 上不一致（source_type/graph_visible）；本报告以 labels 为准，未修改任何一侧。",
+    "部分 fixture 受版本/远端环境限制（lg2-4879、lg2-5062、lg2-5362、so-79788210），静态扫描不受影响，但运行时复现需各自环境。",
+    "相关性/误导/off-rule 判定是分析者判断，逐条写在 predictions.json 的 notes；没有第二标注者，无一致性统计。"
+  ],
+  "material": {
+    "fixture_label_tension": {
+      "forum-1474": "盲标 ACR002 假定无 reducer；fixture 为还原 reporter 的『合并顺序』抱怨而保留 operator.add reducer，规则正确地沉默。",
+      "lg2-1406": "盲标 ACR002 假定 num_p 是声明的无 reducer 通道；fixture 把 num_p 放在 DataOutputState、未合并进 OverallState，ACR002 结构上无法触发。"
+    },
+    "hard_insufficient": {
+      "cases": [
+        "forum-2020",
+        "lg2-5225",
+        "lg2-5362",
+        "lg2-740",
+        "so-79788210"
+      ],
+      "count": 5,
+      "reason": "盲标 graph_visible=false，材料不足以做构图分析。"
+    },
+    "soft_repro_concerns": {
+      "lg2-4879": "依赖 langgraph dev 远端服务，离线不能直接跑。",
+      "lg2-5062": "原 issue 依赖 create_react_agent/ToolNode + 模型输出，离线 fixture 只能保留构图，组合 bug 未必触发。",
+      "lg2-5362": "消息类型降级可能只在特定版本/序列化路径出现。",
+      "so-79788210": "Stack Overflow 未解决、版本信息不一致，KeyError 未必能在当前版本复现。"
+    },
+    "source_type_insufficient": {
+      "cases": [
+        "lg2-740",
+        "so-79788210"
+      ],
+      "count": 2
+    }
+  },
+  "metrics": {
+    "analyzability_rate": {
+      "denominator": 20,
+      "numerator": 15,
+      "rate": 0.75
+    },
+    "control_false_positive_rate": {
+      "denominator": 3,
+      "numerator": 0,
+      "rate": 0.0
+    },
+    "finding_relevance_rate": {
+      "denominator": 19,
+      "numerator": 9,
+      "rate": 0.4737
+    },
+    "fix_advice_misleading_rate": {
+      "denominator": 19,
+      "numerator": 2,
+      "rate": 0.1053
+    },
+    "hit_rate": {
+      "denominator": 9,
+      "numerator": 6,
+      "rate": 0.6667
+    },
+    "misleading_rate": {
+      "denominator": 19,
+      "numerator": 0,
+      "rate": 0.0
+    },
+    "rule_expressibility_rate_all_cases": {
+      "denominator": 20,
+      "numerator": 9,
+      "rate": 0.45
+    },
+    "rule_expressibility_rate_analyzable": {
+      "denominator": 15,
+      "numerator": 9,
+      "rate": 0.6
+    }
+  },
+  "pilot": "pilot2-2026-10-18",
+  "rule_verification": {
+    "new_rules_without_samples": [
+      "ACR008",
+      "ACR009"
+    ],
+    "rules_with_samples": [
+      "ACR001",
+      "ACR002",
+      "ACR003",
+      "ACR007"
+    ],
+    "rules_without_samples": [
+      "ACR004",
+      "ACR005",
+      "ACR006",
+      "ACR008",
+      "ACR009",
+      "ACR101",
+      "ACR102",
+      "ACR103",
+      "ACR104",
+      "ACR105"
+    ]
+  },
+  "rules": {
+    "ACR001": {
+      "case_precision": 0.5,
+      "emitted_case_count": 4,
+      "emitted_cases": [
+        "lg2-1964",
+        "lg2-5062",
+        "lg2-5362",
+        "lg2-6290"
+      ],
+      "emitted_findings": 6,
+      "expected_cases": [
+        "lg2-1964",
+        "lg2-6290"
+      ],
+      "expected_count": 2,
+      "finding_relevance": 0.6667,
+      "fix_advice_misleading_findings": 0,
+      "incidental_findings": 2,
+      "off_rule_findings": 0,
+      "recall": 1.0,
+      "relevant_findings": 4,
+      "secondary_findings": 0,
+      "target_hit_cases": [
+        "lg2-1964",
+        "lg2-6290"
+      ],
+      "target_hit_count": 2
+    },
+    "ACR002": {
+      "case_precision": 0.0,
+      "emitted_case_count": 1,
+      "emitted_cases": [
+        "lg2-1964"
+      ],
+      "emitted_findings": 1,
+      "expected_cases": [
+        "forum-1474",
+        "lg2-1406",
+        "lg2-2336"
+      ],
+      "expected_count": 3,
+      "finding_relevance": 0.0,
+      "fix_advice_misleading_findings": 0,
+      "incidental_findings": 0,
+      "off_rule_findings": 0,
+      "recall": 0.0,
+      "relevant_findings": 0,
+      "secondary_findings": 1,
+      "target_hit_cases": [],
+      "target_hit_count": 0
+    },
+    "ACR003": {
+      "case_precision": 0.2,
+      "emitted_case_count": 5,
+      "emitted_cases": [
+        "forum-2020",
+        "lg2-2392",
+        "lg2-2581",
+        "lg2-4523",
+        "so-79788210"
+      ],
+      "emitted_findings": 5,
+      "expected_cases": [
+        "lg2-2392"
+      ],
+      "expected_count": 1,
+      "finding_relevance": 0.2,
+      "fix_advice_misleading_findings": 0,
+      "incidental_findings": 4,
+      "off_rule_findings": 0,
+      "recall": 1.0,
+      "relevant_findings": 1,
+      "secondary_findings": 0,
+      "target_hit_cases": [
+        "lg2-2392"
+      ],
+      "target_hit_count": 1
+    },
+    "ACR007": {
+      "case_precision": 0.75,
+      "emitted_case_count": 4,
+      "emitted_cases": [
+        "lg2-1406",
+        "lg2-1909",
+        "lg2-1950",
+        "lg2-2581"
+      ],
+      "emitted_findings": 7,
+      "expected_cases": [
+        "lg2-1909",
+        "lg2-1950",
+        "lg2-2581"
+      ],
+      "expected_count": 3,
+      "finding_relevance": 0.5714,
+      "fix_advice_misleading_findings": 2,
+      "incidental_findings": 0,
+      "off_rule_findings": 3,
+      "recall": 1.0,
+      "relevant_findings": 4,
+      "secondary_findings": 0,
+      "target_hit_cases": [
+        "lg2-1909",
+        "lg2-1950",
+        "lg2-2581"
+      ],
+      "target_hit_count": 3
+    }
+  },
+  "schema_version": 1,
+  "source_distribution": {
+    "forum.langchain.com": 3,
+    "github": 15,
+    "stackoverflow.com": 2
+  },
+  "source_type_distribution_blind": {
+    "framework": 3,
+    "insufficient": 2,
+    "usage": 5,
+    "user_graph": 10
+  },
+  "verdicts": {
+    "cases": {
+      "gap": [
+        "forum-2839",
+        "lg2-4523",
+        "lg2-4879",
+        "lg2-5062",
+        "lg2-766",
+        "so-79725144"
+      ],
+      "hit": [
+        "lg2-1909",
+        "lg2-1950",
+        "lg2-1964",
+        "lg2-2392",
+        "lg2-2581",
+        "lg2-6290"
+      ],
+      "miss": [
+        "forum-1474",
+        "lg2-1406",
+        "lg2-2336"
+      ],
+      "not_applicable": [
+        "forum-2020",
+        "lg2-5225",
+        "lg2-5362",
+        "lg2-740",
+        "so-79788210"
+      ]
+    },
+    "counts": {
+      "gap": 6,
+      "hit": 6,
+      "miss": 3,
+      "not_applicable": 5
+    }
+  },
+  "warnings": []
+}

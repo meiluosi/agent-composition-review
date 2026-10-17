@@ -1,0 +1,207 @@
+{
+  "schema_version": 1,
+  "labeled_at": "2026-10-18",
+  "blind": true,
+  "cases": [
+    {
+      "case_id": "lg2-1406",
+      "source_type": "user_graph",
+      "graph_visible": true,
+      "expected_rule": "ACR002",
+      "expected_finding": "Send 扇出后多个并行 num_pros 任务在同一个 superstep 写未加 reducer 的 num_p（str），报 Invalid update for channel num_p；应指出并行分支写同一非 reducer 键。",
+      "normal_control": false,
+      "material_notes": "完整可运行代码；维护者 vbarda 明确建议给 num_p 加 Annotated reducer，issue 因不活跃关闭。",
+      "confidence": "high"
+    },
+    {
+      "case_id": "lg2-1964",
+      "source_type": "user_graph",
+      "graph_visible": true,
+      "expected_rule": "ACR001",
+      "expected_finding": "父图并行挂两个 child 子图，child 未声明 output_schema 且与父图共享 question/results，两个子图都把含 question 的整份状态回传给 sink，同一步写两次；应指出子图输出边界泄漏/共享键冲突。",
+      "normal_control": false,
+      "material_notes": "完整代码；评论区给出 input/output schema 分离方案并被采纳，issue 关闭。",
+      "confidence": "high"
+    },
+    {
+      "case_id": "lg2-2581",
+      "source_type": "user_graph",
+      "graph_visible": true,
+      "expected_rule": "ACR007",
+      "expected_finding": "Send 扇出到编译子图后，子图节点 get_kids 返回未在 SubgraphState 声明的 kids，被过滤后报 Expected node father to update at least one of ['father']；应指出 declared-key 不匹配。",
+      "normal_control": false,
+      "material_notes": "完整代码；评论只留了修复示意图，但错误文本本身已证明 kids 不在子图 schema。",
+      "confidence": "high"
+    },
+    {
+      "case_id": "lg2-6290",
+      "source_type": "user_graph",
+      "graph_visible": true,
+      "expected_rule": "ACR001",
+      "expected_finding": "两个子图直接复用父图 AgentState 且未声明 output_schema，subgraph_1 没写 g_retry_count 也把整份状态回显，父图 reducer 把回显当成新写入再次 +1，循环次数翻倍；应指出子图整状态回传导致 reducer 重放。",
+      "normal_control": false,
+      "material_notes": "完整代码；评论定位为子图 echo 未写键导致 reducer 重跑，但无维护者裁决。ACR001 的并行冲突措辞只部分覆盖该 reducer 重放后果。",
+      "confidence": "medium"
+    },
+    {
+      "case_id": "lg2-766",
+      "source_type": "user_graph",
+      "graph_visible": true,
+      "expected_rule": "GAP:other",
+      "expected_finding": "medical_mentor 同时有普通边和条件边指向 medical_mentor_pass，同一 superstep 两个任务都返回整份 medical，channel medical 收到两个值而报 InvalidUpdateError；重复边/同一节点并行执行两次不在现有规则内。",
+      "normal_control": false,
+      "material_notes": "只贴了 workflow 片段而未给 GraphState；根因需从重复边推断（普通边+条件边同一 target），维护者只问过 state 结构后因不活跃关闭。",
+      "confidence": "medium"
+    },
+    {
+      "case_id": "lg2-2336",
+      "source_type": "user_graph",
+      "graph_visible": true,
+      "expected_rule": "ACR002",
+      "expected_finding": "a 并行扇出到 b/c，c 的条件回边重试与同一步的其他写入竞争 count_b，报 At key 'count_b': Can receive only one value per step；应指出并行分支写同一非 reducer 键。",
+      "normal_control": false,
+      "material_notes": "完整代码；维护者 vbarda 明确建议给 count_b 加 reducer，issue 关闭。",
+      "confidence": "high"
+    },
+    {
+      "case_id": "lg2-740",
+      "source_type": "insufficient",
+      "graph_visible": false,
+      "expected_rule": "NONE",
+      "expected_finding": "材料不足：只贴了 execute_step 一个节点函数，没有 PlanExecute schema 和图构造，无法判断 Must write to at least one of [...] 的结构原因。",
+      "normal_control": false,
+      "material_notes": "issue 正文无图定义/无完整 repro；35 条评论大多是其他用户各自不同的 Must-write-to issue，维护者索要 MVC 后未获提供，不能当作同一结构。",
+      "confidence": "medium"
+    },
+    {
+      "case_id": "lg2-2392",
+      "source_type": "user_graph",
+      "graph_visible": true,
+      "expected_rule": "ACR003",
+      "expected_finding": "双层嵌套子图各用不同 private state；内层图作为节点未声明 output_schema，整份子图状态回传后与上层/父图 schema 不匹配（debugging_result 不应进 OverallState）；应指出嵌套子图输出边界缺失。",
+      "normal_control": false,
+      "material_notes": "只给出 level2 的构图代码，level0/level1 仅文字描述；维护者 vbarda 回复属预期行为，需在层间加 input/output 变换，issue 关闭。",
+      "confidence": "medium"
+    },
+    {
+      "case_id": "lg2-1909",
+      "source_type": "user_graph",
+      "graph_visible": true,
+      "expected_rule": "ACR007",
+      "expected_finding": "被 Send 激活的节点返回 private_var，但该键不在图 State 的 schema（只有 list_of_vars），写入被过滤后报 Must write to at least one of ['list_of_vars']；应指出 declared-key 不匹配/private state 需显式接入 schema。",
+      "normal_control": false,
+      "material_notes": "完整代码；评论给出修复（节点改用 PrivateState 作为输入 schema / 声明 output），申诉者确认解决。",
+      "confidence": "high"
+    },
+    {
+      "case_id": "lg2-5225",
+      "source_type": "framework",
+      "graph_visible": false,
+      "expected_rule": "GAP:reducer-semantics",
+      "expected_finding": "Pydantic 字段 Annotated[list, extend_list] + Field(default_factory=...) 的默认值没有用于 reducer 通道初始化（BinaryOperatorAggregate 用 typ() 播种），默认值被忽略；应指出 reducer 通道的默认值语义。",
+      "normal_control": false,
+      "material_notes": "正文只有 state 类片段、没有图构造；维护者 sydney-runkle 确认可复现，但至今未裁决实现语义（默认值先播种 vs 显式输入覆盖）。",
+      "confidence": "high"
+    },
+    {
+      "case_id": "lg2-4523",
+      "source_type": "usage",
+      "graph_visible": true,
+      "expected_rule": "GAP:command-send",
+      "expected_finding": "子图内 interrupt() 后用 Command(update=..., resume=True) 期望更新状态并重跑节点，实际 update 要等节点结束才生效；应指出 Command(resume/update) 在子图边界的语义，而不是文档曾描述的行为。",
+      "normal_control": false,
+      "material_notes": "完整代码；维护者 vbarda 确认该写法不被推荐、顶层图可用但子图不可用，并更新文档删除该用法，issue 关闭，属文档/用法问题。",
+      "confidence": "medium"
+    },
+    {
+      "case_id": "lg2-4879",
+      "source_type": "framework",
+      "graph_visible": true,
+      "expected_rule": "GAP:command-send",
+      "expected_finding": "RemoteGraph 子图内的 interrupt 在父图 Command(resume=...) 后不恢复，Command 没有传到远端子图，反复返回同一 interrupt；应指出 Command/resume 跨 RemoteGraph 嵌套边界未传递。",
+      "normal_control": false,
+      "material_notes": "完整 repro 但依赖 langgraph dev 远端服务（离线不可直接跑）；评论给出代码级定位（CompiledStateGraph 不处理 Command 输入），2026-07 又有人复现，仍 open、无维护者裁决。",
+      "confidence": "medium"
+    },
+    {
+      "case_id": "lg2-5062",
+      "source_type": "framework",
+      "graph_visible": true,
+      "expected_rule": "GAP:command-send",
+      "expected_finding": "Command(update=..., goto=[Send(...)], graph=Command.PARENT) 在合并多个 Send 时丢掉 update，ToolMessage 不落库导致 supervisor 重复调用工具；应指出 Command.update 与 list[Send] 的组合语义。",
+      "normal_control": false,
+      "material_notes": "代码依赖 create_react_agent/私有模型、非最小可运行；维护者 sydney-runkle 索要最小 repro，多位用户复现，仍 open。",
+      "confidence": "medium"
+    },
+    {
+      "case_id": "lg2-5362",
+      "source_type": "usage",
+      "graph_visible": false,
+      "expected_rule": "GAP:other",
+      "expected_finding": "经 Send arg 传给子图的 Pydantic 消息对象被降级为 BaseMessage（SubgraphState(**model_dump()) 的 type 字段未还原），子图节点的具体消息类型期望被破坏；属 Send 边界的对象类型保持问题。",
+      "normal_control": false,
+      "material_notes": "正文只有 Send/构造片段，无完整图；申诉者自己定位为 BaseMessage 构造问题，issue 关闭，更像用法/序列化语义而非框架构图 bug。",
+      "confidence": "low"
+    },
+    {
+      "case_id": "lg2-1950",
+      "source_type": "usage",
+      "graph_visible": true,
+      "expected_rule": "ACR007",
+      "expected_finding": "class node RetrieveDocumentsNode 返回 docs，但图 OverallState 只声明 question/answer，docs 被过滤后报 Must write to at least one of [...]；应指出 declared-key 不匹配（正确修法是给节点显式 input schema/正确整体 schema）。",
+      "normal_control": false,
+      "material_notes": "完整代码；维护者 vbarda 采纳 add_node(input=QueryOutputState) 方案并关闭，说明是 class node 输入 schema 推断/用法问题，ACR007 的『把键声明进 state』修法不完全适用。",
+      "confidence": "medium"
+    },
+    {
+      "case_id": "forum-1474",
+      "source_type": "user_graph",
+      "graph_visible": true,
+      "expected_rule": "ACR002",
+      "expected_finding": "两个并行分支都写 last_tool，不用 reducer 时同一步第二次写入报 At key 'last_tool': Can receive only one value per step；加 list reducer 后合并顺序不稳定，真正需求是分支身份而非合并。",
+      "normal_control": false,
+      "material_notes": "只有 state 片段 + 构图截图/文字描述（tool node 并行调两个下游函数），无完整注册边代码；无回答，OP 自己顶帖后无下文。",
+      "confidence": "medium"
+    },
+    {
+      "case_id": "forum-2839",
+      "source_type": "usage",
+      "graph_visible": true,
+      "expected_rule": "GAP:other",
+      "expected_finding": "在父节点里用函数方式 subgraph.invoke() 调子图，子图 interrupt() 因为没有 checkpointer/thread_id 不会真正暂停，且 resume 值/interrupt payload 混用、拓扑缺 END；属 HITL/子图用法问题而非框架构图 bug。",
+      "normal_control": false,
+      "material_notes": "完整 snippet；LangChain Expert 逐条列出所需 HITL 机制并给出修正例子，但无 accepted answer；issue 本身是 how-to。",
+      "confidence": "high"
+    },
+    {
+      "case_id": "forum-2020",
+      "source_type": "usage",
+      "graph_visible": false,
+      "expected_rule": "GAP:command-send",
+      "expected_finding": "子图用 Command(graph=PARENT, goto=next_agent, update=...) 交接时只有 Command.update payload 会跨子图边界，同一 stream 里先前累积的状态不会自动带上；应指出 Command 跨子图边界的更新范围。",
+      "normal_control": false,
+      "material_notes": "只有架构文字 + State/Command 片段，无图代码；社区专家回复确认是预期行为，需要把完整消息放进 Command.update 或在 checkpoint 边界后再交接。",
+      "confidence": "medium"
+    },
+    {
+      "case_id": "so-79725144",
+      "source_type": "user_graph",
+      "graph_visible": true,
+      "expected_rule": "GAP:reducer-semantics",
+      "expected_finding": "reducer append_to_list 原地修改输入 list 并返回，条件边节点执行后又用同一对对象触发 reducer，同一条目被追加两次（斐波那契值重复）；应指出 reducer 必须无副作用/纯函数，现有规则不覆盖 reducer 纯度。",
+      "normal_control": false,
+      "material_notes": "完整可运行代码；OP 自答定位为 reducer 修改输入对象导致重复 append（条件边节点为何再次触发 reducer 仍未完全解释），无 accepted answer。",
+      "confidence": "medium"
+    },
+    {
+      "case_id": "so-79788210",
+      "source_type": "insufficient",
+      "graph_visible": false,
+      "expected_rule": "NONE",
+      "expected_finding": "材料不足：只有父图 add_node/conditional_edges 片段，编译子图和 route 函数未给出，无法判断 KeyError: 'scheduler_assistant' 是框架路由 bug 还是构图/命名 misuse。",
+      "normal_control": false,
+      "material_notes": "0 回答、未解决；父图片段能看出『编译子图作为节点 + START 条件路由』，但缺完整复现，不能定 source_type 为 user_graph 或 framework。",
+      "confidence": "low"
+    }
+  ]
+}

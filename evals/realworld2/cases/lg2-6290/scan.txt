@@ -1,0 +1,26 @@
+acr scan - evals/realworld2/cases/lg2-6290
+1 file(s) parsed, 0 skipped - 2 finding(s): high 2, medium 0, low 0
+
+  HIGH   ACR001  Compiled subgraph shares state keys with the parent graph
+    evals/realworld2/cases/lg2-6290/graph.py:58
+    Compiled subgraph registered as node 'subgraph_1' has no output_schema, and child state 'AgentState' shares 'g_max_retry', 'g_retry_count', 'history' with parent state 'AgentState'. The child's full state is merged back into the parent, so writes from this node can collide with sibling branches.
+    evidence:
+      - shared state key(s): 'g_max_retry', 'g_retry_count', 'history'
+      - parent state 'AgentState' declared at line 26; key line(s): 'g_max_retry' at line 28, 'g_retry_count' at line 27, 'history' at line 29
+      - child state 'AgentState' declared at line 26; key line(s): 'g_max_retry' at line 28, 'g_retry_count' at line 27, 'history' at line 29
+      - child graph compiled without output_schema at line 32
+      - parent node 'subgraph_1' registered with add_node at line 58
+    fix: Declare ``output_schema=<SubgraphOutput>`` on the child ``StateGraph`` so only intended keys flow back to the parent, or split the shared key into distinct keys.
+    docs: docs/rules/ACR001.md
+
+  HIGH   ACR001  Compiled subgraph shares state keys with the parent graph
+    evals/realworld2/cases/lg2-6290/graph.py:59
+    Compiled subgraph registered as node 'subgraph_2' has no output_schema, and child state 'AgentState' shares 'g_max_retry', 'g_retry_count', 'history' with parent state 'AgentState'. The child's full state is merged back into the parent, so writes from this node can collide with sibling branches.
+    evidence:
+      - shared state key(s): 'g_max_retry', 'g_retry_count', 'history'
+      - parent state 'AgentState' declared at line 26; key line(s): 'g_max_retry' at line 28, 'g_retry_count' at line 27, 'history' at line 29
+      - child state 'AgentState' declared at line 26; key line(s): 'g_max_retry' at line 28, 'g_retry_count' at line 27, 'history' at line 29
+      - child graph compiled without output_schema at line 32
+      - parent node 'subgraph_2' registered with add_node at line 59
+    fix: Declare ``output_schema=<SubgraphOutput>`` on the child ``StateGraph`` so only intended keys flow back to the parent, or split the shared key into distinct keys.
+    docs: docs/rules/ACR001.md

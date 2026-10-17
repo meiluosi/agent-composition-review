@@ -1,0 +1,247 @@
+{
+  "schema_version": 1,
+  "task": "task-10",
+  "collected_at": "2026-10-18",
+  "collector": "gap-analyst",
+  "scope": "Third-party community posts about LangGraph/LangChain composition failures, excluding the 14 GitHub issues already used in evals/realworld.",
+  "sources_attempted": [
+    {
+      "source": "forum.langchain.com",
+      "method": "Discourse public search.json queries + /raw/<topic_id>/<post> read endpoints; no login",
+      "status": "ok",
+      "candidates": 10
+    },
+    {
+      "source": "stackoverflow.com",
+      "method": "StackExchange API 2.3 search/advanced (tag=langgraph) + questions?filter=withbody; no login",
+      "status": "ok",
+      "candidates": 5
+    },
+    {
+      "source": "reddit.com/r/LangChain",
+      "method": "web_fetch on www.reddit.com / old.reddit.com search.json",
+      "status": "blocked",
+      "detail": "Hostname resolves to a non-public IP in this environment; no public Reddit result was returned by web_search either. Login/paywall bypass was not attempted.",
+      "candidates": 0
+    }
+  ],
+  "counts": {
+    "total": 15,
+    "forum.langchain.com": 10,
+    "stackoverflow.com": 5,
+    "reddit.com": 0,
+    "has_code": 10,
+    "reproducible_yes": 6,
+    "reproducible_partial": 9
+  },
+  "recommended_top5": [
+    "forum-1474",
+    "so-79725144",
+    "forum-2020",
+    "forum-2839",
+    "so-79788210"
+  ],
+  "fetch_policy": "Only URLs, metadata and short paraphrased summaries are stored here. Post bodies were read for verification but are not copied into this JSON; no full text lives in raw/community/.",
+  "exclusion_policy": [
+    "Excluded the 14 GitHub issues already used in evals/realworld.",
+    "Excluded pure UI/visualization, deployment, pricing, installation and generic how-to posts with no observable failure.",
+    "Excluded posts with no discernible graph structure unless they documented a concrete composition symptom (then marked reproducible=partial/no)."
+  ],
+  "candidates": [
+    {
+      "candidate_id": "forum-1540",
+      "source": "forum.langchain.com",
+      "url": "https://forum.langchain.com/t/1540",
+      "title": "InvalidUpdateError: Node __copy__ does not exist - LangGraph State Update Failure",
+      "date": "2025-09-15",
+      "summary": "Calling update_state through the LangGraph API raises InvalidUpdateError: Node __copy__ does not exist; reporter is on LangGraph API 0.4.20 / in-memory runtime 0.12.0. No graph definition was posted.",
+      "has_code": false,
+      "failure_type_guess": "framework",
+      "reproducible": "partial",
+      "recommended_rank": null,
+      "notes": "Error stack and version info are given, but no graph code; the reply only asks for a minimal repro. Needs a platform/runtime environment, so not fixture-ready yet."
+    },
+    {
+      "candidate_id": "forum-1701",
+      "source": "forum.langchain.com",
+      "url": "https://forum.langchain.com/t/1701",
+      "title": "Graph execution goes back to a previous node",
+      "date": "2025-10-01",
+      "summary": "A ReAct-style routing setup unexpectedly re-executes get_product_id and then raises InvalidUpdateError at key 'route': Can receive only one value per step. Only a trace screenshot and the error text were posted.",
+      "has_code": false,
+      "failure_type_guess": "user_graph",
+      "reproducible": "partial",
+      "recommended_rank": null,
+      "notes": "Unresolved; the maintainer asked for more code. Likely a routing/loop design issue, but the material cannot confirm it. Useful as a trace-only community report example."
+    },
+    {
+      "candidate_id": "forum-1474",
+      "source": "forum.langchain.com",
+      "url": "https://forum.langchain.com/t/1474",
+      "title": "How can parallel nodes send a param value to the same downstream node ? the downstream node needs to adapt the param value based on which parallel upstream node called it",
+      "date": "2025-09-05",
+      "summary": "Two parallel branches call the same downstream save-file helper and need to know which branch they came from. A list reducer merges both branch updates out of order, while removing the reducer raises InvalidUpdateError at key 'last_tool'.",
+      "has_code": true,
+      "failure_type_guess": "user_graph",
+      "reproducible": "yes",
+      "recommended_rank": 1,
+      "notes": "State snippet included; no accepted answer. Directly exercises parallel-write/reducer reasoning (ACR002-adjacent) plus branch-identity ambiguity; strong fixture candidate."
+    },
+    {
+      "candidate_id": "forum-2020",
+      "source": "forum.langchain.com",
+      "url": "https://forum.langchain.com/t/2020",
+      "title": "State is not being copied between sub-graphs",
+      "date": "2025-10-30",
+      "summary": "A subgraph hands off to the next subgraph with Command.PARENT, but updates accumulated earlier in the same stream are missing; only the Command(update=...) payload reaches the parent. The reply says this is expected: state crosses a subgraph boundary only via the returned update.",
+      "has_code": true,
+      "failure_type_guess": "user_graph",
+      "reproducible": "partial",
+      "recommended_rank": 3,
+      "notes": "Contains State and Command snippets; maintainer-style reply confirms the behavior, so this is a state-design/handoff issue rather than a framework bug. Relevant to Command/Send + subgraph boundary gaps."
+    },
+    {
+      "candidate_id": "forum-3809",
+      "source": "forum.langchain.com",
+      "url": "https://forum.langchain.com/t/3809",
+      "title": "Pre-interrupt() code re-runs on resume — anti-pattern, or is there a sanctioned way to detect resume?",
+      "date": "2026-05-27",
+      "summary": "Code before interrupt() runs again on every resume, duplicating log lines and once-per-run verification work. The reply confirms the re-run contract, says there is no public resume-detection flag, and recommends splitting the node or persisting an idempotency marker.",
+      "has_code": false,
+      "failure_type_guess": "usage",
+      "reproducible": "partial",
+      "recommended_rank": null,
+      "notes": "Documented behavior, not a defect (langgraph 1.1.2, Python 3.12). Valuable boundary case for resume-replay rules: a static rule must not flag intended pre-interrupt code as a bug."
+    },
+    {
+      "candidate_id": "forum-4428",
+      "source": "forum.langchain.com",
+      "url": "https://forum.langchain.com/t/4428",
+      "title": "How to modify specific item in a State",
+      "date": "2026-08-24",
+      "summary": "Multiple nodes update different cells of a nested list state in the same step. The OP asks for the canonical pattern, posting parallel node returns and a custom reducer; the reply confirms a reducer is required for parallel updates.",
+      "has_code": true,
+      "failure_type_guess": "usage",
+      "reproducible": "yes",
+      "recommended_rank": null,
+      "notes": "Code snippet of state + two nodes; no explicit traceback in the OP, so it is mainly a reducer-semantics design question. Has an accepted answer; usable as a reducer fixture seed but failure evidence is indirect."
+    },
+    {
+      "candidate_id": "forum-2279",
+      "source": "forum.langchain.com",
+      "url": "https://forum.langchain.com/t/2279",
+      "title": "Restoring to checkpoint doesn't resume from node of checkpoint",
+      "date": "2025-11-21",
+      "summary": "update_state on an older checkpoint_id writes new values, but the new checkpoint inherits next from the thread's latest checkpoint instead of the selected one, so time-travel resume does not continue from the chosen node.",
+      "has_code": false,
+      "failure_type_guess": "usage",
+      "reproducible": "partial",
+      "recommended_rank": null,
+      "notes": "Concrete API behavior and version context, no code; a reply suggests using a checkpoint object instead of checkpoint_id. Candidate for checkpoint-resume semantics but needs a repro."
+    },
+    {
+      "candidate_id": "forum-2839",
+      "source": "forum.langchain.com",
+      "url": "https://forum.langchain.com/t/2839",
+      "title": "Does LangGraph support using HITL within subgraphs?",
+      "date": "2026-01-30",
+      "summary": "interrupt() inside a subgraph invoked from a parent node appears not to pause. The snippet lacks a checkpointer/thread_id, mixes the interrupt payload with the resume value, and misses END edges; the reply lists the required HITL mechanics and notes that function-invoked subgraphs restart on resume.",
+      "has_code": true,
+      "failure_type_guess": "user_graph",
+      "reproducible": "yes",
+      "recommended_rank": 4,
+      "notes": "Full snippet; the answer identifies several usage errors. Good parallel-interrupt/resume fixture seed if framed as user-graph misuse rather than a framework bug."
+    },
+    {
+      "candidate_id": "forum-1659",
+      "source": "forum.langchain.com",
+      "url": "https://forum.langchain.com/t/1659",
+      "title": "Streaming subgraphs results in duplicate messages as subgraph updates parent",
+      "date": "2025-09-26",
+      "summary": "With subgraphs=True streaming, when a subagent completes the router emits its full message list again, so clients see duplicate messages; the OP asks whether filtering is the client's job. No code, but it points at the documented streaming example.",
+      "has_code": false,
+      "failure_type_guess": "usage",
+      "reproducible": "partial",
+      "recommended_rank": null,
+      "notes": "No code or traceback; behavior may be documented stream semantics. Lower priority; needs reproduction before fixture work."
+    },
+    {
+      "candidate_id": "forum-2328",
+      "source": "forum.langchain.com",
+      "url": "https://forum.langchain.com/t/2328",
+      "title": "How to Propagate Parent State to a Compiled Subgraph Triggered via Send API",
+      "date": "2025-11-25",
+      "summary": "Send fan-out to a compiled subgraph does not pass the parent's document_id automatically; adding it to Send args makes parallel siblings write the same parent key and raises INVALID_CONCURRENT_GRAPH_UPDATE. A follow-up post includes graph code and the thread has an accepted answer.",
+      "has_code": true,
+      "failure_type_guess": "usage",
+      "reproducible": "partial",
+      "recommended_rank": null,
+      "notes": "Code appears in the follow-up post; the answer explains that parent state is not auto-propagated via Send and suggests a reducer, runtime context, or invoke-from-node alternatives. Relevant to declared-keys/state ownership and Send semantics."
+    },
+    {
+      "candidate_id": "so-79128666",
+      "source": "stackoverflow.com",
+      "url": "https://stackoverflow.com/questions/79128666/langchain-error-must-write-to-at-least-one-of",
+      "title": "LangChain error: Must write to at least one of []",
+      "date": "2024-10-26",
+      "summary": "A node returns a dict keyed 'mesages' (typo for 'messages'); every write is filtered against the declared schema, so the next step raises InvalidUpdateError: Must write to at least one of ['messages'].",
+      "has_code": true,
+      "failure_type_guess": "usage",
+      "reproducible": "yes",
+      "recommended_rank": null,
+      "notes": "Full code; minimal declared-key mismatch caused by a typo (older langgraph traceback). Low-ambiguity usage fixture, distinct from the first batch's GitHub #2644 class-node/foreign-schema case."
+    },
+    {
+      "candidate_id": "so-79607143",
+      "source": "stackoverflow.com",
+      "url": "https://stackoverflow.com/questions/79607143/how-to-implement-subgraph-memory-persistence-in-langgraph-when-parent-and-subgra",
+      "title": "How to implement subgraph memory/persistence in LangGraph when parent and subgraph states diverge?",
+      "date": "2025-05-05",
+      "summary": "When the parent sets a shared field (A=None), the subgraph's checkpointed value is lost; the OP wants subgraphs to keep their own state across parent overrides. The example uses the older Graph API pseudo-code.",
+      "has_code": true,
+      "failure_type_guess": "usage",
+      "reproducible": "partial",
+      "recommended_rank": null,
+      "notes": "Has an accepted answer; code is pseudo/older API, not directly runnable. Subgraph-isolation/checkpoint question that needs translation to the current StateGraph API before fixture work."
+    },
+    {
+      "candidate_id": "so-79788210",
+      "source": "stackoverflow.com",
+      "url": "https://stackoverflow.com/questions/79788210/langgraph-keyerror-when-embedding-a-compiled-subgraph-node-in-a-parent-graph-wo",
+      "title": "LangGraph KeyError: when embedding a compiled subgraph node in a parent graph workflow",
+      "date": "2025-10-11",
+      "summary": "Registering a compiled subgraph as parent node 'scheduler_assistant' and routing to that node from START raises KeyError: 'scheduler_assistant' inside LangGraph routing. The post includes a minimal structure and the traceback.",
+      "has_code": true,
+      "failure_type_guess": "user_graph",
+      "reproducible": "partial",
+      "recommended_rank": 5,
+      "notes": "Concrete KeyError plus code fragments; may be a node-name/routing bug on 0.5.x/0.6.7 or graph-construction misuse — unresolved. Good candidate for subgraph-registration diagnostics."
+    },
+    {
+      "candidate_id": "so-79725144",
+      "source": "stackoverflow.com",
+      "url": "https://stackoverflow.com/questions/79725144/the-conditional-edge-in-langgraph-causes-the-reduce-function-to-be-invoked-twice",
+      "title": "The conditional edge in LangGraph causes the reduce function to be invoked twice",
+      "date": "2025-08-04",
+      "summary": "A looping conditional edge makes an Annotated list reducer append each Fibonacci value twice; the OP expects one reducer call per node update. A full runnable snippet with expected-vs-actual output is included.",
+      "has_code": true,
+      "failure_type_guess": "framework",
+      "reproducible": "yes",
+      "recommended_rank": 2,
+      "notes": "Full code and observed duplicate values; no answer. Root cause unconfirmed (could be conditional-edge write semantics), so verify before labeling it framework vs usage. Directly targets reducer double-application."
+    },
+    {
+      "candidate_id": "so-79751192",
+      "source": "stackoverflow.com",
+      "url": "https://stackoverflow.com/questions/79751192/the-parallel-mapreduce-task-implemented-by-langgraph-has-an-incorrect-execution",
+      "title": "The parallel mapReduce task implemented by LangGraph has an incorrect execution order",
+      "date": "2025-08-30",
+      "summary": "With Send fan-out and a deferred node, b2 still waits for the slow sibling c and runs after it, contrary to the OP's expected order. Full async code and timestamped output are included; this looks like superstep-barrier semantics.",
+      "has_code": true,
+      "failure_type_guess": "usage",
+      "reproducible": "yes",
+      "recommended_rank": null,
+      "notes": "Full code and env (langgraph 0.6.6); no accepted answer. Probably expected scheduling semantics, but a useful reference for the boundary of parallel/execution-order rules."
+    }
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "case_id": "lg2-2336",
+  "source_id": 2336,
+  "source_url": "https://github.com/langchain-ai/langgraph/issues/2336",
+  "title": "langgraph.errors.InvalidUpdateError: Can receive only one value per step ... error when running retry in graph parallel processing",
+  "version": "0.2.14",
+  "source_type": "user_graph",
+  "graph_visible": true,
+  "observed_behavior": "From node a the graph fans out to b and c; b feeds d, while c has a conditional retry edge back to itself. During the retry loop the next step receives more than one write for the plain key count_b and raises InvalidUpdateError: At key 'count_b': Can receive only one value per step. Removing the retry conditional edge makes the graph run.",
+  "structure_focus": "Parallel branches with a self-retry conditional edge converging on one join node; un-reduced key written across overlapping super-steps",
+  "material_level": "high",
+  "notes": "Closed by maintainer with the fix: add a reducer to count_b (link to INVALID_CONCURRENT_GRAPH_UPDATE troubleshooting). The fixture keeps the a -> {b, c} fan-out, b -> d, the c retry self-edge and the c -> d join. This is a composition/state design problem (count_b needs a reducer once branches can overlap), classified user_graph; the nodes in the fixture return partial updates rather than mutating state in place."
+}

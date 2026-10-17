@@ -1,0 +1,13 @@
+{
+  "case_id": "lg2-2581",
+  "source_id": 2581,
+  "source_url": "https://github.com/langchain-ai/langgraph/issues/2581",
+  "title": "Fan-out/in fails with subgraphs",
+  "version": "unknown (body lists langchain 0.3.7; no langgraph version)",
+  "source_type": "user_graph",
+  "graph_visible": true,
+  "observed_behavior": "A conditional edge returns Send tasks targeting a compiled subgraph. Each child gets {'father': ...}, but its node writes a 'kids' key that the child state SubgraphState does not declare. The child boundary rejects the write: InvalidUpdateError: Expected node father to update at least one of ['father'], got {'kids': ['Jon Junior']}. Replacing the subgraph with a plain parent function works.",
+  "structure_focus": "Send fan-out into a compiled subgraph whose state schema omits the key its node writes; child declared keys vs returned keys",
+  "material_level": "high",
+  "notes": "Open; community reply points at the missing child-side schema. The graph is otherwise straightforward: parent fans out with Send to a compiled child and fans back in through parent_node_2. The failure lives at the child state declaration (get_kids writes kids, SubgraphState declares only father), i.e. a declared-keys/composition mistake. Fixture keeps the Send fan-out and the child subgraph; the parent's kids reducer is present but never receives a valid write."
+}

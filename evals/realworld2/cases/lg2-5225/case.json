@@ -1,0 +1,13 @@
+{
+  "case_id": "lg2-5225",
+  "source_id": 5225,
+  "source_url": "https://github.com/langchain-ai/langgraph/issues/5225",
+  "title": "Default value of state variable not working with reducer function",
+  "version": "unknown (body lists langchain-core 0.3.66; no langgraph version; commenter used 1.2.12)",
+  "source_type": "framework",
+  "graph_visible": false,
+  "observed_behavior": "A pydantic state field declared as Annotated[list[str], extend_list] with default_factory ['default'] loses that default when the graph is invoked with an empty input: the reducer channel starts as an empty list, so only the node's value is present instead of ['default', ...].",
+  "structure_focus": "Reducer channel initialization vs declared field default (BinaryOperatorAggregate starts as typ(), LastValue uses MISSING)",
+  "material_level": "medium",
+  "notes": "Open. The issue body contains only the state declaration (no graph code), so graph_visible is false; the fixture wraps it in the trivial single-node graph needed to exercise the reducer. Commenters trace the root cause to BinaryOperatorAggregate.__init__ seeding typ() (e.g. list()) instead of the configured default, and propose a fix/PR; the maintainer thread treats it as a real default-initialization bug. source_type=framework; the fixture keeps the pydantic state with a mutating extend_list reducer."
+}

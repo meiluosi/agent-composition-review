@@ -1,0 +1,22 @@
+acr scan - evals/realworld2/cases/lg2-2581
+1 file(s) parsed, 0 skipped - 2 finding(s): high 0, medium 2, low 0
+
+  MEDIUM ACR007  Node returns keys not declared in the state schema
+    evals/realworld2/cases/lg2-2581/graph.py:31
+    Node 'get_kids' returns key(s) 'kids' that are not declared in state schema 'SubgraphState'. LangGraph filters undeclared keys at the node boundary, so this update is silently dropped and downstream nodes cannot see it.
+    evidence:
+      - node 'get_kids' registered with add_node at line 31
+      - state schema 'SubgraphState' declared at line 21 with key(s): 'father'
+      - node returns undeclared key(s): 'kids' (return line(s): 27)
+    fix: Declare the key in the graph state ``TypedDict`` (with a reducer if multiple nodes write it), or remove/rename the returned key. Do not rely on undeclared keys surviving the node boundary.
+    docs: docs/rules/ACR007.md
+
+  MEDIUM ACR003  Subgraph node has no output_schema
+    evals/realworld2/cases/lg2-2581/graph.py:56
+    Subgraph node 'child_node' has no output_schema. The complete child state (keys: father) is passed back to the parent instead of a narrow, intentional output.
+    evidence:
+      - child graph compiled without output_schema at line 34
+      - child state keys passed back to the parent: father
+      - parent node 'child_node' registered with add_node at line 56
+    fix: Pass ``output_schema=...`` to the child ``StateGraph`` constructor (or ``compile(output_schema=...)``) to restrict what the subgraph returns.
+    docs: docs/rules/ACR003.md

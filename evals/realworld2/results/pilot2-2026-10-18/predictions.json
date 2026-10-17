@@ -1,0 +1,1412 @@
+{
+  "cases": [
+    {
+      "analyzable": true,
+      "case_id": "forum-1474",
+      "confidence": "medium",
+      "control_pass": null,
+      "disagreements": [],
+      "expected_finding": "两个并行分支都写 last_tool，不用 reducer 时同一步第二次写入报 At key 'last_tool': Can receive only one value per step；加 list reducer 后合并顺序不稳定，真正需求是分支身份而非合并。",
+      "expected_rule": "ACR002",
+      "fixture_ast_parseable": true,
+      "graph_visible_blind": true,
+      "graph_visible_fixture": true,
+      "incidental": false,
+      "kind": "issue",
+      "normal_control": false,
+      "notes": "盲标预期 ACR002；scan 0。fixture 保留 Annotated[list, operator.add] reducer（reporter 实际抱怨的是合并顺序/分支身份），因此 ACR002 正确地不触发；thread 里『去掉 reducer 会 InvalidUpdateError』的变体没有进 fixture。判定为 miss（预期规则未命中），但原因是 fixture 保留 reducer 变体、与盲标预期存在 scope 差异，不是扫描器回归。",
+      "report_hint": "ACR002 miss：fixture 保留 reducer 变体，规则正确地沉默",
+      "scan": {
+        "declared_findings": 0,
+        "findings": [],
+        "severity_totals": {
+          "high": 0,
+          "low": 0,
+          "medium": 0
+        }
+      },
+      "scan_findings": [],
+      "source_bucket": "forum.langchain.com",
+      "source_type_blind": "user_graph",
+      "source_type_fixture": "user_graph",
+      "source_url": "https://forum.langchain.com/t/1474",
+      "title": "How can parallel nodes send a param value to the same downstream node? the downstream node needs to adapt the param value based on which parallel upstream node called it",
+      "verdict": "miss"
+    },
+    {
+      "analyzable": false,
+      "case_id": "forum-2020",
+      "confidence": "medium",
+      "control_pass": null,
+      "disagreements": [
+        {
+          "blind": "usage",
+          "field": "source_type",
+          "fixture": "user_graph"
+        },
+        {
+          "blind": false,
+          "field": "graph_visible",
+          "fixture": true
+        }
+      ],
+      "expected_finding": "子图用 Command(graph=PARENT, goto=next_agent, update=...) 交接时只有 Command.update payload 会跨子图边界，同一 stream 里先前累积的状态不会自动带上；应指出 Command 跨子图边界的更新范围。",
+      "expected_rule": "GAP:command-send",
+      "fixture_ast_parseable": true,
+      "graph_visible_blind": false,
+      "graph_visible_fixture": true,
+      "incidental": false,
+      "kind": "issue",
+      "normal_control": false,
+      "notes": "盲标 graph_visible=false（只有架构文字 + State/Command 片段、无图代码）。fixture 重建后 scan 报 ACR003（agent_a 子图无 output_schema），是真实模式但与本 issue 的 Command.PARENT 更新范围无关，记 incidental。记 not_applicable/材料不足；预期 GAP:command-send 仍计入缺口分布。",
+      "report_hint": "材料不足；ACR003 顺带（Command.update 越界非 output_schema）",
+      "scan": {
+        "declared_findings": 1,
+        "findings": [
+          {
+            "file": "evals/realworld2/cases/forum-2020/graph.py",
+            "fix_advice_misleading": false,
+            "kind": "incidental",
+            "line": 54,
+            "message": "Subgraph node 'agent_a' has no output_schema. The complete child state (keys: unknown) is passed back to the parent instead of a narrow, intentional output.",
+            "message_keywords": [
+              "output_schema",
+              "subgraph"
+            ],
+            "message_partial": false,
+            "relevant": false,
+            "rule": "ACR003",
+            "severity": "medium",
+            "title": "Subgraph node has no output_schema"
+          }
+        ],
+        "severity_totals": {
+          "high": 0,
+          "low": 0,
+          "medium": 1
+        }
+      },
+      "scan_findings": [
+        {
+          "file": "evals/realworld2/cases/forum-2020/graph.py",
+          "fix_advice_misleading": false,
+          "kind": "incidental",
+          "line": 54,
+          "message": "Subgraph node 'agent_a' has no output_schema. The complete child state (keys: unknown) is passed back to the parent instead of a narrow, intentional output.",
+          "message_keywords": [
+            "output_schema",
+            "subgraph"
+          ],
+          "message_partial": false,
+          "relevant": false,
+          "rule": "ACR003",
+          "severity": "medium",
+          "title": "Subgraph node has no output_schema"
+        }
+      ],
+      "source_bucket": "forum.langchain.com",
+      "source_type_blind": "usage",
+      "source_type_fixture": "user_graph",
+      "source_url": "https://forum.langchain.com/t/2020",
+      "title": "State is not being copied between sub-graphs",
+      "verdict": "not_applicable"
+    },
+    {
+      "analyzable": true,
+      "case_id": "forum-2839",
+      "confidence": "high",
+      "control_pass": null,
+      "disagreements": [],
+      "expected_finding": "在父节点里用函数方式 subgraph.invoke() 调子图，子图 interrupt() 因为没有 checkpointer/thread_id 不会真正暂停，且 resume 值/interrupt payload 混用、拓扑缺 END；属 HITL/子图用法问题而非框架构图 bug。",
+      "expected_rule": "GAP:other",
+      "fixture_ast_parseable": true,
+      "graph_visible_blind": true,
+      "graph_visible_fixture": true,
+      "incidental": false,
+      "kind": "issue",
+      "normal_control": false,
+      "notes": "盲标预期 GAP:other：父节点用函数方式 subgraph.invoke() 调子图，缺 checkpointer/thread_id 导致 interrupt 不暂停，同时 resume 值/interrupt payload 混用、拓扑缺 END。属 HITL/子图用法，静态构图规则不覆盖，scan 0。GAP 成立。",
+      "report_hint": "GAP:other；HITL/子图用法",
+      "scan": {
+        "declared_findings": 0,
+        "findings": [],
+        "severity_totals": {
+          "high": 0,
+          "low": 0,
+          "medium": 0
+        }
+      },
+      "scan_findings": [],
+      "source_bucket": "forum.langchain.com",
+      "source_type_blind": "usage",
+      "source_type_fixture": "usage",
+      "source_url": "https://forum.langchain.com/t/2839",
+      "title": "Does LangGraph support using HITL within subgraphs?",
+      "verdict": "gap"
+    },
+    {
+      "analyzable": true,
+      "case_id": "lg2-1406",
+      "confidence": "high",
+      "control_pass": null,
+      "disagreements": [],
+      "expected_finding": "Send 扇出后多个并行 num_pros 任务在同一个 superstep 写未加 reducer 的 num_p（str），报 Invalid update for channel num_p；应指出并行分支写同一非 reducer 键。",
+      "expected_rule": "ACR002",
+      "fixture_ast_parseable": true,
+      "graph_visible_blind": true,
+      "graph_visible_fixture": true,
+      "incidental": false,
+      "kind": "issue",
+      "normal_control": false,
+      "notes": "盲标预期 ACR002：num_p 是声明过、无 reducer 的通道，Send 扇出并发写触发 InvalidUpdateError。scan 0 条 ACR002，只报 ACR007×3。fixture 把 num_p/query/datas 放在 DataOutputState/QueryOutputState，没有合并进 OverallState，而 ACR002 只对『已在 TypedDict 声明、无 reducer』的键触发，所以该 fixture 结构上不可能触发 ACR002；ACR007 是 off-rule，不折算成 hit。这不是单纯的扫描器限制：fixture 的 declared-keys 状态与盲标 ACR002 预期存在张力（盲标按 issue 原文的 num_p 通道，fixture 未声明 num_p）。判定为 miss（预期规则未命中），不改 labels/fixtures。",
+      "report_hint": "预期 ACR002 未命中；ACR007×3 是 off-rule（fixture 中 num_p 未声明，ACR002 无法触发）→ miss",
+      "scan": {
+        "declared_findings": 3,
+        "findings": [
+          {
+            "file": "evals/realworld2/cases/lg2-1406/graph.py",
+            "fix_advice_misleading": false,
+            "kind": "off_rule",
+            "line": 52,
+            "message": "Node 'generate_query' returns key(s) 'datas', 'query' that are not declared in state schema 'OverallState'. LangGraph filters undeclared keys at the node boundary, so this update is silently dropped and downstream nodes cannot see it.",
+            "message_keywords": [
+              "declared",
+              "silent"
+            ],
+            "message_partial": false,
+            "relevant": false,
+            "rule": "ACR007",
+            "severity": "medium",
+            "title": "Node returns keys not declared in the state schema"
+          },
+          {
+            "file": "evals/realworld2/cases/lg2-1406/graph.py",
+            "fix_advice_misleading": false,
+            "kind": "off_rule",
+            "line": 53,
+            "message": "Node 'num_pros' returns key(s) 'num_p' that are not declared in state schema 'OverallState'. LangGraph filters undeclared keys at the node boundary, so this update is silently dropped and downstream nodes cannot see it.",
+            "message_keywords": [
+              "declared",
+              "silent"
+            ],
+            "message_partial": false,
+            "relevant": false,
+            "rule": "ACR007",
+            "severity": "medium",
+            "title": "Node returns keys not declared in the state schema"
+          },
+          {
+            "file": "evals/realworld2/cases/lg2-1406/graph.py",
+            "fix_advice_misleading": false,
+            "kind": "off_rule",
+            "line": 54,
+            "message": "Node 'num_pros1' returns key(s) 'query' that are not declared in state schema 'OverallState'. LangGraph filters undeclared keys at the node boundary, so this update is silently dropped and downstream nodes cannot see it.",
+            "message_keywords": [
+              "declared",
+              "silent"
+            ],
+            "message_partial": false,
+            "relevant": false,
+            "rule": "ACR007",
+            "severity": "medium",
+            "title": "Node returns keys not declared in the state schema"
+          }
+        ],
+        "severity_totals": {
+          "high": 0,
+          "low": 0,
+          "medium": 3
+        }
+      },
+      "scan_findings": [
+        {
+          "file": "evals/realworld2/cases/lg2-1406/graph.py",
+          "fix_advice_misleading": false,
+          "kind": "off_rule",
+          "line": 52,
+          "message": "Node 'generate_query' returns key(s) 'datas', 'query' that are not declared in state schema 'OverallState'. LangGraph filters undeclared keys at the node boundary, so this update is silently dropped and downstream nodes cannot see it.",
+          "message_keywords": [
+            "declared",
+            "silent"
+          ],
+          "message_partial": false,
+          "relevant": false,
+          "rule": "ACR007",
+          "severity": "medium",
+          "title": "Node returns keys not declared in the state schema"
+        },
+        {
+          "file": "evals/realworld2/cases/lg2-1406/graph.py",
+          "fix_advice_misleading": false,
+          "kind": "off_rule",
+          "line": 53,
+          "message": "Node 'num_pros' returns key(s) 'num_p' that are not declared in state schema 'OverallState'. LangGraph filters undeclared keys at the node boundary, so this update is silently dropped and downstream nodes cannot see it.",
+          "message_keywords": [
+            "declared",
+            "silent"
+          ],
+          "message_partial": false,
+          "relevant": false,
+          "rule": "ACR007",
+          "severity": "medium",
+          "title": "Node returns keys not declared in the state schema"
+        },
+        {
+          "file": "evals/realworld2/cases/lg2-1406/graph.py",
+          "fix_advice_misleading": false,
+          "kind": "off_rule",
+          "line": 54,
+          "message": "Node 'num_pros1' returns key(s) 'query' that are not declared in state schema 'OverallState'. LangGraph filters undeclared keys at the node boundary, so this update is silently dropped and downstream nodes cannot see it.",
+          "message_keywords": [
+            "declared",
+            "silent"
+          ],
+          "message_partial": false,
+          "relevant": false,
+          "rule": "ACR007",
+          "severity": "medium",
+          "title": "Node returns keys not declared in the state schema"
+        }
+      ],
+      "source_bucket": "github",
+      "source_type_blind": "user_graph",
+      "source_type_fixture": "user_graph",
+      "source_url": "https://github.com/langchain-ai/langgraph/issues/1406",
+      "title": "map-reduce InvalideUpdateError",
+      "verdict": "miss"
+    },
+    {
+      "analyzable": true,
+      "case_id": "lg2-1909",
+      "confidence": "high",
+      "control_pass": null,
+      "disagreements": [],
+      "expected_finding": "被 Send 激活的节点返回 private_var，但该键不在图 State 的 schema（只有 list_of_vars），写入被过滤后报 Must write to at least one of ['list_of_vars']；应指出 declared-key 不匹配/private state 需显式接入 schema。",
+      "expected_rule": "ACR007",
+      "fixture_ast_parseable": true,
+      "graph_visible_blind": true,
+      "graph_visible_fixture": true,
+      "incidental": false,
+      "kind": "issue",
+      "normal_control": false,
+      "notes": "ACR007 命中：node_activate_by_Send 返回 private_var，但 State 只声明 list_of_vars；finding 与 Must write to at least one of ['list_of_vars'] 直接相关，Send 不是 schema escape hatch 的解释与 issue 一致。",
+      "report_hint": "ACR007 命中（private_var 未声明）",
+      "scan": {
+        "declared_findings": 1,
+        "findings": [
+          {
+            "file": "evals/realworld2/cases/lg2-1909/graph.py",
+            "fix_advice_misleading": false,
+            "kind": "relevant",
+            "line": 43,
+            "message": "Node 'node_activate_by_Send' returns key(s) 'private_var' that are not declared in state schema 'State'. LangGraph filters undeclared keys at the node boundary, so this update is silently dropped and downstream nodes cannot see it.",
+            "message_keywords": [
+              "declared",
+              "private",
+              "send",
+              "silent"
+            ],
+            "message_partial": false,
+            "relevant": true,
+            "rule": "ACR007",
+            "severity": "medium",
+            "title": "Node returns keys not declared in the state schema"
+          }
+        ],
+        "severity_totals": {
+          "high": 0,
+          "low": 0,
+          "medium": 1
+        }
+      },
+      "scan_findings": [
+        {
+          "file": "evals/realworld2/cases/lg2-1909/graph.py",
+          "fix_advice_misleading": false,
+          "kind": "relevant",
+          "line": 43,
+          "message": "Node 'node_activate_by_Send' returns key(s) 'private_var' that are not declared in state schema 'State'. LangGraph filters undeclared keys at the node boundary, so this update is silently dropped and downstream nodes cannot see it.",
+          "message_keywords": [
+            "declared",
+            "private",
+            "send",
+            "silent"
+          ],
+          "message_partial": false,
+          "relevant": true,
+          "rule": "ACR007",
+          "severity": "medium",
+          "title": "Node returns keys not declared in the state schema"
+        }
+      ],
+      "source_bucket": "github",
+      "source_type_blind": "user_graph",
+      "source_type_fixture": "user_graph",
+      "source_url": "https://github.com/langchain-ai/langgraph/issues/1909",
+      "title": "PrivateState not working if the node is activated by a Send object",
+      "verdict": "hit"
+    },
+    {
+      "analyzable": true,
+      "case_id": "lg2-1950",
+      "confidence": "medium",
+      "control_pass": null,
+      "disagreements": [],
+      "expected_finding": "class node RetrieveDocumentsNode 返回 docs，但图 OverallState 只声明 question/answer，docs 被过滤后报 Must write to at least one of [...]；应指出 declared-key 不匹配（正确修法是给节点显式 input schema/正确整体 schema）。",
+      "expected_rule": "ACR007",
+      "fixture_ast_parseable": true,
+      "graph_visible_blind": true,
+      "graph_visible_fixture": true,
+      "incidental": false,
+      "kind": "issue",
+      "normal_control": false,
+      "notes": "ACR007×2 命中：generate_query 返回 query、retrieve_documents 返回 docs，而 OverallState 只声明 question/answer；finding 与 Must write to at least one of [...] 相关。注意修法：issue 维护者采用的修复是 graph.add_node(..., input=QueryOutputState)，而 ACR007 的 fix 文本说『把键声明进 state』，对 class-node/私有 schema 场景可能误导。检测正确、修法建议需分场景，故 hit + fix_advice_misleading。",
+      "report_hint": "ACR007×2 命中；检测正确但 fix 建议可能误导（正确修法是 add_node(input=...)）",
+      "scan": {
+        "declared_findings": 2,
+        "findings": [
+          {
+            "file": "evals/realworld2/cases/lg2-1950/graph.py",
+            "fix_advice_misleading": true,
+            "kind": "relevant",
+            "line": 44,
+            "message": "Node 'generate_query' returns key(s) 'query' that are not declared in state schema 'OverallState'. LangGraph filters undeclared keys at the node boundary, so this update is silently dropped and downstream nodes cannot see it.",
+            "message_keywords": [
+              "declared",
+              "silent"
+            ],
+            "message_partial": false,
+            "relevant": true,
+            "rule": "ACR007",
+            "severity": "medium",
+            "title": "Node returns keys not declared in the state schema"
+          },
+          {
+            "file": "evals/realworld2/cases/lg2-1950/graph.py",
+            "fix_advice_misleading": true,
+            "kind": "relevant",
+            "line": 46,
+            "message": "Node 'retrieve_documents' returns key(s) 'docs' that are not declared in state schema 'OverallState'. LangGraph filters undeclared keys at the node boundary, so this update is silently dropped and downstream nodes cannot see it.",
+            "message_keywords": [
+              "declared",
+              "silent"
+            ],
+            "message_partial": false,
+            "relevant": true,
+            "rule": "ACR007",
+            "severity": "medium",
+            "title": "Node returns keys not declared in the state schema"
+          }
+        ],
+        "severity_totals": {
+          "high": 0,
+          "low": 0,
+          "medium": 2
+        }
+      },
+      "scan_findings": [
+        {
+          "file": "evals/realworld2/cases/lg2-1950/graph.py",
+          "fix_advice_misleading": true,
+          "kind": "relevant",
+          "line": 44,
+          "message": "Node 'generate_query' returns key(s) 'query' that are not declared in state schema 'OverallState'. LangGraph filters undeclared keys at the node boundary, so this update is silently dropped and downstream nodes cannot see it.",
+          "message_keywords": [
+            "declared",
+            "silent"
+          ],
+          "message_partial": false,
+          "relevant": true,
+          "rule": "ACR007",
+          "severity": "medium",
+          "title": "Node returns keys not declared in the state schema"
+        },
+        {
+          "file": "evals/realworld2/cases/lg2-1950/graph.py",
+          "fix_advice_misleading": true,
+          "kind": "relevant",
+          "line": 46,
+          "message": "Node 'retrieve_documents' returns key(s) 'docs' that are not declared in state schema 'OverallState'. LangGraph filters undeclared keys at the node boundary, so this update is silently dropped and downstream nodes cannot see it.",
+          "message_keywords": [
+            "declared",
+            "silent"
+          ],
+          "message_partial": false,
+          "relevant": true,
+          "rule": "ACR007",
+          "severity": "medium",
+          "title": "Node returns keys not declared in the state schema"
+        }
+      ],
+      "source_bucket": "github",
+      "source_type_blind": "usage",
+      "source_type_fixture": "usage",
+      "source_url": "https://github.com/langchain-ai/langgraph/issues/1950",
+      "title": "Passing private state with Class Node",
+      "verdict": "hit"
+    },
+    {
+      "analyzable": true,
+      "case_id": "lg2-1964",
+      "confidence": "high",
+      "control_pass": null,
+      "disagreements": [],
+      "expected_finding": "父图并行挂两个 child 子图，child 未声明 output_schema 且与父图共享 question/results，两个子图都把含 question 的整份状态回传给 sink，同一步写两次；应指出子图输出边界泄漏/共享键冲突。",
+      "expected_rule": "ACR001",
+      "fixture_ast_parseable": true,
+      "graph_visible_blind": true,
+      "graph_visible_fixture": true,
+      "incidental": false,
+      "kind": "issue",
+      "normal_control": false,
+      "notes": "ACR001 命中：两个 child 子图由 create_child() helper 返回 compiled graph 后注册，仍被 ACR001 识别（第一批 P0-1 的跨函数解析已生效）；finding 与 issue 的并行 sink 冲突直接相关。附带 ACR002 指出 question 被两个分支写且无 reducer：症状相关，但正确修法是 output_schema 分离，故记 secondary，不计入 ACR002 命中。",
+      "report_hint": "ACR001×2 命中；helper 返回子图已被解析；附带 ACR002 为 secondary",
+      "scan": {
+        "declared_findings": 3,
+        "findings": [
+          {
+            "file": "evals/realworld2/cases/lg2-1964/graph.py",
+            "fix_advice_misleading": false,
+            "kind": "relevant",
+            "line": 53,
+            "message": "Compiled subgraph registered as node 'child1' has no output_schema, and child state 'ChildState' shares 'question', 'results' with parent state 'ParentState'. The child's full state is merged back into the parent, so writes from this node can collide with sibling branches.",
+            "message_keywords": [
+              "compiled subgraph",
+              "output_schema",
+              "state key",
+              "subgraph"
+            ],
+            "message_partial": false,
+            "relevant": true,
+            "rule": "ACR001",
+            "severity": "high",
+            "title": "Compiled subgraph shares state keys with the parent graph"
+          },
+          {
+            "file": "evals/realworld2/cases/lg2-1964/graph.py",
+            "fix_advice_misleading": false,
+            "kind": "relevant",
+            "line": 54,
+            "message": "Compiled subgraph registered as node 'child2' has no output_schema, and child state 'ChildState' shares 'question', 'results' with parent state 'ParentState'. The child's full state is merged back into the parent, so writes from this node can collide with sibling branches.",
+            "message_keywords": [
+              "compiled subgraph",
+              "output_schema",
+              "state key",
+              "subgraph"
+            ],
+            "message_partial": false,
+            "relevant": true,
+            "rule": "ACR001",
+            "severity": "high",
+            "title": "Compiled subgraph shares state keys with the parent graph"
+          },
+          {
+            "file": "evals/realworld2/cases/lg2-1964/graph.py",
+            "fix_advice_misleading": false,
+            "kind": "secondary",
+            "line": 57,
+            "message": "After node 'question_generation', branches 'child1', 'child2' can run in the same superstep and all write state key 'question', which has no reducer. LangGraph raises InvalidUpdateError for concurrent writes to a non-reduced key.",
+            "message_keywords": [
+              "invalidupdate",
+              "no reducer",
+              "parallel",
+              "reducer",
+              "state key",
+              "superstep"
+            ],
+            "message_partial": false,
+            "relevant": false,
+            "rule": "ACR002",
+            "severity": "high",
+            "title": "Parallel branches write the same state key without a reducer"
+          }
+        ],
+        "severity_totals": {
+          "high": 3,
+          "low": 0,
+          "medium": 0
+        }
+      },
+      "scan_findings": [
+        {
+          "file": "evals/realworld2/cases/lg2-1964/graph.py",
+          "fix_advice_misleading": false,
+          "kind": "relevant",
+          "line": 53,
+          "message": "Compiled subgraph registered as node 'child1' has no output_schema, and child state 'ChildState' shares 'question', 'results' with parent state 'ParentState'. The child's full state is merged back into the parent, so writes from this node can collide with sibling branches.",
+          "message_keywords": [
+            "compiled subgraph",
+            "output_schema",
+            "state key",
+            "subgraph"
+          ],
+          "message_partial": false,
+          "relevant": true,
+          "rule": "ACR001",
+          "severity": "high",
+          "title": "Compiled subgraph shares state keys with the parent graph"
+        },
+        {
+          "file": "evals/realworld2/cases/lg2-1964/graph.py",
+          "fix_advice_misleading": false,
+          "kind": "relevant",
+          "line": 54,
+          "message": "Compiled subgraph registered as node 'child2' has no output_schema, and child state 'ChildState' shares 'question', 'results' with parent state 'ParentState'. The child's full state is merged back into the parent, so writes from this node can collide with sibling branches.",
+          "message_keywords": [
+            "compiled subgraph",
+            "output_schema",
+            "state key",
+            "subgraph"
+          ],
+          "message_partial": false,
+          "relevant": true,
+          "rule": "ACR001",
+          "severity": "high",
+          "title": "Compiled subgraph shares state keys with the parent graph"
+        },
+        {
+          "file": "evals/realworld2/cases/lg2-1964/graph.py",
+          "fix_advice_misleading": false,
+          "kind": "secondary",
+          "line": 57,
+          "message": "After node 'question_generation', branches 'child1', 'child2' can run in the same superstep and all write state key 'question', which has no reducer. LangGraph raises InvalidUpdateError for concurrent writes to a non-reduced key.",
+          "message_keywords": [
+            "invalidupdate",
+            "no reducer",
+            "parallel",
+            "reducer",
+            "state key",
+            "superstep"
+          ],
+          "message_partial": false,
+          "relevant": false,
+          "rule": "ACR002",
+          "severity": "high",
+          "title": "Parallel branches write the same state key without a reducer"
+        }
+      ],
+      "source_bucket": "github",
+      "source_type_blind": "user_graph",
+      "source_type_fixture": "user_graph",
+      "source_url": "https://github.com/langchain-ai/langgraph/issues/1964",
+      "title": "Sink node issue, if multiple subgraphs are used in parallel",
+      "verdict": "hit"
+    },
+    {
+      "analyzable": true,
+      "case_id": "lg2-2336",
+      "confidence": "high",
+      "control_pass": null,
+      "disagreements": [],
+      "expected_finding": "a 并行扇出到 b/c，c 的条件回边重试与同一步的其他写入竞争 count_b，报 At key 'count_b': Can receive only one value per step；应指出并行分支写同一非 reducer 键。",
+      "expected_rule": "ACR002",
+      "fixture_ast_parseable": true,
+      "graph_visible_blind": true,
+      "graph_visible_fixture": true,
+      "incidental": false,
+      "kind": "issue",
+      "normal_control": false,
+      "notes": "盲标预期 ACR002；scan 0。fixture 中只有 c 写 count_b，冲突来自 c 的 retry 自环（c -> c）与 b -> d 的并行步重叠；ACR002 只检测『同一来源扇出到两个不同分支、都写同一声明键』，不建模 self-retry/re-entry 的重叠。属于规则模型的结构盲区，不是材料不足。",
+      "report_hint": "ACR002 miss：retry 自环与并行分支重叠不在规则模型内",
+      "scan": {
+        "declared_findings": 0,
+        "findings": [],
+        "severity_totals": {
+          "high": 0,
+          "low": 0,
+          "medium": 0
+        }
+      },
+      "scan_findings": [],
+      "source_bucket": "github",
+      "source_type_blind": "user_graph",
+      "source_type_fixture": "user_graph",
+      "source_url": "https://github.com/langchain-ai/langgraph/issues/2336",
+      "title": "langgraph.errors.InvalidUpdateError: Can receive only one value per step ... error when running retry in graph parallel processing",
+      "verdict": "miss"
+    },
+    {
+      "analyzable": true,
+      "case_id": "lg2-2392",
+      "confidence": "medium",
+      "control_pass": null,
+      "disagreements": [],
+      "expected_finding": "双层嵌套子图各用不同 private state；内层图作为节点未声明 output_schema，整份子图状态回传后与上层/父图 schema 不匹配（debugging_result 不应进 OverallState）；应指出嵌套子图输出边界缺失。",
+      "expected_rule": "ACR003",
+      "fixture_ast_parseable": true,
+      "graph_visible_blind": true,
+      "graph_visible_fixture": true,
+      "incidental": false,
+      "kind": "issue",
+      "normal_control": false,
+      "notes": "ACR003 命中：level-2 子图作为节点未声明 output_schema，finding 与 issue 的层间 state 映射失败相关。限制：child state 是 pydantic BaseModel，scanner 报 keys unknown，没有验证具体键；issue 的根因还包括私有 schema 与父图无共享键，ACR003 只覆盖『缺 output_schema』这一半（message_partial）。",
+      "report_hint": "ACR003 命中；pydantic child keys unknown，只覆盖『缺 output_schema』一半",
+      "scan": {
+        "declared_findings": 1,
+        "findings": [
+          {
+            "file": "evals/realworld2/cases/lg2-2392/graph.py",
+            "fix_advice_misleading": false,
+            "kind": "relevant",
+            "line": 39,
+            "message": "Subgraph node 'code_feedback_agent' has no output_schema. The complete child state (keys: unknown) is passed back to the parent instead of a narrow, intentional output.",
+            "message_keywords": [
+              "output_schema",
+              "subgraph"
+            ],
+            "message_partial": true,
+            "relevant": true,
+            "rule": "ACR003",
+            "severity": "medium",
+            "title": "Subgraph node has no output_schema"
+          }
+        ],
+        "severity_totals": {
+          "high": 0,
+          "low": 0,
+          "medium": 1
+        }
+      },
+      "scan_findings": [
+        {
+          "file": "evals/realworld2/cases/lg2-2392/graph.py",
+          "fix_advice_misleading": false,
+          "kind": "relevant",
+          "line": 39,
+          "message": "Subgraph node 'code_feedback_agent' has no output_schema. The complete child state (keys: unknown) is passed back to the parent instead of a narrow, intentional output.",
+          "message_keywords": [
+            "output_schema",
+            "subgraph"
+          ],
+          "message_partial": true,
+          "relevant": true,
+          "rule": "ACR003",
+          "severity": "medium",
+          "title": "Subgraph node has no output_schema"
+        }
+      ],
+      "source_bucket": "github",
+      "source_type_blind": "user_graph",
+      "source_type_fixture": "user_graph",
+      "source_url": "https://github.com/langchain-ai/langgraph/issues/2392",
+      "title": "Subgraph with private state doesn't have a proper state at the last node",
+      "verdict": "hit"
+    },
+    {
+      "analyzable": true,
+      "case_id": "lg2-2581",
+      "confidence": "high",
+      "control_pass": null,
+      "disagreements": [],
+      "expected_finding": "Send 扇出到编译子图后，子图节点 get_kids 返回未在 SubgraphState 声明的 kids，被过滤后报 Expected node father to update at least one of ['father']；应指出 declared-key 不匹配。",
+      "expected_rule": "ACR007",
+      "fixture_ast_parseable": true,
+      "graph_visible_blind": true,
+      "graph_visible_fixture": true,
+      "incidental": false,
+      "kind": "issue",
+      "normal_control": false,
+      "notes": "ACR007 命中：get_kids 返回未在 SubgraphState 声明的 kids，finding 与 issue 的 Expected node father to update at least one of ['father'] 直接相关。附带 ACR003（子图无 output_schema）是 fixture 中的真实模式，但不是本 issue 的故障，记 incidental。",
+      "report_hint": "ACR007 命中（kids 未声明）；ACR003 顺带",
+      "scan": {
+        "declared_findings": 2,
+        "findings": [
+          {
+            "file": "evals/realworld2/cases/lg2-2581/graph.py",
+            "fix_advice_misleading": false,
+            "kind": "relevant",
+            "line": 31,
+            "message": "Node 'get_kids' returns key(s) 'kids' that are not declared in state schema 'SubgraphState'. LangGraph filters undeclared keys at the node boundary, so this update is silently dropped and downstream nodes cannot see it.",
+            "message_keywords": [
+              "declared",
+              "silent",
+              "subgraph"
+            ],
+            "message_partial": false,
+            "relevant": true,
+            "rule": "ACR007",
+            "severity": "medium",
+            "title": "Node returns keys not declared in the state schema"
+          },
+          {
+            "file": "evals/realworld2/cases/lg2-2581/graph.py",
+            "fix_advice_misleading": false,
+            "kind": "incidental",
+            "line": 56,
+            "message": "Subgraph node 'child_node' has no output_schema. The complete child state (keys: father) is passed back to the parent instead of a narrow, intentional output.",
+            "message_keywords": [
+              "output_schema",
+              "subgraph"
+            ],
+            "message_partial": false,
+            "relevant": false,
+            "rule": "ACR003",
+            "severity": "medium",
+            "title": "Subgraph node has no output_schema"
+          }
+        ],
+        "severity_totals": {
+          "high": 0,
+          "low": 0,
+          "medium": 2
+        }
+      },
+      "scan_findings": [
+        {
+          "file": "evals/realworld2/cases/lg2-2581/graph.py",
+          "fix_advice_misleading": false,
+          "kind": "relevant",
+          "line": 31,
+          "message": "Node 'get_kids' returns key(s) 'kids' that are not declared in state schema 'SubgraphState'. LangGraph filters undeclared keys at the node boundary, so this update is silently dropped and downstream nodes cannot see it.",
+          "message_keywords": [
+            "declared",
+            "silent",
+            "subgraph"
+          ],
+          "message_partial": false,
+          "relevant": true,
+          "rule": "ACR007",
+          "severity": "medium",
+          "title": "Node returns keys not declared in the state schema"
+        },
+        {
+          "file": "evals/realworld2/cases/lg2-2581/graph.py",
+          "fix_advice_misleading": false,
+          "kind": "incidental",
+          "line": 56,
+          "message": "Subgraph node 'child_node' has no output_schema. The complete child state (keys: father) is passed back to the parent instead of a narrow, intentional output.",
+          "message_keywords": [
+            "output_schema",
+            "subgraph"
+          ],
+          "message_partial": false,
+          "relevant": false,
+          "rule": "ACR003",
+          "severity": "medium",
+          "title": "Subgraph node has no output_schema"
+        }
+      ],
+      "source_bucket": "github",
+      "source_type_blind": "user_graph",
+      "source_type_fixture": "user_graph",
+      "source_url": "https://github.com/langchain-ai/langgraph/issues/2581",
+      "title": "Fan-out/in fails with subgraphs",
+      "verdict": "hit"
+    },
+    {
+      "analyzable": true,
+      "case_id": "lg2-4523",
+      "confidence": "medium",
+      "control_pass": null,
+      "disagreements": [
+        {
+          "blind": "usage",
+          "field": "source_type",
+          "fixture": "framework"
+        }
+      ],
+      "expected_finding": "子图内 interrupt() 后用 Command(update=..., resume=True) 期望更新状态并重跑节点，实际 update 要等节点结束才生效；应指出 Command(resume/update) 在子图边界的语义，而不是文档曾描述的行为。",
+      "expected_rule": "GAP:command-send",
+      "fixture_ast_parseable": true,
+      "graph_visible_blind": true,
+      "graph_visible_fixture": true,
+      "incidental": false,
+      "kind": "issue",
+      "normal_control": false,
+      "notes": "盲标预期 GAP:command-send：Command(update+resume) 在父/子图边界的更新时序不同。scan 只报 ACR003（tech_support 子图无 output_schema），是 fixture 中的真实模式但与本 issue 的 resume/update 语义无关，记 incidental。GAP 成立。",
+      "report_hint": "GAP:command-send；ACR003 顺带",
+      "scan": {
+        "declared_findings": 1,
+        "findings": [
+          {
+            "file": "evals/realworld2/cases/lg2-4523/graph.py",
+            "fix_advice_misleading": false,
+            "kind": "incidental",
+            "line": 67,
+            "message": "Subgraph node 'tech_support' has no output_schema. The complete child state (keys: unknown) is passed back to the parent instead of a narrow, intentional output.",
+            "message_keywords": [
+              "output_schema",
+              "subgraph"
+            ],
+            "message_partial": false,
+            "relevant": false,
+            "rule": "ACR003",
+            "severity": "medium",
+            "title": "Subgraph node has no output_schema"
+          }
+        ],
+        "severity_totals": {
+          "high": 0,
+          "low": 0,
+          "medium": 1
+        }
+      },
+      "scan_findings": [
+        {
+          "file": "evals/realworld2/cases/lg2-4523/graph.py",
+          "fix_advice_misleading": false,
+          "kind": "incidental",
+          "line": 67,
+          "message": "Subgraph node 'tech_support' has no output_schema. The complete child state (keys: unknown) is passed back to the parent instead of a narrow, intentional output.",
+          "message_keywords": [
+            "output_schema",
+            "subgraph"
+          ],
+          "message_partial": false,
+          "relevant": false,
+          "rule": "ACR003",
+          "severity": "medium",
+          "title": "Subgraph node has no output_schema"
+        }
+      ],
+      "source_bucket": "github",
+      "source_type_blind": "usage",
+      "source_type_fixture": "framework",
+      "source_url": "https://github.com/langchain-ai/langgraph/issues/4523",
+      "title": "Update state fails when resuming subgraph after interrupt",
+      "verdict": "gap"
+    },
+    {
+      "analyzable": true,
+      "case_id": "lg2-4879",
+      "confidence": "medium",
+      "control_pass": null,
+      "disagreements": [],
+      "expected_finding": "RemoteGraph 子图内的 interrupt 在父图 Command(resume=...) 后不恢复，Command 没有传到远端子图，反复返回同一 interrupt；应指出 Command/resume 跨 RemoteGraph 嵌套边界未传递。",
+      "expected_rule": "GAP:command-send",
+      "fixture_ast_parseable": true,
+      "graph_visible_blind": true,
+      "graph_visible_fixture": true,
+      "incidental": false,
+      "kind": "issue",
+      "normal_control": false,
+      "notes": "盲标预期 GAP:command-send：RemoteGraph 子图内 interrupt 在父图 Command(resume) 后不恢复，Command 没有传到远端子图。fixture 用 RemoteGraph，运行需 live langgraph dev；scan 0。属跨部署边界的运行时语义，静态规则不可见。GAP 成立。",
+      "report_hint": "GAP:command-send；RemoteGraph 跨部署边界需运行时",
+      "scan": {
+        "declared_findings": 0,
+        "findings": [],
+        "severity_totals": {
+          "high": 0,
+          "low": 0,
+          "medium": 0
+        }
+      },
+      "scan_findings": [],
+      "source_bucket": "github",
+      "source_type_blind": "framework",
+      "source_type_fixture": "framework",
+      "source_url": "https://github.com/langchain-ai/langgraph/issues/4879",
+      "title": "Remote Subgraph (using interrupt) not resuming",
+      "verdict": "gap"
+    },
+    {
+      "analyzable": true,
+      "case_id": "lg2-5062",
+      "confidence": "medium",
+      "control_pass": null,
+      "disagreements": [],
+      "expected_finding": "Command(update=..., goto=[Send(...)], graph=Command.PARENT) 在合并多个 Send 时丢掉 update，ToolMessage 不落库导致 supervisor 重复调用工具；应指出 Command.update 与 list[Send] 的组合语义。",
+      "expected_rule": "GAP:command-send",
+      "fixture_ast_parseable": true,
+      "graph_visible_blind": true,
+      "graph_visible_fixture": true,
+      "incidental": false,
+      "kind": "issue",
+      "normal_control": false,
+      "notes": "盲标预期 GAP:command-send：Command(update=..., goto=[Send(...)], graph=PARENT) 同时使用时 update 丢失。scan 只报 ACR001（父/子共享 AgentState 无 output_schema），真实但与 update+Send 组合语义无关，记 incidental。GAP 成立。",
+      "report_hint": "GAP:command-send；ACR001 顺带",
+      "scan": {
+        "declared_findings": 1,
+        "findings": [
+          {
+            "file": "evals/realworld2/cases/lg2-5062/graph.py",
+            "fix_advice_misleading": false,
+            "kind": "incidental",
+            "line": 67,
+            "message": "Compiled subgraph registered as node 'supervisor' has no output_schema, and child state 'AgentState' shares 'data_refs', 'messages' with parent state 'AgentState'. The child's full state is merged back into the parent, so writes from this node can collide with sibling branches.",
+            "message_keywords": [
+              "compiled subgraph",
+              "output_schema",
+              "state key",
+              "subgraph"
+            ],
+            "message_partial": false,
+            "relevant": false,
+            "rule": "ACR001",
+            "severity": "high",
+            "title": "Compiled subgraph shares state keys with the parent graph"
+          }
+        ],
+        "severity_totals": {
+          "high": 1,
+          "low": 0,
+          "medium": 0
+        }
+      },
+      "scan_findings": [
+        {
+          "file": "evals/realworld2/cases/lg2-5062/graph.py",
+          "fix_advice_misleading": false,
+          "kind": "incidental",
+          "line": 67,
+          "message": "Compiled subgraph registered as node 'supervisor' has no output_schema, and child state 'AgentState' shares 'data_refs', 'messages' with parent state 'AgentState'. The child's full state is merged back into the parent, so writes from this node can collide with sibling branches.",
+          "message_keywords": [
+            "compiled subgraph",
+            "output_schema",
+            "state key",
+            "subgraph"
+          ],
+          "message_partial": false,
+          "relevant": false,
+          "rule": "ACR001",
+          "severity": "high",
+          "title": "Compiled subgraph shares state keys with the parent graph"
+        }
+      ],
+      "source_bucket": "github",
+      "source_type_blind": "framework",
+      "source_type_fixture": "framework",
+      "source_url": "https://github.com/langchain-ai/langgraph/issues/5062",
+      "title": "【Command】：Can't use update and List[Send] at the same time if graph==Command.PARENT",
+      "verdict": "gap"
+    },
+    {
+      "analyzable": false,
+      "case_id": "lg2-5225",
+      "confidence": "high",
+      "control_pass": null,
+      "disagreements": [],
+      "expected_finding": "Pydantic 字段 Annotated[list, extend_list] + Field(default_factory=...) 的默认值没有用于 reducer 通道初始化（BinaryOperatorAggregate 用 typ() 播种），默认值被忽略；应指出 reducer 通道的默认值语义。",
+      "expected_rule": "GAP:reducer-semantics",
+      "fixture_ast_parseable": true,
+      "graph_visible_blind": false,
+      "graph_visible_fixture": false,
+      "incidental": false,
+      "kind": "issue",
+      "normal_control": false,
+      "notes": "盲标 graph_visible=false：issue 只有 state 类片段、没有图构造；fixture 是单节点触发 reducer 默认值，scan 0。记 not_applicable/材料不足；预期 GAP:reducer-semantics（Pydantic default_factory 与 BinaryOperatorAggregate 播种）仍计入缺口分布，但静态构图规则不可见。",
+      "report_hint": "材料不足；reducer 默认值语义非静态构图可见",
+      "scan": {
+        "declared_findings": 0,
+        "findings": [],
+        "severity_totals": {
+          "high": 0,
+          "low": 0,
+          "medium": 0
+        }
+      },
+      "scan_findings": [],
+      "source_bucket": "github",
+      "source_type_blind": "framework",
+      "source_type_fixture": "framework",
+      "source_url": "https://github.com/langchain-ai/langgraph/issues/5225",
+      "title": "Default value of state variable not working with reducer function",
+      "verdict": "not_applicable"
+    },
+    {
+      "analyzable": false,
+      "case_id": "lg2-5362",
+      "confidence": "low",
+      "control_pass": null,
+      "disagreements": [
+        {
+          "blind": "usage",
+          "field": "source_type",
+          "fixture": "framework"
+        },
+        {
+          "blind": false,
+          "field": "graph_visible",
+          "fixture": true
+        }
+      ],
+      "expected_finding": "经 Send arg 传给子图的 Pydantic 消息对象被降级为 BaseMessage（SubgraphState(**model_dump()) 的 type 字段未还原），子图节点的具体消息类型期望被破坏；属 Send 边界的对象类型保持问题。",
+      "expected_rule": "GAP:other",
+      "fixture_ast_parseable": true,
+      "graph_visible_blind": false,
+      "graph_visible_fixture": true,
+      "incidental": false,
+      "kind": "issue",
+      "normal_control": false,
+      "notes": "盲标 graph_visible=false（正文只有 Send/构造片段、无完整图）。fixture 重建后 scan 报 ACR001（父子共享 messages、无 output_schema），是真实模式但与 issue 的 BaseMessage 类型降级无关，记 incidental。记 not_applicable/材料不足；预期 GAP:other 仍计入缺口分布。",
+      "report_hint": "材料不足；ACR001 顺带（类型降级非 state 泄漏）",
+      "scan": {
+        "declared_findings": 1,
+        "findings": [
+          {
+            "file": "evals/realworld2/cases/lg2-5362/graph.py",
+            "fix_advice_misleading": false,
+            "kind": "incidental",
+            "line": 47,
+            "message": "Compiled subgraph registered as node 'child' has no output_schema, and child state 'SubgraphState' shares 'messages' with parent state 'ParentState'. The child's full state is merged back into the parent, so writes from this node can collide with sibling branches.",
+            "message_keywords": [
+              "compiled subgraph",
+              "output_schema",
+              "state key",
+              "subgraph"
+            ],
+            "message_partial": false,
+            "relevant": false,
+            "rule": "ACR001",
+            "severity": "high",
+            "title": "Compiled subgraph shares state keys with the parent graph"
+          }
+        ],
+        "severity_totals": {
+          "high": 1,
+          "low": 0,
+          "medium": 0
+        }
+      },
+      "scan_findings": [
+        {
+          "file": "evals/realworld2/cases/lg2-5362/graph.py",
+          "fix_advice_misleading": false,
+          "kind": "incidental",
+          "line": 47,
+          "message": "Compiled subgraph registered as node 'child' has no output_schema, and child state 'SubgraphState' shares 'messages' with parent state 'ParentState'. The child's full state is merged back into the parent, so writes from this node can collide with sibling branches.",
+          "message_keywords": [
+            "compiled subgraph",
+            "output_schema",
+            "state key",
+            "subgraph"
+          ],
+          "message_partial": false,
+          "relevant": false,
+          "rule": "ACR001",
+          "severity": "high",
+          "title": "Compiled subgraph shares state keys with the parent graph"
+        }
+      ],
+      "source_bucket": "github",
+      "source_type_blind": "usage",
+      "source_type_fixture": "framework",
+      "source_url": "https://github.com/langchain-ai/langgraph/issues/5362",
+      "title": "LangChain messages casted to BaseMessage when passed to subgraph via Send arg",
+      "verdict": "not_applicable"
+    },
+    {
+      "analyzable": true,
+      "case_id": "lg2-6290",
+      "confidence": "medium",
+      "control_pass": null,
+      "disagreements": [
+        {
+          "blind": "user_graph",
+          "field": "source_type",
+          "fixture": "framework"
+        }
+      ],
+      "expected_finding": "两个子图直接复用父图 AgentState 且未声明 output_schema，subgraph_1 没写 g_retry_count 也把整份状态回显，父图 reducer 把回显当成新写入再次 +1，循环次数翻倍；应指出子图整状态回传导致 reducer 重放。",
+      "expected_rule": "ACR001",
+      "fixture_ast_parseable": true,
+      "graph_visible_blind": true,
+      "graph_visible_fixture": true,
+      "incidental": false,
+      "kind": "issue",
+      "normal_control": false,
+      "notes": "ACR001×2 命中：两个 sibling 子图复用父图 AgentState 且无 output_schema，结构与 issue 一致。finding 措辞是『并行兄弟写冲突』，而 issue 的实际后果是子图 echo 未写键导致父 reducer 重放；结构判定正确，message 只部分覆盖后果，故 hit + message_partial。",
+      "report_hint": "ACR001×2 命中；message 只部分覆盖 reducer 重放后果",
+      "scan": {
+        "declared_findings": 2,
+        "findings": [
+          {
+            "file": "evals/realworld2/cases/lg2-6290/graph.py",
+            "fix_advice_misleading": false,
+            "kind": "relevant",
+            "line": 58,
+            "message": "Compiled subgraph registered as node 'subgraph_1' has no output_schema, and child state 'AgentState' shares 'g_max_retry', 'g_retry_count', 'history' with parent state 'AgentState'. The child's full state is merged back into the parent, so writes from this node can collide with sibling branches.",
+            "message_keywords": [
+              "compiled subgraph",
+              "output_schema",
+              "retry",
+              "state key",
+              "subgraph"
+            ],
+            "message_partial": true,
+            "relevant": true,
+            "rule": "ACR001",
+            "severity": "high",
+            "title": "Compiled subgraph shares state keys with the parent graph"
+          },
+          {
+            "file": "evals/realworld2/cases/lg2-6290/graph.py",
+            "fix_advice_misleading": false,
+            "kind": "relevant",
+            "line": 59,
+            "message": "Compiled subgraph registered as node 'subgraph_2' has no output_schema, and child state 'AgentState' shares 'g_max_retry', 'g_retry_count', 'history' with parent state 'AgentState'. The child's full state is merged back into the parent, so writes from this node can collide with sibling branches.",
+            "message_keywords": [
+              "compiled subgraph",
+              "output_schema",
+              "retry",
+              "state key",
+              "subgraph"
+            ],
+            "message_partial": true,
+            "relevant": true,
+            "rule": "ACR001",
+            "severity": "high",
+            "title": "Compiled subgraph shares state keys with the parent graph"
+          }
+        ],
+        "severity_totals": {
+          "high": 2,
+          "low": 0,
+          "medium": 0
+        }
+      },
+      "scan_findings": [
+        {
+          "file": "evals/realworld2/cases/lg2-6290/graph.py",
+          "fix_advice_misleading": false,
+          "kind": "relevant",
+          "line": 58,
+          "message": "Compiled subgraph registered as node 'subgraph_1' has no output_schema, and child state 'AgentState' shares 'g_max_retry', 'g_retry_count', 'history' with parent state 'AgentState'. The child's full state is merged back into the parent, so writes from this node can collide with sibling branches.",
+          "message_keywords": [
+            "compiled subgraph",
+            "output_schema",
+            "retry",
+            "state key",
+            "subgraph"
+          ],
+          "message_partial": true,
+          "relevant": true,
+          "rule": "ACR001",
+          "severity": "high",
+          "title": "Compiled subgraph shares state keys with the parent graph"
+        },
+        {
+          "file": "evals/realworld2/cases/lg2-6290/graph.py",
+          "fix_advice_misleading": false,
+          "kind": "relevant",
+          "line": 59,
+          "message": "Compiled subgraph registered as node 'subgraph_2' has no output_schema, and child state 'AgentState' shares 'g_max_retry', 'g_retry_count', 'history' with parent state 'AgentState'. The child's full state is merged back into the parent, so writes from this node can collide with sibling branches.",
+          "message_keywords": [
+            "compiled subgraph",
+            "output_schema",
+            "retry",
+            "state key",
+            "subgraph"
+          ],
+          "message_partial": true,
+          "relevant": true,
+          "rule": "ACR001",
+          "severity": "high",
+          "title": "Compiled subgraph shares state keys with the parent graph"
+        }
+      ],
+      "source_bucket": "github",
+      "source_type_blind": "user_graph",
+      "source_type_fixture": "framework",
+      "source_url": "https://github.com/langchain-ai/langgraph/issues/6290",
+      "title": "Subgraphs channels reducer updating out of turn",
+      "verdict": "hit"
+    },
+    {
+      "analyzable": false,
+      "case_id": "lg2-740",
+      "confidence": "medium",
+      "control_pass": null,
+      "disagreements": [
+        {
+          "blind": "insufficient",
+          "field": "source_type",
+          "fixture": "usage"
+        },
+        {
+          "blind": false,
+          "field": "graph_visible",
+          "fixture": true
+        }
+      ],
+      "expected_finding": "材料不足：只贴了 execute_step 一个节点函数，没有 PlanExecute schema 和图构造，无法判断 Must write to at least one of [...] 的结构原因。",
+      "expected_rule": "NONE",
+      "fixture_ast_parseable": true,
+      "graph_visible_blind": false,
+      "graph_visible_fixture": true,
+      "incidental": false,
+      "kind": "issue",
+      "normal_control": false,
+      "notes": "盲标材料不足（expected_rule=NONE）：issue 只贴 execute_step 一个节点函数，没有 PlanExecute schema 和图构造。fixture 用 thread 里的 single-node 复现重建，scan 0。记 not_applicable/材料不足，不算 miss（预期本来就是 NONE）。",
+      "report_hint": "材料不足（NONE）；not_applicable",
+      "scan": {
+        "declared_findings": 0,
+        "findings": [],
+        "severity_totals": {
+          "high": 0,
+          "low": 0,
+          "medium": 0
+        }
+      },
+      "scan_findings": [],
+      "source_bucket": "github",
+      "source_type_blind": "insufficient",
+      "source_type_fixture": "usage",
+      "source_url": "https://github.com/langchain-ai/langgraph/issues/740",
+      "title": "langgraph.errors.InvalidUpdateError: Must write to at least one of ['input', 'plan', 'past_steps', 'response']",
+      "verdict": "not_applicable"
+    },
+    {
+      "analyzable": true,
+      "case_id": "lg2-766",
+      "confidence": "medium",
+      "control_pass": null,
+      "disagreements": [],
+      "expected_finding": "medical_mentor 同时有普通边和条件边指向 medical_mentor_pass，同一 superstep 两个任务都返回整份 medical，channel medical 收到两个值而报 InvalidUpdateError；重复边/同一节点并行执行两次不在现有规则内。",
+      "expected_rule": "GAP:other",
+      "fixture_ast_parseable": true,
+      "graph_visible_blind": true,
+      "graph_visible_fixture": true,
+      "incidental": false,
+      "kind": "issue",
+      "normal_control": false,
+      "notes": "盲标预期 GAP:other：medical_mentor 同时有普通边和条件边指向 medical_mentor_pass，同一 superstep 两个任务都返回整份 medical，导致 channel 收到两个值。现有 ACR002 只建模『共同来源扇出到不同兄弟节点』，不覆盖 duplicate edge / 同一目标重复执行，scan 0。GAP 成立。",
+      "report_hint": "GAP:other；duplicate edge（普通边+条件边同一 target）不在 ACR002 模型内",
+      "scan": {
+        "declared_findings": 0,
+        "findings": [],
+        "severity_totals": {
+          "high": 0,
+          "low": 0,
+          "medium": 0
+        }
+      },
+      "scan_findings": [],
+      "source_bucket": "github",
+      "source_type_blind": "user_graph",
+      "source_type_fixture": "user_graph",
+      "source_url": "https://github.com/langchain-ai/langgraph/issues/766",
+      "title": "langgraph.errors.InvalidUpdateError: Invalid update for channel medical with values",
+      "verdict": "gap"
+    },
+    {
+      "analyzable": true,
+      "case_id": "so-79725144",
+      "confidence": "medium",
+      "control_pass": null,
+      "disagreements": [
+        {
+          "blind": "user_graph",
+          "field": "source_type",
+          "fixture": "usage"
+        }
+      ],
+      "expected_finding": "reducer append_to_list 原地修改输入 list 并返回，条件边节点执行后又用同一对对象触发 reducer，同一条目被追加两次（斐波那契值重复）；应指出 reducer 必须无副作用/纯函数，现有规则不覆盖 reducer 纯度。",
+      "expected_rule": "GAP:reducer-semantics",
+      "fixture_ast_parseable": true,
+      "graph_visible_blind": true,
+      "graph_visible_fixture": true,
+      "incidental": false,
+      "kind": "issue",
+      "normal_control": false,
+      "notes": "盲标预期 GAP:reducer-semantics：reducer 原地修改输入 list 导致同一条目重复 append。现有规则不检查 reducer 纯度/副作用，scan 0。属 reducer 语义缺口，不是构图结构。GAP 成立。",
+      "report_hint": "GAP:reducer-semantics；reducer 纯度静态不可见",
+      "scan": {
+        "declared_findings": 0,
+        "findings": [],
+        "severity_totals": {
+          "high": 0,
+          "low": 0,
+          "medium": 0
+        }
+      },
+      "scan_findings": [],
+      "source_bucket": "stackoverflow.com",
+      "source_type_blind": "user_graph",
+      "source_type_fixture": "usage",
+      "source_url": "https://stackoverflow.com/questions/79725144/the-conditional-edge-in-langgraph-causes-the-reduce-function-to-be-invoked-twice",
+      "title": "The conditional edge in LangGraph causes the reduce function to be invoked twice",
+      "verdict": "gap"
+    },
+    {
+      "analyzable": false,
+      "case_id": "so-79788210",
+      "confidence": "low",
+      "control_pass": null,
+      "disagreements": [
+        {
+          "blind": "insufficient",
+          "field": "source_type",
+          "fixture": "user_graph"
+        },
+        {
+          "blind": false,
+          "field": "graph_visible",
+          "fixture": true
+        }
+      ],
+      "expected_finding": "材料不足：只有父图 add_node/conditional_edges 片段，编译子图和 route 函数未给出，无法判断 KeyError: 'scheduler_assistant' 是框架路由 bug 还是构图/命名 misuse。",
+      "expected_rule": "NONE",
+      "fixture_ast_parseable": true,
+      "graph_visible_blind": false,
+      "graph_visible_fixture": true,
+      "incidental": false,
+      "kind": "issue",
+      "normal_control": false,
+      "notes": "盲标材料不足（expected_rule=NONE）：只有父图 add_node/conditional_edges 片段，缺编译子图与 route 函数。fixture 重建后 scan 报 ACR003（scheduler 子图无 output_schema），是真实模式但与本 issue 的 KeyError 路由无关，记 incidental。记 not_applicable/材料不足。",
+      "report_hint": "材料不足（NONE）；ACR003 顺带",
+      "scan": {
+        "declared_findings": 1,
+        "findings": [
+          {
+            "file": "evals/realworld2/cases/so-79788210/graph.py",
+            "fix_advice_misleading": false,
+            "kind": "incidental",
+            "line": 68,
+            "message": "Subgraph node 'scheduler_assistant' has no output_schema. The complete child state (keys: unknown) is passed back to the parent instead of a narrow, intentional output.",
+            "message_keywords": [
+              "output_schema",
+              "subgraph"
+            ],
+            "message_partial": false,
+            "relevant": false,
+            "rule": "ACR003",
+            "severity": "medium",
+            "title": "Subgraph node has no output_schema"
+          }
+        ],
+        "severity_totals": {
+          "high": 0,
+          "low": 0,
+          "medium": 1
+        }
+      },
+      "scan_findings": [
+        {
+          "file": "evals/realworld2/cases/so-79788210/graph.py",
+          "fix_advice_misleading": false,
+          "kind": "incidental",
+          "line": 68,
+          "message": "Subgraph node 'scheduler_assistant' has no output_schema. The complete child state (keys: unknown) is passed back to the parent instead of a narrow, intentional output.",
+          "message_keywords": [
+            "output_schema",
+            "subgraph"
+          ],
+          "message_partial": false,
+          "relevant": false,
+          "rule": "ACR003",
+          "severity": "medium",
+          "title": "Subgraph node has no output_schema"
+        }
+      ],
+      "source_bucket": "stackoverflow.com",
+      "source_type_blind": "insufficient",
+      "source_type_fixture": "user_graph",
+      "source_url": "https://stackoverflow.com/questions/79788210/langgraph-keyerror-when-embedding-a-compiled-subgraph-node-in-a-parent-graph-wor",
+      "title": "LangGraph KeyError: when embedding a compiled subgraph node in a parent graph workflow",
+      "verdict": "not_applicable"
+    }
+  ],
+  "frozen_inputs": {
+    "labels_blind": true,
+    "labels_case_count": 20,
+    "labels_path": "evals/realworld2/labels.json",
+    "labels_sha256_actual": "0510774269aa3032be5cb7ce301bddd68ea70ee6c2b4941116a5e93b02201781",
+    "labels_sha256_expected": "0510774269aa3032be5cb7ce301bddd68ea70ee6c2b4941116a5e93b02201781",
+    "labels_sha256_verified": true,
+    "protocol_frozen_at": "2026-10-18"
+  },
+  "generated_by": "scripts/summarize_realworld2_eval.py",
+  "pilot": "pilot2-2026-10-18",
+  "schema_version": 1
+}

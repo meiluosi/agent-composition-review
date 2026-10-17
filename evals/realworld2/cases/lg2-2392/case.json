@@ -1,0 +1,13 @@
+{
+  "case_id": "lg2-2392",
+  "source_id": 2392,
+  "source_url": "https://github.com/langchain-ai/langgraph/issues/2392",
+  "title": "Subgraph with private state doesn't have a proper state at the last node",
+  "version": "0.2.28",
+  "source_type": "user_graph",
+  "graph_visible": true,
+  "observed_behavior": "A level-2 graph is compiled with a private pydantic state (CodeFeedbackAgentPrivateState) and the parent node's return writes that private key. When the level-2 graph is used as a node of a level-1 graph whose state is OverallState, the merge rejects the update because it does not write any parent key: InvalidUpdateError: Must write to at least one of the OverallState keys.",
+  "structure_focus": "Compiled subgraph whose state schema is a private schema with no overlapping keys or output mapping to the parent; nested subgraph boundaries",
+  "material_level": "high",
+  "notes": "Closed; maintainer answer: the last node's update is applied to the level-1 state, but a graph used as a node must still respect its parent's state. Fix with input/output transformations (or schemas that share keys). The OP's code snippet is not directly runnable (n(...) wrappers in the shown graph), and the body describes three levels; the fixture keeps the essential two-level boundary: an OverallState parent containing a compiled child whose state is a private schema that shares no keys with the parent. Classified user_graph because the fix is state-boundary design, not a framework defect."
+}

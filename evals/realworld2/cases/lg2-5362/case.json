@@ -1,0 +1,13 @@
+{
+  "case_id": "lg2-5362",
+  "source_id": 5362,
+  "source_url": "https://github.com/langchain-ai/langgraph/issues/5362",
+  "title": "LangChain messages casted to BaseMessage when passed to subgraph via Send arg",
+  "version": "unknown (body lists langchain-core 0.3.66; no langgraph version)",
+  "source_type": "framework",
+  "graph_visible": true,
+  "observed_behavior": "A parent node passes its state (containing a SystemMessage/HumanMessage) to a compiled subgraph through Send(goto='subgraph', arg=SubgraphState(**state.model_dump())). Inside the subgraph the message object has degraded to BaseMessage, so any code that relies on the concrete message class fails. The reporter traced this to BaseMessage not handling a dict with a 'type' value.",
+  "structure_focus": "Message objects traversing a Send argument into a compiled subgraph; type information lost at the subgraph boundary",
+  "material_level": "medium",
+  "notes": "Open, label-free. The issue body's snippet is malformed (Send(goto=Send(...))), but the follow-up comment gives the working shape: a parent node builds a pydantic SubgraphState and returns Command(goto=Send(node='subgraph', arg=SubgraphState(**state.model_dump()))). The fixture keeps the parent -> Send -> compiled subgraph boundary and records the observed class inside the child; the exact cast may not reproduce on every version. Classified framework because the reported change is a runtime type degradation during graph-boundary serialization, not a schema declaration mistake."
+}

@@ -1,0 +1,13 @@
+{
+  "case_id": "lg2-4879",
+  "source_id": 4879,
+  "source_url": "https://github.com/langchain-ai/langgraph/issues/4879",
+  "title": "Remote Subgraph (using interrupt) not resuming",
+  "version": "0.4.7 (trace metadata; commenter reproduced on 1.2.6)",
+  "source_type": "framework",
+  "graph_visible": true,
+  "observed_behavior": "A supervisor graph adds a RemoteGraph (a graph served by 'langgraph dev') as node 'child'. The remote graph's node_b calls interrupt(). The interrupt propagates up to the supervisor, but sending Command(resume='...') to the supervisor does not reach the remote graph: it starts a fresh run and re-asks the interrupt instead of continuing.",
+  "structure_focus": "RemoteGraph compiled subgraph with interrupt; resume Command crossing a deployment boundary (supervisor thread vs remote thread)",
+  "material_level": "medium",
+  "notes": "Open; a commenter confirms on langgraph 1.2.6 across separately deployed agents. The local-subgraph control in the issue resumes correctly, which is why this is classified framework/platform rather than user graph design. The fixture contains both sides of the reported topology: the remote agent that is served by langgraph dev (not run here) and the supervisor that embeds RemoteGraph and sends Command(resume=...). Running it needs a live langgraph server at REMOTE_URL."
+}

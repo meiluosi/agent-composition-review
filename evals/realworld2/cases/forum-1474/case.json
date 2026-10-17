@@ -1,0 +1,13 @@
+{
+  "case_id": "forum-1474",
+  "source_id": "forum-1474",
+  "source_url": "https://forum.langchain.com/t/1474",
+  "title": "How can parallel nodes send a param value to the same downstream node? the downstream node needs to adapt the param value based on which parallel upstream node called it",
+  "version": "unknown (forum post, 2025-09-05; no version given)",
+  "source_type": "user_graph",
+  "graph_visible": true,
+  "observed_behavior": "Two parallel branches call the same downstream save-file helper. With last_tool declared as Annotated[list[str], operator.add], both branches' tool names merge in an arbitrary order, so the downstream node cannot tell which upstream branch called it. Removing the reducer makes the two parallel updates raise InvalidUpdateError at key 'last_tool'.",
+  "structure_focus": "Parallel fan-out into one shared downstream node; branch identity encoded in a reduced state key",
+  "material_level": "medium",
+  "notes": "Forum thread, no accepted answer; the post includes the state snippet and a graph screenshot but not full graph code. The fixture reconstructs the described topology (one fan-out node -> two parallel branches -> one shared save node) and keeps the list reducer, which is the configuration the reporter says merges out of order. The branch-identity problem is a state-design issue (per-branch keys or a Send payload carrying the branch id would avoid it), so this is classified user_graph. The graph screenshot was not readable as code; the topology comes from the post text."
+}

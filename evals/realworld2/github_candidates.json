@@ -1,0 +1,778 @@
+{
+  "schema_version": 1,
+  "collected_at": "2026-10-18",
+  "batch": "realworld2",
+  "purpose": "Held-out validation corpus for ACR v0.2 rules; none of these issues was used in the v0.2 rule-design round (realworld pilot 2026-10-17).",
+  "source": "GitHub issue search across langchain-ai/langgraph (mostly) and langchain-ai/langchain",
+  "excluded_first_batch": [
+    6446,
+    8320,
+    9311,
+    9005,
+    9086,
+    9253,
+    9106,
+    9276,
+    8753,
+    2644,
+    7580,
+    9084,
+    9019,
+    8608
+  ],
+  "query_seeds": [
+    "InvalidUpdateError",
+    "state lost",
+    "state dropped",
+    "state overwritten",
+    "state not persisted",
+    "mutable default",
+    "shared state",
+    "subgraph state",
+    "parallel state",
+    "reducer",
+    "checkpoint resume",
+    "interrupt resume",
+    "cache wrong",
+    "retry duplicate",
+    "Command update",
+    "Send subgraph",
+    "messages duplicate",
+    "fan-out",
+    "subgraph output schema",
+    "output_schema",
+    "state overwrite",
+    "state missing",
+    "langchain: langgraph state lost",
+    "langchain: langgraph subgraph state"
+  ],
+  "selection_note": "Candidates are real, reproducible issue reports (no PRs, no pure feature requests, no screenshot-only reports); each has a fenced code block in the issue body and local raw body + comments snapshots. Priority: user graph/composition failures > complete code > explicit error > maintainer confirmation; framework-internal bugs are included but tagged source_type_guess=framework. recommended_rank is set for the top 20 only.",
+  "candidates": [
+    {
+      "number": 1406,
+      "repo": "langchain-ai/langgraph",
+      "title": "map-reduce InvalideUpdateError",
+      "url": "https://github.com/langchain-ai/langgraph/issues/1406",
+      "state": "closed",
+      "created_at": "2024-08-21T09:25:52Z",
+      "labels": [],
+      "queries": [
+        "langgraph: InvalidUpdateError"
+      ],
+      "has_code_block": true,
+      "source_type_guess": "user_graph",
+      "selection_reason": "Classic map-reduce fan-out/fan-in graph; a list-valued state field turns into str and raises InvalidUpdateError - direct ACR002-style parallel write conflict.",
+      "comments_count": 7,
+      "recommended_rank": 1,
+      "raw_body": "evals/realworld2/raw/1406.json",
+      "raw_comments": "evals/realworld2/raw/1406.comments.json"
+    },
+    {
+      "number": 1964,
+      "repo": "langchain-ai/langgraph",
+      "title": "Sink node issue, if multiple subgraphs are used in parallel",
+      "url": "https://github.com/langchain-ai/langgraph/issues/1964",
+      "state": "closed",
+      "created_at": "2024-10-02T12:35:52Z",
+      "labels": [],
+      "queries": [
+        "langgraph: InvalidUpdateError",
+        "langgraph: subgraph output schema"
+      ],
+      "has_code_block": true,
+      "source_type_guess": "user_graph",
+      "selection_reason": "Multiple subgraphs run in parallel into a sink node; replacing subgraphs with plain nodes makes it work - subgraph output boundary / shared-state case (ACR001/ACR003).",
+      "comments_count": 7,
+      "recommended_rank": 2,
+      "raw_body": "evals/realworld2/raw/1964.json",
+      "raw_comments": "evals/realworld2/raw/1964.comments.json"
+    },
+    {
+      "number": 2581,
+      "repo": "langchain-ai/langgraph",
+      "title": "Fan-out/in fails with subgraphs",
+      "url": "https://github.com/langchain-ai/langgraph/issues/2581",
+      "state": "closed",
+      "created_at": "2024-11-29T17:12:48Z",
+      "labels": [],
+      "queries": [
+        "langgraph: InvalidUpdateError"
+      ],
+      "has_code_block": true,
+      "source_type_guess": "user_graph",
+      "selection_reason": "Send-based fan-out into subgraphs then merge back into the parent state fails; works when the fan-out targets a parent function - subgraph state merge/output-schema case.",
+      "comments_count": 2,
+      "recommended_rank": 3,
+      "raw_body": "evals/realworld2/raw/2581.json",
+      "raw_comments": "evals/realworld2/raw/2581.comments.json"
+    },
+    {
+      "number": 6290,
+      "repo": "langchain-ai/langgraph",
+      "title": "Subgraphs channels reducer updating out of turn",
+      "url": "https://github.com/langchain-ai/langgraph/issues/6290",
+      "state": "open",
+      "created_at": "2025-10-16T13:33:40Z",
+      "labels": [
+        "bug",
+        "pending",
+        "external"
+      ],
+      "queries": [
+        "langgraph: Send subgraph",
+        "langgraph: subgraph output schema"
+      ],
+      "has_code_block": true,
+      "source_type_guess": "user_graph",
+      "selection_reason": "Two sibling subgraphs share the parent state key behind a counting reducer; reducer fires out of turn across supersteps - parallel subgraph reducer semantics (ACR001/ACR002).",
+      "comments_count": 2,
+      "recommended_rank": 4,
+      "raw_body": "evals/realworld2/raw/6290.json",
+      "raw_comments": "evals/realworld2/raw/6290.comments.json"
+    },
+    {
+      "number": 766,
+      "repo": "langchain-ai/langgraph",
+      "title": "langgraph.errors.InvalidUpdateError: Invalid update for channel medical with values",
+      "url": "https://github.com/langchain-ai/langgraph/issues/766",
+      "state": "closed",
+      "created_at": "2024-06-22T05:43:45Z",
+      "labels": [
+        "stale"
+      ],
+      "queries": [
+        "langgraph: InvalidUpdateError"
+      ],
+      "has_code_block": true,
+      "source_type_guess": "user_graph",
+      "selection_reason": "Concrete InvalidUpdateError for a channel written twice in one step, with graph code; maintainer (sydney-runkle) replied.",
+      "comments_count": 15,
+      "recommended_rank": 5,
+      "raw_body": "evals/realworld2/raw/766.json",
+      "raw_comments": "evals/realworld2/raw/766.comments.json"
+    },
+    {
+      "number": 2336,
+      "repo": "langchain-ai/langgraph",
+      "title": "langgraph.errors.InvalidUpdateError: Can receive only one value per step. Use an Annotated key to handle multiple values. error when running retry in graph parallel processing",
+      "url": "https://github.com/langchain-ai/langgraph/issues/2336",
+      "state": "closed",
+      "created_at": "2024-11-05T04:26:16Z",
+      "labels": [],
+      "queries": [
+        "langgraph: InvalidUpdateError"
+      ],
+      "has_code_block": true,
+      "source_type_guess": "user_graph",
+      "selection_reason": "Parallel branches plus a conditional retry edge on one branch produce 'Can receive only one value per step' - parallel + retry composition (ACR002/ACR005-adjacent).",
+      "comments_count": 2,
+      "recommended_rank": 6,
+      "raw_body": "evals/realworld2/raw/2336.json",
+      "raw_comments": "evals/realworld2/raw/2336.comments.json"
+    },
+    {
+      "number": 740,
+      "repo": "langchain-ai/langgraph",
+      "title": "langgraph.errors.InvalidUpdateError: Must write to at least one of ['input', 'plan', 'past_steps', 'response']",
+      "url": "https://github.com/langchain-ai/langgraph/issues/740",
+      "state": "closed",
+      "created_at": "2024-06-21T10:23:42Z",
+      "labels": [],
+      "queries": [
+        "langgraph: InvalidUpdateError"
+      ],
+      "has_code_block": true,
+      "source_type_guess": "user_graph",
+      "selection_reason": "Long plan-and-execute thread; a node returns no declared keys and raises InvalidUpdateError 'Must write to at least one of ...' - state schema / node return contract (ACR007-adjacent).",
+      "comments_count": 35,
+      "recommended_rank": 7,
+      "raw_body": "evals/realworld2/raw/740.json",
+      "raw_comments": "evals/realworld2/raw/740.comments.json"
+    },
+    {
+      "number": 2392,
+      "repo": "langchain-ai/langgraph",
+      "title": "Subgraph with private state doesn't have a proper state at the last node",
+      "url": "https://github.com/langchain-ai/langgraph/issues/2392",
+      "state": "closed",
+      "created_at": "2024-11-12T00:06:26Z",
+      "labels": [],
+      "queries": [
+        "langgraph: subgraph output schema"
+      ],
+      "has_code_block": true,
+      "source_type_guess": "user_graph",
+      "selection_reason": "Double-nested subgraphs with private state; the innermost graph's last node returns parent-private keys and errors - private state / nested output schema composition.",
+      "comments_count": 3,
+      "recommended_rank": 8,
+      "raw_body": "evals/realworld2/raw/2392.json",
+      "raw_comments": "evals/realworld2/raw/2392.comments.json"
+    },
+    {
+      "number": 1909,
+      "repo": "langchain-ai/langgraph",
+      "title": "PrivateState not working if the node is activated by a Send object",
+      "url": "https://github.com/langchain-ai/langgraph/issues/1909",
+      "state": "closed",
+      "created_at": "2024-09-30T13:50:54Z",
+      "labels": [],
+      "queries": [
+        "langgraph: InvalidUpdateError"
+      ],
+      "has_code_block": true,
+      "source_type_guess": "user_graph",
+      "selection_reason": "PrivateState stops working when the node is activated by Send - Send + private schema interaction.",
+      "comments_count": 4,
+      "recommended_rank": 9,
+      "raw_body": "evals/realworld2/raw/1909.json",
+      "raw_comments": "evals/realworld2/raw/1909.comments.json"
+    },
+    {
+      "number": 5225,
+      "repo": "langchain-ai/langgraph",
+      "title": "Default value of state variable not working with reducer function",
+      "url": "https://github.com/langchain-ai/langgraph/issues/5225",
+      "state": "open",
+      "created_at": "2025-06-27T12:50:19Z",
+      "labels": [
+        "bug",
+        "help wanted",
+        "external"
+      ],
+      "queries": [
+        "langgraph: mutable default"
+      ],
+      "has_code_block": true,
+      "source_type_guess": "user_graph",
+      "selection_reason": "Default value on an Annotated reducer field is not applied - reducer/default initialization semantics; maintainer (sydney-runkle) replied.",
+      "comments_count": 24,
+      "recommended_rank": 10,
+      "raw_body": "evals/realworld2/raw/5225.json",
+      "raw_comments": "evals/realworld2/raw/5225.comments.json"
+    },
+    {
+      "number": 4523,
+      "repo": "langchain-ai/langgraph",
+      "title": "Update state fails when resuming subgraph after interrupt",
+      "url": "https://github.com/langchain-ai/langgraph/issues/4523",
+      "state": "closed",
+      "created_at": "2025-05-03T14:19:29Z",
+      "labels": [],
+      "queries": [
+        "langgraph: subgraph output schema"
+      ],
+      "has_code_block": true,
+      "source_type_guess": "user_graph",
+      "selection_reason": "State update/persistence behavior when resuming a subgraph after interrupt - subgraph resume + state update ordering.",
+      "comments_count": 5,
+      "recommended_rank": 11,
+      "raw_body": "evals/realworld2/raw/4523.json",
+      "raw_comments": "evals/realworld2/raw/4523.comments.json"
+    },
+    {
+      "number": 4879,
+      "repo": "langchain-ai/langgraph",
+      "title": "Remote Subgraph (using interrupt) not resuming",
+      "url": "https://github.com/langchain-ai/langgraph/issues/4879",
+      "state": "open",
+      "created_at": "2025-05-30T09:08:57Z",
+      "labels": [
+        "bug",
+        "external"
+      ],
+      "queries": [
+        "langgraph: Send subgraph"
+      ],
+      "has_code_block": true,
+      "source_type_guess": "user_graph",
+      "selection_reason": "RemoteGraph subgraph containing interrupt does not resume after Command(resume=...); self-contained repro with langgraph dev.",
+      "comments_count": 3,
+      "recommended_rank": 12,
+      "raw_body": "evals/realworld2/raw/4879.json",
+      "raw_comments": "evals/realworld2/raw/4879.comments.json"
+    },
+    {
+      "number": 5062,
+      "repo": "langchain-ai/langgraph",
+      "title": "【Command】：Can't use update and List[Send] at the same time if graph==Command.PARENT",
+      "url": "https://github.com/langchain-ai/langgraph/issues/5062",
+      "state": "open",
+      "created_at": "2025-06-11T15:35:08Z",
+      "labels": [
+        "bug",
+        "pending",
+        "external"
+      ],
+      "queries": [
+        "langgraph: Send subgraph",
+        "langgraph: subgraph output schema"
+      ],
+      "has_code_block": true,
+      "source_type_guess": "user_graph",
+      "selection_reason": "Combining Command(update=...) with a list of Send under Command.PARENT - routing/update composition; maintainer (sydney-runkle) replied.",
+      "comments_count": 5,
+      "recommended_rank": 13,
+      "raw_body": "evals/realworld2/raw/5062.json",
+      "raw_comments": "evals/realworld2/raw/5062.comments.json"
+    },
+    {
+      "number": 5362,
+      "repo": "langchain-ai/langgraph",
+      "title": "LangChain messages casted to BaseMessage when passed to subgraph via Send arg",
+      "url": "https://github.com/langchain-ai/langgraph/issues/5362",
+      "state": "closed",
+      "created_at": "2025-07-06T14:01:22Z",
+      "labels": [
+        "bug",
+        "pending"
+      ],
+      "queries": [
+        "langgraph: Send subgraph"
+      ],
+      "has_code_block": true,
+      "source_type_guess": "usage",
+      "selection_reason": "LangChain message objects passed to a subgraph via Send arg are cast to BaseMessage, breaking the child node's type expectation.",
+      "comments_count": 1,
+      "recommended_rank": 14,
+      "raw_body": "evals/realworld2/raw/5362.json",
+      "raw_comments": "evals/realworld2/raw/5362.comments.json"
+    },
+    {
+      "number": 1950,
+      "repo": "langchain-ai/langgraph",
+      "title": "Passing private state with Class Node",
+      "url": "https://github.com/langchain-ai/langgraph/issues/1950",
+      "state": "closed",
+      "created_at": "2024-10-01T19:37:47Z",
+      "labels": [],
+      "queries": [
+        "langgraph: InvalidUpdateError",
+        "langgraph: subgraph output schema"
+      ],
+      "has_code_block": true,
+      "source_type_guess": "usage",
+      "selection_reason": "Private state used with a class-based node fails with 'must write to global state' while the documented function-node version works - node declaration/output contract (ACR007-adjacent).",
+      "comments_count": 4,
+      "recommended_rank": 15,
+      "raw_body": "evals/realworld2/raw/1950.json",
+      "raw_comments": "evals/realworld2/raw/1950.comments.json"
+    },
+    {
+      "number": 492,
+      "repo": "langchain-ai/langgraph",
+      "title": "Receiving multiple inputs on a single node not working in a vanilla state",
+      "url": "https://github.com/langchain-ai/langgraph/issues/492",
+      "state": "closed",
+      "created_at": "2024-05-19T21:20:45Z",
+      "labels": [],
+      "queries": [
+        "langgraph: InvalidUpdateError"
+      ],
+      "has_code_block": true,
+      "source_type_guess": "usage",
+      "selection_reason": "Plain-dict state with parallel branches triggers LastValue/InvalidUpdateError; adding an Annotated reducer fixes it - minimal ACR002 baseline.",
+      "comments_count": 7,
+      "recommended_rank": 16,
+      "raw_body": "evals/realworld2/raw/492.json",
+      "raw_comments": "evals/realworld2/raw/492.comments.json"
+    },
+    {
+      "number": 5979,
+      "repo": "langchain-ai/langgraph",
+      "title": "if there are two nodes（one node has a prenode） go to same one 4th node , then that 4th node will run twice",
+      "url": "https://github.com/langchain-ai/langgraph/issues/5979",
+      "state": "closed",
+      "created_at": "2025-08-21T02:49:56Z",
+      "labels": [
+        "bug",
+        "pending"
+      ],
+      "queries": [
+        "langgraph: state overwrite"
+      ],
+      "has_code_block": true,
+      "source_type_guess": "user_graph",
+      "selection_reason": "Diamond join where one input has a predecessor makes the shared 4th node run twice - fan-in / superstep execution semantics.",
+      "comments_count": 2,
+      "recommended_rank": 17,
+      "raw_body": "evals/realworld2/raw/5979.json",
+      "raw_comments": "evals/realworld2/raw/5979.comments.json"
+    },
+    {
+      "number": 2142,
+      "repo": "langchain-ai/langgraph",
+      "title": "Subgraph state is not inserted to persistance db.",
+      "url": "https://github.com/langchain-ai/langgraph/issues/2142",
+      "state": "closed",
+      "created_at": "2024-10-19T14:13:27Z",
+      "labels": [
+        "question"
+      ],
+      "queries": [
+        "langgraph: subgraph output schema"
+      ],
+      "has_code_block": true,
+      "source_type_guess": "usage",
+      "selection_reason": "Subgraph state is not persisted to the checkpointer DB as expected; multi-graph persistence expectation with Postgres saver.",
+      "comments_count": 5,
+      "recommended_rank": 18,
+      "raw_body": "evals/realworld2/raw/2142.json",
+      "raw_comments": "evals/realworld2/raw/2142.comments.json"
+    },
+    {
+      "number": 8587,
+      "repo": "langchain-ai/langgraph",
+      "title": "No way to declare the subgraphs a node invokes; detection cannot see them",
+      "url": "https://github.com/langchain-ai/langgraph/issues/8587",
+      "state": "open",
+      "created_at": "2026-08-10T12:52:48Z",
+      "labels": [
+        "bug",
+        "external"
+      ],
+      "queries": [
+        "langgraph: subgraph state"
+      ],
+      "has_code_block": true,
+      "source_type_guess": "framework",
+      "selection_reason": "find_subgraph_pregel cannot see dynamically selected subgraphs; issue asks for an explicit subgraph declaration - directly relevant to ACR's static subgraph reachability limits.",
+      "comments_count": 5,
+      "recommended_rank": 19,
+      "raw_body": "evals/realworld2/raw/8587.json",
+      "raw_comments": "evals/realworld2/raw/8587.comments.json"
+    },
+    {
+      "number": 1511,
+      "repo": "langchain-ai/langgraph",
+      "title": "InvalidUpdateError raised in graph.astream() when given a list of HumanMessage",
+      "url": "https://github.com/langchain-ai/langgraph/issues/1511",
+      "state": "closed",
+      "created_at": "2024-08-28T13:10:31Z",
+      "labels": [],
+      "queries": [
+        "langgraph: InvalidUpdateError"
+      ],
+      "has_code_block": true,
+      "source_type_guess": "usage",
+      "selection_reason": "astream() with a list of HumanMessage raises InvalidUpdateError: Expected dict - input/state shape contract.",
+      "comments_count": 7,
+      "recommended_rank": 20,
+      "raw_body": "evals/realworld2/raw/1511.json",
+      "raw_comments": "evals/realworld2/raw/1511.comments.json"
+    },
+    {
+      "number": 6491,
+      "repo": "langchain-ai/langgraph",
+      "title": "Invalid state saved to checkpoint without validation, causing permanent corruption.",
+      "url": "https://github.com/langchain-ai/langgraph/issues/6491",
+      "state": "open",
+      "created_at": "2025-11-24T07:10:14Z",
+      "labels": [
+        "bug",
+        "pending",
+        "external"
+      ],
+      "queries": [
+        "langgraph: Send subgraph",
+        "langgraph: subgraph output schema"
+      ],
+      "has_code_block": true,
+      "source_type_guess": "framework",
+      "selection_reason": "Node returns a value violating its Pydantic state schema; checkpoint is written but can never be read back - output validation gap.",
+      "comments_count": 5,
+      "recommended_rank": null,
+      "raw_body": "evals/realworld2/raw/6491.json",
+      "raw_comments": "evals/realworld2/raw/6491.comments.json"
+    },
+    {
+      "number": 6607,
+      "repo": "langchain-ai/langgraph",
+      "title": "Graph silently converts output to Dict even though it should be Pydantic class",
+      "url": "https://github.com/langchain-ai/langgraph/issues/6607",
+      "state": "closed",
+      "created_at": "2025-12-17T20:46:12Z",
+      "labels": [
+        "bug",
+        "pending"
+      ],
+      "queries": [
+        "langgraph: output_schema"
+      ],
+      "has_code_block": true,
+      "source_type_guess": "framework",
+      "selection_reason": "Pydantic state output is silently converted to dict at the graph boundary - output schema contract; maintainer (sydney-runkle) replied.",
+      "comments_count": 8,
+      "recommended_rank": null,
+      "raw_body": "evals/realworld2/raw/6607.json",
+      "raw_comments": "evals/realworld2/raw/6607.comments.json"
+    },
+    {
+      "number": 8083,
+      "repo": "langchain-ai/langgraph",
+      "title": "Lang Graph did not save all data to the checkpoint",
+      "url": "https://github.com/langchain-ai/langgraph/issues/8083",
+      "state": "closed",
+      "created_at": "2026-06-15T11:05:12Z",
+      "labels": [
+        "bug",
+        "external"
+      ],
+      "queries": [
+        "langgraph: reducer"
+      ],
+      "has_code_block": true,
+      "source_type_guess": "usage",
+      "selection_reason": "Custom Redis/Postgres checkpointer appears to persist only fields written by the final node - partial state persistence/merge expectation.",
+      "comments_count": 3,
+      "recommended_rank": null,
+      "raw_body": "evals/realworld2/raw/8083.json",
+      "raw_comments": "evals/realworld2/raw/8083.comments.json"
+    },
+    {
+      "number": 6165,
+      "repo": "langchain-ai/langgraph",
+      "title": "apparent caching issue w/ subgraphs",
+      "url": "https://github.com/langchain-ai/langgraph/issues/6165",
+      "state": "closed",
+      "created_at": "2025-09-19T00:27:34Z",
+      "labels": [],
+      "queries": [
+        "langgraph: cache wrong",
+        "langgraph: subgraph output schema"
+      ],
+      "has_code_block": true,
+      "source_type_guess": "framework",
+      "selection_reason": "Maintainer-filed minimal repro: caching does not interact correctly with subgraphs - cache identity vs subgraph invocation (ACR004/ACR008-adjacent).",
+      "comments_count": 3,
+      "recommended_rank": null,
+      "raw_body": "evals/realworld2/raw/6165.json",
+      "raw_comments": "evals/realworld2/raw/6165.comments.json"
+    },
+    {
+      "number": 8009,
+      "repo": "langchain-ai/langgraph",
+      "title": "default_cache_key collides distinct inputs that share tobytes() (numpy dtype / PIL palette) when passed as keyword args",
+      "url": "https://github.com/langchain-ai/langgraph/issues/8009",
+      "state": "open",
+      "created_at": "2026-06-05T05:41:14Z",
+      "labels": [
+        "bug",
+        "external"
+      ],
+      "queries": [
+        "langgraph: state lost"
+      ],
+      "has_code_block": true,
+      "source_type_guess": "framework",
+      "selection_reason": "default_cache_key collides distinct numpy/PIL inputs sharing tobytes() - task cache identity/serialization (ACR008-adjacent).",
+      "comments_count": 9,
+      "recommended_rank": null,
+      "raw_body": "evals/realworld2/raw/8009.json",
+      "raw_comments": "evals/realworld2/raw/8009.comments.json"
+    },
+    {
+      "number": 9072,
+      "repo": "langchain-ai/langgraph",
+      "title": "ToolNode silently drops Command.update when a tool returns Command(graph=PARENT, goto=[Send(...)])",
+      "url": "https://github.com/langchain-ai/langgraph/issues/9072",
+      "state": "open",
+      "created_at": "2026-09-24T11:17:39Z",
+      "labels": [
+        "external"
+      ],
+      "queries": [
+        "langgraph: InvalidUpdateError",
+        "langgraph: state lost",
+        "langgraph: state dropped",
+        "langgraph: state not persisted",
+        "langgraph: shared state",
+        "langgraph: parallel state",
+        "langgraph: reducer",
+        "langgraph: checkpoint resume",
+        "langgraph: interrupt resume",
+        "langgraph: retry duplicate",
+        "langgraph: Command update",
+        "langgraph: messages duplicate",
+        "langgraph: fan-out",
+        "langgraph: state overwrite",
+        "langgraph: state missing"
+      ],
+      "has_code_block": true,
+      "source_type_guess": "framework",
+      "selection_reason": "ToolNode / create_agent silently drops Command(update=..., graph=PARENT, goto=[Send(...)]) from one of two tools - Command+Send composition.",
+      "comments_count": 22,
+      "recommended_rank": null,
+      "raw_body": "evals/realworld2/raw/9072.json",
+      "raw_comments": "evals/realworld2/raw/9072.comments.json"
+    },
+    {
+      "number": 9076,
+      "repo": "langchain-ai/langgraph",
+      "title": "update_state during interrupt() clears StateSnapshot.interrupts and breaks resume-by-id",
+      "url": "https://github.com/langchain-ai/langgraph/issues/9076",
+      "state": "open",
+      "created_at": "2026-09-25T10:00:34Z",
+      "labels": [
+        "external"
+      ],
+      "queries": [
+        "langgraph: checkpoint resume",
+        "langgraph: interrupt resume",
+        "langgraph: Command update"
+      ],
+      "has_code_block": true,
+      "source_type_guess": "framework",
+      "selection_reason": "update_state during interrupt() clears StateSnapshot.interrupts and breaks resume-by-id - interrupt/update_state composition.",
+      "comments_count": 5,
+      "recommended_rank": null,
+      "raw_body": "evals/realworld2/raw/9076.json",
+      "raw_comments": "evals/realworld2/raw/9076.comments.json"
+    },
+    {
+      "number": 9164,
+      "repo": "langchain-ai/langgraph",
+      "title": "Headless tool results dropped when the resume is sent immediately after the interrupt",
+      "url": "https://github.com/langchain-ai/langgraph/issues/9164",
+      "state": "open",
+      "created_at": "2026-10-01T16:19:40Z",
+      "labels": [
+        "bug",
+        "external"
+      ],
+      "queries": [
+        "langgraph: state dropped",
+        "langgraph: parallel state",
+        "langgraph: checkpoint resume",
+        "langgraph: interrupt resume",
+        "langgraph: retry duplicate",
+        "langgraph: Command update",
+        "langgraph: state missing"
+      ],
+      "has_code_block": true,
+      "source_type_guess": "framework",
+      "selection_reason": "Headless client-side tool results are dropped when the resume arrives immediately after the interrupt - resume race loses child task writes.",
+      "comments_count": 4,
+      "recommended_rank": null,
+      "raw_body": "evals/realworld2/raw/9164.json",
+      "raw_comments": "evals/realworld2/raw/9164.comments.json"
+    },
+    {
+      "number": 9185,
+      "repo": "langchain-ai/langgraph",
+      "title": "[BUG] Resuming after a tool error re-runs the tool node, repeating a side effect that already happened",
+      "url": "https://github.com/langchain-ai/langgraph/issues/9185",
+      "state": "closed",
+      "created_at": "2026-10-04T04:41:44Z",
+      "labels": [
+        "bug",
+        "external"
+      ],
+      "queries": [
+        "langgraph: state not persisted",
+        "langgraph: checkpoint resume",
+        "langgraph: interrupt resume",
+        "langgraph: retry duplicate",
+        "langgraph: messages duplicate",
+        "langgraph: state overwrite",
+        "langgraph: state missing"
+      ],
+      "has_code_block": true,
+      "source_type_guess": "usage",
+      "selection_reason": "Resume after a failed tool re-runs the tool node and repeats an already-committed side effect - retry/resume with non-idempotent side effect (ACR005-adjacent).",
+      "comments_count": 15,
+      "recommended_rank": null,
+      "raw_body": "evals/realworld2/raw/9185.json",
+      "raw_comments": "evals/realworld2/raw/9185.comments.json"
+    },
+    {
+      "number": 9326,
+      "repo": "langchain-ai/langgraph",
+      "title": "add_messages skips merging, deletion and format= for messages after RemoveMessage(id=REMOVE_ALL_MESSAGES)",
+      "url": "https://github.com/langchain-ai/langgraph/issues/9326",
+      "state": "open",
+      "created_at": "2026-10-16T12:40:56Z",
+      "labels": [
+        "external"
+      ],
+      "queries": [
+        "langgraph: reducer",
+        "langgraph: messages duplicate"
+      ],
+      "has_code_block": true,
+      "source_type_guess": "framework",
+      "selection_reason": "add_messages short-circuits after RemoveMessage(REMOVE_ALL), skipping merge/deletion/format semantics for following messages - messages reducer.",
+      "comments_count": 2,
+      "recommended_rank": null,
+      "raw_body": "evals/realworld2/raw/9326.json",
+      "raw_comments": "evals/realworld2/raw/9326.comments.json"
+    },
+    {
+      "number": 9176,
+      "repo": "langchain-ai/langgraph",
+      "title": "StateGraph._is_field_binop rejects valid reducers like set.union, functions with default args, and variadics`",
+      "url": "https://github.com/langchain-ai/langgraph/issues/9176",
+      "state": "open",
+      "created_at": "2026-10-03T04:29:17Z",
+      "labels": [
+        "bug",
+        "external"
+      ],
+      "queries": [
+        "langgraph: reducer"
+      ],
+      "has_code_block": true,
+      "source_type_guess": "framework",
+      "selection_reason": "StateGraph._is_field_binop rejects valid reducers such as set.union or functions with default args - reducer declaration/validation.",
+      "comments_count": 4,
+      "recommended_rank": null,
+      "raw_body": "evals/realworld2/raw/9176.json",
+      "raw_comments": "evals/realworld2/raw/9176.comments.json"
+    },
+    {
+      "number": 9178,
+      "repo": "langchain-ai/langgraph",
+      "title": "`bug: Send.__hash__ raises TypeError: unhashable type: 'dict' on standard dictionary payloads`",
+      "url": "https://github.com/langchain-ai/langgraph/issues/9178",
+      "state": "open",
+      "created_at": "2026-10-03T04:35:04Z",
+      "labels": [
+        "bug",
+        "external"
+      ],
+      "queries": [
+        "langgraph: fan-out"
+      ],
+      "has_code_block": true,
+      "source_type_guess": "framework",
+      "selection_reason": "Send.__hash__ raises TypeError on dict payloads, breaking set-based fan-out deduplication - Send composition.",
+      "comments_count": 7,
+      "recommended_rank": null,
+      "raw_body": "evals/realworld2/raw/9178.json",
+      "raw_comments": "evals/realworld2/raw/9178.comments.json"
+    },
+    {
+      "number": 34590,
+      "repo": "langchain-ai/langchain",
+      "title": "Bug Report: `create_agent` Doesn't Persist `None` Values in Command Updates",
+      "url": "https://github.com/langchain-ai/langchain/issues/34590",
+      "state": "closed",
+      "created_at": "2026-01-03T16:59:38Z",
+      "labels": [
+        "bug",
+        "langchain",
+        "external"
+      ],
+      "queries": [
+        "langchain: langgraph state lost",
+        "langchain: langgraph subgraph state"
+      ],
+      "has_code_block": true,
+      "source_type_guess": "usage",
+      "selection_reason": "create_agent drops None values from Command state updates instead of applying custom reducers (langchain repo) - Command update semantics.",
+      "comments_count": 15,
+      "recommended_rank": null,
+      "raw_body": "evals/realworld2/raw/34590.json",
+      "raw_comments": "evals/realworld2/raw/34590.comments.json"
+    }
+  ]
+}

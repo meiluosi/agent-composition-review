@@ -1,0 +1,13 @@
+{
+  "case_id": "forum-2839",
+  "source_id": "forum-2839",
+  "source_url": "https://forum.langchain.com/t/2839",
+  "title": "Does LangGraph support using HITL within subgraphs?",
+  "version": "unknown (forum post, 2026-01-30; no version given)",
+  "source_type": "usage",
+  "graph_visible": true,
+  "observed_behavior": "A parent function node calls a compiled subgraph repeatedly with subgraph.invoke(...). The subgraph's node calls interrupt(), but nothing pauses and no resume is possible: the parent has no checkpointer or thread_id, the interrupt payload is treated as the resume value, and the subgraph topology connects both nodes directly from START. The reply identifies these as usage errors and rewrites the example with a checkpointer, Command(resume=...) and a node_1 -> node_2 -> END topology.",
+  "structure_focus": "interrupt() inside a function-invoked subgraph; missing checkpointer/thread_id and resume handling; subgraph topology",
+  "material_level": "high",
+  "notes": "Forum thread with a full OP snippet and a correcting answer. Classified usage because the answer enumerates concrete mechanics errors (no checkpointer, mixing interrupt payload with resume value, START edges to both nodes) rather than a framework defect. The fixture keeps the OP's flawed shape (function-invoked child without checkpointer, parallel START edges) so the missing HITL mechanics are visible; the forum's corrected version is referenced in the issue link comment but not used."
+}

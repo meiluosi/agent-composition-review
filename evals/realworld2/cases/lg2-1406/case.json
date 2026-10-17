@@ -1,0 +1,13 @@
+{
+  "case_id": "lg2-1406",
+  "source_id": 1406,
+  "source_url": "https://github.com/langchain-ai/langgraph/issues/1406",
+  "title": "map-reduce InvalideUpdateError",
+  "version": "0.2.3",
+  "source_type": "user_graph",
+  "graph_visible": true,
+  "observed_behavior": "A conditional Send fan-out starts several num_pros tasks in one super-step. Each task returns a string for the plain state key num_p, with no reducer, so apply_writes raises InvalidUpdateError: Invalid update for channel num_p with values ['1123', '2123', '3123'].",
+  "structure_focus": "Send fan-out to one node, then fan-in into an un-reduced (and undeclared) state key; intermediate node output schemas are not part of the graph state",
+  "material_level": "high",
+  "notes": "Open at collection, label-free body. Maintainer reply confirms the fix: add Annotated with a reducer to num_p. The graph mixes node return schemas (QueryOutputState, DataOutputState) that are never merged into OverallState, so num_p is not declared there at all; this is a state-schema/fan-in design problem, not a framework defect. The fixture keeps the Send fan-out, num_p writers and the num_pros1 downstream node."
+}

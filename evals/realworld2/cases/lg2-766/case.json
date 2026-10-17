@@ -1,0 +1,13 @@
+{
+  "case_id": "lg2-766",
+  "source_id": 766,
+  "source_url": "https://github.com/langchain-ai/langgraph/issues/766",
+  "title": "langgraph.errors.InvalidUpdateError: Invalid update for channel medical with values",
+  "version": "0.0.66",
+  "source_type": "user_graph",
+  "graph_visible": true,
+  "observed_behavior": "A loop graph writes the whole 'medical' dict from three nodes. After medical_mentor_pass, apply_writes receives two values for the non-reduced channel 'medical' in one super-step and raises InvalidUpdateError: Invalid update for channel medical with values [...]. Forcing the last value lets the graph run but it then loops between medical_mentor and medical_mentor_pass without reaching END.",
+  "structure_focus": "Duplicate edges to the same target (plain edge plus conditional edge) plus a whole-dict state key with no reducer; loop exit ambiguity",
+  "material_level": "high",
+  "notes": "Closed as stale; comments report custom three-argument reducers that cannot work (reducers take two values). The topology registers medical_mentor -> medical_mentor_pass twice (add_edge and add_conditional_edges) while medical_mentor_pass also has a plain edge to END, and every node returns the complete medical dict. The double write and the non-terminating loop both follow from that state/edge design, so this is classified user_graph. The fixture keeps the duplicated edge and the dict-valued channel."
+}

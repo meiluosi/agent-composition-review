@@ -1,0 +1,13 @@
+{
+  "case_id": "lg2-5062",
+  "source_id": 5062,
+  "source_url": "https://github.com/langchain-ai/langgraph/issues/5062",
+  "title": "【Command】：Can't use update and List[Send] at the same time if graph==Command.PARENT",
+  "version": "unknown (no system-info block in body)",
+  "source_type": "framework",
+  "graph_visible": true,
+  "observed_behavior": "A handoff tool inside the supervisor agent returns Command(update={'messages': [...]}, goto=[Send(agent_name, agent_input)], graph=Command.PARENT). The parent supervisor receives the Send fan-out but not the update: the tool message that should be kept is dropped, so the supervisor misses the handoff state. Giving goto a single Send instead of a list keeps the update.",
+  "structure_focus": "Command.PARENT combining update with a list of Send; ToolNode output combination dropping fields",
+  "material_level": "medium",
+  "notes": "Open. Maintainer asked for a minimal repro; later commenters confirm, and one has a forks fix for ToolNode preserving Command.update when combining Command.PARENT outputs with goto=[Send(...)]. Reproducing it exactly needs create_react_agent/ToolNode plus a model that emits the tool call, which is outside an offline fixture; the fixture keeps the parent supervisor + loader topology and a node that returns the same Command shape, so the composition is visible but the ToolNode combination bug may not trigger. It adds a second-pass Command.PARENT goto=END so one invocation terminates after one handoff; on the pinned langgraph 1.0.3 the final state keeps only the later update, which is consistent with the dropped-update symptom. Classified framework (output combination), not user graph design."
+}

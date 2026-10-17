@@ -1,0 +1,14 @@
+acr scan - evals/realworld2/cases/lg2-5062
+1 file(s) parsed, 0 skipped - 1 finding(s): high 1, medium 0, low 0
+
+  HIGH   ACR001  Compiled subgraph shares state keys with the parent graph
+    evals/realworld2/cases/lg2-5062/graph.py:67
+    Compiled subgraph registered as node 'supervisor' has no output_schema, and child state 'AgentState' shares 'data_refs', 'messages' with parent state 'AgentState'. The child's full state is merged back into the parent, so writes from this node can collide with sibling branches.
+    evidence:
+      - shared state key(s): 'data_refs', 'messages'
+      - parent state 'AgentState' declared at line 22; key line(s): 'data_refs' at line 24, 'messages' at line 23
+      - child state 'AgentState' declared at line 22; key line(s): 'data_refs' at line 24, 'messages' at line 23
+      - child graph compiled without output_schema at line 52
+      - parent node 'supervisor' registered with add_node at line 67
+    fix: Declare ``output_schema=<SubgraphOutput>`` on the child ``StateGraph`` so only intended keys flow back to the parent, or split the shared key into distinct keys.
+    docs: docs/rules/ACR001.md

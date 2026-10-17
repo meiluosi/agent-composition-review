@@ -7,6 +7,12 @@
 
 ## [Unreleased]
 
+### Added
+
+- 新增 ACR007：检测节点（含 class-based `__call__`）返回 dict 字面量里不在 graph state schema 中的键；这类写入会被 LangGraph 静默过滤。覆盖真实案例 #8320 与 #2644 的形态。
+- 新增 ACR008：检测 `cache_policy` 节点使用 callable object / lambda / partial / 未解析参数，cache key 可能失去稳定身份并与共享 cache 串结果。覆盖真实案例 #8753 的形态。
+- 新增 ACR009：检测 `retry_policy` 节点内调用多个子图，重试/恢复后可能复用第一个子图的 checkpoint 命名空间。覆盖真实案例 #9253 的形态。
+
 ### 计划中
 
 - 根据 v0.1 的早期使用反馈补充扫描/轨迹规则与最小修复模式。

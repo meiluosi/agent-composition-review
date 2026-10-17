@@ -276,6 +276,8 @@ class FunctionInfo:
     cache_decorators: list[tuple[str, int]] = field(default_factory=list)
     retry_decorators: list[tuple[str, int]] = field(default_factory=list)
     checkpointer_calls: list[tuple[str, int]] = field(default_factory=list)
+    # (target, line) for ``target.invoke(...)``/``ainvoke`` calls inside a node.
+    invoke_calls: list[tuple[str, int]] = field(default_factory=list)
     # (kind, graph variable, output_schema) when a helper returns a compiled
     # graph: ``return child.compile()`` -> ("compile", "child", schema) and
     # ``return child`` -> ("name", "child", None). Used to resolve
@@ -290,6 +292,8 @@ class NodeSpec:
     action_kind: str = "unknown"  # function | subgraph | unknown
     func_name: str | None = None
     graph_var: str | None = None
+    cache_policy_line: int | None = None
+    retry_policy_line: int | None = None
 
 
 @dataclass
@@ -316,6 +320,7 @@ class GraphSpec:
     edges: list[EdgeSpec] = field(default_factory=list)
     compile_line: int | None = None
     compile_cache: bool = False
+    compile_cache_var: str | None = None
     compile_output_schema: str | None = None
     compiled_var: str | None = None
 
@@ -333,6 +338,7 @@ class FileScanner:
         self.display = display
         self.typed_dicts: dict[str, TypedDictInfo] = {}
         self.functions: dict[str, FunctionInfo] = {}
+        self.class_names: set[str] = set()
         self.graphs: dict[str, GraphSpec] = {}
         self.compiled: dict[str, CompiledInfo] = {}
         self.stategraph_names: set[str] = set()
@@ -416,6 +422,20 @@ class FileScanner:
         for node in ast.walk(tree):
             if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef)):
                 self.functions[node.name] = self._analyze_function(node)
+        # Class-based nodes: ``add_node("x", MyNode())`` calls
+        # ``MyNode.__call__``. Collect that method under a qualified name so
+        # the existing write/return analysis can be reused.
+        for node in ast.walk(tree):
+            if not isinstance(node, ast.ClassDef):
+                continue
+            for item in node.body:
+                if (
+                    isinstance(item, (ast.FunctionDef, ast.AsyncFunctionDef))
+                    and item.name == "__call__"
+                ):
+                    qualified = f"{node.name}.__call__"
+                    self.class_names.add(node.name)
+                    self.functions[qualified] = self._analyze_function(item)
 
     def _analyze_function(self, fn: ast.FunctionDef | ast.AsyncFunctionDef) -> FunctionInfo:
         cache_decorators: list[tuple[str, int]] = []
@@ -435,6 +455,7 @@ class FileScanner:
         return_graph_refs: list[tuple[str, str, str | None]] = []
         side_effects: list[str] = []
         checkpointer_calls: list[tuple[str, int]] = []
+        invoke_calls: list[tuple[str, int]] = []
 
         for node in _shallow_body_nodes(fn):
             if isinstance(node, ast.Return):
@@ -460,6 +481,8 @@ class FileScanner:
             call_name = expr_name(node.func) or ""
             base = _last_name(call_name) or ""
             if base in INVOKE_METHODS:
+                target = expr_name(node.func.value) if isinstance(node.func, ast.Attribute) else ""
+                invoke_calls.append((target, node.lineno))
                 side_effects.append(f"calls external `. {base}()` at line {node.lineno}")
             if "tool" in call_name.lower():
                 side_effects.append(f"calls tool `{call_name}()` at line {node.lineno}")
@@ -489,6 +512,7 @@ class FileScanner:
             cache_decorators=cache_decorators,
             retry_decorators=retry_decorators,
             checkpointer_calls=_dedupe_pairs(checkpointer_calls),
+            invoke_calls=_dedupe_pairs(invoke_calls),
             return_graph_ref=(
                 unique_graph_refs[0] if len(unique_graph_refs) == 1 else None
             ),
@@ -524,6 +548,12 @@ class FileScanner:
             value = stmt.value
         if value is None or not isinstance(value, ast.Call):
             return
+
+        # Chained builder assignment:
+        #   graph = StateGraph(S).add_node(...).add_edge(...).compile()
+        # Process the inner add_node/add_edge calls before marking compiled.
+        if isinstance(value.func, ast.Attribute) and value.func.attr in BUILDER_METHODS:
+            self._handle_expr_call(value)
 
         if self._is_stategraph_call(value):
             graph = self._new_graph(target or f"<inline@{value.lineno}>", value)
@@ -603,6 +633,10 @@ class FileScanner:
         if not name:
             return
         node = NodeSpec(name=name, line=call.lineno)
+        if _keyword(call, "cache_policy") is not None:
+            node.cache_policy_line = call.lineno
+        if _keyword(call, "retry_policy") is not None:
+            node.retry_policy_line = call.lineno
         if action is not None:
             if isinstance(action, ast.Call) and self._is_compile_call(action):
                 child = self._resolve_graph(action.func.value)
@@ -617,6 +651,12 @@ class FileScanner:
                 if child is not None:
                     node.action_kind = "subgraph"
                     node.graph_var = child.var
+                else:
+                    # Class-based node, e.g. add_node("n", MyNode()).
+                    callee = _last_name(expr_name(action.func))
+                    if callee in self.class_names:
+                        node.action_kind = "function"
+                        node.func_name = f"{callee}.__call__"
             elif isinstance(action, ast.Name):
                 if action.id in self.functions:
                     node.action_kind = "function"
@@ -639,6 +679,7 @@ class FileScanner:
         cache = _keyword(call, "cache")
         if cache is not None and not _is_false_literal(cache):
             graph.compile_cache = True
+            graph.compile_cache_var = expr_name(cache)
         output = _keyword(call, "output_schema")
         if output is not None:
             graph.compile_output_schema = _class_arg_name(output)
@@ -801,6 +842,9 @@ class FileScanner:
         self._rule_acr004()
         self._rule_acr005()
         self._rule_acr006()
+        self._rule_acr007()
+        self._rule_acr008()
+        self._rule_acr009()
 
     def _rule_acr001(self) -> set[tuple[str, str]]:
         sites: set[tuple[str, str]] = set()
@@ -1044,6 +1088,115 @@ class FileScanner:
                 )
                 first_line = info.checkpointer_calls[0][1]
                 self._emit("ACR006", line=first_line, message=message, evidence=evidence)
+
+    def _rule_acr007(self) -> None:
+        for graph in self.graphs.values():
+            state = self._typed_dict(graph.state_name)
+            if state is None:
+                continue
+            declared = set(state.keys)
+            for node in graph.nodes.values():
+                # A subgraph's output boundary is covered by ACR001/ACR003;
+                # this rule is about a node function returning a key that the
+                # graph's own state does not declare.
+                if node.action_kind != "function":
+                    continue
+                info = self.functions.get(node.func_name or "")
+                if info is None or info.return_keys is None:
+                    continue
+                extra = sorted(set(info.return_keys) - declared)
+                if not extra:
+                    continue
+                returned_label = ", ".join(f"'{key}'" for key in extra)
+                declared_label = ", ".join(f"'{key}'" for key in sorted(declared))
+                evidence = [
+                    f"node '{node.name}' registered with add_node at line {node.line}",
+                    f"state schema '{state.name}' declared at line {state.line} "
+                    f"with key(s): {declared_label}",
+                    f"node returns undeclared key(s): {returned_label} "
+                    f"(return line(s): {', '.join(str(line) for line in info.return_lines)})",
+                ]
+                message = (
+                    f"Node '{node.name}' returns key(s) {returned_label} that are not "
+                    f"declared in state schema '{state.name}'. LangGraph filters "
+                    "undeclared keys at the node boundary, so this update is silently "
+                    "dropped and downstream nodes cannot see it."
+                )
+                self._emit("ACR007", line=node.line, message=message, evidence=evidence)
+
+    def _rule_acr008(self) -> None:
+        """Cache policy on a callable without a stable function identity."""
+
+        for graph in self.graphs.values():
+            for node in graph.nodes.values():
+                if node.cache_policy_line is None:
+                    continue
+                info = self.functions.get(node.func_name or "")
+                named_function = (
+                    node.action_kind == "function"
+                    and info is not None
+                    and not (node.func_name or "").endswith(".__call__")
+                )
+                if named_function:
+                    continue
+                cache_var = graph.compile_cache_var or "the shared cache"
+                evidence = [
+                    f"node '{node.name}' registered with cache_policy at line "
+                    f"{node.cache_policy_line}",
+                    f"callable could not be resolved to a module-level function "
+                    f"(action kind: {node.action_kind})",
+                    f"graph compiled with cache={cache_var} at line "
+                    f"{graph.compile_line or graph.line}",
+                ]
+                message = (
+                    f"Node '{node.name}' enables cache_policy but its callable is not "
+                    "a statically named function (callable object, lambda, partial, or "
+                    "unknown parameter). LangGraph's cache key may lack a stable "
+                    "function identity and collapse to a dynamic namespace; graphs "
+                    "sharing this cache can return each other's results."
+                )
+                self._emit(
+                    "ACR008",
+                    line=node.cache_policy_line,
+                    message=message,
+                    evidence=evidence,
+                )
+
+    def _rule_acr009(self) -> None:
+        """retry_policy on a node that invokes multiple subgraphs."""
+
+        for graph in self.graphs.values():
+            for node in graph.nodes.values():
+                if node.retry_policy_line is None:
+                    continue
+                info = self.functions.get(node.func_name or "")
+                if info is None:
+                    continue
+                targets = sorted(
+                    {target for target, _ in info.invoke_calls if target}
+                )
+                if len(targets) < 2:
+                    continue
+                target_label = ", ".join(f"'{target}'" for target in targets)
+                evidence = [
+                    f"node '{node.name}' registered with retry_policy at line "
+                    f"{node.retry_policy_line}",
+                    f"node function invokes multiple subgraph-like targets: {target_label}",
+                    "retry/checkpoint namespace is positional; a later subgraph may "
+                    "reuse an earlier subgraph's checkpoint after a failed attempt",
+                ]
+                message = (
+                    f"Node '{node.name}' enables retry_policy while invoking multiple "
+                    f"subgraphs ({target_label}). After a retry or resume, a later "
+                    "subgraph can land in the first subgraph's checkpoint namespace "
+                    "and return its stale result."
+                )
+                self._emit(
+                    "ACR009",
+                    line=node.retry_policy_line,
+                    message=message,
+                    evidence=evidence,
+                )
 
 
 def _dedupe(items: list[str]) -> list[str]:

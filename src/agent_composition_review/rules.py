@@ -103,6 +103,56 @@ SCAN_RULES: tuple[Rule, ...] = (
             "outside node execution."
         ),
     ),
+    Rule(
+        id="ACR007",
+        severity="medium",
+        scope="scan",
+        title="Node returns keys not declared in the state schema",
+        summary=(
+            "A node function (or a class-based ``__call__`` node) returns a dict "
+            "literal containing a key that is not declared in the graph's "
+            "``TypedDict`` state schema. LangGraph silently filters undeclared keys, "
+            "so the write disappears and downstream nodes never see it."
+        ),
+        fix=(
+            "Declare the key in the graph state ``TypedDict`` (with a reducer if "
+            "multiple nodes write it), or remove/rename the returned key. Do not "
+            "rely on undeclared keys surviving the node boundary."
+        ),
+    ),
+    Rule(
+        id="ACR008",
+        severity="medium",
+        scope="scan",
+        title="Cache policy on a callable without a stable function identity",
+        summary=(
+            "A node enables ``cache_policy`` but its callable is a callable object, "
+            "lambda, partial, or an unresolved parameter. The cache key can lose the "
+            "module/qualname identity and collapse to a dynamic namespace; graphs "
+            "sharing a cache can return each other's results."
+        ),
+        fix=(
+            "Use a module-level named function for cached nodes, or include an "
+            "explicit stable key/namespace in the cache policy. Avoid sharing one "
+            "cache object across graphs with anonymous callables."
+        ),
+    ),
+    Rule(
+        id="ACR009",
+        severity="medium",
+        scope="scan",
+        title="retry_policy on a node invoking multiple subgraphs",
+        summary=(
+            "A node registered with ``retry_policy`` invokes two or more subgraphs. "
+            "After a failed attempt or resume, a later subgraph can reuse the first "
+            "subgraph's checkpoint namespace and return a stale result."
+        ),
+        fix=(
+            "Avoid multiple subgraph invokes inside one retried node; split them into "
+            "separate nodes or make each subgraph call carry its own explicit "
+            "checkpoint/namespace identity."
+        ),
+    ),
 )
 
 TRACE_RULES: tuple[Rule, ...] = (

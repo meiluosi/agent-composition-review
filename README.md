@@ -201,7 +201,7 @@ acr --help
 
 ## 规则
 
-共 11 条。每条都有独立的说明页（症状、为什么发生、输出示例、最小修复、误报边界）；finding 的 `docs` 字段是 `docs/rules/<RULE>.md` 仓库相对路径，安装版可在 [GitHub 的 docs/rules/](https://github.com/meiluosi/agent-composition-review/tree/main/docs/rules) 查看同一个页面。
+共 14 条。每条都有独立的说明页（症状、为什么发生、输出示例、最小修复、误报边界）；finding 的 `docs` 字段是 `docs/rules/<RULE>.md` 仓库相对路径，安装版可在 [GitHub 的 docs/rules/](https://github.com/meiluosi/agent-composition-review/tree/main/docs/rules) 查看同一个页面。
 
 ### 静态检查（`acr scan`）
 
@@ -213,6 +213,9 @@ acr --help
 | ACR004 | 副作用节点/图被缓存包裹 | medium | [ACR004](docs/rules/ACR004.md) |
 | ACR005 | 副作用节点启用了 retry | medium | [ACR005](docs/rules/ACR005.md) |
 | ACR006 | 节点内通过 checkpointer 读写图状态 | low | [ACR006](docs/rules/ACR006.md) |
+| ACR007 | 节点返回了状态 schema 未声明的键，写入被静默过滤 | medium | [ACR007](docs/rules/ACR007.md) |
+| ACR008 | 缓存节点用了没有稳定身份的 callable，cache key 可能退化 | medium | [ACR008](docs/rules/ACR008.md) |
+| ACR009 | retry_policy 节点内调用多个子图，恢复后可能复用错 checkpoint | medium | [ACR009](docs/rules/ACR009.md) |
 
 ### 轨迹检查（`acr trace`）
 
@@ -254,7 +257,7 @@ acr --help
 
 除了自建案例，我们还从 LangGraph GitHub issue 收集了 **14 个真实故障 + 3 个正常控制图**，按“盲标 → 扫描 → 逐例判定”的协议跑了一轮开发型试点。v0.1.0 的结论不漂亮，但有用：
 
-- 13/14 可以读出构图；现有 11 条规则只能表达其中 **1 个**（#6446）；
+- 13/14 可以读出构图；v0.1.0 的 11 条规则只能表达其中 **1 个**（#6446）；
 - 这个唯一可表达的案例因为子图写在 helper 函数里返回 compiled graph，**扫描漏掉了**；
 - 真实案例上只发出 3 条 finding：**0 条与故障相关**，1 条误导（`ReadOnly` 里的 reducer 被误判为没有 reducer），2 条顺带；
 - 3 个正常控制图 0 误报。
@@ -291,7 +294,7 @@ acr --help
 src/agent_composition_review/          acr CLI 实现（产品代码）
 tests/                                 CLI 与规则测试
 examples/langgraph-subgraph-leak/      #6446 类可运行示例（broken/fixed/run）
-docs/rules/                            11 条规则的独立说明页
+docs/rules/                            14 条规则的独立说明页
 docs/evaluation-history.md             旧评测档案（历史证据，非产品承诺）
 docs/launch/                           公开发布清单与渠道文案
 skills/agent-composition-review/       Agent Skill 入口与参考

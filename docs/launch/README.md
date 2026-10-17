@@ -7,7 +7,7 @@
 - **一句话**：Find the boundary where your LangGraph agent breaks.
 - **产品**：`acr` CLI，静态分析 LangGraph 构图代码、分析失败轨迹、生成一页报告。
 - **许可**：MIT。
-- **v0.1 能兑现的**：`acr scan` / `acr trace` / `acr report` / `acr demo` / `acr rules` 五条命令；ACR001–ACR006 静态规则、ACR101–ACR105 轨迹规则；可选 `[langgraph]` 依赖；Python 3.10+。
+- **v0.1 能兑现的**：`acr scan` / `acr trace` / `acr report` / `acr demo` / `acr rules` 五条命令；ACR001–ACR009 静态规则、ACR101–ACR105 轨迹规则；可选 `[langgraph]` 依赖；Python 3.10+。
 - **v0.1 不宣称的**：不宣称 benchmark 提升或检测准确率；不是运行时追踪器；不自动改代码；只覆盖 Python AST 与 LangGraph 1.x。旧评测历史见 [评测档案](../evaluation-history.md)，不得作为产品效果证据引用。
 
 ## 1. 发布前检查清单
@@ -73,7 +73,7 @@ cd agent-composition-review && python3 -m pip install -e ".[langgraph]"
 
 ### 包含
 
-- `acr scan`：ACR001–ACR006，覆盖子图输出越界、并行写同键、retry/缓存副作用、隐藏状态读写
+- `acr scan`：ACR001–ACR009，覆盖子图输出越界、并行写同键、retry/缓存副作用、隐藏状态读写、节点返回未声明状态键、cache 身份、retry 多子图命名空间
 - `acr trace`：ACR101–ACR105，覆盖重复工具调用、节点重复写、同一步并行写同键、错误后部分写入、最终状态丢键
 - `acr demo`：内置 LangGraph #6446 类示例，broken → scan → 修复 → 通过
 - `acr report`：合并 scan/trace 结果为一页 Markdown

@@ -127,10 +127,82 @@ def test_acr006_checkpointer_access() -> None:
     assert "get_state" in findings[0].message
 
 
+def test_acr007_declared_keys_function_node() -> None:
+    result = scan_fixture("acr007_declared_keys.py")
+    findings = findings_for(result, "ACR007")
+    assert len(findings) == 1
+    finding = findings[0]
+    assert finding.severity == "medium"
+    assert "undeclared_key" in finding.message
+    assert "state schema 'State'" in finding.message
+    assert "filtered" in finding.message or "silently" in finding.message
+    assert finding.docs == "docs/rules/ACR007.md"
+
+
+def test_acr007_declared_keys_class_node() -> None:
+    """Class-based nodes (issue #2644) are analyzed through __call__."""
+
+    result = scan_fixture("acr007_class_node.py")
+    findings = findings_for(result, "ACR007")
+    assert len(findings) == 1
+    finding = findings[0]
+    assert finding.severity == "medium"
+    assert "'zoo'" in finding.message
+    assert "Node 'node_1'" in finding.message
+
+
+def test_acr007_negative_declared_keys() -> None:
+    result = scan_fixture("acr007_negative.py")
+    assert findings_for(result, "ACR007") == []
+    assert result.findings == []
+
+
+def test_acr008_cache_on_anonymous_callable() -> None:
+    result = scan_fixture("acr008_cache_identity.py")
+    findings = findings_for(result, "ACR008")
+    assert len(findings) == 1
+    finding = findings[0]
+    assert finding.severity == "medium"
+    assert "cache_policy" in finding.message
+    assert "dynamic namespace" in finding.message
+    assert finding.docs == "docs/rules/ACR008.md"
+
+
+def test_acr008_negative_named_function() -> None:
+    result = scan_fixture("acr008_negative_named.py")
+    assert findings_for(result, "ACR008") == []
+
+
+def test_acr009_retry_with_multiple_subgraphs() -> None:
+    result = scan_fixture("acr009_retry_subgraphs.py")
+    findings = findings_for(result, "ACR009")
+    assert len(findings) == 1
+    finding = findings[0]
+    assert finding.severity == "medium"
+    assert "'research'" in finding.message and "'review'" in finding.message
+    assert "retry_policy" in finding.message
+    assert finding.docs == "docs/rules/ACR009.md"
+
+
+def test_acr009_negative_single_subgraph() -> None:
+    result = scan_fixture("acr009_negative_single_subgraph.py")
+    assert findings_for(result, "ACR009") == []
+
+
 def test_scan_directory_aggregates_findings() -> None:
     result = scan_path(FIXTURES)
     rules = {finding.rule for finding in result.findings}
-    assert {"ACR001", "ACR002", "ACR003", "ACR004", "ACR005", "ACR006"} <= rules
+    assert {
+        "ACR001",
+        "ACR002",
+        "ACR003",
+        "ACR004",
+        "ACR005",
+        "ACR006",
+        "ACR007",
+        "ACR008",
+        "ACR009",
+    } <= rules
     assert result.files_parsed >= 7
 
 
